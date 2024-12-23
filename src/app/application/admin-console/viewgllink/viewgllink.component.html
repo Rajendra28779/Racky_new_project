@@ -1,0 +1,96 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+    <div class="row justify-content-between">
+      <div class="col-lg-4">
+        <ul class="nav nav-tabs ">
+          <li class="nav-item">
+            <a routerLink="/application/globallink" routerLinkActive="active" class="nav-link " style="color: green;">Add</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/application/viewgllink" routerLinkActive="active" class="nav-link active">View</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-lg-6 ">
+        <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-7">
+        <p>Total Global Link : {{countgllist}}</p>
+      </div>
+      <div class="col-5">
+        <input type="text " id="txtsearchDate " name="txtsearchDate " [(ngModel)]="txtsearchDate" maxlength="20 "
+          class="form-control " placeholder="Search here...... " autocomplete="off"
+          style=" margin-right: 0px; margin-left: 0px;">
+      </div>
+    </div>
+    <br>
+    <div class="table-responsive">
+      <table class="table table-striped mb-0">
+        <thead>
+          <tr>
+            <th width="50">Sl#</th>
+            <th>Global Link Name</th>
+            <th>Description</th>
+            <th>Order No</th>
+            <th>Status</th>
+            <th width="100">Action</th>
+          </tr>
+        </thead>
+        <tbody
+          *ngFor="let v of gllinklist | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage},index as i">
+          <tr *ngIf="gllinklist.length>0">
+            <td *ngIf="currentPage==1 ">{{(i+1)}}</td>
+            <td *ngIf="currentPage!=1 ">{{(currentPage-1)*pageElement+ i+1}}</td>
+            <td>{{v.globalLinkName}}</td>
+            <td> {{v.description}} </td>
+            <td>{{v.order}}</td>
+            <td>
+              <p *ngIf="v.bitStatus==0">Active</p>
+              <p *ngIf="v.bitStatus==1">In-Active</p>
+            </td>
+            <td>
+              <a class="btn btn-outline-primary btn-sm me-1" (click)="edit(v.globalLinkId)"><i
+                  class="bi bi-pencil"></i></a>
+              <!--div *ngIf="v.bitStatus==0">
+                  <a class="btn btn-outline-primary btn-sm me-1" (click)="edit(v.globalLinkId)"><i class="bi bi-pencil"></i></a>
+                <a class="btn btn-outline-danger btn-sm" (click)="delete(v.globalLinkId)" ><i class="bi bi-trash3" ></i></a>
+              </div>
+              <div *ngIf="v.bitStatus==1">
+                <a class="btn btn-outline-primary btn-sm me-1" (click)="edit(v.globalLinkId)"><i class="bi bi-pencil"></i></a>
+                <a class="btn btn-outline-danger btn-sm"  ><i class="bi bi-trash3" ></i></a>
+              </div-->
+            </td>
+          </tr>
+          <tr *ngIf="gllinklist==0">
+            <div class="row ">
+              <span style="color: red;text-align: center;position:absolute ">NO DATA FOUND!!</span>
+            </div>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+  <div class="row" *ngIf="showPegi">
+    <div class="col-sm-4">
+      <div class="col-sm-*">
+        show
+        <select id="pageItem" name="pageItem" class="custom-select-sm" (change)="pageItemChange()">
+          <option value="20">20</option>
+          <option value="50">50</option>
+          <option value={{countgllist}}>ALL</option>
+        </select> entries
+      </div>
+    </div>
+    <div class="col-sm-8 text-right">
+      <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true"
+        (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)">
+      </pagination-controls>
+    </div>
+
+
+  </div>
+</div>

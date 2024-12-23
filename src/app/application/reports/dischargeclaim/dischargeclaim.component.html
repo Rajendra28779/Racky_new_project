@@ -1,0 +1,92 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs" routerLinkActive="active">
+                    <li class="nav-item">
+                        <a routerLink="/application/dischargeclaim" class="nav-link active">District Wise Discharge
+                            Report</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a routerLink="" class="nav-link">View</a>
+                    </li> -->
+                </ul>
+            </div>
+            <div class="col-lg-6 ">
+                <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-box bg-light pt-xl-2">
+        <form>
+            <div class="row">
+                <div class="col-lg-3">
+                    <div>
+                        <label class="col-form-label">Discharge From</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="datepicker">
+                            <label class="input-group-text bg-transparent border-start-0" for="datepicker"><i
+                                    class="iconbsky-calendar"></i> </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div>
+                        <label class="col-form-label">Discharge To</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="datepicker1">
+                            <label class="input-group-text bg-transparent border-start-0" for="datepicker1"><i
+                                    class="iconbsky-calendar"></i> </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class="col-form-label d-md-block d-none">&nbsp;</label>
+                    <button type="submit" class="btn btn-success">Search</button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+    <div class="content-box mt-3 p-0 overflow-hidden">
+        <div class="table-responsive">
+            <table class="table mb-0">
+                <thead>
+                    <tr>
+                        <th width="50">Sl#</th>
+                        <th width="20%">District Name</th>
+                        <th class="text-center">Total Discharge</th>
+                        <th width="250">Discharge Amount (<i class="bi bi-currency-rupee"></i>)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td> 1 </td>
+                        <td><a routerLink="/application/dischargeclaim/khurda"> Angul</a></td>
+                        <td align="center"> 1500 </td>
+                        <td align="right"> 5500325 </td>
+                    </tr>
+                    <tr>
+                        <td> 2 </td>
+                        <td><a routerLink="/application/dischargeclaim/khurda">Balangir</a></td>
+                        <td align="center"> 1325 </td>
+                        <td align="right"> 8253000 </td>
+                    </tr>
+                    <tr>
+                        <td> 3 </td>
+                        <td><a routerLink="/application/dischargeclaim/khurda">Bargarh</a></td>
+                        <td align="center"> 1258 </td>
+                        <td align="right"> 5004500 </td>
+                    </tr>
+                    <tr>
+                        <td>4 </td>
+                        <td><a routerLink="/application/dischargeclaim/khurda">Khurda</a></td>
+                        <td align="center"> 1500 </td>
+                        <td align="right"> 4500500 </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,186 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+    <div class="col-lg-4">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a routerLink="/application/usermobiletrackingconfig" routerLinkActive="active" class="nav-link active">User
+            Mobile tracking Configuration</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-3 col-xxl-3">
+      <div class="mb-xl-3">
+        <label class="control-label">Group type<span class="text-danger">*</span></label>
+        <select class="form-select" name="group" id="group" (change)="getuserDetailsbygroup($event.target.value)">
+          <option value="" selected disabled>Select Group type</option>
+          <option value=6>DC</option>
+          <option value=27>ADC</option>
+          <option value=22>CSM DC</option>
+          <option value=10>TSU</option>
+          <option value=20>SHAS TSU</option>
+          <option value=14>SwasthyaMitra</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top:1ch;" *ngIf="showPegi">
+    <div class="col-3" style="margin-top: 10px">
+      <div class="col-sm-*" *ngIf="showPegi">
+        show
+        <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+          <option value="50">50</option>
+          <option value="100">100</option>
+          <option value="200">200</option>
+          <option value="300">300</option>
+          <option value={{totalcount}}>All</option>
+        </select> entries
+      </div>
+    </div>
+    <div class="col-3" style="margin-top: 10px">
+      <b>Total No. of Records : {{totalcount}}</b>
+    </div>
+    <div class="col-2" style="text-align:end ;">
+      <button class="btn btn-success btn-sm mx-1" style="margin-top: 10px" tooltip="Excel" (click)="downloadList(1)">
+        <i class="bi bi-file-earmark-spreadsheet"></i>
+      </button>
+      <button class="btn btn-danger btn-sm mx-1" style="margin-top: 10px" tooltip="pdf" (click)="downloadList(2)">
+        <i class="bi bi-file-earmark-pdf"></i>
+      </button>
+    </div>
+    <div class="col-4">
+      <input type="text " id="txtsearchDate " name="txtsearchDate " [(ngModel)]="txtsearchDate" maxlength="20 "
+        class="form-control " placeholder="Search here...... " autocomplete="off" style="width:100%">
+    </div>
+  </div>
+  <div class="table-responsive" style="margin-top:1ch;" *ngIf="showPegi">
+    <table class="table table-striped mb-0">
+      <caption></caption>
+      <thead>
+        <tr>
+          <th>Sl#</th>
+          <th>Full Name</th>
+          <th>Mobile No</th>
+          <th style="text-align: center;">Allow For Tracking <br>
+            <input type="checkbox" id="allCheck" (click)="allselectitem()" [checked]="checkAllBox">
+          </th>
+          <th>Tracking End Time</th>
+          <th style="text-align: center;">Log</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let v of userlist | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage},index as i">
+          <td *ngIf="currentPage==1 ">{{(i+1)}}</td>
+          <td *ngIf="currentPage!=1 ">{{(currentPage-1)*pageElement+ i+1}}</td>
+          <td>{{v.fullName}}</td>
+          <td>{{v.phone}}</td>
+          <td style="text-align:center ;">
+            <input type="checkbox" name="otpenable" id="otpenable" class="me-2 text-center"
+              [checked]="v.trackstattus==0" (click)="selectitem(v,i+1)">
+          </td>
+          <td>
+            <select class="form-control" name="hour" id="hour{{i+1}}" style="background: rgb(226, 204, 247);"
+              (change)="selecttime(v,i+1)" [(ngModel)]="v.hour">
+              <ng-container *ngFor="let v of hoursarr">
+                <option value={{v}}>{{v}}</option>
+              </ng-container>
+            </select>:
+            <select class="form-control" name="minite{{i+1}}" id="minite{{i+1}}" style="background: rgb(230, 228, 228);
+              margin-right: 15px;" (change)="selecttime(v,i+1)" [(ngModel)]="v.min">
+              <ng-container *ngFor="let v of minarr">
+                <option value={{v}}>{{v}}</option>
+              </ng-container>
+            </select>
+            <select class="form-control" name="stat" id="stat{{i+1}}"
+              style="background: rgb(177, 222, 248); margin-right: 10px;" (change)="selecttime(v,i+1)"
+              [(ngModel)]="v.stat">
+              <option value='AM'>AM</option>
+              <option value='PM'>PM</option>
+            </select>
+          </td>
+          <td style="text-align: center;">
+            <button style="text-align: center;" class="btn btn-outline-primary btn-sm me-1" (click)="logdata(v)"
+              data-bs-toggle="modal" data-bs-target="#log" style="width:100%">Log</button>
+          </td>
+        </tr>
+        <tr *ngIf="totalcount==0">
+          <td colspan="6" style="text-align:center;">
+            <strong class="text-danger">NO DATA FOUND!!</strong>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="row" *ngIf="showPegi">
+    <div class="col-sm-4">
+      <div class="col-sm-*">
+        show
+        <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+          <option value="50">50</option>
+          <option value="100">100</option>
+          <option value="200">200</option>
+          <option value="300">300</option>
+          <option value={{totalcount}}>All</option>
+        </select> entries
+      </div>
+    </div>
+    <div class="col-sm-8 text-right">
+      <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true"
+        (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)">
+      </pagination-controls>
+    </div>
+  </div>
+
+  <div class="col-lg-2 col-xxl-2" *ngIf="showPegi">
+    <div class="mb-xl-3">
+      <button type="submit" class="btn btn-success" [disabled]="!showsubmitbutton" style="margin-top: 3ch;"
+        (click)="Submit()">Submit</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Attendance Details-->
+<div class="modal fade" id="log" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="max-width: 60%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          DC Name :- {{this.loguser?.fullName}}<br>
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <caption></caption>
+            <thead>
+              <tr>
+                <th>Sl No</th>
+                <th>Allow For Tracking</th>
+                <th>Tracking End Time</th>
+                <th>Updated By</th>
+                <th>Updated On</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of loglist ,index as i">
+                <td>{{i+1}}</td>
+                <td>{{item.trackstatus}}</td>
+                <td>{{item.enddate}}</td>
+                <td>{{item.updateBy}}</td>
+                <td>{{item.updateOn}}</td>
+              </tr>
+              <tr *ngIf="loglist?.length==0">
+                <td colspan="10" style="text-align:center;"><strong class="text-danger">No Data found</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

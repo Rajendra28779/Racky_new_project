@@ -1,0 +1,181 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+    <div class="col-lg-4">
+      <ul class="nav nav-tabs">
+        <li class="nav-item" *ngIf="!isedit">
+          <a routerLink="/application/dcgovthospitalmapping" routerLinkActive="active" class="nav-link active">Add</a>
+        </li>
+        <li class="nav-item" *ngIf="isedit">
+          <a routerLink="/application/dcgovthospitalmapping" routerLinkActive="active"
+            class="nav-link active">Update</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/application/dcgovthospitalmappingview" routerLinkActive="active" class="nav-link"
+            style="color: #1f723f;">View</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="cointainer">
+    <div class="row">
+      <div class="col-lg-3 col-xxl-3">
+        <div class="mb-xl-3">
+            <label class="control-label">Group type<span class="text-danger">*</span></label>
+            <select class="form-select" name="group" id="group" [(ngModel)]="group" [disabled]="isedit"
+                (change)="getuserDetailsbygroup($event.target.value)">
+                <option value="" selected disabled>Select Group type</option>
+                <option value=6>DC</option>
+                <option value=27>ADC</option>
+            </select>
+        </div>
+      </div>
+      <div class="col-lg-4 col-xxl-4" *ngIf="!isedit">
+        <div class="mb-xl-3">
+          <label class="control-label">DC/ADC Name<span class="text-danger">*</span></label>
+          <ng-autocomplete #auto [data]="dcList" placeholder="Select DC/ADC Name" (selected)="selectEvent($event)"
+            (inputCleared)="clearEvent()" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate"
+            [searchKeyword]="keyword" spellcheck="false">
+          </ng-autocomplete>
+
+          <ng-template #itemTemplate let-item>
+            <a [innerHTML]="item.fullName"></a>
+          </ng-template>
+
+          <ng-template #notFoundTemplate let-notFound>
+            <div [innerHTML]="notFound"></div>
+          </ng-template>
+        </div>
+      </div>
+      <div class="col-lg-4 col-xxl-4" *ngIf="isedit">
+        <div class="mb-xl-3">
+          <label class="control-label">DC/ADC Name<span class="text-danger">*</span></label>
+          <input class="form-control" type="text" [value]="dc?.fullName" disabled="disabled" />
+        </div>
+      </div>
+      <div class="col-lg-6 col-xxl-6" *ngIf="showdc">
+        <div class="card shadow-sm basic-info bg-light">
+          <div class="card-body ">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="d-flex">
+                  <span class="text-success me-3">
+                    <i class="bi bi-person-fill larger-icon"></i>
+                  </span>
+                  <div>
+                    <p class="mb-0 fw-500">{{dc?.fullName}}</p>
+                    <p class="mb-0 text-muted">{{dc?.mobileNo}}</p>
+                    <p class="mb-0 text-muted">{{dc?.emailId}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style=" margin-top: 1ch;" *ngIf="showdc">
+      <div class="col-lg-4 col-xxl-4">
+        <div class="mb-xl-3">
+          <label class="control-label">State Name<span class="text-danger">*</span></label>
+          <input type="text" value="Odisha" class="form-control" onkeydown="return false;" disabled>
+        </div>
+      </div>
+      <div class="col-lg-3 col-xxl-3">
+        <div class="mb-xl-3">
+          <label class="control-label">District Name<span class="text-danger">*</span></label>
+          <select class="form-select" name="districtId" id="districtId"
+            (change)="OnChangeDistrict($event.target.value)">
+            <option value="" selected disabled>Select District</option>
+            <ng-container *ngFor="let item of districtList">
+              <option value={{item.districtcode}}>{{item.districtname}}</option>
+            </ng-container>
+          </select>
+        </div>
+      </div>
+      <div class="col-lg-3 col-xxl-3">
+        <div class="mb-xl-3">
+          <label class="control-label">Block Name</label>
+          <select class="form-select" name="blockId" id="blockId" (change)="OnChangeblock($event.target.value)">
+            <option value="" >Select Block</option>
+            <ng-container *ngFor="let item of blocklist">
+              <option value={{item.blockcode}}>{{item.blockname}}</option>
+            </ng-container>
+          </select>
+        </div>
+      </div>
+      <div class="col-lg-3 col-xxl-3">
+        <div class="mb-xl-3">
+            <label class="control-label">Hospital Type<span class="text-danger"></span></label>
+              <select class="form-select" name="hosptype" id="hosptype" (change)="OnChangehospital($event.target.value)">
+                  <option value="" selected disabled>Select Hospital Type</option>
+                  <ng-container *ngFor="let item of hosptypelist">
+                      <option value={{item.hospitaltypeid}}>{{item.hospitaltypename}}</option>
+                  </ng-container>
+              </select>
+          </div>
+      </div>
+      <div class="col-lg-4 col-xxl-4">
+        <div class="mb-xl-3">
+          <label class="control-label">Hospital Name<span class="text-danger"></span></label>
+          <div>
+            <ng-multiselect-dropdown #multiSelect [placeholder]="placeHolder" [data]="hospitalList"
+              [settings]="settingcdmo" id="hospitalCode" [(ngModel)]="selectedItems" (onSelect)=onItemSelect($event)
+              (onDeSelect)="onItemDeSelect($event)" (onSelectAll)="onSelectAll($event)"
+              (onDeSelectAll)="onDeSelectAll($event)">
+            </ng-multiselect-dropdown>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="width: 650pt;">
+      <div class="form-cointainer" *ngIf="hospList.length!=0">
+        <div class="main-tab">
+          <div class="row justify-content-between">
+            <div class="table-responsive">
+              <table class="table table-striped" mb-0>
+                <caption></caption>
+                <thead>
+                  <tr>
+                    <th>Sl No</th>
+                    <th>State</th>
+                    <th>District</th>
+                    <th>Hospital Name</th>
+                    <th style="text-align: center;">Remove</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of hospList; index as i">
+                    <td>{{i+1}}</td>
+                    <td>{{item.stateName}}</td>
+                    <td>{{item.districtName}}</td>
+                    <td>{{item.hospitalName}}</td>
+                    <td style="text-align: center;">
+                      <a class="btn btn-outline-danger btn-sm me-1" (click)="remove(item)">
+                        <i class="bi bi-trash3"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="showdc">
+      <div class="col-lg-12">
+        <div class="d-grid gap-2 d-md-flex" *ngIf="!isedit">
+          <button type="submit" class="btn btn-success" (click)="submit()">Submit</button>
+          <input type="button" value="Reset" class="btn btn-secondary" (click)="onReset()">
+        </div>
+        <div *ngIf="isedit">
+          <button type="button" class="btn btn-success" (click)="updateDcDetails()">Update</button>&nbsp;
+          <input type="button" value="Cancel" class="btn btn-secondary" (click)="cancel()">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

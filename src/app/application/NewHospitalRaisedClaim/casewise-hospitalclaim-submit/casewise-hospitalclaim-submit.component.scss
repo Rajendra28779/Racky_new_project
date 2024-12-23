@@ -1,0 +1,374 @@
+.modal-content {
+    border-radius: 10px;
+}
+
+.modal-header {
+    background-color: #e2f5e9;
+    color: #3a8c58;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.document-upload {
+    .uploaded-doc a {
+        display: block;
+        padding: 1rem;
+    }
+    .required-field::before {
+        content: "*";
+        color: #f00;
+    }
+}
+
+.fw-500 {
+    font-weight: 500 !important;
+}
+
+.fw-600 {
+    font-weight: 600;
+}
+
+.upload__brd {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    .pre_text {
+        background: #e2f5e9;
+        padding: 6px;
+    }
+}
+
+.icon_pre_upload {
+    font-size: 2rem;
+    margin-right: 1rem;
+}
+
+.upload__sec {
+    img {
+        margin: 0;
+        padding: 0;
+        height: 7rem;
+        padding: 0.5rem 0rem;
+    }
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    text-align: center;
+    margin-bottom: 0rem;
+    .card {
+        padding: 1rem;
+    }
+}
+
+.table th {
+    background: #dfe9e3;
+    font-weight: normal;
+}
+
+.card_custom .card-body {
+    background: #eff1fa;
+    padding: 1.2rem;
+    border-radius: 6px;
+    min-height: 12rem;
+    position: relative;
+    border: 1px solid #DEE3F3;
+}
+
+.basic_text {
+    font-weight: 500;
+    font-size: 16px;
+    word-break: break-all;
+    margin-bottom: 0;
+    color: #000;
+}
+
+.table_fixed {
+    max-height: 400px;
+    overflow-y: auto;
+    z-index: 0;
+}
+
+.mw-130 {
+    min-width: 130px;
+}
+
+.table_fixed thead {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.patient_text {
+    color: #333;
+    font-weight: 500;
+}
+
+.card_tabing {
+    .nav-link i {
+        padding-right: 5px;
+    }
+    .nav-tabs .nav-link {
+        position: relative;
+        color: #000;
+        border: none;
+        padding-bottom: 10px;
+        margin-right: 10px;
+        transition: 0.5s;
+    }
+    .nav-link img {
+        height: 16px;
+        margin-right: 5px;
+    }
+    .nav-tabs .nav-link {
+        &::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #508b6c;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+        &.active {
+            &::after {
+                transform: scaleX(1);
+                transform-origin: left;
+            }
+            color: #1a6336;
+            background: #CCEEDC;
+        }
+        &:hover {
+            background: #e9f1ed;
+            transition: 0.5s;
+        }
+    }
+    .card-body {
+        border: 1px solid #ddd;
+        padding: 1rem;
+        min-height: 12rem;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+    .card-header {
+        padding-bottom: 0;
+    }
+}
+
+.card_custom .address_new {
+    font-size: 15px;
+}
+
+.list_inform label {
+    font-size: 14px;
+}
+
+.table th {
+    &:first-child,
+    &:last-child {
+        border-radius: 0;
+    }
+}
+
+.card_warning {
+    background: rgb(255, 247, 237);
+    overflow: hidden;
+    position: relative;
+    padding: 1rem 1rem;
+    min-height: 10rem;
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+    justify-content: center;
+    border: 1px solid #f2e3d1;
+    border-radius: 5px;
+    height: 100%;
+    span {
+        background: rgb(254 215 170);
+        position: absolute;
+        height: 100px;
+        width: 100px;
+        right: -2rem;
+        top: -2rem;
+        box-shadow: inset 0 0 0 20px;
+        border-radius: 9999px;
+        opacity: 1 !important;
+        color: rgba(255, 237, 213, 1);
+    }
+}
+
+.card_success {
+    background: rgb(240 253 244);
+    overflow: hidden;
+    position: relative;
+    padding: 1rem 1rem;
+    height: 100%;
+    min-height: 10rem;
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+    justify-content: center;
+    border: 1px solid #daf1e1;
+    border-radius: 5px;
+    span {
+        background: rgb(187, 247, 208);
+        position: absolute;
+        height: 100px;
+        width: 100px;
+        right: -2rem;
+        top: -2rem;
+        box-shadow: inset 0 0 0 20px;
+        border-radius: 9999px;
+        opacity: 1;
+        color: rgb(220 252 231);
+    }
+}
+
+.card_danger {
+    background: rgb(254, 242, 242);
+    overflow: hidden;
+    position: relative;
+    padding: 1rem 1rem;
+    height: 100%;
+    min-height: 10rem;
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+    justify-content: center;
+    border: 1px solid #f5e2e2;
+    border-radius: 5px;
+    span {
+        background: rgb(254, 202, 202);
+        position: absolute;
+        height: 100px;
+        width: 100px;
+        right: -2rem;
+        top: -2rem;
+        box-shadow: inset 0 0 0 20px;
+        border-radius: 9999px;
+        opacity: 1 !important;
+        color: rgb(254 226 226);
+    }
+}
+
+.card_primary {
+    h5 {
+        color: #000;
+    }
+    background: hsl(248, 100%, 97.1%);
+    overflow: hidden;
+    position: relative;
+    padding: 1rem 1rem;
+    border: 1px solid #e6e3f5;
+    border-radius: 5px;
+    height: 100%;
+    min-height: 10rem;
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+    justify-content: center;
+    span {
+        background: rgb(209 202 253);
+        position: absolute;
+        height: 100px;
+        width: 100px;
+        right: -2rem;
+        top: -2rem;
+        box-shadow: inset 0 0 0 20px;
+        border-radius: 9999px;
+        opacity: 1 !important;
+        color: rgb(229 226 255);
+    }
+}
+
+.list_inform {
+    position: relative;
+}
+
+.file-upload .image-upload-wrap {
+    border: 2px dashed #ddd;
+}
+
+.list_inform {
+    .col {
+        position: relative;
+        flex: 3 0 auto;
+        padding-left: 0rem;
+        margin-top: 20px;
+        border-right: 1px solid #ddd;
+        &:last-child {
+            border-right: 0;
+        }
+    }
+    img {
+        height: 40px;
+    }
+}
+
+.address_new {
+    li {
+        display: flex;
+        align-items: start;
+        column-gap: 2rem;
+    }
+    .address_listhead {
+        min-width: 70px;
+        font-weight: 500;
+    }
+}
+
+//   media query
+@media screen and (max-width: 1440px) {
+    .card_primary,
+    .card_danger,
+    .card_success,
+    .card_warning {
+        padding: 0.8rem;
+    }
+    .basic_text {
+        font-size: 14px;
+    }
+    .card_custom .card-body {
+        padding: 0.8rem;
+    }
+    .patient_text {
+        font-size: 1.1rem;
+    }
+    .card_custom .address_new {
+        font-size: 0.9rem;
+        line-height: 20px;
+        font-size: 14px;
+    }
+    .list_inform p {
+        font-size: 0.9rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .upload__sec {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+/* Add two CSS classes for validation */
+
+.border-success {
+    border-color: green !important;
+}
+
+.border-error {
+    border-color: red !important;
+}
+
+.red-row {
+    background-color: #f8d7da;
+    /* Light red background */
+    color: #721c24;
+    /* Dark red text color */
+}
+
+//   media query

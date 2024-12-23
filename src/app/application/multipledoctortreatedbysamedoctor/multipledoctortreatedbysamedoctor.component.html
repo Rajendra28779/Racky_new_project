@@ -1,0 +1,236 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-10">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <!-- <a routerLink="/application/multiplebeneficiariestreatedbysamedoctor" class="nav-link active">multiple beneficiaries treated by same doctor at multiple Locations during the same period</a> -->
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+        <div class="col-lg-8 col-xxl-8 row">
+            <div class="col-md-9">
+                <div style="padding-top: 10px; font-weight: bold; color: green">Total Record:{{record}}</div>
+            </div>
+            <div [align]="'start'" class="col-md-3">
+                <button class="btn btn-danger" title="Download PDF" (click)="downloadReport('pdf')" style="float:right; margin-left: 5px;"><i class="bi bi-file-earmark-pdf"></i></button>
+                <button class="btn btn-success" title="Download Excel" (click)="downloadReport('excel')" style="float: right"><i class="bi bi-download" ></i></button>
+            </div>
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+            <div class="input-group">
+                <input type="text" id="txtsearchDate" class="form-control" autocomplete="off" placeholder="Search" name="txtsearchDate" [(ngModel)]="txtsearchDate">
+            </div>
+        </div>
+    </div>
+    <div class="alert alert-danger mt-4 mb-4 d-flex small ">
+        <div>
+            <p class="mb-0 pe-3 me-3 border-end "><i class="bi bi-info-circle-fill fs-5 me-2 "></i>Note:</p>
+        </div>
+        <div>
+            <p class="mb-0 "><strong>Highlighted Claims for Multiple Beneficiaries Treated By The Same Doctor At Multiple Locations During The Same Date.</strong></p>
+        </div>
+    </div>
+    <div class="content-box p-0 overflow-hidden ">
+        <div class="table-responsive ">
+            <table class="table table-striped mb-0 ">
+                <thead>
+                    <tr>
+                        <th width="60">Sl No.</th>
+                        <!-- <th class="text-center">URN </th> -->
+                        <!-- <th class="text-center">Claim No.</th> -->
+                        <!-- <th class="text-center">Case No.</th> -->
+                        <!-- <th class="text-center">Patient Name</th> -->
+                        <!-- <th class="text-center">Patient Phone Number</th> -->
+                        <!-- <th class="text-center">Hospital Name</th> -->
+                        <!-- <th class="text-center">Hospital Code</th> -->
+                        <!-- <th class="text-center">Package Code</th> -->
+                        <!-- <th class="text-center">ActualDate Of Admission</th> -->
+                        <!-- <th class="text-center">ActualDate Of Discharge</th> -->
+                        <!-- <th class="text-center">Amount(₹)</th> -->
+                        <th class="text-center">Doctor Name </th>
+                        <th class="text-center">Doctor Registration No.</th>
+                        <th class="text-center">Doctor Mobile No.</th>
+                        <th class="text-center">Doctor Tagged Hospital</th>
+                        <th class="text-center">Doctor Treated Hospital</th>
+                        <th class="text-center">Surgery Date</th>
+                        <th class="text-center">Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let claim of data | filter:txtsearchDate| paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage}; index as i ">
+                        <tr>
+                            <td class="text-center" *ngIf="currentPage==1 ">{{(i+1)}}</td>
+                            <td class="text-center" *ngIf="currentPage!=1 ">{{(currentPage-1)*pageElement+ i+1}}</td>
+                            <!-- <td class="text-center">{{claim.URN}} </td>
+                            <td class="text-center">{{claim.CLAIM_NO}}</td>
+                            <td class="text-center">{{claim.CASENO}}</td>
+                            <td class="text-center">{{claim.PATIENTNAME}}</td>
+                            <td class="text-center">{{claim.PATIENTPHONENO}}</td>
+                            <td class="text-center"> {{claim.HOSPITALNAME}}</td>
+                            <td class="text-center">{{claim.HOSPITALCODE}}</td>
+                            <td class="text-center" title="{{claim.PACKAGENAME}}">{{claim.PACKAGECODE}}</td>
+                            <td class="text-center">{{claim.ACTUALDATEOFADMISSION | date:'dd-MMM-yyyy'}}</td>
+                            <td class="text-center">{{claim.ACTUALDATEOFDISCHARGE | date:'dd-MMM-yyyy'}}</td>
+                            <td class="text-center">{{claim.TOTALAMOUNTCLAIMED }}</td> -->
+                            <td class="text-center">{{claim.SURGERY_DOCTORNAME}} </td>
+                            <td class="text-center">{{claim.SURGERY_DOCTOR_REGNO}} </td>
+                            <td class="text-center">{{claim.surgery_doctor_mobno}} </td>
+                            <td class="text-center" data-bs-target="#doctortagggedhospital" data-bs-toggle="modal" title="Click here to get package details" (click)="gettaggedhospital(claim.SURGERY_DOCTOR_REGNO)"><a href="javascript:void">View</a></td>
+                            <td class="text-center" data-bs-target="#surgerydoctortreted" data-bs-toggle="modal" title="Click here to get package details" (click)="getsurgeryhospitalname(claim.SURGERY_DOCTOR_REGNO)"><a href="javascript:void">View</a></td>
+                            <td class="text-center">{{claim.SURGERY_DATETIME| date:'dd-MMM-yyyy'}} </td>
+                            <td>
+                                <a href="javascript:void(0)" (click)="OnDetails(claim)" class="btn btn-primary btn-sm">Details</a>
+                            </td>
+                        </tr>
+                    </ng-container>
+                    <tr *ngIf="data.length==0">
+                        <td colspan="16">
+                            <p class="mb-0 text-center text-danger fw-bold">NO DATA FOUND!!</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="row mt-3" *ngIf="showPegi">
+    <div class="col-sm-4 ">
+        <div class="col-sm-* ">
+            show
+            <select id="pageItem" name="pageItem" class="form-select-sm" (change)="pageItemChange()">
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="150">150</option>
+                <option value="200">200</option>
+                <option value={{record}}>All</option>
+            </select> entries
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true" (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+    </div>
+</div>
+
+<!-- Doctor Tagged Hospital Details POPUP -->
+<div class="modal fade" id="doctortagggedhospital" aria-labelledby="exampleModalLabel" data-bs-backdrop="static" tabindex="-1" aria-hidden="true" data-bs-focus="false">
+    <div class="modal-dialog modal-xl modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Doctor Tagged Hospital Details</h5>
+                <button type="button" #closebutton class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="accordion custom-accrodion" id="otpExample">
+                    <div class="accordion-item mb-3 border-0">
+                        <div id="packageOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#otpExample">
+                            <div class="accordion-body p-0">
+                                <div class="table-responsive mb-2 custom-tbl">
+                                    <table class="table table-striped border">
+                                        <thead class="tbl-topfix bgcolor-th">
+                                            <tr>
+                                                <th width="6%">Sl#</th>
+                                                <th>Hospital State Name </th>
+                                                <th>Hospital District Name</th>
+                                                <th>Hospital Code</th>
+                                                <th>Hospital Name </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let item of taggedhospital index as i">
+                                                <td data-th=" Sl#">{{i+1}}</td>
+                                                <td data-th=" Hospital Category">
+                                                    <div class="mob-sec">
+                                                        <div class="fw-500">{{item.hospitalstatename}}</div>
+                                                    </div>
+                                                </td>
+                                                <td data-th="Type Details">
+                                                    <div class="mob-sec">
+                                                        <div class="fw-500">{{item.hospitaldistrictname}}</div>
+                                                    </div>
+                                                </td>
+                                                <td data-th="Type Details">
+                                                    <div class="mob-sec">
+                                                        <div class="fw-500">{{item.hospitalname}}</div>
+                                                    </div>
+                                                </td>
+                                                <td data-th="Package Type">
+                                                    <div class="mob-sec">
+                                                        <div class="fw-500">{{item.hospitalcode}}</div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr *ngIf="taggedhospital?.length==0">
+                                                <td colspan="14" align="center"><strong class="text-danger">No data found</strong></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Doctor Treated Hospital POPUP -->
+<div class="modal fade" id="surgerydoctortreted" aria-labelledby="exampleModalLabel" data-bs-backdrop="static" tabindex="-1" aria-hidden="true" data-bs-focus="false">
+    <div class="modal-dialog modal-xl modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Doctor Treated Hospital</h5>
+                <button type="button" #closebutton class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="accordion custom-accrodion" id="otpExample">
+                    <div class="accordion-item mb-3 border-0">
+                        <div id="packageOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#otpExample">
+                            <div class="accordion-body p-0">
+                                <div class="table-responsive mb-2 custom-tbl">
+                                    <table class="table table-striped border">
+                                        <thead class="tbl-topfix bgcolor-th">
+                                            <tr>
+                                                <th width="6%">Sl#</th>
+                                                <th>Hospital Name</th>
+                                                <th>Hospital Code</th>
+                                                <th>Surgery Date And Time</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let item of treatedhistory index as i">
+                                                <td data-th=" Sl#">{{i+1}}</td>
+                                                <td data-th=" Hospital Category">
+                                                    <div class="mob-sec">
+                                                        <div class="fw-500">{{item.hospitalname}}</div>
+                                                    </div>
+                                                </td>
+                                                <td data-th="Type Details">
+                                                    <div class="mob-sec">
+                                                        <div class="fw-500">{{item.hospitalcode}}</div>
+                                                    </div>
+                                                </td>
+                                                <td data-th="Type Details">
+                                                    <div class="mob-sec">
+                                                        <div class="fw-500">{{item.surgerydateandtime |date:'dd-MMM-yyyy hh:mm:ss a'}}</div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr *ngIf="treatedhistory?.length==0">
+                                                <td colspan="14" align="center"><strong class="text-danger">No data found</strong></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

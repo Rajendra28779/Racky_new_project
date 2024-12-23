@@ -1,0 +1,20 @@
+[
+      {
+        "pagetitle":"Add Form Config",
+  
+        "utils":[
+          {"utilName":"mandatory"},
+          {"utilName":"back"}
+         
+          ],
+        "messages":{
+          "successMsg":"Data saved successfully",
+          "errorMsg":"Error in database",
+          "warningtype":"print",
+          "sectionname":"please select section name"
+          
+        }
+      }
+    ]
+
+

@@ -1,0 +1,251 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+    <div class="row justify-content-between">
+      <div class="col-lg-4">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a
+              routerLink="/application/cpdcasereconsider"
+              class="nav-link active"
+              >Case Draft Application
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="content-box">
+        <div class="col-xxl-12">
+          <div class="row">
+            <div class="col-lg-3 col-xxl-3">
+              <div class="mb-xl-3">
+                <label for="EnterFullName" class="form-label"
+                  >Scheme Name<span class="text-danger">*</span></label
+                >
+                <input
+                  class="form-control"
+                  type="text"
+                  placeholder="Scheme Name"
+                  autocomplete="off"
+                  maxlength="30"
+                  id="schemename"
+                  [(ngModel)]="schemeName"
+                  disabled
+                />
+              </div>
+            </div>
+            <div class="col-lg-3 col-xxl-3">
+              <div class="mb-xl-3">
+                <label class="control-label"
+                  >Scheme Category Name<span class="text-danger"></span
+                ></label>
+                <select
+                  class="form-select"
+                  name="schemacategory"
+                  id="schemacategory"
+                  (change)="getschemacategoryid($event.target.value)"
+                  style="margin-top: 9px"
+                >
+                  <option value="" selected>All</option>
+                  <ng-container *ngFor="let item of schemeList">
+                    <option value="{{ item.schemeCategoryId }}">
+                      {{ item.categoryName }}
+                    </option>
+                  </ng-container>
+                </select>
+              </div>
+            </div>
+            <!-- <div class="col-lg-3 col-xxl-3">
+              <div class="mb-xl-3">
+                <label class="control-label">Action Date From</label
+                ><span class="text-danger">*</span>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control border-end-0 datepicker"
+                    id="fromDate"
+                    name="fromDate"
+                    disabled
+                  />
+                  <label
+                    class="input-group-text bg-transparent border-start-0"
+                    for="fromDate"
+                    ><i class="iconbsky-calendar"></i>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-xxl-3">
+              <div class="mb-xl-3">
+                <label class="control-label">Action Date To</label
+                ><span class="text-danger">*</span>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control border-end-0 datepicker"
+                    id="toDate"
+                    name="toDate"
+                    disabled
+                  />
+                  <label
+                    class="input-group-text bg-transparent border-start-0"
+                    for="toDate"
+                    ><i class="iconbsky-calendar"></i>
+                  </label>
+                </div>
+              </div>
+            </div> -->
+            <div class="col-lg-4 col-xxl-4">
+              <div class="mb-xl-3">
+                <label class="control-label"></label>
+                <div class="input-group">
+                  <button
+                    type="submit"
+                    class="btn btn-success"
+                    (click)="getCaseList()"
+                  >
+                    Search
+                  </button>
+                  <button
+                    type="submit"
+                    class="btn btn-secondary"
+                    (click)="ResetField()"
+                    style="margin-left: 1rem"
+                  >
+                    Reset
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" style="margin-top: 10px; margin-bottom: 10px">
+        <div class="col-lg-8 col-xxl-8 row">
+          <!-- <div class="col-md-9"></div>
+          <div [align]="'start'" class="col-md-3">
+            <button
+              class="btn btn-danger"
+              title="Download PDF"
+              (click)="downloadReport('pdf')"
+              style="float: right; margin-left: 5px"
+            >
+              <i class="bi bi-file-earmark-pdf"></i>
+            </button>
+            <button
+              class="btn btn-success"
+              title="Download Excel"
+              (click)="downloadReport('excel')"
+              style="float: right"
+            >
+              <i class="bi bi-download"></i>
+            </button>
+          </div> -->
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+          <div class="input-group">
+            <input
+              type="text"
+              id="txtsearchDate"
+              class="form-control"
+              autocomplete="off"
+              placeholder="Search"
+              name="txtsearchDate"
+              [(ngModel)]="txtsearchDate"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="content-box p-0 overflow-hidden">
+    <div class="table-responsive">
+      <table class="table mb-0">
+        <thead>
+          <tr>
+            <th>Sl#</th>
+            <th>URN</th>
+            <th>Case No.</th>
+            <th>Invoice No.</th>
+            <th>Allocate Date</th>
+            <th>Action to be taken</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container
+            *ngFor="
+              let case of caseList
+                | filter : txtsearchDate
+                | paginate
+                  : {
+                      id: 'listing_pagination',
+                      itemsPerPage: pageElement,
+                      currentPage: currentPage
+                    };
+              index as i
+            "
+          >
+            <tr>
+              <td *ngIf="currentPage == 1">{{ i + 1 }}</td>
+              <td *ngIf="currentPage != 1">
+                {{ (currentPage - 1) * pageElement + i + 1 }}
+              </td>
+              <td>{{ case?.urn }}</td>
+              <td>{{ case?.caseNo }}</td>
+              <td>{{ case?.invoiceNumber }}</td>
+              <td>{{ case?.allocateDate }}</td>
+              <td>{{ case?.actionBy }}</td>
+              <td>
+                <a
+                  class="btn btn-outline-success btn-sm"
+                  (click)="onAction(case.caseId, case.urn, case.caseNo)"
+                  >Action
+                </a>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+        <div class="row" *ngIf="caseList?.length == 0">
+          <h5
+            style="
+              color: rgb(100, 100, 100);
+              text-align: center;
+              position: absolute;
+            "
+          >
+            NO DATA FOUND !!
+          </h5>
+        </div>
+      </table>
+    </div>
+  </div>
+  <div class="row" style="margin-top: 20px" *ngIf="showPegi">
+    <div class="col-sm-6">
+      <div class="col-sm-*">
+        show
+        <select
+          id="pageItem"
+          name="pageItem"
+          class="custom-select-sm"
+          (change)="pageItemChange()"
+        >
+          <option value="10" selected>10</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+          <option value="250">250</option>
+          <option value="500">500</option>
+          <option value="{{ record }}">ALL</option>
+        </select>
+        entries
+      </div>
+    </div>
+    <div class="col-sm-6 text-right">
+      <pagination-controls
+        id="listing_pagination"
+        [maxSize]="10"
+        [directionLinks]="true"
+        (pageChange)="currentPage = $event"
+        (pageBoundsCorrection)="onPageBoundsCorrection($event)"
+      ></pagination-controls>
+    </div>
+  </div>
+</div>

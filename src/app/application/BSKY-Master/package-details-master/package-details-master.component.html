@@ -1,0 +1,348 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item" *ngIf="isVisibleSave">
+                        <a routerLink="/application/packageDetailsMaster" routerLinkActive="active"
+                            class="nav-link active">Add</a>
+                    </li>
+                    <li class="nav-item" *ngIf="isVisibleUpdate">
+                        <a routerLink="/application/packageDetailsMaster" routerLinkActive="active"
+                            class="nav-link active">Update</a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/application/packageDetailsMasterView" routerLinkActive="active"
+                            class="nav-link">View</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- <div class="col-lg-6 ">
+                <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+            </div> -->
+        </div>
+    </div>
+    <div class="content-box">
+        <form [formGroup]="packageDetails" autocomplete="off">
+            <div class="row">
+                <!-- <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Hospital Category<span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <select class="form-select" name="hospitalCategoryId" id="hospitalCategoryId"
+                                formControlName="hospitalCategoryId" [(ngModel)]="updateData.hospitalCategoryId">
+                                <option value="" selected>Select Hospital Category</option>
+                                <ng-container *ngFor="let data of hospitalCategory">
+                                    <option value={{data.hospitalCategoryId}}>{{data.hospitalCategoryName}}</option>
+                                </ng-container>
+                            </select>
+                        </div>
+                    </div>
+                </div> -->
+
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Package Header<span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <select class="form-select" name="packageHeaderCode" id="packageHeaderCode"
+                                formControlName="packageHeaderCode" (change)="onChangeHeaderName($event.target.value)"
+                                [(ngModel)]="updateData.packageHeaderCode">
+                                <option value="" selected>Select Package Header</option>
+                                <ng-container *ngFor="let data of packageHeader">
+                                    <option value={{data.packageheadercode}}>
+                                        {{data.packageheadername}}({{data.packageheadercode}})</option>
+                                </ng-container>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Package Subcategory<span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <select class="form-select" name="packageSubcatagoryId" id="packageSubcatagoryId"
+                                formControlName="packageSubcatagoryId"
+                                (change)="onChangeSubcategory($event.target.value)"
+                                [(ngModel)]="updateData.packageSubcatagoryId">
+                                <option value="" selected>Select Package Subcategory</option>
+                                <ng-container *ngFor="let data of packageSubcategory">
+                                    <option [value]="data.subcategoryId">{{data.packagesubcategoryname}} (
+                                        {{data.packagesubcategorycode}} )</option>
+                                </ng-container>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Procedure Code<span class="text-danger">*</span></label>
+                        <input class="form-control" type="text" autocomplete="off" formControlName="procedureCode"
+                            name="procedureCode" id="procedureCode" [(ngModel)]="updateData.procedureCode"
+                            placeholder="Enter Procedure Code" maxlength="20"
+                            onkeypress="return /[0-9a-zA-Z ]/i.test(event.key)" />
+                        <!-- [(ngModel)]="updateHospital.emailId" name="emailId" id="emailId" placeholder="Enter Email ID" (change)="validateEmail()" (keyup)="keyfunction1($event.target)" maxlength="100"> -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- <div class="col-lg-4 col-xxl-4"> -->
+                <!-- <div class="mb-xl-3">
+                        <label class="control-label">Procedure Code<span class="text-danger">*</span></label>
+                        <input class="form-control" type="text" autocomplete="off" formControlName="procedureCode"
+                            name="procedureCode" id="procedureCode" [(ngModel)]="updateData.procedureCode"
+                            placeholder="Enter Procedure Code" maxlength="20"
+                            onkeypress="return /[0-9a-zA-Z ]/i.test(event.key)" /> -->
+                <!-- [(ngModel)]="updateHospital.emailId" name="emailId" id="emailId" placeholder="Enter Email ID" (change)="validateEmail()" (keyup)="keyfunction1($event.target)" maxlength="100"> -->
+                <!-- </div>
+                </div> -->
+
+                <div class="col-lg-8 col-xxl-8">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Procedure Description<span class="text-danger">*</span></label>
+                        <!-- <input class="form-control" type="text" autocomplete="off" /> -->
+                        <textarea class="form-control" rows="3" autocomplete="off"
+                            formControlName="procedureDescription" name="procedureDescription" id="procedureDescription"
+                            placeholder="Enter Procedure Description" [(ngModel)]="updateData.procedureDescription"
+                            #myInput4 [maxLength]="maxChars"
+                            onkeypress="return /[0-9a-zA-Z @_]/i.test(event.key)"></textarea>
+                        <span class="text-danger small">Characters Remaining: {{maxChars -
+                            myInput4.value.length}}</span>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Preauth Required<span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <select class="form-select" name="mandatoryPreauth" id="mandatoryPreauth"
+                                formControlName="mandatoryPreauth" [(ngModel)]="updateData.mandatoryPreauth">
+                                <option value="" selected>Select Preauth Required</option>
+                                <option value="YES" selected>YES</option>
+                                <option value="NO" selected>NO</option>
+                                <!-- <ng-container *ngFor="let data of mandatoryPreauth">
+                                    <option [value]="data.mandatoryPreauth">{{data.mandatoryPreauth}} (
+                                        {{data.mandatoryPreauth}} )</option>
+                                </ng-container> -->
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Male Amount<span class="text-danger">*</span></label>
+                        <input class="form-control" type="text" (keypress)="numericOnly($event)" autocomplete="off"
+                            name="amount" id="amount" formControlName="amount" [(ngModel)]="updateData.amount"
+                            placeholder="Enter Male Amount" maxlength="10" />
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Female Amount
+                            <span *ngIf="packageDetails.value.amount">(Same as Male Amount)
+                                <input type="checkbox" autocomplete="off" formControlName="isSame" value="Y"
+                                    [(ngModel)]="updateData.isSame" />
+                            </span>
+                        </label>
+                        <input *ngIf="!packageDetails.value.isSame; else default" class="form-control" type="text"
+                            (keypress)="numericOnly($event)" autocomplete="off" formControlName="femaleAmount"
+                            name="femaleAmount" id="femaleAmount" [(ngModel)]="updateData.femaleAmount"
+                            placeholder="Enter Female Amount" maxlength="10" />
+                        <ng-template #default>
+                            <input [(ngModel)]="packageDetails.value.amount" class="form-control" type="text"
+                                (keypress)="numericOnly($event)" autocomplete="off" formControlName="femaleAmount"
+                                name="femaleAmount" id="femaleAmount" />
+                        </ng-template>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Preauth Required
+                            <input type="checkbox" value="Y" (change)="onChange($event)" name="mandatoryPreauth"
+                                id="mandatoryPreauth" autocomplete="off" formControlName="mandatoryPreauth"
+                                [(ngModel)]="updateData.mandatoryPreauth" />
+                        </label>
+                    </div>
+                </div>
+            </div> -->
+
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Package Category Type<span class="text-danger">*</span></label>
+                        <select class="form-select" formControlName="packageCatagoryType" name="packageCatagoryType"
+                            id="packageCatagoryType" [(ngModel)]="updateData.packageCatagoryType">
+                            <option value="" selected>Select Package Category Type</option>
+                            <option value="RESERVED">RESERVED</option>
+                            <option value="OPEN">OPEN</option>
+                            <option value="REFERRAL">REFERRAL</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Maximum Days<span class="text-danger">*</span></label>
+                        <input class="form-control" type="text" (keypress)="numericOnly($event)" autocomplete="off"
+                            formControlName="maximumDays" name="maximumDays" id="maximumDays"
+                            [(ngModel)]="updateData.maximumDays" placeholder="Enter Maximum Days" maxlength="2"
+                            pattern="^[1-9][0-9]*$" oninput="if(!this.value.match('^[1-9][0-9]*$'))this.value='';" />
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Day Care<span class="text-danger">*</span></label>
+                        <select class="form-select" formControlName="dayCare" name="dayCare" id="dayCare"
+                            [(ngModel)]="updateData.dayCare">
+                            <option value="" selected>Select Day Care</option>
+                            <option value="Y">YES</option>
+                            <option value="N">NO</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Multiple Procedures<span class="text-danger">*</span></label>
+                        <input class="form-control" type="text" autocomplete="off" name="multiProcedure"
+                            id="multiProcedure" formControlName="multiProcedure" [(ngModel)]="updateData.multiProcedure"
+                            placeholder="Enter Multiple Procedures" maxlength="30"
+                            onkeypress="return /[0-9a-zA-Z ]/i.test(event.key)" />
+                    </div>
+                </div> -->
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Fixed/Variable length of stay<span
+                                class="text-danger">*</span></label>
+                        <select class="form-select" type="text" autocomplete="off" name="stayType" id="stayType"
+                            formControlName="stayType" [(ngModel)]="updateData.stayType">
+                            <option value="" selected>Select Fixed/Variable length of stay</option>
+                            <option value="VARIABLE">VARIABLE</option>
+                            <option value="NA">NA</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Package Extention<span class="text-danger">*</span></label>
+                        <select class="form-select" type="text" autocomplete="off" name="packageExtention"
+                            id="packageExtention" formControlName="packageExtention"
+                            [(ngModel)]="updateData.packageExtention">
+                            <option value="" selected>Select Package Extention</option>
+                            <option value="Y">YES</option>
+                            <option value="N">NO</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Price Editable<span class="text-danger">*</span></label>
+                        <select class="form-select" type="text" autocomplete="off" name="priceEditable"
+                            id="priceEditable" formControlName="priceEditable" [(ngModel)]="updateData.priceEditable">
+                            <option value="" selected>Select Price Editable</option>
+                            <option value="Y">YES</option>
+                            <option value="N">NO</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Package Under Exception<span class="text-danger">*</span></label>
+                        <select class="form-select" type="text" autocomplete="off" name="isPackageException"
+                            id="isPackageException" formControlName="isPackageException"
+                            [(ngModel)]="updateData.isPackageException">
+                            <option value="" selected>Select Package Under Exception</option>
+                            <option value="Y">YES</option>
+                            <option value="N">NO</option>
+                        </select>
+                        <span class="text-danger small">Package never required Pre-Auth</span>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Mandatory Documents For Pre-Authorization<span
+                                class="text-danger">*</span></label>
+                        <textarea class="form-control" type="text" autocomplete="off" name="preauthDocs"
+                            id="preauthDocs" formControlName="preauthDocs" [(ngModel)]="updateData.preauthDocs"
+                            placeholder="Enter Mandatory Documents For Pre-Authorization" #myInput4
+                            [maxLength]="maxChars">
+                        </textarea>
+                        <span class="text-danger small">Characters Remaining: {{maxChars -
+                            myInput4.value.length}}</span>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Mandatory Documents For Claim Processing<span
+                                class="text-danger">*</span></label>
+                        <textarea class="form-control" type="text" autocomplete="off" name="claimProcessDocs"
+                            id="claimProcessDocs" formControlName="claimProcessDocs"
+                            [(ngModel)]="updateData.claimProcessDocs"
+                            placeholder="Enter Mandatory Documents For Claim Processing" #myInput4
+                            [maxLength]="maxChars">
+
+                        </textarea>
+                        <span class="text-danger small">Characters Remaining: {{maxChars -
+                            myInput4.value.length}}</span>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                  <div class="mb-xl-3">
+                      <label class="control-label">Scheme<span class="text-danger">*</span></label>
+                      <ng-multiselect-dropdown #multiSelect
+                        [placeholder]="schemePlaceHolder" [settings]="settingScheme" [data]="schemeList"
+                        id="scheme" (onSelect)="onSelect($event)"
+                        formControlName="scheme"
+                        (onDeSelect)="onDeSelect($event)" (onSelectAll)="onSelectAll($event)"
+                        (onDeSelectAll)="onDeSelectAll($event)" [(ngModel)]="updateData.scheme">
+                  </ng-multiselect-dropdown>
+                  </div>
+              </div>
+              <div class="col-lg-4 col-xxl-4">
+                <div class="mb-xl-3">
+                    <label class="control-label">Surgical/Medical<span class="text-danger">*</span></label>
+                    <select class="form-select" type="text" autocomplete="off" name="isSurgical"
+                        id="isSurgical" formControlName="isSurgical"
+                        [(ngModel)]="updateData.isSurgical">
+                        <option value="" selected>Select Surgical</option>
+                        <option value="S">Surgical</option>
+                        <option value="M">Medical</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-4 col-xxl-4" *ngIf="updateData?.isSurgical=='M'">
+              <div class="mb-xl-3">
+                  <label class="control-label">Extension Of Stay Allow<span class="text-danger">*</span></label>
+                  <select class="form-select" type="text" autocomplete="off" name="extnofstay"
+                      id="extnofstay" formControlName="extnofstay" [(ngModel)]="updateData.extnofstay">
+                      <option value="" selected>-Select-</option>
+                      <option value=1>Yes</option>
+                      <option value=0>No</option>
+                  </select>
+              </div>
+            </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="d-grid gap-2 d-md-flex" *ngIf="isVisibleSave">
+                        <button type="submit" value="Submit" class="btn btn-success"
+                            (click)="savegroup()">Submit</button>
+                        <button type="reset" class="btn btn-secondary" (click)="reset()">Reset</button>
+                    </div>
+                    <div class="d-grid gap-2 d-md-flex" *ngIf="!isVisibleSave">
+                        <button type="submit" value="Update" class="btn btn-success"
+                            (click)="savegroup()">Update</button>
+                        <button type="cancel" class="btn btn-secondary"
+                            routerLink="/application/packageDetailsMasterView">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

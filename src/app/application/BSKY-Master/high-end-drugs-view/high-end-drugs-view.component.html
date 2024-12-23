@@ -1,0 +1,110 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs ">
+                    <li class="nav-item">
+                        <a routerLink="/application/highEndDrugs" routerLinkActive="active" class="nav-link">Add</a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/application/highEndDrugsView" routerLinkActive="active" class="nav-link active"
+                            style="color: #1f723f;">View</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-between">
+        <div class="form-group">
+            <button class="btn btn-outline-success btn-sm me-1" type="submit" (click)="downloadList()">
+                <i class="bi bi-download"></i>
+            </button>
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+            <div class="input-group">
+                <input type="text" id="txtsearchDate" class="form-control mb-3" placeholder="Search here"
+                    name="txtsearchDate" [(ngModel)]="txtsearchData" autocomplete="off">
+            </div>
+        </div>
+    </div>
+    <div class="content-box p-0 mt-2 overflow-hidden">
+        <div class="table-responsive">
+            <table class="table table-striped" mb-0>
+                <thead>
+                    <tr>
+                        <th width="50">Sl No.</th>
+                        <!-- <th width="150">Ward Name</th>
+                        <th width="150">Implant Code</th> -->
+                        <th width="100">HighEndDrug Code</th>
+                        <th width="100">HighEndDrug Name</th>
+                        <th width="100">No. Of unit</th>
+                        <th width="100">Per Unit Price</th>
+                        <th width="100">Maximum Unit Price</th>
+                        <th width="100">Is Preauth Required</th>
+                        <th width="100">Unit Editable</th>
+                        <th width="100">Price Editable</th>
+                        <th width="100">Recomended Dose</th>
+                        <th width="100">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr
+                        *ngFor="let item of highendDrugsdata |filter:txtsearchData| paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};index as i">
+                        <td *ngIf="currentPage==1">{{i+1}}</td>
+                        <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+i+1}}</td>
+                        <!-- <td>{{item.implantDetailsId.implantName}}</td> -->
+                        <!-- <td>{{item.wardCategoryId?.wardName}}</td>
+                        <td>{{item.implantCode}}</td> -->
+                        <td>{{item.hedCode}}</td>
+                        <td>{{item.hedName}}</td>
+                        <td *ngIf="item.unit==null">N/A</td>
+                        <td *ngIf="item.unit!==null">{{item.unit}}</td>
+                        <td *ngIf="item.price==null">N/A</td>
+                        <td *ngIf="item.price!==null">{{item.price| currency:'':''}}</td>
+                        <td *ngIf="item.maximumUnit==null">N/A</td>
+                        <td *ngIf="item.maximumUnit!==null">{{item.maximumUnit}}</td>
+                        <td *ngIf="item.isPreAuthRequired ==null">N/A</td>
+                        <td *ngIf="item.isPreAuthRequired!==null">{{item.isPreAuthRequired}}</td>
+                        <td>{{item.unitEditable}}</td>
+                        <td>{{item.priceEditable}}</td>
+                        <td *ngIf="item.recomendedDose==null">N/A</td>
+                        <td *ngIf="item.recomendedDose!==null">{{item.recomendedDose}}</td>
+                        <td>
+                            <div class="d-flex justify-content-center">
+                                <a class="btn btn-outline-primary btn-sm me-2" (click)="edit(item.id)">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <a class="btn btn-outline-danger btn-sm" (click)="delete(item.id)">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr *ngIf="highendDrugsdata?.length == 0">
+                        <td colspan="12">
+                            <p class="mb-0 text-center text-danger fw-bold">NO record found</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row" *ngIf="showPegi">
+        <div class="col-sm-4">
+            <div class="col-sm-*">
+                show
+                <select id="pageItem" name="pageItem" class="custom-select-sm" (change)="pageItemChange()">
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="40">40</option>
+                </select> entries
+            </div>
+        </div>
+        <div class="col-sm-8 text-right">
+            <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true"
+                (pageChange)="currentPage = $event" class="text-end"
+                (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+        </div>
+    </div>
+</div>

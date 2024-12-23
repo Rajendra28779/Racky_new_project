@@ -1,0 +1,702 @@
+.bg__applied
+  {
+    tr {
+      td {
+        background-color: #ffeaea !important;
+      }
+    }
+  }
+
+  .bg__appliednew
+  {
+    tr {
+      td {
+        background-color: #dee5f1 !important;
+      }
+    }
+  }
+
+
+.bg__applied,
+.bg__appliednew  {
+
+  table {
+    tr {
+      background: transparent;
+      td,th{
+        background: transparent;
+      }
+    }
+  }
+}
+
+.bg__applied > tbody > tr:nth-of-type(odd) > *,
+.bg__appliednew > tbody > tr:nth-of-type(odd) > *
+{
+ --bs-table-striped-bg: transparent;
+}
+
+
+table thead,
+tbody,
+tfoot,
+tr,
+td,
+th {
+    font-size: 15px;
+}
+
+.badge-success {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 15px;
+    color: #006128;
+    margin-top: 8px;
+    padding: 5px;
+}
+
+p {
+    font-size: 15px;
+}
+
+.card-body p {
+    margin-bottom: 0.5rem;
+}
+
+.num_bg {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 800;
+    font-size: 22px;
+    line-height: 30px;
+    color: #ff4f1a;
+}
+
+.titletxt {
+    background: #ddffdd;
+}
+
+.card_bg {
+    background: #dfe9e3;
+    border-radius: 0;
+}
+
+.accordion-button {
+    cursor: pointer;
+}
+
+.card-header {
+    padding: 10px;
+}
+
+.hidtbl-th {
+    font-size: 15px;
+}
+
+.treatment-details h6 {
+    font-size: 15px;
+}
+
+.card-header h5 {
+    font-size: 1.2rem;
+    letter-spacing: 0.2px;
+}
+
+.qry-hed {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 17px;
+    color: #FF4C4C;
+}
+
+.font-500 {
+    font-weight: 500;
+}
+
+.icon-pdf {
+    font-size: 1.5em;
+    margin-top: 10px;
+    color: #FF4C4C;
+}
+
+.icon-pdf i {
+    color: #FF4C4C;
+}
+
+.table-striped>tbody>tr:nth-of-type(odd)>* {
+    --bs-table-striped-bg: transparent;
+}
+
+
+.text-yellow {
+    color: #fff943;
+}
+
+.bg_hed {
+    --bs-table-striped-bg: #dfe9e3 !important;
+    background: #dfe9e3;
+}
+
+.badge-danger {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 15px;
+    color: #A73B3B;
+    margin-top: 1em;
+    padding: 5px;
+}
+
+.badge2 {
+    background: #FFDADA;
+    opacity: 0.8;
+    border-radius: 4px;
+}
+
+.badge {
+    background: #C2EBD3;
+    opacity: 0.8;
+    border-radius: 4px;
+}
+
+.th-small {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    margin-top: 6px;
+}
+
+.table th:first-child {
+    border-radius: 0;
+}
+
+.color-hed {
+    color: #515151 !important;
+    font-weight: 500;
+}
+
+.icon-pdf a {
+    cursor: pointer;
+}
+
+.bg-color {
+    background-color: #151B54;
+}
+
+@import 'src/assets/scss/mixins';
+@import 'src/assets/scss/variables';
+@import 'src/assets/scss/statuspage';
+.treatment-history {
+    li {
+        padding: .4rem;
+        i {
+            color: $link-color;
+        }
+    }
+}
+
+small,
+.small {
+    font-weight: normal;
+    color: $gray-600;
+    padding-bottom: .3rem;
+}
+
+.alert {
+    h5 {
+        small {
+            font-size: 70%;
+        }
+    }
+    i {
+        opacity: .6;
+    }
+    &-danger {
+        i {
+            color: $red;
+        }
+    }
+    &-success {
+        i {
+            color: $green;
+        }
+    }
+    &-primary {
+        i {
+            color: $blue;
+        }
+    }
+}
+
+.document-upload {
+    .uploaded-doc {
+        a {
+            display: block;
+            padding: 1rem;
+        }
+    }
+}
+
+//CSS For Treatment Table and Old Treatment Table
+//Start
+.treatment-history-table-class {
+    width: 100%;
+    margin-top: 5px;
+    display: block;
+    overflow-y: scroll;
+    height: 18rem;
+}
+
+.treatment-history-table-head-class {
+    thead {
+        position: sticky;
+        top: 0;
+        background: #eee9e9;
+        z-index: 1;
+    }
+}
+
+.modal-height {
+    height: 175pt;
+}
+
+.pg-modal-height {
+    height: 275pt;
+}
+
+//End
+.custom-accrodion .accordion-button {
+    padding: 10px 0px;
+    box-shadow: none;
+    background: transparent;
+    color: #0B744C;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.fx-width {
+    width: 170px;
+}
+
+.custom-tbl th {
+    background-color: #f3f3f3;
+    font-weight: 500;
+    border-radius: 0;
+}
+
+.custom-tbl tr,
+th,
+td {
+    border-color: #f3f3f3;
+    font-size: 14px;
+    vertical-align: top;
+}
+
+.border,
+.border-bottom {
+    border-color: #f3f3f3 !important;
+}
+
+.fw-normal {
+    font-weight: normal;
+}
+
+.bg-outline-success {
+    background: #CCEEDC;
+    font-weight: 500;
+    color: #137E3F;
+    padding: 6px 10px;
+    text-align: center;
+    font-size: 12px;
+}
+
+.bg-outline-grey {
+    background: transparent;
+    font-weight: 500;
+    color: #333;
+    padding: 6px 10px;
+    text-align: center;
+    font-size: 12px;
+    border: 1px solid #ddd;
+    white-space: inherit;
+}
+
+.bg-outline-primary {
+    background: #dce7ff;
+    font-weight: 500;
+    color: #47639d;
+    padding: 6px 10px;
+    text-align: center;
+    font-size: 12px;
+}
+
+.fw-500 {
+    font-weight: 500;
+    margin-bottom: 0.3rem;
+}
+
+.bg-outline-danger {
+    background: #FEE5E5;
+    font-weight: 500;
+    color: #E94343;
+    padding: 6px 10px;
+    text-align: center;
+    font-size: 12px;
+}
+
+.bg-outline-warning {
+    background: #FFF1D9;
+    font-weight: 500;
+    color: #ECA00D;
+    padding: 6px 10px;
+    text-align: center;
+    font-size: 12px;
+}
+
+.custom-tbl {
+    max-height: 300px;
+    overflow: auto;
+}
+
+.custom-tbl .table-striped>tbody>tr:nth-of-type(odd)>* {
+    --bs-table-accent-bg: transparent;
+}
+
+.tbl-topfix {
+    position: sticky;
+    top: -2px;
+    background: #fff;
+}
+
+.accordion-button::after {
+    float: right !important;
+    font-family: FontAwesome;
+    content: "\f078";
+    padding-right: 5px;
+    background-image: none;
+    font-weight: normal;
+}
+
+.custom-tbl th {
+    display: none;
+}
+
+.custom-tbl td {
+    display: flex;
+    align-items: top;
+}
+
+.custom-tbl td:before {
+    content: attr(data-th) "";
+    width: 150px;
+    display: inline-block;
+    color: #333;
+    font-weight: 500;
+    margin-right: 1.5rem;
+}
+
+.custom-tbl th,
+.custom-tbl td {
+    text-align: left;
+}
+
+.width15 {
+    width: 15px;
+}
+
+.border-bottom {
+    border-color: #1a633633 !important;
+}
+
+@media screen and (max-width: 1366px) {
+    .width-adrs {
+        width: 240px;
+    }
+}
+
+@media screen and (min-width: 800px) {
+    .custom-tbl tr:nth-child(2) {
+        border-top: none;
+    }
+    .custom-tbl tr:hover:not(:first-child) {
+        background-color: #d8e7f3;
+    }
+    .custom-tbl td:before {
+        display: none;
+    }
+    .custom-tbl th,
+    .custom-tbl td {
+        display: table-cell;
+        padding: .25em .5em;
+    }
+    .custom-tbl th:first-child,
+    .custom-tbl td:first-child {
+        padding-left: 0;
+    }
+    .custom-tbl th:last-child,
+    .custom-tbl td:last-child {
+        padding-right: 0;
+    }
+    .custom-tbl th,
+    .custom-tbl td {
+        padding: 0.5em 0.5em !important;
+    }
+}
+
+
+/* THE END OF THE IMPORTANT STUFF */
+
+@media screen and (max-width: 1024px) {
+    .modal-lg {
+        --bs-modal-width: 1000px;
+    }
+}
+
+@media (max-width:768px) {
+    .accordion {
+        margin-bottom: 1rem;
+    }
+    .custom-accrodion .accordion-item {
+        margin-bottom: 1em 0.5rem !important;
+        border-bottom: none !important;
+    }
+    .custom-accrodion .accordion-button {
+        padding: 10px 10px;
+        box-shadow: none;
+        color: #0B744C;
+        background-color: var(--bs-accordion-active-bg);
+        font-size: 18px;
+        font-weight: 500;
+    }
+    .badge {
+        margin-top: 0.5rem;
+    }
+    .custom-tbl th,
+    .custom-tbl td {
+        text-align: left;
+        border: 1px solid #ddd;
+        border-bottom: none;
+    }
+    .custom-tbl td:last-child {
+        margin-bottom: 1.4rem;
+        box-shadow: 2px 4px 7px 0px rgb(172 171 171 / 30%), 0 3px 4px rgb(179 177 177 / 22%);
+    }
+    .mob-box {
+        background: #fff;
+        border: none;
+    }
+    .custom-tbl table {
+        border: none !important;
+        margin-bottom: 0;
+    }
+    .fw-500 {
+        font-weight: normal;
+        margin-bottom: 0rem;
+    }
+    .accordion-item {
+        border-bottom: 1px solid #dee2e6 !important;
+        border-radius: 0;
+        margin-bottom: 0 !important;
+    }
+    .modal-dialog {
+        max-width: 95%;
+        margin-right: auto;
+        margin-left: auto;
+    }
+    .mob-sec {
+        float: left;
+        width: 450px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .modal-xl {
+        --bs-modal-width: 1300px;
+    }
+}
+
+// rersponsive css
+@media (max-width:640px) {
+    .custom-tbl td:before {
+        content: attr(data-th) "";
+        width: 130px;
+        display: inline-block;
+        color: #333;
+        font-weight: 500;
+        font-size: 14px;
+    }
+    .mob-sec {
+        float: left;
+        width: 190px;
+        font-size: 14px;
+    }
+    h5 {
+        font-size: 16px;
+    }
+    .custom-accrodion .accordion-button {
+        font-size: 16px;
+    }
+    .custom-accrodion .accordion-item {
+        border-bottom: none !important;
+        border-radius: 0;
+    }
+}
+
+@media (max-width:375px) {
+    .custom-tbl td:before {
+        content: attr(data-th) "";
+        width: 100px;
+        display: inline-block;
+        color: #333;
+        font-weight: 500;
+        font-size: 13px;
+    }
+    .mob-sec {
+        font-size: 13px;
+        width: 180px;
+    }
+}
+
+@media (max-width:320px) {
+    .custom-tbl td:before {
+        content: attr(data-th) "";
+        width: 100px;
+        display: inline-block;
+        color: #333;
+        font-weight: 500;
+        font-size: 13px;
+    }
+    .mob-sec {
+        font-size: 13px;
+        width: 125px;
+    }
+}
+
+// rersponsive css
+// pramod----------------------------------
+.patientinfo {
+    .card {
+        border-radius: 0.25rem !important;
+        border: 1px solid #e1e1e1 !important;
+    }
+}
+
+.table {
+    th {
+        background-color: rgb(255, 255, 255);
+        font-weight: 500;
+        font-size: 15px;
+    }
+    tr {
+        td {
+            span {
+                padding: 0;
+            }
+            .tdfont {
+                color: #767676;
+            }
+            div {
+                padding: 0;
+            }
+        }
+    }
+    .w-200 {
+        width: 200px;
+    }
+    .w-150 {
+        width: 150px;
+    }
+}
+
+.table {
+    .bgcolor-th {
+        th {
+            background-color: #f7f7f7;
+        }
+    }
+}
+
+.accordion-button:not(.collapsed) {
+    border-bottom: 2px solid rgb(120 187 145 / 58%);
+    color: #158941;
+    font-weight: bold;
+    background-color: #f7f7f7;
+    border-radius: 0;
+    cursor: pointer;
+}
+
+.accordion-button {
+    &.collapsed {
+        border-bottom: 2px solid rgb(120 187 145 / 58%);
+        color: #158941;
+        font-weight: bold;
+        background-color: #ffffff;
+        border-radius: 0;
+        cursor: pointer;
+    }
+}
+
+.accordion-item:last-of-type .accordion-button.collapsed {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.bi-file-earmark-pdf {
+    color: #e12b2b !important;
+    font-size: 15px !important;
+}
+
+.bi-file-earmark-image {
+    color: #e12b2b !important;
+    font-size: 15px !important;
+}
+
+.nodata-f {
+    font-size: 1rem;
+    color: rgb(209, 62, 74);
+}
+
+.document-upload {
+    a {
+        padding: 0rem !important;
+        img {
+            width: 2rem;
+        }
+    }
+}
+
+.patientinfo {
+    svg {
+        width: 44px;
+        height: 44px;
+    }
+}
+
+.accordion-item {
+    border: none;
+}
+
+@media (max-width:1024px) {
+    .urno h5 {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width:800px) {
+    .urno.text-end {
+        text-align: left !important;
+    }
+}
+
+.w-lg {
+    flex: 2 0 0%;
+}
+
+@media (max-width:800px) {
+    .w-lg {
+        flex: 1 0 0%;
+    }
+}

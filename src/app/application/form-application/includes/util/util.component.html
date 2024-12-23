@@ -1,0 +1,34 @@
+
+
+        <div [ngSwitch]="childMessage.utilName">
+              <div *ngSwitchCase="'mandatory'">
+                    <p class="ml-2">( * ) Indicates mandatory fields.</p>
+                </div>
+                <div *ngSwitchCase="'search'">
+                        <a  id="searchicon" href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="" (click)="opensearch()" data-original-title="Search"><i class="icon-search1"></i></a>
+                    </div>
+                <div *ngSwitchCase="'print'">
+                        <a  id="printicon" href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="" (click)="printTable()"  data-original-title="Print"><i class="icon-print-solid"></i></a>   
+                </div>
+               
+                <div *ngSwitchCase="'delete'">
+                        <a  id="deleteicon" href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="" (click)="deleteAll(sendIds,funType)"  data-original-title="Delete"><i class="icon-trash-solid"></i></a>
+                </div>
+                <div *ngSwitchCase="'publish'">
+                    <a  id="publishicon" href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="" (click)="publishAll(sendIds,funType)"  data-original-title="Publish"><i class="icon-volume-up-solid"></i></a>
+                </div>
+                <div *ngSwitchCase="'unpublish'">
+                    <a  id="unpublishicon" href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="" (click)="unpublishAll(sendIds,funType)" data-original-title="Unpublish"><i class="icon-volume-off-solid"></i></a>
+                </div>
+                <div *ngSwitchCase="'download'">
+                        <a  title="" href="javascript:void(0)" id="downloadicon" data-toggle="tooltip" data-placement="top" data-original-title="Download"><i class="icon-download-solid"></i></a>
+                    </div>
+                    <div *ngSwitchCase="'back'">
+                        <a  title="" href="javascript:void(0)" id="backicon" data-toggle="tooltip" data-placement="top" (click)="backClicked()" data-original-title="Back"><i class="icon-arrow-left-solid"></i></a>
+                    </div>
+                <div *ngSwitchDefault></div>
+              </div>
+
+        
+             
+    

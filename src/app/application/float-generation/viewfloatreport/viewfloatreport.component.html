@@ -1,0 +1,221 @@
+<div class="main-tab">
+    <div class="row d-flex align-items-center">
+        <div class="col">
+            <ul class="nav nav-tabs d-flex flex-wrap">
+                <li class="nav-item">
+                    <a routerLink="/application/floatgeneration" routerLinkActive="active" class="nav-link text-success">Generate Float</a>
+                </li>
+                <li class="nav-item">
+                    <a routerLink="/application/actionWiseFloatGeneration" routerLinkActive="active" class="nav-link text-success">Action Wise Float</a>
+                </li>
+                <li class="nav-item">
+                    <a routerLink="/application/hospitalWiseFloatGeneration" routerLinkActive="active" class="nav-link text-success">Hospital Wise Float</a>
+                </li>
+                <li class="nav-item">
+                    <a routerLink="/application/viewfloatreport" routerLinkActive="active" class="nav-link">View Reports</a>
+                </li>
+                <li class="nav-item">
+                    <a routerLink="/application/1.0Admissionand2.0Discharge" routerLinkActive="active" class="nav-link text-success">Old Block Report</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-auto">
+            <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+        </div>
+    </div>
+</div>
+
+<div id="filter" class="searchCriteriaBox bg-light p-3">
+    <div class="row">
+        <div class="col-lg-3 col-xxl-3">
+            <div class="mb-xl-3">
+                <label class="control-label">Date of Creation From<span class="text-danger">*</span></label>
+                <div class="input-group">
+                    <input type="text" class="form-control border-end-0 datepicker" id="formdate" name="fromDate">
+                    <label class="input-group-text bg-transparent border-start-0" for="formdate">
+                        <i class="iconbsky-calendar"></i>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xxl-3">
+            <div class="mb-xl-3">
+                <label class="control-label">Date of Creation To<span class="text-danger">*</span></label>
+                <div class="input-group">
+                    <input type="text" class="form-control border-end-0 datepicker" id="todate" name="toDate">
+                    <label class="input-group-text bg-transparent border-start-0" for="todate">
+                        <i class="iconbsky-calendar"></i>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xxl-3">
+            <div class="mb-xl-3">
+                <label class="control-label">Mortality (CPD)</label>
+                <select class="form-select" name="mortality" id="mortality">
+                    <option value="" selected>All</option>
+                    <option value="Y">Yes</option>
+                    <option value="N">No</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xxl-3">
+            <div class="mb-xl-3">
+                <label class="control-label">Scheme Category Name<span class="text-danger">*</span></label>
+                <select class="form-select" name="schemacategory" id="schemacategory" (change)="getschemacategoryid($event.target.value)" style="margin-top: 9px;">
+                <option value="" selected >All</option>
+                <ng-container *ngFor="let item of schemeList">
+                    <option value={{item.schemeCategoryId}}>{{item.categoryName}}</option>
+                </ng-container>
+            </select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3 col-xxl-3">
+            <div class="mb-xl-3">
+                <label class="control-label">State Name</label>
+                <ng-autocomplete #auto2 [data]="stateList" placeholder="Select State" (selected)="selectEvent2($event)" (inputCleared)="clearEvent2()" [itemTemplate]="itemTemplate2" [notFoundTemplate]="notFoundTemplate2" [searchKeyword]="keyword2" spellcheck="false">
+                </ng-autocomplete>
+
+                <ng-template #itemTemplate2 let-item>
+                    <a [innerHTML]="item.stateName"></a>
+                </ng-template>
+
+                <ng-template #notFoundTemplate2 let-notFound>
+                    <div [innerHTML]="notFound"></div>
+                </ng-template>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xxl-3">
+            <div class="mb-xl-3">
+                <label class="control-label">District Name</label>
+                <ng-autocomplete #auto1 [data]="districtList" placeholder="Select District" (selected)="selectEvent1($event)" (inputCleared)="clearEvent1()" [itemTemplate]="itemTemplate1" [notFoundTemplate]="notFoundTemplate1" [searchKeyword]="keyword1" spellcheck="false">
+                </ng-autocomplete>
+
+                <ng-template #itemTemplate1 let-item>
+                    <a [innerHTML]="item.districtname"></a>
+                </ng-template>
+
+                <ng-template #notFoundTemplate1 let-notFound>
+                    <div [innerHTML]="notFound"></div>
+                </ng-template>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xxl-3">
+            <div class="mb-xl-3">
+                <label class="control-label">Hospital Name</label>
+                <ng-autocomplete #auto [data]="hospitalList" placeholder="Select Hospital" (selected)="selectEvent($event)" (inputCleared)="clearEvent()" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" [searchKeyword]="keyword" spellcheck="false">
+                </ng-autocomplete>
+
+                <ng-template #itemTemplate let-item>
+                    <a [innerHTML]="item.hospitalName"></a>
+                </ng-template>
+
+                <ng-template #notFoundTemplate let-notFound>
+                    <div [innerHTML]="notFound"></div>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col align-self-end">
+            <div class="col-lg-12">
+                <button class="btn btn-success mr-2" (click)="getGeneratedReports()">Search</button> &nbsp;
+                <button class="btn btn-secondary" (click)="resetTable()">Reset</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+    <div class="col-lg-3 col-xxl-3" style="padding-top: 10px; padding-left: 18px;">
+        <div class="form-group" *ngIf="showPegi">
+            show
+            <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="200">200</option>
+                <option value="500">500</option>
+                <option value="{{floatList?.length}}">All</option>
+            </select> entries
+        </div>
+    </div>
+    <div class="col-lg-3 col-xxl-3 text-center" style="padding-top: 10px;">
+        <div class="form-group">
+            <b>Total Reports: <span style="color: green;">{{floatList?.length}}</span></b>
+        </div>
+    </div>
+    <div class="col-lg-2 col-xxl-2"></div>
+    <div class="col-lg-4 col-xxl-4">
+        <div class="input-group">
+            <input type="text" id="txtsearchDate" class="form-control" placeholder="Search here" name="txtsearchDate" [(ngModel)]="txtsearchDate" autocomplete="off">
+        </div>
+    </div>
+</div>
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="table-responsive">
+                <table class="table table-striped" mb-0 id="exportTable">
+                    <thead>
+                        <tr>
+                            <th>Sl No</th>
+                            <th>Float Generated On</th>
+                            <th>Actual Date Of Discharge From</th>
+                            <th>Actual Date Of Discharge To</th>
+                            <th>Mortality (CPD)</th>
+                            <th>State Name</th>
+                            <th>District Name</th>
+                            <th width="250">Hospital Details</th>
+                            <th style="text-align: center;">Download</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of floatList | filter:txtsearchDate | 
+                            paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};index as i">
+                            <td *ngIf="currentPage==1">{{i+1}}</td>
+                            <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+i+1}}</td>
+                            <td>{{item.createdOn}}</td>
+                            <td>{{item.actualDateOfDischargeFrom}}</td>
+                            <td>{{item.actualDateOfDischargeTo}}</td>
+                            <td>{{item.cpdMortality}}</td>
+                            <td>{{item.stateName}}</td>
+                            <td>{{item.districtName}}</td>
+                            <td>{{item.hospitalName}}</td>
+                            <td style="text-align: center;">
+                                <a *ngIf="item.extn=='xlsx'" class="btn btn-outline-success btn-sm me-1" (click)="download(item.fileName)">
+                                    <i class="bi bi-file-earmark-spreadsheet" style="font-size: 13pt;"></i>
+                                </a>
+                                <a *ngIf="item.extn=='pdf'" class="btn btn-outline-danger btn-sm me-1" (click)="download(item.fileName)">
+                                    <i class="bi bi-file-earmark-pdf" style="font-size: 13pt;"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr *ngIf="! floatList?.length">
+                            <td colspan="9" align="center"><strong class="text-danger">No data found</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row" *ngIf="showPegi">
+                <div class="col-sm-4">
+                    <div class="col-sm-*">
+                        show
+                        <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                            <option value="200">200</option>
+                            <option value="500">500</option>
+                            <option value="{{floatList?.length}}">All</option>
+                        </select> entries
+                    </div>
+                </div>
+                <div class="col-sm-8 text-right">
+                    <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true" (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

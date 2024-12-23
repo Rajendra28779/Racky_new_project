@@ -1,0 +1,52 @@
+<button type="button" class="btn btn-primary" *ngIf="!isDisableBtn" (click)="allocateCase()">
+  Allocate Case
+</button>
+<button type="button" class="btn btn-warning" *ngIf="show">
+  {{leftTime}} Left
+</button>
+<br/>
+<div class="card-body" *ngIf="show">
+  <div class="table-responsive treatment-history-table-class">
+    <table
+      aria-describedby="cardBalanceDetails"
+      class="table mb-0 border"
+      style="width: 100%"
+    >
+      <thead class="bgcolor-th">
+        <tr>
+          <th>URN</th>
+          <th>Case No.</th>
+          <!-- <th>Hospital</th> -->
+          <th>Invoice No.</th>
+          <th>Allocate Date</th>
+          <th>Action to be taken</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let case of allocateCaseList">
+          <td>{{ case?.urn }}</td>
+          <td>{{ case?.caseNo }}</td>
+          <!-- <td>{{ case?.hospitalName }}({{ case?.hospitalCode }})</td> -->
+          <td>{{ case?.invoiceNumber }}</td>
+          <td>{{ case?.allocateDate }}</td>
+          <td>{{ case?.actionBy }}</td>
+          <td><a class="btn btn-outline-success btn-sm" (click)="onAction(case.caseId,case.urn,case.caseNo)">Action
+          </a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<br />
+<br />
+<div>
+  <ul class="list-group">
+    <li class="list-group-item">1. By clicking on allocate button, one case will be allocated.</li>
+    <li class="list-group-item">2. At a time one case will be allocated.</li>
+    <li class="list-group-item">3. Action time period for allocated case will be one hour from allocation time.</li>
+    <li class="list-group-item">4. If the action of allocated case is not taken within one hour then that case will be moved to dishonor bucket and penalty will be imposed. </li>
+    <li class="list-group-item">5. Submitted cases can be rechecked in reconsider bucket.
+    </li>
+  </ul>
+</div>

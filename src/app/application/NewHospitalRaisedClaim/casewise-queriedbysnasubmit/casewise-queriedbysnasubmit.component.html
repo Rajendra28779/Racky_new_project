@@ -1,0 +1,370 @@
+<div class="form-container claim-detail">
+    <div class="main-tab mb-4">
+        <div class="row justify-content-between align-items-center">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/CasewiseQueriedbysnasubmit" class="nav-link active">Case Queried by SNA</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-6 text-end">
+                <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+            </div>
+        </div>
+    </div>
+    <div class="content-box p-0 border-0 bg-transparent">
+        <div class="row g-4">
+            <!-- Basic Information Card -->
+            <!-- Patient Information Card -->
+            <div class="col-xl-4 col-lg-4 col-md-12 col-12">
+                <div class="card_custom">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-12">
+                        <div class="card_primary">
+                            <h5> {{snaqueryhsptldtls[0]?.patientName}} </h5>
+                            <span class="position-absolute"> </span>
+                            <ul class="list-unstyled mb-0 address_new">
+                                <li id="age">
+
+                                    <div class="address_listhead"> Age : </div>
+                                    <div> {{snaqueryhsptldtls[0]?.age}},
+                                        <b class="fw-500 ms-2"> Gender - </b> {{snaqueryhsptldtls[0]?.gender}}
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="address_listhead"> Mob No. :</div>
+                                    <div> {{snaqueryhsptldtls[0]?.patientPhoneNumber}} </div>
+                                </li>
+                                <li>
+                                    <div class="address_listhead"> Address :</div>
+                                    <div>
+                                        {{snaqueryhsptldtls[0]?.villagename}}, {{snaqueryhsptldtls[0]?.panchayatname}}, {{snaqueryhsptldtls[0]?.blockname}}, {{snaqueryhsptldtls[0]?.districtname}}, {{snaqueryhsptldtls[0]?.stateName}} </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-8 col-lg-8 col-md-6 col-12">
+                <div class="card_custom">
+                    <!-- <div class="card-header">
+                        <h5 class="mb-0">Basic Information</h5>
+                    </div> -->
+                    <div class="row list_inform">
+                        <div class="col-xl-4 col-lg-4 col-md-12 col-12">
+                            <div class="card_success">
+                                <span class="position-absolute"> </span>
+                                <div class="mb-2">
+                                    <img src="../../../../assets/img/casenum.svg">
+                                </div>
+                                <div>
+                                    <label class="text-muted mb-0">Case Number</label>
+                                    <p class="basic_text" id="UrnNumber">{{snaqueryhsptldtls[0]?.caseNumber}}</p>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-4 col-md-6 col-12">
+                            <div class="card_warning">
+                                <span class="position-absolute"> </span>
+                                <div class="mb-2">
+                                    <img src="../../../../assets/img/urn.svg">
+                                </div>
+                                <div>
+                                    <label class="text-muted mb-0">URN Number</label>
+                                    <p class="basic_text" id="UrnNumber">{{snaqueryhsptldtls[0]?.urn}}</p>
+                                </div>
+                                <div>
+                                    <label class="text-muted mb-0">Blocking Invoice Number</label>
+                                    <p class="basic_text" id="Invoice">
+                                        {{snaqueryhsptldtls[0]?.blockingInvoiceNumber}}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-4 col-lg-4 col-md-6 col-12">
+                            <div class="card_danger">
+                                <span class="position-absolute"> </span>
+                                <div class="mb-2">
+                                    <img src="../../../../assets/img/invoicenum.svg">
+                                </div>
+                                <div>
+                                    <label class="text-muted mb-0">Claim Bill Number</label>
+                                    <p class="basic_text" id="Invoice">
+                                        {{snaqueryhsptldtls[0]?.claimbillno}}</p>
+                                </div>
+                                <div>
+                                    <label class="text-muted mb-0">Claim Case Number</label>
+                                    <p class="basic_text" id="Invoice">
+                                        {{snaqueryhsptldtls[0]?.claimcaseno}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-responsive table_fixed mt-4">
+                <table class="table border table-striped table-hover">
+                    <thead class="table-primary">
+                        <tr>
+                            <th class="fw-500"> Sl# </th>
+                            <th class="fw-500"> Speciality Code </th>
+                            <th>
+                                <div class="fw-bold"> Procedure Code </div>
+                                <div> Name </div>
+                            </th>
+
+                            <th class="mw-130">
+                                <div class="fw-bold"> Package Type </div>
+                                <div> Amount </div>
+                            </th>
+                            <th class="fw-500"> HED (₹)</th>
+                            <th class="fw-500"> Implant (₹)</th>
+                            <th class="fw-500"> Blocked Amount (₹)</th>
+                            <th class="fw-500"> Calculated % </th>
+                            <!-- <th class="fw-500"> System Calculated Discharge Amount (₹)</th> -->
+                            <th class="fw-500"> Hospital Discharge Amount (₹)</th>
+                            <th class="fw-500"> Claim Amount (₹)</th>
+                            <th class="text-center fw-500"> Upload Document </th>
+                            <th class="text-center fw-500"> Details </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of snaqueryhsptldtls1; let i = index" [ngClass]="{'red-row': item.deletedstatus === '1'}">
+                            <td>{{ i + 1 }}</td>
+                            <td title="{{item.specialityName}}">{{ item.specialityCode }}</td>
+                            <td>
+                                <div class="fw-bold"> {{ item.procedureCode }} </div>
+                                <div>
+                                    <span *ngIf="!item.exp">
+                                    {{item.procedureName | slice:0:20}} 
+                                    <span *ngIf="item.procedureName.length > 20">...</span>
+                                    </span>
+
+                                    <span *ngIf="item.exp">{{item.procedureName}}&nbsp;&nbsp;</span>
+
+                                    <a href="javascript:void(0)" (click)="item.exp = !item.exp">
+                                    {{item.exp ? 'Show Less' : 'Show More'}}
+                                </a>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="fw-bold"> {{ item.packageType }} </div>
+                                <div> {{ item.packageAmount }} </div>
+                            </td>
+                            <td>{{ item.totalHedCost }}</td>
+                            <td>{{ item.totalImplantCost }}</td>
+                            <td>{{ item.actualPackageCost }}</td>
+                            <td>{{ item.calculatedPercentage }}</td>
+                            <!-- <td>{{ item.systemCalculatedDischargeAmount }}</td> -->
+                            <td>{{ item.hospitalDischargeAmount }}</td>
+                            <td>{{ item.modifiedAmount }}</td>
+                            <td class="text-center">
+                                <button class="btn btn-sm btn-outline-secondary" title="Upload" [disabled]="item.deletedstatus === '1'" (click)="openUploadModal(item)">
+                                <i class="bi" 
+                                   [ngClass]="{
+                                     'bi-upload': item.docuploadedstatus !== '1', 
+                                     'bi-check-circle-fill': item.docuploadedstatus === '1', 
+                                     'text-success': item.docuploadedstatus === '1'
+                                   }">
+                                </i>
+                            </button>
+                            </td>
+                            <td class="text-center">
+                                <button class="btn btn-sm btn-outline-success" [ngbTooltip]="'View'" title="View" (click)="openDetails(item.transactiondetailsId, item.urn, item.authorizedCode, item.hospitalCode)">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="8" class="text-end fw-bold">Total</td>
+                            <!-- <td class="text-end fw-bold">{{ getSum('systemCalculatedDischargeAmount')| currency: 'INR':'symbol':'1.0-2' }}</td> -->
+                            <td class="text-end fw-bold">{{ getSum('hospitalDischargeAmount')| currency: 'INR':'symbol':'1.0-2' }}</td>
+                            <td class="text-end fw-bold">{{ getSum('modifiedAmount')| currency: 'INR':'symbol':'1.0-2' }}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <div class="col-lg-12">
+                <h5>Action Taken History</h5>
+                <div class="table-responsive table_fixed mt-4">
+                    <table class="table border table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Sl#</th>
+                                <th>Action On</th>
+                                <th>Action Type</th>
+                                <th>Action By</th>
+                                <th>Claimed Amount (₹)</th>
+                                <th>Action Amount (₹)</th>
+                                <th>Remarks</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let claim of getactiontakenData , index as i">
+                                <td>{{i+1}}</td>
+                                <td>{{claim.actionon}}</td>
+                                <td>{{claim.actiontype}}</td>
+                                <td>{{claim.actionby}}</td>
+
+                                <td *ngIf="claim.claimedamount != null">{{claim.claimedamount | number}}</td>
+                                <td *ngIf="claim.claimedamount == null">--</td>
+
+                                <td *ngIf="claim.actionamount != null">{{claim.actionamount | number}}</td>
+                                <td *ngIf="claim.actionamount == null">--</td>
+
+                                <td *ngIf="claim.remarks != null">{{claim.remarks}}</td>
+                                <td *ngIf="claim.remarks == null">--</td>
+
+                                <td>
+                                    <span *ngIf="!claim.expanded && claim.description?.length > 0">{{claim.description | slice:0:20}}</span>
+                                    <span *ngIf="!claim.expanded && claim.description?.length > 20">...</span>
+                                    <span *ngIf="claim.expanded && claim.description">{{claim.description}}</span>
+                                    <span *ngIf="!claim.description"></span>
+                                    <a href="javascript:void(0)" *ngIf="claim.description" (click)="claim.expanded = !claim.expanded">
+                                        {{claim.expanded ? 'Show Less' : 'Show More'}}
+                                    </a>
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- </div> -->
+            <div class="clearfix"></div>
+            <div class="col-xl-7 col-lg-7 col-md-12 col-12" [formGroup]="myGroup">
+                <label for="User Address" class="control-label mb-2"> Remarks <span class="text-danger">*</span>
+                </label>
+                <textarea class="form-control" rows="4" id="cremarks" name="cremarks" formControlName="cremarks" maxlength="1000" placeholder="Enter Remarks" #myInput [maxlength]="maxChars" (keypress)="keyPress($event)"></textarea>
+                <span class="text-danger small">Characters Remaining: {{maxChars - myInput.value.length}}</span>
+            </div>
+            <div class="d-grid gap-2 d-md-flex">
+                <div><button type="button" class="btn btn-success" (click)="submitreclaim()"> Re-claim </button> </div>
+                <div><input type="reset" value="Reset" class="btn btn-secondary"> </div>
+            </div>
+            <!-- Delete Confirmation Modal -->
+            <div class="modal justify-content-center" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal justify-content-center" id="uploadModalcpdquery" tabindex="-1" aria-labelledby="uploadModalLabel" data-bs-backdrop="static">
+                <div class="modal-dialog modal-xl modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="uploadModalLabel">Upload Documents</h5>
+                            <button type="button" class="btn-close" (click)="resetModal()"></button>
+                        </div>
+
+                        <!-- Modal Body -->
+                        <div class="modal-body">
+                            <!-- Card 1: Patient Information -->
+                            <div class="card mb-4" style="background-color: #f8f9fa;">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <!-- First row: 3 items -->
+                                        <div class="col-md-4"><strong>Patient Name:</strong> {{ selectedPatientName }}</div>
+                                        <div class="col-md-4"><strong>Speciality Code:</strong> {{ selectedspecialityCode }}</div>
+                                        <div class="col-md-4"><strong>Procedure Code:</strong> {{ selectedProcedureCode }}</div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <!-- Second row: 3 items -->
+                                        <div class="col-md-4"><strong>Procedure Name:</strong> {{ selectedProcedureName }}</div>
+                                        <div class="col-md-4"><strong>Package Type:</strong> {{ selectedPackageType }}</div>
+                                        <div class="col-md-4"><strong>Package Amount:</strong> {{ selectedPackageAmount | currency: 'INR':'symbol':'1.0-2' }}</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 2: Document Upload Section -->
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <!-- First File Upload Column -->
+                                        <div class="col-6 col-lg-3 col-xxl-3">
+                                            <div class="file-upload">
+                                                <p class="mb-1">Additional Slip1<strong class="required-field" style="color: red;">*</strong></p>
+                                                <div class="file-upload-content">
+                                                    <a class="btn btn-danger text-white btn-sm remove-img">
+                                                        <i class="fas fa-times"></i>
+                                                    </a>
+                                                    <img class="file-upload-image" src="#" alt="your image" />
+                                                </div>
+                                                <div class="image-upload-wrap text-center rounded" id="additionapicid">
+                                                    <input class="file-upload-input" type="file" id="ADD" accept=".pdf,.jpeg,.jpg" onCut="return false" onDrag="return false" onDrop="return false" (change)="AdditionalDocument($event)" />
+                                                    <div class="drag-text" *ngIf="length == 1">
+                                                        <h5><i class="iconbsky-upload-icon d-block fs-4"></i>{{ filename }}</h5>
+                                                    </div>
+                                                    <div class="drag-text" *ngIf="length != 1">
+                                                        <h5><i class="iconbsky-upload-icon d-block fs-4"></i>Select a file to upload</h5>
+                                                    </div>
+                                                </div>
+                                                <p class="small pt-1">
+                                                    <img src="./assets/img/pdf.png" alt="Download Document" target="_blank" width="20">
+                                                    <a style="cursor:pointer;" (click)="downloadfilehospitallbill()">Download</a>
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <!-- Second File Upload Column -->
+                                        <div class="col-6 col-lg-3 col-xxl-3">
+                                            <div class="file-upload">
+                                                <p class="mb-1">Additional Slip2</p>
+                                                <div class="file-upload-content">
+                                                    <a class="btn btn-danger text-white btn-sm remove-img">
+                                                        <i class="fas fa-times"></i>
+                                                    </a>
+                                                    <img class="file-upload-image" src="#" alt="your image" />
+                                                </div>
+                                                <div class="image-upload-wrap text-center rounded" id="add1pic">
+                                                    <input class="file-upload-input" type="file" id="ADDC" accept=".pdf,.jpeg,.jpg" onCut="return false" onDrag="return false" onDrop="return false" (change)="AdditionalDocument1($event)" />
+                                                    <div class="drag-text" *ngIf="lengthadd1 == 1">
+                                                        <h5><i class="iconbsky-upload-icon d-block fs-4"></i>{{ filenameadd1 }}</h5>
+                                                    </div>
+                                                    <div class="drag-text" *ngIf="lengthadd1 != 1">
+                                                        <h5><i class="iconbsky-upload-icon d-block fs-4"></i>Select a file to upload</h5>
+                                                    </div>
+                                                </div>
+                                                <p class="small pt-1">
+                                                    <img src="./assets/img/pdf.png" alt="Download Document" target="_blank" width="20">
+                                                    <a style="cursor:pointer;" (click)="downloadfilehospitallbillforadd2()">Download</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Notice Section -->
+                                    <hr class="my-4">
+                                    <div class="d-block text-danger small">
+                                        <p class="mb-1 small">Additional Slip1, Additional Slip2 must be in .jpg, .jpeg, .pdf format and under 8MB.</p>
+                                        <p class="mb-0 small">(*) Indicates mandatory.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Modal Footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success me-2" (click)="confirmSubmission()">Submit</button>
+                            <button type="button" class="btn btn-secondary" (click)="resetModal()">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

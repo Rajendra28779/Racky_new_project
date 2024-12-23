@@ -1,0 +1,104 @@
+.img-account-profile {
+  height: 10rem;
+}
+
+.rounded-circle {
+  border-radius: 50% !important;
+}
+
+.print-btn {
+  position: absolute;
+  top: 4rem;
+  right: 2rem;
+}
+
+.print-btn .print i {
+  font-size: 2rem;
+  color: #4b9668;
+}
+
+.print-btn .print i:hover {
+  font-size: 2rem;
+  color: #316b47;
+}
+
+.print-btn .arrow-back i {
+  font-size: 2rem;
+  color: #6c757d;
+}
+
+.print-btn .arrow-back i:hover {
+  font-size: 2rem;
+  color: #515457;
+}
+
+.form-check-input:checked {
+  background-color: #1f723f !important;
+  border-color: #1f723f !important;
+}
+
+.form-check-input {
+  border: 1px solid #44ad6d;
+}
+
+.form-check-input:focus {
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem rgb(42 179 74 / 25%) !important;
+}
+
+.text-indent {
+  text-indent: 15px;
+}
+
+@media print {
+  @page {
+  size: A4 portrait;
+      margin: 0;
+}
+
+  #FinalSubmit {
+      display: none;
+  }
+
+  .view-sign {
+      display: none;
+  }
+
+  .col-xxl-6 {
+      flex: 0 0 auto;
+      width: 50%;
+  }
+
+  .col-3 {
+      flex: 0 0 auto;
+      width: 40%;
+  }
+
+  .col-9 {
+      flex: 0 0 auto;
+      width: 60%;
+  }
+
+  .col-xxl-3 {
+      flex: 0 0 auto;
+      width: 30%;
+  }
+
+  .col-xl-4 {
+      flex: 0 0 auto;
+      width: 30%;
+  }
+
+  .col-xl-8 {
+      flex: 0 0 auto;
+      width: 70%;
+  }
+
+  .col-xl {
+      flex: 1 0 0%;
+  }
+
+  .container-xxl, .container-xl, .container-lg, .container-md, .container-sm, .container {
+      max-width: 100%;
+  }
+}

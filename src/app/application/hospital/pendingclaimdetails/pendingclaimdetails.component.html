@@ -1,0 +1,222 @@
+<div class="form-cointainer claim-detail">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <!-- <a routerLink="/application/snoapproval" routerLinkActive="active" class="nav-link active">CPD Approval</a> -->
+                        <a routerLink="/application/RejectedClaim/Action" class="nav-link active">Non Uploading Initial Document Details</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-6 ">
+                <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-box p-0 border-0 bg-transparent">
+        <div class="row">
+            <div class="col-lg-6 col-xl-6 col-xxl-4">
+                <div class="card shadow-sm basic-info">
+                    <div class="card-header">
+                        <h5 class="mb-0">Basic Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3 border-bottom pb-3">
+                            <span class="text-success"><i class="iconbsky-urn-number fs-1 me-3"></i></span>
+                            <div>
+                                <p class="text-muted mb-0">URN</p>
+                                <p class="mb-0 fw-bold" id="UrnNumber">
+                                    {{ claimDetails?.URN}}</p>
+                            </div>
+                        </div>
+                        <!-- <div class=" d-flex align-items-center mb-3 border-bottom pb-3 ">
+                            <span class="text-success "><i class="iconbsky-case-number fs-1 me-3 "></i></span>
+                            <div>
+                                <p class="text-muted mb-0 ">Case Number</p>
+                                <p class="mb-0 fw-bold " *ngFor="let claim of userdetailsByid"></p>
+                            </div>
+                        </div> -->
+                        <div class="d-flex align-items-center ">
+                            <span class="text-success "><i class="iconbsky-invoice-number fs-1 me-3 "></i></span>
+                            <div>
+                                <p class="text-muted mb-0 ">Blocking Invoice Number</p>
+                                <p class="mb-0 fw-bold " id="Invoice">
+                                    {{ claimDetails?.INVOICENO}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-xl-6 col-xxl-4 ">
+                <div class="card text-bg-success patient-info shadow-sm ">
+                    <div class="card-header ">
+                        <h5 class="mb-0 ">Patient Information</h5>
+                    </div>
+                    <div class="card-body py-xl-4 ">
+                        <div class="row ">
+                            <div class="col-lg-12 ">
+                                <h4 class="fw-normal mb-3 " id="name">
+                                    {{ claimDetails?.PATIENTNAME}}
+                                </h4>
+                                <h6 class="fw-normal mb-3 " id="name">
+                                    {{ claimDetails?.CATEGORYNAME}}
+                                </h6>
+                                <ul class="list-unstyled mb-0">
+                                    <li><i class="iconbsky-age"></i> {{ claimDetails?.AGE}} Years</li>
+                                    <li *ngIf="  claimDetails?.GENDER=='F' "><i class="iconbsky-gender"></i> Female</li>
+                                    <li *ngIf="  claimDetails?.GENDER=='M' "><i class="iconbsky-gender"></i> Male</li>
+                                    <li><i class="iconbsky-mobile"></i> {{ claimDetails?.MOBILE}} </li>
+                                    <li><i class="iconbsky-location"></i> {{ claimDetails?.ADDRESS}} </li>
+
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 ">
+                <div class="card shadow-sm mt-3 mt-xl-4 ">
+                    <div class="card-header ">
+                        <h5 class="mb-0 ">Treatment Details</h5>
+                    </div>
+                    <div class="card-body ">
+                        <div class="row gx-xl-5 treatment-details ">
+                            <div class="col-xl ">
+                                <p class="small text-muted mb-0 ">Date Of Adminssion -Date Of Discharge</p>
+                                <h6 class="mb-0 ">{{ claimDetails?.DATEOFADMISSION | date: 'dd-MMM-yyyy'}}-{{ claimDetails?.DATEOFDISCHARGE | date: 'dd-MMM-yyyy'}}</h6>
+                            </div>
+                            <div class="col-xl border-start ">
+                                <div class="d-flex align-items-center ">
+                                    <!-- <i class="iconbsky-package-amount mt-2 me-3 fs-1 "></i> -->
+                                    <div>
+                                        <p class="small text-muted mb-0 ">Package Rate(₹)</p>
+                                        <h6 class="mb-0 ">
+                                            {{ claimDetails?.TOTALAMOUNTBLOCKED | currency:"":"" }}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl border-start ">
+                                <div class="d-flex align-items-center ">
+                                    <!-- <i class="iconbsky-block-amount mt-2 me-3 fs-1 "></i> -->
+                                    <div>
+                                        <p class="small text-muted mb-0 ">Blocked Amount(₹)</p>
+                                        <h6 class="mb-0 ">
+                                            {{ claimDetails?.CURRENTTOTALAMOUNT | currency:"":"" }}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 ">
+                                <hr class="mt-xl-4 ">
+                            </div>
+                            <div class="col-lg-6 ">
+                                <div class="d-flex align-items-center ">
+                                    <!-- <i class="iconbsky-block-amount mt-2 me-3 fs-1 "></i> -->
+                                    <div>
+                                        <p class="small text-muted mb-0 ">Packages</p>
+                                        <h6 class="mb-0 ">{{ claimDetails?.PACKAGENAME}}
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 border-start ">
+                                <div class="d-flex align-items-center ">
+                                    <!-- <i class="iconbsky-block-amount mt-2 me-3 fs-1 "></i> -->
+                                    <div>
+                                        <p class="small text-muted mb-0 ">Procedure</p>
+                                        <h6 class="mb-0 ">{{ claimDetails?.PROCEDURENAME}}
+
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class=" row ">
+                            <div class="col-lg-12 ">
+                                <hr class="my-xl-4 ">
+                                <h5>Pre-Auth Log</h5>
+                                <div class="table-responsive ">
+                                    <table class="table mb-0" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th width="40" rowspan="2">Sl#</th>
+                                                <th rowspan="2">Pre-Auth Code</th>
+                                                <th rowspan="2">Claimed Amount (₹)</th>
+                                                <th rowspan="2">Approved Amount (₹)</th>
+                                                <th rowspan="2">Claimed Date</th>
+                                                <th rowspan="2">Approved Date</th>
+                                                <th rowspan="2">Remark</th>
+                                                <th colspan="3" style="text-align:center">Documents</th>
+                                                <th rowspan="2">Details</th>
+                                            </tr>
+                                            <tr>
+                                                <th>Doc1</th>
+                                                <th>Doc2</th>
+                                                <th>Doc3</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <ng-container *ngIf="check">
+                                                <tr *ngFor="let prteAuth of preAuth,index as i">
+                                                    <td>{{i+1}}</td>
+                                                    <td>{{prteAuth.preauthCode}}</td>
+                                                    <td>{{prteAuth.claimedAmount | currency:"":""}}</td>
+                                                    <td>{{prteAuth.approvedAmount | currency:"":""}}</td>
+                                                    <td>{{prteAuth.claimedDate | date :'dd-MMM-yyyy, h:mm:ss a'}}</td>
+                                                    <td>{{prteAuth.approvedDate | date :'dd-MMM-yyyy, h:mm:ss a'}}</td>
+                                                    <td>{{prteAuth.preAuthRemarks}}</td>
+                                                    <td *ngIf="prteAuth.aditionalDoc1 != undefined"><a href="javascript:void(0);" (click)="downloadAction($event,prteAuth.aditionalDoc1,prteAuth.hospitalCode,prteAuth.claimedDate,'')"><i class="bi bi-file-earmark-pdf" style="color:red;font-size:15px;"></i></a></td>
+                                                    <td *ngIf="prteAuth.aditionalDoc1 == undefined">--</td>
+                                                    <td *ngIf="prteAuth.aditionalDoc2 != undefined"><a href="javascript:void(0);" (click)="downloadAction($event,prteAuth.aditionalDoc2,prteAuth.hospitalCode,prteAuth.claimedDate,'')"><i class="bi bi-file-earmark-pdf" style="color:red;font-size:15px;"></i></a></td>
+                                                    <td *ngIf="prteAuth.aditionalDoc2 == undefined">--</td>
+                                                    <td *ngIf="prteAuth.aditionalDoc3 != undefined"><a href="javascript:void(0);" (click)="downloadAction($event,prteAuth.aditionalDoc3,prteAuth.hospitalCode,prteAuth.claimedDate,'')"><i class="bi bi-file-earmark-pdf" style="color:red;font-size:15px;"></i></a></td>
+                                                    <td *ngIf="prteAuth.aditionalDoc3 == undefined">--</td>
+                                                    <td><a href="javascript:void(0)" (click)="preAuthLogDetail(prteAuth.urnNo, claimDetails?.AUTHORIZEDCODE,prteAuth.hospitalCode)">Click here</a></td>
+                                                </tr>
+                                            </ng-container>
+                                            <tr *ngIf="!check">
+                                                <td colspan="8" align="center"><strong class="text-danger">No data found</strong></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- <div class="card-body" *ngIf="preAuth.length!=0">
+                                    <ul class="list-unstyled">
+                                        <li><i class="iconbsky-list-icon me-2"></i> Check more information.<a href="javascript:void(0)" (click)="preauthLogDetails()"> Click here</a></li>
+                                    </ul>
+                                    <hr>
+
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-lg-12">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <div class="row">
+                            <!-- <div class="col-lg-6 col-xxl-5" [formGroup]="myGroup"> -->
+                            <div class="col-lg-6 col-xxl-5" [formGroup]="myGroup">
+                                <label class="col-form-label">Description<span class="text-danger">*</span></label>
+                                <textarea class="form-control" rows="4" id="description" name="description" formControlName="description" maxlength="500" placeholder="Enter description" #myInput [maxlength]="maxChars" (keypress)="DescriptionValidation($event)"></textarea>
+                                <!-- <textarea class="form-control" rows="4" id="remarks" name="remarks" formControlName="remarks" maxlength="500" placeholder="Enter description" #myInput [maxlength]="maxChars"></textarea> -->
+                                <span class="text-danger small">Characters Remaining: {{maxChars -
+                                    myInput.value.length}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-grid gap-2 d-sm-block mt-3 mt-xl-4">
+            <button class="btn btn-success px-xl-3 py-xl-2 me-2 " (click)="submitDetails(claimDetails?.URN,claimDetails?.HOSPITALCODE,claimDetails?.TRANSACTIONDETAILSID)">Request</button>
+            <button class="btn btn-secondary px-xl-3 py-xl-2" (click)="OncancelClaimRAise()">Cancel</button>
+
+        </div>
+    </div>
+</div>

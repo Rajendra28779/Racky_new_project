@@ -1,0 +1,721 @@
+<div class="container claim-detail">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item" class="nav-link active">Case Informarion</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-box p-0 border-0 bg-transparent">
+        <div class="row">
+            <div class="col-xl-6 col-lg-6 mb-2 mt-2">
+                <h4> Case No - <span class="text-success"> {{packageDetails?.caseNo}} </span> </h4>
+                <!-- <h4> Status - <span class="text-success"> {{packageDetails?.status}} </span> </h4>  -->
+            </div>
+            <div class="col-xl-6 col-lg-6 mb-2 mt-2">
+                <!-- <h4> Case No - <span class="text-success"> {{packageDetails?.caseNo}} </span> </h4> -->
+                <h4> Status - <span class="text-success"> {{packageDetails?.status}} </span> </h4>
+            </div>
+            <!-- Treatment information -->
+            <div class="col-lg-12 col-xl-12 col-xxl-12">
+                <div class="card shadow-sm basic-info mb-4">
+                    <div class="card-header border-top card_bg bg-success text-white">
+                        <h5 class="mb-0"> Package Information</h5>
+                    </div> 
+                    <div class="card-body p-0">
+                        <div class="col-xl-12 col-lg-12 p-3">
+                            <div class="row treatment-details">
+
+
+
+                                <div class="col-xl-4 col-lg-4 border-end">
+                                    <div class="d-flex align-items-center">
+                                        <div>
+                                            <p class="small text-muted mb-1"> Patient Name </p>
+                                            <h6 class="mb-0"> {{packageDetails?.patientName}}</h6>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xl-4 col-lg-4 border-end">
+                                    <div class="d-flex align-items-center">
+                                        <div>
+                                            <p class="small text-muted mb-1"> Patient Photo </p>
+                                            <!-- <h6  class="mb-0"> {{packageDetails?.patientPhoto}}</h6> -->
+                                            <span class="icon-pdf" *ngIf="packageDetails?.patientPhoto != '--'"><a
+                                                    title="PDF File"
+                                                    (click)="download(packageDetails?.patientPhoto,packageDetails?.sDate)"><i
+                                                        class="bi bi-file-earmark-pdf me-2"></i></a></span>
+                                            <h6 class="mb-0" *ngIf="packageDetails?.patientPhoto == '--'">
+                                                {{packageDetails?.patientPhoto}}</h6>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xl-4 col-lg-4">
+                                    <div class="d-flex align-items-center  ">
+                                        <div>
+                                            <p class="small text-muted mb-1"> Admission Type</p>
+                                            <h6 class="mb-0"> {{packageDetails?.admissionType}} </h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <hr class="mt-xl-3">
+                                </div>
+
+
+                                <div class="col-xl-4 col-lg-4 border-end">
+                                    <div class="d-flex align-items-center  ">
+                                        <div>
+                                            <p class="small text-muted mb-1">Procedure Code</p>
+                                            <h6 class="mb-0"> {{packageDetails?.procedureCode}} </h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 col-lg-4 border-end">
+                                    <div class="d-flex align-items-center">
+                                        <div>
+                                            <p class="small text-muted mb-1">Procedure Name </p>
+                                            <h6 class="mb-0"> {{packageDetails?.procedureName}} </h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 col-lg-4">
+                                    <div class="d-flex align-items-center ">
+                                        <div>
+                                            <p class="small text-muted mb-1"> Doctor Name </p>
+                                            <h6 class="mb-0"> {{packageDetails?.doctorName}}</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <hr class="mt-xl-3">
+                                </div> 
+                                <div class="col-xl-4 col-lg-4 border-end">
+                                    <div class="d-flex align-items-center  ">
+                                        <div>
+                                            <p class="small text-muted mb-1">Package Code</p>
+                                            <h6 class="mb-0"> {{packageDetails?.packageCode}} </h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 col-lg-4 border-end">
+                                    <div class="d-flex align-items-center ">
+                                        <div>
+                                            <p class="small text-muted mb-1">Package Name </p>
+                                            <h6 class="mb-0"> {{packageDetails?.packageName}}
+                                            </h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 col-lg-4">
+                                    <div class="d-flex align-items-center">
+                                        <div>
+                                            <p class="small text-muted mb-1"> Pre Auth Status </p>
+                                            <h6 class="mb-0"> {{packageDetails?.preAuthStatus}}</h6>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <hr class="mt-xl-3">
+                                </div>
+ 
+                                <div class="col-xl-12 col-lg-12 mb-3">
+                                    <div class="border">
+                                        <div class="head-block">
+                                            <h5 class="text-success m-0"> Blocked </h5>
+                                        </div>
+
+                                        <div class="row p-3">
+
+                                            <div class="col-xl-4 col-lg-4 border-end">
+                                                <div class="d-flex align-items-center">
+                                                    <div>
+                                                        <p class="small text-muted mb-1"> Package Cost </p>
+                                                        <h6 class="mb-0"> <span><i
+                                                                    class="bi bi-currency-rupee"></i>{{packageDetails?.totalPackageCost
+                                                                | currency:"":""}}</span> </h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xl-4 col-lg-4 border-end">
+                                                <div class="d-flex align-items-center ">
+                                                    <div>
+                                                        <p class="small text-muted mb-1"> Amount Blocked</p>
+                                                        <h6 class="mb-0"><span><i class="bi bi-currency-rupee"></i>
+                                                                {{packageDetails?.amountBlocked |
+                                                                currency:"":""}}</span></h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xl-4 col-lg-4">
+                                                <div class="d-flex align-items-center ">
+                                                    <div>
+                                                        <p class="small text-muted mb-1"> Block Date</p>
+                                                        <h6 class="mb-0"> {{packageDetails?.blockDate}} </h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12">
+                                                <hr class="mt-xl-3">
+                                            </div>
+
+                                            <div class="col-xl-4 col-lg-4 border-end">
+                                                <div class="d-flex align-items-center ">
+                                                    <div>
+                                                        <p class="small text-muted mb-1"> Block Verification Mode</p>
+                                                        <h6 class="mb-0"> {{packageDetails?.verificationCode}}</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xl-4 col-lg-4 border-end">
+                                                <div class="d-flex align-items-center ">
+                                                    <div>
+                                                        <p class="small text-muted mb-1"> Verifier Member Name</p>
+                                                        <h6 class="mb-0"> {{packageDetails?.verifyMemberName}}</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xl-4 col-lg-4">
+                                                <div class="d-flex align-items-center">
+                                                    <div>
+                                                        <p class="small text-muted mb-1"> No of Days</p>
+                                                        <h6 class="mb-0"> {{packageDetails?.noOfDays}} </h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12">
+                                                <hr class="mt-xl-3">
+                                            </div>
+
+                                            <div class="col-xl-4 col-lg-4 border-end">
+                                                <div class="d-flex align-items-center ">
+                                                    <div>
+                                                        <p class="small text-muted mb-1"> Override Code</p>
+                                                        <h6 class="mb-0"> {{packageDetails?.overrideCode}}</h6>
+                                                    </div>
+                                                </div>
+                                            </div> 
+                                            <div class="col-xl-4 col-lg-4 border-end">
+                                                <div class="d-flex align-items-center">
+                                                    <div>
+                                                        <p class="small text-muted mb-1"> Referal Code</p>
+                                                        <h6 class="mb-0"> {{packageDetails?.referalCode}} </h6>
+                                                    </div>
+                                                </div>
+                                            </div> 
+                                            <div class="col-xl-4 col-lg-4">
+                                                <div class="d-flex align-items-center ">
+                                                    <div>
+                                                        <p class="small text-muted mb-1"> Expire Date</p>
+                                                        <h6 class="mb-0"> {{packageDetails?.expireDate}}</h6>
+                                                    </div>
+                                                </div>
+                                            </div> 
+                                        </div>
+                                    </div> 
+                                </div> 
+                                <div class="col-xl-12 col-lg-12 mb-3">
+                                    <div class="border">
+                                        <div class="head-block">
+                                            <h5 class="text-success m-0"> Un-Blocked </h5>
+                                        </div>
+
+                                        <div class="row p-3">
+                                            <div class="col-xl-4 col-lg-4 border-end">
+                                                <div class="d-flex align-items-center">
+                                                    <div>
+                                                        <p class="small text-muted mb-1"> Un-Block Date</p>
+                                                        <h6 class="mb-0"> {{packageDetails?.unBlockDate}} </h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-4 col-lg-4 border-end">
+                                                <div class="d-flex align-items-center ">
+                                                    <div>
+                                                        <p class="small text-muted mb-1"> Un-Blocking Invoice Number</p>
+                                                        <h6 class="mb-0"> {{packageDetails?.unblockInvoice}}</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-4 col-lg-4">
+                                                <div class="d-flex align-items-center">
+                                                    <div>
+                                                        <p class="small text-muted mb-1"> Un-Blocking Description</p>
+                                                        <h6 class="mb-0"> {{packageDetails?.unblockingDesc}} </h6>
+                                                    </div>
+                                                </div>
+                                            </div> 
+                                            <div class="col-12">
+                                                <hr class="mt-xl-3">
+                                            </div> 
+                                            <div class="col-xl-4 col-lg-4 border-end">
+                                                <div class="d-flex align-items-center">
+                                                    <div>
+                                                        <p class="small text-muted mb-1"> Un-Blocking Verification Mode
+                                                        </p>
+                                                        <h6 class="mb-0"> {{packageDetails?.unblockverificationMode}}
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xl-4 col-lg-4 border-end">
+                                                <div class="d-flex align-items-center ">
+                                                    <div>
+                                                        <p class="small text-muted mb-1"> Un-Blocking Override Code</p>
+                                                        <h6 class="mb-0"> {{packageDetails?.unblockOverrideCode}}</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xl-4 col-lg-4">
+                                                <div class="d-flex align-items-center ">
+                                                    <div>
+                                                        <p class="small text-muted mb-1"> Un-Blocking Verifier Member
+                                                            Name</p>
+                                                        <h6 class="mb-0"> {{packageDetails?.unblockVerifyMemebrName}}
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> 
+
+                                <div class="col-xl-12 col-lg-12 mb-3">
+                                    <div class="border">
+                                        <div class="head-block">
+                                            <h5 class="text-success m-0"> Pre-Auth Details </h5>
+                                        </div>
+
+                                        <div class="row p-3">
+                                            <div class="col-xl-3 col-lg-3">
+                                                <div class="d-flex align-items-center ">
+                                                    <div>
+                                                        <p class="small text-muted mb-1">Request Date</p>
+                                                        <h6 class="mb-0">{{packageDetails?.requestDate}}</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-3 col-lg-3 border-end">
+                                                <div class="d-flex align-items-center ">
+                                                    <div>
+                                                        <p class="small text-muted mb-1"> Hospital Request Amount</p>
+                                                        <h6 class="mb-0"> <span><i
+                                                                    class="bi bi-currency-rupee"></i>{{packageDetails?.requestAmount|
+                                                                currency:"":""}}</span></h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-3 col-lg-3">
+                                                <div class="d-flex align-items-center ">
+                                                    <div>
+                                                        <p class="small text-muted mb-1">Doc 1</p>
+                                                        <span class="icon-pdf" *ngIf="packageDetails?.doc1 != '--'"><a
+                                                                title="PDF File"
+                                                                (click)="download(packageDetails?.doc1,packageDetails?.sDate)"><i
+                                                                    class="bi bi-file-earmark-pdf me-2"></i></a></span>
+                                                        <h6 class="mb-0" *ngIf="packageDetails?.doc1 == '--'">
+                                                            {{packageDetails?.doc1}}</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-3 col-lg-3">
+                                                <div class="d-flex align-items-center ">
+                                                    <div>
+                                                        <p class="small text-muted mb-1"> Insuffient Amount</p>
+                                                        <h6 class="mb-0"><span><i
+                                                                    class="bi bi-currency-rupee"></i>{{packageDetails?.insufficientAmount
+                                                                | currency:"":""}}</span></h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <hr class="mt-xl-3">
+                                            </div> 
+                                            <div class="col-xl-3 col-lg-3 border-end">
+                                                <div class="d-flex align-items-center ">
+                                                    <div>
+                                                        <p class="small text-muted mb-1">Request Desc</p>
+                                                        <h6 class="mb-0"> {{packageDetails?.requestDesc}}</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-3 col-lg-3 border-end">
+                                                <div class="d-flex align-items-center">
+                                                    <div>
+                                                        <p class="small text-muted mb-1"> SNA Approved Amount</p>
+                                                        <h6 class="mb-0"> <span><i class="bi bi-currency-rupee"></i>
+                                                                {{packageDetails?.approvedAmount|
+                                                                currency:"":""}}</span> </h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-3 col-lg-3 border-end">
+                                                <div class="d-flex align-items-center ">
+                                                    <div>
+                                                        <p class="small text-muted mb-1">Approved Date</p>
+                                                        <h6 class="mb-0"> {{packageDetails?.approvedDate}}</h6>
+                                                    </div>
+                                                </div>
+                                            </div> 
+
+                                            <div class="col-12">
+                                                <hr class="mt-xl-3">
+                                            </div> 
+                                            <div class="col-xl-6 col-lg-3 border-end">
+                                                <div class="d-flex align-items-center ">
+                                                    <div>
+                                                        <p class="small text-muted mb-1"> SNA Description </p>
+                                                        <h6 class="mb-0"> {{packageDetails?.snaDescription}}</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-6 col-lg-3 border-end">
+                                                <div class="d-flex align-items-center ">
+                                                    <div>
+                                                        <p class="small text-muted mb-1"> SNA Remark </p>
+                                                        <h6 class="mb-0"> {{packageDetails?.snaRemark}}</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-12">
+                                                <hr class="mt-xl-3">
+                                            </div>
+
+                                            <div class="col-xl-6 col-lg-3">
+                                                <div class="d-flex align-items-center ">
+                                                    <div>
+                                                        <p class="small text-muted mb-1">First Query Date</p>
+                                                        <h6 class="mb-0"> {{packageDetails?.query1Date}}</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xl-3 col-lg-3 border-end">
+                                                <div class="d-flex align-items-center ">
+                                                    <div>
+                                                        <p class="small text-muted mb-1"> SNA Description for First
+                                                            Query</p>
+                                                        <h6 class="mb-0"> {{packageDetails?.moreDocsDesc}}</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12">
+                                                <hr class="mt-xl-3">
+                                            </div>
+
+                                            <div class="col-xl-3 col-lg-3 border-end">
+                                                <div class="d-flex align-items-center">
+                                                    <div>
+                                                        <p class="small text-muted mb-1">First Query Replay Date </p>
+                                                        <h6 class="mb-0"> {{packageDetails?.queryReplayByHosDate1}}
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xl-3 col-lg-3 border-end">
+                                                <div class="d-flex align-items-center ">
+                                                    <div>
+                                                        <p class="small text-muted mb-1">First Query Replay By Hospital
+                                                        </p>
+                                                        <h6 class="mb-0"> {{packageDetails?.queryReplayByHos1}}</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xl-3 col-lg-3 border-end">
+                                                <div class="d-flex align-items-center ">
+                                                    <div>
+                                                        <p class="small text-muted mb-1">Doc 2</p>
+                                                        <span class="icon-pdf" *ngIf="packageDetails?.doc2 != '--'"><a
+                                                                title="PDF File"
+                                                                (click)="download(packageDetails?.doc2,packageDetails?.sDate)"><i
+                                                                    class="bi bi-file-earmark-pdf me-2"></i></a></span>
+                                                        <h6 class="mb-0" *ngIf="packageDetails?.doc2 == '--'">
+                                                            {{packageDetails?.doc2}}</h6>
+                                                    </div>
+                                                </div>
+                                            </div> 
+                                            <div class="col-12">
+                                                <hr class="mt-xl-3">
+                                            </div> 
+                                            <div class="col-xl-6 col-lg-3">
+                                                <div class="d-flex align-items-center">
+                                                    <div>
+                                                        <p class="small text-muted mb-1">Second Query Date</p>
+                                                        <h6 class="mb-0"> {{packageDetails?.query2Date}} </h6>
+                                                    </div>
+                                                </div>
+                                            </div> 
+                                            <div class="col-xl-6 col-lg-3 border-end">
+                                                <div class="d-flex align-items-center ">
+                                                    <div>
+                                                        <p class="small text-muted mb-1"> SNA Description for Second
+                                                            Query</p>
+                                                        <h6 class="mb-0"> {{packageDetails?.moreDocsDesc2}}</h6>
+                                                    </div>
+                                                </div>
+                                            </div> 
+                                            <div class="col-12">
+                                                <hr class="mt-xl-3">
+                                            </div> 
+                                            <div class="col-xl-3 col-lg-3 border-end">
+                                                <div class="d-flex align-items-center ">
+                                                    <div>
+                                                        <p class="small text-muted mb-1">Second Query Replay Date</p>
+                                                        <h6 class="mb-0"> {{packageDetails?.queryReplayByHosDate2}}</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-3 col-lg-3 border-end">
+                                                <div class="d-flex align-items-center ">
+                                                    <div>
+                                                        <p class="small text-muted mb-1">Second Query Replay By Hospital
+                                                        </p>
+                                                        <h6 class="mb-0"> {{packageDetails?.queryReplayByHos2}}</h6>
+                                                    </div>
+                                                </div>
+                                            </div> 
+                                            <div class="col-xl-3 col-lg-3 border-end">
+                                                <div class="d-flex align-items-center">
+                                                    <div>
+                                                        <p class="small text-muted mb-1">Doc 3</p>
+                                                        <span class="icon-pdf" *ngIf="packageDetails?.doc3 != '--'"><a
+                                                                title="PDF File"
+                                                                (click)="download(packageDetails?.doc3,packageDetails?.sDate)"><i
+                                                                    class="bi bi-file-earmark-pdf me-2"></i></a></span>
+                                                        <h6 class="mb-0" *ngIf="packageDetails?.doc3 == '--'">
+                                                            {{packageDetails?.doc3}}</h6>
+                                                    </div>
+                                                </div>
+                                            </div> 
+                                        </div>  
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>
+                    </div> 
+                    <!-- <div  class="col-xxl-12 col-xl-12 col-lg-12">
+                       <div  class="card-header border-top card_bg bg-success text-white">
+                         <h5  class="mb-0"> Pre-auth Details </h5>
+                      </div>
+                      <div class="card-body">
+                         <table  width="100%" class="table table-striped border mb-0 pt-0">
+                            <thead >
+                               <tr >
+                                  <th  align="left" class="text-start titletxt"> Package Details </th>
+                                  <th  align="right" class="text-end titletxt"> Unit </th>
+                                  <th  align="right" class="text-end titletxt"> Price/Unit </th>
+                                  <th  align="right" class="text-end titletxt"> Total Price </th>
+                               </tr>
+                            </thead>
+                            <tbody >
+                               <tr>
+                                  <td colspan="4" class="text-center bg_hed"> <b> Implant </b> </td>
+                               </tr>
+                               <tr *ngFor="let item of implantInfoArray; index as i">
+                                  <td  class="hidtbl-th pl-0 py-2">
+                                     <div  class="mb-2"> {{item.implantName}}</div> 
+                                  </td> 
+                                  <td  align="right" class="hidtbl-th pl-0"> {{item.unit}} </td>
+                                  <td  align="right" class="hidtbl-th pl-0">
+                                     <span ><i  class="bi bi-currency-rupee"></i>{{item.unitPerPrice | currency:"":""}}</span>
+                                  </td>
+                                  <td  align="right" class="hidtbl-th pl-0">
+                                     <span ><i  class="bi bi-currency-rupee"></i>{{item.amount | currency:"":""}}</span>
+                                  </td>
+                               </tr> 
+                               <tr>
+                                  <td colspan="4" class="text-center bg_hed"> <b> HighendDrugs </b> </td>
+                               </tr> 
+                               <tr *ngFor="let item of hedInfoArray; index as i"> 
+                                  <td  class=" pl-0 py-2">
+                                     <div  class="mb-2"> {{item.hedName}}</div> 
+                                  </td>
+                                  <td  align="right" class=" pl-0">
+                                     {{item.hedUnit}}
+                                  </td>
+                                  <td  align="right" class=" pl-0">
+                                     <span ><i  class="bi bi-currency-rupee"></i>{{item.hedpricePerUnit| currency:"":""}}</span>
+                                  </td>
+                                  <td  align="right" class=" pl-0">
+                                     <span ><i  class="bi bi-currency-rupee"></i>{{item.hedPrice | currency:"":""}}</span>
+                                  </td>
+                               </tr> 
+                                <tr >
+                                  <td  colspan="3" class="border-bottom-0 pl-0 pb-0">
+                                     <div  class="color-hed mb-2"> Total Package Cost </div>
+                                  </td>
+                                  <td  align="right" class="border-bottom-0 pl-0 pb-0">
+                                     <span ><i  class="bi bi-currency-rupee"></i><b>{{balanceInfo?.totalPackageCost | currency:"":""}}</b></span>                                  </td>
+                               </tr>
+                               <tr >
+                                  <td  colspan="3" class="border-bottom-0 pl-0 pb-0">
+                                     <div  class="color-hed mb-2"> Family Available Fund </div>
+                                  </td>
+                                  <td  align="right" class="border-bottom-0 pl-0 pb-0"><span ><i  class="bi bi-currency-rupee"></i><b>{{balanceInfo?.familyFund | currency:"":""}}</b></span></td>
+                               </tr>
+                               <tr >
+                                  <td  colspan="3" class="border-bottom-0 pl-0 pb-0">
+                                     <div  class="color-hed mb-2"> Female Available Fund  </div>
+                                  </td>
+                                  <td  align="right" class="border-bottom-0 pl-0 pb-0"><span ><i  class="bi bi-currency-rupee"></i><b>{{balanceInfo?.femaleFund | currency:"":""}}</b></span></td>
+                               </tr>
+                               <tr >
+                                  <td  colspan="3" class="border-bottom-0 pl-0 pb-0">
+                                     <div  class="color-hed mb-2"> Insufficient Amount </div>
+                                  </td>
+                                  <td  align="right" class="border-bottom-0 pl-0 pb-0"><span ><i  class="bi bi-currency-rupee"></i><b>{{balanceInfo?.insuffientFund | currency:"":""}}</b></span></td>
+                               </tr>
+                            </tbody>
+                         </table>
+                      </div>
+
+                    </div> -->
+
+                </div>
+
+            </div>
+
+
+            <!-- Implant Details --> 
+            <div class="card shadow-sm basic-info mb-4">
+                <div class="card-header border-top card_bg bg-success text-white">
+                    <h5 class="mb-0"> Implant Details</h5>
+                </div>
+                <div class="card-body">
+                    <table width="100%" class="table table-striped border mb-3 pt-0">
+                        <thead>
+                            <tr>
+                                <th align="left" width="30%" class="text-start titletxt"> Implant Name </th>
+                                <th align="right" width="20%" class="text-end titletxt"> Unit </th>
+                                <th align="right" width="25%" class="text-end titletxt"> Price/Unit </th>
+                                <th align="right" width="25%" class="text-end titletxt"> Total price </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of implantInfoArray; index as i">
+                                <td align="left" class="hidtbl-th pl-0"> {{item.implantName}}</td>
+                                <td align="right" class="hidtbl-th pl-0"> {{item.unit}} </td>
+                                <td align="right" class="hidtbl-th pl-0"> {{item.unitPerPrice | currency:"":""}}</td>
+                                <td align="right" class="hidtbl-th pl-0"> {{item.amount | currency:"":""}} </td>
+                            </tr> 
+                        </tbody>
+                    </table> 
+                </div>
+            </div>
+
+            <!-- Implant Details -->
+
+
+            <!-- HighendDrugs Details -->
+
+            <div class="card shadow-sm basic-info mb-4">
+                <div class="card-header border-top card_bg bg-success text-white">
+                    <h5 class="mb-0"> HighendDrugs Details</h5>
+                </div>
+                <div class="card-body">
+
+                    <table width="100%" class="table table-striped border mb-0 pt-0">
+                        <thead>
+                            <tr>
+                                <th align="left" width="30%" class="text-start titletxt"> HighendDrugs Name </th>
+                                <th align="right" width="20%" class="text-end titletxt"> Unit </th>
+                                <th align="right" width="25%" class="text-end titletxt"> Price/Unit </th>
+                                <th align="right" width="25%" class="text-end titletxt"> Total price </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of hedInfoArray; index as i">
+                                <td align="left" class="hidtbl-th pl-0"> {{item.hedName}} </td>
+                                <td align="right" class="hidtbl-th pl-0"> {{item.hedUnit}} </td>
+                                <td align="right" class="hidtbl-th pl-0"> {{item.hedpricePerUnit| currency:"":""}} </td>
+                                <td align="right" class="hidtbl-th pl-0"> {{item.hedPrice | currency:"":""}} </td>
+                            </tr> 
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+            <!-- HighendDrugs Details -->
+
+
+            <!-- Ward Information -->
+            <div class="card shadow-sm basic-info mb-4">
+                <div class="card-header border-top card_bg bg-success text-white">
+                    <h5 class="mb-0">Ward Information</h5>
+                </div>
+                <div class="card-body">
+                    <table width="100%" class="table table-striped border mb-0 pt-0">
+                        <thead>
+                            <tr>
+                                <th align="left" class="text-start titletxt"> Ward Name </th>
+                                <th align="right" class="text-end titletxt"> Ward Amount </th>
+                                <th align="right" class="text-end titletxt"> Ward Block Date </th>
+                                <th align="right" class="text-end titletxt"> Status </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of wardInfoArray; index as i">
+                                <td class="hidtbl-th pl-0 py-2">
+                                    <div class="mb-2"> {{item.wardName}}</div>
+                                </td>
+                                <td align="right" class="hidtbl-th pl-0"> {{item.wardAmount}} </td>
+                                <td align="right" class="hidtbl-th pl-0"> {{item.wardBlockDate}} </td>
+                                <td align="right" class="hidtbl-th pl-0"> {{item.preAuthStatus}} </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- Ward Information --> 
+            <!-- Vital Information -->
+            <div class="card shadow-sm basic-info mb-4">
+                <div class="card-header border-top card_bg bg-success text-white">
+                    <h5 class="mb-0">Vital Information</h5>
+                </div>
+
+                <div class="card-body">
+                    <table width="100%" class="table table-striped border mb-0 pt-0">
+                        <thead>
+                            <tr>
+                                <th align="left" class="text-start titletxt" width="20%"> Vital Sign </th>
+                                <th class="text-start titletxt" width="80%"> Value </th>
+                                <!-- <th  align="right" class="text-end titletxt"> Ward Block Date </th> 
+                                    <th  align="right" class="text-end titletxt"> Status </th>      -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of vitalInfoArray; index as i">
+                                <td class="hidtbl-th pl-0 py-2">
+                                    <div class="mb-2"> {{item.vitalSign}}</div>
+                                </td>
+                                <td class="hidtbl-th pl-0"> {{item.vitalValue}} </td>
+                                <!-- <td  align="right" class="hidtbl-th pl-0"> {{item.wardBlockDate}} </td> 
+                                    <td  align="right" class="hidtbl-th pl-0"> {{item.preAuthStatus}} </td>  -->
+                            </tr>
+                        </tbody>
+                    </table>
+                </div> 
+            </div> 
+        </div>
+    </div> 
+</div>

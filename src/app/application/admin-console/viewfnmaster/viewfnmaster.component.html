@@ -1,0 +1,102 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+    <div class="row justify-content-between">
+      <div class="col-lg-4">
+        <ul class="nav nav-tabs ">
+          <li class="nav-item">
+            <a routerLink="/application/functionmaster" routerLinkActive="active" class="nav-link " style="color: green;">Add</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/application/viewfnmaster" routerLinkActive="active" class="nav-link active">View</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-lg-6 ">
+        <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-3" style="margin-top: 2ch;">
+        <div class="col-sm-*" *ngIf="showPegi">
+          show
+          <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+            <option value="20">20</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+            <option value={{countfunctionmaster}}>ALL</option>
+          </select> entries
+        </div>
+      </div>
+      <div class="col-4" style="margin-top: 2ch;">
+        <b>Total Function Master : {{countfunctionmaster}}</b>
+      </div>
+      <div class="col-5">
+        <input type="text " id="txtsearchDate " name="txtsearchDate " [(ngModel)]="txtsearchDate" maxlength="20 "
+          class="form-control " placeholder="Search here...... " autocomplete="off"
+          style=" margin-right: 0px; margin-left: 0px;">
+      </div>
+    </div>
+    <br>
+    <div class="table-responsive">
+      <table class="table table-striped mb-0">
+        <thead>
+          <tr>
+            <th width="50">Sl#</th>
+            <th>Function Name</th>
+            <th>Function Url</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th width="100">Action</th>
+          </tr>
+        </thead>
+        <tbody
+          *ngFor="let v of functionmaster | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage},index as i">
+          <tr>
+            <td *ngIf="currentPage==1 ">{{(i+1)}}</td>
+            <td *ngIf="currentPage!=1 ">{{(currentPage-1)*pageElement+ i+1}}</td>
+            <td>{{v.functionName}}</td>
+            <td> {{v.fileName}} </td>
+            <td> {{v.description}} </td>
+            <td>
+              <p *ngIf="v.bitStatus==0">Active</p>
+              <p *ngIf="v.bitStatus==1">In-Active</p>
+            </td>
+            <td>
+              <a class="btn btn-outline-primary btn-sm me-1" (click)="edit(v.functionId)"><i
+                  class="bi bi-pencil"></i></a>
+              <!--div *ngIf="v.bitStatus==0">
+                  <a class="btn btn-outline-primary btn-sm me-1" (click)="edit(v.functionId)"><i class="bi bi-pencil"></i></a>
+                <a class="btn btn-outline-danger btn-sm" (click)="delete(v.functionId)" ><i class="bi bi-trash3" ></i></a>
+              </div>
+              <div *ngIf="v.bitStatus==1">
+                <a class="btn btn-outline-primary btn-sm me-1" (click)="edit(v.functionId)"><i class="bi bi-pencil"></i></a>
+                <a class="btn btn-outline-danger btn-sm"  ><i class="bi bi-trash3" ></i></a>
+              </div-->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+  <div class="row" *ngIf="showPegi">
+    <div class="col-sm-4">
+      <div class="col-sm-*">
+        show
+        <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+          <option value="20">20</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+          <option value={{countfunctionmaster}}>ALL</option>
+        </select> entries
+      </div>
+    </div>
+    <div class="col-sm-8 text-right">
+      <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true"
+        (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)">
+      </pagination-controls>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,229 @@
+<nav id="sidebar" class="sidebar">
+    <a class="sidebar-brand d-inline-flex align-items-center" routerLink="dashboard">
+        <img src="./assets/img/bsky-logo.png" alt="GJAY" class="me-1 me-lg-3">
+        <span class="align-middle">BSKY </span>
+    </a>
+    <div class="sidebar-content py-2 scrollsidebar">
+        <ul class="sidebar-nav">
+            <li class="sidebar-item" routerLinkActive="active">
+                <a class="sidebar-link" routerLink="dashboard">
+                    <i class="bi bi-speedometer2"></i> <span class="align-middle">Dashboard</span>
+                </a>
+            </li>
+
+            <li class="sidebar-item" routerLinkActive="active" *ngIf="isHospital">
+                <a data-bs-target="#claimMontor" data-bs-toggle="collapse" class="sidebar-link collapsed" routerLinkActive="active" (click)="$event.stopPropagation();">
+                    <i class="bi bi-journal-check"></i> <span class="align-middle">Claim Monitoring</span> </a>
+                <ul id="claimMontor" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                    <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="claimraise" routerLinkActive="active">Claim to Raise</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="RejectedClaim" routerLinkActive="active">Non Uploading Initial Document</a></li>
+                    <!-- <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="query" routerLinkActive="active">Query</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="paid" routerLinkActive="active">Paid Status</a></li> -->
+                    <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="/application/claimsqueriedbySNO" routerLinkActive="active">Claims Queried by SNA</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="/application/SNARejectedlist" routerLinkActive="active">Non compliance of Query-SNA</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="claimquerybycpd" routerLinkActive="active">Claims Queried By CPD</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="CPDRejectedlist" routerLinkActive="active">Non compliance of Query-CPD</a></li>
+                    <!-- <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="/application/claimReport" routerLinkActive="active">Hospital Claim Report</a></li> -->
+                    <!-- <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="/application/trackingdetails" routerLinkActive="active">Hospital Tracking Report</a></li> -->
+                    <!-- <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="claimquerybycpd" routerLinkActive="active">Claims Queried By CPD</a></li> -->
+                    <!-- <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="/application/claimReport" routerLinkActive="active">Hospital Claims Report</a></li> -->
+                    <!-- <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="/application/hospitalactivity" routerLinkActive="active">Hospital Activity</a></li> -->
+                    <!-- <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="/application/snoapproval" routerLinkActive="active">CPD/SNO Doctor Approval</a></li> -->
+                </ul>
+            </li>
+            <li class="sidebar-item" routerLinkActive="active" *ngIf="isMISREport">
+                <a data-bs-target="#claim" data-bs-toggle="collapse" class="sidebar-link collapsed" routerLinkActive="active" (click)="$event.stopPropagation();">
+                    <i class="bi bi-journal-check"></i> <span class="align-middle">MIS Report</span> </a>
+                <ul id="claim" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                    <!-- <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="/application/claimReport" routerLinkActive="active">Hospital Claims Report</a></li> -->
+                    <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="/application/trackingdetails" routerLinkActive="active">Claim Tracking Report</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="/application/claimReport" routerLinkActive="active">Claims Report</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="ClaimPaidReport" routerLinkActive="active">Claim Paid Report</a></li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" routerLink="DischargeReport" routerLinkActive="active">Discharge List Report</a>
+                    </li>
+
+                </ul>
+            </li>
+            <li class="sidebar-item" routerLinkActive="active" *ngIf="isCpd">
+                <a data-bs-target="#cpdClaimMng" data-bs-toggle="collapse" class="sidebar-link collapsed" routerLinkActive="active" (click)="$event.stopPropagation();">
+                    <i class="bi bi-journal-check"></i> <span class="align-middle">CPD Claim Management</span> </a>
+                <ul id="cpdClaimMng" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                    <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="/application/cpdapproval" routerLinkActive="active">CPD Approval</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="/application/cpdreapproval" routerLinkActive="active">CPD Re-settlement</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="/application/cpdrevert" routerLinkActive="active">SNA Reverted</a></li>
+                </ul>
+            </li>
+            <li class="sidebar-item" routerLinkActive="active" *ngIf="isCpd">
+                <a data-bs-target="#misreportcpd" data-bs-toggle="collapse" class="sidebar-link collapsed" routerLinkActive="active" (click)="$event.stopPropagation();">
+                    <i class="bi bi-journal-check"></i> <span class="align-middle">MIS Report</span> </a>
+                <ul id="misreportcpd" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                    <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="/application/cpdReport" routerLinkActive="active">CPD Action List</a></li>
+                </ul>
+            </li>
+
+            <li class="sidebar-item" routerLinkActive="active" *ngIf="isCpd">
+                <a data-bs-target="#hrforcpd" data-bs-toggle="collapse" class="sidebar-link collapsed" routerLinkActive="active" (click)="$event.stopPropagation();">
+                    <i class="bi bi-journal-check"></i> <span class="align-middle">HR</span> </a>
+                <ul id="hrforcpd" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                    <!-- <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="/application/cpdapproval" routerLinkActive="active">leave Apply</a></li> -->
+                    <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="/application/cpdleaveapply" routerLinkActive="active">Leave Apply</a></li>
+                </ul>
+            </li>
+            <li class="sidebar-item" routerLinkActive="active" *ngIf="isSna">
+                <a data-bs-target="#snoClaimMng" data-bs-toggle="collapse" class="sidebar-link collapsed" routerLinkActive="active" (click)="$event.stopPropagation();">
+                    <i class="bi bi-journal-check"></i> <span class="align-middle">SNA Claim Management</span> </a>
+                <ul id="snoClaimMng" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                    <li class="sidebar-item"><a class="sidebar-link" routerLink="/application/snoapproval" routerLinkActive="active">CPD Approved</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link" routerLink="/application/snoreapproval" routerLinkActive="active">SNA Re-settlement</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link" routerLink="/application/cpdrejected" routerLinkActive="active">CPD Rejected</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link" routerLink="snabulkapproval" routerLinkActive="active">SNA Bulk Approve</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link" routerLink="/application/unProcessedClaimList" routerLinkActive="active">Unprocessed Claim </a></li>
+                    <li class="sidebar-item"><a class="sidebar-link" routerLink="SystemRejectedClaimRequest" routerLinkActive="active">System Rejected Request</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link" routerLink="Non-complianceQueryRequest" routerLinkActive="active">Non-compliance Query Request</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link" routerLink="paymentfreeze" routerLinkActive="active">Payment Freeze</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link" routerLink="snarejetedlist" routerLinkActive="active">SNA Rejected</a></li>
+
+
+
+                </ul>
+            </li>
+            <li class="sidebar-item" routerLinkActive="active" *ngIf="isSna">
+                <a data-bs-target="#misReport" data-bs-toggle="collapse" class="sidebar-link collapsed" routerLinkActive="active" (click)="$event.stopPropagation();">
+                    <i class="bi bi-flag"></i> <span class="align-middle">Reports</span> </a>
+                <ul id="misReport" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                    <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="/application/snaReport" routerLinkActive="active">SNA Action List</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="claimActionCount" routerLinkActive="active">Claim Action Count List</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="DischargeReport" routerLinkActive="active">Discharge List Report</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="sysrejectedreports" routerLinkActive="active">Systen Rejected Report</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="snadischargereport" routerLinkActive="active">SNA Discharge Report</a></li>
+
+                  </ul>
+            </li>
+            <li class="sidebar-item" routerLinkActive="active" *ngIf="isSna">
+                <a data-bs-target="#hrforsno" data-bs-toggle="collapse" class="sidebar-link collapsed" routerLinkActive="active" (click)="$event.stopPropagation();">
+                    <i class="bi bi-flag"></i> <span class="align-middle">HR</span> </a>
+                <ul id="hrforsno" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                    <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="/application/cpdleaveapprove" routerLinkActive="active">CPD Leave Approve</a></li>
+                </ul>
+            </li>
+            <li class="sidebar-item" routerLinkActive="active" *ngIf="isDc">
+                <a data-bs-target="#dcClaimMng" data-bs-toggle="collapse" class="sidebar-link collapsed" routerLinkActive="active" (click)="$event.stopPropagation();">
+                    <i class="bi bi-journal-check"></i> <span class="align-middle">DC Claim Management</span> </a>
+                <ul id="dcClaimMng" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                    <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="/application/dcapproval" routerLinkActive="active">DC Approval</a></li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" routerLink="DischargeReport" routerLinkActive="active">Discharge List Report</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="sidebar-item" routerLinkActive="active">
+                <li class="sidebar-item" routerLinkActive="active" *ngIf="isAdmin">
+                    <a data-bs-target="#admin" data-bs-toggle="collapse" class="sidebar-link collapsed" routerLinkActive="active" (click)="$event.stopPropagation();">
+                        <i class="bi bi-person-plus"></i> <span class="align-middle">Admin</span> </a>
+                    <ul id="admin" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+
+                        <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="userGroup" routerLinkActive="active">Create Group</a></li>
+                        <!-- <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="creategroup" routerLinkActive="active">Create Group</a></li> -->
+                        <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="grouptype" routerLinkActive="active">Create Group-Type</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="userSubGroup" routerLinkActive="active">Create Sub-Group</a></li>
+                        <!--li class="sidebar-item"><a class="sidebar-link lnk" routerLink="createsno" routerLinkActive="active">Create SNA User</a></li-->
+                        <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="createuser" routerLinkActive="active">Create User</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="createcpd" routerLinkActive="active">Create CPD User</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="userhospital" routerLinkActive="active">Create Hospital</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="snoConfiguration" routerLinkActive="active">SNA Configuration</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="cpdConfiguration" routerLinkActive="active">CPD Configuration</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="dcConfiguration" routerLinkActive="active">DC Configuration</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="functionmaster" routerLinkActive="active">Function Master</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="globallink" routerLinkActive="active">Global Link</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="primarylink" routerLinkActive="active">Primary Link</a></li>
+                        <!-- <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="creategroup" routerLinkActive="active">Create Group</a></li>
+                            -->
+
+                        <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="userMenuMapping" routerLinkActive="active">User Menu Mapping</a></li>
+                        <!--li class="sidebar-item"><a class="sidebar-link lnk" routerLink="createuser" routerLinkActive="active">User Master</a></li-->
+                        <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="userInactive" routerLinkActive="active">User Inactive</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="ResetPassword" routerLinkActive="active">Reset Password</a></li>
+
+                    </ul>
+                </li>
+                <!-- <li class="sidebar-item" routerLinkActive="active" *ngIf="isAdmin">
+                    <a data-bs-target="#misReport" data-bs-toggle="collapse" class="sidebar-link collapsed" routerLinkActive="active" (click)="$event.stopPropagation();">
+                        <i class="bi bi-flag"></i> <span class="align-middle">Reports</span> </a>
+                    <ul id="misReport" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="dischargeclaim" routerLinkActive="active">District Wise Discharge</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="categorywisetreat" routerLinkActive="active">Category Wise Treatment</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="multiplepackage" routerLinkActive="active">Multiple Package Blocking</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="ongoingicu" routerLinkActive="active">Ongoing ICU Treatment</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="hospitalwisepaid" routerLinkActive="active">Hospital Wise paid Claim</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="treamentHistoryPerUrn" routerLinkActive="active">Search by URN</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="userGroup" routerLinkActive="active">Create Group</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="grouptype" routerLinkActive="active">Create Group-Type</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="userSubGroup" routerLinkActive="active">Create Sub-Group</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="createsno" routerLinkActive="active">Create SNA User</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="createcpd" routerLinkActive="active">Create CPD User</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="snoConfiguration" routerLinkActive="active">SNA Configuration</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="cpdConfiguration" routerLinkActive="active">CPD Configuration</a></li>
+                    </ul>
+                </li> -->
+                <li class="sidebar-item" routerLinkActive="active" *ngIf="isAdmin">
+                    <a data-bs-target="#misReport" data-bs-toggle="collapse" class="sidebar-link collapsed" routerLinkActive="active" (click)="$event.stopPropagation();">
+                        <i class="bi bi-flag"></i> <span class="align-middle">Reports</span> </a>
+                    <ul id="misReport" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="dischargeclaim" routerLinkActive="active">District Wise Discharge</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="categorywisetreat" routerLinkActive="active">Category Wise Treatment</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="multiplepackage" routerLinkActive="active">Multiple Package Blocking</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="ongoingicu" routerLinkActive="active">Ongoing ICU Treatment</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="hospitalwisepaid" routerLinkActive="active">Hospital Wise paid Claim</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="treamentHistoryPerUrn" routerLinkActive="active">Search by URN</a></li>
+
+                        <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="serchbypackage" routerLinkActive="active">Search by Urn and Package</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="actiontaken" routerLinkActive="active">Claim Action List</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="claimActionCount" routerLinkActive="active">Claim Action Count List</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="claimtrackingreport" routerLinkActive="active">Claim Tracking List</a></li>
+
+                    </ul>
+                </li>
+                <!-- <li class="sidebar-item" routerLinkActive="active">
+                <a data-bs-target="#hospitalProfile" data-bs-toggle="collapse" class="sidebar-link collapsed">
+                    <i class="bi bi-hospital"></i> <span class="align-middle">Hospital Profile</span> </a>
+                <ul id="hospitalProfile" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                    <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="specialty" routerLinkActive="active">Specialty</a> </li>
+                    <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="medicalstaff" routerLinkActive="active">Medical staff</a></li>
+                </ul>
+            </li> -->
+                <!-- <li class="sidebar-item" routerLinkActive="active">
+                <a class="sidebar-link lnk" routerLink="grievance">
+                    <i class="bi bi-chat-dots"></i> <span class="align-middle">Grievance</span>
+                </a>
+            </li> -->
+                <!-- <li class="sidebar-item" routerLinkActive="active">
+                <a class="sidebar-link lnk" routerLink="createsno">
+                    <i class="bi bi-person"></i> <span class="align-middle">Create SNO User</span>
+                </a>
+            </li>
+            <li class="sidebar-item" routerLinkActive="active">
+                <a class="sidebar-link lnk" routerLink="createcpd">
+                    <i class="bi bi-person"></i> <span class="align-middle">Create CPD User</span>
+                </a>
+            </li> -->
+                <!-- <li class="sidebar-item" routerLinkActive="active">
+                <a class="sidebar-link lnk" routerLink="snoapproval">
+                    <i class="bi bi-person"></i> <span class="align-middle">CPD/SNO Doctor Approval</span>
+                </a>
+            </li> -->
+                <!-- <li class="sidebar-item" routerLinkActive="active">
+                <a class="sidebar-link lnk" routerLink="creategroup">
+                    <i class="bi bi-person"></i> <span class="align-middle">Create Group</span>
+                </a>
+            </li> -->
+                <!-- <li class="sidebar-item" routerLinkActive="active">
+                <a class="sidebar-link lnk" routerLink="demo">
+                    <i class="bi bi-person"></i> <span class="align-middle">Demo Page</span>
+                </a>
+            </li> -->
+        </ul>
+        <div style="height: 25pt;"></div>
+    </div>
+    <app-appfooter></app-appfooter>
+</nav>

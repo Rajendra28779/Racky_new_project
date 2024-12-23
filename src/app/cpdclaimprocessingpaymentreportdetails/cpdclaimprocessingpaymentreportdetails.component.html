@@ -1,0 +1,113 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/cpdclaimprocessingpaymentreportdetails" class="nav-link active">CPD Claim Processing Payment Report Details
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-4">
+        <div class="col-lg-4 col-xxl-4">
+            CPD Name : <strong>{{cpdname}}</strong>
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+            Search By: <strong>{{searchbyName}}</strong>
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+            Year : <strong>{{year}}</strong>
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+            Month : <strong>{{monthnameData}}</strong>
+        </div>
+        <div class="col-lg-4 col-xxl-8">
+            Active Status : <strong>{{cpdstatus}}</strong>
+        </div>
+        <div class="col-lg-4 col-xxl-12">
+            Header Name : <strong>{{reportName}}</strong>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+        <div class="col-lg-8 col-xxl-8 row">
+            <div class="col-md-9">
+                <div style="padding-top: 10px; font-weight: bold; color: green"></div>
+            </div>
+            <div [align]="'start'" class="col-md-3">
+                <button class="btn btn-success" title="Download Excel" (click)="downloadReportExcel()" style="float: right"><i class="bi bi-download" ></i></button>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-xxl-4">
+            <div class="input-group">
+                <input type="text" id="txtsearchDate" class="form-control" autocomplete="off" placeholder="Search" name="txtsearchDate" [(ngModel)]="txtsearchDate">
+            </div>
+        </div>
+    </div>
+    <div class="content-box p-0 overflow-hidden">
+        <div class="table-responsive">
+            <table class="table table-striped mb-0">
+                <thead>
+                    <tr>
+                        <th class="text-center">Sl No.</th>
+                        <th class="text-center">Claim Number</th>
+                        <th class="text-center">Invoice Number</th>
+                        <th class="text-center">URN</th>
+                        <th class="text-center">Patient Name</th>
+                        <th class="text-center">Package Code</th>
+                        <th class="text-center">Actual Date Of Admission</th>
+                        <th class="text-center">Actual Date Of Discharge</th>
+                        <th class="text-center">Action On</th>
+                        <th class="text-center">Claim Submitted Date</th>
+                        <th class="text-center">Claimed Amount(₹)</th>
+                        <th class="text-center">Approved Amount(₹)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let claim of innerdata | filter:txtsearchDate| paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage}; index as i ">
+                        <tr>
+                            <td class="text-center" *ngIf="currentPage==1 ">{{(i+1)}}</td>
+                            <td class="text-center" *ngIf="currentPage!=1 ">{{(currentPage-1)*pageElement+ i+1}}</td>
+                            <td class="text-center">{{claim.claimnumber}}</td>
+                            <td class="text-center">{{claim.invoicenumber}}</td>
+                            <td class="text-center">{{claim.urn}}</td>
+                            <td class="text-center">{{claim.patientname}}</td>
+                            <td class="text-center">{{claim.packagecode}}</td>
+                            <td class="text-center">{{claim.actualdateofadmission | date:'dd-MMM-yyyy'}}</td>
+                            <td class="text-center">{{claim.actualdateofdischarge | date:'dd-MMM-yyyy'}}</td>
+                            <td class="text-center">{{claim.actionon}}</td>
+                            <td class="text-center">{{claim.createdon}}</td>
+                            <td class="text-center">{{claim.totalamountclaimed}}</td>
+                            <td class="text-center">{{claim.approvedamount}}</td>
+                        </tr>
+                    </ng-container>
+                    <tr *ngIf="this.innerdata.length==0">
+                        <td colspan="16">
+                            <p class="mb-0 text-center text-danger fw-bold">NO DATA FOUND!!</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row mt-3" *ngIf="showPegi">
+        <div class="col-sm-4 ">
+            <div class="col-sm-* ">
+                show
+                <select id="pageItem" name="pageItem" class="form-select-sm" (change)="pageItemChange()">
+                    <option value="200">200</option>
+                    <option value="400">400</option>
+                    <option value="800">800</option>
+                    <option value="1000">1000</option>
+                    <option value={{record}}>All</option>
+                </select> entries
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true" (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,104 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+      <div class="row justify-content-between">
+        <div class="col-lg-4">
+          <ul class="nav nav-tabs">
+            <li class="nav-item">
+              <a routerLink="/application/cpdApprovedCase" class="nav-link active">SNA Case Resettlement</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div id="filter" class="searchCriteriaBox bg-light p-3">
+      <div class="row">
+        <div class="col-lg-4 col-xxl-4">
+          <div class="mb-xl-3">
+            <label class="control-label">Actual Date of Discharge From</label><span class="text-danger">*</span>
+            <div class="input-group">
+              <input type="text" onkeydown="return false;" class="form-control border-end-0 datepicker" id="datepicker1"
+                name="fromDate">
+              <label class="input-group-text bg-transparent border-start-0" for="datepicker1"><i
+                  class="iconbsky-calendar"></i> </label>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+          <div class="mb-xl-3">
+            <label class="control-label">Actual Date of Discharge To</label><span class="text-danger">*</span>
+            <div class="input-group">
+              <input type="text" onkeydown="return false;" class="form-control border-end-0 datepicker" id="datepicker2"
+                name="toDate">
+              <label class="input-group-text bg-transparent border-start-0" for="datepicker2"><i
+                  class="iconbsky-calendar"></i> </label>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+          <div class="mb-xl-3">
+            <label class="control-label">Case No</label>
+            <div class="input-group">
+              <input type="text" class="form-control border-end-0" id="caseNo"
+                name="caseNo">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col align-self-end">
+          <div class="col-lg-12">
+            <button type="submit" class="btn btn-success" (click)="onClickSearch()">Search</button> &nbsp;
+            <button type="submit" class="btn btn-secondary" (click)="ResetField()">Reset</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body" *ngIf="show">
+      <div class="table-responsive treatment-history-table-class">
+        <table aria-describedby="cardBalanceDetails" class="table mb-0 border" style="width: 100%">
+          <thead class="bgcolor-th">
+            <tr>
+              <th>Sl#</th>
+              <th>Case No.</th>
+              <th>URN</th>
+              <th>Patient Name</th>
+              <th>Hospital</th>
+              <th>Allocate Date</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let case of allocateCaseList | paginate:
+            {id: 'listing_pagination', itemsPerPage:pageElement,  currentPage: currentPage } ; let i = index">
+              <td>{{ i+1 }}</td>
+              <td>{{ case?.caseNo }}</td>
+              <td>{{ case?.urn }}</td>
+              <td>{{ case?.patientName }}</td>
+              <td>{{ case?.hospitalName }}</td>
+              <td>{{ case?.allocateDate }}</td>
+              <td><a class="btn btn-outline-success btn-sm" (click)="onAction(case.caseId,case.urn,case.caseNo)">Action
+                </a></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="row mt-2 col-xl-12" *ngIf="showPagination">
+          <div class="col-lg-2">
+            <div class="col-sm-*">
+              Show
+              <select id="pageItem" name="pageItem" class="custom-select-sm" (change)="pageItemChange()">
+                <option value="100">100</option>
+                <option value="200">200</option>
+                <option value="500">500</option>
+                <option value="{{allocateCaseList.length}}">All</option>
+              </select>
+              Entries
+            </div>
+          </div>
+          <div class="col-lg-10 text-end">
+            <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true"
+              (pageChange)="pageChange($event)"></pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

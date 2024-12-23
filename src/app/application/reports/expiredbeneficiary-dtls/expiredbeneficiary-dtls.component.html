@@ -1,0 +1,1351 @@
+<div class="container-fluid">
+    <div class="form-cointainer">
+        <div class="main-tab">
+            <div class="row justify-content-between">
+                <div class="col-lg-4">
+                    <ul class="nav nav-tabs">
+                        <!-- <li class="nav-item">
+                            <a class="nav-link active">Expired Beneficiary
+                                Details</a>
+                        </li> -->
+                        <li class="nav-item">
+                            <a routerLink="/application/expiredbeneficiaryreport/expiredbeneficiarydetails"  routerLinkActive="active" class="nav-link active">Expired Beneficiary
+                                Details</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 col-xl-12 col-xxl-12">
+            <div class="row mt-4">
+                <div class="col-lg-12 accordion">
+
+
+
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Case Number:-{{basicinformationObj?.caseno}}</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Claim Submitted
+                            On:-{{basicinformationObj?.claimSubmittedOn| date :'dd-MMM-yyyy, h:mm:ss a'}}</h5>
+
+                        <span>
+                            <app-utilite (click)="goBackToPrevPage()"></app-utilite>
+                        </span>
+                            <!-- <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite> -->
+                    </div>
+
+                    <div class="card shadow-sm treatment-history">
+                        <div class="accordion-item" id="headingThree">
+                            <div class="accordion-button collapsed card-header bg-color text-white text-bg-success"
+                                data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false"
+                                aria-controls="collapseTwo" style="height: 40px;">
+                                <h5>Basic Information:-</h5>
+                            </div>
+                            <div id="collapseThree" class="accordion-collapse collapse show"
+                                aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                                <div class="card-body">
+                                    <div class="col-lg-12 col-xl-12 col-xxl-12 mb-4">
+                                        <div class="card shadow-sm basic-info">
+                                            <div class="card-header bg-color text-black">
+                                                <h5 class="mb-0"> Hospital Information</h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row treatment-details">
+                                                    <div class="col-xl-4 col-lg-4">
+                                                        <div class="d-flex align-items-center  border-end">
+                                                            <div>
+                                                                <p class="small text-muted mb-1">Hospital Name</p>
+                                                                <h6 class="mb-0"> {{basicinformationObj?.hospitalName}}
+                                                                </h6>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-2 col-lg-2">
+                                                        <div class="d-flex align-items-center  border-end">
+                                                            <div>
+                                                                <p class="small text-muted mb-1">Hospital Code</p>
+                                                                <h6 class="mb-0"> {{basicinformationObj?.hospitalCode }}
+                                                                </h6>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-3 col-lg-3">
+                                                        <div class="d-flex align-items-center border-end">
+                                                            <div>
+                                                                <p class="small text-muted mb-1">URN</p>
+                                                                <h6 class="mb-0"> {{basicinformationObj?.urn}} </h6>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-3 col-lg-3">
+                                                        <div class="d-flex align-items-center">
+                                                            <div>
+                                                                <p class="small text-muted mb-1">Invoice Number</p>
+                                                                <h6 class="mb-0"> {{basicinformationObj?.invoiceNumber}}
+                                                                </h6>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <hr class="mt-xl-3">
+                                                    </div>
+                                                    <div class="col-xl-4 col-lg-4">
+                                                        <div class="d-flex align-items-center  border-end">
+                                                            <div>
+                                                                <p class="small text-muted mb-1">Claim Number</p>
+                                                                <h6 class="mb-0"> {{basicinformationObj?.claimNo}} </h6>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-2 col-lg-4">
+                                                        <div class="d-flex align-items-center  border-end">
+                                                            <div>
+                                                                <p class="small text-muted mb-1">Patient Name</p>
+                                                                <h6 class="mb-0"> {{basicinformationObj?.patientName}}
+                                                                </h6>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-2 col-lg-4">
+                                                        <div class="d-flex align-items-center  border-end ">
+                                                            <div>
+                                                                <p class="small text-muted mb-1">Mobile Number</p>
+                                                                <h6 class="mb-0"
+                                                                    *ngIf="basicinformationObj?.patirntPhone==null">N/A
+                                                                </h6>
+                                                                <h6 class="mb-0"
+                                                                    *ngIf="basicinformationObj?.patirntPhone!=null">
+                                                                    {{basicinformationObj?.patirntPhone}}</h6>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-4 col-lg-4">
+                                                        <div class="d-flex align-items-center">
+                                                            <div>
+                                                                <p class="small text-muted mb-1">Address</p>
+                                                                <h6 class="mb-0"> {{basicinformationObj?.address}} </h6>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 col-xl-12 col-xxl-12">
+                <div class="row mt-4">
+                    <div class="col-lg-12 accordion">
+                        <div class="card shadow-sm treatment-history">
+                            <div class="accordion-item" id="headingThree">
+                                <div class="accordion-button collapsed card-header bg-color text-white text-bg-success"
+                                    data-bs-toggle="collapse" data-bs-target="#collapsefour" aria-expanded="false"
+                                    aria-controls="collapseTwo" style="height: 40px;">
+                                    <h5>Treatment Details:-</h5>
+                                </div>
+                                <div id="collapsefour" class="accordion-collapse collapse show"
+                                    aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <div class="row treatment-details">
+                                            <div class="col-xl-2 col-lg-2">
+                                                <div class="d-flex align-items-center  border-end">
+                                                    <div>
+                                                        <p class="small text-muted mb-1">Date of Admission</p>
+                                                        <h6 class="mb-0"> {{basicinformationObj?.dateAdmission}}
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-2 col-lg-2">
+                                                <div class="d-flex align-items-center  border-end">
+                                                    <div>
+                                                        <p class="small text-muted mb-1">Date of Discharge</p>
+                                                        <h6 class="mb-0"> {{basicinformationObj?.dateDischarge}}
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-2 col-lg-2">
+                                                <div class="d-flex align-items-center  border-end">
+                                                    <div>
+                                                        <p class="small text-muted mb-1">Actual Date of Admission</p>
+                                                        <h6 class="mb-0"> {{basicinformationObj?.actualDateAdm }} </h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-3 col-lg-3">
+                                                <div class="d-flex align-items-center border-end">
+                                                    <div>
+                                                        <p class="small text-muted mb-1">Actual Date of Discharge</p>
+                                                        <h6 class="mb-0"> {{basicinformationObj?.actualDischarge}} </h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-3 col-lg-3">
+                                                <div class="d-flex align-items-center">
+                                                    <div>
+                                                        <p class="small text-muted mb-1">Package Rate</p>
+                                                        <h6 class="mb-0" *ngIf="basicinformationObj?.packRate==null">N/A
+                                                        </h6>
+                                                        <h6 class="mb-0" *ngIf="basicinformationObj?.packRate!=null">
+                                                            {{basicinformationObj?.packRate}}</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <hr class="mt-xl-3">
+                                            </div>
+                                            <div class="col-xl-2 col-lg-2">
+                                                <div class="d-flex align-items-center  border-end">
+                                                    <div>
+                                                        <p class="small text-muted mb-1">Blocked Amount (₹) </p>
+                                                        <h6 class="mb-0"> {{basicinformationObj?.totalAmt |
+                                                            currency:'':''}}
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-2 col-lg-2">
+                                                <div class="d-flex align-items-center  border-end">
+                                                    <div>
+                                                        <p class="small text-muted mb-1">Procedure Code</p>
+                                                        <h6 class="mb-0"> {{basicinformationObj?.procedureCode}} </h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-3 col-lg-3">
+                                                <div class="d-flex align-items-center  border-end">
+                                                    <div>
+                                                        <p class="small text-muted mb-1">Procedure Name</p>
+                                                        <h6 class="mb-0"> {{basicinformationObj?.procedureName}} </h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-2 col-lg-2">
+                                                <div class="d-flex align-items-center  border-end">
+                                                    <div>
+                                                        <p class="small text-muted mb-1">Subpackage Code</p>
+                                                        <h6 class="mb-0">{{basicinformationObj?.subpackageCode}}
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-3 col-lg-3">
+                                                <div class="d-flex align-items-center">
+                                                    <div>
+                                                        <p class="small text-muted mb-1">Subpackage Name</p>
+                                                        <h6 class="mb-0">{{basicinformationObj?.subpakageName}}
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12">
+                                                <hr class="mt-xl-3">
+                                            </div>
+                                            <div class="col-xl-2 col-lg-2">
+                                                <div class="d-flex align-items-center  border-end">
+                                                    <div>
+                                                        <p class="small text-muted mb-1">Package Code</p>
+                                                        <h6 class="mb-0"> {{basicinformationObj?.packageCode}}
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-2 col-lg-2">
+                                                <div class="d-flex align-items-center  border-end">
+                                                    <div>
+                                                        <p class="small text-muted mb-1">Package Name</p>
+                                                        <h6 class="mb-0">{{basicinformationObj?.packageName}}</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-2 col-lg-2" *ngIf="btmdisable">
+                                                <div class="d-flex align-items-center  border-end">
+                                                    <div>
+                                                        <p class="small text-muted mb-1">Mortality (As per Hospital)</p>
+                                                        <h6 class="mb-0"
+                                                            *ngIf="basicinformationObj?.hospMortality==null">
+                                                            N/A</h6>
+                                                        <h6 class="mb-0"
+                                                            *ngIf="basicinformationObj?.hospMortality!=null">
+                                                            {{basicinformationObj?.hospMortality }} </h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-2 col-lg-2" *ngIf="btmdisable">
+                                                <div class="d-flex align-items-center  border-end">
+                                                    <div>
+                                                        <p class="small text-muted mb-1">Mortality (As per CPD)</p>
+                                                        <h6 class="mb-0"
+                                                            *ngIf="basicinformationObj?.cpdMortality==null">N/A
+                                                        </h6>
+                                                        <h6 class="mb-0"
+                                                            *ngIf="basicinformationObj?.cpdMortality!=null">
+                                                            {{basicinformationObj?.cpdMortality}}</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-2 col-lg-2">
+                                                <div class="d-flex align-items-center">
+                                                    <div>
+                                                        <p class="small text-muted mb-1">NABH Flag</p>
+                                                        <h6 class="mb-0" *ngIf="basicinformationObj?.nabhflag==null">N/A
+                                                        </h6>
+                                                        <h6 class="mb-0" *ngIf="basicinformationObj?.nabhflag!=null">
+                                                            {{basicinformationObj?.nabhflag}}</h6>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-2 col-lg-2">
+                                                <div class="d-flex align-items-center">
+                                                    <div>
+                                                        <p class="small text-muted mb-1">Implant Data</p>
+                                                        <h6 class="mb-0" *ngIf="basicinformationObj?.implantData==null">
+                                                            N/A
+                                                        </h6>
+                                                        <h6 class="mb-0" *ngIf="basicinformationObj?.implantData!=null">
+                                                            {{basicinformationObj?.implantData }} </h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-xl-12 col-xxl-12">
+            <div class="row mt-4">
+                <div class="col-lg-12 accordion">
+                    <div class="card shadow-sm treatment-history">
+                        <div class="accordion-item" id="headingThree">
+                            <div class="accordion-button collapsed card-header bg-color text-white text-bg-success"
+                                data-bs-toggle="collapse" data-bs-target="#collapsefive" aria-expanded="false"
+                                aria-controls="collapseTwo" style="height: 40px;">
+                                <h5>Pre-Auth Log :-</h5>
+                            </div>
+                            <div id="collapsefive" class="accordion-collapse collapse show"
+                                aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table mb-0" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th width="40" rowspan="2">Sl#</th>
+                                                    <th rowspan="2">Pre-Auth Code</th>
+                                                    <th rowspan="2">Amount (₹)</th>
+                                                    <th rowspan="2">Approved Amount (₹)</th>
+                                                    <th rowspan="2">Pre-Auth<br> Date</th>
+                                                    <th rowspan="2">Approved Date</th>
+                                                    <th rowspan="2">Remark</th>
+                                                    <th colspan="3" style="text-align:center">Documents</th>
+                                                    <th rowspan="2">Details</th>
+                                                </tr>
+                                                <tr>
+                                                    <th>Doc1</th>
+                                                    <th>Doc2</th>
+                                                    <th>Doc3</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <ng-container>
+                                                    <tr *ngFor="let v of preAuthLog,index as i">
+                                                        <td>{{i+1}}</td>
+                                                        <td *ngIf="v.preAuthCode==null">N/A</td>
+                                                        <td *ngIf="v.preAuthCode!=null">{{v.preAuthCode}}</td>
+                                                        <td>{{v.packageCode | currency:"":""}}</td>
+                                                        <td *ngIf="v.approvedAmount==null">N/A</td>
+                                                        <td *ngIf="v.approvedAmount!=null">{{v.approvedAmount}}</td>
+                                                        <td *ngIf="v.preAuthDate==null">N/A</td>
+                                                        <td *ngIf="v.preAuthDate!=null">{{v.preAuthDate | date
+                                                            :'dd-MMM-yyyy' }}
+                                                        </td>
+                                                        <td *ngIf="v.approvedDate==null">N/A</td>
+                                                        <td *ngIf="v.approvedDate!=null">{{v.approvedDate | date
+                                                            :'dd-MMM-yyyy' }}
+                                                        </td>
+                                                        <td *ngIf="v.remark==null">N/A</td>
+                                                        <td *ngIf="v.remark!=null">{{v.remark}}</td>
+                                                        <td *ngIf="v.aditionalDoc1 != undefined"><a
+                                                                href="javascript:void(0);"
+                                                                (click)="downloadAction($event,highEndDrugList.aditionalDoc1,highEndDrugList.hospitalCode,highEndDrugList.claimedDate,'')"><i
+                                                                    class="bi bi-file-earmark-pdf"
+                                                                    style="color:red;font-size:15px;"></i></a></td>
+                                                        <td *ngIf="highEndDrugList.aditionalDoc1 == undefined">--</td>
+                                                        <td *ngIf="highEndDrugList.aditionalDoc2 != undefined"><a
+                                                                href="javascript:void(0);"
+                                                                (click)="downloadAction($event,highEndDrugList.aditionalDoc2,highEndDrugList.hospitalCode,highEndDrugList.claimedDate,'')"><i
+                                                                    class="bi bi-file-earmark-pdf"
+                                                                    style="color:red;font-size:15px;"></i></a></td>
+                                                        <td *ngIf="highEndDrugList.aditionalDoc2 == undefined">--</td>
+                                                        <td *ngIf="highEndDrugList.aditionalDoc3 != undefined"><a
+                                                                href="javascript:void(0);"
+                                                                (click)="downloadAction($event,highEndDrugList.aditionalDoc3,highEndDrugList.hospitalCode,highEndDrugList.claimedDate,'')"><i
+                                                                    class="bi bi-file-earmark-pdf"
+                                                                    style="color:red;font-size:15px;"></i></a></td>
+                                                        <td *ngIf="highEndDrugList.aditionalDoc3 == undefined">--</td>
+                                                        <td><a href="javascript:void(0)"
+                                                                (click)="preAuthLogDetail(highEndDrugList.urnNo, highEndDrugList?.AUTHORIZEDCODE,highEndDrugList.hospitalCode)">Click
+                                                                here</a></td>
+                                                    </tr>
+                                                </ng-container>
+                                                <tr *ngIf="preAuthLog.length==0">
+                                                    <td colspan="16" align="center"><strong class="text-danger">No data
+                                                            found</strong></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-12 col-xl-12 col-xxl-12">
+            <div class="row mt-4">
+                <div class="col-lg-12 accordion">
+                    <div class="card shadow-sm treatment-history">
+                        <div class="accordion-item" id="headingFour">
+                            <div class="accordion-button collapsed card-header bg-color text-white text-bg-success"
+                                data-bs-toggle="collapse" data-bs-target="#collapsesix" aria-expanded="false"
+                                aria-controls="collapseTwo" style="height: 40px;">
+                                <div class="row col-lg-12">
+                                    <div class="col-lg-10">
+                                        <h5 class="mb-0">Latest Documents Uploaded</h5>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <button class="btn btn-light" style="float: right" (click)="viewAllDocument(
+                                      basicinformationObj?.dischargeDoc,
+                                      basicinformationObj?.additDocs,
+                                      basicinformationObj?.additDocs1,
+                                      basicinformationObj?.additionalDocs2,
+                                      basicinformationObj?.preSurgery,
+                                      basicinformationObj?.postSurgery,
+                                      basicinformationObj?.patientPhoto,
+                                      basicinformationObj?.intSurPhoto,
+                                      basicinformationObj?.specimanPhoto)"><span class="bi bi-download"
+                                                style="margin-right: 5px;"></span>Download
+                                            All</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="collapsesix" class="accordion-collapse collapse show" aria-labelledby="headingFour"
+                                data-bs-parent="#accordionExample">
+                                <div class="row mt-4">
+                                    <div class="col-lg-12">
+                                        <div class="card shadow-sm document-upload">
+                                            <div class="card-body uploaded-doc">
+                                                <div class="row gx-5 justify-content-between">
+                                                    <div class="col-lg-6 col-xxl-6 border-end pt-xl-2">
+                                                        <div class="row">
+                                                            <!-- <div class="col-6 col-lg-3 col-xxl-3 text-center mb-4">
+                                                    </div> -->
+                                                            <div class="col-4 col-lg-2 col-xxl-2 text-center mb-2">
+                                                                <ng-container
+                                                                    *ngIf="basicinformationObj?.dischargeDoc != undefined">
+                                                                    <a href="javascript:void(0);" (click)="downloadAction($event,basicinformationObj?.dischargeDoc,basicinformationObj?.hospitalCode,basicinformationObj?.actualDateAdm
+                                                                )">
+                                                                        <img src="./../assets/img/pdf.png"
+                                                                            alt="Discharge Slip" class="mb-2"
+                                                                            [width]="100">
+                                                                    </a>
+                                                                    <span class="d-block">Discharge Doc</span>
+                                                                    <i class="bi bi-check2" *ngIf="disslipcheck"></i>
+                                                                    <i class="bi bi-x-lg" style="color:red;"
+                                                                        *ngIf="disslipuncheck"></i>
+                                                                </ng-container>
+                                                                <a href="javascript:void(0);"
+                                                                    *ngIf="basicinformationObj?.dischargeDoc == undefined">
+                                                                    <span class="d-block mb-3"
+                                                                        *ngIf="basicinformationObj?.dischargeDoc == undefined">-NA-</span>
+                                                                    <span class="d-block mb-3">Discharge Doc</span>
+                                                                </a>
+                                                            </div>
+                                                            <div class="col-6 col-lg-3 col-xxl-3 text-center mb-4"
+                                                                *ngIf=" basicinformationObj?.additDocs!= undefined">
+                                                                <a href="javascript:void(0);" (click)="downloadAction($event, basicinformationObj?.additDocs, basicinformationObj?.hospitalCode, basicinformationObj?.actualDateAdm
+                                                            )">
+
+                                                                    <img src="./assets/img/pdf.png" alt="Admission Slip"
+                                                                        class="mb-2" [width]="100">
+                                                                    <span class="d-block">Additional Docs</span>
+                                                                </a>
+
+                                                            </div>
+                                                            <div style="margin-top: 12%;"
+                                                                class="col-6 col-lg-3 col-xxl-3 text-center mb-4" *ngIf=" basicinformationObj?.additDocs
+                                                        == undefined">
+                                                                <span class="d-block">--</span>
+                                                                <span class="d-block">Additional Docs</span>
+                                                            </div>
+                                                            <div class="col-6 col-lg-3 col-xxl-3 text-center mb-4"
+                                                                *ngIf=" basicinformationObj?.additDocs1 != undefined">
+                                                                <a href="javascript:void(0);" (click)="downloadAction($event, basicinformationObj?.additDocs1, basicinformationObj?.hospitalCode, basicinformationObj?.actualDateAdm
+                                                            )">
+                                                                    <img src="./assets/img/pdf.png" alt="Admission Slip"
+                                                                        class="mb-2" [width]="100">
+                                                                    <span class="d-block">Aditional Docs 1</span>
+                                                                </a>
+                                                            </div>
+                                                            <div style="margin-top: 12%;"
+                                                                class="col-6 col-lg-3 col-xxl-3 text-center mb-4"
+                                                                *ngIf=" basicinformationObj?.additDocs1 == undefined">
+                                                                <span class="d-block">--</span>
+                                                                <span class="d-block">Additional Docs 1</span>
+                                                            </div>
+                                                            <div class="col-6 col-lg-3 col-xxl-3 text-center mb-4"
+                                                                *ngIf=" basicinformationObj?.additionalDocs2
+                                                        != undefined">
+                                                                <a href="javascript:void(0);" (click)="downloadAction($event, basicinformationObj?.additionalDocs2
+                                                            , basicinformationObj?.hospitalCode, basicinformationObj?.actualDateAdm
+                                                            )">
+                                                                    <img src="./assets/img/pdf.png" alt="Admission Slip"
+                                                                        class="mb-2" [width]="100">
+                                                                    <span class="d-block">Additional Docs 2</span>
+                                                                </a>
+                                                            </div>
+                                                            <div style="margin-top: 12%;"
+                                                                class="col-6 col-lg-3 col-xxl-3 text-center mb-4" *ngIf=" basicinformationObj?.additionalDocs2
+                                                        == undefined"> <span class="d-block">--</span>
+                                                                <span class="d-block">Additional Docs 2</span>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 col-xxl-6">
+                                                        <div class="row gx-5">
+                                                            <div class="col-6 col-xxl-4 text-center"
+                                                                *ngIf=" basicinformationObj?.preSurgery != undefined">
+                                                                <a href="javascript:void(0);"
+                                                                    (click)="downloadAction($event, basicinformationObj?.preSurgery, basicinformationObj?.hospitalCode, basicinformationObj?.actualDateAdm)">
+
+                                                                    <img src="./assets/img/male-profile.jpg"
+                                                                        alt="Pre-Surgery" class=" mb-2" [width]="100">
+                                                                    <span class="d-block mb-3">Pre-Surgery</span>
+                                                                </a>
+                                                            </div>
+                                                            <div class="col-6 col-xxl-4 text-center"
+                                                                *ngIf=" basicinformationObj?.preSurgery == undefined">
+                                                                <a href="javascript:void(0);">
+                                                                    <p>--</p>
+                                                                </a>
+                                                                <span class="d-block mb-3">Pre-Surgery</span>
+                                                            </div>
+                                                            <div class="col-6 col-xxl-4 text-center"
+                                                                *ngIf=" basicinformationObj?.postSurgery != undefined">
+                                                                <a href="javascript:void(0);"
+                                                                    (click)="downloadAction($event, basicinformationObj?.postSurgery
+                                                            , basicinformationObj?.hospitalCode, basicinformationObj?.actualDateAdm)">
+                                                                    <img src="./assets/img/male-profile.jpg"
+                                                                        alt="Post-Surgery" class="mb-2" [width]="100">
+                                                                    <span class="d-block mb-3">Post-Surgery</span>
+                                                                </a>
+                                                            </div>
+                                                            <div class="col-6 col-xxl-4 text-center" *ngIf=" basicinformationObj?.postSurgery
+                                                        == undefined">
+                                                                <a href="javascript:void(0);">
+                                                                    <p>--</p>
+                                                                </a>
+                                                                <span class="d-block mb-3">Post-Surgery</span>
+                                                            </div>
+                                                            <div class="col-6 col-xxl-4 text-center"
+                                                                *ngIf=" basicinformationObj?.PATIENT_PHOTO != undefined">
+                                                                <a href="javascript:void(0);"
+                                                                    (click)="downloadAction($event, basicinformationObj?.PATIENT_PHOTO, basicinformationObj?.hospitalCode, basicinformationObj?.actualDateAdm)">
+                                                                    <img src="./assets/img/male-profile.jpg"
+                                                                        alt="Post-Surgery" class="mb-2" [width]="100">
+                                                                    <span class="d-block mb-3">Patient Photo</span></a>
+                                                            </div>
+                                                            <div class="col-6 col-xxl-4 text-center" *ngIf=" basicinformationObj?.patientPhoto
+                                                        == undefined">
+                                                                <a href="javascript:void(0);">
+                                                                    <p>--</p>
+                                                                </a>
+                                                                <span class="d-block mb-3">Patient Photo</span>
+                                                            </div>
+                                                            <div class="col-6 col-xxl-4 text-center"
+                                                                *ngIf=" basicinformationObj?.intSurPhoto != undefined">
+                                                                <a href="javascript:void(0);"
+                                                                    (click)="downloadAction($event, basicinformationObj?.intSurPhoto,basicinformationObj?.hospitalCode,basicinformationObj?.actualDateAdm)">
+                                                                    <img src="./assets/img/male-profile.jpg"
+                                                                        alt="Post-Surgery" class="mb-2" [width]="100">
+                                                                    <span class="d-block mb-3">Intra-Surgery
+                                                                        photo</span>
+                                                                </a>
+                                                            </div>
+                                                            <div class="col-6 col-xxl-4 text-center"
+                                                                *ngIf=" basicinformationObj?.intSurPhoto == undefined">
+                                                                <a href="javascript:void(0);">
+                                                                    <p>--</p>
+                                                                </a>
+                                                                <span class="d-block mb-3">Intra-Surgery photo</span>
+                                                            </div>
+                                                            <div class="col-6 col-xxl-4 text-center"
+                                                                *ngIf="basicinformationObj?.specimanPhoto != undefined">
+                                                                <a href="javascript:void(0);"
+                                                                    (click)="downloadAction($event, basicinformationObj?.specimanPhoto, basicinformationObj?.hospitalCode, basicinformationObj?.actualDateAdm)">
+                                                                    <img src="./assets/img/male-profile.jpg"
+                                                                        alt="Post-Surgery" class="mb-2" [width]="100">
+                                                                    <span class="d-block mb-3">Specimen Removal</span>
+                                                                </a>
+                                                            </div>
+                                                            <div class="col-6 col-xxl-4 text-center" *ngIf=" basicinformationObj?.specimanPhoto
+                                                        == undefined">
+                                                                <a href="javascript:void(0);">
+                                                                    <p>--</p>
+                                                                </a>
+                                                                <span class="d-block mb-3">Specimen Removal Photo</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="col-lg-12 col-xl-12 col-xxl-12">
+            <div class="row mt-4">
+                <div class="col-lg-12 accordion">
+                    <div class="card shadow-sm treatment-history">
+                        <div class="accordion-item" id="headingSeven">
+                            <div class="accordion-button collapsed card-header bg-color text-white text-bg-success"
+                                data-bs-toggle="collapse" data-bs-target="#collapseSeven" aria-expanded="false"
+                                aria-controls="collapseTwo" style="height: 40px;">
+                                <h5>Highend Drugs:-</h5>
+                            </div>
+                            <div id="collapseSeven" class="accordion-collapse collapse show"
+                                aria-labelledby="headingSeven" data-bs-parent="#accordionExample">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table mb-0" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Sl#</th>
+                                                    <th>Code</th>
+                                                    <th>Name</th>
+                                                    <th>Unit Price</th>
+                                                    <th>Unit</th>
+                                                    <th>Total Price</th>
+                                                    <th>Recomidose</th>
+                                                    <th>Pre-Auth Required</th>
+                                                    <th>Activity Done On</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                <ng-container *ngIf="highEndDrugList.length>0">
+                                                    <tr *ngFor="let v of highEndDrugList,index as i">
+                                                        <td *ngIf="currentPage==1">{{i+1}}</td>
+                                                        <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+i+1}}
+                                                        </td>
+                                                        <td *ngIf="v.code==null">N/A</td>
+                                                        <td *ngIf="v.code!=null">{{v.code}}</td>
+                                                        <td *ngIf="v.name==null">N/A</td>
+                                                        <td *ngIf="v.name!=null">{{v.name}}</td>
+                                                        <td *ngIf="v.unit==null">N/A</td>
+                                                        <td *ngIf="v.unit!=null">{{v.unit | currency:'':''}}</td>
+                                                        <td *ngIf="v.unit2==null">N/A</td>
+                                                        <td *ngIf="v.unit2!=null">{{v.unit2}}</td>
+                                                        <td *ngIf="v.totalPrice==null">N/A</td>
+                                                        <td *ngIf="v.totalPrice!=null">{{v.totalPrice | currency:'':''}}
+                                                        </td>
+                                                        <td *ngIf="v.recomidose==null">N/A</td>
+                                                        <td *ngIf="v.recomidose!=null">{{v.recomidose}}</td>
+                                                        <td *ngIf="v.preAuthReq==null">N/A</td>
+                                                        <td *ngIf="v.preAuthReq!=null">{{v.preAuthReq}}</td>
+                                                        <td *ngIf="v.activityDon1==null">N/A</td>
+                                                        <td *ngIf="v.activityDon1!=null">{{v.activityDon1 | date
+                                                            :'dd-MMM-yyyy, h:mm:ss a'}}</td>
+                                                    </tr>
+                                                </ng-container>
+                                                <tr *ngIf="record==0">
+                                                    <td colspan="16" align="center"><strong class="text-danger">No data
+                                                            found</strong></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 col-xl-12 col-xxl-12">
+            <div class="row mt-4">
+                <div class="col-lg-12 accordion">
+                    <div class="card shadow-sm treatment-history">
+                        <div class="accordion-item" id="headingEight">
+                            <div class="accordion-button collapsed card-header bg-color text-white text-bg-success"
+                                data-bs-toggle="collapse" data-bs-target="#collapseEight" aria-expanded="false"
+                                aria-controls="collapseTwo" style="height: 40px;">
+                                <h5>Implant:-</h5>
+                            </div>
+                            <div id="collapseEight" class="accordion-collapse collapse show"
+                                aria-labelledby="headingEight" data-bs-parent="#accordionExample">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table mb-0" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Sl#</th>
+                                                    <th>Code</th>
+                                                    <th>Implant Name</th>
+                                                    <th>Procedure Code</th>
+                                                    <th>Unit Price</th>
+                                                    <th>Unit</th>
+                                                    <th>Total Amount</th>
+                                                    <th>Action On</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                <ng-container *ngIf="implantDataList.length>0">
+                                                    <tr *ngFor="let v of implantDataList,index as i">
+                                                        <td *ngIf="currentPage==1">{{i+1}}</td>
+                                                        <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+i+1}}
+                                                        </td>
+                                                        <td *ngIf="v.code==null">N/A</td>
+                                                        <td *ngIf="v.code!=null">{{v.code}}</td>
+                                                        <td *ngIf="v.implantName==null">N/A</td>
+                                                        <td *ngIf="v.implantName!=null">{{v.implantName}}</td>
+                                                        <td *ngIf="v.procedureCode==null">N/A</td>
+                                                        <td *ngIf="v.procedureCode!=null">{{v.procedureCode}}</td>
+                                                        <td *ngIf="v.unitPrice==null">N/A</td>
+                                                        <td *ngIf="v.unitPrice!=null">{{v.unitPrice | currency:'':''}}
+                                                        </td>
+                                                        <td *ngIf="v.unit==null">N/A</td>
+                                                        <td *ngIf="v.unit!=null">{{v.unit}}</td>
+                                                        <td *ngIf="v.totalAmt==null">N/A</td>
+                                                        <td *ngIf="v.totalAmt!=null">{{v.totalAmt | currency:'':''}}
+                                                        </td>
+                                                        <td *ngIf="v.activityDon1==null">N/A</td>
+                                                        <td *ngIf="v.activityDon1!=null">{{v.activityDon1 | date
+                                                            :'dd-MMM-yyyy, h:mm:ss a'}}</td>
+                                                    </tr>
+                                                </ng-container>
+                                                <tr *ngIf="implantDataList.length==0">
+                                                    <td colspan="16" align="center"><strong class="text-danger">No data
+                                                            found</strong></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 col-xl-12 col-xxl-12">
+            <div class="row mt-4">
+                <div class="col-lg-12 accordion">
+                    <div class="card shadow-sm treatment-history">
+                        <div class="accordion-item" id="headingNine">
+                            <div class="accordion-button collapsed card-header bg-color text-white text-bg-success"
+                                data-bs-toggle="collapse" data-bs-target="#collapseNine" aria-expanded="false"
+                                aria-controls="collapseTwo" style="height: 40px;">
+                                <h5>Ward:-</h5>
+                            </div>
+                            <div id="collapseNine" class="accordion-collapse collapse show"
+                                aria-labelledby="headingNine" data-bs-parent="#accordionExample">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table mb-0" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Sl#</th>
+                                                    <th>Ward Name</th>
+                                                    <th>Ward Amount</th>
+                                                    <th>Ward Block Date</th>
+                                                    <th>Pre-Auth Required</th>
+                                                    <th>Activity Done On</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                <ng-container *ngIf="wardDataList.length>0">
+                                                    <tr *ngFor="let v of wardDataList,index as i">
+                                                        <td *ngIf="currentPage==1">{{i+1}}</td>
+                                                        <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+i+1}}
+                                                        </td>
+                                                        <td *ngIf="v.wardName==null">N/A</td>
+                                                        <td *ngIf="v.wardName!=null">{{v.wardName}}</td>
+                                                        <td *ngIf="v.wardAmount==null">N/A</td>
+                                                        <td *ngIf="v.wardAmount!=null">{{v.wardAmount | currency:'':''}}
+                                                        </td>
+                                                        <td *ngIf="v.wardBlockDate==null">N/A</td>
+                                                        <td *ngIf="v.wardBlockDate!=null">{{v.wardBlockDate | date
+                                                            :'dd-MMM-yyyy, h:mm:ss a'}}</td>
+                                                        <td *ngIf="v.preAuthReq==null">N/A</td>
+                                                        <td *ngIf="v.preAuthReq!=null">{{v.preAuthReq}}</td>
+                                                        <td *ngIf="v.activityDon1==null">N/A</td>
+                                                        <td *ngIf="v.activityDon1!=null">{{v.activityDon1 | date
+                                                            :'dd-MMM-yyyy, h:mm:ss a'}}</td>
+                                                    </tr>
+                                                </ng-container>
+                                                <tr *ngIf="wardDataList.length==0">
+                                                    <td colspan="16" align="center"><strong class="text-danger">No data
+                                                            found</strong></td>
+                                                </tr>
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 col-xl-12 col-xxl-12">
+            <div class="row mt-4">
+                <div class="col-lg-12 accordion">
+                    <div class="card shadow-sm treatment-history">
+                        <div class="accordion-item" id="headingOne">
+                            <div class="accordion-button collapsed card-header bg-color text-white text-bg-success"
+                                data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false"
+                                aria-controls="collapseTwo" style="height: 40px;">
+                                <h5 class="mb-0">Treatment History:-</h5>
+                            </div>
+                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingTwo"
+                                data-bs-parent="#accordionExample">
+                                <div class="card-body">
+                                    <ul class="list-unstyled">
+                                        <li><i class="iconbsky-list-icon me-2"></i> Check all discharged treatment
+                                            information.
+                                        </li>
+                                        <div class="content-box">
+                                            <div class="row">
+                                                <div class="table-responsive">
+                                                    <table class="table mb-0" id="treatmentTable">
+                                                        <thead>
+                                                            <tr>
+                                                                <th width="50">Sl#</th>
+                                                                <th>Claim No.</th>
+                                                                <th>URN</th>
+                                                                <th>Package Code</th>
+                                                                <th>Patient Name</th>
+                                                                <th>Hospital Name</th>
+                                                                <th>Admission Date</th>
+                                                                <th>Actual Admission Date</th>
+                                                                <th>Discharge Date</th>
+                                                                <th>Actual Discharge Date</th>
+                                                                <th>Hospital Claim Amount(₹)</th>
+                                                                <th>CPD Approved Amount(₹)</th>
+                                                                <th>SNA Approved Amount(₹)</th>
+                                                                <th>Status</th>
+                                                                <th>CPD Name</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr *ngFor="let v of treatmentHistory
+                                                            ,index as i">
+                                                                <td *ngIf="currentPage==1">{{i+1}}</td>
+                                                                <td *ngIf="currentPage!=1">
+                                                                    {{(currentPage-1)*pageElement+i+1}}</td>
+                                                                <td *ngIf="v.claimNo==null">N/A</td>
+                                                                <td *ngIf="v.claimNo!=null">{{v.claimNo}}</td>
+                                                                <td *ngIf="v.urn==null">N/A</td>
+                                                                <td *ngIf="v.urn!=null">{{v.urn}}</td>
+                                                                <td *ngIf="v.packageCode1==null">N/A</td>
+                                                                <td *ngIf="v.packageCode1!=null">{{v.packageCode1}}</td>
+                                                                <td *ngIf="v.patientName==null">N/A</td>
+                                                                <td *ngIf="v.patientName!=null">{{v.patientName}}</td>
+                                                                <td *ngIf="v.hospitalName==null">N/A</td>
+                                                                <td *ngIf="v.hospitalName!=null">{{v.hospitalName}}</td>
+                                                                <td *ngIf="v.datadmission2==null">N/A</td>
+                                                                <td *ngIf="v.datadmission2!=null">{{v.datadmission2 |
+                                                                    date :'dd-MMM-yyyy' }}
+                                                                </td>
+                                                                <td *ngIf="v.actualDateAdm==null">N/A</td>
+                                                                <td *ngIf="v.actualDateAdm!=null">{{v.actualDateAdm |
+                                                                    date :'dd-MMM-yyyy' }}
+                                                                </td>
+                                                                <td *ngIf="v.dateDischarge==null">N/A</td>
+                                                                <td *ngIf="v.dateDischarge!=null">{{v.dateDischarge |
+                                                                    date :'dd-MMM-yyyy' }}
+                                                                </td>
+                                                                <td *ngIf="v.actualDischarge==null">N/A</td>
+                                                                <td *ngIf="v.actualDischarge!=null">
+                                                                    {{v.actualDischarge | date :'dd-MMM-yyyy'}}</td>
+                                                                <td *ngIf="v.hospitalClmAmount==null">N/A</td>
+                                                                <td *ngIf="v.hospitalClmAmount!=null">
+                                                                    {{v.hospitalClmAmount| currency:'':'' }}</td>
+                                                                <td *ngIf="v.cpdappAmount==null">N/A</td>
+                                                                <td *ngIf="v.cpdappAmount!=null">{{v.cpdappAmount |
+                                                                    currency:'':''}}
+                                                                </td>
+                                                                <td *ngIf="v.snaapprovemount==null">N/A</td>
+                                                                <td *ngIf="v.snaapprovemount!=null">
+                                                                    {{v.snaapprovemount | currency:'':''}}</td>
+                                                                <td *ngIf="v.status==null">N/A</td>
+                                                                <td *ngIf="v.status!=null">{{v.status}}</td>
+                                                                <td *ngIf="v.cpdname==null">N/A</td>
+                                                                <td *ngIf="v.cpdname!=null">{{v.cpdname}}</td>
+                                                            </tr>
+                                                            <tr *ngIf="this.treatmentHistory.length==0">
+                                                                <td colspan="16">
+                                                                    <p class="mb-0 text-center text-danger fw-bold">NO
+                                                                        DATA FOUND!!
+                                                                    </p>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ul>
+                                    <ul class="list-unstyled">
+                                        <li><i class="iconbsky-list-icon me-2"></i> Check Old Claim information.
+                                        </li>
+                                        <div class="content-box">
+                                            <div class="row">
+                                                <div class="table-responsive">
+                                                    <table class="table  mb-0" id="oldTreatmentTable">
+                                                        <thead>
+                                                            <tr>
+                                                                <th width="50">Sl#</th>
+                                                                <th>URN</th>
+                                                                <th>Patient Name</th>
+                                                                <th>Hospital Name</th>
+                                                                <th>Date of Admission</th>
+                                                                <th>Actual Date of Admission</th>
+                                                                <th>Date of Discharge</th>
+                                                                <th>Actual Date of Discharge</th>
+                                                                <th>Claim Status</th>
+                                                                <th>Approved Amount(₹)</th>
+                                                                <th>Approved Date</th>
+                                                                <th>SNA Approved Amount(₹)</th>
+                                                                <th>SNA Approved Date</th>
+                                                                <th>Remarks</th>
+                                                                <th>SNA Remarks</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr *ngFor="let v of treatmentHistory,index as i">
+                                                                <td *ngIf="currentPage==1">{{i+1}}</td>
+                                                                <td *ngIf="currentPage!=1">
+                                                                    {{(currentPage-1)*pageElement+i+1}}</td>
+                                                                <td *ngIf="v.urn==null">N/A</td>
+                                                                <td *ngIf="v.urn!=null">{{v.urn}}</td>
+                                                                <td *ngIf="v.patientName==null">N/A</td>
+                                                                <td *ngIf="v.patientName!=null">{{v.patientName}}</td>
+                                                                <td *ngIf="v.hospitalName==null">N/A</td>
+                                                                <td *ngIf="v.hospitalName!=null">{{v.hospitalName}}</td>
+                                                                <td *ngIf="v.dateAdmission==null">N/A</td>
+                                                                <td *ngIf="v.dateAdmission!=null">{{v.dateAdmission |
+                                                                    date :'dd-MMM-yyyy'}}
+                                                                </td>
+                                                                <td *ngIf="v.actualDateAdm==null">N/A</td>
+                                                                <td *ngIf="v.actualDateAdm!=null">{{v.actualDateAdm |
+                                                                    date :'dd-MMM-yyyy'}}
+                                                                </td>
+                                                                <td *ngIf="v.dateDischarge==null">N/A</td>
+                                                                <td *ngIf="v.dateDischarge!=null">{{v.dateDischarge |
+                                                                    date :'dd-MMM-yyyy'}}
+                                                                </td>
+                                                                <td *ngIf="v.actualDischarge==null">N/A</td>
+                                                                <td *ngIf="v.actualDischarge!=null">
+                                                                    {{v.actualDischarge | date :'dd-MMM-yyyy'}}</td>
+                                                                <td *ngIf="v.claimStatus==null">N/A</td>
+                                                                <td *ngIf="v.claimStatus!=null">{{v.claimStatus}}</td>
+                                                                <td *ngIf="v.approvedAmount==null">N/A</td>
+                                                                <td *ngIf="v.approvedAmount!=null">{{v.approvedAmount}}
+                                                                </td>
+                                                                <td *ngIf="v.approvedDate==null">N/A</td>
+                                                                <td *ngIf="v.approvedDate!=null">{{v.approvedDate | date
+                                                                    :'dd-MMM-yyyy'}}
+                                                                </td>
+                                                                <td *ngIf="v.snaapprovemount==null">N/A</td>
+                                                                <td *ngIf="v.snaapprovemount!=null">
+                                                                    {{v.snaapprovemount}}</td>
+                                                                <td *ngIf="v.approvedDate==null">N/A</td>
+                                                                <td *ngIf="v.approvedDate!=null">{{v.approvedDate | date
+                                                                    :'dd-MMM-yyyy'}}
+                                                                </td>
+                                                                <td *ngIf="v.remark==null">N/A</td>
+                                                                <td *ngIf="v.remark!=null">{{v.remark}}</td>
+                                                                <td *ngIf="v.snaRemark==null">N/A</td>
+                                                                <td *ngIf="v.snaRemark!=null">{{v.snaRemark}}</td>
+                                                            </tr>
+                                                            <tr *ngIf="this.treatmentHistory.length==0">
+                                                                <td colspan="16">
+                                                                    <p class="mb-0 text-center text-danger fw-bold">NO
+                                                                        DATA FOUND!!
+                                                                    </p>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 col-xl-12 col-xxl-12">
+                <div class="row mt-4">
+                    <div class="col-lg-12 accordion">
+                        <div class="card shadow-sm treatment-history">
+                            <div class="accordion-item" id="headingTwo">
+                                <div class="accordion-button collapsed card-header bg-color text-white text-bg-success"
+                                    data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false"
+                                    aria-controls="collapseTwo" style="height: 40px;">
+                                    <h5 class="mb-0">Multiple Package Blocking:-</h5>
+                                </div>
+                                <div id="collapseTwo" class="accordion-collapse collapse show"
+                                    aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table mb-0" style="width:100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th width="40" rowspan="2">Sl#</th>
+                                                        <th rowspan="2" width="40">Patient Name</th>
+                                                        <th rowspan="2" width="40">Date of Admission</th>
+                                                        <th rowspan="2" width="40">Date of Discharge</th>
+                                                        <th rowspan="2" width="40">Package Name</th>
+                                                        <th rowspan="2" width="40">Claim Raised By</th>
+                                                    </tr>
+
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let v of multiplePackageBlocking,index as i">
+                                                        <td *ngIf="currentPage==1">{{i+1}}</td>
+                                                        <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+i+1}}
+                                                        </td>
+                                                        <td *ngIf="v.patientName==null">N/A</td>
+                                                        <td *ngIf="v.patientName!=null">{{v.patientName}}</td>
+                                                        <td *ngIf="v.dateAdmission==null">N/A</td>
+                                                        <td *ngIf="v.dateAdmission!=null">{{v.dateAdmission}}</td>
+                                                        <td *ngIf="v.dateDischarge==null">N/A</td>
+                                                        <td *ngIf="v.dateDischarge!=null">{{v.dateDischarge}}</td>
+                                                        <td *ngIf="v.packageName==null">N/A</td>
+                                                        <td *ngIf="v.packageName!=null">{{v.packageName}}</td>
+                                                        <td *ngIf="v.claimRaised==null">N/A</td>
+                                                        <td *ngIf="v.claimRaised!=null">{{v.claimRaised | date
+                                                            :'dd-MMM-yyyy'}}
+                                                        </td>
+                                                    </tr>
+                                                    <tr *ngIf="this.multiplePackageBlocking.length==0">
+                                                        <td colspan="16">
+                                                            <p class="mb-0 text-center text-danger fw-bold">NO DATA
+                                                                FOUND!!</p>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-xl-12 col-xxl-12">
+                    <div class="row mt-4">
+                        <div class="col-lg-12 accordion">
+                            <div class="card shadow-sm treatment-history">
+                                <div class="accordion-item" id="data">
+                                    <div class="accordion-button collapsed card-header bg-color text-white text-bg-success"
+                                        data-bs-toggle="collapse" data-bs-target="#collapse" aria-expanded="false"
+                                        aria-controls="collapse" style="height: 40px;">
+                                        <h5 class="mb-0">Action Taken History:-</h5>
+                                    </div>
+                                    <div id="collapse" class="accordion-collapse collapse show" aria-labelledby="data"
+                                        data-bs-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="table mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Sl#</th>
+                                                            <th>Action By</th>
+                                                            <th>Action On</th>
+                                                            <th>Action Type</th>
+                                                            <th>Action Amount (₹)</th>
+                                                            <th>Remark</th>
+                                                            <th>Description</th>
+                                                            <th>Discharge Slip</th>
+                                                            <th>Additional Docs</th>
+                                                            <th>Additional Docs1</th>
+                                                            <th>Additional Docs2</th>
+                                                            <th>Pre Surgery</th>
+                                                            <th>Post Surgery</th>
+                                                            <th>Intra Surgery</th>
+                                                            <th>Specimen Removal</th>
+                                                            <th>Patient Photo</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let v of actionTakenHistory ,index as i">
+                                                            <td *ngIf="currentPage==1">{{i+1}}</td>
+                                                            <td *ngIf="currentPage!=1">
+                                                                {{(currentPage-1)*pageElement+i+1}}
+                                                            </td>
+                                                            <td>{{v.actionBy}}</td>
+                                                            <td>{{v.actionOn | date :'dd-MMM-yyyy'}}</td>
+                                                            <td>{{v.actionType}}</td>
+                                                            <td>{{v.actionAmount | currency:'':''}}</td>
+                                                            <td *ngIf="v.remark!=null">{{v.remark}}</td>
+                                                            <td *ngIf="v.remark==null">N/A</td>
+                                                            <td *ngIf="v.description!= undefined"><a
+                                                                    href="javascript:void(0)"
+                                                                    (click)="viewDescription(v.description)">view</a>
+                                                            </td>
+                                                            <td *ngIf="v.description== undefined">--</td>
+
+                                                            <td *ngIf="v.dischargeSlip != undefined"><a
+                                                                    href="javascript:void(0);"
+                                                                    (click)="downloadAction($event,v.dischargeSlip,basicinformationObj.hospitalCode,basicinformationObj.actualDateAdm)"><i
+                                                                        class="bi bi-file-earmark-pdf"
+                                                                        style="color:red;font-size:24px;"></i></a>
+                                                            </td>
+                                                            <td *ngIf="v.dischargeSlip == undefined">--</td>
+
+                                                            <td *ngIf="v.additDocs != undefined"><a
+                                                                    href="javascript:void(0);"
+                                                                    (click)="downloadAction($event,v.additDocs ,basicinformationObj.hospitalCode,basicinformationObj.actualDateAdm)"><i
+                                                                        class="bi bi-file-earmark-pdf"
+                                                                        style="color:red;font-size:24px"></i></a>
+                                                            </td>
+                                                            <td *ngIf="v.additDocs == undefined">--</td>
+
+                                                            <td *ngIf="v.additDocs1 != undefined"><a
+                                                                    href="javascript:void(0);"
+                                                                    (click)="downloadAction($event,v.additDocs1,basicinformationObj.hospitalCode,basicinformationObj.actualDateAdm)"><i
+                                                                        class="bi bi-file-earmark-pdf"
+                                                                        style="color:red;font-size:24px"></i></a>
+                                                            </td>
+                                                            <td *ngIf="v.additDocs1 == undefined">--</td>
+
+                                                            <td *ngIf="v.additionalDocs2!= undefined"><a
+                                                                    href="javascript:void(0);" (click)="downloadAction($event,v.additionalDocs2,basicinformationObj.hospitalCode,basicinformationObj.actualDateAdm
+                                                            )"><i class="bi bi-file-earmark-pdf"
+                                                                        style="color:red;font-size:24px"></i></a>
+                                                            </td>
+                                                            <td *ngIf="v.additionalDocs2 == undefined">--</td>
+
+                                                            <td *ngIf="v.preSurgery != undefined"><a
+                                                                    href="javascript:void(0);" (click)="downloadAction($event,v.preSurgery,basicinformationObj.hospitalCode,basicinformationObj.actualDateAdm
+                                                            )"><i class="bi bi-file-earmark-image"
+                                                                        style="color:red;font-size:24px"></i></a>
+                                                            </td>
+                                                            <td *ngIf="v.preSurgery == undefined">--</td>
+                                                            <td *ngIf="v.preSurgery != undefined"><a
+                                                                    href="javascript:void(0);" (click)="downloadAction($event,v.preSurgery,basicinformationObj.hospitalCode,basicinformationObj.actualDateAdm
+                                                            )"><i class="bi bi-file-earmark-image"
+                                                                        style="color:red;font-size:24px"></i></a>
+                                                            </td>
+                                                            <td *ngIf="v.preSurgery == undefined">--</td>
+                                                            <td *ngIf="v.intSurPhoto != undefined"><a
+                                                                    href="javascript:void(0);" (click)="downloadAction($event,v.intSurPhoto,basicinformationObj.hospitalCode,basicinformationObj.actualDateAdm
+
+)"><i class="bi bi-file-earmark-image" style="color:red;font-size:24px"></i></a>
+                                                            </td>
+                                                            <td *ngIf="v.intSurPhoto == undefined">--</td>
+                                                            <td *ngIf="v.specimanPhoto != undefined"><a
+                                                                    href="javascript:void(0);" (click)="downloadAction($event,v.specimanPhoto,basicinformationObj.hospitalCode,basicinformationObj.actualDateAdm
+                                                            )"><i class="bi bi-file-earmark-image"
+                                                                        style="color:red;font-size:24px"></i></a>
+                                                            </td>
+                                                            <td *ngIf="v.specimanPhoto == undefined">--</td>
+                                                            <td *ngIf="v.patientPhoto != undefined"><a
+                                                                    href="javascript:void(0);"
+                                                                    (click)="downloadAction($event,v.patientPhoto,basicinformationObj.hospitalCode,basicinformationObj.actualDateAdm)"><i
+                                                                        class="bi bi-file-earmark-image"
+                                                                        style="color:red;font-size:24px"></i></a>
+                                                            </td>
+                                                            <td *ngIf="v.patientPhoto == undefined">--</td>
+                                                        </tr>
+                                                        <tr *ngIf="this.actionTakenHistory.length==0">
+                                                            <td colspan="16">
+                                                                <p class="mb-0 text-center text-danger fw-bold">NO DATA
+                                                                    FOUND!!
+                                                                </p>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- noncompliance -->
+
+    </div>
+
+    <div class="modal justify-content-center" id="viewDescription" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body py-5">
+                    <span class="text-center text-success">
+                        {{dtls}}
+                    </span>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal"
+                        (click)="modalClose()">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>    <br>
+    <div class="col-lg-12" *ngIf="btmdisable">
+        <div class="card shadow-sm treatment-history accordion">
+          <div class="accordion-item" id="data">
+            <div class="accordion-button collapsed card-header bg-color text-white text-bg-success"
+                data-bs-toggle="collapse" data-bs-target="#collapseh" aria-expanded="false"
+                aria-controls="collapseh" style="height: 40px;">
+                <h5 class="mb-0">Action Log :-</h5>
+            </div>
+            <div id="collapseh" class="accordion-collapse collapse show" aria-labelledby="data"
+                data-bs-parent="#accordionExample">
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table mb-0" style="width:100%">
+                  <caption></caption>
+                    <thead>
+                        <tr>
+                            <th>Sl#</th>
+                            <th>URN No.</th>
+                            <th>Hospital Mortality</th>
+                            <th>CPD Mortality</th>
+                            <th>SNA Mortality</th>
+                            <th>Updated By</th>
+                            <th>Updated On</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let v of actionloglist,index as i">
+                            <td>{{i+1}}</td>
+                            <td>{{v.urn}}</td>
+                            <td>{{v.mortality}}</td>
+                            <td>{{v.cpdmortality}}</td>
+                            <td>{{v.snamortality}}</td>
+                            <td>{{v.updatedby}}</td>
+                            <td>{{v.updatedon}}</td>
+                        </tr>
+                        <tr *ngIf="actionloglist.length==0">
+                            <td colspan="16" align="center"><strong class="text-danger">No data
+                                    found</strong></td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+            </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12" *ngIf="!btmdisable">
+      <div class="card shadow-sm">
+        <div class="card-body">
+            <div class="row ">
+              <div class="col-lg-3" >
+                <div class="ps-0 fw-500">Hospital Mortality: <span style="color: #1f723f;">{{mortalitystatus?.hospitalmortalitystatus}}</span></div>
+              </div>
+              <div class="col-lg-3" >
+                <div class="ps-0 fw-500">CPD Mortality: <span style="color: #1f723f;">{{mortalitystatus?.cpdmortalitystatus}}</span></div>
+              </div>
+              <div class="col-lg-3" >
+                <div class="ps-0 fw-500">SNA Mortality: <span style="color: #1f723f;">{{mortalitystatus?.snamortalitystatus}}</span></div>
+              </div>
+            </div><hr>
+            <input type="button "class="btn btn-success" (click)="sendOtp()" value="Make Alive">
+        </div>
+      </div>
+    </div>
+</div>
+
+
+<!-- modal for otp -->
+<div class="modal modal-custom-backdrop" id="OtpModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+    style="backdrop-filter: blur(5px);" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-success" id="exampleModalLabel">Enter OTP<span
+                        class="required-asterisk text-danger">
+                        *</span></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="close()"></button>
+            </div>
+            <div class="modal-body py-5">
+
+
+                <div class="row">
+                    <div class="iconinput">
+                        <input type="text" class="form-control usertext userinput" id="otpId" name="otpId" maxlength="6"
+                            placeholder="Enter OTP" autocomplete="off"
+                            onkeyup="this.value=this.value.replace(/[^0-9]/g,'');">
+                    </div>
+                </div>
+                <div class="d-flex pt-4 pb-3">
+                    <div class="pe-2 text-secondary">
+                        <i class="feather-iconsmartphone text-secondary fs-1-2" id="phoneId"></i>
+                    </div>
+                    <input type="text" id="mobileNoId" class="form-control text-secondary p-0 border-0" readonly>
+                </div>
+                <div class="d-flex pt-4 pb-2 position-absolute bottom--10">
+
+                    <div class="pe-2 text-secondary">
+                        <p id="timerdivId"><i class="feather-iconclock fs-1-2"></i> Time Left : </p>
+                    </div>
+                    <div>
+                        <input type="text" id="timeCounter" class="form-control text-danger p-0 border-0" readonly>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer d-flex justify-content-center align-items-center">
+                <button type="button" id="sendId" class="btn btn-success" (click)="validateOtp()">Submit</button>
+                <button type="button" id="reSendId" class="btn btn-success" (click)="onResendOtp()">Resend
+                    OTP</button>
+            </div>
+        </div>
+    </div>
+</div>

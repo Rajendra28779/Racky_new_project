@@ -1,0 +1,160 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/BulkExtensionOfNonCompliance" class="nav-link active">Bulk Extension Of NonCompliance</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="content-box">
+        <div class="col-xxl-10">
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Actual Date Of Discharge From</label><span class="text-danger">*</span>
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="datepicker1" name="fromDate">
+                            <label class="input-group-text bg-transparent border-start-0" for="datepicker1"><i
+                                    class="iconbsky-calendar"></i> </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Actual Date Of Discharge To</label><span class="text-danger">*</span>
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="datepicker2" name="toDate">
+                            <label class="input-group-text bg-transparent border-start-0" for="datepicker2"><i
+                                    class="iconbsky-calendar"></i>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Extension Type</label><span class="text-danger">*</span>
+                        <select class="form-select" id="actionType" aria-label="Disabled select example" [(ngModel)]="actionId">
+                            <option value="" selected disabled>Select</option>
+                            <option value="1">Non-Uploading Initial Doc</option>
+                            <option value="2">Non-compliance of Query CPD</option>
+                            <option value="3">Non-compliance of Query SNA</option>
+                        </select>
+                    </div>
+                </div>
+        
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="control-label">State Name</label>
+                        <select class="form-select" name="stateId" id="stateId" (change)="OnChangeState($event.target.value)">
+                            <option value="" selected>Select State</option>
+                            <ng-container *ngFor="let item of stateList">
+                                <option value={{item.stateCode}}>{{item.stateName}}</option>
+                            </ng-container>
+                        </select>
+        
+                    </div>
+                    <div class="col-md-4">
+                        <label class="control-label">District Name</label>
+                        <select class="form-select" name="districtId" id="districtId"
+                            (change)="OnChangeDistrict($event.target.value)">
+                            <option value="" selected>Select District</option>
+                            <ng-container *ngFor="let item of districtList">
+                                <option value={{item.districtcode}}>{{item.districtname}}</option>
+                            </ng-container>
+                        </select>
+        
+                    </div>
+                    <div class="col-md-4">
+                        <label class="control-label">Hospital Name</label>
+                        <select class="form-select" name="hospital" id="hospital">
+                            <option value="" selected>Select Hospital</option>
+                            <ng-container *ngFor="let item of hospitalList">
+                                <option value={{item.hospitalCode}}>{{item.hospitalName}}</option>
+                            </ng-container>
+                        </select>
+        
+                    </div>
+        
+                </div>
+                    <div class="col-12">
+                        <br class="mt-xl-4"> 
+                    </div>
+                    <div class="col-lg-4 col-xxl-4">
+                        <div class="mb-xl-3">
+                            <label class="control-label">SNA Doctor Name</label>
+                            <ng-autocomplete #auto [data]="snoList" placeholder="Select SNA Name"
+                                (selected)="selectEvent($event)" (inputCleared)="clearEvent()" [itemTemplate]="itemTemplate"
+                                [notFoundTemplate]="notFoundTemplate" [searchKeyword]="keyword" spellcheck="false">
+                            </ng-autocomplete>
+        
+                            <ng-template #itemTemplate let-item>
+                                <a [innerHTML]="item.fullName"></a>
+                            </ng-template>
+        
+                            <ng-template #notFoundTemplate let-notFound>
+                                <div [innerHTML]="notFound"></div>
+                            </ng-template>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <br class="mt-xl-4"> 
+                    </div>
+                    <div class="col-lg-4 col-xxl-4">
+                        <div class="mb-xl-3">
+                            <div class="d-grid gap-2 d-md-flex">
+                                <button type="submit" class="btn btn-success me-1" (click)="Search()">Search</button>
+                                <button type="reset" class="btn btn-secondary" (click)="ResetField()">Reset</button>
+                            </div>
+                        </div>
+                    </div>
+                   
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 10px;margin-bottom: 10px;" *ngIf="showPegi">
+        <div class="col-lg-4 col-xxl-4 " *ngIf="typedata=='1'">
+            <p class="text-muted mb-0 " style="font-size: 14pt;">Total Non Uploading Of Initial Documents</p>
+            <p class="mb-0 " style="font-size: 16pt; color: blue;">{{this.snoclaimlist[0].count}}</p>
+        </div>
+        <div class="col-lg-4 col-xxl-4 " *ngIf="typedata=='2'">
+            <p class="text-muted mb-0 " style="font-size: 14pt;">Total Non Compliance Query CPD</p>
+            <p class="mb-0 " style="font-size: 16pt; color: blue;">{{this.snoclaimlist[0].count}}</p>
+        </div>
+        <div class="col-lg-4 col-xxl-4 " *ngIf="typedata=='3'">
+            <p class="text-muted mb-0 " style="font-size: 14pt;">Total Non Compliance Query SNA</p>
+            <p class="mb-0 " style="font-size: 16pt; color: blue;">{{this.snoclaimlist[0].count}}</p>
+        </div>
+        <div class="col-lg-4 col-xxl-4 "></div>
+        <div class="col-lg-4 col-xxl-4 "></div>
+    </div>
+    
+</div>
+<div class="content-box" style="margin-top: 10px;margin-bottom: 10px;" id="data1">
+    <div class="col-xxl-10">
+        <div class="row">
+            <div class="col-lg-4 col-xxl-4">
+                <div class="mb-xl-3">
+                    <label class="control-label">Date Extend Upto:</label><span class="text-danger">*</span>
+                    <div class="input-group">
+                        <input type="text" class="form-control border-end-0 datepicker" id="datepicker3" name="toDate" autocomplete="off">
+                        <label class="input-group-text bg-transparent border-start-0" for="datepicker3"><i
+                                class="iconbsky-calendar"></i> </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-12">
+            <div class="d-grid gap-2 d-md-flex">
+                <button class="btn btn-success me-2" id="Approve" (click)="submitDetails()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

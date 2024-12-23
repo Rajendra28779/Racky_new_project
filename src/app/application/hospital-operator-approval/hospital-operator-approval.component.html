@@ -1,0 +1,209 @@
+<div class="main-tab">
+  <div class="col-lg-4">
+      <ul class="nav nav-tabs">
+          <li class="nav-item">
+              <a routerLink="/application/hospitalopreatorapprove" routerLinkActive="active"
+                  class="nav-link active" >Applied List</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/application/hospitalopreatorreport" routerLinkActive="active"
+                class="nav-link " style="color: #1f723f;">Report</a>
+        </li>
+      </ul>
+  </div>
+</div>
+<div class="row" >
+  <div class="col-lg-4 col-xxl-4" style="padding-left: 17px;">
+      <b>Total Users: <span style="color: green;">{{userData.length}}</span></b>
+  </div>
+  <div class="col-lg-4 col-xxl-4" style="text-align: right; padding-top: 3px;">
+      <div class="form-group">
+          <button class="btn btn-outline-success btn-sm me-1" type="submit" (click)="downloadReport(1)">
+              <i class="bi bi-download"></i>
+          </button>
+          <button class="btn btn-outline-danger btn-sm me-1" tooltip="pdf" (click)="downloadReport(2)">
+            <i class="bi bi-file-earmark-pdf"></i>
+        </button>
+      </div>
+  </div>
+  <div class="col-lg-4 col-xxl-4">
+      <div class="input-group">
+          <input type="text" id="txtsearchDate" class="form-control" placeholder="Search here" name="txtsearchDate"
+              [(ngModel)]="txtsearchDate">
+      </div>
+  </div>
+</div>
+<div class="form-cointainer">
+  <div class="main-tab">
+      <div class="row justify-content-between">
+          <div class="table-responsive">
+              <table class="table table-striped" mb-0 id="exportTable">
+                  <thead>
+                      <tr>
+                          <th width="40">Sl No</th>
+                          <th width="100">Hospital Name</th>
+                          <th width="100">Hospital Mobile No.</th>
+                          <th width="100">Operator Full Name</th>
+                          <th width="100">Operator User Name</th>
+                          <th width="30">Operator Mobile No.</th>
+                          <th width="50">Operator State</th>
+                          <th width="60">Operator District</th>
+                          <th width="60" style="text-align: center;">Action</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr *ngFor="let item of userData | filter:txtsearchDate |
+                          paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};index as i">
+                          <td *ngIf="currentPage==1">{{i+1}}</td>
+                          <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+i+1}}</td>
+                          <td>{{item.hospitalname}}</td>
+                          <td>{{item.hospmobile}}</td>
+                          <td>{{item.fullName}}</td>
+                          <td>{{item.userName}}</td>
+                          <td>{{item.mobileNo}}</td>
+                          <td>{{item.stateCode}}</td>
+                          <td>{{item.distCode}}</td>
+                          <td style="text-align: center;">
+                              <a class="btn btn-outline-primary btn-sm me-1" (click)="edit(item)" >
+                                  Action
+                              </a>
+                          </td>
+                      </tr>
+                      <tr *ngIf="! userData?.length">
+                          <td colspan="9" align="center"><strong class="text-danger">No data found</strong></td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+          <div class="row" *ngIf="showPegi">
+              <div class="col-sm-4">
+                  <div class="col-sm-*">
+                      show
+                      <select id="pageItem" name="pageItem" class="custom-select-sm" (change)="pageItemChange()">
+                          <option value="100">100</option>
+                          <option value="200">200</option>
+                          <option value="300">300</option>
+                          <option value="400">400</option>
+                      </select> entries
+                  </div>
+              </div>
+              <div class="col-sm-8 text-right">
+                  <pagination-controls id="listing_pagination" [maxSize]="100" [directionLinks]="true"
+                      (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal modal-custom-backdrop" id="showdetails" tabindex="-1" aria-labelledby="exampleModalLabel" style="backdrop-filter: blur(5px);"
+        aria-hidden="true">
+  <div class="modal-dialog" style="max-width: 70%;">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">
+                  <span>Take Action</span>
+              </h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="cloasemodeal()"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-lg-4 col-xxl-4 border-end">
+                <div class="mb-xl-3">
+                  <h5><b style="color: rgb(80, 80, 233);">Hospital Name</b></h5>
+                    <p style="margin-left: 3ch;"><b>{{operatordetails?.hospitalname}}</b></p>
+                </div>
+              </div>
+              <div class="col-lg-4 col-xxl-4 border-end">
+                <div class="mb-xl-3">
+                  <h5><b style="color: rgb(80, 80, 233);">Hospital Code</b></h5>
+                    <p style="margin-left: 3ch;"><b>{{operatordetails?.hospitalCode}}</b></p>
+                </div>
+              </div>
+              <div class="col-lg-4 col-xxl-4 ">
+                <div class="mb-xl-3">
+                  <h5><b style="color: rgb(80, 80, 233);">Hospital Mobile No.</b></h5>
+                    <p style="margin-left: 3ch;"><b>{{operatordetails?.hospmobile}}</b></p>
+                </div>
+              </div>
+              <hr>
+              <div class="col-lg-4 col-xxl-4 border-end">
+                <div class="mb-xl-3">
+                  <h5><b style="color: rgb(80, 80, 233);">Operator Name</b></h5>
+                    <p style="margin-left: 3ch;"><b>{{operatordetails?.fullName}}</b></p>
+                </div>
+              </div>
+              <div class="col-lg-3 col-xxl-3 border-end">
+                <div class="mb-xl-3">
+                  <h5><b style="color: rgb(80, 80, 233);">Operator Mobile No.</b></h5>
+                    <p style="margin-left: 3ch;"><b>{{operatordetails?.mobileNo}}</b></p>
+                </div>
+              </div>
+              <div class="col-lg-5 col-xxl-5">
+                <div class="mb-xl-3">
+                  <h5><b style="color: rgb(80, 80, 233);">Operator EmailID</b></h5>
+                    <p style="margin-left: 3ch;"><b>{{operatordetails?.email}}</b></p>
+                </div>
+              </div>
+              <hr>
+              <div class="col-lg-4 col-xxl-4 border-end">
+                <div class="mb-xl-3">
+                  <h5><b style="color: rgb(80, 80, 233);">State Name</b></h5>
+                    <p style="margin-left: 3ch;"><b>{{operatordetails?.stateCode}}</b></p>
+                </div>
+              </div>
+              <div class="col-lg-4 col-xxl-4 border-end">
+                <div class="mb-xl-3">
+                  <h5><b style="color: rgb(80, 80, 233);">District Name</b></h5>
+                    <p style="margin-left: 3ch;"><b>{{operatordetails?.distCode}}</b></p>
+                </div>
+              </div>
+              <div class="col-lg-4 col-xxl-4">
+                <div class="mb-xl-3">
+                  <h5><b style="color: rgb(80, 80, 233);">Applied Date</b></h5>
+                    <p style="margin-left: 3ch;"><b>{{operatordetails?.applydate}}</b></p>
+                </div>
+              </div>
+          </div>
+          <hr>
+                  <div class="row">
+                    <div class="col-lg-12 col-xxl-12">
+                      <div class="table-responsive  example-container">
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th>Sl No</th>
+                              <th>Operator Name</th>
+                              <th>Operator State</th>
+                              <th>Operator District</th>
+                              <th>Status</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let item of hospsperatorlist index as j">
+                              <td>{{j+1}}</td>
+                              <td>{{item.fullName}}</td>
+                              <td>{{item.stateCode}}</td>
+                              <td>{{item.distCode}}</td>
+                              <td>{{item.status}}</td>
+                            </tr>
+                            <tr *ngIf="! hospsperatorlist?.length">
+                              <td colspan="5" align="center"><strong class="text-danger">No data found</strong></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+          <div class="col-lg-12 col-xxl-12" style="text-align: center; margin-top: 1ch;">
+            <div class="mb-xl-3">
+              <button  title="Approve" class="btn btn-success btn-sm me-2" (click)="action(1,operatordetails.operatorId)">Approve</button>
+              <button style="text-align: center;" title="Reject" class="btn btn-danger btn-sm me-1" (click)="action(2,operatordetails.operatorId)">Reject</button>
+            </div>
+          </div>
+
+          </div>
+      </div>
+  </div>
+</div>

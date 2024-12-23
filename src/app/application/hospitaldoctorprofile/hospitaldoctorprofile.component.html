@@ -1,0 +1,153 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-6">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item" *ngIf="hidebuttonstatus">
+                        <a routerLink="/application/hospitaldoctorprofile" class="nav-link active">Add</a>
+                    </li>
+                    <li class="nav-item" *ngIf="hidebuttonstatusadmin">
+                        <a routerLink="/application/hospitaldoctorprofile" class="nav-link active">Update</a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/application/hospitaldoctorprofileview" class="nav-link ">View</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row" *ngIf="hidestatus">
+        <div class="col-lg-4 col-xxl-4">
+            <div class="mb-xl-3">
+                <label class="control-label">State Name</label><span class="text-danger">*</span>
+                <select class="form-select" name="stateId" id="stateId" (change)="OnChangeState($event.target.value)" [(ngModel)]="statecode" disabled>
+                    <option value="">Select State</option>
+                    <ng-container *ngFor="let item of stateList">
+                        <option value={{item.stateCode}}>{{item.stateName}}</option>
+                    </ng-container>
+                </select>
+            </div>
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+            <div class="mb-xl-3">
+                <label class="control-label">District Name</label><span class="text-danger">*</span>
+                <select class="form-select" name="districtId" id="districtId" (change)="OnChangeDistrict($event.target.value)" [(ngModel)]="districtcode" disabled>
+                    <option value="">Select District</option>
+                    <ng-container *ngFor="let item of districtList">
+                        <option value={{item.districtcode}}>{{item.districtname}}</option>
+                    </ng-container>
+                </select>
+            </div>
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+            <div class="mb-xl-3">
+                <label class="control-label">Hospital Name</label><span class="text-danger">*</span>
+                <select class="form-select" name="hospitalcode" id="hospitalcode" [(ngModel)]="hospitalcode" disabled>
+                    <option value="">Select Hospital Name</option>
+                    <ng-container *ngFor="let item of hospitalList">
+                        <option value={{item.hospitalCode}}>{{item.hospitalName}}</option>
+                    </ng-container>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="hiseestatusadmin">
+        <div class="col-lg-4 col-xxl-4">
+            <div class="mb-xl-3">
+                <label class="control-label">State Name</label><span class="text-danger">*</span>
+                <select class="form-select" name="stateId" id="stateId" (change)="OnChangeState($event.target.value)" [(ngModel)]="statecodedata">
+                    <option value="">Select State</option>
+                    <ng-container *ngFor="let item of stateList">
+                        <option value={{item.stateCode}}>{{item.stateName}}</option>
+                    </ng-container>
+                </select>
+            </div>
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+            <div class="mb-xl-3">
+                <label class="control-label">District Name</label><span class="text-danger">*</span>
+                <select class="form-select" name="districtId" id="districtId" (change)="OnChangeDistrict($event.target.value)" [(ngModel)]="districtcodedata">
+                    <option value="">Select District</option>
+                    <ng-container *ngFor="let item of districtList">
+                        <option value={{item.districtcode}}>{{item.districtname}}</option>
+                    </ng-container>
+                </select>
+            </div>
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+            <div class="mb-xl-3">
+                <label class="control-label">Hospital Name</label><span class="text-danger">*</span>
+                <select class="form-select" name="hospitalcode" id="hospitalcode" (change)="OnChangehospital($event.target.value)" [(ngModel)]="hospitalcodedata">
+                    <option value="">Select Hospital Name</option>
+                    <ng-container *ngFor="let item of hospitalList">
+                        <option value={{item.hospitalCode}}>{{item.hospitalName}}</option>
+                    </ng-container>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4 col-xxl-4 ">
+            <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3 ">
+                <label class="control-label mb-2">Doctor Name</label><span class="text-danger">*</span>
+                <input type="text" maxlength="30" class="form-control " id="docname" aria-label="Disabled select example " placeholder="Enter Doctor Name  " autocomplete="off" onkeyup="this.value=this.value.replace(/[^a-zA-Z ]/g,'');" [(ngModel)]="docname">
+            </div>
+        </div>
+        <div class="col-lg-4 col-xxl-4 ">
+            <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3 ">
+                <label class="control-label mb-2">Contact Number</label><span class="text-danger">*</span>
+                <input type="text" maxlength="12" class="form-control " id="contactnumber" aria-label="Disabled select example " placeholder="Enter Contact Number  " autocomplete="off" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" [(ngModel)]="contactnumber">
+            </div>
+        </div>
+        <div class="col-lg-4 col-xxl-4 ">
+            <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3 ">
+                <label class="control-label mb-2">Registration Number</label><span class="text-danger">*</span>
+                <input type="text" maxlength="20" class="form-control " id="regnumber" aria-label="Disabled select example " placeholder="Enter Registration Number  " autocomplete="off" onkeyup="this.value=this.value.replace(/[^0-9a-zA-Z]/g,'');" [(ngModel)]="regnumber">
+            </div>
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+            <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                <label class="control-label mb-2">Date Of Joining</label><span class="text-danger">*</span>
+                <div class="input-group">
+                    <input type="text" class="form-control border-end-0 datepicker" id="datepicker3" autocomplete="off" [(ngModel)]="dateofjoining">
+                    <label class="input-group-text bg-transparent border-start-0"><i
+                            class="iconbsky-calendar"></i> </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-cointainer">
+        <div class="main-tab">
+            <div class="row justify-content-between">
+                <div class="table-responsive">
+                    <table class="table table-sm table-striped">
+                        <thead>
+                            <tr class="small">
+                                <th class="text-center"><input type="checkbox" id="allCheck" (change)="checkAllCheckBox($event)"></th>
+                                <th class="text-center" width="50">Sl#</th>
+                                <th class="text-center">Speciality Code</th>
+                                <th class="text-center">Speciality Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container>
+                                <tr class="small" *ngFor="let item of speciality | filter:txtsearchDate; index as i">
+                                    <td class="text-center"><input id="{{item.packageheadercode}}" type="checkbox" (change)="tdCheck($event,item.packageheadercode,item.packageheader)"></td>
+                                    <td class="text-center">{{i+1}}</td>
+                                    <td class="text-center">{{item.packageheadercode}}</td>
+                                    <td class="text-center">{{item.packageheader}}</td>
+                                </tr>
+                            </ng-container>
+                            <tr *ngIf=" this.speciality.length==0">
+                                <td colspan="14" class="text-center"><strong class="text-danger">NO DATA FOUND!!</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <a class="btn btn-success px-xl-3 py-xl-2 me-2 " *ngIf="buttonhide" (click)="Submit() ">Submit</a>
+        <a class="btn btn-secondary px-xl-3 py-xl-2 " *ngIf="buttonhide" (click)="Reset() ">Reset</a>
+    </div>
+</div>

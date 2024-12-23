@@ -1,0 +1,337 @@
+
+<div class="container my-3 py-3">
+    <div class="d-flex justify-content-center mb-2">
+        <div  class="section-heading text-muted"><h3 >Your Grievance Details </h3>
+          <div  class="custom-border"></div>
+        </div>
+      </div>
+     
+       
+  
+    <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12">
+     <div class="d-flex justify-content-end mb-2">
+  
+        <a title="" href="javascript:void(0)" class="btn btn-sm btn-success" id="backicon" data-toggle="tooltip"
+        data-placement="top" (click)="backClicked()" data-original-title="Back"><i
+            class="icon-arrow-left-solid"></i></a>
+      </div>
+  
+      <div class="card">
+         <h5 class="d-flex bg-success-new text-white text-capitalize border-right w-100 p-2 fw-normal f-coloumn">
+            <div class="p-2 flex-grow-1 bd-highlight justify-content-start d-flex f-coloumn">
+               <span class="d-flex align-items-center font-head"> Your Grievance register ID : <b class="px-2"> {{application?.vchApplicationNo}}</b> </span>
+               <span class="border-end ms-3"></span> 
+               <span *ngIf="priority !='null'; else others " class="text-white bg-danger rounded-1 m-2 high_btn  align-items-center ms-3"> {{priority}} Priority </span>
+               <ng-template #others>
+                 <span  class="text-white bg-danger rounded-1 m-2 high_btn  align-items-center ms-3">NA Priority</span>
+               </ng-template>
+              </div>
+            <!-- <div class="p-2 bd-highlight">
+               <button class="btn btn-warning warning-bg" type="button" data-bs-toggle="modal" (click)="modalData(onlineServiceId,processId)" data-bs-target="#exampleModal"> Track Status </button>
+            </div> -->
+         </h5>
+         <!-- Modal -->
+         <!-- <div class="modal fade d-none" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+               <div class="modal-content">
+                  <div class="p-3">
+                     <button type="button" class="btn-close float-end" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body p-4">
+                    <div class="d-flex justify-content-center mb-2">
+                      <div  class="section-heading text-muted mb-4"><h4 >Your Grievance Log Details </h4>
+                        <div  class="custom-border"></div>
+                      </div>
+                    </div>
+                     <div class="row">
+                        <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6">
+                           <div class="d-flex bd-highlight align-items-center">
+                              <div class="d-flex bd-highlight align-items-center"> <i class="icon-file-alt-solid icon-font"></i>  </div>
+                            <div>
+                                 <div class="preview-textmodal">Grievance Register ID </div>
+                                 <label class="preview-lbl"> <b> {{application?.vchApplicationNo}}</b> </label>
+                                </div>
+                              
+                           </div>
+                        </div>
+                        <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6">
+                           <div class="d-flex bd-highlight align-items-center">
+                              <div class="d-flex bd-highlight align-items-center"> <i class="custom-icon-user icon-font"></i> </div>
+                              <div>
+                              <div class="preview-textmodal">Application Name </div>
+                                 <label class="preview-lbl"> <b> {{trackData?.benificiaryName}} </b> </label>
+                                </div>
+                           </div>
+                        </div>
+                     </div>
+                     <hr>
+                     <div class="row d-flex justify-content-center">
+                        <div class="row">
+                           <div class="col-12 px-2">
+                              <div class="card card00 border-0">
+ 
+  <div *ngIf="noteingList?.length > 0">
+     <div class="action-history">
+        <div class="action-item notingTbl">
+           <div class="row">
+  
+              <div class="stepper d-flex flex-column">
+  
+                 <div class="d-flex mb-1" id="viewTable" *ngFor="let nlist of noteingList;let i=index">
+  
+  
+                    <div class="d-flex flex-column pr-4 align-items-center">
+                       <div class="circle-goal py-2 px-3 bg-success text-white mb-1"> 
+                          <span *ngIf="nlist.intstatus == 1" class="icon-fast-forward-solid icon-bgwhite"></span>
+                             <span *ngIf="nlist.intstatus == 2" class="icon-fast-forward-solid icon-bgwhite"></span>
+                                <span *ngIf="nlist.intstatus == 6" class="icon-question-circle icon-bgwhite"></span>
+                                <span *ngIf="nlist.intstatus == 8" class="icon-check-solid icon-bgwhite"></span>
+                                <span *ngIf="nlist.intstatus == 7" class="icon-times-solid icon-bgwhite"></span>
+                                <span *ngIf="nlist.intstatus == 17" class="icon-times-solid icon-bgwhite"></span>
+                                <span *ngIf="nlist.intstatus == 18" class="icon-envelope-open icon-bgwhite"></span>
+                                <span *ngIf="nlist.intstatus == 20" class="icon-check-circle icon-bgwhite"></span>
+                          
+                          </div>
+                       <div class="line h-100"></div>
+                    </div>
+  
+  
+                    <div class="ms-3">
+                       <label class="head-step"> <b> {{nlist.intfromauthority}} </b> </label>
+  
+  
+                       <div class="d-flex align-items-center">
+                          <div class="p-1">
+                             <div class="preview-textmodal m-0"> <span class="custom-icon-calendar icon-bg"></span></div>
+                          </div>
+                          <div class="p-1 flex-fill">
+                             <h6 class="text-secondary m-0"> <small> {{nlist.dtactiontaken}} </small> </h6>
+                          </div>
+                       </div>
+  
+  
+                       <div class="d-flex align-items-center">
+                          <div class="p-1">
+                             <div class="preview-textmodal m-0"> <span *ngIf="nlist.intstatus == 1" class="icon-fast-forward-solid icon-bg"></span>
+                                <span *ngIf="nlist.intstatus == 2" class="icon-fast-forward-solid icon-bg"></span>
+                                <span *ngIf="nlist.intstatus == 6" class="icon-question-circle icon-bg"></span>
+                                <span *ngIf="nlist.intstatus == 8" class="icon-check-solid icon-bg"></span>
+                                <span *ngIf="nlist.intstatus == 7" class="icon-times-solid icon-bgred"></span>
+                                <span *ngIf="nlist.intstatus == 17" class="icon-times-solid icon-bgred"></span>
+                                <span *ngIf="nlist.intstatus == 18" class="icon-envelope-open icon-bg"></span>
+                                <span *ngIf="nlist.intstatus == 20" class="icon-check-circle icon-bg"></span>
+                             </div>
+                          </div>
+                       <div class="p-1 flex-fill">
+  
+                             <div class="text-secondary m-0">
+  
+                                {{nlist.intstatus == 2 ? 'Revert' 
+                                   : (nlist.intstatus == 1) ? 'Forward'  
+                                   : (nlist.intstatus == 3) ? 'Resubmitted' 
+                                   : (nlist.intstatus == 6) ? 'Query' 
+                                   : (nlist.intstatus == 7) ? 'Reject'
+                                   : (nlist.intstatus == 9) ? 'Query Replied by Applicant' 
+                                   : (nlist.intstatus == 8) ?'Approved'
+                                   : (nlist.intstatus == 17) ?'Reject'
+                                   : (nlist.intstatus == 18) ?'Reopen'
+                                   : (nlist.intstatus == 20) ?'Applied'
+                                   :'---'}}
+  
+  
+                             </div>
+  
+  
+                          </div>
+                       </div>
+  
+  
+  
+  
+  
+                    </div>
+                 </div>
+              </div>
+  
+  
+  
+  
+  
+           </div>
+        </div>
+     </div>
+  
+  
+     <div>
+  
+     </div>
+  
+  
+  
+  
+  </div>                   
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+   -->
+         <div class="card-body">
+           
+          <!-- <div class="d-flex justify-content-between align-items-center">
+            <h4 class="mb-3">Preview of {{ formName}}</h4>
+          </div> -->
+        
+        
+            <div *ngIf="sectionwise" class="accordion" id="accordionExample">       <!-- section Wise -->
+        
+        
+                    <div class="accordion-item" *ngFor="let dynPrvKeys of dynamicCtrlPreviewKeys; let i = index">
+                            <h2 class="accordion-header" id="headingTwo">
+                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapseTwo'+i"  aria-expanded="false" aria-controls="collapseTwo">
+                                    {{dynamicpreviewDetails[dynPrvKeys]['sectionName']}}
+                              </button>
+                            </h2>
+                            <div id="collapseTwo{{i}}" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                              <div class="accordion-body">
+                                    <div class="dynamic-ctrls" >
+        
+                                            <div class="dynGridCls" *ngFor="let dynPrvForm of dynamicpreviewDetails[dynPrvKeys]['arrFormWiseValue']" [ngClass]="{'onegrid':gridtype == 1, 'twogrid': gridtype == 2, 'threeGrid':gridtype == 3,'border-right':gridtype == 3,'fullwidthSection':dynPrvForm.ctrlTypeId==10 || dynPrvForm.ctrlTypeId==8 || dynPrvForm.ctrlTypeId==12}">
+        
+                                                    <label *ngIf=" dynPrvForm.ctrlTypeId!=8 && dynPrvForm.ctrlTypeId!=10 && dynPrvForm.ctrlTypeId!=12" class="mb-0 dynlabel"  >
+                                                           {{ dynPrvForm.ctrlName}}
+                                                       </label>
+  
+                                                    <div class="control-holder">
+                                                        <div class="form-group">
+        
+                                                            <div *ngIf="dynPrvForm.ctrlTypeId==10">     <!-- For Add More -->
+        
+                                                                <table class="table table-bordered">
+                                                                  <tr>
+                                                                      <th>Sl#</th>
+                                                                      <th *ngFor="let addMoreTh of dynPrvForm.addMoreDetails[0];">
+                                                                        {{addMoreTh.ctrlName}}
+                                                                      </th>
+        
+                                                                  </tr>
+                                                                <tr *ngFor="let addMoreDet of dynPrvForm.addMoreDetails; let addMoreTrCtr=index">
+                                                                        <td>{{addMoreTrCtr + 1}} </td>
+                                                                        <ng-container *ngFor="let addMoreTdDet of addMoreDet ">
+                                                                           <td *ngIf="addMoreTdDet.ctrlTypeId!=7">{{addMoreTdDet.ctrlValue }}</td>
+                                                                           <td *ngIf="addMoreTdDet.ctrlTypeId==7">
+                                                                            <a  target="_blank" class="text-danger h4 mt-2 d-inline-block" [href]="addMoreTdDet.ctrlValue"><i class="icon-file-pdf-solid"></i></a>
+                                                                          </td>
+                                                                        </ng-container>
+        
+                                                                  </tr>
+                                                              </table>
+                                                              </div>
+                                                              
+                                                              <div *ngIf="dynPrvForm.ctrlTypeId==8">
+                                                                <h2 class="{{dynPrvForm.ctrlHeadingType}}">{{dynPrvForm.ctrlValue}}</h2>
+        
+        
+        
+                                               </div>
+                                                               <label class="data-lebel" *ngIf="dynPrvForm.ctrlTypeId!=7 && dynPrvForm.ctrlTypeId!=8 && dynPrvForm.ctrlTypeId!=10 && dynPrvForm.ctrlTypeId!=12" [innerHTML]="dynPrvForm.ctrlValue"></label>
+                                                               
+                                                               <a *ngIf="dynPrvForm.ctrlTypeId==7" target="_blank" class="text-danger h4 mt-2 d-inline-block" [href]="dynPrvForm.ctrlValue"><i class="icon-file-pdf-solid"></i></a>
+                                                            </div>
+                                                            </div>
+                                            </div>
+                                        </div>
+                                       </div>
+                            </div>
+                          </div>
+                  </div>
+        
+                            <div *ngIf="!sectionwise" >  <!-- without section -->
+                                              <div class="dynamic-ctrls nth-grid" *ngFor="let dynPrvKeys of dynamicCtrlPreviewKeys; let i = index" >
+                                                      <div class="dynGridCls" [ngClass]="{'onegrid':gridtype == 1, 'twogrid': gridtype == 2, 'threeGrid':gridtype == 3,'fullwidthSection':dynPrvForm.ctrlTypeId== 10 || dynPrvForm.ctrlTypeId== 8 || dynPrvForm.ctrlTypeId== 12 ,'d-none':dynPrvForm.ctrlTypeId== 5}" *ngFor="let dynPrvForm of dynamicpreviewDetails[dynPrvKeys]['arrFormWiseValue']">
+        
+                                                              <div *ngIf="dynPrvForm.ctrlTypeId!=8 && dynPrvForm.ctrlTypeId!=12" class="mb-1 dynlabel"  >
+                                                                    {{ dynPrvForm.ctrlName}}
+                                                              </div>
+                                         
+                                                                <div *ngIf="dynPrvForm.ctrlTypeId==10">
+        
+                                                                 <div class="tbl-bg">
+                                                                  <table class="table m-0">
+                                                                    <tr >
+                                                                        <th width="20" class="border-0">Sl#</th>
+                                                                        <th width="200" class="border-0" *ngFor="let addMoreTh of dynPrvForm.addMoreDetails[0];">
+                                                                          {{addMoreTh.ctrlName}}
+                                                                        </th>
+        
+                                                                    </tr>
+                                                                  <tr *ngFor="let addMoreDet of dynPrvForm.addMoreDetails; let addMoreTrCtr=index">
+                                                                          <td>{{addMoreTrCtr + 1}} </td>
+                                                                          <ng-container *ngFor="let addMoreTdDet of addMoreDet ">
+                                                                             <td *ngIf="addMoreTdDet.ctrlTypeId!=7">{{addMoreTdDet.ctrlValue }}</td>
+                                                                             <td *ngIf="addMoreTdDet.ctrlTypeId==7">
+                                                                              <a   *ngIf="addMoreTdDet.ctrlName
+                                                                              ==='Upload Supporting Document'"target="_blank" class="text-danger h4 mt-2 d-inline-block" [href]="addMoreTdDet.ctrlValue">
+                                                                                <img src="{{siteUrl}}assets/img/pdf.png" width="40" alt="PDF File">
+                                                                             </a>
+                                                                             
+                                                                                <a  *ngIf="addMoreTdDet.ctrlName
+                                                                                ==='Upload Audio/Video' && addMoreTdDet.ctrlValue.includes('null') == false"
+                                                                                 target="_blank" class="text-danger h4 mt-2 d-inline-block" [href]="addMoreTdDet.ctrlValue">
+                                                                                <img src="{{siteUrl}}assets/img/video.png" width="40" alt="video File">
+                                                                             </a>
+                                                                            
+                                                                            </td>
+                                                                          </ng-container>
+        
+                                                                    </tr>
+                                                                </table>
+                                                              </div>
+        
+        
+        
+                                                                </div>
+                                                               <div *ngIf="dynPrvForm.ctrlTypeId==8">
+                                                                  <h2 class="dynPrvForm.ctrlHeadingType" >{{dynPrvForm.ctrlValue}}</h2>
+        
+                                                               </div>
+                                                              <div class="control-holder" *ngIf="dynPrvForm.ctrlTypeId!=8 && dynPrvForm.ctrlTypeId!=12 && dynPrvForm.ctrlTypeId!=10" >
+                                                                  <div class="form-group">
+                                                                        <label *ngIf="dynPrvForm.ctrlTypeId!=7" [innerHTML]="dynPrvForm.ctrlValue"></label>
+                                                                        <a *ngIf="dynPrvForm.ctrlTypeId==7" target="_blank" class="text-danger h4 mt-2 d-inline-block" [href]="dynPrvForm.ctrlValue"><i class="icon-file-pdf-solid"></i></a>
+                                                                      </div>
+                                                                      </div>
+                                                      </div>
+                                                  </div>
+        
+                            </div>
+        
+                              <div class="text-center" *ngIf="btnShow==1">
+                                <a class="btn btn-dark me-2" (click)="gotToPrev()"><i class="fa-solid fa-arrow-left"></i>Prev</a>
+                                <button class="btn btn-success me-2" [disabled]="btnDisabledStatus" (click)="applyForProcess()">Submit</button>
+                                <!-- <input  type="reset" class="btn btn-danger me-2 "  value="Reset"> -->
+        
+                              </div>
+            
+         </div>
+      </div>
+   </div>
+  
+  
+  
+  
+  
+  
+  
+   
+  
+  </div>
+  
+  <div class="loader" *ngIf="loading">
+    <div class="loader-item"></div>
+    <p>Loading...</p>
+  </div>
+  

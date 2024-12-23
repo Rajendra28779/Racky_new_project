@@ -1,0 +1,210 @@
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { ClaimactioncountdetailsComponent } from './application/reports/claimactioncountdetails/claimactioncountdetails.component';
+import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
+import { LoginComponent } from './login/login.component';
+import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
+import { PreauthHistoryComponent } from './preauth-history/preauth-history.component';
+import { TreatmentHistoryPackageComponent } from './treatment-history-package/treatment-history-package.component';
+import { TreatmentHistoryComponent } from './treatment-history/treatment-history.component';
+import { TrackingDetailsComponent } from './tracking-details/tracking-details.component'
+import { CpdMultiPackageBlockingComponent } from './cpd-multi-package-blocking/cpd-multi-package-blocking.component';
+import { SnaPackageBlockingComponent } from './sna-package-blocking/sna-package-blocking.component';
+import { DischargedTreatmentInfoComponent } from './discharged-treatment-info/discharged-treatment-info.component';
+import { AuthGuard } from './services/auth.guard';
+import { UnauthorizeComponent } from './unauthorize/unauthorize.component';
+import { ClaimProcessedComponent } from 'src/app/application/sna/claim-processed/ClaimProcessedComponent';
+import { ValidateOtpComponent } from './validate-otp/validate-otp.component';
+import { TransactioncountdetalsReportsComponent } from './application/reports/transactioncountdetals-reports/transactioncountdetals-reports.component';
+import { DischargedetailsHistoryComponent } from './application/hospital/dischargedetails-history/dischargedetails-history.component';
+import { ClaimRecievedDetailsComponent } from './application/reports/claim-recieved-details/claim-recieved-details.component';
+import { ClaimstatictiscDetailsComponent } from './application/reports/claimstatictisc-details/claimstatictisc-details.component';
+import { TreatmentHistorySnaComponent } from './application/treatment-history-sna/treatment-history-sna.component';
+import { SnaactiontakenlogdetailsrprtComponent } from './application/reports/snaactiontakenlogdetailsrprt/snaactiontakenlogdetailsrprt.component'
+import { CpdTrackingDetailsComponent } from './application/cpd-tracking-details/cpd-tracking-details.component';
+import { TreatmentHistoryCpdComponent } from './treatment-history-cpd/treatment-history-cpd.component';
+import { PackageDetailsComponent } from './application/package-details/package-details.component';
+import { ClaimcountprogressreportDetailsComponent } from './application/reports/claimcountprogressreport-details/claimcountprogressreport-details.component';
+import { TrackingDetailsHospitalComponent } from './tracking-details-hospital/tracking-details-hospital.component'
+import { TreatmentHistoryHospitalComponent } from './treatment-history-hospital/treatment-history-hospital.component';
+import { ChangeUserPasswordComponent } from './change-user-password/change-user-password.component'
+import { OldtreatmentHistorySNAComponent } from './application/oldtreatment-history-sna/oldtreatment-history-sna.component';
+import { HospitalWiseClaimReportDetailComponent } from './hospital-wise-claim-report-detail/hospital-wise-claim-report-detail.component';
+import { PatientDetailsComponent } from './patient-details/patient-details.component';
+import { CpdactiontakenlogdetailsComponent } from './application/cpdactiontakenlogdetails/cpdactiontakenlogdetails.component';
+import { PaidinternalComponent } from './paidinternal/paidinternal.component';
+import { PrimaryLinkGuard } from './services/primary-link.guard';
+import { SnawisependingreportdetailsComponent } from './application/snawisependingreportdetails/snawisependingreportdetails.component';
+import { LandingComponent } from "./landing/landing.component";
+import { CpdreceivedcountreportdetailsComponent } from './application/cpdreceivedcountreportdetails/cpdreceivedcountreportdetails.component';
+import { RationCardSchedularDetailsReportComponent } from './application/ration-card-schedular-details-report/ration-card-schedular-details-report.component';
+import { CpdwiseunprocesseddetailsComponent } from './application/cpdwiseunprocesseddetails/cpdwiseunprocesseddetails.component';
+import { CpdwishospitalwisedetailspageComponent } from './application/cpdwishospitalwisedetailspage/cpdwishospitalwisedetailspage.component';
+import { PreauthCaseDetailsComponent } from './preauth-case-details/preauth-case-details.component';
+import { CpdPaymentDetailsReportComponent } from './application/cpd-payment-details-report/cpd-payment-details-report.component';
+import { UrnwiseactionreportDetailsComponent } from './application/reports/urnwiseactionreport-details/urnwiseactionreport-details.component';
+import { TreamenthistorybyurnadhardetailsComponent } from './application/treamenthistorybyurnadhardetails/treamenthistorybyurnadhardetails.component';
+import { CpdactionwiseperformancedetailsComponent } from './application/cpdactionwiseperformancedetails/cpdactionwiseperformancedetails.component';
+import { HospitalwisesummarryinnerpageComponent } from './hospitalwisesummarryinnerpage/hospitalwisesummarryinnerpage.component';
+import { DbschedulerdetailsreportComponent } from './application/dbschedulerdetailsreport/dbschedulerdetailsreport.component';
+import { ViewoldclaimandnewclaimdetailsComponent } from './viewoldclaimandnewclaimdetails/viewoldclaimandnewclaimdetails.component';
+import { HospitalincentivedetailsreportComponent } from './application/hospitalincentivedetailsreport/hospitalincentivedetailsreport.component';
+import { OldclaimtrackingdetailsComponent } from './application/sna/oldclaimtrackingdetails/oldclaimtrackingdetails.component';
+import { HospitaldetailsComponent } from './application/BSKY-Master/hospitaldetails/hospitaldetails.component';
+import { HospitalwisefloatdetailsComponent } from './hospitalwisefloatdetails/hospitalwisefloatdetails.component';
+import { SummarydetailsComponent } from './summarydetails/summarydetails.component';
+import { HospitalwiseongoingtreatmentdetailsComponent } from './application/hospitalwiseongoingtreatmentdetails/hospitalwiseongoingtreatmentdetails.component';
+import { BenificiaryGenderWiseDtlsComponent } from './application/reports/benificiary-gender-wise-dtls/benificiary-gender-wise-dtls.component';
+import { BenificiaryGenderGramWiseDtlsComponent } from './application/reports/benificiary-gender-gram-wise-dtls/benificiary-gender-gram-wise-dtls.component';
+import { BenificiaryVillageDtlsComponent } from './application/reports/benificiary-village-dtls/benificiary-village-dtls.component';
+import { BenificaryDetailsComponent } from './application/reports/benificary-details/benificary-details.component';
+import { HospitalauthenticationdetailsComponent } from './application/reports/hospitalauthenticationdetails/hospitalauthenticationdetails.component';
+import { MobileapiComponent } from './mobileapi/mobileapi.component';
+import { PackagebenificiarydtlsComponent } from './application/reports/packagebenificiarydtls/packagebenificiarydtls.component';
+import { CpdReportDtlsComponent } from './application/CPD/mis_report/cpd-report-dtls/cpd-report-dtls.component';
+import { BlockedcaselogdetailsreportComponent } from './application/blockedcaselogdetailsreport/blockedcaselogdetailsreport.component';
+import { UnprocessedsummarydetailsComponent } from './application/unprocessedsummarydetails/unprocessedsummarydetails.component';
+import { PendingmortalitystatusComponent } from './pendingmortalitystatus/pendingmortalitystatus.component';
+import { PendingHospitalClaimsComponent } from "./pending-hospital-claims/pending-hospital-claims.component";
+import { MnthWiseDischargeMedtlsComponent } from './application/reports/mnth-wise-discharge-medtls/mnth-wise-discharge-medtls.component';
+import { MemnthDischargeDetailsComponent } from './application/reports/memnth-discharge-details/memnth-discharge-details.component';
+import { SnarejectiondetailsComponent } from './snarejectiondetails/snarejectiondetails.component';
+import { SnaremarkcountdetailsComponent } from './snaremarkcountdetails/snaremarkcountdetails.component';
+import { FloatclaimdetailsComponent } from './floatclaimdetails/floatclaimdetails.component';
+import { DynamicreportdetailsComponent } from './application/dynamicreport/dynamicreportdetails/dynamicreportdetails.component';
+import { GrievanceCountReportComponent } from './grievance-count-report/grievance-count-report.component';
+import { OldBlockDatareportListComponent } from './application/reports/old-block-datareport-list/old-block-datareport-list.component';
+import { PackagedetailsforspecialityComponent } from './packagedetailsforspeciality/packagedetailsforspeciality.component';
+import { DoctorprofiledetailsComponent } from './doctorprofiledetails/doctorprofiledetails.component';
+import { TreatmenthistoryofurnComponent } from './treatmenthistoryofurn/treatmenthistoryofurn.component';
+import { ExpiredbeneficiaryDtlsComponent } from './application/reports/expiredbeneficiary-dtls/expiredbeneficiary-dtls.component';
+import { CpdPaymentCalculationDetailsComponent } from "./cpd-payment-calculation-details/cpd-payment-calculation-details.component";
+import { OldblockDataViewdetailsComponent } from './application/misreports/oldblock-data-viewdetails/oldblock-data-viewdetails.component';
+import { BlockwisetreetmentdatareportComponent } from './application/misreports/blockwisetreetmentdatareport/blockwisetreetmentdatareport.component';
+import { GpwisetreetmentdatareportComponent } from './application/misreports/gpwisetreetmentdatareport/gpwisetreetmentdatareport.component';
+import { VillagewisetreetmentdatareportComponent } from './application/misreports/villagewisetreetmentdatareport/villagewisetreetmentdatareport.component';
+import { SnawisepreauthactiondetailsComponent } from './application/snawisepreauthactiondetails/snawisepreauthactiondetails.component';
+import { MortalitydetailsComponent } from './mortalitydetails/mortalitydetails.component';
+import { UrnwiseamounntblockreportComponent } from './urnwiseamounntblockreport/urnwiseamounntblockreport.component';
+import { UrnwiseamountutilizegplistComponent } from './urnwiseamountutilizegplist/urnwiseamountutilizegplist.component';
+import { UrnwiseamountutilizevillagelistComponent } from './urnwiseamountutilizevillagelist/urnwiseamountutilizevillagelist.component';
+import { OutsideodishatreatmentdetailsblockComponent } from './outsideodishatreatmentdetailsblock/outsideodishatreatmentdetailsblock.component';
+import { OutsideodishatreatmentdetailspanchayatComponent } from './outsideodishatreatmentdetailspanchayat/outsideodishatreatmentdetailspanchayat.component';
+import { OutsideodishatreatmentdetailsvillageComponent } from './outsideodishatreatmentdetailsvillage/outsideodishatreatmentdetailsvillage.component';
+import { CpdclaimprocessingpaymentreportdetailsComponent } from './cpdclaimprocessingpaymentreportdetails/cpdclaimprocessingpaymentreportdetails.component';
+import { OldClaimProgressReportDetailsComponent } from './application/old-claim-progress-report-details/old-claim-progress-report-details.component';
+import { HospitalwiseAbstractComponent } from './hospitalwise-abstract/hospitalwise-abstract.component';
+import { PackagepatternComponent } from './packagepattern/packagepattern.component';
+import { PostpaymentsummarydetailsComponent } from './postpaymentsummarydetails/postpaymentsummarydetails.component';
+import { AuthenticationdeviceComponent } from './authenticationdevice/authenticationdevice.component';
+import { CasewisehospitaldetailsComponent } from './casewisehospitaldetails/casewisehospitaldetails.component';
+import { SmpatientreviewdetailsComponent } from './smpatientreviewdetails/smpatientreviewdetails.component';
+
+
+const routes: Routes = [
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  { path: 'changepassword', component: ForgotpasswordComponent },
+  { path: 'treatmenthistory', component: TreatmentHistoryComponent },
+  { path: 'treatmenthistoryhospital', component: TreatmentHistoryHospitalComponent },
+  { path: 'preauthhistory', component: PreauthHistoryComponent },
+  { path: 'multipackage', component: CpdMultiPackageBlockingComponent },
+  { path: 'multipackageblock', component: SnaPackageBlockingComponent },
+  { path: 'trackingdetails', component: TrackingDetailsComponent },
+  { path: 'trackingdetailscpd', component: CpdTrackingDetailsComponent },
+  { path: 'trackingdetailshospital', component: TrackingDetailsHospitalComponent },
+  { path: 'treatmentinfo', component: DischargedTreatmentInfoComponent },
+  { path: 'unauthorize', component: UnauthorizeComponent },
+  { path: 'landing', component: LandingComponent },
+  { path: 'treatmenthistorypackage', component: TreatmentHistoryPackageComponent },
+  { path: 'claimprocessed', component: ClaimProcessedComponent },
+  { path: 'forgotpassword', component: ValidateOtpComponent },
+  { path: 'dischargelistHistoryHospital', component: DischargedetailsHistoryComponent },
+  { path: 'snaactiontakenlogdetails', component: SnaactiontakenlogdetailsrprtComponent },
+  { path: 'cpdpaymentdetailsreport', component: CpdPaymentDetailsReportComponent },
+  { path: 'claimActionCountDetails', component: ClaimactioncountdetailsComponent },
+  { path: 'transactionCountReportDetails', component: TransactioncountdetalsReportsComponent },
+  { path: 'claimRecievedCountReportDetails', component: ClaimRecievedDetailsComponent },
+  { path: 'claimStatisticDetails', component: ClaimstatictiscDetailsComponent },
+  { path: 'treatmenthistoryforsna', component: TreatmentHistorySnaComponent },
+  { path: 'treatmenthistoryforcpd', component: TreatmentHistoryCpdComponent },
+  { path: 'packageDetails', component: PackageDetailsComponent },
+  { path: 'claimcountprogressreportDetails', component: ClaimcountprogressreportDetailsComponent },
+  { path: 'changeuserpassword', component: ChangeUserPasswordComponent },
+  { path: 'Oldtreatmenthistoryforsna', component: OldtreatmentHistorySNAComponent },
+  { path: 'hospitalwiseclaimreportdetaildata', component: HospitalWiseClaimReportDetailComponent },
+  { path: 'patientdetails', component: PatientDetailsComponent },
+  { path: 'Cpdactiondetails', component: CpdactiontakenlogdetailsComponent },
+  { path: 'paidreportdetails', component: PaidinternalComponent },
+  { path: 'snawisependingreportdetails', component: SnawisependingreportdetailsComponent },
+  { path: 'cpdcountdetailsreport', component: CpdreceivedcountreportdetailsComponent },
+  { path: 'rationcardscgedulardetailsreport', component: RationCardSchedularDetailsReportComponent },
+  { path: 'cpdwiseunprocesseddetails', component: CpdwiseunprocesseddetailsComponent },
+  { path: 'cpdwisehospitalwisedetails', component: CpdwishospitalwisedetailspageComponent },
+  { path: 'preauthcasedetails', component: PreauthCaseDetailsComponent },
+  { path: 'cpdwieperformancedetails', component: CpdactionwiseperformancedetailsComponent },
+  { path: 'urnwiseactionreportsdetails', component: UrnwiseactionreportDetailsComponent },
+  { path: 'treatmenthistorydetails', component: TreamenthistorybyurnadhardetailsComponent },
+  { path: 'hospitalsummarryinerpage', component: HospitalwisesummarryinnerpageComponent },
+  { path: 'dbschedulerdetailsreport', component: DbschedulerdetailsreportComponent },
+  { path: 'viewoldclaimandnewclaimdetails', component: ViewoldclaimandnewclaimdetailsComponent },
+  { path: 'hospincentivedtls', component: HospitalincentivedetailsreportComponent },
+  { path: 'oldClaimtrackingdetails', component: OldclaimtrackingdetailsComponent },
+  { path: 'hospdetailsreport', component: HospitaldetailsComponent },
+  { path: 'hospitalwiseongoingtreatmentdtls', component: HospitalwiseongoingtreatmentdetailsComponent },
+  { path: 'hospitalauthdetails', component: HospitalauthenticationdetailsComponent },
+  { path: 'blockedcaselogreportdtls', component: BlockedcaselogdetailsreportComponent },
+  { path: 'unprocessedsummarydetails', component: UnprocessedsummarydetailsComponent },
+  { path: 'hospitalwisefloatnumberDetails', component: HospitalwisefloatdetailsComponent },
+  { path: 'summarydetails', component: SummarydetailsComponent },
+  { path: 'snapreauthactiondetails', component: SnawisepreauthactiondetailsComponent },
+  { path: 'blockwisegenderdetails', component: BenificiaryGenderWiseDtlsComponent },
+  { path: 'gramwisegenderdetails', component: BenificiaryGenderGramWiseDtlsComponent },
+  { path: 'villagewisegenderdetails', component: BenificiaryVillageDtlsComponent },
+  { path: 'benificarydetails', component: BenificaryDetailsComponent },
+  { path: 'packagewisebenificiarydetails', component: PackagebenificiarydtlsComponent },
+  { path: 'cpdreportdetails', component: CpdReportDtlsComponent },
+  { path: 'pendingmortalitystatus', component: PendingmortalitystatusComponent },
+  { path: 'pendingHospitalClaims', component: PendingHospitalClaimsComponent },
+  { path: 'downloaddischargeadmiisiondumpdetails', component: MnthWiseDischargeMedtlsComponent },
+  { path: 'downloadadmissiondumpdata', component: MemnthDischargeDetailsComponent },
+  //Rajendra
+  { path: 'oldblockdataviewdetails', component: OldblockDataViewdetailsComponent },
+  { path: 'blockwisetreatmentdata', component: BlockwisetreetmentdatareportComponent },
+  { path: 'gpwisetreatmentdata', component: GpwisetreetmentdatareportComponent },
+  { path: 'villagewisetreatmentdata', component: VillagewisetreetmentdatareportComponent },
+  { path: 'dynamicreportdetails', component: DynamicreportdetailsComponent },
+  { path: 'SNARemarkwisedetails', component: SnarejectiondetailsComponent },
+  { path: 'SNARemarkcountdetails', component: SnaremarkcountdetailsComponent },
+  { path: 'floatclaimdetails', component: FloatclaimdetailsComponent },
+  { path: 'grievanceReportDetails', component: GrievanceCountReportComponent },
+  { path: 'oldblockdatareportlist', component: OldBlockDatareportListComponent },
+  { path: 'packagedetails', component: PackagedetailsforspecialityComponent },
+  { path: 'hospitaldoctorprofiledetails', component: DoctorprofiledetailsComponent },
+  { path: 'treatmenthistoryofurn', component: TreatmenthistoryofurnComponent },
+  { path: 'expiredbeneficiarydetails', component: ExpiredbeneficiaryDtlsComponent },
+  { path: 'cpdPaymentCalculationDetails', component: CpdPaymentCalculationDetailsComponent },
+  { path: 'mortalityReportDetails', component: MortalitydetailsComponent },
+  { path: 'UrnwiseamounntUtilizeblockreport', component: UrnwiseamounntblockreportComponent },
+  { path: 'UrnwiseamounntUtilizegpreport', component: UrnwiseamountutilizegplistComponent },
+  { path: 'UrnwiseamounntUtilizevillagereport', component: UrnwiseamountutilizevillagelistComponent },
+  { path: 'outsideodishatreatmentdetailsblock', component: OutsideodishatreatmentdetailsblockComponent },
+  { path: 'outsideodishatreatmentdetailspanchayat', component: OutsideodishatreatmentdetailspanchayatComponent },
+  { path: 'Outsideodishatreatmentdetailsvillage', component: OutsideodishatreatmentdetailsvillageComponent },
+  { path: 'cpdclaimprocessingpaymentreportdetails', component: CpdclaimprocessingpaymentreportdetailsComponent },
+  { path: 'oldClaimProgressReportdetails', component: OldClaimProgressReportDetailsComponent },
+  { path: 'hospitalwiseAbstractReport', component: HospitalwiseAbstractComponent },
+  { path: 'packagepattern', component: PackagepatternComponent },
+  { path: 'postpaymentnewsummarydetails', component: PostpaymentsummarydetailsComponent},
+  { path: 'authenticationdevice', component: AuthenticationdeviceComponent},
+  { path: 'Hospitalclaimwisepatienttreatmentdetails', component: CasewisehospitaldetailsComponent},
+  { path: 'swasthyamitrareviewpatientdetails', component: SmpatientreviewdetailsComponent},
+  {path: 'application', loadChildren: () => import('./application/application.module').then(m => m.ApplicationModule),canActivate: [AuthGuard], canActivateChild: [PrimaryLinkGuard],},
+  { path: '**', component: PagenotfoundComponent }
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }

@@ -1,0 +1,111 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs" routerLinkActive="active">
+                    <li class="nav-item">
+                        <a routerLink="/application/ongoingicu" class="nav-link active">Ongoing ICU Treatment Report</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a routerLink="" class="nav-link">View</a>
+                    </li> -->
+                </ul>
+            </div>
+            <div class="col-lg-6 ">
+                <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-box bg-light pt-xl-2">
+        <form>
+            <div class="row">
+                <div class="col-lg-3">
+                    <div >
+                        <label class="col-form-label">District Name</label>
+                        <select class="form-select">
+                            <option selected value="undefined">Select</option>
+                            <option value="1">Cuttack</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div >
+                        <label class="col-form-label">Hospital Name</label>
+                        <select class="form-select">
+                            <option selected value="undefined">Select</option>
+                            <option value="1">TEST HOSPITAL</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div >
+                        <label class="col-form-label">No. of days more than</label>
+                        <select class="form-select">
+                            <option selected value="undefined">Select</option>
+                            <option value="1">1</option>
+                            <option value="2">5</option>
+                            <option value="3">10</option>
+                            <option value="4">15</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class="col-form-label d-md-block d-none">&nbsp;</label>
+                    <button type="submit" class="btn btn-success">Search</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="content-box mt-3 p-0 overflow-hidden">
+        <div class="table-responsive">
+            <table class="table mb-0">
+                <thead>
+                    <tr>
+                        <th width="50">Sl#</th>
+                        <th>URN</th>
+                        <th>Hospital Name</th>
+                        <th>Category Name</th>
+                        <th>Package Name</th>
+                        <th>Admission From</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td> 1 </td>
+                        <td>21080600001000000</td>
+                        <td>A Jamabahal</td>
+                        <td> Ophthalmology </td>
+                        <td>Ptosis Surgery </td>
+                        <td> 10-08-2022 </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>21080600001000001</td>
+                        <td>A. Malkangiri </td>
+                        <td> Ophthalmology </td>
+                        <td>Entropion correction </td>
+                        <td> 12-08-2022 </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>21080600001000002</td>
+                        <td>Abarsingh SC </td>
+                        <td> Ophthalmology </td>
+                        <td>Lid Tear Repair </td>
+                        <td> 15-08-2022 </td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>21080600001000004</td>
+                        <td>Abdalpur SC </td>
+                        <td> Ophthalmology </td>
+                        <td>Lid Abscess Drainage </td>
+                        <td> 18-08-2022 </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

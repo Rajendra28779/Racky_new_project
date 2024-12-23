@@ -1,0 +1,40 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+    <div class="row justify-content-between">
+      <div class="col-lg-4">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a routerLink="/application/paymentfreeze" class="nav-link active"
+              >Claims</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="content-box">
+    <div class="col-xxl-10">
+      <div class="row">
+        <div class="col-lg-4 col-xxl-4">
+          <div class="mb-xl-3">
+            <label class="control-label">Choose File</label
+            ><span class="text-danger">*</span>
+            <div class="input-group">
+              <input
+                type="file"
+                accept=".xlsx, .xls, .csv"
+                class="form-control border-end-0 datepicker"
+                id="file"
+                name="file"
+                (change)="selectedFile($event) "
+              /> 
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-xxl-4 mt-4">
+            <button type="submit" class="btn btn-success" (click)="submit()">Submit</button>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>

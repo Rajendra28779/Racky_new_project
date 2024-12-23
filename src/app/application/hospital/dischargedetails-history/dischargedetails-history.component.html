@@ -1,0 +1,300 @@
+<div class="container-fluid pt-1 ps-4 pe-4 pb-2">
+    <div class="logoprint"><img src="../../../../assets/img/bsky-logo.png">
+        <h4>Gopabandhu Jan Arogya Yojana</h4>
+        <a href="javascript:void(0)" class="print-icon" onclick="window.print()"><i class="bi bi-printer-fill me-1"></i>Print</a>
+    </div>
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/dischargelistHistoryHospital" routerLinkActive="active" class="nav-link active">Discharge List Report -History</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="reportlist">
+            <div class="reportlist-left">
+                <div class="card shadow-sm mt-3 mt-xl-3 p-3">
+                    <h5>{{itemvalue?.hospitalname}} ({{itemvalue?.hospitalcode}}) <span class="text-end">URN: {{itemvalue?.urn}}</span></h5>
+                    <table class="table mb-0 ">
+                        <tr>
+                            <td valign="top" class="width-rl">Claim Number</td>
+                            <td width="10px" class="pt-2px" valign="top">
+                                <Strong>:</Strong>
+                            </td>
+                            <td class="fw-500" valign="top">{{itemvalue?.claim_no}}</td>
+                        </tr>
+                        <tr>
+                            <td valign="top">TMS Case Number</td>
+                            <td width="10px" class="pt-2px" valign="top">
+                                <Strong>:</Strong>
+                            </td>
+                            <!-- <td>{{caseno}}</td> -->
+                            <td class="fw-500" valign="top">{{itemvalue?.tmscaseno}}</td>
+                        </tr>
+                        <tr>
+                            <td valign="top">Claim Case Number</td>
+                            <td width="10px" class="pt-2px" valign="top">
+                                <Strong>:</Strong>
+                            </td>
+                            <td class="fw-500" valign="top">{{itemvalue?.hopitalclmcaseno}}</td>
+                        </tr>
+                        <tr>
+                            <td valign="top">Invoice Number</td>
+                            <td width="10px" class="pt-2px" valign="top">
+                                <Strong>:</Strong>
+                            </td>
+                            <td class="fw-500" valign="top">{{itemvalue?.invoiceno}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="reportlist-right">
+                <div class="card shadow-sm mt-3 mt-xl-3 p-3">
+                    <h5>Patient Details</h5>
+                    <table class="table mb-0 ">
+                        <tr>
+                            <td class="width-p">Patient Name</td>
+                            <td width="10px" class="pt-2px" valign="top">
+                                <Strong>:</Strong>
+                            </td>
+                            <td>{{itemvalue?.patientname}}</td>
+                        </tr>
+                        <tr>
+                            <td>Age</td>
+                            <td width="10px" class="pt-2px" valign="top">
+                                <Strong>:</Strong>
+                            </td>
+                            <td>{{itemvalue?.age}} Years</td>
+                        </tr>
+                        <tr>
+                            <td>Gender</td>
+                            <td width="10px" class="pt-2px" valign="top">
+                                <Strong>:</Strong>
+                            </td>
+                            <td>{{itemvalue?.gender}}</td>
+
+                        </tr>
+                        <tr>
+                            <td>Mobile No</td>
+                            <td width="10px" class="pt-2px" valign="top">
+                                <Strong>:</Strong>
+                            </td>
+                            <td>{{itemvalue?.PATIENTPHONENO!=null?itemvalue?.PATIENTPHONENO:'N/A' }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <h5 class="mt-3 mt-xl-4 ">Treatment Details</h5>
+                <div class="card mb-3">
+                    <table class="table mb-0">
+                        <thead class="bggreen">
+                            <tr>
+                                <th>Date Of Admission - Date Of Discharge</th>
+                                <th>Package Rate(₹)</th>
+                                <th>Blocked Amount(₹)</th>
+                                <th>Claimed Amount (₹)</th>
+                                <th>Authorized Code</th>
+                                <th>Procedure</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="border-end">{{itemvalue?.dateofadmission}} | {{itemvalue?.dateofdischarge}}</td>
+                                <td class="border-end">{{itemvalue?.PACKAGERATE| currency:'':''}}
+                                </td>
+                                <td class="border-end">{{itemvalue?.totalamountblocked| currency:'':''}}
+                                </td>
+                                <td class="border-end"> {{ itemvalue?.totalamountclaimed | currency : "" : "" }}</td>
+                                <td class="border-end">{{itemvalue?.authorizedcode}}</td>
+                                <td>{{itemvalue?.procedurename}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card mb-3">
+                    <table class="table mb-0">
+                        <thead class="bggreen">
+                            <tr>
+                                <th>Packages</th>
+                                <th>Mortality</th>
+                                <th>Referral Code</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="border-end">{{itemvalue?.packagename}}</td>
+                                <td class="border-end">{{itemvalue?.mortality}}</td>
+                                <td>
+                                    {{itemvalue?.referralcode!=' '?itemvalue?.referralcode:'N/A'}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card mb-3">
+                    <table class="table mb-0">
+                        <thead class="bggreen">
+                            <tr>
+                                <th>Actual Date Of Admission</th>
+                                <th>Actual Date Of Discharge</th>
+                                <th>IMPLANT DATA</th>
+                                <th>NABH Flag</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="border-end"> {{itemvalue?.actualdateofadmission}}</td>
+                                <td class="border-end"> {{itemvalue?.actualdateofdischarge}}</td>
+                                <td class="border-end">
+                                    {{itemvalue?.implant_data!=' '?itemvalue?.implant_data:'N/A'}}
+                                </td>
+                                <td>{{itemvalue?.nabh?itemvalue?.nabh:'N/A'}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class=" row ">
+            <div class="col-lg-12 mt-3">
+                <h5>Pre-Auth Log</h5>
+                <div class="table-responsive ">
+                    <table class="table mb-0 ">
+                        <thead>
+                            <tr>
+                                <th width="60 " rowspan="2">Sl No.</th>
+                                <th rowspan="2">Pre Auth Code</th>
+                                <th rowspan="2">Claimed Amount(₹)</th>
+                                <th rowspan="2">Approved Amount(₹)</th>
+                                <th rowspan="2">Pre-Auth Date</th>
+                                <th rowspan="2">Approved Date</th>
+                                <th rowspan="2">Remarks</th>
+                                <th colspan="3" style="text-align:center">Documents</th>
+                            </tr>
+                            <tr>
+                                <th>Doc1</th>
+                                <th>Doc2</th>
+                                <th>Doc3</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container>
+                                <tr *ngFor="let auth of datavalue index as i">
+                                    <td>{{i+1}}</td>
+                                    <td>{{auth.preauthCode}}</td>
+                                    <td>{{auth.claimedAmount | currency:'':''}}</td>
+                                    <td>{{auth.approvedAmount | currency:'':''}}</td>
+                                    <td>{{auth.claimedDate | date :'dd-MMM-yyyy, h:mm:ss a'}}</td>
+                                    <td>{{auth.approvedDate | date :'dd-MMM-yyyy, h:mm:ss a'}}</td>
+                                    <td>{{auth.preAuthRemarks}}</td>
+                                    <td *ngIf="auth.aditionalDoc1 != undefined"><a href="javascript:void(0);" (click)="downloadAction($event,auth.aditionalDoc1,auth.hospitalCode,auth.claimedDate,'')"><i
+                                            class="bi bi-file-earmark-pdf" style="color:red;font-size:15px;"></i></a>
+                                    </td>
+                                    <td *ngIf="auth.aditionalDoc1 == undefined">--</td>
+                                    <td *ngIf="auth.aditionalDoc2 != undefined"><a href="javascript:void(0);" (click)="downloadAction($event,auth.aditionalDoc2,auth.hospitalCode,auth.claimedDate,'')"><i
+                                            class="bi bi-file-earmark-pdf" style="color:red;font-size:15px;"></i></a>
+                                    </td>
+                                    <td *ngIf="auth.aditionalDoc2 == undefined">--</td>
+                                    <td *ngIf="auth.aditionalDoc3 != undefined"><a href="javascript:void(0);" (click)="downloadAction($event,auth.aditionalDoc3,auth.hospitalCode,auth.claimedDate,'')"><i
+                                            class="bi bi-file-earmark-pdf" style="color:red;font-size:15px;"></i></a>
+                                    </td>
+                                    <td *ngIf="auth.aditionalDoc3 == undefined">--</td>
+                                </tr>
+                            </ng-container>
+                            <tr *ngIf="!query">
+                                <td colspan="13" align="center"><strong class="text-danger">No data
+                                    found</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3 d-none-print">
+        <div class="col-lg-12 " *ngIf="hidedocs">
+            <div class="card shadow-sm basic-info ">
+                <div class="card-header ">
+                    <h5 class="mb-0 text-white">Documents Uploaded During Patient Discharge</h5>
+                </div>
+                <div class="card-body ">
+                    <div class="row gx-2 justify-content-between document-upload ">
+                        <div class="col-lg-12 col-xxl-12 ">
+                            <div class="row">
+                                <div class="row">
+                                    <div class="col-6 col-lg-3 col-xxl-3 text-center " *ngIf="itemvalue?.dischargeslip != undefined">
+                                        <a style="cursor:pointer ;" (click)="downloadActionforDischarge($event,itemvalue?.dischargeslip,itemvalue?.hospitalcode,itemvalue?.dateofadmission)">
+                                            <img src="./assets/img/pdf.png" alt="Patient Photo " class="mb-2 rounded " Width="80">
+                                            <span class="d-block ">Discharge Slip</span>
+                                        </a>
+                                    </div>
+                                    <div class="col-6 col-lg-3 col-xxl-3 text-center " *ngIf="itemvalue?.dischargeslip == undefined">
+                                        <span class="d-block ">--</span>
+                                        <span class="d-block ">Discharge Slip</span>
+                                    </div>
+                                    <div class="col-6 col-lg-3 col-xxl-3 text-center " *ngIf="itemvalue?.presurgeryphoto != undefined">
+                                        <a style="cursor:pointer ;" (click)="downloadActionforDischarge($event,itemvalue?.presurgeryphoto,itemvalue?.hospitalcode,itemvalue?.dateofadmission)">
+                                            <img src="./assets/img/male-profile.jpg " alt="Patient Photo " class="mb-2 rounded " Width="80">
+                                            <span class="d-block ">Pre-Surgery</span>
+                                        </a>
+                                    </div>
+                                    <div class="col-6 col-lg-3 col-xxl-3 text-center " *ngIf="itemvalue?.presurgeryphoto == undefined">
+                                        <span class="d-block ">--</span>
+                                        <span class="d-block ">Pre-Surgery</span>
+                                    </div>
+                                    <div class="col-6 col-lg-3 col-xxl-3 text-center " *ngIf="itemvalue?.postsurgeryphoto != undefined">
+                                        <a style="cursor:pointer ;" (click)="downloadActionforDischarge($event,itemvalue?.postsurgeryphoto,itemvalue?.hospitalcode,itemvalue?.dateofadmission)">
+                                            <img src="./assets/img/male-profile.jpg " alt="Patient Photo " class="mb-2 rounded " Width="80">
+                                            <span class="d-block ">Post-Surgery</span>
+                                        </a>
+                                    </div>
+                                    <div class="col-6 col-lg-3 col-xxl-3 text-center " *ngIf="itemvalue?.postsurgeryphoto == undefined">
+                                        <span class="d-block ">--</span>
+                                        <span class="d-block ">Post-Surgery</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6 col-lg-3 col-xxl-3 text-center " *ngIf="itemvalue?.intra_surgery_photo != undefined">
+                                        <a style="cursor:pointer ;" (click)="downloadActionforDischarge($event,itemvalue?.intra_surgery_photo,itemvalue?.hospitalcode,itemvalue?.dateofadmission)">
+                                            <img src="./assets/img/male-profile.jpg " alt="Patient Photo " class="mb-2 rounded " Width="80">
+                                            <span class="d-block ">Intra Surgery</span>
+                                        </a>
+                                    </div>
+                                    <div class="col-6 col-lg-3 col-xxl-3 text-center " *ngIf="itemvalue?.intra_surgery_photo == undefined">
+                                        <span class="d-block ">--</span>
+                                        <span class="d-block ">Intra Surgery</span>
+                                    </div>
+                                    <div class="col-6 col-lg-3 col-xxl-3 text-center " *ngIf="itemvalue?.specimen_removal_photo != undefined">
+                                        <a style="cursor:pointer ;" (click)="downloadActionforDischarge($event,itemvalue?.specimen_removal_photo,itemvalue?.hospitalcode,itemvalue?.dateofadmission)">
+                                            <img src="./assets/img/male-profile.jpg " alt="Patient Photo " class="mb-2 rounded " Width="80">
+                                            <span class="d-block ">Specimen Removal</span>
+                                        </a>
+                                    </div>
+                                    <div class="col-6 col-lg-3 col-xxl-3 text-center " *ngIf="itemvalue?.specimen_removal_photo == undefined">
+                                        <span class="d-block ">--</span>
+                                        <span class="d-block ">Specimen Removal</span>
+                                    </div>
+                                    <div class="col-6 col-lg-3 col-xxl-3 text-center " *ngIf="itemvalue?.patient_photo != undefined">
+                                        <a style="cursor:pointer ;" (click)="downloadActionforDischarge($event,itemvalue?.patient_photo,itemvalue?.hospitalcode,userdetailsByid1?.dateofadmission)">
+                                            <img src="./assets/img/male-profile.jpg " alt="Patient Photo " class="mb-2 rounded " Width="80">
+                                            <span class="d-block ">Patient Photo</span>
+                                        </a>
+                                    </div>
+                                    <div class="col-6 col-lg-3 col-xxl-3 text-center " *ngIf="itemvalue?.patient_photo == undefined">
+                                        <span class="d-block ">--</span>
+                                        <span class="d-block ">Patient Photo</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,88 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+      <div class="row justify-content-between">
+        <div class="col-lg-4">
+          <ul class="nav nav-tabs ">
+            <li class="nav-item">
+              <a routerLink="/application/foremark" routerLinkActive="active" class="nav-link" style="color: green;">Add</a>
+            </li>
+            <li class="nav-item">
+              <a routerLink="/application/foremarkview" routerLinkActive="active" class="nav-link active">View</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-lg-6 ">
+          <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-7">
+          <p>Total FO Remark : {{countgllist}}</p>
+        </div>
+        <div class="col-5">
+          <input type="text " id="txtsearchDate " name="txtsearchDate " [(ngModel)]="txtsearchDate" maxlength="20 "
+            class="form-control " placeholder="Search here...... " autocomplete="off"
+            style=" margin-right: 0px; margin-left: 0px;">
+        </div>
+      </div>
+      <br>
+      <div class="table-responsive">
+        <table class="table table-striped mb-0">
+          <thead>
+            <tr>
+              <th width="50">Sl#</th>
+              <th>Fo Remark</th>
+              <th>Description</th>
+              <!-- <th>Order No</th> -->
+              <th>Status</th>
+              <th width="100">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+            *ngFor="let v of list | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage},index as i">
+              <td>{{i+1}}</td>
+              <td>{{v.remark}}</td>
+              <td> {{v.description}} </td>
+              <!-- <td>{{v.order}}</td> -->
+              <td>
+                <p *ngIf="v.status==0">Active</p>
+                <p *ngIf="v.status==1">In-Active</p>
+              </td>
+              <td>
+                <a class="btn btn-outline-primary btn-sm me-1" (click)="edit(v)"><i
+                    class="bi bi-pencil"></i></a>
+              </td>
+            </tr>
+            <tr *ngIf="countgllist==0">
+              <div class="row ">
+                <span style="color: red;text-align: center;position:absolute ">NO DATA FOUND!!</span>
+              </div>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+    <div class="row" *ngIf="showPegi">
+      <div class="col-sm-4">
+        <div class="col-sm-*">
+          show
+          <select id="pageItem" name="pageItem" class="custom-select-sm" (change)="pageItemChange()">
+            <option value="10">20</option>
+            <option value="20">50</option>
+            <option value="30">100</option>
+            <option value={{countgllist}}>ALL</option>
+          </select> entries
+        </div>
+      </div>
+      <div class="col-sm-8 text-right">
+        <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true"
+          (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)">
+        </pagination-controls>
+      </div>
+
+
+    </div>
+  </div>

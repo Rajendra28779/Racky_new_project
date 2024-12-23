@@ -1,0 +1,101 @@
+<div class="content">
+<div class="main-tab">
+  <div class="col-lg-4">
+      <ul class="nav nav-tabs">
+          <li class="nav-item">
+              <a routerLink="/hospincentivedtls" routerLinkActive="active" class="nav-link"
+                  style="color: #1f723f;">Hospital Incentive Details Report</a>
+          </li>
+      </ul>
+  </div>
+</div>
+
+<div class="row" style="margin-bottom: 1ch;">
+  <div class="col-4">
+    State Name : <b>{{statename}}</b>
+  </div>
+  <div class="col-5">
+    Category Name : <b>{{catgoryname}}</b>
+  </div>
+  <!-- <div class="col-sm-3" style="text-align:end ;">
+    show
+      <select id="pageItem1" name="pageItem1" class="custom-select-sm" (change)="pageItemChange1()" [(ngModel)]="pageElement">
+        <option value="100">100</option>
+        <option value="200">200</option>
+        <option value="300">300</option>
+        <option value={{length}}>ALL</option>
+      </select> entries
+  </div> -->
+</div>
+
+<div class="row" >
+  <div class="col-4">
+    District Name : <b>{{distname}}</b><br><br>
+     show
+      <select id="pageItem1" name="pageItem1" class="custom-select-sm" [(ngModel)]="pageElement">
+        <option value="100">100</option>
+        <option value="200">200</option>
+        <option value="300">300</option>
+        <option value={{length}}>ALL</option>
+      </select> entries
+ </div>
+  <div class="col-2">
+    Total Count : <b>{{length}}</b>
+  </div>
+  <div class="col-2" style="text-align:end ;">
+    <button class="btn btn-success btn-sm mx-1" style="margin-top: 10px" tooltip="Excel" (click)="downloadReport(1)">
+      <i class="bi bi-file-earmark-spreadsheet"></i>
+  </button>
+    <button class="btn btn-danger btn-sm mx-1" style="margin-top: 10px" tooltip="pdf" (click)="downloadReport(2)">
+        <i class="bi bi-file-earmark-pdf"></i>
+    </button>
+  </div>
+  <div class="col-4">
+    <div class="input-group" >
+      <input type="text" id="txtsearchDate" class="form-control"
+          placeholder="Search" name="txtsearchDate" [(ngModel)]="txtsearchDate" autocomplete="off">
+  </div>
+  </div>
+</div>
+<div class="table-responsive" style="margin-top: 1ch;">
+  <table class="table table-striped mb-0">
+      <thead>
+          <tr>
+            <th *ngFor="let v of header">{{v}}</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let v of List | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage}, index as i">
+            <td *ngFor="let v1 of v">{{v1}}</td>
+          </tr>
+          <tr *ngIf="length==0">
+              <td colspan="16" align="center">
+                  <strong class="text-danger">NO DATA FOUND!!</strong>
+              </td>
+          </tr>
+      </tbody>
+  </table>
+</div>
+<div class="row" *ngIf="showPegi">
+<div class="col-sm-4">
+  <div class="col-sm-*">
+    show
+    <select id="pageItem" name="pageItem" class="custom-select-sm"  [(ngModel)]="pageElement">
+      <option value="100">100</option>
+      <option value="200">200</option>
+      <option value="300">300</option>
+      <option value={{length}}>ALL</option>
+    </select> entries
+  </div>
+</div>
+<div class="col-sm-8 text-right">
+  <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true"
+    (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)">
+  </pagination-controls>
+</div>
+
+
+</div>
+
+
+</div>

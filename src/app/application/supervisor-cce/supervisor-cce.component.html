@@ -1,0 +1,480 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/supervisorcce" routerLinkActive="active" class="nav-link active"
+                            style="color: #1f723f;">Call Details</a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/application/supervisorccedcReverted" routerLinkActive="active" class="nav-link">DC Reverted Details</a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/application/supervisorcceview" routerLinkActive="active" class="nav-link">View
+                            Approval</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="content-box mt-3">
+        <div class="col-xxl-10">
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label class="control-label mb-2">From Date</label><span class="text-danger">*</span>
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="date1" name="fromDate">
+                            <label class="input-group-text bg-transparent border-start-0" for="datepicker1"><i
+                                    class="iconbsky-calendar"></i> </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label class="control-label mb-2">To Date</label><span class="text-danger">*</span>
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="date2" name="toDate">
+                            <label class="input-group-text bg-transparent border-start-0" for="datepicker2"><i
+                                    class="iconbsky-calendar"></i> </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label class="control-label mb-2">User Id</label>
+                        <div class="input-group">
+                            <select class="form-select" id="userName" name="userName">
+                                <option value="" selected>Select User Id</option>
+                                <ng-container *ngFor="let item of userList">
+                                    <option value={{item.userId}}>{{item.fullname}}</option>
+                                </ng-container>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="control-label">State Name</label>
+                    <select class="form-select" name="stateId" id="stateId"
+                        (change)="OnChangeState($event.target.value)">
+                        <option value="" selected>Select State</option>
+                        <ng-container *ngFor="let item of stateList">
+                            <option value={{item.stateCode}}>{{item.stateName}}</option>
+                        </ng-container>
+                    </select>
+
+                </div>
+                <div class="col-md-4">
+                    <label class="control-label">District Name</label>
+                    <select class="form-select" name="districtId" id="districtId"
+                        (change)="OnChangeDistrict($event.target.value)">
+                        <option value="" selected>Select District</option>
+                        <ng-container *ngFor="let item of districtList">
+                            <option value={{item.districtcode}}>{{item.districtname}}</option>
+                        </ng-container>
+                    </select>
+
+                </div>
+                <div class="col-md-4">
+                    <label class="control-label">Hospital Name</label>
+                    <select class="form-select" name="hospital" id="hospital">
+                        <option value="" selected>Select Hospital</option>
+                        <ng-container *ngFor="let item of hospitalList">
+                            <option value={{item.hospitalCode}}>{{item.hospitalName}}</option>
+                        </ng-container>
+                    </select>
+
+                </div>
+
+                <!-- <div class="mt-2">
+                    <div class="d-grid gap-2 d-md-flex">
+                        <button type="submit" class="btn btn-success" (click)="Search()">Search</button>
+                        <button type="reset" class="btn btn-secondary" (click)="ResetField()">Reset</button>
+
+                    </div>
+                </div> -->
+
+            </div>
+            <div class="col-lg-12 mt-3">
+                <div class="d-grid gap-2 d-md-flex">
+                    <button type="submit" class="btn btn-success" (click)="onSearch()">Search</button>
+                    <button type="reset" class="btn btn-secondary" (click)="resetField()">Reset</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!--104 outbound call report-->
+    <div class="row mt-3">
+        <div class="col-xxl-7 col-xl-7 col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+            <div class="card border">
+                <div class="row m-0">
+                    <div
+                        class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-3 col-xs-12  border-right  py-xxl-2 py-xl-2 py-lg-2 px-xxl-3 px-xl-2 px-lg-2">
+                        <div class="d-flex justify-content-center align-items-center h-100">
+                            <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+                                <label class="card-complhead color-g"> {{cceCountData?.completed}}</label>
+                                <div class="card-completed fw-normal"> Completed </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-3 col-xs-12 p-0">
+                        <div
+                            class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 h-50 py-xxl-2 py-xl-2 py-lg-2 px-xxl-3 px-xl-3 px-lg-2 px-md-3 py-md-2">
+                            <div class="p-2 flex-fill text-xs-center">
+                                <label class="card-head"> {{cceCountData?.yes}}</label>
+                                <div class="card-small fw-normal"> Yes </div>
+                            </div>
+                        </div>
+                        <div class="border-top"></div>
+                        <div
+                            class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 h-50  py-xxl-2 py-xl-2 py-lg-2 px-xxl-3 px-xl-3 px-lg-2 px-md-3 py-md-2">
+                            <div class="p-2 flex-fill text-xs-center">
+                                <label class="card-head"> {{cceCountData?.no}}</label>
+                                <div class="card-small fw-normal"> No </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 border-start py-xxl-2 py-xl-2 py-lg-2 px-xxl-3 px-xl-2 px-lg-2">
+                        <div class="d-flex">
+                            <div class="p-0 flex-fill mb-2">
+                                <label class="card-head"> {{cceCountData?.positive}}</label>
+                                <div class="card-small fw-normal"> Positive </div>
+                            </div>
+                            <div class="p-0 flex-fill text-end mb-2">
+                                <label class="card-head"> {{cceCountData?.negetive}}</label>
+                                <div class="card-small fw-normal"> Negetive </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-start align-items-start mb-2">
+                            <div class="w-100 card-small">Are you receiving cashless treatment under GJAY?</div>
+                            <!-- <div class="p-2 mw-40 card-small fw-normal flex-fill"> -->
+                            <!-- <div class="progress">
+                                    <div class="progress-bar bg-primary" role="progressbar" aria-label="Success example"
+                                        [style.width]="cceCountData?.supportPercent + '%'"
+                                        [attr.aria-valuenow]="cceCountData?.supportPercent" aria-valuemin="0"
+                                        aria-valuemax="100">
+                                    </div>
+                                </div> -->
+                            <!-- </div> -->
+                            <div class="card-small">
+                                <!-- <div class="text-end card-small fw-normal fs-6"> {{cceCountData?.support}} -  -->
+                                <div class="text-end card-small fw-normal fs-6">
+                                    <span class="text-primary percent-p"> {{cceCountData?.support}} </span>
+                                    <!-- <span class="text-primary percent-p"> {{cceCountData?.supportPercent}} </span> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-start align-items-start mb-2">
+                            <div class="w-100 card-small"> Are you satisfied with service? </div>
+                            <!-- <div class="p-2 mw-40 card-small fw-normal flex-fill"> -->
+                            <!-- <div class="progress">
+                                    <div class="progress-bar bg-success" role="progressbar" aria-label="Success example"
+                                        [style.width]="cceCountData?.behaviourPercent + '%'"
+                                        [attr.aria-valuenow]="cceCountData?.behaviourPercent" aria-valuemin="0"
+                                        aria-valuemax="100">
+                                    </div>
+                                </div> -->
+                            <!-- </div> -->
+                            <div class="card-small">
+                                <div class="text-end card-small fw-normal fs-6">
+                                    <!-- {{cceCountData?.behaviour}} -  -->
+                                    <span class="text-success percent-p"> {{cceCountData?.behaviour}} </span>
+                                    <!-- <span class="text-success percent-p"> {{cceCountData?.behaviourPercent}} </span> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-start align-items-start mb-2">
+                            <div class="w-100 card-small"> Whether you have paid any extra money for treatment under
+                              GJAY? </div>
+                            <!-- <div class="p-2 mw-40 card-small fw-normal flex-fill"> -->
+                            <!-- <div class="progress">
+                                    <div class="progress-bar bg-danger" role="progressbar" aria-label="Success example"
+                                        [style.width]="cceCountData?.bribePercent + '%'"
+                                        [attr.aria-valuenow]="cceCountData?.bribePercent" aria-valuemin="0"
+                                        aria-valuemax="100">
+                                    </div>
+                                </div> -->
+                            <!-- </div> -->
+                            <div class=" card-small fs-6">
+                                <div class="text-end card-small fw-normal">
+                                    <!-- {{cceCountData?.bribe}} -  -->
+                                    <span class="text-danger percent-p"> {{cceCountData?.bribe}} </span>
+                                    <!-- <span class="text-danger percent-p"> {{cceCountData?.bribePercent}} </span> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-start align-items-start mb-2">
+                            <div class="w-100 card-small"> Did Swasthya Mitra facilitate your care? </div>
+                            <!-- <div class="p-2 mw-40 card-small fw-normal flex-fill"> -->
+                            <!-- <div class="progress">
+                                    <div class="progress-bar bg-danger" role="progressbar" aria-label="Success example"
+                                        [style.width]="cceCountData?.bribePercent + '%'"
+                                        [attr.aria-valuenow]="cceCountData?.bribePercent" aria-valuemin="0"
+                                        aria-valuemax="100">
+                                    </div>
+                                </div> -->
+                            <!-- </div> -->
+                            <div class="card-small fs-6">
+                                <div class="text-end card-small fw-normal">
+                                    <!-- {{cceCountData?.bribe}} -  -->
+                                    <span class="text-info percent-p"> {{cceCountData?.facilitate}} </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xxl-5 col-xl-5 col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
+            <div class="card border d-flex h-100">
+                <div class="row h-100 m-0">
+                    <div
+                        class="col-xxl-4 col-xl-4 col-lg-3 col-md-3 col-sm-3 col-xs-12 border-right  py-xxl-2 py-xl-2 py-lg-2 px-xxl-3 px-xl-2 px-lg-2">
+                        <div class="d-flex justify-content-center align-items-center h-100">
+                            <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+                                <label class="card-complhead text-warning"> {{cceCountData?.pending}}</label>
+                                <div class="card-pending fw-normal"> Pending </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="col-xxl-8 col-xl-8 col-lg-8 col-md-9 col-sm-9 col-xs-12 p-2 py-xxl-3  py-xxl-2 py-xl-2 py-lg-2 px-xxl-3 px-xl-2 px-lg-2">
+                        <div class="row d-flex justify-content-center align-items-center h-100 m-0">
+                            <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <label class="card-head"> {{cceCountData?.freshCase}}</label>
+                                <div class="card-small fw-normal"> Fresh Cases </div>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <label class="card-warning text-end w-100"> {{cceCountData?.freshPercent}}%</label>
+                                <div class="progress">
+                                    <div class="progress-bar bg-warning" role="progressbar" aria-label="Success example"
+                                        [style.width]="cceCountData?.freshPercent + '%'"
+                                        [attr.aria-valuenow]="cceCountData?.freshPercent" aria-valuemin="0"
+                                        aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <label class="card-head"> {{cceCountData?.notConnected}}</label>
+                                <div class="card-small fw-normal"> Not Connected </div>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <label class="card-warning text-end w-100">
+                                    {{cceCountData?.notConnectedPercent}}%</label>
+                                <div class="progress">
+                                    <div class="progress-bar bg-warning" role="progressbar" aria-label="Success example"
+                                        [style.width]="cceCountData?.notConnectedPercent + '%'"
+                                        [attr.aria-valuenow]="cceCountData?.notConnectedPercent" aria-valuemin="0"
+                                        aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!--104 outbound call report-->
+
+
+
+    <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+        <div class="col-lg-4 col-xxl-4" style="padding-top: 10px; padding-left: 17px;">
+            <b>No. Of Records: <span style="color: green;">{{size}}</span></b>
+        </div>
+        <div class="col-lg-4 col-xxl-4" style="text-align: right; padding-top: 3px;">
+            <div class="form-group">
+                <button class="btn btn-outline-success btn-sm me-1" type="submit" (click)="downloadReport()">
+                    <i class="bi bi-download"></i>
+                </button>
+            </div>
+        </div>
+        <!-- <div class="col-md-3 col-lg-3 col-xl-3 col-xxl-3 ms-xxl-auto ms-xl-auto ms-lg-auto ms-md-auto"> -->
+        <div class="col-lg-4 col-xxl-4">
+            <div class="input-group">
+                <input type="text" id="txtsearchDate" class="form-control" placeholder="Search" name="txtsearchDate"
+                    autocomplete="off" [(ngModel)]="txtsearchDate">
+            </div>
+        </div>
+        <!-- </div> -->
+    </div>
+    <div class="row mt-3">
+        <div class="table-responsive pkg_tbl">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th width="60">Sl No. </th>
+                        <th width="60">Case No </th>
+                        <th>URN</th>
+                        <th class="mw-150">Patient Name</th>
+                        <th>District Name</th>
+                        <th>Block Name</th>
+                        <th> Panchayat Name</th>
+                        <th> Village Name</th>
+                        <th> DateOf Admission</th>
+                        <th> Total Amount Blocked</th>
+                        <th> Hospital District</th>
+                        <th>Hospital Name</th>
+                        <th>Procedure Name</th>
+                        <th>Package Name</th>
+                        <th>Patient PhoneNo</th>
+                        <th>Alternate PhoneNo</th>
+                        <th>Invoice No.</th>
+                        <th>MobileNo Active Status</th>
+                        <!-- <th>Name of Executive</th> -->
+                        <th>Call Response</th>
+                        <th>Feedback App Login Id</th>
+                        <th>Data Receive Date</th>
+                        <th>Calling Date</th>
+                        <!-- <th>Repeat Check</th> -->
+                        <th>Not connected dial count</th>
+                        <th class="mw-200">Are you receiving cashless treatment under GJAY</th>
+                        <th class="mw-200">Are you satisfied with service? </th>
+                        <th class="mw-200">Whether you have paid any extra money for treatment under GJAY</th>
+                        <th class="mw-200">Did Swasthya Mitra facilitate your care?</th>
+                        <th>Remark</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="!cceOutboundData?.length">
+                        <td colspan="17" class="text-center"><strong class="text-danger">No data found</strong></td>
+                    </tr>
+                    <!-- <ng-container *ngFor="let item of cceOutboundData | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};index as i"> -->
+                    <ng-container *ngFor="let item of cceOutboundData | filter:txtsearchDate;index as i">
+                        <tr [ngClass]="{'active_trbg' : item.status}">
+                            <!-- <td class="th-small" *ngIf="currentPage==1">{{i+1}}</td>
+                            <td class="th-small" *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+i+1}}</td> -->
+                            <td class="th-small">{{i+pageIn}}</td>
+                            <td>{{item?.transId}}</td>
+                            <td>{{item?.urn}}</td>
+                            <td>{{item?.patientName}}</td>
+                            <td>{{item?.districtName}}</td>
+                            <td>{{item?.blockName}}</td>
+                            <td>{{item?.panchayatName}}</td>
+                            <td>{{item?.villageName}}</td>
+                            <td>{{item?.dateOfAdm | date:'dd/MM/yyyy'}}</td>
+                            <td>{{item?.totalAmountBlocked | currency:'':''}}</td>
+                            <td>{{item?.hospitalDist}}</td>
+                            <td>{{item?.hospitalName}}</td>
+                            <td>{{item?.procedureName}}</td>
+                            <td> {{item?.packageName}}</td>
+                            <td>{{item?.mobileNo}}</td>
+                            <td *ngIf="item?.alternativeNo!=null"> {{item?.alternativeNo}}</td>
+                            <td *ngIf="item?.alternativeNo==null">-NA-</td>
+                            <td>{{item?.invoiceNo}}</td>
+                            <td>{{item?.mobileActiveStatus}}</td>
+                            <!-- <td>Executive</td> -->
+                            <td>{{item?.callResponse}}</td>
+                            <td *ngIf="item?.feedbackLoginId!=null">{{item?.feedbackLoginId}}</td>
+                            <td *ngIf="item?.feedbackLoginId==null">-NA-</td>
+                            <td *ngIf="item?.alottedDate!=null">{{item?.alottedDate | date: 'dd/MM/yyyy'}}</td>
+                            <td *ngIf="item?.alottedDate==null">-NA-</td>
+                            <td>{{item?.createdOn |date: 'dd/MM/yyyy'}}</td>
+                            <!-- <td></td> -->
+                            <td *ngIf="item?.dialedCount!=null">{{item?.dialedCount}}</td>
+                            <td *ngIf="item?.dialedCount==null">-NA-</td>
+                            <td *ngIf="item?.question1Response!=null">{{item?.question1Response}}</td>
+                            <td *ngIf="item?.question1Response==null">-NA-</td>
+                            <td *ngIf="item?.question2Response!=null">{{item?.question2Response}}</td>
+                            <td *ngIf="item?.question2Response==null">-NA-</td>
+                            <td *ngIf="item?.question3Response!=null">{{item?.question3Response}}</td>
+                            <td *ngIf="item?.question3Response==null">-NA-</td>
+                            <td *ngIf="item?.question4Response!=null">{{item?.question4Response}}</td>
+                            <td *ngIf="item?.question4Response==null">-NA-</td>
+                            <td *ngIf="item?.executiveRemarks!=null">{{item?.executiveRemarks}}</td>
+                            <td *ngIf="item?.executiveRemarks==null">-NA-</td>
+                            <td>
+                                <ng-container
+                                    *ngIf="(item?.mobileActiveStatus == 'Yes' && item?.reAssignFlag == 0 && item?.question1Response =='YES' && item?.question2Response == 'YES' && item?.question3Response == 'NO' && item?.question4Response == 'YES') || (item?.mobileActiveStatus == 'Not Connected' && item?.reAssignFlag == 0) || (item?.mobileActiveStatus == 'Yes' && item?.reAssignFlag == 0 && item?.question1Response =='YES' && item?.question2Response == 'YES' && item?.question3Response == 'NO')||
+                                     (item?.mobileActiveStatus == 'Yes' && item?.reAssignFlag == 0 && item?.question1Response ==null && item?.question2Response == null && item?.question3Response == null&& item?.question4Response == null)">
+                                    <button class="btn btn-warning" href="javascript:void(0)" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal1" (click)="view(item.cceId)">Re-Assign
+                                    </button>
+
+                                </ng-container>
+                                <!-- <ng-container *ngIf="item?.mobileActiveStatus == 'Not Connected'">
+                                    <button type="button" class="btn btn-warning">
+                                        Re-Assign
+                                    </button>
+                                </ng-container> -->
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+        <div class="row" style="margin-top: 20px;" *ngIf="showPegi">
+            <div class="col-sm-2">
+                <div class="col-sm-*">
+                    show
+                    <select id="pageItem" name="pageItem" class="custom-select-sm" (change)="pageItemChange()">
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="{{size}}">All</option>
+                    </select> entries
+                </div>
+            </div>
+            <div class="col-sm-10 text-end">
+                <ul style="display: inline;" class="text-end">
+                  <li (click)="selectedIndex!=1 && prev()" style="display: inline;" [ngClass]="{'lst':selectedIndex!=1,'ltu':selectedIndex==1}">
+                    <span>&lt;&lt; Previous </span>
+                  </li>
+                  <li *ngIf="newList[0].id!=1" (click)="prevlist()" style="display: inline; padding-top: 5px; padding-bottom: 5px;" class="upg">
+                      <span style="padding-left: 10px; padding-right: 5px; "> ... </span>
+                  </li>
+                  <ng-container *ngFor="let element of newList">
+                      <li (click)="selectedIndex!=element.id && paginate(element)" style="display: inline; text-align: center; padding-top: 5px; padding-bottom: 5px;"
+                          [ngClass]="{'pgl':selectedIndex==element.id,'upg':selectedIndex!=element.id}">
+                          <span style="padding-left: 10px; padding-right: 6px;"> {{element.id}} </span>
+                      </li>
+                  </ng-container>
+                  <li *ngIf="newList[newList.length-1].id!=pgList[pgList.length-1].id" (click)="nextlist()" style="display: inline; padding-top: 5px; padding-bottom: 5px;" class="upg">
+                      <span style="padding-left: 10px; padding-right: 5px; "> ... </span>
+                  </li>
+                  <li (click)="selectedIndex!=pgList?.length && next()" style="display: inline;"
+                      [ngClass]="{'lst':selectedIndex!=pgList?.length,'ltu':selectedIndex==pgList?.length}">
+                      <span style="padding-left: 4px;"> Next &gt;&gt;</span>
+                  </li>
+                </ul>
+                <!-- <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true"
+                    (pageChange)="currentPage = $event"></pagination-controls> -->
+            </div>
+
+        </div>
+
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Supervisor remark to CCE </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        (click)="remarkRemove()"></button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <label class="control-label mb-2">Remark<span class="text-danger">*</span></label>
+                        <textarea class="form-control" id="reassignRemark" name="reassignRemark" #myInput4 [maxLength]="maxChars"></textarea>
+                        <span class="text-danger small">Characters Remaining: {{maxChars - myInput4.value.length}}</span>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        (click)=remarkRemove()>Close</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                        (click)="saveReassignData()">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>

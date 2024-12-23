@@ -1,0 +1,23 @@
+[
+    {
+      "pagetitle":"View Pending Applications",
+      "tabList":[
+       
+        {"tabName":"Application Summary","tabUrl":"../../grievance-application-cdmo"},
+        {"tabName":"Grievance Summary","tabUrl":"../../grievance-summary-cdmo","tabClass":"active"}
+      ],
+      "utils":[
+        {"utilName":"print"},   
+        {"utilName":"back"}
+        ],
+      "messages":
+        {
+          "successMsg":"Date saved successfully",
+          "errorMsg":"Error in database",
+          "warningtype":"You want to delete this record",
+          "deleteMsg":"Record has been deleted"
+        }
+       
+      
+    }
+  ]

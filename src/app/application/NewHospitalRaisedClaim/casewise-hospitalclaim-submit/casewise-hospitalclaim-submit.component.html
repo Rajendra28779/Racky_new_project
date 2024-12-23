@@ -1,0 +1,446 @@
+<div class="form-container claim-detail">
+    <div class="main-tab mb-4">
+        <div class="row justify-content-between align-items-center">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/casewiseHospitalclaimSubmit" class="nav-link active">Casewise
+                            Hospital Claim Submit</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-6 text-end">
+                <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-box p-0 border-0 bg-transparent">
+        <div class="row g-4">
+            <!-- Basic Information Card -->
+            <!-- Patient Information Card -->
+            <div class="col-xl-4 col-lg-4 col-md-12 col-12">
+                <div class="card_custom">
+                    <!-- <div class="card-header">
+                        <h5 class="mb-0">Patient Information</h5>
+                    </div> -->
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-12">
+                        <div class="card_primary">
+                            <h5> {{newClaimDetailsData[0]?.patientName}} </h5>
+                            <span class="position-absolute"> </span>
+                            <ul class="list-unstyled mb-0 address_new">
+                                <li id="age">
+
+                                    <div class="address_listhead"> Age : </div>
+                                    <div> {{newClaimDetailsData[0]?.age}},
+                                        <b class="fw-500 ms-2"> Gender - </b> {{newClaimDetailsData[0]?.gender}}
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="address_listhead"> Mob No. :</div>
+                                    <div> {{newClaimDetailsData[0]?.patientPhoneNumber}} </div>
+                                </li>
+                                <li>
+                                    <div class="address_listhead"> Address :</div>
+                                    <div>
+                                        {{newClaimDetailsData[0]?.villagename}}, {{newClaimDetailsData[0]?.panchayatname}}, {{newClaimDetailsData[0]?.blockname}}, {{newClaimDetailsData[0]?.districtname}}, {{newClaimDetailsData[0]?.stateName}} </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-8 col-lg-8 col-md-6 col-12">
+                <div class="card_custom">
+                    <!-- <div class="card-header">
+                        <h5 class="mb-0">Basic Information</h5>
+                    </div> -->
+                    <div class="row list_inform">
+                        <div class="col-xl-4 col-lg-4 col-md-12 col-12">
+                            <div class="card_success">
+                                <span class="position-absolute"> </span>
+                                <div class="mb-2">
+                                    <img src="../../../../assets/img/casenum.svg">
+                                </div>
+                                <div>
+                                    <label class="text-muted mb-0">Case Number</label>
+                                    <p class="basic_text" id="UrnNumber">{{newClaimDetailsData[0]?.caseNumber}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-4 col-md-6 col-12">
+                            <div class="card_warning">
+                                <span class="position-absolute"> </span>
+                                <div class="mb-2">
+                                    <img src="../../../../assets/img/urn.svg">
+                                </div>
+                                <div>
+                                    <label class="text-muted mb-0">URN Number</label>
+                                    <p class="basic_text" id="UrnNumber">{{newClaimDetailsData[0]?.urn}}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-4 col-lg-4 col-md-6 col-12">
+                            <div class="card_danger">
+                                <span class="position-absolute"> </span>
+                                <div class="mb-2">
+                                    <img src="../../../../assets/img/invoicenum.svg">
+                                </div>
+                                <div>
+                                    <label class="text-muted mb-0">Blocking Invoice Number</label>
+                                    <p class="basic_text" id="Invoice">
+                                        {{newClaimDetailsData[0]?.blockingInvoiceNumber}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-responsive table_fixed mt-4">
+                <table class="table border table-striped table-hover">
+                    <thead class="table-primary">
+                        <tr>
+                            <th class="fw-500"> Sl# </th>
+                            <th class="fw-500"> Speciality Code </th>
+                            <th>
+                                <div class="fw-bold"> Procedure Code </div>
+                                <div> Name </div>
+                            </th>
+
+                            <th class="mw-130">
+                                <div class="fw-bold"> Package Type </div>
+                                <div> Amount (₹)</div>
+                            </th>
+                            <th class="fw-500"> HED (₹)</th>
+                            <th class="fw-500"> Implant (₹)</th>
+                            <th class="fw-500"> Blocked Amount (₹)</th>
+                            <th class="fw-500"> Calculated % </th>
+                            <th class="fw-500"> System Calculated Discharge Amount (₹)</th>
+                            <th class="fw-500"> Hospital Discharge Amount (₹)</th>
+                            <th class="fw-500"> Claim Amount (₹)</th>
+                            <th class="text-center fw-500"> Upload Document </th>
+                            <th class="text-center fw-500"> Details </th>
+                            <th class="text-center fw-500"> Delete </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of newClaimDetailsData1; let i = index" [ngClass]="{'red-row': item.deletedstatus === '1'}">
+                            <td>{{ i + 1 }}</td>
+                            <td title="{{item.specialityName}}">{{ item.specialityCode }}</td>
+                            <td>
+                                <div class="fw-bold">{{ item.procedureCode }}</div>
+                                <div>
+                                    <!-- Safe navigation operator to handle null/undefined procedureName -->
+                                    <span *ngIf="!item.exp && item.procedureName?.length > 0">
+                                        {{ item.procedureName | slice:0:20 }}
+                                        <span *ngIf="item.procedureName?.length > 20">...</span>
+                                    </span>
+
+                                    <span *ngIf="item.exp && item.procedureName">{{ item.procedureName }}&nbsp;&nbsp;</span>
+
+                                    <!-- Show More/Show Less toggle -->
+                                    <a href="javascript:void(0)" (click)="item.exp = !item.exp" *ngIf="item.procedureName?.length > 20">
+                                        {{ item.exp ? 'Show Less' : 'Show More' }}
+                                    </a>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="fw-bold">{{ item.packageType }}</div>
+                                <div>{{ item.packageAmount }}</div>
+                            </td>
+                            <td>{{ item.totalHedCost }}</td>
+                            <td>{{ item.totalImplantCost }}</td>
+                            <td>{{ item.actualPackageCost }}</td>
+                            <td>{{ item.calculatedPercentage }}</td>
+                            <td>{{ item.systemCalculatedDischargeAmount }}</td>
+                            <td>{{ item.hospitalDischargeAmount }}</td>
+                            <td class="text-center">
+                                <!-- Modified Amount Input with validation and disabled logic -->
+                                <input type="text" [(ngModel)]="item.modifiedAmount" [ngModelOptions]="{standalone: true}" maxlength="7" (change)="getChangedAmount(item)" [disabled]="item.deletedstatus === '1'" (keypress)="keyPress1($event)" class="form-control form-control-sm" />
+                            </td>
+                            <td class="text-center">
+                                <button class="btn btn-sm btn-outline-secondary" title="Upload" [disabled]="item.deletedstatus === '1'" (click)="openUploadModal(item)">
+                                    <i class="bi" 
+                                       [ngClass]="{
+                                         'bi-upload': item.docuploadedstatus !== '1', 
+                                         'bi-check-circle-fill': item.docuploadedstatus === '1', 
+                                         'text-success': item.docuploadedstatus === '1'
+                                       }">
+                                    </i>
+                                </button>
+                            </td>
+                            <td class="text-center">
+                                <button class="btn btn-sm btn-outline-success" [ngbTooltip]="'View'" title="View" (click)="openDetails(item.transactiondetailsId, item.urn, item.authorizedCode, item.hospitalCode)">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </td>
+                            <td class="text-center">
+                                <button class="btn btn-sm" [disabled]="item.deletedstatus === '1'" (click)="openDeleteModal(item)" [ngClass]="{'btn-outline-danger': item.deletedstatus !== '1'}">
+                                    <!-- Show "Deleted" text when deletedstatus is '1', else show the trash icon -->
+                                    <ng-container *ngIf="item.deletedstatus === '1'; else showTrashIcon">
+                                        <span class="text-danger">Deleted</span>
+                                    </ng-container>
+                                    
+                                    <ng-template #showTrashIcon>
+                                        <i class="bi bi-trash-fill"></i>
+                                    </ng-template>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="8" class="text-end fw-bold">Total</td>
+                            <td class="text-end fw-bold">{{ getSum('systemCalculatedDischargeAmount') | currency: 'INR':'symbol':'1.0-2' }}</td>
+                            <td class="text-end fw-bold">{{ getSum('hospitalDischargeAmount') | currency: 'INR':'symbol':'1.0-2' }}</td>
+                            <td class="text-end fw-bold">{{ getSum('modifiedAmount') | currency: 'INR':'symbol':'1.0-2' }}</td>
+                            <td colspan="3"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <!-- tab section -->
+            <div class="row mt-4 ">
+                <div class="col-lg-12 ">
+                    <div class="card shadow-sm basic-info ">
+                        <div class="card-body ">
+                            <div class="row">
+                                <div class="col-sm">
+                                    <label for="EnterFullName" class="form-label">Claim Case No.<span
+                                            class="text-danger"></span></label>
+                                    <input class="form-control" type="text" placeholder="Enter claim Case No. here" autocomplete="off" id="casenumber" maxlength="20" onkeyup="this.value=this.value.replace(/[^0-9.a-zA-Z@/_() ]/g,'');" oninput="this.value = this.value.toUpperCase()" (keyup)="keyFunc1($event.target)">
+                                </div>
+                                <div class="col-sm">
+                                    <label for="EnterFullName" class="form-label"> Claim Bill No.<span
+                                            class="text-danger"></span></label>
+                                    <input class="form-control" type="text" placeholder="Enter claim Bill No. here" autocomplete="off" id="billnumber" maxlength="20" onkeyup="this.value=this.value.replace(/[^0-9.a-zA-Z@/_() ]/g,'');" oninput="this.value = this.value.toUpperCase()" (keyup)="keyFunc2($event.target)">
+                                </div>
+                                <div class="col-lg-4 col-xxl-4">
+                                    <div class="mb-xl-3">
+                                        <label class="control-label">Claim Bill Date</label><span class="text-danger"></span>
+                                        <div class="input-group mb-xl-3">
+                                            <input type="text" class="form-control border-end-0 datepicker" id="date" name="date" placeholder="Enter claim Bill Date here">
+                                            <label class="input-group-text bg-transparent border-start-0"><i class="iconbsky-calendar"></i></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="col-xl-7 col-lg-7 col-md-12 col-12" [formGroup]="myGroup">
+                <label for="User Address" class="control-label mb-2"> Remarks <span class="text-danger">*</span>
+                </label>
+                <textarea class="form-control" rows="4" id="cremarks" name="cremarks" formControlName="cremarks" maxlength="1000" placeholder="Enter Remarks" #myInput [maxlength]="maxChars" (keypress)="keyPress($event)"></textarea>
+                <span class="text-danger small">Characters Remaining: {{maxChars - myInput.value.length}}</span>
+            </div>
+            <div class="d-grid gap-2 d-md-flex">
+                <div><button type="button" class="btn btn-success" (click)="submitCasewiseData()"> Submit </button> </div>
+                <div><input type="reset" value="Reset" class="btn btn-secondary"> </div>
+            </div>
+            <!-- Delete Confirmation Modal -->
+            <div class="modal justify-content-center" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
+                            <button type="button" class="btn-close" (click)="deleteModal()"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p><strong>Speciality Code:</strong> {{ selectedspecialityCode }}</p>
+                            <p><strong>Procedure Code:</strong> {{ selectedProcedureCode }}</p>
+                            <p><strong>Procedure Name:</strong> {{ selectedProcedureName }}</p>
+                            <p><strong>Package Type:</strong> {{ selectedPackageType }}</p>
+                            <p><strong>Package Amount:</strong>{{ selectedPackageAmount | currency: 'INR':'symbol':'1.0-2' }}</p>
+                            <div class="mb-3">
+                                <label for="deleteReason" class="form-label" class="fw-semibold mb-3">Reason for Deletion :</label>
+                                <textarea id="deleteReason" [(ngModel)]="deleteReason" (input)="onReasonInput()" class="form-control" rows="3" placeholder="Enter your reason here..." maxlength="500" (keypress)="keyPress($event)"></textarea>
+                                <div class="d-flex justify-content-between mt-1">
+                                    <div *ngIf="deleteReason.length < 100 && isSubmitAttempted" class="text-danger">
+                                        Minimum 100 characters are required.
+                                    </div>
+                                    <small class="text-muted">{{ deleteReason.length }}/500 characters</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" (click)="confirmDeletion()">Delete</button>
+                            <button type="button" class="btn btn-secondary" (click)="deleteModal()">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal justify-content-center" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" data-bs-backdrop="static">
+                <div class="modal-dialog modal-xl modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="uploadModalLabel">Upload Documents</h5>
+                            <button type="button" class="btn-close" (click)="resetModal()"></button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Card 1: Patient Information Section -->
+                            <div class="card mb-4" style="background-color: #f8f9fa;">
+                                <!-- Light background color -->
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-4"><strong>Patient Name:</strong> {{ selectedPatientName }}</div>
+                                        <div class="col-md-4"><strong>Speciality Code:</strong> {{ selectedspecialityCode }}</div>
+                                        <div class="col-md-4"><strong>Procedure Code:</strong> {{ selectedProcedureCode }}</div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-md-4"><strong>Procedure Name:</strong> {{ selectedProcedureName }}</div>
+                                        <div class="col-md-4"><strong>Package Type:</strong> {{ selectedPackageType }}</div>
+                                        <div class="col-md-4"><strong>Package Amount:</strong> {{ selectedPackageAmount | currency: 'INR':'symbol':'1.0-2' }}</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 2: Document Upload Section -->
+                            <div class="card">
+                                <!-- Different light background color -->
+                                <div class="card-body">
+                                    <div class="row">
+                                        <!-- Discharge Slip Upload -->
+                                        <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+                                            <div class="file-upload">
+                                                <p class="mb-2">Discharge Slip<strong class="text-danger">*</strong></p>
+                                                <div class="file-upload-content">
+                                                    <a class="btn btn-danger text-white btn-sm remove-img"><i class="fas fa-times"></i></a>
+                                                    <img class="file-upload-image" src="#" alt="your image" />
+                                                </div>
+                                                <div class="image-upload-wrap text-center rounded" id="treatment">
+                                                    <input class="file-upload-input" type='file' id="Treatment" accept=".pdf,.jpeg,.jpg" (change)="TreatmentDetailsSlip($event)" />
+                                                    <div class="drag-text" *ngIf="lengthforfilevalue == 1">
+                                                        <h5><i class="iconbsky-upload-icon d-block fs-4"></i> {{traetmentvalue}}</h5>
+                                                    </div>
+                                                    <div class="drag-text" *ngIf="lengthforfilevalue != 1">
+                                                        <h5><i class="iconbsky-upload-icon d-block fs-4"></i> Select a file to upload</h5>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex align-items-center justify-content-end mt-2">
+                                                    <a target="_blank" class="me-2 btn btn-outline-success btn-sm" title="Download" (click)="downloadfiletreatmentbill()">
+                                                        <i class="bi bi-download"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Additional Slip Upload -->
+                                        <div class="col-xl-6 col-lg-6 col-md-6 col-12">
+                                            <div class="file-upload">
+                                                <p class="mb-2">Additional Slip</p>
+                                                <div class="file-upload-content">
+                                                    <a class="btn btn-danger text-white btn-sm remove-img"><i class="fas fa-times"></i></a>
+                                                    <img class="file-upload-image" src="#" alt="your image" />
+                                                </div>
+                                                <div class="image-upload-wrap text-center rounded" id="valuedf">
+                                                    <input class="file-upload-input" type='file' id="Hospital" accept=".pdf,.jpeg,.jpg" (change)="HospitalBill($event)" />
+                                                    <div class="drag-text" *ngIf="lengthforfile == 1">
+                                                        <h5><i class="iconbsky-upload-icon d-block fs-4"></i>{{ shortLink }}</h5>
+                                                    </div>
+                                                    <div class="drag-text" *ngIf="lengthforfile != 1">
+                                                        <h5><i class="iconbsky-upload-icon d-block fs-4"></i> Select a file to upload</h5>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex align-items-center justify-content-end mt-2">
+                                                    <a target="_blank" class="me-2 btn btn-outline-success btn-sm" title="Download" (click)="downloadfilehospitallbill()">
+                                                        <i class="bi bi-download"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- More file uploads can be added here as needed in a similar manner -->
+                                    <hr class="my-4">
+                                    <div class="col-lg-12 col-xl-12 col-md-12 col-12">
+                                        <div class="row upload__sec">
+                                            <div class="col-12 text-center mb-4">
+                                                <div class="upload__brd">
+                                                    <img [src]="urlPreSurgery" *ngIf="urlPreSurgery " alt="Admission Slip " id="imageData ">
+                                                    <div class="pre_text">Pre-Surgery</div>
+                                                </div>
+
+                                                <div class="photoUpload btn btn-outline-success btn-sm mt-3">
+                                                    <input type="file" class="upload" id="pree" accept=".jpeg,.jpg" (change)="PreSurgery($event.target.files,'pre')" />
+                                                    <span> Uploaded Photo <i class="bi bi-upload ms-2"></i></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 text-center mb-4">
+
+                                                <div class="upload__brd">
+                                                    <img [src]="urlPostSurgery " *ngIf="urlPostSurgery " alt="Admission Slip ">
+                                                    <div class="pre_text"> Post-Surgery</div>
+                                                </div>
+                                                <div class="photoUpload btn btn-outline-success btn-sm mt-3">
+                                                    <input type="file" class="upload " id="post" accept=".jpeg,.jpg" (change)="PostSurgry($event.target.files,'post')" />
+                                                    <span> Uploaded Photo <i class="bi bi-upload ms-2"></i></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 text-center mb-4">
+                                                <div class="upload__brd">
+                                                    <img [src]="urlIntraSurgery" *ngIf="urlIntraSurgery " alt="Admission Slip " id="Data ">
+                                                    <div class="pre_text"> Intra Surgery </div>
+                                                </div>
+
+                                                <div class="photoUpload btn btn-outline-success btn-sm mt-3">
+                                                    <input type="file" class="upload " id="intra" accept=".jpeg,.jpg" (change)="IntraSurgery($event.target.files,'intra')" />
+                                                    <span> Uploaded Photo <i class="bi bi-upload ms-2"></i></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 text-center mb-4">
+                                                <div class="upload__brd">
+                                                    <img [src]="urlSpecimenRemoval " *ngIf="urlSpecimenRemoval" alt="Admission Slip ">
+                                                    <div class="pre_text"> Specimen Removal </div>
+                                                </div>
+                                                <div class="photoUpload btn btn-outline-success btn-sm mt-3">
+                                                    <input type="file" class="upload " id="Specim" accept=".jpeg,.jpg" (change)="SpecimenRemoval($event.target.files,'Specimen')" />
+                                                    <span> Uploaded Photo <i class="bi bi-upload ms-2"></i> </span>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 text-center mb-4">
+                                                <div class="upload__brd">
+                                                    <img [src]="PatientPhoto " *ngIf="PatientPhoto" alt="Admission Slip ">
+                                                    <div class="pre_text"> Patient Photo </div>
+                                                </div>
+
+                                                <div class="photoUpload btn btn-outline-success btn-sm mt-3">
+                                                    <input type="file" class="upload " id="ppic" accept=".jpeg,.jpg" (change)="PatientPhotoPic($event.target.files,'ppic')" />
+                                                    <span> Uploaded Photo <i class="bi bi-upload ms-2"></i> </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- noting -->
+                                    <hr class="my-4">
+                                    <div class="text-danger small">
+                                        <p class="mb-1">Discharge Slip, Additional Slip must be in .jpg, .jpeg, .pdf format and under 8MB.</p>
+                                        <p class="mb-0">Pre-Surgery, Post-Surgery, Intra Surgery, Specimen Removal, Patient Photo must be in .jpg, .jpeg format and under 1MB. (*) Indicates mandatory.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Modal Footer -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-success me-2" (click)="confirmSubmission()">Submit</button>
+                                <button type="button" class="btn btn-secondary" (click)="resetModal()">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

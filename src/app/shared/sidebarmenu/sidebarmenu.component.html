@@ -1,0 +1,35 @@
+<nav id="sidebar" class="sidebar">
+    <a class="sidebar-brand d-inline-flex align-items-center" routerLink="dashboard">
+        <img src="./assets/img/bsky-logo.png" alt="GJAY" class="me-1 me-lg-3">
+        <span class="align-middle">BSKY </span>
+    </a>
+    <div class="sidebar-content py-2 scrollsidebar">
+        <ul class="sidebar-nav">
+            <li class="sidebar-item" routerLinkActive="active">
+                <a class="sidebar-link" (click)="dashboard()">
+                    <i class="bi bi-speedometer2"></i><span class="align-middle">Dashboard</span>
+                </a>
+            </li>
+            <li class="sidebar-item" routerLinkActive="active" *ngFor="let menu of menuList">
+                <a href="{{'#' + menu.globalName.replace(' ','')}}" data-bs-toggle="collapse"
+                    class="sidebar-link collapsed" routerLinkActive="active" (click)="$event.stopPropagation();">
+                    <i class="bi bi-journal-check"></i> <span class="align-middle">{{menu.globalName}}</span> </a>
+                <ul id="{{menu.globalName.replace(' ','')}}" class="sidebar-dropdown list-unstyled collapse"
+                    data-bs-parent="#sidebar">
+                    <li class="sidebar-item" *ngFor="let primaryLink of menu.primaryList"><a class="sidebar-link lnk"
+                            routerLink="{{primaryLink.functionList.functionUrl}}"
+                            routerLinkActive="active">{{primaryLink.primaryName
+                            }}</a></li>
+                </ul>
+            </li>
+            <!-- <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="RejectedClaim" routerLinkActive="active">Non Uploading Initial Document</a></li>
+                     <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="/application/claimsqueriedbySNO" routerLinkActive="active">Claims Queried by SNA</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="/application/SNARejectedlist" routerLinkActive="active">Non compliance of Query-SNA</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="claimquerybycpd" routerLinkActive="active">Claims Queried By CPD</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link lnk" routerLink="CPDRejectedlist" routerLinkActive="active">Non compliance of Query-CPD</a></li> -->
+
+        </ul>
+        <div style="height: 25pt;"></div>
+    </div>
+    <app-appfooter></app-appfooter>
+</nav>

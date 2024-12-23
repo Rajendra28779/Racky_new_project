@@ -1,0 +1,310 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div>
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/dischargereportlist" class="nav-link active">Discharge Data Report</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="content-box">
+        <div class="col-xxl-10">
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Actual Date Of Discharge From</label><span class="text-danger">*</span>
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="datepicker1" name="fromDate">
+                            <label class="input-group-text bg-transparent border-start-0" for="datepicker1"><i
+                                    class="iconbsky-calendar"></i> </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Actual Date Of Discharge To</label><span class="text-danger">*</span>
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="datepicker2" name="toDate">
+                            <label class="input-group-text bg-transparent border-start-0" for="datepicker2"><i
+                                    class="iconbsky-calendar"></i>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="control-label">State Name</label>
+                        <select class="form-select" name="stateId" id="stateId" (change)="OnChangeState($event.target.value)">
+                        <option value="" selected>Select State</option>
+                        <ng-container *ngFor="let item of stateList">
+                            <option value={{item.stateCode}}>{{item.stateName}}</option>
+                        </ng-container>
+                    </select>
+
+                    </div>
+                    <div class="col-md-4">
+                        <label class="control-label">District Name</label>
+                        <select class="form-select" name="districtId" id="districtId" (change)="OnChangeDistrict($event.target.value)">
+                        <option value="" selected>Select District</option>
+                        <ng-container *ngFor="let item of districtList">
+                            <option value={{item.districtcode}}>{{item.districtname}}</option>
+                        </ng-container>
+                    </select>
+
+                    </div>
+                    <div class="col-md-4">
+                        <label class="control-label">Hospital Name</label>
+                        <select class="form-select" name="hospital" id="hospital">
+                        <option value="" selected>Select Hospital</option>
+                        <ng-container *ngFor="let item of hospitalList">
+                            <option value={{item.hospitalCode}}>{{item.hospitalName}}</option>
+                        </ng-container>
+                    </select>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col align-self-end">
+                        <div class="col-lg-12">
+                            <button class="btn btn-success mr-2" (click)="onClickSearch()">Search</button> &nbsp;
+                            <button class="btn btn-secondary" (click)="ResetField()">Reset</button>
+                            <div [align]="'start'" class="table-utilities float-end" style="padding-bottom: 1%;">
+                                <button class="btn btn-success btn-sm mx-1" style="margin-top: 10px" tooltip="Excel" id="excelreport" (click)="downloadReport()">
+                                <i class="bi bi-download"></i>
+                            </button>
+                                <!-- <button class="btn btn-danger btn-sm mx-1" style="margin-top: 10px" tooltip="pdf" id="pdfreport" (click)="downloadReport('pdf')">
+                                <i class="bi bi-file-earmark-pdf"></i>
+                            </button> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-lg-3 col-xl-3 col-xxl-3 ms-xxl-auto ms-xl-auto ms-lg-auto ms-md-auto">
+                        <div class="mb-3 mt-3">
+                            <input type="text " id="txtsearchDate " name="txtsearchDate " [(ngModel)]="txtsearchDate" maxlength="20 " class="form-control " placeholder="Search here...... " autocomplete="off" style="margin-left: 255px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content-box p-0 overflow-hidden">
+        <div class="table-responsive">
+            <table class="table table-striped mb-0">
+                <thead>
+                    <tr>
+                        <th width="40">Sl#</th>
+                        <th>URN</th>
+                        <th>Invoice Number</th>
+                        <th>Hospital Details</th>
+                        <th>Patientname</th>
+                        <th>Date of Admission</th>
+                        <th>Date of Discharge</th>
+                        <th>Actual Date of Admission</th>
+                        <th>Actual Date of Discharge</th>
+                        <th>Claim Raise Status</th>
+                        <th>Cpd Approved Amount</th>
+                        <th>Sna Approved Amount</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let claim of List | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};
+                    index as i">
+                        <td>{{i+pageIn}}</td>
+                        <td>{{claim.urnNo }}</td>
+                        <td>{{claim.invoiceno}}</td>
+                        <td>{{claim.hospitalname}}({{claim.hospitalcode}})</td>
+                        <td>{{claim.patientname}}</td>
+                        <td>{{claim.dateofadmission | date:'dd/MMM/yyyy'}}</td>
+                        <td>{{claim.dateofdischarge | date:'dd/MMM/yyyy'}}</td>
+                        <td>{{claim.actualdateofadmission | date:'dd/MMM/yyyy'}}</td>
+                        <td>{{claim.actualdateofdischarge | date:'dd/MMM/yyyy'}}</td>
+                        <td>{{claim.claimraisestatus}}</td>
+                        <td>{{claim.cpd_APPROVED_AMOUNT}}</td>
+                        <td>{{claim.sna_APPROVED_AMOUNT}}</td>
+                        <td class="text-center ">
+                            <a class="btn btn-outline-success btn-sm " data-bs-toggle="modal" data-bs-target="#examset" (click)="viewData(claim,claim.claim_ID)">View</a>
+                        </td>
+                    </tr>
+                    <tr *ngIf="List.length==0">
+                        <div class="row">
+                            <span style="color: red;text-align: center;position:absolute">NO DATA FOUND!!</span>
+                        </div>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 20px; margin-bottom: 20px;" *ngIf="showPegi">
+        <div class="col-sm-2">
+            <div class="col-sm-*">
+                Show
+                <select id="pageItem" name="pageItem" class="custom-select-sm" (change)="pageItemChange()" [(ngModel)]="pageElement">
+                    <option value="500">500</option>
+                    <option value="1000">1000</option>
+                    <option value="2000">2000</option>
+                    <option value="5000">5000</option>
+                    <option value="10000">10000</option>
+                </select> Entries
+            </div>
+        </div>
+        <div class="col-sm-10" style="text-align: right;">
+            <ul style="display: inline;" class="text-end">
+                <li (click)="selectedIndex!=1 && prev()" style="display: inline;" [ngClass]="{'lst':selectedIndex!=1,'ltu':selectedIndex==1}">
+                    <span>&lt;&lt; Previous </span>
+                </li>
+                <li *ngIf="newList[0].id!=1" (click)="prevlist()" style="display: inline; padding-top: 5px; padding-bottom: 5px;" class="upg">
+                    <span style="padding-left: 10px; padding-right: 5px; "> ... </span>
+                </li>
+                <ng-container *ngFor="let element of newList">
+                    <li (click)="selectedIndex!=element.id && paginate(element)" style="display: inline; text-align: center; padding-top: 5px; padding-bottom: 5px;" [ngClass]="{'pgl':selectedIndex==element.id,'upg':selectedIndex!=element.id}">
+                        <span style="padding-left: 10px; padding-right: 6px;"> {{element.id}} </span>
+                    </li>
+                </ng-container>
+                <li *ngIf="newList[newList.length-1].id!=pgList[pgList.length-1].id" (click)="nextlist()" style="display: inline; padding-top: 5px; padding-bottom: 5px;" class="upg">
+                    <span style="padding-left: 10px; padding-right: 5px; "> ... </span>
+                </li>
+                <li (click)="selectedIndex!=pgList?.length && next()" style="display: inline;" [ngClass]="{'lst':selectedIndex!=pgList?.length,'ltu':selectedIndex==pgList?.length}">
+                    <span style="padding-left: 4px;"> Next &gt;&gt;</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- modal -->
+<div class="modal fade" id="examset" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-focus="false">
+    <div class="modal-dialog" style="max-width: 95%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Discharge Data Report</h5>
+                <button type="button" #closebutton class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-cointainer">
+                    <div class="main-tab">
+                        <div class="row justify-content-between">
+                            <div class="table-responsive">
+                                <table class="table table-striped" mb-0>
+                                    <thead>
+                                        <tr>
+                                            <th>Hospital state Name</th>
+                                            <th>Hospital District Name</th>
+                                            <th>Patientphonenumber</th>
+                                            <th>Gender</th>
+                                            <th> Age</th>
+                                            <th>Familyheadname</th>
+                                            <th>Verifiername</th>
+                                            <th>Patient statecode</th>
+                                            <th>Patient districtcode</th>
+                                            <th>Patient blockcode</th>
+                                            <th>Patient panchayatcode</th>
+                                            <th>Patient villagecode</th>
+                                            <th>Patient statename</th>
+                                            <th>Patient districtname</th>
+                                            <th>Patient blockname</th>
+                                            <th>Patient panchayatname</th>
+                                            <th>Villagename</th>
+                                            <th>Fpverifier</th>
+                                            <th>ID</th>
+                                            <th>Fp_verifiername</th>
+                                            <th>Transactiontype</th>
+                                            <th>Transactiondate</th>
+                                            <th>Transactiontime</th>
+                                            <th>Packagecode</th>
+                                            <th>Fund available balance (from_5lakh)</th>
+                                            <th>Noofdays</th>
+                                            <th>Mortality</th>
+                                            <th>Transactiondescription</th>
+                                            <th>Unblockamount</th>
+                                            <th>Policystartdate</th>
+                                            <th>Policyenddate</th>
+                                            <th>Procedurename</th>
+                                            <th>Packagename</th>
+                                            <th>Packagecategorycode</th>
+                                            <th>Packageid</th>
+                                            <th>Triggerflag</th>
+                                            <th>Referralcode</th>
+                                            <th>Hospital category /accreditation</th>
+                                            <th>System rejected status</th>
+                                            <th>Rejected status</th>
+                                            <th>Verificationmode</th>
+                                            <th>Ispatientotpverified</th>
+                                            <th>Referralauthstatus</th>
+                                            <th>Cpdclaimstatus</th>
+                                            <th>Cpdremarks</th>
+                                            <th>Snaclaimstatus</th>
+                                            <th>Snaremarks</th>
+                                            <th>Hospitalclaimedamount</th>
+                                        </tr>
+                                    </thead>
+                                    <tr *ngFor="let item of detailData,index as i">
+                                        <td>{{item.hospital_STATENAME}}</td>
+                                        <td>{{item.hospital_DISTRICTNAME}}</td>
+                                        <td>{{item.Patientphonenumber}}</td>
+                                        <td>{{item.gender}}</td>
+                                        <td>{{item.age}}</td>
+                                        <td>{{item.familyheadname}}</td>
+                                        <td>{{item.verifiername}}</td>
+                                        <td>{{item.patient_STATECODE}}</td>
+                                        <td>{{item.patient_DISTRICTCODE}}</td>
+                                        <td>{{item.patient_BLOCKCODE}}</td>
+                                        <td>{{item.patient_PANCHAYATCODE}}</td>
+                                        <td>{{item.patient_VILLAGECODE}}</td>
+                                        <td>{{item.patient_STATENAME}}</td>
+                                        <td>{{item.patient_DISTRICTNAME}}</td>
+                                        <td>{{item.patient_BLOCKNAME}}</td>
+                                        <td>{{item.patient_PANCHAYATNAME}}</td>
+                                        <td>{{item.villagename}}</td>
+                                        <td>{{item.fpverifier}}</td>
+                                        <td>{{item.id}}</td>
+                                        <td>{{item.fp_VERIFIERNAME}}</td>
+                                        <td>{{item.transactiontype}}</td>
+                                        <td>{{item.transactiondate}}</td>
+                                        <td>{{item.transactiontime}}</td>
+                                        <td>{{item.packagecode}}</td>
+                                        <td>{{item.fund_AVAILABLE_BALANCE_from_5lakh}}</td>
+                                        <td>{{item.noofdays}}</td>
+                                        <td>{{item.mortality}}</td>
+                                        <td>{{item.transactiondescription}}</td>
+                                        <td>{{item.unblockamount}}</td>
+                                        <td>{{item.policystartdate}}</td>
+                                        <td>{{item.policyenddate}}</td>
+                                        <td>{{item.procedurename}}</td>
+                                        <td>{{item.packagename}}</td>
+                                        <td>{{item.packagecategorycode}}</td>
+                                        <td>{{item.packageid}}</td>
+                                        <td>{{item.triggerflag}}</td>
+                                        <td>{{item.referralcode}}</td>
+                                        <td>{{item.hospital_Category_Accreditation}}</td>
+                                        <td>{{item.sys_REJ_STATUS}}</td>
+                                        <td>{{item.rejected_STATUS}}</td>
+                                        <td>{{item.verificationmode}}</td>
+                                        <td>{{item.ispatientotpverified}}</td>
+                                        <td>{{item.referralauthstatus}}</td>
+                                        <td>{{item.cpdclaimstatus}}</td>
+                                        <td>{{item.cpdremarks}}</td>
+                                        <td>{{item.snaclaimstatus}}</td>
+                                        <td>{{item.snaremarks}}</td>
+                                        <td>{{item.hospitalclaimedamount}}</td>
+                                    </tr>
+                                    <tbody>
+
+                                        <tr *ngIf="! detailData?.length">
+                                            <td colspan="18" align="center"><strong class="text-danger">No data found</strong></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

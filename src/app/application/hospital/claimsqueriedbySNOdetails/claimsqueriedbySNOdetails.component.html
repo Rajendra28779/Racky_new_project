@@ -1,0 +1,675 @@
+<div class="form-cointainer claim-detail">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <!-- <a routerLink="/application/snoapproval" routerLinkActive="active" class="nav-link active">CPD Approval</a> -->
+                        <a routerLink="/application/claimsqueriedbySNOdetails/Action" class="nav-link active">Claims Queried by SNA  </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-6 ">
+                <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+            </div>
+        </div>
+    </div>
+    <div class="content-box p-0 border-0 bg-transparent">
+        <div class="row">
+            <div class="col-lg-6 col-xl-6 col-xxl-4">
+                <div class="card shadow-sm basic-info">
+                    <div class="card-header">
+                        <h5 class="mb-0">Basic Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3 border-bottom pb-3">
+                            <span class="text-success"><i class="iconbsky-urn-number fs-1 me-3"></i></span>
+                            <div>
+                                <p class="text-muted mb-0">URN</p>
+                                <p class="mb-0 fw-bold" id="UrnNumber">
+                                    {{userdetailsByid?.URN}}</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center mb-3 border-bottom pb-3 ">
+                            <span class="text-success "><i class="iconbsky-invoice-number fs-1 me-3 "></i></span>
+                            <div>
+                                <p class="text-muted mb-0 ">Blocking Invoice Number</p>
+                                <p class="mb-0 fw-bold">{{userdetailsByid?.INVOICENO}}</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center ">
+                            <span class="text-success "><i class="iconbsky-case-number fs-1 me-3 "></i></span>
+                            <div>
+                                <p class="text-muted mb-0 ">Claim Number</p>
+                                <p class="mb-0 fw-bold ">{{userdetailsByid?.claim_no}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-xl-6 col-xxl-4 ">
+                <div class="card text-bg-success patient-info shadow-sm ">
+                    <div class="card-header ">
+                        <h5 class="mb-0 ">Patient Information</h5>
+                    </div>
+                    <div class="card-body py-xl-4 ">
+                        <div class="row ">
+                            <div class="col-lg-12 ">
+                                <h4 class="fw-normal mb-3 " id="name">
+                                    {{userdetailsByid?.PATIENTNAME}}
+                                </h4>
+                                <h6 class="fw-normal mb-3 " id="name">
+                                    {{userdetailsByid?.categoryName}}
+                                </h6>
+                                <ul class=" list-unstyled mb-0 ">
+                                    <li id="age"><i class="iconbsky-age "></i>{{userdetailsByid?.AGE}}</li>
+                                    <!-- <li id="gender"><i class="iconbsky-gender "></i> {{userdetailsByid.GENDER}}</li> -->
+                                    <li *ngIf=" userdetailsByid?.GENDER=='F' "><i class="iconbsky-gender"></i> Female</li>
+                                    <li *ngIf=" userdetailsByid?.GENDER=='M' "><i class="iconbsky-gender"></i> Male</li>
+                                    <li><i class="iconbsky-mobile "></i>{{userdetailsByid?.patientphoneno}}</li>
+                                    <li><i class="iconbsky-location "></i> {{userdetailsByid?.BLOCKNAME}}, {{userdetailsByid?.DISTRICTNAME}}, {{userdetailsByid?.STATENAME}}
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 ">
+                <div class="card shadow-sm mt-3 mt-xl-4 ">
+                    <div class="card-header ">
+                        <h5 class="mb-0 ">Treatment Details</h5>
+                    </div>
+                    <div class="card-body ">
+                        <div class="row gx-xl-5 treatment-details ">
+                            <div class="col-xl ">
+                                <p class="small text-muted mb-0 ">Actual Date of Admission - Actual Date of Discharge</p>
+                                <h6 class="mb-0 ">{{userdetailsByid?.actualdateofadmission | date:'dd-MMM-yyyy'}}-{{userdetailsByid?.actualdateofdischarge | date:'dd-MMM-yyyy'}}
+                                </h6>
+                            </div>
+                            <div class="col-xl border-start ">
+                                <div class="d-flex align-items-center ">
+                                    <!-- <i class="iconbsky-package-amount mt-2 me-3 fs-1 "></i> -->
+                                    <div>
+                                        <p class="small text-muted mb-0 ">Package Rate(₹)</p>
+                                        <h6 class="mb-0 ">{{userdetailsByid?.TOTALAMOUNTBLOCKED | currency:'':''}}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl border-start ">
+                                <div class="d-flex align-items-center ">
+                                    <!-- <i class="iconbsky-block-amount mt-2 me-3 fs-1 "></i> -->
+                                    <div>
+                                        <p class="small text-muted mb-0 ">Blocked Amount(₹)</p>
+                                        <h6 class="mb-0 ">{{userdetailsByid?.TOTALAMOUNTCLAIMED | currency:'':'' }}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 ">
+                                <hr class="mt-xl-4 ">
+                            </div>
+
+
+                            <!--                          Modification Start Area-->
+
+
+                            <div class="col-xl ">
+                                <p class="small text-muted mb-0 ">Package Code</p>
+                                <h6 class="mb-0 ">{{userdetailsByid?.packageCode1}}</h6>
+                                <p class="small text-muted mb-0 ">Package Name</p>
+                                <h6 class="mb-0 ">{{userdetailsByid?.packageName1}}</h6>
+                            </div>
+                            <div class="col-xl border-start ">
+                                <div class="d-flex align-items-center ">
+                                    <div>
+                                        <p class="small text-muted mb-0 ">Sub-Package Code</p>
+                                        <h6 class="mb-0 ">{{userdetailsByid?.subPackageCode1}}</h6>
+                                        <p class="small text-muted mb-0 ">Sub-Package Name</p>
+                                        <h6 class="mb-0 ">{{userdetailsByid?.subPackageName1}}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl border-start ">
+                                <div class="d-flex align-items-center ">
+                                    <div>
+                                        <p class="small text-muted mb-0 ">Procedure Code</p>
+                                        <h6 class="mb-0 ">{{userdetailsByid?.procedureCode1}}</h6>
+                                        <p class="small text-muted mb-0 ">Procedure Name</p>
+                                        <span class="mb-0 " id="procedureNameId" style="font-weight: 500"></span>
+                                        <span id="showMoreId" (click)="showProcedureName()"></span>
+                                        <span id="showMoreId1" (click)="hideProcedureName()"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 ">
+                                <hr class="mt-xl-4 ">
+                            </div>
+                            <!--                          Modification End Area-->
+
+                            <div class="col-lg-6 ">
+                                <!--                                <div class="d-flex align-items-center ">-->
+                                <!--                                    &lt;!&ndash; <i class="iconbsky-block-amount mt-2 me-3 fs-1 "></i> &ndash;&gt;-->
+                                <!--                                    <div>-->
+                                <!--                                        <p class="small text-muted mb-0 ">Packages</p>-->
+                                <!--                                        <h6 class="mb-0 ">{{userdetailsByid?.PACKAGENAME}}-->
+                                <!--                                        </h6>-->
+                                <!--                                    </div>-->
+                                <!--                                </div>-->
+                                <div class="d-flex align-items-center ">
+                                    <!-- <i class="iconbsky-block-amount mt-2 me-3 fs-1 "></i> -->
+                                    <div>
+                                        <p class="small text-muted mb-0 ">CLAIM CASE NO</p>
+                                        <h6 class="mb-0 ">{{userdetailsByid?.CLAIM_CASE_NO!=null?userdetailsByid?.CLAIM_CASE_NO:'NA'}}
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 border-start ">
+                                <!--                                <div class="d-flex align-items-center ">-->
+                                <!--                                    &lt;!&ndash; <i class="iconbsky-block-amount mt-2 me-3 fs-1 "></i> &ndash;&gt;-->
+                                <!--                                    <div>-->
+                                <!--                                        <p class="small text-muted mb-0 ">Procedure</p>-->
+                                <!--                                        <h6 class="mb-0 ">{{userdetailsByid?.PROCEDURENAME}}-->
+                                <!--                                        </h6>-->
+                                <!--                                    </div>-->
+                                <!--                                </div>-->
+                                <div class="d-flex align-items-center ">
+                                    <!-- <i class="iconbsky-block-amount mt-2 me-3 fs-1 "></i> -->
+                                    <div>
+                                        <p class="small text-muted mb-0 "> CLAIM BILL NO</p>
+                                        <h6 class="mb-0 ">{{userdetailsByid?.CLAIM_BILL_NO!=null?userdetailsByid?.CLAIM_BILL_NO:"N/A"}}
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 ">
+                                <hr class="mt-xl-4 ">
+                            </div>
+                            <div class="col-xl ">
+                                <p class="small text-muted mb-0 "> Authentication Mode
+                                </p>
+                                <h6 class="mb-0 " style="color:red">{{userdetailsByid?.verification!=null?userdetailsByid?.verification:"N/A"}} </h6>
+                            </div>
+
+                            <div class="col-xl border-start ">
+                                <div class="d-flex align-items-center ">
+                                    <!-- <i class="iconbsky-package-amount mt-2 me-3 fs-1 "></i> -->
+                                    <div>
+                                        <p class="small text-muted mb-0 "> Is Patient OTP Verified</p>
+                                        <h6 class="mb-0 ">{{userdetailsByid?.ispatient!=null?userdetailsByid?.ispatient:"N/A"}}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl border-start ">
+                                <div class="d-flex align-items-center ">
+                                    <!-- <i class="iconbsky-package-amount mt-2 me-3 fs-1 "></i> -->
+                                    <div>
+                                        <p class="small text-muted mb-0 ">Referral Authstatus</p>
+                                        <h6 class="mb-0 ">
+                                            {{userdetailsByid?.Referalstatus!=null?userdetailsByid?.Referalstatus:"N/A"}}</h6>
+                                    </div>
+                                </div>
+                                <!-- <div class="row ">
+                            <div class="col-lg-12 ">
+                                <hr class="my-xl-4 ">
+                                <h5>Normal Pre-Auth/Package Change Pre-Auth</h5>
+                                <div class="table-responsive ">
+                                    <table class="table mb-0 ">
+                                        <thead>
+                                            <tr>
+                                                <th width="40 ">Sl#</th>
+                                                <th>Action Date</th>
+                                                <th>Application Status</th>
+                                                <th>Remarks</th>
+                                                <th width="120 ">Documents</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>10-Jul-2022</td>
+                                                <td>Approved</td>
+                                                <td>Ok</td>
+                                                <td><a href="javascript:void(0); "><i class="bi bi-list-check "></i> View </a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                <td>10-Jul-2022</td>
+                                                <td>Approved</td>
+                                                <td>Ok</td>
+                                                <td><a href="javascript:void(0); "><i class="bi bi-list-check "></i> View </a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-4 ">
+                    <div class="col-lg-12 ">
+                        <div class="card shadow-sm basic-info ">
+                            <div class="card-header ">
+                                <h5 class="mb-0 ">Latest Documents Uploaded</h5>
+                            </div>
+                            <div class="card-body ">
+                                <div class="row gx-5 justify-content-between document-upload ">
+                                    <div class="col-lg-12 col-xxl-12 ">
+                                        <div class="row uploaded-doc ">
+                                            <!-- <div class="col-6 col-lg-3 col-xxl-3 text-center " *ngIf="userdetailsByid.Admission == undefined">
+                                        <a style="cursor:pointer ;" (click)="downloadActionforDischarge($event,userdetailsByid.dischargeslip,userdetailsByid.hospitalcode,userdetailsByid.dateofadmission)">
+                                            <img src="./assets/img/pdf.png " alt="Admission Slip " class="mb-2 ">
+                                            <span class="d-block ">Admission Slip</span>
+                                        </a>
+                                    </div> -->
+                                            <!-- <div class="col-6 col-lg-3 col-xxl-3 text-center " *ngIf="userdetailsByid?.Admissionon == undefined"> -->
+                                            <!-- <a (click)="downloadActionforDischarge($event,userdetails.dischargeslip,userdetails.hospitalcode,userdetails.dateofadmission)"> -->
+                                            <!-- <img src="../../../assets/img/pdf.png " alt="Admission Slip " class="mb-2 " Width="80"> -->
+                                            <!-- <span class="d-block ">--</span>
+                                    <span class="d-block ">Admission Slip</span>
+                                </div> -->
+                                            <div class="col-6 col-lg-3 col-xxl-3 text-center " *ngIf="userdetailsByid?.dischargeslip != undefined">
+                                                <a style="cursor:pointer ;" (click)="downloadActionforDischarge($event,userdetailsByid?.dischargeslip,userdetailsByid?.hospitalcode,userdetailsByid?.dateofadmission)">
+                                                    <img src="./assets/img/pdf.png " alt="Admission Slip " class="mb-2 ">
+                                                    <span class="d-block ">Discharge  Slip</span>
+                                                </a>
+                                            </div>
+
+                                            <div class="col-6 col-lg-3 col-xxl-3 text-center " *ngIf="userdetailsByid?.dischargeslip == undefined">
+                                                <!-- <a (click)="downloadActionforDischarge($event,userdetailsByid.dischargeslip,userdetailsByid.hospitalcode,userdetailsByid.dateofadmission)">
+                                            <img src="../../../assets/img/pdf.png " alt="Admission Slip " class="mb-2 "> -->
+                                                <span class="d-block ">--</span>
+                                                <span class="d-block ">Discharge  Slip</span>
+                                            </div>
+
+                                            <div class="col-6 col-lg-3 col-xxl-3 text-center " *ngIf="userdetailsByid?.addtional_doc != undefined">
+                                                <a style="cursor:pointer ;" (click)="downloadActionforDischarge($event,userdetailsByid?.addtional_doc,userdetailsByid?.hospitalcode,userdetailsByid?.dateofadmission)">
+                                                    <img src="./assets/img/pdf.png " alt="Admission Slip " class="mb-2 ">
+                                                    <span class="d-block ">Additional  Slip</span>
+                                                </a>
+                                            </div>
+                                            <div class="col-6 col-lg-3 col-xxl-3 text-center " *ngIf="userdetailsByid?.addtional_doc == undefined">
+                                                <!-- <a (click)="downloadActionforDischarge($event,userdetailsByid.addtional_doc,userdetailsByid.hospitalcode,userdetailsByid.dateofadmission)">
+                                            <img src="../../../assets/img/pdf.png " alt="Admission Slip " class="mb-2 "> -->
+                                                <span class="d-block ">--</span>
+                                                <span class="d-block ">Additional  Slip</span>
+                                            </div>
+                                            <div class="col-6 col-lg-3 col-xxl-3 text-center " *ngIf="userdetailsByid?.PRESURGERYPHOTO != undefined">
+                                                <a style="cursor:pointer ;" (click)="downloadActionforDischarge($event,userdetailsByid?.PRESURGERYPHOTO,userdetailsByid?.hospitalcode,userdetailsByid?.dateofadmission)">
+                                                    <img src="./assets/img/male-profile.jpg " alt="Patient Photo " class="mb-2 rounded ">
+                                                    <span class="d-block ">Pre-Surgery</span>
+                                                </a>
+                                            </div>
+
+                                            <div class="col-6 col-lg-3 col-xxl-3 text-center " *ngIf="userdetailsByid?.PRESURGERYPHOTO == undefined">
+                                                <!-- <a (click)="downloadActionforDischarge($event,userdetailsByid.PRESURGERYPHOTO,userdetailsByid.hospitalcode,userdetailsByid.dateofadmission)">
+                                            <img src="../../../assets/img/male-profile.jpg " alt="Patient Photo " class="mb-2 rounded "> -->
+                                                <span class="d-block ">--</span>
+                                                <span class="d-block ">Pre-Surgery</span>
+                                            </div>
+
+                                            <div class="col-6 col-lg-3 col-xxl-3 text-center " *ngIf="userdetailsByid?.POSTSURGERYPHOTO != undefined">
+                                                <a style="cursor:pointer ;" (click)="downloadActionforDischarge($event,userdetailsByid?.POSTSURGERYPHOTO,userdetailsByid?.hospitalcode,userdetailsByid?.dateofadmission)">
+                                                    <img src="./assets/img/male-profile.jpg " alt="Patient Photo " class="mb-2 rounded ">
+                                                    <span class="d-block ">Post-Surgery</span>
+                                                </a>
+                                            </div>
+
+                                            <div class="col-6 col-lg-3 col-xxl-3 text-center " *ngIf="userdetailsByid?.POSTSURGERYPHOTO == undefined">
+                                                <!-- <a (click)="downloadActionforDischarge($event,userdetailsByid.POSTSURGERYPHOTO,userdetailsByid.hospitalcode,userdetailsByid.dateofadmission)">
+                                            <img src="../../../assets/img/male-profile.jpg " alt="Patient Photo " class="mb-2 rounded "> -->
+                                                <span class="d-block ">--</span>
+                                                <span class="d-block ">Post-Surgery</span>
+                                            </div>
+
+
+                                            <div class="col-6 col-lg-3 col-xxl-3 text-center " *ngIf="userdetailsByid?.intra_surgery_photo != undefined">
+                                                <a style="cursor:pointer ;" (click)="downloadActionforDischarge($event,userdetailsByid?.intra_surgery_photo,userdetailsByid?.hospitalcode,userdetailsByid?.dateofadmission)">
+                                                    <img src="./assets/img/male-profile.jpg " alt="Patient Photo " class="mb-2 rounded ">
+                                                    <span class="d-block ">Intra Surgery Photo</span>
+                                                </a>
+                                            </div>
+                                            <div class="col-6 col-lg-3 col-xxl-3 text-center " *ngIf="userdetailsByid?.intra_surgery_photo == undefined">
+                                                <!-- <a (click)="downloadActionforDischarge($event,userdetailsByid.POSTSURGERYPHOTO,userdetailsByid.hospitalcode,userdetailsByid.dateofadmission)">
+                                            <img src="../../../assets/img/male-profile.jpg " alt="Patient Photo " class="mb-2 rounded "> -->
+                                                <span class="d-block ">--</span>
+                                                <span class="d-block ">Intra Surgery</span>
+                                            </div>
+
+                                            <div class="col-6 col-lg-3 col-xxl-3 text-center " *ngIf="userdetailsByid?.specimen_removal_photo != undefined">
+                                                <a style="cursor:pointer ;" (click)="downloadActionforDischarge($event,userdetailsByid?.specimen_removal_photo,userdetailsByid?.hospitalcode,userdetailsByid?.dateofadmission)">
+                                                    <img src="./assets/img/male-profile.jpg " alt="Patient Photo " class="mb-2 rounded ">
+                                                    <span class="d-block "> Specimen Removal</span>
+                                                </a>
+                                            </div>
+                                            <div class="col-6 col-lg-3 col-xxl-3 text-center " *ngIf="userdetailsByid?.specimen_removal_photo == undefined">
+                                                <!-- <a (click)="downloadActionforDischarge($event,userdetailsByid.POSTSURGERYPHOTO,userdetailsByid.hospitalcode,userdetailsByid.dateofadmission)">
+                                            <img src="../../../assets/img/male-profile.jpg " alt="Patient Photo " class="mb-2 rounded "> -->
+                                                <span class="d-block ">--</span>
+                                                <span class="d-block "> Specimen Removal</span>
+                                            </div>
+
+
+                                            <div class="col-6 col-lg-3 col-xxl-3 text-center " *ngIf="userdetailsByid?.patient_photo != undefined">
+                                                <a style="cursor:pointer ;" (click)="downloadActionforDischarge($event,userdetailsByid?.patient_photo,userdetailsByid?.hospitalcode,userdetailsByid?.dateofadmission)">
+                                                    <img src="./assets/img/male-profile.jpg " alt="Patient Photo " class="mb-2 rounded ">
+                                                    <span class="d-block ">Patient Photo</span>
+                                                </a>
+                                            </div>
+
+                                            <div class="col-6 col-lg-3 col-xxl-3 text-center " *ngIf="userdetailsByid?.patient_photo == undefined">
+                                                <!-- <a (click)="downloadActionforDischarge($event,userdetailsByid.POSTSURGERYPHOTO,userdetailsByid.hospitalcode,userdetailsByid.dateofadmission)">
+                                            <img src="../../../assets/img/male-profile.jpg " alt="Patient Photo " class="mb-2 rounded "> -->
+                                                <span class="d-block ">--</span>
+                                                <span class="d-block ">Patient Photo</span>
+                                            </div>
+
+                                        </div>
+                                        <div class="alert alert-danger mb-4 d-flex align-items-center small mt-3">
+                                            <p class="mb-0 pe-3 me-3 border-end ">
+                                                <i class="bi bi-info-circle-fill fs-5 me-2 "></i> Guideline for Upload
+                                            </p>
+                                            <p class="mb-0 ">
+                                                Additional Slip1 and Additional Slip2 should be in <strong>.pdf,.jpg, .jpeg</strong> format and should be below
+                                                <strong>8MB</strong><strong> and (*) Indicates mandatory </strong>
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6 col-lg-3 col-xxl-3 ">
+                                                <div class="file-upload ">
+                                                    <p class="mb-1 ">Additional Slip1<strong class="required-field"></strong></p>
+                                                    <div class="file-upload-content ">
+                                                        <a class="btn btn-danger text-white btn-sm remove-img "><i
+                                                        class="fas fa-times "></i>
+                                                </a>
+                                                        <img class="file-upload-image " src="# " alt="your image " />
+                                                    </div>
+                                                    <div class="image-upload-wrap text-center rounded " id="additionapicid">
+                                                        <input class="file-upload-input " type='file' id="ADD" accept=".pdf,.jpeg,.jpg" onCut="return false" onDrag="return false" onDrop="return false" (change)="AdditionalDocument($event) " />
+                                                        <div class="drag-text " *ngIf="length==1">
+                                                            <h5><i class="iconbsky-upload-icon d-block fs-4 "></i>{{filename}}</h5>
+                                                        </div>
+                                                        <div class="drag-text " *ngIf="length!=1">
+                                                            <h5><i class="iconbsky-upload-icon d-block fs-4 "></i>Select a file to upload</h5>
+                                                        </div>
+                                                    </div>
+                                                    <p class="small pt-1 "><img src="./assets/img/pdf.png " alt="Download Document " target="_blank" width="20 "> <a style="cursor:pointer ;" (click)="downloadfilehospitallbill() "> Download</a></p>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 col-lg-3 col-xxl-3 ">
+                                                <div class="file-upload ">
+                                                    <p class="mb-1 ">Additional Slip2</p>
+                                                    <div class="file-upload-content ">
+                                                        <a class="btn btn-danger text-white btn-sm remove-img "><i
+                                                        class="fas fa-times "></i>
+                                                </a>
+                                                        <img class="file-upload-image " src="# " alt="your image " />
+                                                    </div>
+                                                    <div class="image-upload-wrap text-center rounded " id="add1pic">
+                                                        <input class="file-upload-input " type='file' id="ADDC" accept=".pdf,.jpeg,.jpg" onCut="return false" onDrag="return false" onDrop="return false" (change)="AdditionalDocument1($event) " />
+                                                        <div class="drag-text " *ngIf="lengthadd1==1">
+                                                            <h5><i class="iconbsky-upload-icon d-block fs-4 "></i>{{filenameadd1}}</h5>
+                                                        </div>
+                                                        <div class="drag-text " *ngIf="lengthadd1!=1">
+                                                            <h5><i class="iconbsky-upload-icon d-block fs-4 "></i>Select a file to upload</h5>
+                                                        </div>
+                                                    </div>
+                                                    <p class="small pt-1 "><img src="./assets/img/pdf.png " alt="Download Document " target="_blank" width="20 "> <a style="cursor:pointer ;" (click)="downloadfilehospitallbillforadd2() "> Download</a></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="alert alert-danger mb-4 d-flex align-items-center small ">
+                                    <p class="mb-0 pe-3 me-3 border-end ">
+                                        <i class="bi bi-info-circle-fill fs-5 me-2 "></i> Guideline for Upload
+                                    </p>
+                                    <p class="mb-0 ">
+                                        Photo should be in <strong>.jpg, .jpeg, .png</strong> format. Upload photo below
+                                        <strong>300kb</strong> size.<br> Recommended dimension to upload is
+                                        <strong>15*200</strong> pixels.
+                                    </p>
+                                </div> -->
+                                        <!-- <hr class="my-xl-4 ">
+                                <div class="row "> -->
+                                        <!-- <div class="col-6 col-lg-4 col-xxl-4 "> -->
+                                        <!-- <div class="file-upload ">
+                                            <p class="mb-1 ">Discharge Document Slip</p>
+                                            <div class="file-upload-content ">
+                                                <a class="btn btn-danger text-white btn-sm remove-img "><i
+                                                                class="fas fa-times "></i>
+                                                        </a>
+                                                <img class="file-upload-image " src="# " alt="your image " />
+                                            </div>
+                                            <div class="image-upload-wrap text-center rounded ">
+                                                <input class="file-upload-input " type='file' (change)="TreatmentDetailsSlip($event.target.files)" />
+                                                <div class="drag-text ">
+                                                    <h5><i class="iconbsky-upload-icon d-block fs-4 "></i> Drag or select a file to upload</h5>
+                                                </div>
+                                            </div> -->
+                                        <!-- <p class="small pt-1 "><img src="../../../assets/img/pdf.png " alt="Download Document " width="20 "> <a href="javascript:void(0) "> Download</a></p> -->
+                                        <!-- </div> -->
+
+                                        <!-- </div> -->
+                                        <!-- <div class="col-6 col-lg-4 col-xxl-4 "> -->
+                                        <!-- <div class="file-upload "> -->
+                                        <!-- <p class="mb-1 ">Additional Document Slip</p>
+                                        <div class="file-upload-content ">
+                                            <a onclick="removeUpload() " class="btn btn-danger text-white btn-sm remove-img "><i
+                                                                class="fas fa-times "></i>
+                                                        </a>
+                                            <img class="file-upload-image " src="# " alt="your image " />
+                                        </div>
+                                        <div class="image-upload-wrap text-center rounded ">
+                                            <input class="file-upload-input " type='file' onchange="readURL(this); " accept="image/* " (change)="HospitalBill($event.target.files)" />
+                                            <div class="drag-text ">
+                                                <h5><i class="iconbsky-upload-icon d-block fs-4 "></i> Drag or select a file to upload</h5>
+                                            </div>
+                                        </div> -->
+                                        <!-- <p class="small pt-1 "><img src="../../../assets/img/pdf.png " alt="Download Document " width="20 "> <a href="javascript:void(0) "> Download</a></p> -->
+                                        <!-- </div> -->
+                                        <!-- </div> -->
+                                        <!-- <div class="col-6 col-lg-4 col-xxl-4 "> -->
+                                        <!-- <div class="file-upload ">
+                                    <p class="mb-1 ">Investigation Report</p>
+                                    <div class="file-upload-content ">
+                                        <a onclick="removeUpload() " class="btn btn-danger text-white btn-sm remove-img "><i
+                                                                class="fas fa-times "></i>
+                                                        </a>
+                                        <img class="file-upload-image " src="# " alt="your image " />
+                                    </div>
+                                    <div class="image-upload-wrap text-center rounded ">
+                                        <input class="file-upload-input " type='file' onchange="readURL(this); " accept="image/* " (change)="investigationReport($event.target.files)" />
+                                        <div class="drag-text ">
+                                            <h5><i class="iconbsky-upload-icon d-block fs-4 "></i> Drag or select a file to upload</h5>
+                                        </div>
+                                    </div> -->
+                                        <!-- <p class="small pt-1 "><img src="../../../assets/img/pdf.png " alt="Download Document " width="20 "> <a href="javascript:void(0) "> Download</a></p> -->
+                                        <!-- </div> -->
+                                    </div>
+                                </div>
+                                <!-- </div> -->
+                                <!-- <div class="col-lg-5 ">
+                            <h6 class="mb-3 ">Patient Photo</h6>
+                            <div class="row gx-5 ">
+                                <div class="col-6 col-xxl-4 text-center ">
+                                    <img [src]="urlPreSurgery" *ngIf="urlPreSurgery " alt="Admission Slip " class="w-100 mb-2 rounded " id="imageData ">
+                                    <span class="d-block mb-3 ">Pre-Surgery</span>
+                                    <div class="photoUpload btn btn-success btn-sm ">
+                                        <input type="file" class="upload " id="pree" (change)="selectFile($event,'pre') " (change)="Procedure($event.target.files)" />
+                                        <span><i class="iconbsky-image-upload text-white "></i> Uploaded
+                                                        Photo</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-6 col-xxl-4 text-center ">
+                                    <img [src]="urlPostSurgery " *ngIf="urlPostSurgery " alt="Admission Slip " class="w-100 mb-2 rounded ">
+                                    <span class="d-block mb-3 ">Post-Surgery</span>
+                                    <div class="photoUpload btn btn-success btn-sm ">
+                                        <input type="file" class="upload " id="post" (change)="selectFile($event,'post') " (change)="post($event.target.files)" />
+                                        <span><i class="iconbsky-image-upload text-white "></i> Uploaded
+                                                        Photo</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                                <!-- <hr> -->
+                                <!-- <div class="row mt-4"> -->
+                                <!-- <div class="col-lg-12">
+                                    <div class="card shadow-sm treatment-history">
+                                        <div class="card-header">
+                                            <h5 class="mb-0">Treatment History</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <ul class="list-unstyled">
+                                                <li><i class="iconbsky-list-icon me-2"></i> Check all discharged treatment information.<a href="javascript:void(0)"> Click here</a></li>
+                                                <li><i class="iconbsky-list-icon me-2"></i> Check all discharged treatment information admitted on 4-Jul-2022. <a href="javascript:void(0)">Click here</a>
+                                                </li>
+                                                <li><i class="iconbsky-list-icon me-2"></i> Total no. of discharge for this package till now. <span class="text-primary"> 2 times</span></li>
+                                                <li><i class="iconbsky-list-icon me-2"></i> Total no. of discharge for this package for this patient till now. <span class="text-primary">1 time</span></li>
+                                            </ul>
+                                            <hr> -->
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <hr class="my-xl-4">
+                                        <h5>Action Taken History</h5>
+                                        <div class="table-responsive">
+                                            <table class="table mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Sl#</th>
+                                                        <!-- <th>Action By</th> -->
+                                                        <th>Action On</th>
+                                                        <th>Action Type</th>
+                                                        <th>Claimed Amount(₹)</th>
+                                                        <th>Action Amount(₹)</th>
+                                                        <th>Remarks </th>
+                                                        <th>Description</th>
+                                                        <th>Discharge Slip</th>
+                                                        <th>Additional Docs</th>
+                                                        <th>Additional Docs1</th>
+                                                        <th>Additional Docs2</th>
+                                                        <th>Pre-Surgery</th>
+                                                        <th>Post-Surgery</th>
+                                                        <th>Intra Surgery</th>
+                                                        <th>Specimen Removal</th>
+                                                        <th>Patient Photo</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let claim of claimLog , index as i">
+                                                        <td>{{i+1}}</td>
+                                                        <!-- <td>{{claim.ACTIONBY}}</td> -->
+                                                        <td>{{claim.ACTIONON | date :'dd-MMM-yyyy, h:mm:ss a'}}</td>
+                                                        <td>{{claim.ACTIONTYPE}}</td>
+                                                        <td *ngIf="claim.CLAIMAMOUNT != null">{{claim.CLAIMAMOUNT | number}}</td>
+                                                        <td *ngIf="claim.CLAIMAMOUNT == null">--</td>
+                                                        <td *ngIf="claim.approvedamount != null">{{claim.approvedamount | number}}</td>
+                                                        <td *ngIf="claim.approvedamount == null">--</td>
+                                                        <td *ngIf="claim.Remark != null">{{claim.Remark}}</td>
+                                                        <td *ngIf="claim.Remark == null">--</td>
+                                                        <td *ngIf="claim.REMARKS != null"><a href="javascript:void(0)" (click)="viewDescription(claim.REMARKS)">view</a></td>
+                                                        <td *ngIf="claim.REMARKS == null">--</td>
+                                                        <td *ngIf="claim.DISCHARGESLIP != undefined"><a style="cursor:pointer ;" (click)="downloadActionforDischarge($event,claim.DISCHARGESLIP,userdetailsByid.hospitalcode,userdetailsByid.dateofadmission)"><i class="bi bi-file-earmark-pdf" style="color:red;font-size:24px;"></i></a></td>
+                                                        <td *ngIf="claim.DISCHARGESLIP == undefined">--</td>
+                                                        <td *ngIf="claim.ADITIONALDOCS != undefined"><a style="cursor:pointer ;" (click)="downloadActionforDischarge($event,claim.ADITIONALDOCS,userdetailsByid.hospitalcode,userdetailsByid.dateofadmission)"><i class="bi bi-file-earmark-pdf" style="color:red;font-size:24px"></i></a></td>
+                                                        <td *ngIf="claim.ADITIONALDOCS == undefined">--</td>
+                                                        <td *ngIf="claim.additionaldoc1 != undefined"><a style="cursor:pointer ;" (click)="downloadActionforDischarge($event,claim.additionaldoc1,userdetailsByid.hospitalcode,userdetailsByid.dateofadmission)"><i class="bi bi-file-earmark-pdf" style="color:red;font-size:24px"></i></a></td>
+                                                        <td *ngIf="claim.additionaldoc1 == undefined">--</td>
+                                                        <td *ngIf="claim.additionaldoc2 != undefined"><a style="cursor:pointer ;" (click)="downloadActionforDischarge($event,claim.additionaldoc2,userdetailsByid.hospitalcode,userdetailsByid.dateofadmission)"><i class="bi bi-file-earmark-pdf" style="color:red;font-size:24px"></i></a></td>
+                                                        <td *ngIf="claim.additionaldoc2 == undefined">--</td>
+                                                        <td *ngIf="claim.PRESURGERY != undefined"><a style="cursor:pointer ;" (click)="downloadActionforDischarge($event,claim.PRESURGERY,userdetailsByid.hospitalcode,userdetailsByid.dateofadmission)"><i class="bi bi-file-earmark-image" style="color:red;font-size:24px"></i></a></td>
+                                                        <td *ngIf="claim.PRESURGERY == undefined">--</td>
+                                                        <td *ngIf="claim.POSTSURGERY != undefined"><a style="cursor:pointer ;" (click)="downloadActionforDischarge($event,claim.POSTSURGERY,userdetailsByid.hospitalcode,userdetailsByid.dateofadmission)"><i class="bi bi-file-earmark-image" style="color:red;font-size:24px"></i></a></td>
+                                                        <td *ngIf="claim.POSTSURGERY == undefined">--</td>
+                                                        <td *ngIf="claim.intra_surgery_photo != undefined"><a style="cursor:pointer ;" (click)="downloadActionforDischarge($event,claim.intra_surgery_photo,userdetailsByid.hospitalcode,userdetailsByid.dateofadmission)"><i class="bi bi-file-earmark-image" style="color:red;font-size:24px"></i></a></td>
+                                                        <td *ngIf="claim.intra_surgery_photo == undefined">--</td>
+                                                        <td *ngIf="claim.specimen_removal_photo != undefined"><a style="cursor:pointer ;" (click)="downloadActionforDischarge($event,claim.specimen_removal_photo,userdetailsByid.hospitalcode,userdetailsByid.dateofadmission)"><i class="bi bi-file-earmark-image" style="color:red;font-size:24px"></i></a></td>
+                                                        <td *ngIf="claim.specimen_removal_photo == undefined">--</td>
+                                                        <td *ngIf="claim.patient_photo != undefined"><a style="cursor:pointer ;" (click)="downloadActionforDischarge($event,claim.patient_photo,userdetailsByid.hospitalcode,userdetailsByid.dateofadmission)"><i class="bi bi-file-earmark-image" style="color:red;font-size:24px"></i></a></td>
+                                                        <td *ngIf="claim.patient_photo == undefined">--</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="alert alert-success">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-lg-3 col-xxl-2 border-end">
+                                                                <div class="d-flex align-items-center mb-xl-4">
+                                                                    <i class="iconbsky-approve-amount fs-3 me-3"></i>
+                                                                    <h5 class="mb-0">
+                                                                        <small class="d-block"> Approved Amount</small> {{ action1.approvedAmount | currency:"INR"
+                                                                        }}
+                                                                    </h5>
+                                                                </div>
+                                                                <div class="d-flex align-items-center">
+                                                                    <i class="iconbsky-approve-on fs-2 me-3"></i>
+                                                                    <h5>
+                                                                        <small class="d-block"> Approved on </small>
+                                                                    </h5>
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="col-lg-9 col-xxl-9 ps-xl-4">
+                                                                <p class="small mb-1"> Approval Remark</p>
+                                                                <p>{{action1.remarks}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div> -->
+                                <!-- </div>
+                        </div>
+                    </div> -->
+                                <!-- </div> -->
+                                <!-- <div class="row mt-4">
+                            <div class="col-lg-12">
+                                <div class="card shadow-sm">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-lg-6 col-xxl-5">
+                                                <label class="col-form-label">Remark</label>
+                                                <textarea class="form-control" rows="4"></textarea>
+                                            </div>
+                                            <div class="col-lg-4 col-xxl-4">
+                                                <label class="col-form-label">Approved Amount</label>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text" id="basic-addon1"><i
+                                                                        class="bi bi-currency-rupee"></i></span>
+                                                    <input type="text" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                                <div class="mt-3">
+                                    <a class="btn btn-success px-xl-3 py-xl-2 me-2 " (click)="reClaimRaiseRequest()">Re-claim</a>
+                                    <a class="btn btn-secondary px-xl-3 py-xl-2 " (click)="queryclaimRequest()">Cancel</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal justify-content-center" id="appealDisposal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body py-5">
+                        <span class="text-center text-success">
+            <!-- <i class="bi bi-check-circle d-block fs-1 mb-3"></i> -->
+            {{dtls}}
+            <!-- Your password has been sent to your mail ID. -->
+           </span>
+
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="modalClose()">Ok</button>
+                    </div>
+                </div>
+            </div>
+        </div>

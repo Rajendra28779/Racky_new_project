@@ -1,0 +1,68 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/treamentHistoryPerUrn" routerLinkActive="active"
+                            class="nav-link active">Treatment History As Per URN</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="content-box">
+                <div class="row">
+                    <form [formGroup]="searchHistory" autocomplete="off">
+                        <div class="row">
+                            <div class="mb-3 col-sm-4">
+                                <label for="urnno" class="form-label">URN Number:<span style="color: red;">*</span></label>
+                                <input type="text" class="form-control" id="urnno" name="urnno" formControlName="urnno" placeholder="URN Number" onkeyup="this.value=this.value.replace(/[^0-9]/,'');"
+                                [ngClass]="{ 'is-invalid': submitted && f['urnno'].errors }" [(ngModel)]="txnId">
+                            </div>
+                            <div class="col-sm-4">
+                                <label class="form-label d-none d-md-block">&nbsp;</label>
+                                <div class="d-grid gap-2 d-md-flex">
+                                    <div >
+                                        <input type="submit" (click)="searchTreatmentData()" value="Search" class="btn btn-success">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="table-responsive" >
+                        <table class="table table-striped mb-0">
+                          <thead>
+                            <tr>
+                              <th width="50">Sl#</th>
+                              <th>URN No</th>
+                              <th>Package Code</th>
+                              <th>Patient Name</th>
+                              <th>Hospital Name</th>
+                              <th>Admission Date</th>
+                              <th>Discharge Date</th>
+                              <th>Amount(₹)</th>
+                            </tr>
+                          </thead>
+                          <tbody >
+                            <ng-container *ngIf="trtData?.length">
+                            <tr *ngFor="let item of trtData; index as i">
+                            <td>{{i+1}}</td>
+                            <td width="100">{{item.urnno}}</td>
+                            <td width="100" title={{item.packagename}}>{{item.packagecode}}</td>
+                            <td width="100">{{item.patientname}}</td>
+                            <td width="100">{{item.hospitalname}}</td>
+                            <td width="100">{{item.dateofadmission}}</td>
+                            <td width="100">{{item.dateofdischarge}}</td>
+                            <td width="100">{{item.totalamount}}</td>
+                            </tr>
+                            </ng-container>
+                            <tr *ngIf="! trtData?.length">
+                                <td colspan="8" align="center" *ngIf="isVisible"><strong class="text-danger">No data found</strong></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

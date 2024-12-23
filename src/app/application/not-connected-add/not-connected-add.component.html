@@ -1,0 +1,255 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/notConnectedadd" routerLinkActive="active"
+                            class="nav-link active">Add</a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/application/notConnectedview" routerLinkActive="active"
+                            class="nav-link">View</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-4 col-xxl-4"></div>
+            <div class="col-lg-4 col-xxl-4">
+                <div class="input-group">
+                    <input type="text" id="txtsearchDate" class="form-control" placeholder="Search" name="txtsearchDate"
+                        autocomplete="off" [(ngModel)]="txtsearchDate">
+                </div>
+            </div>
+        </div>
+
+        <form [formGroup]="notConnectedForm">
+            <div class="content-box mt-3">
+                <div class="table-responsive card">
+                    <table class="table table-striped table-sm">
+                        <thead class="small">
+                            <tr>
+                                <th></th>
+                                <th width="50">Sl#</th>
+                                <th class="min-w150" width="550">Mobile No. Active Status</th>
+                                <th class="min-w150" width="350">Call Response Category</th>
+                                <th width="250">URN</th>
+                                <!-- <th width="50">Transaction ID</th> -->
+                                <!-- <th width="100">Invoice No.</th> -->
+                                <!-- <th width="200">Member ID</th> -->
+                                <th width="200">Patient Name</th>
+                                <th width="100">Patient Phone No.</th>
+                                <th width="100">Alternate Phone No.</th>
+                                <th width="100">Not Connected Attempt Count</th>
+                                <th width="100">District Name</th>
+                                <th width="50">Block Name</th>
+                                <!-- <th width="50">Panchayat Name</th> -->
+                                <!-- <th width="50">Village Name</th> -->
+                                <th width="250">Allotted Date</th>
+                                <th width="50">Date Of Admission</th>
+                                <!-- <th width="50">Total Amount Blocked</th> -->
+                                <th width="50">Hospital District</th>
+                                <th width="200">Hospital Name</th>
+                                <!-- <th width="50">Procedure Name</th> -->
+                                <!-- <th width="250">Package Name</th> -->
+                                <!-- <th width="250">Case No.</th> -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngIf="!ccelist?.length">
+                                <td colspan="13" class="text-center"><strong class="text-danger">No data
+                                        found</strong></td>
+                            </tr>
+                            <tr *ngFor="let ntcntd of ccelist | filter:txtsearchDate |
+                                        paginate: {id: 'listing_pagination',
+                                        itemsPerPage: pageElement, currentPage: currentPage};index as i">
+
+                                <td>
+                                    <!-- <input type="checkbox" [checked]="ntcntd.statusFlag"
+                                        (change)="ntcntd.statusFlag = !ntcntd.statusFlag"> -->
+                                    <input type="radio" [checked]="ntcntd.statusFlag" (change)="selectCheck(ntcntd, i)" name="radio">
+                                </td>
+                                <td *ngIf="currentPage==1">{{i+1}}</td>
+                                <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+ i+1}}</td>
+                                <td>
+                                    <div class="input-group">
+                                        <select type="select" class="form-select" name="actStat" [id]="'actStat'+i"
+                                            autocomplete="off"
+                                            (change)="selectStatus($event.target.value, i);ntcntd.actStat = $event.target.value">
+                                            <option value="" selected>---Select---</option>
+                                            <ng-container *ngFor="let p of mobilenoview">
+                                                <option *ngIf="ntcntd.attemptCount != 5" [value]="p.id">{{p.status}}</option>
+                                                <option *ngIf="ntcntd.attemptCount == 5" [value]="p.id" [hidden]="p.id == 3"> {{p.status}}</option>
+                                            </ng-container>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <select type="select" class="form-select" name="catg" [id]="'categoryName'+i" autocomplete="off"
+                                        (change)="ntcntd.catg=$event.target.value"(change)="Selectedvalue($event.target.value)">
+                                        <option value="" selected>---Select---</option>
+                                        <!-- <option *ngFor="let p of callresponse" [value]="p.categoryName">
+                                            {{p.categoryName}}
+                                        </option> -->
+                                    </select>
+                                </td>
+                                <td>{{ntcntd.urn}}</td>
+                                <!-- <td>{{ntcntd.transactionId}}</td> -->
+                                <!-- <td>{{ntcntd.invoice}}</td> -->
+                                <!-- <td>{{ntcntd.memberId}}</td> -->
+                                <td>{{ntcntd.patientName}}</td>
+                                <td>{{ntcntd.patientContactNumber}}</td>
+                                <td>{{ntcntd.alternatePhoneno}}</td>
+                                <td>{{ntcntd.attemptCount}}</td>
+                                <td>{{ntcntd.districtName}}</td>
+                                <td>{{ntcntd.blockName}}</td>
+                                <!-- <td>{{ntcntd.panchayatName}}</td> -->
+                                <!-- <td>{{ntcntd.villageName}}</td> -->
+                                <td>{{ntcntd.allottedDate}}</td>
+                                <td>{{ntcntd.admissionDate |  date:'dd/MM/yyyy'}}</td>
+                                <!-- <td>{{ntcntd.totalAmoutClaimed}}</td> -->
+                                <td>{{ntcntd.hospitalDistrict}}</td>
+                                <td>{{ntcntd.hospitalName}}</td>
+                                <!-- <td>{{ntcntd.procedureName}}</td> -->
+                                <!-- <td>{{ntcntd.packageName}}</td> -->
+                                <!-- <td>{{ntcntd.caseNo}}</td> -->
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="row mt-2" *ngIf="showPegi">
+                    <div class="col-sm-4">
+                        <div class="col-sm-*">
+                            show
+                            <select id="pageItem" name="pageItem" class="custom-select-sm" (change)="pageItemChange()">
+                                <option value="100">100</option>
+                                <option value="200">200</option>
+                                <option value="300">300</option>
+                                <option value={{record}}>All</option>
+                                </select> entries
+                        </div>
+                    </div>
+                    <div class="col-sm-8 text-right">
+                        <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true"
+                            (pageChange)="currentPage = $event" class="text-end"
+                            (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+                    </div>
+                </div>
+
+                <div class="row mt-5" *ngIf="mStatus">
+                    <div class="col-lg-8 col-xxl-8">
+                        <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                            <label class="control-label mb-2">1. Are you receiving cashless treatment under GJAY?
+                                (ଆପଣ ଜି.ଜେ.ଏ.ୱାଇ ଅଧୀନରେ ନଗଦବିହୀନ ଚିକିତ୍ସା ଗ୍ରହଣ କରୁଛନ୍ତି କି?)</label>
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-xxl-4">
+                        <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                            <div class="input-group">
+                                <input type="radio" value="YES" formControlName="que1" name="que1" id="que1"> Yes&nbsp;
+                                <input type="radio" value="NO" formControlName="que1" name="que1" id="que1"> No
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" *ngIf="mStatus">
+                    <div class="col-lg-8 col-xxl-8">
+                        <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                            <label class="control-label mb-2">2. Are you satisfied with service? (ଆପଣ ସେବାରେ
+                                ସନ୍ତୁଷ୍ଟ କି?)</label>
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-xxl-4">
+                        <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                            <div class="input-group">
+                                <input type="radio" value="YES" formControlName="que2" name="que2" id="que2"> Yes&nbsp;
+                                <input type="radio" value="NO" formControlName="que2" name="que2" id="que2"> No
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" *ngIf="mStatus">
+                    <div class="col-lg-8 col-xxl-8">
+                        <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                            <label class="control-label mb-2">3. Whether you have paid any extra money for treatment
+                                under
+                                GJAY?
+                                (ଆପଣ ଜି.ଜେ.ଏ.ୱାଇ ଅଧୀନରେ ଚିକିତ୍ସା ପାଇଁ କୌଣସି ଅତିରିକ୍ତ ଟଙ୍କା ଦେଇଛନ୍ତି କି?)</label>
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-xxl-4">
+                        <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                            <div class="input-group">
+                                <input type="radio" value="YES" formControlName="que3" name="que3" id="que3"> Yes&nbsp;
+                                <input type="radio" value="NO" formControlName="que3" name="que3" id="que3"> No
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" *ngIf="mStatus && smfStatus">
+                    <div class="col-lg-8 col-xxl-8">
+                        <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                            <label class="control-label mb-2">4. Did Swasthya Mitra facilitate your care? (ସ୍ୱାସ୍ଥ୍ୟ
+                                ମିତ୍ର
+                                ଆପଣଙ୍କ ଯତ୍ନକୁ ସୁଗମ କରିଥିଲେ କି?)</label>
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-xxl-4">
+                        <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                            <div class="input-group">
+                                <input type="radio" value="YES" formControlName="que4" name="que4" id="que4"> Yes&nbsp;
+                                <input type="radio" value="NO" formControlName="que4" name="que4" id="que4"> No
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-8 col-xxl-8">
+                        <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                            <label class="control-label mb-2">5. Alternate Phone No</label>
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-xxl-4">
+                        <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                            <div class="input-group">
+                                <input type="text" class="form-control w-100" formControlName="altNo"
+                                    (keypress)="numericOnly($event)" autocomplete="off" maxlength="10"
+                                    name="altNo" id="altNo">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-8 col-xxl-8">
+                        <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                            <label class="control-label mb-2">6. Remarks</label>
+                            <span class="text-danger">*</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-xxl-4">
+                        <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                            <div class="input-group">
+                                <textarea type="text" class="form-control w-100" formControlName="remk" name="remk"
+                                    id="remk" #myInput4 [maxLength]="maxChars"></textarea>
+                                <span class="text-danger small">Characters Remaining: {{maxChars - myInput4.value.length}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class=" col-12 col-md-4 col-lg-4">
+                    <button type="button" class="btn btn-success" (click)="SubmitCreate()">Submit</button>&nbsp;
+                    <input type="button" value="Cancel" class="btn btn-secondary" (click)="ResetForm()">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

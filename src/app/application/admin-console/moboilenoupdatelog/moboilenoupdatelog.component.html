@@ -1,0 +1,121 @@
+<div class="main-tab">
+  <div class="row">
+    <div class="col-lg-10">
+      <ul class="nav nav-tabs">
+        <li class="nav-item" >
+          <a routerLink="/application/mobilenoupdate" routerLinkActive="active" class="nav-link"
+            style="color: #1f723f;">Update</a>
+        </li>
+        <li class="nav-item" >
+          <a routerLink="/application/mobilenoupdatelog" routerLinkActive="active" class="nav-link active">Log</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+  <div class="col-lg-3 col-xxl-3" style="padding-top: 10px; padding-left: 17px;">
+    <div class="col-sm-*" *ngIf="showPegi">
+      show
+      <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+        <option value="100">100</option>
+        <option value="200">200</option>
+        <option value="300">300</option>
+        <option value={{record}}>All</option>
+      </select> entries
+    </div>
+  </div>
+  <div class="col-lg-3 col-xxl-3" style="padding-top: 10px; padding-left: 17px;">
+    <b>Total Users: <span style="color: green;">{{userData.length}}</span></b>
+  </div>
+  <div class="col-lg-2 col-xxl-2" style="text-align: right; padding-top: 3px;">
+    <div class="form-group">
+      <button class="btn btn-success btn-sm mx-1" type="submit" (click)="downloadReport(1)">
+        <i class="bi bi-download"></i>
+      </button>
+      &nbsp;
+      <button class="btn btn-danger btn-sm me-1" type="submit" (click)="downloadReport(2)"><i
+          class="bi bi-file-earmark-pdf"></i></button>
+    </div>
+  </div>
+  <div class="col-lg-4 col-xxl-4">
+    <div class="input-group">
+      <input type="text" id="txtsearchDate" class="form-control" placeholder="Search here" name="txtsearchDate"
+        [(ngModel)]="txtsearchDate">
+    </div>
+  </div>
+</div>
+<div class="form-cointainer">
+  <div class="main-tab">
+    <div class="row justify-content-between">
+      <div class="table-responsive">
+        <table class="table table-striped" mb-0>
+          <caption></caption>
+          <thead>
+            <tr>
+              <th>Sl No</th>
+              <th>Full Name</th>
+              <th>Username</th>
+              <th>Mobile No</th>
+              <th>State</th>
+              <th>District</th>
+              <th>Group</th>
+              <th>Requested Through</th>
+              <th>Description</th>
+              <th>Updated By</th>
+              <th>Updated On</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let item of userData | filter:txtsearchDate |paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage},index as i">
+              <td *ngIf="currentPage==1">{{i+1}}</td>
+              <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+i+1}}</td>
+              <td>{{item.fullName}}</td>
+              <td>{{item.userName}}</td>
+              <td>{{item.mobileNo}}</td>
+              <td>{{item.stateName}}</td>
+              <td>{{item.districtname}}</td>
+              <td>{{item.groupTypeName}}</td>
+              <td>{{item.rqstthrough}}</td>
+              <td>
+                <!-- {{item.description}} -->
+                <span id="{{'preAuthDocId'+i}}">
+                {{item.description.length>30?item.description.substring(0, 30) + '...':item.description}}
+                </span>
+                <span style="cursor: pointer; color: #1d89c9" id="{{'showMoreId'+i}}" (click)="showPreDoc1(item.description,i)">
+                    {{item.description.length>30?'Show More':''}}
+                </span>
+                <span style="cursor: pointer; color: #1d89c9" id="{{'showMoreId'+i+1}}" (click)="hidePreDoc1(item.description,i)"></span>
+              </td>
+              <td>{{item.updatedby}}</td>
+              <td>{{item.updatedon}}</td>
+            </tr>
+            <tr *ngIf="! userData?.length">
+              <td colspan="9" style="text-align: center;"><strong class="text-danger">No data found</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="row" *ngIf="showPegi">
+        <div class="col-sm-4">
+          <div class="col-sm-*">
+            show
+            <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+              <option value="100">100</option>
+              <option value="200">200</option>
+              <option value="300">300</option>
+              <option value={{record}}>All</option>
+            </select> entries
+          </div>
+        </div>
+        <div class="col-sm-8 text-right">
+          <pagination-controls id="listing_pagination" [maxSize]="100" [directionLinks]="true"
+            (pageChange)="currentPage = $event" class="text-end"
+            (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

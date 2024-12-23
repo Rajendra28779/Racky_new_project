@@ -1,0 +1,142 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+    <div class="row justify-content-between">
+      <div class="col-lg-4">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a routerLink="/application/temporarycode" routerLinkActive="active" class="nav-link" style="color: #1f723f;">Temporary Override Code</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/application/temporarycodeview" routerLinkActive="" class="nav-link active">View</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="content-box">
+    <div class="row">
+      <div class="col-lg-4 col-xxl-4">
+        <div class="mb-xl-3">
+          <label class="control-label">State Name<span
+            class="text-danger">*</span></label>
+          <select class="form-select" name="stateId" id="stateId" (change)="onChangeState($event.target.value)">
+            <option value="" selected disabled>Select State</option>
+            <ng-container *ngFor="let item of stateList">
+              <option value={{item.stateCode}}>{{item.stateName}}</option>
+            </ng-container>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-xxl-4">
+        <div class="mb-xl-3">
+          <label class="control-label">District Name<span class="text-danger">*</span></label>
+          <select class="form-select" name="districtId" id="districtId" (change)="onChangeDistrict($event.target.value)">
+            <option value="">Select All</option>
+            <ng-container *ngFor="let item of districtList">
+              <option value={{item.districtcode}}>{{item.districtname}}</option>
+            </ng-container>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-xxl-4">
+        <div class="mb-xl-3">
+          <label class="control-label">Hospital Name<span class="text-danger">*</span></label>
+          <ng-multiselect-dropdown #multiSelect [placeholder]="hosPlaceHolder" [settings]="settingHospital" [data]="hospitalList" id="districtCode" (onSelect)="onHosSelect($event)" (onDeSelect)="onHosDeSelect($event)" (onSelectAll)="onSelectAllHos($event)" (onDeSelectAll)="onDeSelectAllHos($event)"
+                [(ngModel)]="selectedHospital">
+          </ng-multiselect-dropdown>
+        </div>
+      </div>
+      <div class="col-lg-6 col-xxl-6">
+        <div class="mb-xl-3">
+          <label class="control-label"></label>
+          <div class="d-grid gap-2 d-md-flex input-group">
+            <button type="button" class="btn btn-success" (click)="search()">Search</button>
+            <button type="button" class="btn btn-primary" style="margin-left:5px;" (click)="reset()">Reset</button>&nbsp;
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" style="margin-top: 10px;margin-bottom: 10px;" *ngIf="temporaryOverrideList.length!=0">
+      <div class="col-lg-3 col-xxl-3" style="margin-top: 2ch;">
+        <div class="col-sm-*" *ngIf="showPegi">
+          show
+          <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+            <option value="100" selected>100</option>
+            <option value="250">250</option>
+            <option value="500">500</option>
+            <option value="1000">1000</option>
+            <option value="{{allRecordsSize}}">ALL</option>
+          </select> entries
+        </div>
+      </div>
+      <div class="col-lg-3 col-xxl-3" style="margin-top: 2ch;">
+        <b>Total No Of Record : {{temporaryOverrideList.length}}</b>
+      </div>
+      <div class="col-lg-2 col-xxl-2"></div>
+      <div class="col-lg-4 col-xxl-4" style="text-align: right">
+        <div class="input-group">
+          <input type="text" id="txtsearchDate" class="form-control" autocomplete="off" placeholder="Search" name="textSearch" [(ngModel)]="textSearch">
+        </div>
+      </div>
+    </div>
+    <div class="form-cointainer" *ngIf="temporaryOverrideList.length!=0">
+      <div class="main-tab">
+        <div class="row justify-content-between">
+          <div class="table-responsive">
+            <table class="table table-striped" mb-0>
+              <caption></caption>
+              <thead>
+              <tr>
+                <th>Sl No</th>
+                <th>State</th>
+                <th>District</th>
+                <th>Hospital</th>
+                <th>Override Code</th>
+                <th>Valid From</th>
+                <th>Valid To</th>
+                <th>Action</th>
+              </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of temporaryOverrideList | filter:textSearch | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage}; index as i">
+                  <td *ngIf="currentPage==1">{{(i+1)}}</td>
+                  <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+ i+1}}</td>
+                  <td>{{item.stateName}}</td>
+                  <td>{{item.districtName}}</td>
+                  <td>{{item.hospitalName}}</td>
+                  <td>{{item.hosOverrideCode}}</td>
+                  <td>{{item.fromDate}}</td>
+                  <td>{{item.toDate}}</td>
+                  <td><a class="btn btn-outline-danger btn-sm me-1" (click)="removeCode(item)">
+                        <i class="bi bi-trash"></i>
+                      </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top: 20px;" *ngIf="showPegi">
+      <div class="col-sm-6">
+        <div class="col-sm-*">
+          show
+          <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+            <option value="100" selected>100</option>
+            <option value="250">250</option>
+            <option value="500">500</option>
+            <option value="1000">1000</option>
+            <option value="{{temporaryOverrideList.length}}">ALL</option>
+          </select> entries
+        </div>
+      </div>
+      <div class="col-sm-6 text-right">
+        <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true" (pageChange)="currentPage = $event" (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+      </div>
+    </div>
+</div>
+</div>

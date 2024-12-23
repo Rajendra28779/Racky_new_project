@@ -1,0 +1,217 @@
+<div class="content">
+    <div class="container-fluid p-0">
+        <div class="form-cointainer">
+            <div class="main-tab">
+                <div class="row justify-content-between">
+                    <div class="col-lg-12 col-xl-12 mb-3">
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a routerLink="/application/patientdetails" routerLinkActive="active"
+                                    class="nav-link active">Patient
+                                    Referral Details</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="content-box">
+                        <form [formGroup]="approveForm">
+                            <div class="row">
+                                <div class="col-md-12 col-12">
+                                    <div class="row mb-3">
+                                        <div class="col-xl-4 col-lg-4">
+                                            <p class="small text-muted mb-2">NFSA/SFSSCard or GJAY CardNo:</p>
+                                            <h6> {{item?.urn}} </h6>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-4 border-start mb-3">
+                                            <p class="small text-muted mb-2">Patient Name:</p>
+                                            <h6>{{item?.patientName}}</h6>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-4 border-start mb-3">
+                                            <p class="small text-muted mb-2">Age:</p>
+                                            <h6>{{item?.age}}</h6>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-4">
+                                            <p class="small text-muted mb-2">Gender:</p>
+                                            <h6>{{item?.gender}}</h6>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-4 border-start">
+                                            <p class="small text-muted mb-2">Regd.No:</p>
+                                            <h6>{{item?.regdno}}</h6>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-4 border-start">
+                                            <p class="small text-muted mb-2">Date:</p>
+                                            <h6> {{item?.referralDate | date:'dd-MMM-yy'}}</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card shadow-sm mt-3 mt-xl-4 mb-3">
+                                <div class="col-md-12 col-12">
+                                    <div class="card-header">
+                                        <h5 class="mb-0">REFERRAL FROM </h5>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-12 px-3">
+                                    <div class="row">
+                                        <div class="col-xl-3 col-lg-3">
+                                            <p class="small text-muted mb-2 mt-3">Name of Hospital:</p>
+                                            <h6 class="mb-3"> {{item?.fromHospitalName}} </h6>
+                                        </div>
+                                        <div class="col-xl-3 col-lg-3 border-start">
+                                            <p class="small text-muted mb-2 mt-3">Name of Dr:</p>
+                                            <h6 class="mb-3"> {{item?.fromDrName}} </h6>
+                                        </div>
+                                        <div class="col-xl-3 col-lg-3 border-start">
+                                            <p class="small text-muted mb-2 mt-3">Department:</p>
+                                            <h6 class="mb-3"> {{item?.fromDeptName}} </h6>
+                                        </div>
+                                        <div class="col-xl-3 col-lg-3 border-start">
+                                            <p class="small text-muted mb-2 mt-3">Date:</p>
+                                            <h6 class="mb-3"> {{item?.fromReferralDate | date:'dd-MMM-yy'}} </h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-12">
+                                <div class="card shadow-sm mt-3 mt-xl-4 mb-3">
+                                    <div class="col-md-12 col-12">
+                                        <div class="card-header">
+                                            <h5 class="mb-0">REFERRAL TO </h5>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-12 px-3">
+                                        <div class="row">
+
+                                            <div class="col-xl-2 col-lg-2">
+                                                <p class="small text-muted mb-2 mt-3">State Name:</p>
+                                                <h6 class="mb-3"> {{item?.stateId}} </h6>
+                                            </div>
+                                            <div class="col-xl-2 col-lg-2 border-start">
+                                                <p class="small text-muted mb-2 mt-3">District Name:</p>
+                                                <h6 class="mb-3"> {{item?.districtId}} </h6>
+                                            </div>
+                                            <div class="col-xl-3 col-lg-3 border-start">
+                                                <p class="small text-muted mb-2 mt-3">Hospital Name:</p>
+                                                <h6 class="mb-3"> {{item?.toHospital}} </h6>
+                                            </div>
+                                            <div class="col-xl-3 col-lg-3 border-start">
+                                                <p class="small text-muted mb-2 mt-3">Reason for Referring:</p>
+                                                <h6 class="mb-3"> {{item?.reasonForRefer}} </h6>
+                                            </div>
+                                            <div class="col-xl-2 col-lg-2 border-start">
+                                                <p class="small text-muted mb-2 mt-3">Date:</p>
+                                                <h6 class="mb-3"> {{item?.toReferralDate | date:'dd-MMM-yy'}} </h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content-box mt-3">
+                                <div class="row mb-3">
+                                    <label class="col-sm-4 control-label">Provisional / Final Diagnosis:</label>
+                                    <div class="col-sm-8">
+                                        {{item?.diagnosis}}
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label class="col-sm-4 control-label">Brief History & Details of the
+                                        Patient:</label>
+                                    <div class="col-sm-8">
+                                        {{item?.briefHistory}}
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label class="col-sm-4 control-label">Treatment Given:</label>
+                                    <div class="col-sm-8">
+                                        {{item?.treatmentGiven}}
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label class="col-sm-4 control-label">Investigation Remark:</label>
+                                    <div class="col-sm-8">
+                                        {{item?.investigationRemark}}
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label class="col-sm-4 control-label">Treatment Advised:</label>
+                                    <div class="col-sm-8">
+                                        {{item?.treatmentAdvised}}
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label class="col-sm-4 control-label">Document:</label>
+                                    <div class="col-sm-8" *ngIf="item.pdfName!==null">
+                                        <a  (click)="downloadAction(item.pdfName,item.hospitalCode,item.ctrOn)">
+                                            <img src="./assets/img/pdf.png" alt="Admission Slip" class="mb-2" [width]="50">
+                                        </a>
+                                    </div>
+                                </div>
+                                <ng-container *ngIf="viewStatus">
+                                <div class="row mb-3">
+                                    <label class="col-sm-4 control-label">Remark:</label>
+                                    <div class="col-sm-8">
+                                        {{item?.remarks}}
+                                    </div>
+                                </div>
+                                </ng-container>
+
+                            </div>
+
+                            <div class="mt-3">
+                                <div class="card shadow-sm mt-3 mt-xl-4 mb-3">
+                                    <div class="col-md-12 col-12">
+                                        <div class="card-header">
+                                            <h5 class="mb-0">Vitals at the time of Referring </h5>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-xl-12 p-3">
+                                        <div class="table-responsive" *ngIf=showVital>
+                                            <table class="table table-striped text-center border mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Vitals</th>
+                                                        <th>Value</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let v of vitalValue">
+                                                        <td>{{v.value}} </td>
+                                                        <td>{{v.vital}} </td>
+                                                    </tr>
+                                                    <tr  *ngIf="dataNotAvailable">
+                                                        <td colspan="12">
+                                                            <p class="mb-0 text-center text-danger fw-bold">NO DATA FOUND!!</p>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12" *ngIf="isTextVisible">
+                                <label class="col-form-label">Description <span class="text-danger">
+                                        *</span></label>
+                                <textarea class="form-control" rows="4" id="finalRemarksId"
+                                    placeholder="Enter Description" formControlName="remarks" #myInput
+                                    [maxLength]="maxChars" (keypress)="keyPress($event)"></textarea>
+                                <span class="text-danger small">Characters Remaining:
+                                    {{maxChars - myInput.value.length}}</span>
+                            </div>
+                            <div class="col-lg-12 mt-3" *ngIf="isButtonVisible">
+                                <div class="d-grid gap-2 d-md-flex">
+                                    <button class="btn btn-success" value="approve" (click)="Submit(1)">Authenticate</button>
+                                    <button class="btn  btn-danger" value="reject" (click)="Submit(2)">Not Authenticate</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

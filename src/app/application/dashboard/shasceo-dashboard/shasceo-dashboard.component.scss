@@ -1,0 +1,399 @@
+
+.date-container {
+  display: flex;
+  align-items: center;
+}
+
+.date-container label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.dashboard {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 10px;
+}
+
+.card-container {
+  display: flex;
+  flex-direction: column; /* Stacks the cards vertically */
+  align-items: center;    /* Center the cards horizontally */
+  gap: 15px;              /* Adds space between the cards */
+  max-width: 220px;       /* Limits the width of the container */
+  margin: 0 auto;         /* Centers the container on the page */
+  padding: 20px;          /* Adds space inside the container */
+}
+
+.card {
+  flex: 1;
+  min-width: 200px;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.card h4 {
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.card p {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.table-container {
+  margin: 10px;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+}
+
+thead {
+  background-color: #f4e1c4;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 12px 15px;
+  text-align: center;
+}
+
+th {
+  background-color: #f8d568;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+td {
+  font-size: 14px;
+}
+
+.table-header {
+  background-color: #f8c86e;
+  text-align: center;
+  font-size: 16px;
+  padding: 15px;
+  font-weight: bold;
+  border: none;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #fff;
+}
+
+tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+@media (max-width: 600px) {
+  table, thead, tbody, th, td, tr {
+    display: block;
+  }
+
+  tr {
+    margin-bottom: 15px;
+  }
+
+  th {
+    background-color: #f8d568;
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  td {
+    padding: 10px;
+    font-size: 14px;
+    text-align: left;
+  }
+
+  .report-container {
+    font-family: Arial, sans-serif;
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  h2 {
+    text-align: center;
+    color: #333;
+  }
+
+  .section {
+    margin-bottom: 20px;
+  }
+
+  h3 {
+    background-color: #f4a261;
+    color: white;
+    padding: 10px;
+    text-align: left;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0;
+  }
+
+  thead {
+    background-color: #264653;
+    color: white;
+  }
+
+  th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+  }
+
+  tbody tr:nth-child(odd) {
+    background-color: #f0e5d8;
+  }
+
+  tbody tr:nth-child(even) {
+    background-color: #fff;
+  }
+
+  .total-package table thead {
+    background-color: #2a9d8f;
+  }
+
+  .top-speciality table thead {
+    background-color: #e76f51;
+  }
+
+  .sna-wise-claim table thead {
+    background-color: #ff7f0e;
+  }
+
+  .top-procedures table thead {
+    background-color: #bc5090;
+  }
+
+  tbody tr:hover {
+    background-color: #f1c40f;
+  }
+
+  @media (max-width: 768px) {
+    table, thead, tbody, th, td, tr {
+      display: block;
+    }
+
+    tr {
+      margin-bottom: 15px;
+    }
+
+    td {
+      padding: 8px;
+      text-align: left;
+    }
+
+    h3 {
+      font-size: 1.1em;
+    }
+  }
+
+}
+
+
+
+.number-circle{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 39px;
+    color: #404040;
+
+    }
+.number-light {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 28px;
+    color: #404040;
+}
+
+
+.card-header h6 {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 23px;
+    color: #fff;
+    margin: 0;
+}
+
+.progress {
+    height: 4px;
+    background: transparent;
+    border-radius: 0;
+}
+
+.card {
+    background: #FFFFFF;
+    border: 1px solid #E0E0E0;
+    box-shadow: 2px 0px 24px rgba(163, 163, 163, 0.25);
+    border-radius: 6px;
+}
+
+
+.bg-successnew {
+    background-color: #68a990;
+}
+
+
+
+.border-right-0 {
+    border-right: none;
+}
+
+.st-report .card-title {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 20px;
+    color: #404040;
+}
+
+.card-body {
+    padding: 10px 20px;
+}
+
+.card-group .bg-secondary {
+    background-color: #ecf0fb !important;
+    float: left;
+    width: 100%;
+}
+
+.border-right {
+    position: relative;
+}
+
+.font-w {
+    font-weight: 500;
+    color: #0B744C;
+}
+
+.border-right::after {
+    content: '';
+    border-right: 1px solid #DEE3F3;
+    position: absolute;
+    top: 0;
+    width: 1px;
+    height: 100%;
+    right: -12%;
+}
+
+.card-header .nm-tx {
+
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 28px;
+    padding-left: 15px;
+}
+
+.font-big {
+    font-weight: 400;
+    font-size: 20px;
+}
+
+.card-text .small-l{
+    opacity: 0.7;
+}
+
+.p-gap{
+    padding: 0.5rem 2rem;
+}
+
+.card-group .r-number {
+
+    font-style: normal;
+    font-weight: 500;
+    font-size: 32px;
+    padding: 0.5rem 2rem;
+    color: #0B744C;
+
+}
+
+.card-group .number {
+
+    font-style: normal;
+    font-weight: 500;
+    font-size: 26px;
+    padding: 1rem;
+    color: #0B744C;
+}
+
+.card-body h4 .number {
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 28px;
+}
+
+.card-group .card-text {
+
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    color: #404040;
+}
+
+
+.card-group .card-text .sm-txt {
+    float: left;
+    width: 100%;
+}
+
+.card-group {
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+.card-group .card {
+
+    border-radius: 0;
+    box-shadow: none;
+    padding: 1em;
+    border-top: none;
+    border-left: none;
+    margin: 0;
+
+}
+
+.text-warning {
+    color: #ECA00D !important;
+}
+
+.card-header {
+    border-bottom: none;
+    color: #404040;
+    padding: 15px 10px 15px 30px;
+}
+
+.card-header h5 {
+    text-transform: capitalize;
+    font-size: 18px;
+    font-weight: 400;
+    margin: 0;
+}
+
+.card-header h4 {
+    font-size: 1.3rem;
+    font-weight: 400;
+    margin: 0;
+}
+
+

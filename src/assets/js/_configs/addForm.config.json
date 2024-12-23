@@ -1,0 +1,70 @@
+[
+      {
+        "pagetitle":"Add Form Config",
+        "tabList":[
+         
+                  
+                   {"tabName":"Add","tabUrl":"","tabClass":"active"}
+                  ],
+        "utils":[
+          {"utilName":"mandatory"},
+          {"utilName":"back"}
+         
+          ],
+        "messages":{
+          "successMsg":"Data saved successfully",
+          "errorMsg":"Error in database",
+          "warningtype":"print",
+          "sectionname":"please select section name",
+          "gridmsg":"Select Form Grid type",
+          "generateformSuccess":"Form Generated Successfully",
+          "msgCtrlLabel":"Control label can not be blank",
+          "msgCtrlTblName":"Table column can not be blank",
+           "msgCtrlTblType":"Select column type",
+          "msgCtrlTblLength":"Enter column type length",
+          "msgCtrlDependantParent":"Select Other Parent Field",
+          "msgCtrlDependantvalue":"Select Other Parent Field value",
+          "msgBlankspace":"Space not allowed in table column name",
+           "msgctrlFileMaxLength":"Enter file max length",
+          "msgctrlFileSizeType":"Select File Size",
+            "msgctrlFileType":"Select File type",
+          "msgctrlTablename":"Table name can not be blank",
+          "msgradioAddmoreviewtype":"Select Addmore view type",
+          "msgAddcontrol":"Add control in Addmore Section",
+           "msgCtrlTblDefault":"Select column default value",
+           "msgIntDefault":"INT datatype can not accept null as default value",
+           "msgOtherDefault":"Only INT data type accept 0 as default value, Please change",
+           "msgctrlLabelData":"Labeldata can not be blank",
+            "msgrowData":"Add Row Data",
+            "msgctrlRowdataSlNo":"Row data sl no can not be blank",
+            "msgctrlRowdataName":"Row data name can not be blank",
+            "msgStaticOption":"Add Static options",
+            "msgBinddatatype":"Select data bind type",
+             "msgSelectfield":"Select field based on dependdant",
+             "msgctrlCCDTextColumnName":"Enter cascading text coloumn name",
+             "msgcstableName":"Enter cascading table name",
+            "msgctrlCCDValueColumnName":"Enter cascading value coloumn name",
+            "msgtgchildColumn":"Enter tag child column",
+            "msgctrlCCStaticFieldValue":"Select field value",
+             "msgctrlCCStaticValue" :"Enter static option value",
+             "msgctrlCCStaticName":"Enter static option name",
+             "msgctrlCalcFieldtype":"Select calculation field",
+              "msgctrlCalcValue":"Select calculation field value",
+              "msgCalulationfields":"Add calculation options",
+              "msgctrlSelApiMethod":"Select API method",
+              "msgctrlTxtApiUrl":"Enter API URL",
+              "msgctrlApiSelType":"Select API data type",
+              "msgctrlApiSelEventType":"Select API Event",
+              "msgctrlinputParams":"Add API Input params",
+              "msgctrloutputParams":"Add API Output params",
+              "msgctrlinputparamType":"Select Input param Type",
+              "msgctrlinputparamValue":"Select or enter Input param value",
+              "msgctrlinputparamKey":"Enter enter input param key",
+              "msgctrlOutparamKey":"Select OutPut param key",
+               "msgctrlOutparams":"Select OutPut param type",
+                "msgctrlOutparamVal":"Enter OutPut param value"
+        }
+      }
+    ]
+
+

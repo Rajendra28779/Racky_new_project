@@ -1,0 +1,24 @@
+[
+      {
+        "pagetitle":"View Manage Form",
+        "tabList":[{"tabName":"Add","tabUrl":"../addManageform"},
+          {"tabName":"View","tabUrl":"../viewManageform","tabClass":"active"}],
+        "utils":[
+         
+          {"utilName":"search"},
+          {"utilName":"print"},
+          {"utilName":"publish"},
+          {"utilName":"unpublish"},
+          {"utilName":"download"}
+         
+          ],
+        "messages":[
+          {"successMsg":"Date saved successfully"},
+          {"errorMsg":"Error in database"},
+          {"warningtype":"print"}
+         
+        ]
+      }
+    ]
+
+

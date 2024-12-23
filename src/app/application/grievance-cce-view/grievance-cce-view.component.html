@@ -1,0 +1,382 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+      <div class="row justify-content-between">
+          <div class="col-lg-4">
+              <ul class="nav nav-tabs">
+                  <li class="nav-item">
+                      <a routerLink="/application/grievanceCCE" routerLinkActive="active" class="nav-link">Call Center
+                          Executive</a>
+                  </li>
+                  <li class="nav-item">
+                    <a routerLink="/application/grievanceCCEResettlement" routerLinkActive="active" class="nav-link">Query</a>
+                  </li>
+                  <li class="nav-item">
+                      <a routerLink="/application/grievanceCCEView" routerLinkActive="active"
+                          class="nav-link active">View</a>
+                  </li>
+                  <li class="nav-item">
+                    <a routerLink="/application/goInitialTakeAction" routerLinkActive="active"
+                        class="nav-link">Initial Take Action</a>
+                  </li>
+              </ul>
+          </div>
+      </div>
+  </div>
+
+  <div class="content-box mt-3">
+      <div class="col-xxl-10">
+          <div class="row">
+              <div class="col-lg-4 col-xxl-4">
+                  <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                      <label class="control-label mb-2">From Date</label><span class="text-danger">*</span>
+                      <div class="input-group">
+                          <input type="text" class="form-control border-end-0 datepicker" id="date1" name="fromDate">
+                          <label class="input-group-text bg-transparent border-start-0" for="datepicker1"><i
+                                  class="iconbsky-calendar"></i> </label>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-lg-4 col-xxl-4">
+                  <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                      <label class="control-label mb-2">To Date</label><span class="text-danger">*</span>
+                      <div class="input-group">
+                          <input type="text" class="form-control border-end-0 datepicker" id="date2" name="toDate">
+                          <label class="input-group-text bg-transparent border-start-0" for="datepicker2"><i
+                                  class="iconbsky-calendar"></i> </label>
+                      </div>
+                  </div>
+              </div>
+              <!-- <div class="col-lg-2 col-xxl-2">
+                  <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                      <label class="control-label mb-2">Last Action By</label>
+                      <select class="form-select" name="actionBy" id="actionBy">
+                          <option value="A" selected>Select</option>
+                          <option value="D">CCE</option>
+                          <option value="C">DC</option>
+                          <option value="B">DGO</option>
+                      </select>
+                  </div>
+              </div>
+              <div class="col-lg-2 col-xxl-2">
+                  <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                      <label class="control-label mb-2">Pending At</label>
+                      <select class="form-select" name="pendingAt" id="pendingAt">
+                          <option value="A" selected>Select</option>
+                          <option value="B">DC</option>
+                          <option value="C">DGO</option>
+                          <option value="D">GO</option>
+                      </select>
+                  </div>
+              </div> -->
+
+              <div class="col-lg-4 col-xxl-4">
+                  <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                      <label class="control-label mb-2">Status</label>
+                      <select class="form-select" name="status" id="status">
+                          <option value="A" selected>Select</option>
+                          <option value="Q">Query</option>
+                          <option value="Y">Action Taken</option>
+                      </select>
+                  </div>
+              </div>
+
+          </div>
+          <div class="row">
+              <div class="col-md-4">
+                  <label class="control-label">State Name</label>
+                  <select class="form-select" name="stateId" id="stateId"
+                      (change)="OnChangeState($event.target.value)">
+                      <option value="" selected>Select State</option>
+                      <ng-container *ngFor="let item of stateList">
+                          <option value={{item.stateCode}}>{{item.stateName}}</option>
+                      </ng-container>
+                  </select>
+
+              </div>
+              <!--
+                Date         :-  05-09-2023
+                Modified By  :-  Rajendra prasad sahoo
+                purpose      :-  Adding MultiSelect Dropdown
+              -->
+              <div class="col-md-4">
+                  <label class="control-label">District Name</label>
+                  <!-- <select class="form-select" name="districtId" id="districtId"
+                      (change)="OnChangeDistrict($event.target.value)">
+                      <option value="" selected>Select District</option>
+                      <ng-container *ngFor="let item of districtList">
+                          <option value={{item.districtcode}}>{{item.districtname}}</option>
+                      </ng-container>
+                  </select> -->
+                  <div>
+                    <ng-multiselect-dropdown #multiSelect [placeholder]="placeholderdistrict" [data]="districtlistdataformultidropdown" [settings]="dropdownSettingsfrdistrict" id="DistrictCode" (onSelect)=onItemSelectfrdistrict($event) (onDeSelect)="onItemDeSelectfrdistrict($event)"
+                    [(ngModel)]="selectedItems"  (onSelectAll)="onSelectAllfrdistrict($event)" (onDeSelectAll)="onDeSelectAllfordistrict($event)">
+                    </ng-multiselect-dropdown>
+                  </div>
+
+
+              </div>
+              <div class="col-md-4">
+                  <label class="control-label">Hospital Name</label>
+                  <!-- <select class="form-select" name="hospital" id="hospital">
+                      <option value="" selected>Select Hospital</option>
+                      <ng-container *ngFor="let item of hospitalList">
+                          <option value={{item.hospitalCode}}>{{item.hospitalName}}</option>
+                      </ng-container>
+                  </select> -->
+                  <div>
+                    <ng-multiselect-dropdown #multiSelect [placeholder]="placeholderdistricthospital" [data]="hospitaldatadataformultidropdown" [settings]="dropdownSettingsfrhospitalist" id="HospitalCode" (onSelect)=onItemSelectfrhospital($event) (onDeSelect)="onItemDeSelectfrhospital($event)"
+                    [(ngModel)]="selectedItems1"  (onSelectAll)="onSelectAllfrhospital($event)" (onDeSelectAll)="onDeSelectAllforhospital($event)">
+                    </ng-multiselect-dropdown>
+                  </div>
+
+              </div>
+
+              <!-- <div class="mt-2">
+                  <div class="d-grid gap-2 d-md-flex">
+                      <button type="submit" class="btn btn-success" (click)="Search()">Search</button>
+                      <button type="reset" class="btn btn-secondary" (click)="ResetField()">Reset</button>
+
+                  </div>
+              </div> -->
+
+          </div>
+          <div class="col-lg-12 mt-3">
+              <div class="d-grid gap-2 d-md-flex">
+                  <button type="submit" class="btn btn-success" (click)="onSearch()">Search</button>
+                  <button type="reset" class="btn btn-secondary" (click)="resetField()">Reset</button>
+              </div>
+          </div>
+
+      </div>
+  </div>
+
+  <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+      <div class="col-lg-4 col-xxl-4">
+          <div class="form-group">
+              <button class="btn btn-outline-success btn-sm me-1" type="submit" (click)="downloadList()">
+                  <i class="bi bi-download"></i>
+              </button>
+          </div>
+      </div>
+      <div class="col-lg-4 col-xxl-4"></div>
+      <div class="col-lg-4 col-xxl-4">
+          <div class="input-group">
+              <input type="text" id="txtsearchDate" class="form-control" placeholder="Search" name="txtsearchDate"
+                  autocomplete="off" [(ngModel)]="txtsearchDate">
+          </div>
+      </div>
+  </div>
+
+  <div class="row mt-3">
+      <div class="table-responsive">
+          <table class="table">
+              <thead>
+                  <tr>
+                      <th width="50">Sl No. </th>
+                      <th width="130">URN</th>
+                      <th width="150">Patient Name</th>
+                      <th width="150">Active Status</th>
+                      <th width="150">Call Response</th>
+                      <th width="150">Hospital Name</th>
+                      <th width="150">CCE Remarks</th>
+                      <th width="150">
+                        <div> DC Remarks </div>
+                        <div class="th-small"> Document </div>
+                    </th>
+                    <th width="150">
+                        <div> DGO Remarks </div>
+                        <div class="th-small"> Document </div>
+                    </th>
+                    <th width="150">
+                        <div> DGO Query Remarks </div>
+                        <div class="th-small"> Document </div>
+                    </th>
+                      <th width="150">GO Status</th>
+                      <th width="150">GO Remarks</th>
+                      <th width="150">GO Query Remark</th>
+                      <th width="150">Date of Admission</th>
+                      <!-- <th width="150">Alloted Date</th> -->
+                      <th width="170">Total Amount Blocked (₹)</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngIf="!goView?.length">
+                      <td colspan="17" class="text-center"><strong class="text-danger">No data found</strong></td>
+                  </tr>
+                  <ng-container
+                      *ngFor="let item of goView | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};index as i">
+                      <tr [ngClass]="{'query' : item.goQueryCount == 1 && item.dgoReplay == 'N'}">
+                          <td class="th-small" *ngIf="currentPage==1">{{i+1}}</td>
+                          <td class="th-small" *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+i+1}}</td>
+                          <td>{{item.urn}}</td>
+                          <td>{{item.patientName}}</td>
+                          <td>
+                              <!-- <ng-container *ngIf="item.status == '1'">
+                              Yes
+                          </ng-container>
+                          <ng-container *ngIf="item.status == '2'">
+                              No
+                          </ng-container>
+                          <ng-container *ngIf="item.status == '3'">
+                              Not Connected
+                          </ng-container> -->
+                              {{item.status}}
+                          </td>
+                          <td>{{item.categoryName}}</td>
+                          <td>{{item.hospitalName}}</td>
+                          <td>{{item.executiveRemarks}}</td>
+                          <td class="text-center">
+                            <div class="popover__wrapper">
+                                <div class="mt-0" title="DC Remarks">
+                                    <div class="color-hed bg-fa"> <i class="bi bi-info-circle"></i> </div>
+                                </div>
+                                <div class="popover__content">
+                                    <h4 class="border-bottom mb-2 top-head"> DC Remarks </h4>
+                                    <div class="col-xxl-12 col-xl-12 col-lg-12">
+                                        <div class="hidtbl-th p-1 m-0 gap-bt">
+                                            <p class="text-danger" *ngIf="item.dcRemarks==null">Remarks Not Available</p>
+                                            <p>{{item.dcRemarks}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-2">
+                                <div class="col-lg-4 col-xxl-4" *ngIf="item.dcUploadPdfPath">
+                                    <div class="mb-xl-3">
+                                        <button title="PDF File" class="btn btn-outline-success btn-sm"
+                                            (click)="downloadAction($event, item.dcUploadPdfPath, item.hospitalCode, item.admissionDate,'')">
+                                            <i class="bi bi-file-earmark-pdf"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-xxl-4" *ngIf="item.dcUploadAudio">
+                                    <div class="mb-xl-3">
+                                        <a target="_blank" title="Audio File"
+                                            class="btn btn-outline-success btn-sm"
+                                            (click)="downloadAction($event, item.dcUploadAudio, item.hospitalCode,item.admissionDate,'')">
+                                            <i class="bi bi-music-note-beamed"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-xxl-4" *ngIf="item.dcUploadVideo">
+                                    <div class="mb-xl-3">
+                                        <button title="Video File" class="btn btn-outline-success btn-sm"
+                                            (click)="downloadAction($event, item.dcUploadVideo, item.hospitalCode, item.admissionDate,'')">
+                                            <i class="bi bi-camera-video"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </td>
+                        <td class="text-center" style="text-align:center;">
+                          <div class="popover__wrapper">
+                              <div class="mt-0" title="DGO Remarks">
+                                  <div class="color-hed bg-fa"> <i class="bi bi-info-circle"></i> </div>
+                              </div>
+                              <div class="popover__content">
+                                  <h4 class="border-bottom mb-2 top-head"> DGO Remarks </h4>
+                                  <div class="col-xxl-12 col-xl-12 col-lg-12">
+                                      <div class="hidtbl-th p-1 m-0 gap-bt">
+                                          <p class="text-danger" *ngIf="item.dgoRemarks==null">Remarks Not Available</p>
+                                          <p>{{item.dgoRemarks}}</p>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+
+                          <div class="row mt-2">
+                              <div class="col-lg-4 col-xxl-4" *ngIf="item.dgoDoc">
+                                  <div class="mb-xl-3">
+                                      <button title="PDF File" class="btn btn-outline-success btn-sm"
+                                          (click)="downloadAction($event, item.dgoDoc, item.hospitalCode, item.admissionDate,'')">
+                                          <i class="bi bi-file-earmark-pdf"></i>
+                                      </button>
+                                  </div>
+                              </div>
+                          </div>
+                      </td>
+
+                      <td class="text-center">
+                          <div class="popover__wrapper">
+                              <div class="mt-0" title="DGO Query Remarks">
+                                  <div class="color-hed bg-fa"> <i class="bi bi-info-circle"></i> </div>
+                              </div>
+                              <div class="popover__content">
+                                  <h4 class="border-bottom mb-2 top-head"> DGO Query Remarks </h4>
+                                  <div class="col-xxl-12 col-xl-12 col-lg-12">
+                                      <div class="hidtbl-th p-1 m-0 gap-bt">
+                                        <p class="text-danger" *ngIf="item.dgoQueryRemarks==null">Remarks Not Available</p>
+                                        <p>{{item.dgoQueryRemarks}}</p>
+                                          <!-- <p class="text-danger" *ngIf="item.dgoRemarks==null">Remarks Not Available</p>
+                                          <p>{{item.dgoQueryRemarks}}</p> -->
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+
+                          <div class="row mt-2">
+                              <div class="col-lg-4 col-xxl-4" *ngIf="item.dgoQueryDoc">
+                                  <div class="mb-xl-3">
+                                      <button title="PDF File" class="btn btn-outline-success btn-sm"
+                                          (click)="downloadAction($event, item.dgoQueryDoc, item.hospitalCode, item.admissionDate,'')">
+                                          <i class="bi bi-file-earmark-pdf"></i>
+                                      </button>
+                                  </div>
+                              </div>
+                          </div>
+                      </td>
+                          <td>{{item.goStatus}}</td>
+                          <td>{{item.goRemarks}}
+                          <td>{{item.goQueryRemarks}}</td>
+                          <td>{{item.admissionDate | date:'dd-MMM-yyyy'}}</td>
+                          <!-- <td>{{item.allottedDate | date:'dd/MM/yyyy'}}</td> -->
+                          <td>
+                              <ng-container *ngIf="item.totalAmoutClaimed">
+                                  {{item.totalAmoutClaimed | currency:'':''}}
+                              </ng-container>
+                          </td>
+                      </tr>
+                  </ng-container>
+              </tbody>
+          </table>
+      </div>
+      <div class="row" style="margin-top: 20px;" *ngIf="showPegi">
+          <div class="col-sm-2">
+              <div class="col-sm-*">
+                  show
+                  <select id="pageItem" name="pageItem" class="custom-select-sm" (change)="pageItemChange()">
+                      <!-- <option value="5">5</option> -->
+                      <option value="100">100</option>
+                      <option value="200">200</option>
+                      <option value="250">250</option>
+                      <option value="500">500</option>
+                      <option value="{{size}}">All</option>
+                  </select> entries
+              </div>
+          </div>
+          <div class="col-sm-10 text-end">
+              <ul style="display: inline;" class="text-end">
+                  <li (click)="selectedIndex!=1 && prev()" style="display: inline;"
+                      [ngClass]="{'lst':selectedIndex!=1}">
+                      <span>&lt;&lt;&nbsp;Previous&nbsp;</span>
+                  </li>
+                  <ng-container *ngFor="let element of pgList">
+                      <li (click)="selectedIndex!=element.id && paginate(element)"
+                          style="display: inline; padding: 3px; text-align: center; cursor: pointer;"
+                          [ngClass]="{'pgl':selectedIndex==element.id}">
+                          &nbsp;{{element.id}}&nbsp;
+                      </li>
+                  </ng-container>
+                  <li (click)="selectedIndex!=pgList?.length && next()" style="display: inline;"
+                      [ngClass]="{'lst':selectedIndex!=pgList?.length}">
+                      <span>&nbsp;Next&nbsp;&gt;&gt;</span>
+                  </li>
+              </ul>
+              <!-- <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true"
+                  (pageChange)="currentPage = $event"></pagination-controls> -->
+          </div>
+      </div>
+  </div>
+</div>

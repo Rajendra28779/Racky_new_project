@@ -1,0 +1,243 @@
+<!--
+@Project : GJAY Frontend
+@Author : Sambit Kumar Pradhan
+@Created On : 22/06/2023 - 1:03 PM
+-->
+
+<div class="report-class">
+  <div class="form-cointainer">
+
+    <div class="main-tab">
+      <div class="row justify-content-between">
+        <div class="col-lg-4">
+          <ul class="nav nav-tabs">
+            <li class="nav-item">
+              <a routerLink="/application/schedulerReportDetails" routerLinkActive="active" class="nav-link active" style="color: #1f723f;">Scheduler Report Details</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-box mt-3">
+      <div class="col-xxl-12">
+        <div class="row">
+
+          <div class="col-xl">
+            <div class="d-flex align-items-center">
+              <div>
+                <p class="small text-muted mb-0">Service Name</p>
+                <h6 class="mb-0"><i class="bi bi-receipt small"></i> {{reportData?.apiName}} </h6>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl border-start">
+            <div class="d-flex align-items-center">
+              <div>
+                <p class="small text-muted mb-0">Service Call Date</p>
+                <h6 class="mb-0 "><i class="bi bi-calendar-date small"></i> {{reportData?.createdOn}} </h6>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl border-start">
+            <div class="d-flex align-items-center">
+              <div>
+                <p class="small text-muted mb-0">Service Start Time</p>
+                <h6 class="mb-0 "><i class="bi bi-clock small"></i> {{reportData?.apiStartTime}} </h6>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl border-start">
+            <div class="d-flex align-items-center">
+              <div>
+                <p class="small text-muted mb-0">Service End Time</p>
+                <h6 class="mb-0 "><i class="bi bi-clock small"></i> {{reportData?.apiEndTime}} </h6>
+              </div>
+            </div>
+          </div>
+
+          <ng-container *ngIf="apiId == 1">
+            <div class="col-xl border-start">
+              <p class="small text-muted mb-0">Request From Date</p>
+              <h6 class="mb-0"><i class="bi bi-calendar-date small"></i> {{inputData?.fromDate}} </h6>
+            </div>
+
+            <div class="col-xl border-start">
+              <p class="small text-muted mb-0">Request To Date</p>
+              <h6 class="mb-0"><i class="bi bi-calendar-date small"></i> {{inputData?.toDate}} </h6>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="apiId == 2">
+            <div class="col-xl border-start">
+              <p class="small text-muted mb-0">Request Date</p>
+              <ng-container *ngIf="inputData?.date; else allDate">
+                <h6 class="mb-0"><i class="bi bi-calendar-date small"></i> {{inputData.date}}</h6>
+              </ng-container>
+              <ng-template #allDate>
+                <h6 class="mb-0"><i class="bi bi-calendar3 small"></i>&emsp;All</h6>
+              </ng-template>
+            </div>
+
+            <div class="col-xl border-start">
+              <p class="small text-muted mb-0">Request Data Status</p>
+              <h6 class="mb-0">
+                <i class="bi bi-save2 small"></i>
+                <ng-container [ngSwitch]="inputData?.flag.toUpperCase()">
+                  <ng-container *ngSwitchCase="'I'">&emsp;Inserted</ng-container>
+                  <ng-container *ngSwitchCase="'U'">&emsp;Updated</ng-container>
+                  <ng-container *ngSwitchCase="''">&emsp;All</ng-container>
+                </ng-container>
+              </h6>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="apiId == 3">
+            <div class="col-xl border-start">
+              <p class="small text-muted mb-0">Request Date</p>
+              <ng-container *ngIf="inputData?.date; else allDate">
+                <h6 class="mb-0"><i class="bi bi-calendar-date small"></i> {{inputData.date}}</h6>
+              </ng-container>
+              <ng-template #allDate>
+                <h6 class="mb-0"><i class="bi bi-calendar3 small"></i>&emsp;All</h6>
+              </ng-template>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="apiId == 8">
+            <div class="col-xl border-start">
+              <p class="small text-muted mb-0">Request From Date</p>
+              <h6 class="mb-0"><i class="bi bi-calendar-date small"></i> {{inputData?.FromDate}} </h6>
+            </div>
+
+            <div class="col-xl border-start">
+              <p class="small text-muted mb-0">Request To Date</p>
+              <h6 class="mb-0"><i class="bi bi-calendar-date small"></i> {{inputData?.ToDate}} </h6>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="apiId == 9">
+            <div class="col-xl border-start">
+              <ng-container *ngIf="inputData && inputData.hasOwnProperty('aadhaarNumber')">
+                <p class="small text-muted mb-0">Request Aadhaar Number</p>
+                <h6><i class="bi bi-card-text small"></i>&emsp; {{inputData.aadhaarNumber}} </h6>
+              </ng-container>
+              <ng-container *ngIf="inputData && inputData.hasOwnProperty('rationCardNumber')">
+                <p class="small text-muted mb-0">Request Ration Card Number</p>
+                <h6><i class="bi bi-card-text small"></i>&emsp; {{inputData.rationCardNumber}} </h6>
+              </ng-container>
+            </div>
+          </ng-container>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-box">
+    <div class="row">
+      <div class="col-lg-6 col-xxl-6">
+        <h6 style="color: #0b6c21; margin-top: 15px; margin-left: 4px;">Records Count : <strong>{{outputData?.length}}</strong></h6>
+      </div>
+      <div class="col-lg-3 col-xxl-3">
+        <button class="btn btn-success btn-sm mx-1" style="margin-top: 5px; float: right" tooltip="Excel" (click)="downloadReport('excel')">
+          <i class="bi bi-file-excel"></i>
+        </button>
+<!--        <button class="btn btn-danger btn-sm mx-1" style="margin-top: 5px; float: right" tooltip="pdf" (click)="downloadReport('pdf')">-->
+<!--          <i class="bi bi-file-pdf"></i>-->
+<!--        </button>-->
+      </div>
+      <div class="col-lg-3 col-xxl-3">
+        <input type="text" id="searchFilter" class="form-control" placeholder="Search here" name="searchFilter" [(ngModel)]="searchFilter">
+      </div>
+    </div>
+
+    <br>
+
+    <div class="table-responsive">
+      <table class="table mb-0 table-striped">
+        <thead>
+        <tr>
+          <th>SL No</th>
+          <th *ngFor="let header of headerData">{{ convertToTitleCase(header) }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <ng-container *ngIf="outputData?.length > 0">
+          <tr *ngFor="let output of outputData | filter:searchFilter | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage}; index as i">
+            <td>{{ (currentPage - 1) * pageElement + i + 1 }}</td>
+            <td *ngFor="let header of headerData">
+              <ng-container *ngIf="header == 'oldData' && output [header] == undefined">--</ng-container>
+              <ng-container *ngIf="header == 'oldData' && output[header] != undefined;"><a href="javascript:void(0);" title="Click To View Old Data" (click)="openModal(reportData?.apiName, output[header])" style="color: #1da33c"><i class="bi bi-eye-fill"></i></a></ng-container>
+              <ng-container *ngIf="header !== 'oldData'"> {{ output[header] }} </ng-container>
+            </td>
+          </tr>
+        </ng-container>
+        <tr *ngIf="outputData?.length == 0">
+          <td colspan="7" class="text-center text-danger"><strong>No data found</strong></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="row" *ngIf="showPagination">
+      <div class="col-sm-4">
+        <div class="col-sm-*">
+          show
+          <select id="pageItem" name="pageItem" class="custom-select-sm" (change)="pageItemChange($event)">
+            <option value="25" selected>25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+            <option value="250">250</option>
+            <option value="{{outputData?.length}}">All</option>
+          </select> entries
+        </div>
+      </div>
+      <div class="col-sm-8 text-right">
+        <pagination-controls id="listing_pagination" [maxSize]="7" [directionLinks]="true"
+                             (pageChange)="currentPage = $event" class="text-end"
+                             (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--Modal Start-->
+<div class="modal justify-content-center" id="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="margin-left: 20rem;">
+    <div class="modal-content" style="width: 290%;">
+      <h5 class="text-center" style="margin-top: 1rem">OLD DATA RECORD</h5>
+        <div class="table-responsive modalBody">
+          <table class="table mb-0 table-striped" style="margin-left: 1rem; margin-left: 1rem;">
+            <thead>
+            <tr>
+              <th>SL No</th>
+              <th *ngFor="let header of oldData?.headerData">{{ convertToTitleCase(header) }}</th>
+            </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngIf="oldData?.data">
+                <tr>
+                  <td>1</td>
+                  <td *ngFor="let header of oldData?.headerData">
+                    <ng-container *ngIf="header === 'exportDate'"> {{oldData?.data[header] | date :'dd-MMM-yyyy, h:mm:ss a'}} </ng-container>
+                    <ng-container *ngIf="header === 'updateDate'; else body"> {{oldData?.data[header] | date :'dd-MMM-yyyy, h:mm:ss a'}} </ng-container>
+                    <ng-template #body>
+                      {{oldData?.data[header]}}
+                    </ng-template>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+      <div class="text-center" style="margin-bottom: 1rem;">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="closeModal()" style="width: 8%">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Modal End-->

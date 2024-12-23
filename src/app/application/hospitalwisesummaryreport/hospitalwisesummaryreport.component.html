@@ -1,0 +1,97 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/hospitalwisesumarryreport" class="nav-link active">Hospital wise Payment Summary Report</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="content-box mt-3">
+        <div class="col-xxl-10">
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label class="control-label mb-2">Actual Date of Discharge From</label><span class="text-danger">*</span>
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="datepicker4" name="fromDate" autocomplete="off">
+                            <label class="input-group-text bg-transparent border-start-0" for="datepicker4"><i
+                                    class="iconbsky-calendar"></i> </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label class="control-label mb-2">To</label><span class="text-danger">*</span>
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="datepicker3" name="toDate" autocomplete="off">
+                            <label class="input-group-text bg-transparent border-start-0" for="datepicker3"><i
+                                    class="iconbsky-calendar"></i> </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label class="control-label mb-2">Search Type<span class="text-danger">*</span></label>
+                        <select class="form-select" id="actionType" aria-label="Disabled select example">
+                    <option value="" selected disabled>Select</option>
+                    <option value="2">Paid</option>
+                    <option value="1">Freezed</option>
+                    <option value="3">SNA Rejected</option>
+                  </select>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="d-grid gap-2 d-md-flex">
+                        <button type="submit" class="btn btn-success" (click)="gethospitalsummarycount()">Search</button>
+                        <button type="reset" class="btn btn-secondary" (click)="resetField()">Reset</button>
+                    </div>
+                </div>
+                <div class="col-md-3 col-lg-3 col-xl-3 col-xxl-3 ms-xxl-auto ms-xl-auto ms-lg-auto ms-md-auto">
+                    <div class="mb-3 mt-3" [align]="'start'">
+                        <button class="btn btn-success btn-sm mx-1" tooltip="Excel" (click)="downloadReport('xcl')"><i class="bi bi-download"></i></button>
+                        <button class="btn btn-danger btn-sm mx-1" tooltip="pdf" (click)="downloadReport('pdf')"><i class="bi bi-file-earmark-pdf"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="alert alert-danger mt-4 mb-4 d-flex small ">
+        <div>
+            <p class="mb-0 pe-3 me-3 border-end ">
+                <i class="bi bi-info-circle-fill fs-5 me-2 "></i>NOTE
+            </p>
+        </div>
+        <div>
+            <p class="mb-0 ">
+                <strong>Click On Total Case Number To See the Records Or Claims.</strong> &nbsp;&nbsp;&nbsp;
+            </p>
+        </div>
+    </div>
+    <div>
+        <div class="content-box p-0 overflow-hidden ">
+            <div class="table-responsive ">
+                <table class="table table-sm table-striped mb-0 ">
+                    <thead>
+                        <tr>
+                            <th>Total Case</th>
+                            <th>Total Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let claim of result ,index as i ">
+                            <td (click)="gtdata(claim.totalcase)" data-bs-toggle="modal" data-bs-target="#details"><a href="javascript:void(0); ">{{claim.totalcase}}</a></td>
+                            <td> {{claim.totalamount}}</td>
+                        </tr>
+                        <tr *ngIf="result.length==0 ">
+                            <td colspan="20 " class="text-center text-uppercase "><strong class="text-danger ">No data found !!</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

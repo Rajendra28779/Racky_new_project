@@ -1,0 +1,32 @@
+@import '../../../../assets/scss/mixins';
+@import '../../../../assets/scss/variables';
+@import '../../../../assets/scss/statuspage';
+.document-upload {
+    .uploaded-doc {
+        a {
+            display: block;
+            padding: 1rem;
+        }
+    }
+    .required-field::before {
+        content: "*";
+        color: red;
+    }
+}
+
+.claim-detail .patient-info li {
+    text-transform: uppercase;
+}
+
+.swal2-title-lg {
+    font-size: 1.0em !important;
+    /* Use !important for overriding potential conflicts */
+}
+
+.div-patient {
+    // width: 130px;
+    margin: 0 auto;
+    // border: 1px solid #ced4da;
+    border-radius: .5rem;
+    // padding: 2rem;
+}

@@ -1,0 +1,183 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+    <div class="row justify-content-between">
+      <div class="col-lg-4">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a routerLink="cpdcountdetailsreport" class="nav-link active">Cpd Allotment Details Report</a>
+          </li>
+        </ul>
+      </div>
+      <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+        <div class="col-md-4">
+          <div>CPD Name : {{name}}<b></b>
+          </div>
+          <div>Alloted Date : {{date}}<b></b>
+          </div>
+          <div>Case Type : {{type}}<b></b>
+          </div>
+        </div>
+        <!-- <div class="col-md-3"></div>
+        <div class="col-md-4">
+          <div class="mb-3 mt-3">
+            <input type="text" id="txtsearchDate" class="form-control" placeholder="Search" name="txtsearchDate"
+              [(ngModel)]="txtsearchDate">
+          </div>
+        </div>
+
+        <div class="col-md-1">
+          <div class="mb-3 mt-3">
+          <div class="table-responsive">
+            <div [align]="'start'" class="table-utilities" style="padding-bottom: 1%;">
+              <button  class="btn btn-success "
+                (click)="downloadReport('xcl')">
+                <i class="bi bi-file-earmark-spreadsheet"></i>
+              </button>
+              &nbsp;
+              <button class="btn btn-danger" type="submit"(click)="downloadReport('pdf')">
+                <i class="bi bi-file-earmark-pdf"></i>
+              </button>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div> -->
+      <div class="row">
+        <div class="col-lg-4 col-xxl-4"></div>
+        <div class="col-lg-4 col-xxl-4">
+          <div class="table-utilities float-end">
+            <button class="btn btn-success " (click)="downloadReport('xcl')">
+              <i class="bi bi-file-earmark-spreadsheet"></i>
+            </button>
+            &nbsp;
+            <button class="btn btn-danger" type="submit" (click)="downloadReport('pdf')">
+              <i class="bi bi-file-earmark-pdf"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-xxl-4">
+          <div class="input-group">
+            <input type="text" id="txtsearchDate" class="form-control" placeholder="Search here...."
+              name="txtsearchDate" [(ngModel)]="txtsearchDate" autocomplete="off">
+          </div>
+        </div>
+      </div>
+    </div>
+      <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+
+
+        <div class="content-box">
+          <div class="row">
+            <div class="table-responsive">
+              <table class="table table-striped mb-0">
+                <thead>
+                  <tr>
+                    <!-- <th width="40">Sl No</th> -->
+                    <th *ngFor="let v of header">{{v}}</th>
+                    <!-- <th width="40">Sl#</th>
+                    <th>Case No</th>
+                    <th>URN</th>
+
+                    <th>Patient Name</th>
+                    <th>Actual Date Of Admission</th>
+                    <th>Actual Date Of Discharge</th>
+                    <th>Assigned Date</th>
+                    <th *ngIf="show">Hospital Re-claim Date</th>
+                    <th *ngIf="show">CPD Query Date</th>
+                    <th *ngIf="show">Non-Compliance Date</th>
+                    <th *ngIf="show">Date of Unprocessed</th>
+                    <th *ngIf="show">Unprocessed Type</th>
+                    <th *ngIf="show">Action Date</th>
+                    <th *ngIf="!show">Dishonour Date</th>
+                     -->
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- <tr
+                    *ngFor="let Cpd of claimlist | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};index as i">
+                    <td>{{(i+1)}}</td>
+
+                    <td>{{Cpd.caseno}}</td>
+                    <td>{{Cpd.urn}}</td>
+
+                    <td>{{Cpd.patientname}}</td>
+                    <td *ngIf="!Cpd.actualdateofadmission">N/A</td>
+                    <td *ngIf="Cpd.actualdateofadmission">{{Cpd.actualdateofadmission| date :'dd-MMM-yyyy'}}</td>
+                    <td *ngIf="!Cpd.actualdateofdischarge">N/A</td>
+                    <td>{{Cpd.actualdateofdischarge | date :'dd-MMM-yyyy'}}</td>
+                    <td>{{Cpd.assigned_Date | date :'dd-MMM-yyyy'}}</td>
+                    <td *ngIf="Cpd.hospital_Reclaim_Date">{{Cpd.hospital_Reclaim_Date}}</td>
+                    <td *ngIf="!Cpd.hospital_Reclaim_Date">N/A</td>
+                    <td *ngIf="Cpd.cpd_QUERY_DATE">{{Cpd.cpd_QUERY_DATE}}</td>
+                    <td *ngIf="!Cpd.cpd_QUERY_DATE">N/A</td>
+                    <td *ngIf="Cpd.non_compliance_date">{{Cpd.non_compliance_date}}</td>
+                    <td *ngIf="!Cpd.non_compliance_date">N/A</td>
+                    <td *ngIf="Cpd.dateunofprocessed">{{Cpd.dateunofprocessed}}</td>
+                    <td *ngIf="!Cpd.dateunofprocessed">N/A</td>
+                    <td *ngIf="Cpd.unprocessed_TYPE">{{Cpd.unprocessed_TYPE}}</td>
+                    <td *ngIf="!Cpd.unprocessed_TYPE">N/A</td>
+                     <td *ngIf="!Cpd.cpdactiondate">N/A</td>
+                     <td *ngIf="show">{{Cpd.cpdactiondate | date :'dd-MMM-yyyy'}}</td>
+
+
+
+                     </tr> -->
+                     <tr *ngFor="let v of value
+                     | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement,
+                     currentPage: currentPage},index as i">
+
+                             <!-- <td >{{(i+1)}}</td> -->
+
+                             <td *ngFor="let v1 of v">
+
+                               {{v1}}
+
+                             </td>
+                            </tr>
+                     <tr *ngIf="record==0">
+
+                      <td colspan="20" align="center">
+
+                        <strong class="text-danger">NO DATA FOUND!!</strong>
+                      </td>
+                  </tr>
+              </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="row mt-3" *ngIf="showPegi">
+            <div class="col-sm-6">
+             <div class="col-sm-*">
+
+                show
+
+                <select id="pageItem" name="pageItem" class="custom-select-sm"
+(change)="pageItemChange()">
+
+        <option value="100">100</option>
+
+        <option value="200">200</option>
+
+        <option value="300">300</option>
+
+        <option value={{record}}>All</option>
+
+      </select> entries
+
+    </div>
+
+  </div>
+
+  <div class="col-sm-8 text-right">
+
+    <pagination-controls id="listing_pagination" [maxSize]="10"
+[directionLinks]="true"
+
+      (pageChange)="currentPage = $event" class="text-end"
+(pageBoundsCorrection)="onPageBoundsCorrection($event)">
+</pagination-controls>
+</div>
+</div>
+</div>

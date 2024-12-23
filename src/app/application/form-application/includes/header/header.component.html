@@ -1,0 +1,54 @@
+<div class="fixed-topmenu">
+  <a class="nav-toggle-btn" (click)="togglemenu()">
+             
+             <span></span>
+             <span></span>
+             <span></span>
+             </a>
+ 
+             <ul>
+              <li>
+                <div class="theme">
+                 <label id="switch" class="switch">
+                <input type="checkbox" (click)="toggleTheme()" id="slider">
+                <span class="slider round"></span>
+             
+            </label>
+          </div></li>
+                <li><a href="javascript:void(0)" id="notifications" data-target="#newnotification-section" (click)="notificationOpen()" class="notifications" >
+                   <i class="icon-bell"></i><span class="badge bg-danger"></span></a></li>
+                <li><a href="javascript:void(0)"  > <img src="{{siteUrl}}assets/img/user.png" alt="user"> </a>
+                   <div class="header-dropdown">
+                     <div class="p-2 border-bottom">
+                      Hi,&nbsp; <strong>{{username}}</strong>
+                    </div>
+                     <a href="profile.html" class=""><i class="icon-user-circle"></i> Profile</a>
+                      <a routerLink="./changepassword" class=""><i class="icon-lock-solid" ></i> Change Password</a>
+                       <a href="javascript:void(0)" (click)="logout()" class=""><i class="icon-arrow60"></i> Sign Out</a>
+                   </div>
+ 
+                </li>
+             
+             </ul>
+ 
+ </div>
+ 
+ 
+ 
+ 
+ <div class="notification-sec" id="newnotification-section">
+  
+    <div class="d-flex justify-content-between align-items-center mb-3">
+       <h5 class="mb-0 pb-0">Notifications</h5>
+       <a class="div-close" href="javascript:void(0)" (click)="divclose()" ><i class="icon-arrow-right-solid"></i></a>
+    </div>
+                               <ul>
+                                
+                                   <li class="unread">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li>
+                                    <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li>
+                                     <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li>
+                                      <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </li>
+                               </ul>
+                             
+ </div>
+ 

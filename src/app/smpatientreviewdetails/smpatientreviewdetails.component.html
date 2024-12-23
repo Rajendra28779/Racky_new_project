@@ -1,0 +1,160 @@
+<div class="row mt-4">
+    <div class="col-lg-12">
+        <div class="accordion">
+            <div class="card shadow-sm">
+                <div class="accordion-item">
+                    <div class="card-header bg-color">
+                        <h5 class="mb-0 text-success" style="font-size: 12pt;">SwasthyaMitra-Patient Review Details:
+                        </h5>
+                    </div>
+                    <div class="card-body bg-light p-4">
+                        <!-- First row with 6 fields -->
+                        <div class="row row-cols-1 row-cols-md-3 mb-3">
+                            <div class="col mb-3">
+                                <div class="p-3 border rounded bg-white shadow-sm">
+                                    <label class="d-block"><strong>Reviewed by:</strong></label>
+                                    <p class="text-center mb-0">{{reviewdtls[0]?.fullname}}</p>
+                                </div>
+                            </div>
+                            <div class="col mb-3">
+                                <div class="p-3 border rounded bg-white shadow-sm">
+                                    <label class="d-block"><strong>Patient Name:</strong></label>
+                                    <p class="text-center mb-0">{{reviewdtls[0]?.patientname}}</p>
+                                </div>
+                            </div>
+                            <div class="col mb-3">
+                                <div class="p-3 border rounded bg-white shadow-sm">
+                                    <label class="d-block"><strong>URN:</strong></label>
+                                    <p class="text-center mb-0">{{reviewdtls[0]?.urn}}</p>
+                                </div>
+                            </div>
+                            <div class="col mb-3">
+                                <div class="p-3 border rounded bg-white shadow-sm">
+                                    <label class="d-block"><strong>Hospital Code:</strong></label>
+                                    <p class="text-center mb-0">{{reviewdtls[0]?.hospitalcode}}</p>
+                                </div>
+                            </div>
+                            <div class="col mb-3">
+                                <div class="p-3 border rounded bg-white shadow-sm">
+                                    <label class="d-block"><strong>Patient Contact Number:</strong></label>
+                                    <p class="text-center mb-0">{{reviewdtls[0]?.patientcontactnumber}}</p>
+                                </div>
+                            </div>
+                            <div class="col mb-3">
+                                <div class="p-3 border rounded bg-white shadow-sm">
+                                    <label class="d-block"><strong>Date Of Admission:</strong></label>
+                                    <p class="text-center mb-0">{{reviewdtls[0]?.dateofadmission}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Second row with 6 fields -->
+                        <div class="row row-cols-1 row-cols-md-3">
+                            <div class="col mb-3">
+                                <div class="p-3 border rounded bg-white shadow-sm">
+                                    <label class="d-block"><strong>Reference:</strong></label>
+                                    <p class="text-center mb-0">{{reviewdtls[0]?.wheatherrefer}}</p>
+                                </div>
+                            </div>
+                            <div class="col mb-3">
+                                <div class="p-3 border rounded bg-white shadow-sm">
+                                    <label class="d-block"><strong>Mortality:</strong></label>
+                                    <p class="text-center mb-0">{{reviewdtls[0]?.death}}</p>
+                                </div>
+                            </div>
+                            <div class="col mb-3">
+                                <div class="p-3 border rounded bg-white shadow-sm">
+                                    <label class="d-block"><strong>Mortality Date And Time :</strong></label>
+                                    <p class="text-center mb-0">{{reviewdtls[0]?.deathtime}}</p>
+                                </div>
+                            </div>
+                            <div class="col mb-3">
+                                <div class="p-3 border rounded bg-white shadow-sm">
+                                    <label class="d-block"><strong>Admission Review Date and
+                                            Time:</strong></label>
+                                    <p class="text-center mb-0">{{reviewdtls[0]?.admissionreviewtime}}</p>
+                                </div>
+                            </div>
+                            <div class="col mb-3">
+                                <div class="p-3 border rounded bg-white shadow-sm">
+                                    <label class="d-block"><strong>Out of Pocket Expenditure Pre
+                                            Blocking:</strong></label>
+                                    <p class="text-center mb-0">{{reviewdtls[0]?.oopeatpreblock}}</p>
+
+                                </div>
+                            </div>
+                            <div class="col mb-3">
+                                <div class="p-3 border rounded bg-white shadow-sm">
+                                    <label class="d-block"><strong>Out of Pocket Expenditure After
+                                            Blocking:</strong></label>
+                                    <p class="text-center mb-0">{{reviewdtls[0]?.oopeafterblocking}}</p>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- thrd row with 6 fields -->
+                        <div class="row row-cols-1 row-cols-md-3">
+                            <div class="col mb-3">
+                                <div class="p-3 border rounded bg-white shadow-sm">
+                                    <label class="d-block text-center"><strong>Patient Photo After Discharge:</strong></label>
+                                    <div class="text-center">
+                                        <ng-container
+                                            *ngIf="reviewdtls[0]?.patientphotoafterdischarge != undefined; else noReport">
+                                            <a style="cursor: pointer;"
+                                                (click)="downloadAction($event, reviewdtls[0]?.patientphotoafterdischarge, reviewdtls[0]?.hospitalcode, reviewdtls[0]?.dateofadmission)">
+                                                <img src="../../../../../assets/img/pdf.png"
+                                                    alt="Patient Photo After Discharge" class="mb-2"
+                                                    style="width: 50px; height: 50px;"> <!-- Reduced size -->
+                                            </a>
+                                        </ng-container>
+                                    </div>
+                                    <ng-template #noReport>
+                                        <p class="text-center mb-0">N/A</p>
+                                    </ng-template>
+                                </div>
+                            </div>
+
+                            <div class="col mb-3">
+                                <div class="p-3 border rounded bg-white shadow-sm">
+                                    <label class="d-block text-center"><strong>Patient Photo After Blocking:</strong></label>
+                                    <div class="text-center">
+                                        <ng-container
+                                            *ngIf="reviewdtls[0]?.patientphotoafterblocking != undefined; else noReport">
+                                            <a style="cursor: pointer;"
+                                                (click)="downloadAction($event, reviewdtls[0]?.patientphotoafterblocking, reviewdtls[0]?.hospitalcode, reviewdtls[0]?.dateofadmission)">
+                                                <img src="../../../../../assets/img/pdf.png"
+                                                    alt="Patient Photo After Blocking" class="mb-2"
+                                                    style="width: 50px; height: 50px;"> <!-- Reduced size -->
+                                            </a>
+                                        </ng-container>
+                                    </div>
+                                    <ng-template #noReport>
+                                        <p class="text-center mb-0">N/A</p>
+                                    </ng-template>
+                                </div>
+                            </div>
+                            <div class="col mb-3">
+                                <div class="p-3 border rounded bg-white shadow-sm">
+                                    <label class="d-block text-center"><strong>Success Story Document:</strong></label>
+                                    <div class="text-center">
+                                        <ng-container
+                                            *ngIf="reviewdtls[0]?.successstorydoc != undefined; else noReport">
+                                            <a style="cursor: pointer;"
+                                                (click)="downloadAction($event, reviewdtls[0]?.successstorydoc, reviewdtls[0]?.hospitalcode, reviewdtls[0]?.dateofadmission)">
+                                                <img src="../../../../../assets/img/pdf.png"
+                                                    alt="Success Story Document" class="mb-2"
+                                                    style="width: 50px; height: 50px;"> <!-- Reduced size -->
+                                            </a>
+                                        </ng-container>
+                                    </div>
+                                    <ng-template #noReport>
+                                        <p class="text-center mb-0">N/A</p>
+                                    </ng-template>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

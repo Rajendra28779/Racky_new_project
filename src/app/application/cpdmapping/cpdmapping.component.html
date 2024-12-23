@@ -1,0 +1,151 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/cpdmapping" routerLinkActive="active" class="nav-link active">CPD Mapping</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- <div class="col-lg-6 ">
+                <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+            </div> -->
+        </div>
+    </div>
+    <div class="content-box">
+        <form>
+            <div class="row">
+                <div class="col-xxl-8">
+                    <form [formGroup]="SearchForm">
+                        <div class="row">
+                            <!-- <div class="col-lg-4 col-xxl-4">
+                                <div class="mb-xl-3">
+                                    <label class="control-label">State Name<span class="text-danger"></span></label>
+                                    <select class="form-select" name="stateCode" id="stateCode" formControlName="stateCode" (change)="OnChangeState($event.target.value)">
+                                        <option value=""  selected >Select State</option>
+                                        <ng-container *ngFor="let item of stateList">
+                                            <option value={{item.stateCode}}>{{item.stateName}}</option>
+                                        </ng-container>
+                                    </select>
+                                </div>
+                            </div> -->
+                            <div class="col-lg-4 col-xxl-4">
+                                <div class="mb-xl-3">
+                                    <label class="control-label">State Name<span class="text-danger"></span></label>
+                                    <select class="form-select" name="stateCode" id="stateCode" formControlName="stateCode" (change)="OnChangeState($event.target.value)">
+                                        <option value=""  selected >Select State</option>
+                                        <ng-container *ngFor="let item of stateList">
+                                            <option value={{item.stateCode}}>{{item.stateName}}</option>
+                                        </ng-container>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-xxl-4">
+                                <div class="mb-xl-3">
+                                    <label class="control-label">Restricted Hospital Name<span class="text-danger"></span></label>
+                                    <ng-autocomplete #auto [data]="restrictedHospital"  placeholder="Select Hospital" (selected)="selectEvent($event)"
+                                        (inputCleared)="onReset()" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" 
+                                        [searchKeyword]="keyword" spellcheck="false">
+                                    </ng-autocomplete>   
+                                   
+                                    <ng-template #itemTemplate let-item>
+                                        <a [innerHTML]="item.hospitalName"></a>
+                                    </ng-template>
+                                    
+                                    <ng-template #notFoundTemplate let-notFound>
+                                        <div [innerHTML]="notFound"></div>
+                                    </ng-template>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-xxl-4"></div>
+                            <div class="col-lg-4 col-xxl-4">
+                                <div class="mb-xl-3">
+                                    <button type="submit" class="btn btn-success" (click)="Search()">Search</button>&nbsp;
+                                    <!-- <input type="reset" value="Reset" class="btn btn-secondary"> -->
+                                    <button type="button" class="btn btn-secondary" (click)="onResetmethode()">Reset</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+        <div class="col-lg-4 col-xxl-4">
+            <p>Total CPD Doctor List : {{countlist}}</p>
+        </div>
+        <!-- <div class="col-lg-3 col-xxl-3"></div>
+        <div class="col-lg-1 col-xxl-1">
+            <div class="input-group" style="margin-left: 88px; margin-top: 5px;">
+                <button class="btn btn-outline-success btn-sm me-1" type="submit" (click)="downloadReport()">
+                    <i class="bi bi-download"></i>
+                </button>
+            </div>
+           
+        </div> -->
+        <div class="col-lg-4 col-xxl-4">
+            <div class="table-utilities input-group" style="margin-left: 267px; margin-top: 5px; ">
+              <button class="btn btn-success btn-sm mx-1" style="border-radius: 4px;" tooltip="Excel" (click)="downloadReport('excel')">
+                <i class="bi bi-download"></i>
+              </button>
+              <button class="btn btn-danger btn-sm mx-1" style="border-radius: 4px;" tooltip="pdf" (click)="downloadReport('pdf')">
+                <i class="bi bi-file-earmark-pdf"></i>
+              </button>
+            </div>
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+            <div class="input-group">
+                <input type="text" id="txtsearchDate" class="form-control" placeholder="Search" name="txtsearchDate" [(ngModel)]="txtsearchDate" autocomplete="off">
+            </div>
+        </div>
+    </div>
+    <div class="content-box p-0 overflow-hidden " id="action" >
+    <div class="table-responsive ">
+        <table class="table table-striped mb-0 ">
+            <thead>
+                <tr>
+                    <th width="60">Sl No.</th>
+                    <th>FullName</th>
+                    <th>UserName</th>
+                    <th>Hospital Code</th>
+                    <th>Hospital Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of stateAndhospitalcpdlist | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage}; index as i ">
+                    <td *ngIf="currentPage==1">{{i+1}}</td>
+                    <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+i+1}}</td>
+                    <td>{{item.fullname}}</td>
+                    <td>{{item.userName}}</td>
+                    <td>{{item.hospitalCode}}</td>
+                    <td>{{item.hospitalName}}</td>
+                </tr>
+                <tr *ngIf="snareport" id="loop">
+                    <td colspan="10 ">
+                        <p class="mb-0 text-center text-danger fw-bold ">NO DATA FOUND!!</p>
+                    </td>
+                </tr> 
+            </tbody>
+        </table>
+    </div>
+    <div class="row" *ngIf="showPegi">
+        <div class="col-sm-4">
+            <div class="col-sm-*">
+                show
+                <select id="pageItem" name="pageItem" class="custom-select-sm" (change)="pageItemChange()">
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                </select> entries
+            </div>
+        </div>
+        <div class="col-sm-8 text-right">
+            <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true" (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+        </div>
+    </div>
+    </div>
+</div>

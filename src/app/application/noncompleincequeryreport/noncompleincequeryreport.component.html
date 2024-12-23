@@ -1,0 +1,179 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+      <div class="row justify-content-between">
+          <div class="col-lg-4">
+              <ul class="nav nav-tabs">
+                  <!-- <li class="nav-item">
+                      <a routerLink="/application/claimraise" class="nav-link ">Claims</a>
+                  </li> -->
+                  <li class="nav-item">
+                      <a routerLink="/application/SNARejectedlist" class="nav-link active">Non compliance of Query-SNA
+                          List</a>
+                  </li>
+                  <!-- <li class="nav-item">
+                      <a routerLink="/application/query" class="nav-link">Query</a>
+                  </li>
+                  <li class="nav-item">
+                      <a routerLink="/application/paid" class="nav-link">Paid</a>
+                  </li> -->
+              </ul>
+          </div>
+          <!-- <div class="col-lg-6 ">
+              <app-utilite (receiveResponse)="getResponseFromChild($event) "></app-utilite>
+          </div> -->
+      </div>
+  </div>
+
+  <div class="content-box mt-3">
+      <div class="col-xxl-10">
+          <div class="row">
+              <div class="col-lg-4 col-xxl-4">
+                  <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                      <label class="control-label mb-2">Actual Date of Discharge</label><span class="text-danger">*</span>
+                      <div class="input-group">
+                          <input type="text" class="form-control border-end-0 datepicker" id="datep" name="fromDate" autocomplete="off">
+                          <label class="input-group-text bg-transparent border-start-0" for="datep"><i
+                                  class="iconbsky-calendar"></i> </label>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-lg-4 col-xxl-4">
+                  <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                      <label class="control-label mb-2"> To Date</label><span class="text-danger">*</span>
+                      <div class="input-group">
+                          <input type="text" class="form-control border-end-0 datepicker" id="datepicker" name="toDate" autocomplete="off">
+                          <label class="input-group-text bg-transparent border-start-0" for="datepicker"><i
+                                  class="iconbsky-calendar"></i> </label>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="col-xxl-10">
+          <div class="row">
+              <div class="col-lg-4 col-xxl-4">
+                  <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                      <label class="control-label mb-2">Package Category</label>
+                      <select class="form-select" id="Package" aria-label="Disabled select example" placeholder="Enter Package Category... " autocomplete="off" (change)="getPackageName($event.target.value)">
+                          <option value="" selected disabled>Select Package Category</option>
+                          <ng-container *ngFor="let item of serachdata ">
+                              <option value={{item.id}}>{{item.procedures}}({{item.procedurecode}})</option>
+                          </ng-container>
+                      </select>
+                  </div>
+              </div>
+              <div class="col-lg-4 col-xxl-4 ">
+                  <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3 ">
+                      <label class="control-label mb-2 ">Package Name</label>
+                      <select class="form-select " id="PackageName" aria-label="Disabled select example " placeholder="Enter Package Name... " (blur)="ongetpackagename($event.target.value)">
+                          <option value="" selected disabled>Select Package Name</option>
+                          <ng-container *ngFor="let pack of packagependingdata ">
+                              <option>{{pack.packagename}}</option>
+                          </ng-container>
+
+                      </select>
+
+                  </div>
+              </div>
+              <div class="col-lg-4 col-xxl-4 ">
+                  <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3 ">
+                      <label class="control-label mb-2 ">URN </label>
+                      <input type="text " class="form-control" id="actionTypee" aria-label="Disabled select example " autocomplete="off" placeholder="Enter URN " maxlength="20 " onkeyup="this.value=this.value.replace(/[^0-9]/g, ''); ">
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-12 ">
+              <div class="d-grid gap-2 d-md-flex ">
+                  <button type="submit " class="btn btn-success" (click)="OngetdataforSnaList() ">Search</button>
+                  <button type="reset " class="btn btn-secondary" (click)="OnGetReset() ">Reset</button>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <div class="row">
+      <div class="col-md-3 col-lg-3 col-xl-3 col-xxl-3 ms-xxl-auto ms-xl-auto ms-lg-auto ms-md-auto">
+        <div class="mb-3 mt-3" [align]="'start'">
+          <button class="btn btn-success btn-sm mx-1" tooltip="Excel" (click)="downloadReport('excel')"><i class="bi bi-download"></i></button>
+          <button class="btn btn-danger btn-sm mx-1" tooltip="pdf" (click)="downloadReport('pdf')"><i class="bi bi-file-earmark-pdf"></i></button> </div>
+  </div>
+        <div class="mb-3 mt-3">
+              <input type="text " id="txtsearchDate" [(ngModel)]="txtsearchDate" class="form-control " placeholder="Search here......" autocomplete="off">
+              <!-- <button type="button " class="btn btn-success border border-start-0 ">Search</button> -->
+          </div>
+
+  </div>
+
+  <div class="content-box p-0 overflow-hidden ">
+      <table class="table table-striped mb-0 ">
+          <thead>
+              <tr>
+                  <th width="60">Sl No.</th>
+                  <th>Claim No.</th>
+                  <th>URN</th>
+                  <th width="150">Hospital Details</th>
+                  <th>Patient Name</th>
+                  <th>Invoice Number</th>
+                  <th>Package Code</th>
+                  <!-- <th>Admission Date</th> -->
+                  <th width="120">ActualDate Of Admission</th>
+                  <!-- <th>Discharge Date</th> -->
+                  <th width="120">ActualDate Of Discharge</th>
+                  <!-- <th>Remark</th> -->
+                  <th width="200">Last Date Of Query </th>
+                  <th>Amount(₹)</th>
+                  <!-- <th>Action</th> -->
+                  <!-- <th>Pending <small>(in days)</small></th> -->
+                  <th width="70">Details</th>
+              </tr>
+          </thead>
+          <tbody>
+              <ng-container *ngFor="let claim of sysRejeted |filter:txtsearchDate| paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage}; index as i ">
+                  <tr>
+                      <td *ngIf="currentPage==1 ">{{(i+1)}}</td>
+                      <td *ngIf="currentPage!=1 ">{{(currentPage-1)*pageElement+ i+1}}</td>
+                      <td>{{claim.claim_no}}</td>
+                      <td>{{claim.urn}}</td>
+                      <td>{{claim.hospitalName}} ({{claim.hospitalCode}})</td>
+                      <td>{{claim.patientName}}</td>
+                      <td>{{claim.invoiceno}}</td>
+                      <td title={{claim.packageName}}> {{claim.packageCode}}</td>
+                      <!-- <td>{{claim.dateofadmission }}</td> -->
+                      <td>{{claim.actualdateofadmission}}</td>
+                      <!-- <td>{{claim.dateofdischarge}}</td> -->
+                      <td>{{claim.actualdateofdischarge}}</td>
+                      <td> {{claim.updateon | date :'dd-MMM-yyyy, h:mm:ss a'}}</td>
+                      <td> {{claim.snoapprovedamount | currency:"INR ":''}}</td>
+                      <!-- <td class="text-center">
+                          <a class="btn btn-outline-success btn-sm"
+                              (click)="onclaim(claim.transactiondetailsid,claim.urn,claim.updateon)">Action</a>
+                      </td> -->
+                      <td><a class="btn btn-primary btn-sm" (click)="view(claim.claimID)">Details</a></td>
+                  </tr>
+              </ng-container>
+              <tr *ngIf="snareport ">
+                  <td colspan="16">
+                      <p class="mb-0 text-center text-danger fw-bold">NO DATA FOUND!!</p>
+                  </td>
+              </tr>
+          </tbody>
+      </table>
+  </div>
+</div>
+<div class="row mt-3" *ngIf="showPegi ">
+  <div class="col-sm-4 ">
+      <div class="col-sm-* ">
+          show
+          <select id="pageItems" name="pageItems " class="form-select-sm " (change)="pageItemChange() ">
+              <option value="10 ">10</option>
+              <option value="20 ">20</option>
+              <option value="30 ">30</option>
+              <option value="40 ">40</option>
+          </select> entries
+      </div>
+  </div>
+  <div class="col-sm-8">
+      <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true" (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+  </div>
+
+</div>

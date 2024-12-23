@@ -1,0 +1,239 @@
+<div class="main-tab">
+    <div class="col-lg-4">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a routerLink="/application/smusercreate" routerLinkActive="active" class="nav-link"
+                    style="color: #1f723f;">Add</a>
+            </li>
+            <li class="nav-item">
+                <a routerLink="/application/smuserview" routerLinkActive="active" class="nav-link active">View</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div id="filter" class="searchCriteriaBox bg-light p-3">
+    <div class="row">
+        <!-- <div class="col-lg-3 col-xxl-3">
+          <div class="form-group">
+              <label class="control-label">Group<span class="text-danger">*</span></label>
+              <select name="groupId" id="groupId" class="form-control">
+                  <option value="">Select Group</option>
+                  <ng-container *ngFor="let item of groupList">
+                      <option [value]=item.typeId>{{item.groupTypeName}}</option>
+                  </ng-container>
+              </select>
+          </div>
+      </div> -->
+        <div class="col-lg-3 col-xxl-3">
+            <div class="form-group">
+                <label class="control-label">State Name<span class="text-danger">*</span></label>
+                <select name="stateId" id="stateId" class="form-control" (change)="OnChangeState($event.target.value)">
+                    <option value="">Select State</option>
+                    <ng-container *ngFor="let item of stateList;index as i">
+                        <option [value]="item.stateCode">{{item.stateName}}</option>
+                    </ng-container>
+                </select>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xxl-3">
+            <div class="form-group">
+                <label class="control-label">District Name<span class="text-danger">*</span></label>
+                <select name="districtId" id="districtId" class="form-control">
+                    <option value="">Select District</option>
+                    <ng-container *ngFor="let item of districtList;index as i">
+                        <option [value]="item.districtcode">{{item.districtname}}</option>
+                    </ng-container>
+                </select>
+            </div>
+        </div>
+        <div class="col align-self-end">
+            <div class="form-group">
+                <button class="btn btn-success mr-2" (click)="getSwasthyaMitra()">Search</button>
+                &nbsp;
+                <button class="btn btn-secondary" (click)="resetTable()">Reset</button>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+    <div class="col-lg-4 col-xxl-4" style="padding-top: 10px;">
+      <div class="col-sm-*" *ngIf="showPegi">
+        show
+        <select id="pageItem" name="pageItem" class="custom-select-sm"  [(ngModel)]="pageElement">
+            <option value="100">100</option>
+            <option value="200">200</option>
+            <option value="300">300</option>
+            <option value="400">400</option>
+            <option value={{record}}>All</option>
+        </select> entries
+    </div>
+    </div>
+    <div class="col-lg-2 col-xxl-2 mt-3" >
+      Total Record : {{record}}
+    </div>
+    <div class="col-lg-2 col-xxl-2" style="text-align: right; padding-top: 3px;">
+        <div class="form-group">
+            <!-- <button class="btn btn-outline-success btn-sm me-1" type="submit" (click)="downloadReport(1)">
+                <i class="bi bi-download"></i>
+            </button> -->
+            <button class="btn btn-success btn-sm mx-1" style="margin-top: 10px" tooltip="Excel"
+                (click)="downloadReport(1)">
+                <i class="bi bi-file-earmark-spreadsheet"></i>
+            </button>
+            <button class="btn btn-danger btn-sm mx-1" style="margin-top: 10px" tooltip="pdf" (click)="downloadReport(2)">
+                <i class="bi bi-file-earmark-pdf"></i>
+              </button>
+
+        </div>
+    </div>
+    <div class="col-lg-4 col-xxl-4">
+        <div class="input-group">
+            <input type="text" id="txtsearchDate" class="form-control" placeholder="Search here..." name="txtsearchDate"
+                [(ngModel)]="txtsearchDate">
+        </div>
+    </div>
+</div>
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="table-responsive">
+                <table class="table table-striped" mb-0 id="exportTable">
+                    <thead>
+                        <tr>
+                            <th width="50">Sl No</th>
+                            <th width="50">Full Name</th>
+                            <th width="50">Username</th>
+                            <th width="50">Mobile No</th>
+                            <th width="50">State</th>
+                            <th width="50">District</th>
+                            <th width="50">Group</th>
+                            <th width="50">Status</th>
+                            <th width="50">Tagged Hospital</th>
+                            <th width="50" style="text-align: center;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngIf="record>0">
+                            <tr
+                                *ngFor="let item of swasthyaData | filter:txtsearchDate |
+                          paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};index as i">
+                                <td *ngIf="currentPage==1">{{i+1}}</td>
+                                <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+i+1}}</td>
+                                <td>{{item.fullName}}</td>
+                                <td>{{item.userName}}</td>
+                                <td>{{item.mobileNo}}</td>
+
+                                <td>{{item.stateName}}</td>
+                                <td>{{item.districtName}}</td>
+                                <td>{{item.gropName}}</td>
+                                <td *ngIf="item.stateFlg==0">Active</td>
+                                <td *ngIf="item.stateFlg==1">InActive</td>
+                                <!-- <td><a href="javascript:void(0);" (click)="view(item)">{{item.counthospital}}</a></td> -->
+                                <td style="text-align: center;"><a href="javascript:void(0)" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal1" (click)="view(item)">{{item.counthospital}}</a>
+                                </td>
+                                <!-- <td>{{item.counthospital}}</td> -->
+                                <td> <a class="btn btn-outline-primary btn-sm me-1" (click)="edit(item.bskyUserId
+                                )">
+                                        <i class="bi bi-pencil"></i>
+                                    </a></td>
+                            </tr>
+                        </ng-container>
+                        <tr *ngIf="record==0">
+                            <div class="row">
+                                <span style="color: red;text-align: center;position:absolute">NO DATA FOUND!!</span>
+                            </div>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="row" *ngIf="showPegi">
+                <div class="col-sm-4">
+                    <div class="col-sm-*">
+                        show
+                        <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+                            <option value="100">100</option>
+                            <option value="200">200</option>
+                            <option value="300">300</option>
+                            <option value="400">400</option>
+                            <option value={{record}}>All</option>
+                        </select> entries
+                    </div>
+                </div>
+                <div class="col-sm-8 text-right">
+                    <pagination-controls id="listing_pagination" [maxSize]="100" [directionLinks]="true"
+                        (pageChange)="currentPage = $event" class="text-end"
+                        (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="max-width: 65%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    <span>{{header}} - Tagged Hospitals</span>
+
+                    <!-- <span>{{fullname}} - Tagged Hospitals</span> -->
+
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-lg-7 col-xxl-7" style="margin-top: 10px">
+                        <!-- Total Record : {{count}} -->
+                    </div>
+                    <div class="col-lg-2 col-xxl-2" style="text-align:end ;">
+                        <button class="btn btn-success btn-sm mx-1" style="margin-top: 10px" tooltip="Excel"
+                            (click)="downloadReportList(1)">
+                            <i class="bi bi-file-earmark-spreadsheet"></i>
+                        </button>
+                        <button class="btn btn-danger btn-sm mx-1" style="margin-top: 10px" tooltip="pdf" (click)="downloadReportList(2)">
+                            <i class="bi bi-file-earmark-pdf"></i>
+                          </button>
+                    </div>
+                    <div class="col-lg-3 col-xxl-3">
+                        <input type="text" class="form-control" placeholder="Search here" style="margin-top: 10px"
+                            [(ngModel)]="txtsearchDate">
+                    </div>
+                </div>
+                <br>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Sl No</th>
+                            <th>Hospital Name</th>
+                            <th>Hospital Code</th>
+                            <th>State</th>
+                            <th>District</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngIf="count>0">
+                            <tr *ngFor="let item of detailData | filter:txtsearchDate; index as j">
+                                <td>{{j+1}}</td>
+                                <td>{{item.hospitalName}} </td>
+                                <td>{{item.hospitalCode}} </td>
+                                <td>{{item.state}}</td>
+                                <td>{{item.dist}}</td>
+                            </tr>
+                        </ng-container>
+                        <tr *ngIf="count==0">
+                            <div class="row">
+                                <span style="color: red;text-align: center;position:absolute">NO DATA FOUND!!</span>
+                            </div>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

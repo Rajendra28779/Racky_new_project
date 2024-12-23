@@ -1,0 +1,131 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+      <div class="row justify-content-between">
+          <div class="col-lg-4">
+              <ul class="nav nav-tabs ">
+                <li class="nav-item" *ngIf="isUpdateBtnInVisible">
+                  <a routerLink="/application/packgaeunbundlingmaster" routerLinkActive="active" class="nav-link active">Add</a>
+              </li>
+              <li class="nav-item" *ngIf="!isUpdateBtnInVisible">
+                <a routerLink="/application/packgaeunbundlingmaster" routerLinkActive="active" class="nav-link active">Update</a>
+            </li>
+              <li class="nav-item">
+                <a routerLink="/application/packgaeunbundlingmasterview" routerLinkActive="active" class="nav-link" style="color: #1f723f;">View</a>
+            </li>
+              </ul>
+          </div>
+      </div>
+  </div>
+
+  <div class="content-box">
+    <div class="row">
+      <div class="col-lg-6 col-xxl-3">
+        <div class="mb-xl-3">
+            <label class="control-label">Unbundling Package Name</label><span class="text-danger">*</span>
+            <textarea class="form-control"  placeholder="Enter Unbundling Package Name" autocomplete="off" id="packagename" maxlength="1000" [(ngModel)]="getbyid.packagename"
+                onkeyup="this.value=this.value.replace(/[^0-9.a-zA-Z ]/g,'');" #myInput  (keypress)="keyPress($event)"></textarea>
+                <span class="text-danger small">Characters Remaining: {{maxChars - myInput.value.length}}</span>
+        </div>
+      </div>
+    </div>
+  <div class="row mt-2">
+    <div class="col-lg-3 col-xxl-3">
+      <div class="mb-xl-3">
+          <label class="control-label">Speciality Name</label><span class="text-danger">*</span>
+          <ng-autocomplete #auto [data]="packageHeaderItem" placeholder="Select Package Name" (selected)="selectEvent($event)"
+              (inputCleared)="clearEvent()" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate"
+              [searchKeyword]="keyword" spellcheck="false" >
+          </ng-autocomplete>
+
+          <ng-template #itemTemplate let-item>
+              <a [innerHTML]="item.packageheadername"></a>
+          </ng-template>
+
+          <ng-template #notFoundTemplate let-notFound>
+              <div [innerHTML]="notFound"></div>
+          </ng-template>
+      </div>
+  </div>
+  <div class="col-lg-4 col-xxl-4">
+      <div class="mb-xl-3">
+          <label class="control-label">Unbundling Package Code</label><span class="text-danger">*</span>
+          <ng-multiselect-dropdown #multiSelect [placeholder]="placeHolder" [data]="packageList" [settings]="dropdownSettings" id="hospitalCode" (onSelect)=onItemSelect($event) (onDeSelect)="onItemDeSelect($event)" (onSelectAll)="onSelectAll($event)"
+           (onDeSelectAll)="onDeSelectAll($event)">
+          </ng-multiselect-dropdown>
+      </div>
+  </div>
+  </div>
+  <div class="row">
+      <div class="col-lg-4 col-xxl-4" *ngIf="!isUpdateBtnInVisible">
+        <div class="mb-xl-3">
+            <label>Status:</label>&nbsp;&nbsp;<br>
+                    <label *ngIf="getbyid.status==0">
+                        <input type="radio" checked="checked" [checked]="true" (click)="yes($event)"
+                        name="status" id="status">Active &nbsp;&nbsp;
+                        <input type="radio" (click)="no($event)"
+                        name="status" id="status">In-Active
+                    </label>
+
+                    <label *ngIf="getbyid.status==1">
+                        <input type="radio" (click)="yes($event)"
+                        name="status" id="status">Active &nbsp;&nbsp;
+                        <input type="radio" checked="checked" [checked]="true" (click)="no($event)"
+                        name="status" id="status">In-Active
+                    </label>
+        </div>
+    </div>
+    <div class="col-lg-8 col-xxl-8">
+      <div class="mb-xl-3">
+              <div class="form-cointainer" *ngIf="hospList.length!=0">
+                <div class="main-tab">
+                    <div class="row justify-content-between">
+                        <div class="table-responsive">
+                            <table class="table table-striped" mb-0>
+                                <thead>
+                                    <tr>
+                                        <th>Sl No</th>
+                                        <th>Speciality Code</th>
+                                        <th>Speciality Name</th>
+                                        <th>Package Code</th>
+                                        <th style="text-align: center;">Remove</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of hospList; index as i">
+                                        <td>{{i+1}}</td>
+                                        <td>{{item.specCode}}</td>
+                                        <td>{{item.specName}}</td>
+                                        <td>{{item.procName}}</td>
+                                        <td style="text-align: center;">
+                                            <a class="btn btn-outline-danger btn-sm me-1" (click)="remove(item)">
+                                                <i class="bi bi-trash3"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+      </div>
+      </div>
+    </div>
+  </div>
+    <div class="col-lg-12 mt-3" >
+      <div class="d-grid gap-2 d-md-flex" >
+          <div *ngIf="!isUpdateBtnInVisible">
+              <div >
+              <button type="button" class="btn btn-success" (click)="updategroup(updatinglist)">Update</button>&nbsp;
+              <input type="button" value="Cancel" class="btn btn-secondary" (click)="ResetForm()">
+              </div>
+          </div>
+          <div *ngIf="isUpdateBtnInVisible">
+              <div >
+              <button type="button" class="btn btn-success" (click)="SubmitCreate()">Submit</button>&nbsp;
+              <input type="reset" value="Reset" class="btn btn-secondary" (click)="resetVal()">
+          </div>
+          </div>
+      </div >
+  </div>
+  </div>
+</div>

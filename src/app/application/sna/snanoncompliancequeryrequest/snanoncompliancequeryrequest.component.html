@@ -1,0 +1,285 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/NoncomplianceQueryRequest" class="nav-link active">SNA Non-compliance Query Request List</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="content-box">
+        <div class="col-xxl-10">
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <div class="mb-xl-3">
+                            <div class="mb-xl-3">
+                                <label for="EnterFullName" class="form-label">Scheme Name<span class="text-danger">*</span></label>
+                                <input class="form-control" type="text" placeholder="Scheme Name" autocomplete="off" maxlength="30" id="schemename" [(ngModel)]="schemeName" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4 ">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3 ">
+                        <label class="control-label">Scheme Category Name<span class="text-danger"></span></label>
+                        <select class="form-select" name="schemacategory" id="schemacategory" (change)="getschemacategoryid($event.target.value)" style="margin-top: 9px;">
+                            <option value="" selected >All</option>
+                            <ng-container *ngFor="let item of schemeList">
+                                <option value={{item.schemeCategoryId}}>{{item.categoryName}}</option>
+                            </ng-container>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Requested From</label><span class="text-danger">*</span>
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="date9" name="fromDate">
+                            <label class="input-group-text bg-transparent border-start-0" for="date9"><i class="iconbsky-calendar"></i> </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Requested To</label><span class="text-danger">*</span>
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="date10" name="toDate">
+                            <label class="input-group-text bg-transparent border-start-0" for="date10"><i class="iconbsky-calendar"></i> </label>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Request Type</label>
+                        <select class="form-select" id="actionType" aria-label="Disabled select example" [(ngModel)]="actionId">
+                            <option value="3">Non-compliance of Query CPD</option>
+                            <option value="4">Non-compliance of Query SNA</option>
+                          </select>
+                    </div>
+                </div> -->
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">State Name</label>
+                        <select class="form-select" id="statecode1" aria-label="Disabled select example" (change)="OnChangeState($event)">
+                            <option value="" selected>Select State</option>
+                            <option *ngFor="let c of statelist" [value]="c.stateCode">{{c.stateName}}</option>
+                          </select>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">District Name</label>
+                        <select class="form-select" id="distcode1" aria-label="Disabled select example" (change)="OnChangeDist($event)">
+                            <option value="" selected>Select District</option>
+                            <option *ngFor="let c of distList" [value]="c.DISTRICTCODE">{{c.DISTRICTNAME}}</option>
+                          </select>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Hospital Name</label>
+                        <select class="form-select" name="hospitalcode" id="hospitalcode">
+                            <option value="" selected >Select Hospital Name</option>
+                            <option *ngFor="let c of hospitalList" [value]="c.HOSPITALCODE">{{c.HOSPITALNAME}}</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Speciality Name</label>
+                        <select class="form-select" name="spId" id="spId" >
+                            <option value="" selected >Select Speciality Name</option>
+                            
+                        </select>
+                    </div>
+                    <div class="col-lg-4 col-xxl-4">
+                        <div class="mb-xl-3">
+                            <label class="control-label">Package Name<span class="text-danger">*</span></label>
+                            <select class="form-select" name="pkgId" id="pkgId">
+                                <option value="" selected>Select Package Name</option>
+    
+                            </select>
+                        </div>
+                    </div>
+                </div> -->
+                <div class="col-lg-12">
+                    <div class="d-grid gap-2 d-md-flex">
+                        <button type="submit" class="btn btn-success" (click)="getRejectedRequestList()">Search</button>
+                        <button type="reset" class="btn btn-secondary" (click)="ResetField()">Reset</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+        <div class="col-lg-4 col-xxl-4">Total Request List : {{totalCount}}</div>
+        <div class="col-lg-4 col-xxl-4"></div>
+        <div class="col-lg-4 col-xxl-4">
+            <div class="input-group">
+                <input type="text" id="txtsearchDate" class="form-control" placeholder="Search" name="txtsearchDate" [(ngModel)]="txtsearchDate" autocomplete="off">
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3 mt-3">
+        <div class="col-lg-9 col-xxl-9">
+            <div [align]="'start'" class="table-utilities">
+                <button class="btn btn-success btn-sm mx-1" tooltip="Excel" (click)="downloadReport()">
+                <i class="bi bi-download" ></i>
+              </button>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xxl-3">
+        </div>
+    </div>
+    <div class="content-box p-0 overflow-hidden">
+
+        <div class="table-responsive">
+            <table class="table table-striped mb-0">
+                <thead>
+                    <tr>
+                        <th width="40">Sl#</th>
+                        <th>URN</th>
+                        <th>Claim No</th>
+                        <th>Patient Name</th>
+                        <th>Package ID</th>
+                        <th>Requested On</th>
+                        <th>Last Query On</th>
+                        <th>Amount (₹)</th>
+                        <!-- <th>Alloted Date</th> -->
+                        <th width="130">Take Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let claim of rejectRequestList | filter:txtsearchDate  | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};
+                    index as i">
+                        <td *ngIf="currentPage==1">{{(i+1)}}</td>
+                        <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+ i+1}}</td>
+                        <td>{{claim.urn}}</td>
+                        <td style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#claimnumberhistorymodal" (click)="gethistoryclaimno(claim.claimNo)" title="Click here to get Claim Number Details"><a>{{claim.claimNo}}</a></td>
+                        <td>{{claim.patientName}}</td>
+                        <td title={{claim.packageName}}> {{claim.packageCode}}</td>
+                        <td> {{claim.createdOn | date :'dd-MMM-yyyy, h:mm:ss a'}}</td>
+                        <td> {{claim.lastQueryOn | date :'dd-MMM-yyyy, h:mm:ss a'}}</td>
+                        <!-- <td> {{claim.cpdAlotteddate | date :'dd-MMM-yyyy, h:mm:ss a'}}</td> -->
+                        <td> {{claim.currentTotalAmount | currency:'':''}}</td>
+
+                        <td class="text-center">
+                            <a class="btn btn-outline-success btn-sm" (click)="onAction(claim.transactionDetailsId,claim.urn,claim.packageCode)">Action</a>
+                        </td>
+                    </tr>
+                    <tr *ngIf="rejectRequestList.length==0">
+                        <div class="row">
+                            <span style="color: red;text-align: center;position:absolute">NO DATA FOUND!!</span>
+                        </div>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 20px;" *ngIf="showPegi">
+        <div class="col-sm-6">
+            <div class="col-sm-*">
+                show
+                <select id="pageItem" name="pageItem" class="custom-select-sm" (change)="pageItemChange()">
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                </select> entries
+            </div>
+        </div>
+        <div class="col-sm-6 text-right">
+            <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true" (pageChange)="currentPage = $event" (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+        </div>
+    </div>
+</div>
+
+<!-- CLAIM NUMBER POPUP -->
+<div class="modal fade" id="claimnumberhistorymodal" aria-labelledby="exampleModalLabel" data-bs-backdrop="static" tabindex="-1" aria-hidden="true" data-bs-focus="false">
+    <div class="modal-dialog modal-xl modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Claim Number Details</h5>
+                <button type="button" #closebutton class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="accordion custom-accrodion" id="claimexample">
+                    <div class="accordion-item mb-3 border-0">
+                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#otpExample">
+                            <div class="accordion-body p-0">
+                                <div class="table-responsive mb-2 custom-tbl">
+                                    <table class="table table-striped border">
+                                        <thead class="tbl-topfix bgcolor-th">
+                                            <tr>
+                                                <th class="text-center">Sl#</th>
+                                                <th class="text-center">Claim No.</th>
+                                                <th class="text-center">Hospital Name</th>
+                                                <th class="text-center">Hospital Code</th>
+                                                <th class="text-center">Action By</th>
+                                                <th class="text-center">Action Type</th>
+                                                <th class="text-center">Action On</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let item of claimDetails index as i" class="mob-box">
+                                                <td data-th="Sl#">
+                                                    <div class="text-center" class="mob-sec">
+                                                        {{i+1}}
+                                                    </div>
+                                                </td>
+                                                <td data-th="Hospital Details">
+                                                    <div class="text-center" class="mob-sec">
+                                                        <div class="fw-500"> {{item.claim_no}} </div>
+                                                    </div>
+                                                </td>
+                                                <td data-th="Hospital Details">
+                                                    <div class="text-center" class="mob-sec">
+                                                        <div class="fw-500"> {{item.hospitalname}} </div>
+                                                    </div>
+                                                </td>
+                                                <td data-th="Created On">
+                                                    <div class="text-center" class="mob-sec">
+                                                        <div class="fw-500"> {{item.hospitalcode}} </div>
+                                                    </div>
+                                                </td>
+                                                <td data-th="Verified Member Name" class="fw-500">
+                                                    <div class="text-center" class="mob-sec">
+                                                        {{item.fullname}}
+                                                    </div>
+                                                </td>
+                                                <td data-th="Verified Member Name" class="fw-500">
+                                                    <div class="text-center" class="mob-sec">
+                                                        {{item.actiontype}}
+                                                    </div>
+                                                </td>
+                                                <td data-th="Verified Member Name" class="fw-500">
+                                                    <div class="text-center" class="mob-sec">
+                                                        {{item.actionon}}
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr *ngIf="claimDetails?.length==0" align="center">
+                                                <td class="text-center" data-th="No Data Found" colspan="14" align="center"><strong class="text-danger">No Data found</strong></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

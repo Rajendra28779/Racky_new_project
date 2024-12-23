@@ -1,0 +1,119 @@
+@font-face {
+    font-family: 'iconbsky';
+    src: url('../fonts/iconbsky.eot?ej7g21');
+    src: url('../fonts/iconbsky.eot?ej7g21#iefix') format('embedded-opentype'),
+        url('../fonts/iconbsky.ttf?ej7g21') format('truetype'),
+        url('../fonts/iconbsky.woff?ej7g21') format('woff'),
+        url('../fonts/iconbsky.svg?ej7g21#iconbsky') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+}
+
+[class^="iconbsky-"],
+[class*=" iconbsky-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'iconbsky' !important;
+    speak: never;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.iconbsky-view:before {
+    content: "\e900";
+}
+
+.iconbsky-urn-number:before {
+    content: "\e901";
+}
+
+.iconbsky-upload-icon:before {
+    content: "\e902";
+}
+
+.iconbsky-reject-on:before {
+    content: "\e903";
+}
+
+.iconbsky-procedure:before {
+    content: "\e906";
+}
+
+.iconbsky-password:before {
+    content: "\e907";
+}
+
+.iconbsky-package-amount:before {
+    content: "\e908";
+}
+
+.iconbsky-package:before {
+    content: "\e909";
+}
+
+.iconbsky-notification:before {
+    content: "\e90a";
+}
+
+.iconbsky-mobile:before {
+    content: "\e90b";
+}
+
+.iconbsky-location:before {
+    content: "\e90c";
+}
+
+.iconbsky-list-icon:before {
+    content: "\e90d";
+}
+
+.iconbsky-invoice-number:before {
+    content: "\e90e";
+}
+
+.iconbsky-image-upload:before {
+    content: "\e90f";
+}
+
+.iconbsky-Icon-feather-mail:before {
+    content: "\e910";
+}
+
+.iconbsky-hospital:before {
+    content: "\e911";
+}
+
+.iconbsky-gender:before {
+    content: "\e912";
+}
+
+.iconbsky-case-number:before {
+    content: "\e913";
+}
+
+.iconbsky-calendar:before {
+    content: "\e914";
+}
+
+.iconbsky-block-amount:before {
+    content: "\e915";
+}
+
+.iconbsky-approve-on:before {
+    content: "\e916";
+}
+
+.iconbsky-approve-amount:before {
+    content: "\e917";
+}
+
+.iconbsky-age:before {
+    content: "\e918";
+}

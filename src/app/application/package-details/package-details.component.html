@@ -1,0 +1,205 @@
+
+<div class="form-cointainer claim-detail">
+  
+<div class="col-lg-12">
+    <div class="card shadow-sm mt-3 mt-xl-4 ">
+        <div class="card-header">
+            <h5 class="mb-0">Package Details</h5>
+        </div>
+        <div class="card-body">
+            <div class="row gx-xl-5 treatment-details">
+
+                <div class="col-xl border-start">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <p class="small text-muted mb-0">Procedure Code</p>
+                            <h6 class="mb-0">
+                                {{packageData?.procedureCode}}
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl border-start">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <p class="small text-muted mb-0">Package Id</p>
+                            <h6 class="mb-0">
+                                {{packageData?.packageId}}
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl border-start">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <p class="small text-muted mb-0">Package Name</p>
+                            <h6 class="mb-0">
+                                {{packageData?.packageName}}
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl border-start">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <p class="small text-muted mb-0">Package Cost(₹)</p>
+                            <h6 class="mb-0">
+                                {{packageData?.cost | currency:"":""}}
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <hr class="mt-xl-4">
+                </div>
+
+
+                <div class="col-xl border-start">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <p class="small text-muted mb-0">Stratification Criteria</p>
+                            <h6 class="mb-0">
+                                {{packageData?.stratificationCriteria}}
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl border-start">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <p class="small text-muted mb-0">No of Strati Criteria Which can be Book</p>
+                            <h6 class="mb-0">
+                                {{packageData?.noofStratiCriteriaWhicanbeBook}}
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl border-start">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <p class="small text-muted mb-0">Implant Shighend Consumables</p>
+                            <h6 class="mb-0">
+                                {{packageData?.implantShighendConsumables}}
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl border-start">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <p class="small text-muted mb-0">Can More Than1 Type of Implant Book</p>
+                            <h6 class="mb-0">
+                                {{packageData?.canMoreThan1TypeofImplantBook}}
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-12">
+                    <hr class="mt-xl-4">
+                </div>
+
+                <div class="col-xl border-start">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <p class="small text-muted mb-0">Reservation Public Hospitals</p>
+                            <h6 class="mb-0">
+                                {{packageData?.reservationPublicHospitals}}
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl border-start">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <p class="small text-muted mb-0">Special Conditio Popup</p>
+                            <h6 class="mb-0">
+                                {{packageData?.specialConditioPopup}}
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl border-start">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <p class="small text-muted mb-0">Special Conditions Rule</p>
+                            <h6 class="mb-0">
+                                {{packageData?.specialConditionsRule}}
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl border-start">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <p class="small text-muted mb-0">Auto Approved</p>
+                            <h6 class="mb-0">
+                                {{packageData?.autoApproved}}
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <hr class="mt-xl-4">
+                </div>
+
+                <div class="col-xl border-start">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <p class="small text-muted mb-0">Man Documents Preauthorization</p>
+                            <h6 class="mb-0">
+                                {{packageData?.manDocumentsPreauthorization}}
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl border-start">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <p class="small text-muted mb-0">Man Doc Claim Processing</p>
+                            <h6 class="mb-0">
+                                {{packageData?.mandocclaimprocessing}}
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl border-start">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <p class="small text-muted mb-0">Remark</p>
+                            <h6 class="mb-0">
+                                {{packageData?.remark}}
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div class="col-xl border-start">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <p class="small text-muted mb-0">autoApproved</p>
+                            <h6 class="mb-0">
+                                {{packageData?.autoApproved}}
+                            </h6>
+                        </div>
+                    </div>
+                </div> -->
+
+        </div>
+    </div>
+</div>
+</div>

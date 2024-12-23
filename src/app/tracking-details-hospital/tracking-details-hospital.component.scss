@@ -1,0 +1,59 @@
+@import '../../assets/scss/mixins';
+@import '../../assets/scss/variables';
+@import '../../assets/scss/statuspage';
+
+.treatment-history {
+    li {
+        padding: .4rem;
+
+        i {
+            color: $link-color;
+        }
+    }
+}
+
+small,
+.small {
+    font-weight: normal;
+    color: $gray-600;
+    padding-bottom: .3rem;
+}
+
+.alert {
+    h5 {
+        small {
+            font-size: 70%;
+        }
+    }
+
+    i {
+        opacity: .6;
+    }
+
+    &-danger {
+        i {
+            color: $red;
+        }
+    }
+
+    &-success {
+        i {
+            color: $green;
+        }
+    }
+
+    &-primary {
+        i {
+            color: $blue;
+        }
+    }
+}
+
+.document-upload {
+    .uploaded-doc {
+        a {
+            display: block;
+            padding: 1rem;
+        }
+    }
+}

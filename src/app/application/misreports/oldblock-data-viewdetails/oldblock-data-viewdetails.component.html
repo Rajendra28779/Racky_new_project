@@ -1,0 +1,446 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+      <div class="row justify-content-between">
+          <div class="col-lg-4">
+              <ul class="nav nav-tabs">
+                  <li class="nav-item">
+                      <a style="margin-left: 3ch;" routerLinkActive="active" class="nav-link active">Old Block Data View Details</a>
+                  </li>
+              </ul>
+          </div>
+          <!-- <div class="col-lg-6 ">
+              <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+          </div> -->
+      </div>
+  </div>
+  <div class="content-box">
+                <!-- Hospital information -->
+    <div  class="col-lg-12 col-xl-12 col-xxl-12 mb-4" >
+      <div  class="card shadow-sm basic-info">
+         <div  class="card-header bg-color">
+            <h5  class="mb-0" style="color:white;">Hospital information</h5>
+         </div>
+         <div  class="card-body">
+            <div class="row treatment-details">
+               <div  class="col-xl-4 col-lg-4">
+                  <div  class="d-flex align-items-center  border-end">
+                     <div >
+                        <p  class="small text-muted mb-1">Hospital Name</p>
+                        <h6  class="mb-0"> {{result?.hospitalName}}  </h6>
+                     </div>
+                  </div>
+               </div>
+               <div  class="col-xl-4 col-lg-4">
+                  <div  class="d-flex align-items-center  border-end">
+                     <div >
+                        <p  class="small text-muted mb-1">Hospital Code</p>
+                        <h6  class="mb-0"> {{result?.hospitalCode}}  </h6>
+                     </div>
+                  </div>
+               </div>
+               <div  class="col-xl-4 col-lg-4">
+                  <div  class="d-flex align-items-center border-end">
+                     <div >
+                        <p  class="small text-muted mb-1">Hospital Address </p>
+                        <h6  class="mb-0"> {{result?.hospitalAddress}} </h6>
+                     </div>
+                  </div>
+               </div>
+          </div>
+        </div>
+      </div>
+    </div>
+                   <!-- Patient information -->
+    <div  class="col-lg-12 col-xl-12 col-xxl-12 mb-4" >
+      <div  class="card shadow-sm basic-info">
+         <div  class="card-header bg-color">
+            <h5  class="mb-0" style="color:white;">Patient information</h5>
+         </div>
+         <div  class="card-body">
+            <div class="row treatment-details">
+               <div  class="col-xl-3 col-lg-3">
+                  <div  class="d-flex align-items-center  border-end">
+                     <div >
+                        <p  class="small text-muted mb-1">Patient Name</p>
+                        <h6  class="mb-0"> {{result?.patientName}}  </h6>
+                     </div>
+                  </div>
+               </div>
+               <div  class="col-xl-3 col-lg-3">
+                  <div  class="d-flex align-items-center  border-end">
+                     <div >
+                        <p  class="small text-muted mb-1">Age</p>
+                        <h6  class="mb-0"> {{result?.age}}  </h6>
+                     </div>
+                  </div>
+               </div>
+               <div  class="col-xl-3 col-lg-3">
+                  <div  class="d-flex align-items-center border-end">
+                     <div >
+                        <p  class="small text-muted mb-1">Gender</p>
+                        <h6  class="mb-0" *ngIf="result?.gender=='M'"> Male </h6>
+                        <h6  class="mb-0"  *ngIf="result?.gender=='F'">FeMale</h6>
+                     </div>
+                  </div>
+               </div>
+               <div  class="col-xl-3 col-lg-3">
+                <div  class="d-flex align-items-center ">
+                   <div >
+                      <p  class="small text-muted mb-1">Phone no</p>
+                      <h6  class="mb-0"> {{result?.PatientPhoneNo}} </h6>
+                   </div>
+                </div>
+             </div>
+             <div  class="col-12">
+              <hr  class="mt-xl-3">
+           </div>
+               <div  class="col-xl-3 col-lg-3">
+                  <div  class="d-flex align-items-center  border-end">
+                     <div >
+                        <p  class="small text-muted mb-1">Patient Address</p>
+                        <h6  class="mb-0" style="width:28ch;"> {{result?.patientAddress}}  </h6>
+                     </div>
+                  </div>
+               </div>
+               <div  class="col-xl-3 col-lg-3">
+                  <div  class="d-flex align-items-center  border-end">
+                     <div >
+                        <p  class="small text-muted mb-1">District Name</p>
+                        <h6  class="mb-0"> {{result?.districtName}}  </h6>
+                     </div>
+                  </div>
+               </div>
+               <div  class="col-xl-3 col-lg-3">
+                  <div  class="d-flex align-items-center border-end">
+                     <div >
+                        <p  class="small text-muted mb-1">Block Name</p>
+                        <h6  class="mb-0"> {{result?.blockname}} </h6>
+                     </div>
+                  </div>
+               </div>
+               <div  class="col-xl-3 col-lg-3">
+                <div  class="d-flex align-items-center ">
+                   <div >
+                      <p  class="small text-muted mb-1">Village Name</p>
+                      <h6  class="mb-0"> {{result?.villageName}} </h6>
+                   </div>
+                </div>
+             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+                   <!-- Treatment information -->
+    <div  class="col-lg-12 col-xl-12 col-xxl-12 mb-4" >
+      <div  class="card shadow-sm basic-info">
+         <div  class="card-header bg-color">
+            <h5  class="mb-0" style="color:white;">Treatment information</h5>
+         </div>
+         <div  class="card-body">
+            <div class="row treatment-details">
+               <div  class="col-xl-3 col-lg-3">
+                  <div  class="d-flex align-items-center  border-end">
+                     <div >
+                        <p  class="small text-muted mb-1">Actual Date Of Admission</p>
+                        <h6  class="mb-0"> {{result?.actualDateOfadmission}}  </h6>
+                     </div>
+                  </div>
+               </div>
+               <div  class="col-xl-3 col-lg-3">
+                  <div  class="d-flex align-items-center  border-end">
+                     <div >
+                        <p  class="small text-muted mb-1">Actual Date Of Discharge</p>
+                        <h6  class="mb-0"> {{result?.actualDateOfDischarge}}  </h6>
+                     </div>
+                  </div>
+               </div>
+               <div  class="col-xl-3 col-lg-3">
+                <div  class="d-flex align-items-center border-end">
+                   <div >
+                      <p  class="small text-muted mb-1">Date Of Admission</p>
+                      <h6  class="mb-0"> {{result?.DateOfAdmission}} </h6>
+                   </div>
+                </div>
+             </div>
+             <div  class="col-xl-3 col-lg-3">
+              <div  class="d-flex align-items-center ">
+                 <div >
+                    <p  class="small text-muted mb-1">Date Of Discharge</p>
+                    <h6  class="mb-0"> {{result?.DateOfDischarge}} </h6>
+                 </div>
+              </div>
+           </div>
+             <div  class="col-12">
+              <hr  class="mt-xl-3">
+           </div>
+               <div  class="col-xl-3 col-lg-3">
+                  <div  class="d-flex align-items-center  border-end">
+                     <div >
+                        <p  class="small text-muted mb-1">Procedure Name</p>
+                        <h6  class="mb-0"> {{result?.procedureName}}  </h6>
+                     </div>
+                  </div>
+               </div>
+               <div  class="col-xl-3 col-lg-3">
+                  <div  class="d-flex align-items-center  border-end">
+                     <div >
+                        <p  class="small text-muted mb-1">Package Name</p>
+                        <h6  class="mb-0"> {{result?.PackageName}}  </h6>
+                     </div>
+                  </div>
+               </div>
+               <div  class="col-xl-3 col-lg-3">
+                  <div  class="d-flex align-items-center border-end">
+                     <div >
+                        <p  class="small text-muted mb-1">Package Code</p>
+                        <h6  class="mb-0"> {{result?.packageCode}} </h6>
+                     </div>
+                  </div>
+               </div>
+               <div  class="col-xl-3 col-lg-3">
+                <div  class="d-flex align-items-center ">
+                   <div >
+                      <p  class="small text-muted mb-1">Family Head Name</p>
+                      <h6  class="mb-0"> {{result?.familyheadName}} </h6>
+                   </div>
+                </div>
+             </div>
+
+            <div  class="col-12">
+              <hr  class="mt-xl-3">
+           </div>
+               <div  class="col-xl-3 col-lg-3">
+                  <div  class="d-flex align-items-center  border-end">
+                     <div >
+                        <p  class="small text-muted mb-1">Verifire Name</p>
+                        <h6  class="mb-0"> {{result?.VerifireName}}  </h6>
+                     </div>
+                  </div>
+               </div>
+               <div  class="col-xl-3 col-lg-3">
+                  <div  class="d-flex align-items-center  border-end">
+                     <div >
+                        <p  class="small text-muted mb-1">Mortality</p>
+                        <h6  class="mb-0"> {{result?.mortality}}  </h6>
+                     </div>
+                  </div>
+               </div>
+               <div  class="col-xl-3 col-lg-3">
+                  <div  class="d-flex align-items-center border-end">
+                     <div >
+                        <p  class="small text-muted mb-1">Referral Code</p>
+                        <h6  class="mb-0"> {{result?.referralCode}} </h6>
+                     </div>
+                  </div>
+               </div>
+               <div  class="col-xl-3 col-lg-3">
+                <div  class="d-flex align-items-center ">
+                   <div >
+                      <p  class="small text-muted mb-1">Authorized Code</p>
+                      <h6  class="mb-0"> {{result?.authorizedCode}} </h6>
+                   </div>
+                </div>
+             </div>
+            <div  class="col-12">
+              <hr  class="mt-xl-3">
+           </div>
+               <div  class="col-xl-3 col-lg-3">
+                  <div  class="d-flex align-items-center  border-end">
+                     <div >
+                        <p  class="small text-muted mb-1">NABH Flag</p>
+                        <h6  class="mb-0"> {{result?.nabhFlag}}  </h6>
+                     </div>
+                  </div>
+               </div>
+               <div  class="col-xl-3 col-lg-3">
+                  <div  class="d-flex align-items-center  border-end">
+                     <div >
+                        <p  class="small text-muted mb-1">Implant Data</p>
+                        <h6  class="mb-0"> {{result?.implantdata}}  </h6>
+                     </div>
+                  </div>
+               </div>
+               <div  class="col-xl-3 col-lg-3">
+                  <div  class="d-flex align-items-center border-end">
+                     <div >
+                        <p  class="small text-muted mb-1">Claim Status</p>
+                        <h6  class="mb-0"> {{result?.claimstatus}} </h6>
+                     </div>
+                  </div>
+               </div>
+               <div  class="col-xl-3 col-lg-3">
+                <div  class="d-flex align-items-center ">
+                   <div >
+                      <p  class="small text-muted mb-1">Approved Amount</p>
+                      <h6  class="mb-0"> {{result?.approvedAmount}} </h6>
+                   </div>
+                </div>
+             </div>
+             <div  class="col-12">
+              <hr  class="mt-xl-3">
+           </div>
+               <div  class="col-xl-3 col-lg-3">
+                  <div  class="d-flex align-items-center  border-end">
+                     <div >
+                        <p  class="small text-muted mb-1">Approve Date</p>
+                        <h6  class="mb-0"> {{result?.approveddate  | date :'dd-MMM-yyyy, h:mm:ss a'}}  </h6>
+                     </div>
+                  </div>
+               </div>
+               <div  class="col-xl-3 col-lg-3">
+                  <div  class="d-flex align-items-center  border-end">
+                     <div >
+                        <p  class="small text-muted mb-1">Paid By</p>
+                        <h6  class="mb-0"> {{result?.paidby}}  </h6>
+                     </div>
+                  </div>
+               </div>
+               <div  class="col-xl-3 col-lg-3">
+                  <div  class="d-flex align-items-center border-end">
+                     <div >
+                        <p  class="small text-muted mb-1">Bank Name</p>
+                        <h6  class="mb-0"> {{result?.bankName}} </h6>
+                     </div>
+                  </div>
+               </div>
+               <div  class="col-xl-3 col-lg-3">
+                <div  class="d-flex align-items-center ">
+                   <div >
+                      <p  class="small text-muted mb-1">Paid Date</p>
+                      <h6  class="mb-0"> {{result?.paidDate  | date :'dd-MMM-yyyy, h:mm:ss a'}} </h6>
+                   </div>
+                </div>
+             </div>
+             <div  class="col-12">
+              <hr  class="mt-xl-3">
+           </div>
+               <div  class="col-xl-3 col-lg-3">
+                  <div  class="d-flex align-items-center  border-end">
+                     <div >
+                        <p  class="small text-muted mb-1">Remark</p>
+                        <h6  class="mb-0"> {{result?.remark}}  </h6>
+                     </div>
+                  </div>
+               </div>
+               <div  class="col-xl-3 col-lg-3">
+                  <div  class="d-flex align-items-center  border-end">
+                     <div >
+                        <p  class="small text-muted mb-1">Rejected By</p>
+                        <h6  class="mb-0"> {{result?.rejecteduser}}  </h6>
+                     </div>
+                  </div>
+               </div>
+               <div  class="col-xl-3 col-lg-3">
+                  <div  class="d-flex align-items-center border-end">
+                     <div >
+                        <p  class="small text-muted mb-1">Investigation Date</p>
+                        <h6  class="mb-0"> {{result?.investigationDate  | date :'dd-MMM-yyyy, h:mm:ss a'}} </h6>
+                     </div>
+                  </div>
+               </div>
+               <div  class="col-xl-3 col-lg-3">
+                <div  class="d-flex align-items-center ">
+                   <div >
+                      <p  class="small text-muted mb-1">Sna Claim Status</p>
+                      <h6  class="mb-0"> {{result?.snaclaimStatus}} </h6>
+                   </div>
+                </div>
+             </div>
+             <div  class="col-12">
+              <hr  class="mt-xl-3">
+           </div>
+               <div  class="col-xl-3 col-lg-3">
+                  <div  class="d-flex align-items-center  border-end">
+                     <div >
+                        <p  class="small text-muted mb-1">Sna Approved Amount</p>
+                        <h6  class="mb-0"> {{result?.snaApprovedAmount}}  </h6>
+                     </div>
+                  </div>
+               </div>
+               <div  class="col-xl-3 col-lg-3">
+                  <div  class="d-flex align-items-center  border-end">
+                     <div >
+                        <p  class="small text-muted mb-1">Sna Approved Date</p>
+                        <h6  class="mb-0"> {{result?.snaApprovedDate  | date :'dd-MMM-yyyy, h:mm:ss a'}}  </h6>
+                     </div>
+                  </div>
+               </div>
+               <div  class="col-xl-3 col-lg-3">
+                  <div  class="d-flex align-items-center border-end">
+                     <div >
+                        <p  class="small text-muted mb-1">Sna Rejected Date</p>
+                        <h6  class="mb-0"> {{result?.snaRejectedDate  | date :'dd-MMM-yyyy, h:mm:ss a'}} </h6>
+                     </div>
+                  </div>
+               </div>
+               <div  class="col-xl-3 col-lg-3">
+                <div  class="d-flex align-items-center ">
+                   <div >
+                      <p  class="small text-muted mb-1">Sna Investigation Date</p>
+                      <h6  class="mb-0"> {{result?.snaInvestigationdate  | date :'dd-MMM-yyyy, h:mm:ss a'}} </h6>
+                   </div>
+                </div>
+             </div>
+             <div  class="col-12">
+              <hr  class="mt-xl-3">
+           </div>
+               <div  class="col-xl-3 col-lg-3">
+                  <div  class="d-flex align-items-center  border-end">
+                     <div >
+                        <p  class="small text-muted mb-1">Sna remark</p>
+                        <h6  class="mb-0"> {{result?.snaremark}}  </h6>
+                     </div>
+                  </div>
+               </div>
+               <div  class="col-xl-3 col-lg-3">
+                  <div  class="d-flex align-items-center  border-end">
+                     <div >
+                        <p  class="small text-muted mb-1">TPA Final Status</p>
+                        <h6  class="mb-0"> {{result?.tpafinalstatus}}  </h6>
+                     </div>
+                  </div>
+               </div>
+               <div  class="col-xl-3 col-lg-3">
+                  <div  class="d-flex align-items-center border-end">
+                     <div >
+                        <p  class="small text-muted mb-1">TPA Final Dicission Date</p>
+                        <h6  class="mb-0"> {{result?.tpafinalDicissionDate  | date :'dd-MMM-yyyy, h:mm:ss a'}} </h6>
+                     </div>
+                  </div>
+               </div>
+               <div  class="col-xl-3 col-lg-3">
+                <div  class="d-flex align-items-center ">
+                   <div >
+                      <p  class="small text-muted mb-1">Reverted DATE</p>
+                      <h6  class="mb-0"> {{result?.revertedDATE  | date :'dd-MMM-yyyy, h:mm:ss a'}} </h6>
+                   </div>
+                </div>
+             </div>
+             <div  class="col-12">
+              <hr  class="mt-xl-3">
+           </div>
+               <div  class="col-xl-3 col-lg-3">
+                  <div  class="d-flex align-items-center  border-end">
+                     <div >
+                        <p  class="small text-muted mb-1">Sna Final Status</p>
+                        <h6  class="mb-0"> {{result?.snaFinalStatus}}  </h6>
+                     </div>
+                  </div>
+               </div>
+               <div  class="col-xl-3 col-lg-3">
+                  <div  class="d-flex align-items-center  border-end">
+                     <div >
+                        <p  class="small text-muted mb-1">Sna Final Dicission Date</p>
+                        <h6  class="mb-0"> {{result?.snaFinalDicissionDate  | date :'dd-MMM-yyyy, h:mm:ss a'}}  </h6>
+                     </div>
+                  </div>
+               </div>
+
+            </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>

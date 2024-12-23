@@ -1,0 +1,288 @@
+<!--IRIS and Finger Master Data Show in Modal-->
+<button type="hidden" data-bs-toggle="modal" data-bs-target="#fingerIRISModal"
+        class="btn btn-outline-warning focusedBtn btn-sm my-2 my-sm-0" #irisFingerButton hidden>
+</button>
+
+<div class="modal fade" id="fingerIRISModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header align-items-center">
+        <h5 class="modal-title" id="exampleModalLabel" style="text-align: center;">Operator Authentication</h5>
+        <button type="button" #irisFingerClsBtn class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="OTPclsBtn"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-lg-12" style="text-align: center">
+            <div class="alert alert-warning m-0 p-2 align-items-center d-flex" >
+              <input type="checkbox" id="verificationAuthCheckbox" name="verificationAuthCheckbox" style="margin-right: 13px; zoom: 145%;"
+                     (change)="checkDeclaration($event)">
+              <label for="verificationAuthCheckbox" class="ml-2 m-0">
+                <small style="font-size: smaller"><br />
+                  I hereby state that I have no objection in authenticating myself with Aadhaar based authentication system and consent to providing through IRIS/FACE/FINGER  for Aadhaar based authentication for the application use.
+                </small>
+                <strong class="text-danger ms-1" >*</strong>
+              </label>
+
+            </div>
+
+            <br>
+            <div class="table-responsive">
+              <table id="patientFamilyList" class="table table-striped border">
+                <caption></caption>
+                <thead>
+                  <tr>
+                    <th class="black" style="width: 15%" scope="">IRIS</th>
+                    <th class="black"  style="width: 15%;" scope="">FINGER</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <div class="prehed-small">
+                        <select class="form-select" name="btnIRIS" id="btnIRIS"
+                                (change)="generateIRIS($event, 'IRIS')">
+                          <option value="0">SELECT</option>
+                          <option value="1">BIOMATIQUES IRIS</option>
+                          <option value="2">MANTRA IRIS</option>
+                        </select>
+                      </div>
+                      <div class="prehed-small">
+                        <label class="badge bg-success text-white" id="irisVerified"></label>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <div class="prehed-small">
+                        <select class="form-select" name="fingerDeviceId" id="btnFINGER"
+                                    (change)="verifyThumb($event, 'FINGER')">
+                              <option value="100">SELECT</option>
+                              <option *ngFor="let fingerDevice of fingerDeviceList" [value]="fingerDevice?.deviceId">{{fingerDevice?.deviceName}}</option>
+                            </select>
+                      </div>
+                      <div class="prehed-small">
+                        <label class="badge bg-success text-white" id="fingerVerified"></label>
+                      </div>
+                    </div>
+                  </td>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- End IRIS and Finger Master Data Show in Modal -->
+
+  <!--IRIS Modal  TMS Design-->
+<button type="hidden" data-bs-toggle="modal" data-bs-target="#IrisModal"
+class="btn btn-outline-warning focusedBtn btn-sm my-2 my-sm-0" id="IRISbtn" hidden>
+</button>
+<div class="modal fade" id="IrisModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+<div class="modal-dialog modal-lg" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel1">Authenticate</h5>
+      <button type="button" #irisCloseButton class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close"
+        id="irisCloseButton">
+        <span aria-hidden="true">x</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="row justify-content-center  customRadio">
+        <div class="col-md-3">
+          <div class="chkbox-bg">
+            <input type="radio" name="textEditor" id="rdProduction" checked="checked" value="P">
+            <label for="rdProduction"> Production </label>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="chkbox-bg">
+            <input type="radio" name="textEditor" id="rdStaging" value="S" disabled>
+            <label for="rdStaging"> Staging Server </label>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-lg-12 row">
+          <div class="col-md-3">
+            <input type="hidden" id="getrdresponse" />
+            <div class="col-form-label">
+              RD Service Status
+              <strong><span style="color:red">*</span></strong>
+            </div>
+            <input type="text" class="form-control" id="rdStatus" readonly>
+          </div>
+          <div class="col-md-3">
+            <div class="col-form-label">
+              Device Info Path
+              <strong><span style="color:red">*</span></strong>
+            </div>
+            <input type="text" class="form-control" id="rdinfo" readonly>
+          </div>
+          <div class="col-md-3">
+            <div class="col-form-label">
+              Capture Path
+              <strong><span style="color:red">*</span></strong>
+            </div>
+            <input type="text" id="capturePath" class="form-control" readonly>
+          </div>
+          <div class="col-md-3">
+            <div class="col-form-label">
+              RD Service Info
+              <strong><span style="color:red">*</span></strong>
+            </div>
+            <input type="text" class="form-control" readonly>
+          </div>
+        </div>
+      </div>
+      <div class="row  mb-3 heading-pkg border-bottom" style="margin-top: 1rem;">
+        <h5> Capture Pid Data </h5>
+      </div>
+      <div class="form-row">
+        <div class="col-lg-12 row">
+          <div class="col-md-3">
+            <div class="col-form-label">
+              Error Code
+              <strong><span style="color:red">*</span></strong>
+            </div>
+            <input type="text" class="form-control" id="errCode" readonly>
+          </div>
+          <div class="col-md-3">
+            <div class="col-form-label">
+              Quality Service
+              <strong><span style="color:red">*</span></strong>
+            </div>
+            <input type="text" class="form-control" readonly>
+          </div>
+          <div class="col-md-3">
+            <div class="col-form-label">
+              Error Info
+              <strong><span style="color:red">*</span></strong>
+            </div>
+            <input type="text" class="form-control" id="errInfo" readonly>
+          </div>
+          <div class="col-md-3">
+            <div class="col-form-label">
+              dpid
+              <strong><span style="color:red">*</span></strong>
+            </div>
+            <input type="text" class="form-control" id="dpid" readonly>
+          </div>
+          <div class="col-md-3">
+            <div class="col-form-label">
+              Red/Id
+              <strong><span style="color:red">*</span></strong>
+            </div>
+            <input type="text" class="form-control" readonly>
+          </div>
+          <div class="col-md-3">
+            <div class="col-form-label">
+              Red/info
+              <strong><span style="color:red">*</span></strong>
+            </div>
+            <input type="text" class="form-control" readonly>
+          </div>
+          <div class="col-md-3">
+            <div class="col-form-label">
+              do
+              <strong><span style="color:red">*</span></strong>
+            </div>
+            <input type="text" class="form-control" readonly>
+          </div>
+          <div class="col-md-3">
+            <div class="col-form-label">
+              mi
+              <strong><span style="color:red">*</span></strong>
+            </div>
+            <input type="text" class="form-control" id="mi" readonly>
+          </div>
+          <div class="col-md-12">
+            <div class="col-form-label">
+              mc
+              <strong><span style="color:red">*</span></strong>
+            </div>
+            <input type="text" class="form-control" id="mc" readonly>
+          </div>
+        </div>
+
+      </div>
+      <div class="mb-3">
+        <div class="row  mb-3 heading-pkg border-bottom" style="margin-top: 1rem;">
+          <h5> Auth Request </h5>
+        </div>
+        <div class="form-row">
+          <div class="col-lg-12 row">
+            <div class="col-md-3">
+              <div class="col-form-label">
+                Aadhaar UID
+                <strong><span style="color:red">*</span></strong>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <input type="text" id="AadharUidMask" class="form-control" readonly>
+              <input type="hidden" id="AadharUid" class="form-control" readonly>
+            </div>
+            <div class="col-md-3">
+              <div class="col-form-label">
+                Response Result
+                <strong><span style="color:red">*</span></strong>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <input type="text" class="form-control" readonly>
+            </div>
+          </div>
+        </div>
+        <div class="form-row" style="margin-top: 1rem">
+          <div class="col-lg-12 row">
+            <div class="col-md-3">
+              <div class="col-form-label">
+                Error code
+                <strong><span style="color:red">*</span></strong>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <input type="number" class="form-control" readonly>
+            </div>
+            <div class="col-md-3">
+              <div class="col-form-label">
+                Error Info
+                <strong><span style="color:red">*</span></strong>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <input type="text" class="form-control" readonly>
+            </div>
+          </div>
+        </div>
+        <input type="hidden" id="rdInfo" />
+        <input type="hidden" id="rdData" />
+        <input type="hidden" id="MemberId">
+        <input type="hidden" id="MemberName">
+        <input type="hidden" id="Urn">
+        <input type="hidden" id="rdport">
+        <input hidden id="DeviceSlno" />
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 px-0" style="margin-top: 1rem; text-align: left">
+          <input type="button" class="btn btn-outline-warning mb-2" value="Capture" id="btnBiomatique"
+            (click)="Capture();">
+          <input type="button" class="btn btn-outline-warning mb-2" value="Capture" id="btnMantra"
+            (click)="CaptureAvdm();">
+          <input type="button" class="btn btn-outline-warning mb-2" value="Capture" id="btnFinger"
+            (click)="CaptureFingerAvdm();">
+            <input type="button" class="btn btn-outline-warning mb-2" value="Capture" id="btnFinger1"
+            (click)="CaptureACPLFingerAvdm();">
+          <input type="button" class="btn btn-outline-success mb-2" value="Authenticate" id="btnAuthentication"
+            (click)="IRISVerify(authType)" style="margin-left: 1rem;">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+</div>
+</div>

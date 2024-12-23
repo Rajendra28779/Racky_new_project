@@ -1,0 +1,216 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+    <div class="row justify-content-between">
+      <div class="col-lg-10">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a routerLink="/application/hospitalUIDAuthConfig" routerLinkActive="active" style="color: #1f723f;"
+              class="nav-link ">Hospital Auth Mapping</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/application/hospitalUIDAuthConfigview" routerLinkActive="" class="nav-link active">Log</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-box">
+    <div class="row">
+      <div class="col-lg-3 col-xxl-3">
+        <div class="mb-xl-3">
+          <label class="control-label">State Name<span class="text-danger"></span></label>
+          <select class="form-select" name="stateId" id="stateId" (change)="onChangeState($event.target.value)">
+            <option value="" selected disabled>Select State</option>
+            <ng-container *ngFor="let item of stateList">
+              <option value={{item.stateCode}}>{{item.stateName}}</option>
+            </ng-container>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-xxl-3">
+        <div class="mb-xl-3">
+          <label class="control-label">District Name</label>
+          <select class="form-select" name="districtId" id="districtId"
+            (change)="onChangeDistrict($event.target.value)">
+            <option value="">Select All</option>
+            <ng-container *ngFor="let item of districtList">
+              <option value={{item.districtcode}}>{{item.districtname}}</option>
+            </ng-container>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-xxl-3">
+        <div class="mb-xl-3">
+          <label class="control-label">Hospital Name</label>
+          <select class="form-select" name="hosId" id="hosId">
+            <option value="">Select All</option>
+            <ng-container *ngFor="let item of hospitalList">
+              <option value={{item.hospitalCode}}>{{item.hospitalName}}</option>
+            </ng-container>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-lg-2 col-xxl-2">
+        <div class="mb-xl-3">
+          <label class="control-label"></label>
+          <div class="d-grid gap-2 d-md-flex input-group">
+            <button type="button" class="btn btn-success" (click)="fetchDetails()">Fetch</button>
+            <button type="button" class="btn btn-secondary" style="margin-left:5px;"
+              (click)="reset()">Reset</button>&nbsp;
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top: 5px;margin-bottom: 5px;">
+      <div class="col-lg-3 col-xxl-3" style="margin-top: 2ch;">
+        <div class="col-sm-*" *ngIf="showPegi">
+          show
+          <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+            <option value="100" selected>100</option>
+            <option value="250">250</option>
+            <option value="500">500</option>
+            <option value="1000">1000</option>
+            <option value="{{allRecordsSize}}">ALL</option>
+          </select> entries
+        </div>
+      </div>
+      <div class="col-lg-3 col-xxl-3" style="margin-top: 2ch;">
+        <b>Total No Of Record : {{configList.length}}</b>
+      </div>
+      <div class="col-2" style="text-align:end ;">
+        <button class="btn btn-success btn-sm mx-1" style="margin-top: 10px" tooltip="Excel" (click)="downloadList(1)">
+          <i class="bi bi-file-earmark-spreadsheet"></i>
+        </button>
+        <button class="btn btn-danger btn-sm mx-1" style="margin-top: 10px" tooltip="pdf" (click)="downloadList(2)">
+          <i class="bi bi-file-earmark-pdf"></i>
+        </button>
+      </div>
+      <div class="col-lg-4 col-xxl-4" style="text-align: right">
+        <div class="input-group">
+          <input type="text" id="txtsearchDate" class="form-control" autocomplete="off" placeholder="Search"
+            name="textSearch" [(ngModel)]="textSearch">
+        </div>
+      </div>
+    </div>
+    <div class="form-cointainer">
+      <div class="main-tab">
+        <div class="row justify-content-between">
+          <div class="table-responsive">
+            <table class="table table-striped" mb-0>
+              <caption></caption>
+              <thead>
+                <tr>
+                  <th>Sl No</th>
+                  <th>Hospital Code</th>
+                  <th>Hospital Name</th>
+                  <th>OTP</th>
+                  <th>IRIS</th>
+                  <th>POS</th>
+                  <th>FACE</th>
+                  <th>Log</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="let item of configList | filter:textSearch | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage}; index as i">
+                  <td *ngIf="currentPage==1">{{(i+1)}}</td>
+                  <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+ i+1}}</td>
+                  <td>{{item.hospitalCode}}</td>
+                  <td>{{item.hospitalName}}</td>
+                  <td><b>{{item.otp}}</b></td>
+                  <td><b>{{item.iris}}</b></td>
+                  <td><b>{{item.pos}}</b></td>
+                  <td><b>{{item.face}}</b></td>
+                  <td style="text-align:center;"><a class="btn btn-outline-primary btn-sm me-1" data-bs-toggle="modal" data-bs-target="#log"
+                    (click)="log(item)"><i class="bi bi-eye"></i></a></td>
+                </tr>
+                <tr *ngIf="!showPegi">
+                  <td colspan="10"><span style="color:red; font-weight: bold;">NO DATA FOUND !!</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top: 20px;" *ngIf="showPegi">
+      <div class="col-sm-6">
+        <div class="col-sm-*">
+          show
+          <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+            <option value="100" selected>100</option>
+            <option value="250">250</option>
+            <option value="500">500</option>
+            <option value="1000">1000</option>
+            <option value="{{allRecordsSize}}">ALL</option>
+          </select> entries
+        </div>
+      </div>
+      <div class="col-sm-6 text-right" style="text-align: right;">
+        <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true"
+          (pageChange)="currentPage = $event" (pageBoundsCorrection)="onPageBoundsCorrection($event)">
+        </pagination-controls>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal Attendance Details-->
+<div class="modal fade" id="log" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="max-width: 60%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="col-9">
+          <h5 class="modal-title" id="exampleModalLabel">
+            {{hospname}} Log Details :-
+          </h5>
+        </div>
+        <div class="col-2" style="text-align:end ;">
+          <button class="btn btn-success btn-sm mx-1" style="margin-top: 10px" tooltip="Excel"
+            (click)="downloadList1(1)">
+            <i class="bi bi-file-earmark-spreadsheet"></i>
+          </button>
+          <button class="btn btn-danger btn-sm mx-1" style="margin-top: 10px" tooltip="pdf" (click)="downloadList1(2)">
+            <i class="bi bi-file-earmark-pdf"></i>
+          </button>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive example-container1" style="margin-top:1ch;">
+          <table class="table table-striped">
+            <caption></caption>
+            <thead>
+              <tr>
+                <th>Sl No</th>
+                <th>Verification Mode</th>
+                <th>Allow Status</th>
+                <th>Updated By</th>
+                <th>Updated On</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of loglist ,index as i">
+                <td>{{i+1}}</td>
+                <td>{{item.verificationMode}}</td>
+                <td>{{item.allowstatus}}</td>
+                <td>{{item.logcreatby}}</td>
+                <td>{{item.logcreatedon}}</td>
+              </tr>
+              <tr *ngIf="loglist?.length==0">
+                <td colspan="10" style="text-align:center;"><strong class="text-danger">No data found</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

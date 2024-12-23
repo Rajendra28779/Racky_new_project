@@ -1,0 +1,720 @@
+<div class="ceo__dashboard">
+  <!-- top section -->
+
+  <!-- top section -->
+  <div class="box-outer">
+    <!-- funds section -->
+    <section class="funds_section">
+      <div class="row">
+        <div class="col-xxl-3 col-xl-3 col-lg-6 col-md-5 col-sm-6 col-12 mb-3">
+          <div class="card bg_blue">
+            <div class="card-body">
+              <div class="total_hospitalsec">
+                <div class="funds_content">
+                  <label> Total Hospital </label>
+                  <p>{{hosFamilyData?.totalHospital}}</p>
+                </div>
+                <div class="funds_icongrid">
+                  <img alt="Icon" src="../../../assets/img/svg/hospital.svg" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xxl-3 col-xl-3 col-lg-6 col-md-7 col-sm-6 col-12 mb-3">
+          <div class="card bg_green">
+            <div class="card-body">
+              <div class="total_hospitalsec">
+                <div class="funds_content">
+                  <label> Empanneled </label>
+                  <div class="small_part">
+                    <div>
+                      <h5>{{hosFamilyData?.totalInsideHospital}}</h5>
+                      <div class="content">Inside</div>
+                    </div>
+                    <div>
+                      <h5>{{hosFamilyData?.totalOutsideHospital}}</h5>
+                      <div class="content">Outside</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="funds_icongrid">
+                  <img
+                    alt="Icon"
+                    src="../../../assets/img/svg/health-insurance.svg"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xxl-3 col-xl-3 col-lg-6 col-md-7 col-sm-6 col-12 mb-3">
+          <div class="card bg_yellow">
+            <div class="card-body">
+              <div class="total_hospitalsec">
+                <div class="funds_content">
+                  <label> Suspended </label>
+                  <p>{{hosFamilyData?.totalSuspendedHospital}}</p>
+                </div>
+                <div class="funds_icongrid">
+                  <img alt="Icon" src="../../../assets/img/svg/suspended.svg" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xxl-3 col-xl-3 col-lg-6 col-md-5 col-sm-6 col-12 mb-3">
+          <div class="card bg_orange">
+            <div class="card-body">
+              <div class="total_hospitalsec">
+                <div class="funds_content">
+                  <label> De-Empanneled </label>
+                  <p>{{hosFamilyData?.totalDeEnpaneledHospital}}</p>
+                </div>
+                <div class="funds_icongrid">
+                  <img alt="Icon" src="../../../assets/img/svg/patient.svg" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- funds section -->
+    <!-- price chart section -->
+    <section class="unique__section">
+      <div class="row">
+        <div class="col-xxl-4 col-xl-4 col-lg-9 col-md-9 col-sm-12 col-12 mb-3">
+          <div class="card">
+            <div class="card-body">
+              <div class="flexing_uniquie row">
+                <div class="item col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-12">
+                  <div class="icon_uniquie">
+                    <img src="../../../assets/img/svg/community.svg" />
+                  </div>
+                  <label> {{hosFamilyData?.totalFamily}} </label>
+                  <p>Total Family</p>
+                </div>
+                <div
+                  class="item col-xxl-7 col-xl-7 col-lg-7 col-md-7 col-12 px-4"
+                >
+                  <ul>
+                    <li>
+                      <div class="item_flex">
+                        <p>NFSA</p>
+                        <label> {{hosFamilyData?.nfsaFamily}} </label>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="item_flex">
+                        <p>SFSA</p>
+                        <label> {{hosFamilyData?.sfsaFamily}} </label>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="item_flex">
+                        <p>Nabin</p>
+                        <label> {{hosFamilyData?.nabinFamily}} </label>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+
+                <!-- <div class="item col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-12">
+                  <div id="donutprice_chart" class="chart_section_price"></div>
+                </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="col-xxl-4 col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12 mb-3"
+        >
+          <div class="card">
+            <div class="card-body">
+              <div class="flexing_uniquie row">
+                <div class="item col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-12">
+                  <div class="icon_uniquie">
+                    <img src="../../../assets/img/svg/community.svg" />
+                  </div>
+
+                  <label> {{hosFamilyData?.totalMember}} </label>
+                  <p>Total member</p>
+                </div>
+
+                <div
+                  class="item col-xxl-7 col-xl-7 col-lg-7 col-md-7 col-12 px-4"
+                >
+                  <ul>
+                    <li>
+                      <div class="item_flex">
+                        <p>NFSA</p>
+                        <label> {{hosFamilyData?.nfsaMember}} </label>
+                      </div>
+                    </li>
+
+                    <li>
+                      <div class="item_flex">
+                        <p>SFSA</p>
+                        <label> {{hosFamilyData?.sfsaMember}} </label>
+                      </div>
+                    </li>
+
+                    <li>
+                      <div class="item_flex">
+                        <p>Nabin</p>
+                        <label> {{hosFamilyData?.nabinMember}} </label>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+
+                <!-- <div class="item col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-12">
+                   <div
+                    id="donutprice_chartnew"
+                    class="chart_section_price"
+                  ></div>
+                </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xxl-4 col-xl-4 col-lg-3 col-md-3 col-sm-12 col-12 mb-3">
+          <div class="card">
+            <div class="card-body">
+              <!-- <div class="icon_uniquie">
+                <img src="../../../assets/img/svg/disability.svg" />
+              </div>
+              <label>{{familyData?.uniqueMember}}</label>
+              <p>Unique member</p> -->
+              <ul>
+                <li>
+                  <div class="item_flex">
+                    <p>Member with UID</p>
+                    <label> {{hosFamilyData?.memberWithUID}} </label>
+                  </div>
+                </li>
+
+                <li>
+                  <div class="item_flex">
+                    <p>Unique UID</p>
+                    <label> {{hosFamilyData?.uniqueUID}} </label>
+                  </div>
+                </li>
+
+                <li>
+                  <div class="item_flex">
+                    <p>Duplicate UID</p>
+                    <label> {{hosFamilyData?.duplicateUID}} </label>
+                  </div>
+                </li>
+                <li>
+                  <div class="item_flex">
+                    <p>UID Not Available</p>
+                    <label> {{hosFamilyData?.uidNotAvailable}} </label>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- price chart section -->
+    <!-- ekyc  section -->
+    <section class="ekyc__section">
+      <div class="row">
+        <div
+          class="col-xxl-6 col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12 mb-3"
+        >
+          <div class="card">
+            <div class="card-body">
+              <label> E-KYC Done by Members </label>
+              <div class="icon_ekyc">
+                <div class="ekyc_items">
+                  <div class="icons">
+                    <img src="../../../assets/img/svg/layer_2.svg" />
+                  </div>
+
+                  <div class="label_txt">
+                    <h5>{{hosFamilyData?.totalEkycMember}}</h5>
+                    <p>Total</p>
+                  </div>
+                </div>
+
+                <div class="ekyc_items">
+                  <div class="icons">
+                    <img src="../../../assets/img/svg/identity.svg" />
+                  </div>
+
+                  <div class="label_txt">
+                    <h5>{{hosFamilyData?.ekycNFSAMember}}</h5>
+                    <p>NFSA</p>
+                  </div>
+
+                  <div class="increase_ekyc">
+                    <img src="../../../assets/img/svg/chart-upper.svg" />
+                    <div><span> {{hosFamilyData?.ekycNfSSMemberPercent}}%</span> Increased</div>
+                  </div>
+                </div>
+
+                <div class="ekyc_items">
+                  <div class="icons">
+                    <img src="../../../assets/img/svg/id-card.svg" />
+                  </div>
+
+                  <div class="label_txt">
+                    <h5>{{hosFamilyData?.ekycSFSSMember}}</h5>
+                    <p>SFSS</p>
+                  </div>
+
+                  <div class="increase_ekyc">
+                    <img src="../../../assets/img/svg/chart-upper.svg" />
+                    <div><span> {{hosFamilyData?.ekycSFSSMemberPercent}}%</span> Increased</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="col-xxl-6 col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12 mb-3"
+        >
+          <div class="card">
+            <div class="card-body">
+              <label> E-KYC Done by Family </label>
+              <div class="icon_ekyc">
+                <div class="ekyc_items">
+                  <div class="icons">
+                    <img src="../../../assets/img/svg/layer_2.svg" />
+                  </div>
+
+                  <div class="label_txt">
+                    <h5>{{hosFamilyData?.totalEKYCFamily}}</h5>
+                    <p>Total</p>
+                  </div>
+                </div>
+
+                <div class="ekyc_items">
+                  <div class="icons">
+                    <img src="../../../assets/img/svg/identity.svg" />
+                  </div>
+
+                  <div class="label_txt">
+                    <h5>{{hosFamilyData?.ekycNFSSFamily}}</h5>
+                    <p>NFSA</p>
+                  </div>
+
+                  <div class="increase_ekyc">
+                    <img src="../../../assets/img/svg/chart-upper.svg" />
+                    <div><span> {{hosFamilyData?.ekycNFSSFamilyPercent}}%</span> Increased</div>
+                  </div>
+                </div>
+                <div class="ekyc_items">
+                  <div class="icons">
+                    <img src="../../../assets/img/svg/id-card.svg" />
+                  </div>
+
+                  <div class="label_txt">
+                    <h5>{{hosFamilyData?.ekycSFSSFamily}}</h5>
+                    <p>SFSA</p>
+                  </div>
+
+                  <div class="increase_ekyc">
+                    <img src="../../../assets/img/svg/chart-upper.svg" />
+                    <div><span> {{hosFamilyData?.ekycSFSSFamilyPercent}}%</span> Increased</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ekyc  section -->
+
+    <!-- SNA wise report section -->
+    <section>
+      <div class="row">
+        <!-- <div class="col-xxl-8 col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
+          <div class="card">
+            <div class="card-header">
+              <div class="heading">SNA Wise Report</div>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive table-wrapper scroll_heightfix">
+                <table class="table" width="100%" cellspacing="2" border="0">
+                  <thead>
+                    <tr>
+                      <th width="55">Sl.No</th>
+                      <th width="150">SNA Name</th>
+                      <th>Total Pre-auth Received (Inr)</th>
+                      <th>Current Pending for Approval (Inr)</th>
+                      <th>Auto Approved (Inr)</th>
+                      <th>Action Taken (A+R) (Inr)</th>
+                      <th>Claim Auditted (Inr)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>1</td>
+                      <td>Lorem Ipsum is</td>
+                      <td>1,34,000</td>
+                      <td>1,14,000</td>
+                      <td>14,000</td>
+                      <td>34,000</td>
+                      <td>14,000</td>
+                    </tr>
+                    <tr>
+                      <td>2</td>
+                      <td>Lorem Ipsum is</td>
+                      <td>1,34,000</td>
+                      <td>1,14,000</td>
+                      <td>14,000</td>
+                      <td>34,000</td>
+                      <td>14,000</td>
+                    </tr>
+                    <tr>
+                      <td>3</td>
+                      <td>Lorem Ipsum is</td>
+                      <td>1,34,000</td>
+                      <td>1,14,000</td>
+                      <td>14,000</td>
+                      <td>34,000</td>
+                      <td>14,000</td>
+                    </tr>
+                    <tr>
+                      <td>4</td>
+                      <td>Lorem Ipsum is</td>
+                      <td>1,34,000</td>
+                      <td>1,14,000</td>
+                      <td>14,000</td>
+                      <td>34,000</td>
+                      <td>39,000</td>
+                    </tr>
+                    <tr>
+                      <td>5</td>
+                      <td>Lorem Ipsum is</td>
+                      <td>1,34,000</td>
+                      <td>1,14,000</td>
+                      <td>14,000</td>
+                      <td>34,000</td>
+                      <td>50,000</td>
+                    </tr>
+                    <tr>
+                      <td>6</td>
+                      <td>Lorem Ipsum is</td>
+                      <td>1,34,000</td>
+                      <td>1,14,000</td>
+                      <td>14,000</td>
+                      <td>34,000</td>
+                      <td>28,000</td>
+                    </tr>
+                  </tbody>
+
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div> -->
+        <div
+          class="col-xxl-4 col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12 mb-3"
+        >
+          <div class="card">
+            <div class="card-header">
+              <div class="heading">Gender Details</div>
+            </div>
+
+            <div class="card-body">
+              <div id="gender_chart" class="chart_section"></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xxl-4 col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
+          <div class="card">
+            <div class="card-header">
+              <div class="heading">Finance</div>
+            </div>
+            <div class="card-body executive_chart">
+              <div id="department_chart" class="chart_section"></div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="col-xxl-4 col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12 mb-3"
+        >
+          <div class="card">
+            <div class="card-header">
+              <div class="row">
+                <div class="col-xxl-6 col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12">
+                  <div class="heading">Attendance</div>
+                </div>
+                <div class="col-xxl-6 col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12">
+                  <select
+                    class="form-select form-select-sm custom-select"
+                    id="attendanceUser"
+                    [(ngModel)]="attendanceUser"
+                    (change)="getAtttendanceReport()"
+                  >
+                    <option value="DC">DC</option>
+                    <option value="ADC" >ADC</option>
+                    <option value="SM" >SM</option>
+                  </select>
+                </div>
+            </div>
+            </div>
+
+            <div class="card-body">
+              <div id="empanelment_chart" class="chart_section"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+    <!-- SNA wise report section -->
+    <div class="top-box d-flex align-items-end justify-content-end gap-3 w-100 mb-3">
+      <div class="box_select">
+        <select
+          class="form-select form-select-sm custom-select"
+          id="month"
+          [(ngModel)]="month"
+          (change)="getDischargeDetails()"
+        >
+          <!-- <option value="" disabled>Select Month</option> -->
+          <option *ngFor="let month of monthList" [value]="month.monthId">
+            {{ month.monthName }}
+          </option>
+        </select>
+      </div>
+      <div class="box_select">
+        <select
+          class="form-select form-select-sm custom-select"
+          id="year"
+          [(ngModel)]="year"
+          (change)="getDischargeDetails()"
+        >
+          <option value="" disabled>Select Year</option>
+          <option *ngFor="let x of yearList" [value]="x">{{ x }}</option>
+        </select>
+      </div>
+    </div>
+    <!-- department section -->
+    <section>
+      <div class="row">
+
+        <div class="col-xxl-6 col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
+          <div class="card">
+            <div class="card-header">
+              <div class="heading">Authentication Details</div>
+            </div>
+            <div class="card-body executive_chart">
+              <div id="authenticate_chart" class="chart_section_new"></div>
+            </div>
+          </div>
+        </div>
+
+
+        <div
+          class="col-xxl-6 col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12 mb-3"
+        >
+          <div class="card p-3 border-0">
+            <!-- <div
+              class="top-box d-flex align-items-end justify-content-end gap-2 w-100"
+            >
+              <div class="box_select">
+                <select
+                  class="form-select form-select-sm custom-select"
+                  id="dischargeMonth"
+                  [(ngModel)]="dischargeMonth"
+                  (change)="getDischargeDetails()"
+                >
+                 <option value="" disabled>Select Month</option>
+                <option *ngFor="let month of monthList" [value]="month.monthId">
+                  {{ month.monthName }}
+                </option>
+              </select>
+              </div>
+              <div class="box_select">
+                <select
+                  class="form-select form-select-sm custom-select"
+                  id="dischargeYear"
+                  [(ngModel)]="dischargeYear"
+                  (change)="getDischargeDetails()"
+                >
+                  <option value="" disabled>Select Year</option>
+                  <option *ngFor="let x of yearList" [value]="x">{{ x }}</option>
+                </select>
+              </div>
+            </div> -->
+            <div class="discharge__dtails">
+              <div class="row mb-3">
+                <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-12 mb-2">
+                  <div class="bg__card">
+                    <label> Discharge Details </label>
+                    <div class="items">
+                      <div class="items__list">
+                        <h5>{{dischargeDetails?.totalPackageDischarge}}</h5>
+                        <p>Total Package</p>
+                      </div>
+
+                      <div class="items__list">
+                        <h5>&#8377; {{dischargeDetails?.totalDischargeAmount}}<sup class="lower-sup"> Cr </sup></h5>
+                        <p>Total Amount</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-12 mb-2">
+                  <div class="bg__card">
+                    <label> Claim Details </label>
+                    <div class="items">
+                      <div class="items__list">
+                        <h5>{{dischargeDetails?.totalClaim}}</h5>
+                        <p>Total No</p>
+                      </div>
+                      <div class="items__list">
+                        <h5>&#8377; {{dischargeDetails?.totalClaimAmount}}<sup class="lower-sup"> Cr </sup></h5>
+                        <p>Total Amount</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-12">
+                  <div class="bg__card bg__lightorange">
+                    <label> Highest Used </label>
+                    <div class="items">
+                      <div class="items__list">
+                        <h4>{{highestUsedProcedure?.hospitalName}} ({{highestUsedProcedure?.hospitalCode}})</h4>
+                        <p>Footfall Hospital</p>
+                      </div>
+                      <div class="items__list">
+                        <h5>{{highestUsedProcedure?.speciality}}</h5>
+                        <p>Speciality</p>
+                      </div>
+                      <div class="items__list">
+                        <h5>{{highestUsedProcedure?.procedureCode}}</h5>
+                        <p>Procedure</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- department section -->
+
+    <!-- speciality section -->
+    <section>
+      <div class="row">
+        <div class="col-xxl-6 col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
+          <div class="card">
+            <div class="card-header">
+              <div class="heading">Top 10 Speciality</div>
+            </div>
+            <div class="card-body executive_chart">
+              <div id="speciality_chart" class="chart_section"></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xxl-6 col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
+          <div class="card">
+            <div class="card-header">
+              <div class="heading">Top 10 Procedure</div>
+            </div>
+            <div class="card-body executive_chart">
+              <div id="procedure_chart" class="chart_section"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- speciality  section -->
+
+    <!-- SNA wise claim section -->
+    <section>
+      <div class="row">
+        <div
+          class="col-xxl-7 col-xl-7 col-lg-12 col-md-12 col-sm-12 col-12 mb-3"
+        >
+          <div class="card">
+            <div class="card-header">
+              <div class="heading">SNA Wise Claim</div>
+            </div>
+
+            <div class="card-body">
+              <div class="table-responsive table-wrapper scroll_heightfix">
+                <table class="table" width="100%" cellspacing="2" border="0">
+                  <thead>
+                    <tr>
+                      <th width="55">Sl.No</th>
+                      <th>SNA Name</th>
+                      <th>
+                        Total Claim Submitted <br />
+                        By Hospital
+                      </th>
+                      <th>Submitted Amount</th>
+                      <th>SNA Audited (A+R+Q)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of snaWiseClaim; index as i">
+                      <td>{{i+1}}</td>
+                      <td>{{item.snaName}}</td>
+                      <td>{{item.totalClaim}}</td>
+                      <td>{{item.totalAmount}}</td>
+                      <td>{{item.totalAmount}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xxl-5 col-xl-5 col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
+          <div class="card">
+            <div class="card-header">
+              <div class="heading">Hospital Variation</div>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive table-wrapper scroll_heightfix">
+                <table class="table" width="100%" cellspacing="2" border="0">
+                  <thead>
+                    <tr>
+                      <th width="55">Sl.No</th>
+
+                      <th>Hospital Name</th>
+                      <th>Hospital Code</th>
+                      <th>Treatment</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of hospitalVariation; index as i">
+                      <td>{{i+1}}</td>
+                      <td>{{item.hospitalName}}</td>
+                      <td>{{item.hospitalCode}}</td>
+                      <td>{{item.treatment}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- SNA wise claim section -->
+  </div>
+</div>

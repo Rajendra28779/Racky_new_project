@@ -1,0 +1,141 @@
+<div class="main-tab">
+    <div class="row justify-content-between">
+        <div class="col-lg-4">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a routerLink="/application/addunprocess" routerLinkActive="active" class="nav-link ">Add</a>
+                </li>
+                <li class="nav-item">
+                    <a routerLink="/application/viewunprocess" routerLinkActive="active" class="nav-link"
+                        style="color: #1f723f;">View</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="content-box mt-3">
+        <div class="col-xxl-10">
+            <form>
+                <div class="row">
+                    <div class="col-lg-4 col-xxl-4">
+                        <div class="mb-xl-3">
+                            <label class="control-label">Year</label><span class="text-danger">*</span>
+                            <select class="form-select" id="years" name="years">
+                                <option value="" selected>Select Year</option>
+                                <ng-container *ngFor="let year of getAllYears">
+                                    <option value={{year}}>{{ year }}</option>
+                                </ng-container>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-xxl-4">
+                        <div class="mb-xl-3">
+                            <label class="control-label">Month</label><span class="text-danger">*</span>
+                            <select class="form-select" id="months" name="months" aria-label="Disabled select example">
+                                <option value="" selected>Select Month</option>
+                                <option value="1">January</option>
+                                <option value="2">February</option>
+                                <option value="3">March</option>
+                                <option value="4">April</option>
+                                <option value="5">May</option>
+                                <option value="6">June</option>
+                                <option value="7">July</option>
+                                <option value="8">August</option>
+                                <option value="9">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <input type="submit" value="Search" class="btn btn-success" (click)="search()">&nbsp;
+                        <input type="Reset" value="Reset" class="btn btn-secondary" (click)="Reset()">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+    <div class="col-lg-4 col-xxl-4"></div>
+    <div class="col-lg-4 col-xxl-4"></div>
+    <div class="col-lg-4 col-xxl-4">
+        <div class="input-group">
+            <input type="text" id="txtsearchDate" class="form-control" placeholder="Search here..." name="txtsearchDate"
+                [(ngModel)]="txtsearchDate" autocomplete="off">
+        </div>
+    </div>
+</div>
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="table-responsive">
+                <table class="table table-striped" mb-0>
+                    <thead>
+                        <tr>
+                            <th width="200">Sl No.</th>
+                            <th width="300">Year</th>
+                            <th width="300">Month</th>
+                            <th width="200">Unprocess Date</th>
+                            <th width="250">Status</th>
+                            <th width="100" style="text-align: center;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngIf="record>0">
+                            <tr
+                                *ngFor="let item of unprocessedList | filter:txtsearchDate | 
+                                paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage}; index as i">
+                                <td *ngIf="currentPage==1">{{i+1}}</td>
+                                <td *ngIf="currentPage!==1">{{(currentPage-1)*pageElement+i+1}}</td>
+                                <td>{{item.years}}</td>
+                                <td *ngIf="item.months==1">January</td>
+                                <td *ngIf="item.months==2">February</td>
+                                <td *ngIf="item.months==3">March</td>
+                                <td *ngIf="item.months==4">April</td>
+                                <td *ngIf="item.months==5">May</td>
+                                <td *ngIf="item.months==6">June</td>
+                                <td *ngIf="item.months==7">July</td>
+                                <td *ngIf="item.months==8">August</td>
+                                <td *ngIf="item.months==9">September</td>
+                                <td *ngIf="item.months==10">October</td>
+                                <td *ngIf="item.months==11">November</td>
+                                <td *ngIf="item.months==12">December</td>
+                                <td>{{item.unprocessDate | date :'dd-MMM-yyyy'}}</td>
+                                <td *ngIf="item.statusFlag==0">Unprocess Not Run</td>
+                                <td *ngIf="item.statusFlag==1">Unprocess Run</td>
+                                <td style="text-align: center;">
+                                        <a class="btn btn-outline-primary btn-sm me-1" (click)="edit(item)">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                </td>       
+                            </tr>
+                        </ng-container>
+                        <tr *ngIf="record==0">
+                            <div class="row">
+                                <span style="color: red;text-align: center;position:absolute">NO DATA FOUND!!</span>
+                            </div>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row" *ngIf="showPegi">
+                <div class="col-sm-4">
+                    <div class="col-sm-*">
+                        show
+                        <select id="pageItem" name="pageItem" class="custom-select-sm" (change)="pageItemChange()">
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                            <option value="200">200</option>
+                            <option value="500">500</option>
+                        </select> entries
+                    </div>
+                </div>
+                <div class="col-sm-8 text-right">
+                    <pagination-controls id="listing_pagination" [maxSize]="100" [directionLinks]="true"
+                        (pageChange)="currentPage = $event" class="text-end"
+                        (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+                </div>
+            </div>
+        </div>
+    </div>

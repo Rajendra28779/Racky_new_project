@@ -1,0 +1,67 @@
+<div class="wrapper">
+  <!--<app-appsidebar></app-appsidebar>-->
+  <app-sidebarmenu></app-sidebarmenu>
+  <div class="main">
+    <app-appheader></app-appheader>
+    <main class="content">
+      <div class="container-fluid p-0">
+        <div class="form-cointainer">
+          <div class="main-tab">
+            <div class="row justify-content-between">
+              <div class="col-lg-6 ">
+                <ul class="nav nav-tabs">
+                  <li class="nav-item">
+                    <a routerLinkActive="active" class="nav-link active">Treatment History As Package</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="content-box">
+            <div class="table-responsive">
+              <table class="table table-striped mb-0">
+                <thead>
+                  <tr>
+                    <th width="50">Sl#</th>
+                    <th>URN</th>
+                    <th>Patient Name</th>
+                    <th>Hospital Name</th>
+                    <th>PackageCode</th>
+                    <th>Admission Date</th>
+                    <th>Discharge Date</th>
+                    <th>Amount(₹)</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="treatmenthistory?.length">
+                  <tr *ngFor="let v of treatmenthistory;index as i">
+                    <td>{{i+1}}</td>
+                    <td width="100">{{v.urnno}}</td>
+                    <td width="100">{{v.patentname}}</td>
+                    <td width="100">{{v.hospitalname}}</td>
+                    <td width="100" title={{v.packagename}}>{{v.packagecode}}</td>
+                    <td width="100">{{v.dateofadmission}}</td>
+                    <td width="100">{{v.dateofdischarge}}</td>
+                    <td width="100">{{v.totalamount}}</td>
+                    <td width="100">{{v.status}}</td>
+                  </tr>
+                </tbody>
+                <tbody *ngIf="! treatmenthistory?.length">
+                  <tr>
+                    <td colspan="9" class="text-center">
+                      <h3 style="color:red;">No Data Found!!!</h3>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <!-- <pagination-controls (pageChange)="P = $event" class="float-right"></pagination-controls> -->
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </main>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+[
+    {
+      "pagetitle":"View Plugin",
+      "tabList":[
+        {"tabName":"View","tabUrl":"../viewplugin","tabClass":"active"},
+        {"tabName":"Add","tabUrl":"../addplugin"}
+        
+      ],
+      "utils":[
+        {"utilName":"search"},
+        {"utilName":"print"},
+        {"utilName":"delete"},
+        {"utilName":"publish"},
+        {"utilName":"unpublish"},
+        {"utilName":"download"}
+        ],
+      "messages":
+        {
+        "successMsg":"Plugin saved successfully",
+        "errorMsg":"Error in database12",
+        "warningtype":"You want to delete this record",
+        "deleteMsg":"Record has been deleted",
+        "searchErrorMsg":"No Record Found"
+        }
+       
+      
+    }
+  ]

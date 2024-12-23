@@ -1,0 +1,121 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+    <div class="row justify-content-between">
+      <div class="col-lg-4">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a routerLinkActive="active" class="nav-link active" style="color: #1f723f;">Empanelment Details Updation</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div>
+  </div>
+
+  <div class="content-box">
+    <div class="row">
+      <div class="col-lg-4 col-xxl-4">
+        <div class="mb-xl-3">
+          <label for="EnterFullName" class="form-label">Hospital Name <span class="text-danger">: </span></label>
+          <strong>{{ hospitalData?.hospitalName }}</strong>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-xxl-4">
+        <div class="mb-xl-3">
+          <label for="UserName" class="form-label">Hospital Code <span class="text-danger">: </span></label>
+          <strong>{{ hospitalData?.hospitalCode }}</strong>
+        </div>
+
+      </div>
+      <div class="col-lg-4 col-xxl-4">
+        <div class="mb-xl-3">
+          <label for="EnterMobileno" class="form-label">Mobile No <span class="text-danger">: </span></label>
+          <strong>{{ hospitalData?.mobile }}</strong>
+        </div>
+
+      </div>
+      <div class="col-lg-4 col-xxl-4">
+        <div class="mb-xl-3">
+          <label for="EnterEmailID" class="form-label">Email ID <span class="text-danger">: </span></label>
+          <strong>{{ hospitalData?.emailId }}</strong>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-xxl-4">
+        <div class="mb-xl-3">
+          <label class="control-label">State Name <span class="text-danger">: </span></label>
+          <strong>{{ hospitalData?.stateName }}</strong>
+        </div>
+      </div>
+      <div class="col-lg-4 col-xxl-4">
+        <div class="mb-xl-3">
+          <label class="control-label">District Name <span class="text-danger">: </span></label>
+          <strong>{{ hospitalData?.districtName }}</strong>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-lg-12">
+      <label class="form-label d-none d-md-block">&nbsp;</label>
+      <div class="d-grid gap-2 d-md-flex">
+        <div>
+          <div>
+            <button type="button" class="btn btn-success" (click)="edit(hospitalData)">Update</button>&nbsp;
+            <input type="button" value="Cancel" class="btn btn-secondary">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div class="modal modal-custom-backdrop" id="exampleOtpModal" tabindex="-1" aria-labelledby="exampleModalLabel" style="backdrop-filter: blur(5px);"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title text-success" id="exampleModalLabel" >Enter OTP<span
+                  class="required-asterisk text-danger">
+                  *</span></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closemodeal()"></button>
+              </div>
+                <div class="modal-body py-5">
+
+
+                    <div class="row">
+                            <div class="iconinput">
+                                <input type="text" class="form-control usertext userinput" id="otpId" name="otpId" maxlength="6"
+                                    placeholder="Enter OTP" autocomplete="off"  onkeyup="this.value=this.value.replace(/[^0-9]/g,'');">
+
+                                <input type="hidden" class="form-control usertext userinput" id="userId" name="userId">
+                            </div>
+                    </div>
+                    <div class="d-flex pt-4 pb-3">
+                        <div class="pe-2 text-secondary">
+                            <i class="feather-iconsmartphone text-secondary fs-1-2" id="phoneId"></i>
+                        </div>
+                            <input type="text" id="mobileNoId" class="form-control text-secondary p-0 border-0" readonly>
+                    </div>
+                    <div class="d-flex pt-4 pb-2 position-absolute bottom--10">
+
+                        <div class="pe-2 text-secondary">
+                            <p id="timerdivId"><i class="feather-iconclock fs-1-2"></i> Time Left : </p>
+                        </div>
+                        <div>
+                            <input type="text" id="timeCounter" class="form-control text-danger p-0 border-0" readonly>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-footer d-flex justify-content-center align-items-center">
+                    <button type="button" id="sendId" class="btn btn-success" (click)="validateOtp()">Submit</button>
+                    <button type="button" id="reSendId" class="btn btn-success" (click)="onResendOtp()">Resend
+                        OTP</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+

@@ -1,0 +1,123 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+      <div class="row justify-content-between">
+          <div class="col-lg-4">
+               <ul class="nav nav-tabs ">
+                <li class="nav-item" *ngIf="!showupdate">
+                <a routerLink="/application/messagemaster" routerLinkActive="active" class="nav-link active">Add</a>
+                </li>
+                <li class="nav-item" *ngIf="showupdate">
+                  <a routerLink="/application/messagemaster" routerLinkActive="active" class="nav-link active">Update</a>
+                  </li>
+                  <li class="nav-item">
+                    <a routerLink="/application/viewmessagemaster" routerLinkActive="active" class="nav-link ">View</a>
+                    </li>
+              </ul>
+          </div>
+          <div class="col-lg-6 ">
+                  <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+              </div>
+        </div>
+  </div>
+  <div class="content-box">
+    <form [formGroup]="group">
+    <div class="row">
+      <div class="col-lg-2 col-xxl-2">
+        <div class="mb-xl-3">
+          <label for="EnterFunctionName" class="form-label">Message type<span class="text-danger">*</span></label>
+          <select class="form-select"  id="global" formControlName="global" name="global" [(ngModel)]="getbyid.type">
+            <option selected disabled="disabled" value="">Select</option>
+              <option value="sms" >SMS</option>
+              <option value="email" >E-Mail</option>
+          </select>
+        </div>
+    </div>
+      <div class="col-lg-4 col-xxl-4">
+          <div class="mb-xl-3">
+            <label for="EnterFunctionName" class="form-label">Message Purpose<span class="text-danger">*</span></label>
+              <input class="form-control" type="text" placeholder="Enter Purpose" formControlName="prps"  autocomplete="off" id="purpose" maxlength="500" [(ngModel)]="getbyid.prps"
+              onkeyup="this.value=this.value.replace(/[^a-zA-Z-_ ]/g,'');">
+          </div>
+      </div>
+      <div class="col-lg-4 col-xxl-4">
+        <div class="mb-xl-3">
+          <label for="EnterFunctionName" class="form-label">Template Id</label>
+            <input class="form-control" type="text" placeholder="Enter Template Id" formControlName="temp"  autocomplete="off" id="temp" maxlength="25" [(ngModel)]="getbyid.tempid"
+            onkeyup="this.value=this.value.replace(/[^0-9 ]/g,'');">
+        </div>
+    </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-4 col-xxl-4">
+          <div class="mb-xl-3">
+            <label for="EnterFunctionDescription" class="form-label">Message Content<span class="text-danger">*</span></label>
+              <textarea class="form-control"  placeholder="Enter  Message Content" formControlName="functiondescription" autocomplete="off" id="msgcontain" maxlength="500" [(ngModel)]="getbyid.cnct"
+               onkeyup="this.value=this.value.replace(/[^0-9.a-zA-Z@/_() ]/g,'');" #myInput [maxlength]="maxChars" (keypress)="keyPress($event)"></textarea>
+              <span class="text-danger small">Characters Remaining: {{maxChars - myInput.value.length}}</span>
+          </div>
+      </div>
+      <div class="col-lg-1 col-xxl-1"></div>
+      <div class="col-lg-2 col-xxl-2" style="margin-top:3ch;">
+        <div class="mb-xl-3">
+            <label>Send Status:</label>&nbsp;&nbsp;<br>
+                    <label *ngIf="sendstatus=='0'">
+                        <input type="radio" checked="checked" [checked]="true" (click)="yes1($event)"
+                        name="send" id="send">Yes &nbsp;&nbsp;
+                        <input type="radio" (click)="no1($event)"
+                        name="send" id="send">No
+                    </label>
+
+                    <label *ngIf="sendstatus=='1'">
+                        <input type="radio" (click)="yes1($event)"
+                        name="send" id="send">Yes &nbsp;&nbsp;
+                        <input type="radio" checked="checked" [checked]="true" (click)="no1($event)"
+                        name="send" id="send">No
+                    </label>
+        </div>
+      </div>
+      <div class="col-lg-3 col-xxl-3" *ngIf="showupdate" style="margin-top:3ch;">
+        <div class="mb-xl-3">
+            <label>Status:</label>&nbsp;&nbsp;<br>
+                    <label *ngIf="getbyid.isactive==0">
+                        <input type="radio" checked="checked" [checked]="true" (click)="yes($event)"
+                        name="status" id="status">Active &nbsp;&nbsp;
+                        <input type="radio" (click)="no($event)"
+                        name="status" id="status">In-Active
+                    </label>
+
+                    <label *ngIf="getbyid.isactive==1">
+                        <input type="radio" (click)="yes($event)"
+                        name="status" id="status">Active &nbsp;&nbsp;
+                        <input type="radio" checked="checked" [checked]="true" (click)="no($event)"
+                        name="status" id="status">In-Active
+                    </label>
+        </div>
+    </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6 col-xxl-6">
+        <div class="mb-xl-3">
+          <label  class="form-label">Message Editor<span class="text-danger">*</span></label>
+            <ckeditor [editor]="Editor"  [(ngModel)]="model.editorData" (blur)="onChange($event)" formControlName="edit"></ckeditor>
+      </div>
+      </div>
+      <div class="col-lg-4 col-xxl-4">
+        <div class="mb-xl-3">
+          <label for="Remarks" class="form-label">Remarks<span class="text-danger">*</span></label>
+            <textarea class="form-control"  placeholder="Enter Remarks" formControlName="remarks" autocomplete="off" id="remarks" maxlength="500" [(ngModel)]="getbyid.remarks"
+             onkeyup="this.value=this.value.replace(/[^0-9.a-zA-Z@/_() ]/g,'');" #myInput1 [maxlength]="maxChars1" (keypress)="keyPress1($event)"></textarea>
+            <span class="text-danger small">Characters Remaining: {{maxChars1 - myInput1.value.length}}</span>
+        </div>
+      </div>
+      <div *ngIf="!showupdate">
+        <input type="submit" value="Submit" (click)="submit()" class="btn btn-success">&nbsp;
+        <input type="reset" value="Reset"  class="btn btn-secondary">
+      </div>
+      <div *ngIf="showupdate">
+        <input type="submit" value="Update" (click)="update()" class="btn btn-success">&nbsp;
+        <input type="button" value="Cancel"  (click)="cancel()" class="btn btn-secondary">
+      </div>
+    </div>
+  </form>
+  </div>
+</div>

@@ -1,0 +1,130 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <!-- <div class="row justify-content-between"> -->
+        <div class="col-lg-4">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a routerLink="/application/implant" routerLinkActive="active" class="nav-link"
+                        style="color: #1f723f;">Add</a>
+                </li>
+                <li class="nav-item">
+                    <a routerLink="/application/implantView" routerLinkActive="active" class="nav-link active">View</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- <div class="col-lg-4 col-xxl-4"></div>
+    <div class="d-flex justify-content-between">
+        <div class="form-group">
+            <button class="btn btn-outline-success btn-sm me-1" type="submit" (click)="downloadList()">
+                <i class="bi bi-download"></i>
+            </button>
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+            <input type="text" id="txtsearchDate" class="form-control" placeholder="Search here" name="textsearchData"
+                [(ngModel)]="txtsearchDate">
+        </div>
+    </div> -->
+    <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+        <div class="col-lg-6 col-xxl-6">
+            <div class="row" *ngIf="showPegi">
+                <div class="col-sm-4">
+                    <div class="col-sm-*">
+                        show
+                        <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                            <option value="200">200</option>
+                            <option value="500">500</option>
+                            <option value={{record}}>All</option>
+                        </select> entries
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-lg-2 col-xxl-2">
+            <div class="table-utilities float-end">
+                <button class="btn btn-success btn-sm mx-1" tooltip="Excel" (click)="downloadList(1)"><i
+                        class="bi bi-download"></i>
+                </button>
+                &nbsp;
+                <button class="btn btn-danger btn-sm me-1" type="submit" (click)="downloadList(2)"><i
+                        class="bi bi-file-earmark-pdf"></i></button>
+            </div>
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+            <div class="input-group">
+                <input type="text" id="txtsearchDate" class="form-control" placeholder="Search here"
+                    name="txtsearchDate" [(ngModel)]="txtsearchDate" autocomplete="off">
+            </div>
+        </div>
+    </div>
+    <form>
+
+        <div class="content-box mt-3">
+            <div class="table-responsive">
+                <table class="table table-striped mb-0">
+                    <thead>
+                        <tr>
+                            <th width="50">Sl#</th>
+                            <!-- <th>Procedure Code</th> -->
+                            <th>Implant Code</th>
+                            <th>Implant Name</th>
+                            <th>Unit</th>
+                            <th>Maximum Unit</th>
+                            <th>Unitcycle Price</th>
+                            <th>Price Editable</th>
+                            <th>Unit Editable</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let implnt of implantView | filter:txtsearchDate | 
+                                paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};
+                     index as i">
+                            <td hidden>{{implnt.implantId}}</td>
+                            <td *ngIf="currentPage==1">{{(i+1)}}</td>
+                            <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+ i+1}}</td>
+                            <!-- <td>{{implnt.procedureCode}}</td> -->
+                            <td>{{implnt.implantCode}}</td>
+                            <td>{{implnt.implantName}}</td>
+                            <td>{{implnt.unit}}</td>
+                            <td>{{implnt.maximumUnit}}</td>
+                            <td>{{implnt.unitCyclePrice |currency:'':''}}</td>
+                            <td>{{implnt.priceEditable}}</td>
+                            <td>{{implnt.unitEditable}}</td>
+                            <td>
+                                <div class="d-flex justify-content-center">
+                                    <a class="btn btn-outline-primary btn-sm me-2" (click)="edit(implnt.implantId)"><i
+                                            class="bi bi-pencil"></i></a>
+                                    <a class="btn btn-outline-danger btn-sm" (click)="delete(implnt.implantId)"><i
+                                            class="bi bi-trash3"></i></a>
+                                </div>
+                            </td>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </form>
+    <div class="row" *ngIf="showPegi">
+        <div class="col-sm-4">
+            <div class="col-sm-*">
+                show
+                <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                    <option value="200">200</option>
+                    <option value="500">500</option>
+                    <option value={{record}}>All</option>
+                </select> entries
+            </div>
+        </div>
+        <div class="col-sm-8 text-right">
+            <pagination-controls id="listing_pagination" [maxSize]="100" [directionLinks]="true"
+                (pageChange)="currentPage = $event" class="text-end"
+                (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,99 @@
+
+<div class="form-cointainer">
+  <div class="main-tab">
+      <div class="row justify-content-between">
+          <div class="col-lg-4">
+              <ul class="nav nav-tabs">
+                  <li class="nav-item" >
+                      <a routerLink="/application/hospitalbackdateconfig" routerLinkActive="active" class="nav-link " style="color: #1f723f;">Update</a>
+                  </li>
+                  <li class="nav-item">
+                      <a routerLink="/application/hospitalbackdateconfigview" routerLinkActive="active" class="nav-link active" >Log</a>
+                  </li>
+                  <li class="nav-item">
+                    <a routerLink="/application/hospitalbackdateconfigviewrpt" routerLinkActive="active" class="nav-link" style="color: #1f723f;">BackDate Report</a>
+                </li>
+              </ul>
+          </div>
+      </div>
+  </div>
+    <div class="content-box">
+      <div class="row">
+        <div class="col-5">
+          <p>Total List : {{count}}</p>
+        </div>
+        <div class="col-2" style="text-align:end ;">
+          <button class="btn btn-success btn-sm mx-1" style="margin-top: 10px" tooltip="Excel" (click)="downloadList(1)">
+        <i class="bi bi-file-earmark-spreadsheet"></i>
+    </button>
+          <button class="btn btn-danger btn-sm mx-1" style="margin-top: 10px" tooltip="pdf" (click)="downloadList(2)">
+          <i class="bi bi-file-earmark-pdf"></i>
+      </button>
+      </div>
+        <div class="col-5">
+          <input type="text " id="txtsearchDate " name="txtsearchDate " [(ngModel)]="txtsearchDate" maxlength="20 "
+            class="form-control " placeholder="Search here...... " autocomplete="off"
+            style=" margin-right: 0px; margin-left: 0px;">
+        </div>
+      </div>
+      <br>
+      <div class="table-responsive">
+        <table class="table table-striped mb-0">
+          <thead>
+            <tr>
+              <th width="50">Sl#</th>
+              <th>State Name</th>
+              <th>District Name</th>
+              <th>Hospital Name</th>
+              <th>Privious BackDate Admission Days</th>
+              <th>Current BackDate Admission Days</th>
+              <th>Privious BackDate Discharge Days</th>
+              <th>Current BackDate Discharge Days</th>
+              <th>Updated By</th>
+              <th>Updated On</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let v of list | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage},index as i">
+              <td *ngIf="currentPage==1 ">{{(i+1)}}</td>
+                <td *ngIf="currentPage!=1 ">{{(currentPage-1)*pageElement+ i+1}}</td>
+              <td>{{v.districtcode.statecode.stateName}}</td>
+              <td>{{v.districtcode.districtname}}</td>
+              <td>{{v.hospital.hospitalName +" ("+v.hospital.hospitalCode+")"}}</td>
+              <td>{{v.backdateadmissiondate}}</td>
+              <td>{{v.hospital.backdateadmissiondate}}</td>
+              <td>{{v.backdatedischargedate}}</td>
+              <td>{{v.hospital.backdatedischargedate}}</td>
+              <td>{{v.createdby.fullname}}</td>
+              <td width="150">{{v.createon | date :'dd-MMM-yyyy'}}</td>
+            </tr>
+            <tr *ngIf="count==0">
+              <div class="row ">
+                <span style="color: red;text-align: center;position:absolute ">NO DATA FOUND!!</span>
+              </div>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+      <div class="row" *ngIf="showPegi">
+        <div class="col-sm-4">
+          <div class="col-sm-*">
+            show
+            <select id="pageItem" name="pageItem" class="custom-select-sm" (change)="pageItemChange()">
+              <option value="100">100</option>
+              <option value="200">200</option>
+              <option value={{count}}>ALL</option>
+            </select> entries
+          </div>
+        </div>
+        <div class="col-sm-8 text-right">
+          <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true"
+            (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)">
+          </pagination-controls>
+        </div>
+
+
+      </div>
+    </div>
+</div>

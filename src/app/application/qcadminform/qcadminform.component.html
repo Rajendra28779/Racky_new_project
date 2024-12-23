@@ -1,0 +1,482 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/shasqcadminform" routerLinkActive="active"
+                            class="nav-link active">Update</a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/application/shasqcadminformview" routerLinkActive="active" class="nav-link"
+                            style="color: #1f723f;">View</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="content-box">
+        <form [formGroup]="HospitalType" autocomplete="off">
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Hospital Name</label><span class="text-danger">*</span>
+                        <ng-autocomplete #auto2 [data]="hospitalList" placeholder="Select Hospital"
+                            (selected)="selectEvent2($event)" (inputCleared)="clearEvent2()"
+                            [itemTemplate]="itemTemplate2" [notFoundTemplate]="notFoundTemplate2"
+                            [searchKeyword]="keyword2" spellcheck="false">
+                        </ng-autocomplete>
+                        <ng-template #itemTemplate2 let-item>
+                            <a [innerHTML]="item.hospitalName"></a>
+                        </ng-template>
+                        <ng-template #notFoundTemplate2 let-notFound>
+                            <div [innerHTML]="notFound"></div>
+                        </ng-template>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Hospital Code</label>
+                        <input class="form-control" type="text" disabled formControlName="hospitalCode"
+                            placeholder="Hospital Code" autocomplete="off" name="hospitalCode" id="hospitalCode"
+                            maxlength="10" onkeyup="this.value=this.value.replace(/[^a-zA-Z0-9]/g,'');"
+                            [(ngModel)]="updateEmpanelHospitalData.hospitalCode">
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Mobile No</label>
+                        <input class="form-control" type="text" disabled formControlName="mobile" autocomplete="off"
+                            name="mobile" id="mobile" placeholder="Enter Mobile No" maxlength="10"
+                            onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"
+                            [(ngModel)]="updateEmpanelHospitalData.mobile">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Email Id</label>
+                        <input class="form-control" type="text" disabled formControlName="emailId" autocomplete="off"
+                            name="emailId" id="emailId" (change)="validateEmail()" placeholder="Enter Email ID"
+                            (keyup)="keyfunction1($event.target)" maxlength="100"
+                            [(ngModel)]="updateEmpanelHospitalData.emailId">
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">State Name</label>
+                        <select class="form-select" name="stateId" id="stateId" formControlName="stateId"
+                            (change)="OnChangeState($event.target.value)"
+                            [(ngModel)]="updateEmpanelHospitalData.stateCode" disabled>
+                            <option value="" selected disabled>Select State</option>
+                            <ng-container *ngFor="let item of stateList">
+                                <option value={{item.stateCode}}>{{item.stateName}}</option>
+                            </ng-container>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">District Name</label>
+                        <select class="form-select" name="districtId" id="districtId" formControlName="districtId"
+                            [(ngModel)]="updateEmpanelHospitalData.districtCode" disabled>
+                            <option value="" selected>Select District</option>
+                            <ng-container *ngFor="let item of districtList">
+                                <option value={{item.districtcode}}>{{item.districtname}}</option>
+                            </ng-container>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Hospital Category</label>
+                        <select class="form-select" name="hospitalCategory" id="hospitalCategory"
+                            formControlName="hospitalCategoryid"
+                            [(ngModel)]="updateEmpanelHospitalData.hospitalCategoryid" (change)="getId($event)">
+                            <option value="" selected disabled>Select Hospital Category</option>
+                            <ng-container *ngFor="let item of catList">
+                                <option value={{item.categoryId}}>{{item.categoryName}}</option>
+                            </ng-container>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3" id="doj">
+                        <label class="control-label mb-2">Valid Period From</label><ng-container
+                            *ngIf="ishidemandatory"><span class="text-danger">*</span></ng-container>
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="formdate"
+                                name="fromDate" placeholder="Valid Period From" formControlName="hosCValidDateFrom"
+                                [(ngModel)]="updateEmpanelHospitalData.hosCValidDateFrom">
+                            <label class="input-group-text bg-transparent border-start-0" for="formdate">
+                                <i class="iconbsky-calendar"></i>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3" id="doj">
+                        <label class="control-label mb-2">Valid Period To</label><ng-container
+                            *ngIf="ishidemandatory"><span class="text-danger">*</span></ng-container>
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="todate" name="toDate"
+                                placeholder="Valid Period To" formControlName="hosCValidDateTo"
+                                [(ngModel)]="updateEmpanelHospitalData.hosCValidDateTo">
+                            <label class="input-group-text bg-transparent border-start-0" for="todate">
+                                <i class="iconbsky-calendar"></i>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!----------------upload document end------------------>
+
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label for="EnterFunctionDescription" class="form-label">MOU</label>
+                        <textarea class="form-control" placeholder="Enter  Description" formControlName="mou"
+                            autocomplete="off" id="moudescription" maxlength="100"
+                            onkeyup="this.value=this.value.replace(/[^0-9.a-zA-Z@/_() ]/g,'');" #myInput
+                            [maxlength]="maxChars" (keypress)="keyPress($event)"
+                            [(ngModel)]="updateEmpanelHospitalData.mou"></textarea>
+                        <span class="text-danger small">Characters Remaining: {{maxChars - myInput.value.length}}</span>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label class="control-label mb-2">MOU Start Date</label><span class="text-danger">*</span>
+
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="formdate1"
+                                formControlName="mouStartDt" placeholder="Mou Start Date" name="fromDate1"
+                                [(ngModel)]="updateEmpanelHospitalData.mouStartDt">
+                            <label class="input-group-text bg-transparent border-start-0" for="formdate1">
+                                <i class="iconbsky-calendar"></i>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label class="control-label mb-2">MOU End Date</label><span class="text-danger">*</span>
+
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="todate1"
+                                placeholder="Mou End Date" name="toDate1" formControlName="mouEndDt"
+                                [(ngModel)]="updateEmpanelHospitalData.mouEndDt">
+                            <label class="input-group-text bg-transparent border-start-0" for="todate1">
+                                <i class="iconbsky-calendar"></i>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!----------------upload document First -------------------->
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4" id="Upload">
+                    <div class="file-upload mb-xl-4 text-center">
+                        <p class="mb-1 text-start">MOU Upload Document</p>
+                        <div class="file-upload-content">
+                            <a class="btn btn-danger  text-white btn-sm remove-img"><i class="fas fa-times"></i></a>
+                            <img class="file-upload-image" src="#" alt="your image" />
+                        </div>
+                        <div class="image-upload-wrap rounded">
+                            <input class="file-upload-input" id="notficationdoc" type='file' onCut="return false "
+                                onDrag="return false " onDrop="return false " (change)="handleFileInput($event)">
+                            <div class="drag-text" *ngIf="!flag">
+                                <h5><i class="iconbsky-upload-icon d-block fs-4"></i><span class="text-danger">Drag or
+                                        select a file to upload </span>
+                                </h5>
+                            </div>
+                            <div class="drag-text" *ngIf="flag">
+                                <h5><i class="iconbsky-upload-icon d-block fs-4"></i><span
+                                        class="text-danger">{{fileToUpload.name}}</span>
+                                </h5>
+                            </div>
+                        </div>
+                        <p class="small pt-1 " style="text-align: right;"><img src="./assets/img/pdf.png "
+                                alt="Download Document " width="20 "> <a target="_blank" class="dbtn"
+                                (click)="downloadfiletreatmentbill($event,mouDocUpload) "> Download</a></p>
+                    </div>
+                </div>
+
+                <!-- drop down for preauth required -->
+
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Is PreAuth Approval Require</label><span
+                            class="text-danger">*</span>
+                        <select class="form-select" name="preauthapprovalrequired" id="preauthapprovalrequired"
+                            formControlName="preauthapprovalrequired"
+                            [(ngModel)]="updateEmpanelHospitalData.preauthapprovalrequired"
+                            (change)="getpreauth($event)">
+                            <option value="" selected disabled>Select</option>
+                            <option
+                                title="All the packages will be treated as open packages for outside state hospitals.Package price as per package master is not applicable.Package costs are editable. Pre Auth not required."
+                                value="1">Exception 1 </option>
+                            <option
+                                title="Other private hospitals outside state , Pre auth only for unspecified packages"
+                                value="2">Exception 2</option>
+                            <option title="Normal package block according to the package master" value="0">No Exception
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- drop down for cpd approved required -->
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Is CPD Approval Require</label><span class="text-danger">*</span>
+                        <select class="form-select" name="cpdApprovalRequired" id="cpdApprovalRequired"
+                            formControlName="cpdApprovalRequired"
+                            [(ngModel)]="updateEmpanelHospitalData.cpdApprovalRequired">
+                            <option value="" selected disabled>Select</option>
+                            <option value="0">Yes</option>
+                            <option value="1">No</option>
+                        </select>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div style="height: 20pt;"></div>
+            <div class="row">
+                <div class="col-lg-6 col-xxl-6">
+                    <div class="mb-3" *ngIf="isSaveData">
+                        <ng-container *ngIf="empanelmentstatus==1">
+                            <label *ngIf="mouStatus==0">
+                                <label>MOU Status:</label>&nbsp;&nbsp;
+                                <input type="radio" checked="checked" [checked]="true" (click)="yes1($event)"
+                                    name="mouStatus" id="mouStatus" disabled>Active &nbsp;&nbsp;
+                                <input type="radio" (click)="no1($event)" name="mouStatus" id="mouStatus"
+                                    disabled>In-Active
+                            </label>
+
+                            <label *ngIf="mouStatus==1">
+                                <label>MOU Status:</label>&nbsp;&nbsp;
+                                <input type="radio" (click)="yes1($event)" name="mouStatus" id="mouStatus"
+                                    disabled>Active &nbsp;&nbsp;
+                                <input type="radio" checked="checked" [checked]="true" (click)="no1($event)"
+                                    name="mouStatus" id="mouStatus" disabled>In-Active
+                            </label>
+
+                        </ng-container>
+
+                        <ng-container *ngIf="empanelmentstatus==0">
+                            <label *ngIf="mouStatus==0">
+                                <label>MOU Status:</label>&nbsp;&nbsp;
+                                <input type="radio" checked="checked" [checked]="true" (click)="yes1($event)"
+                                    name="mouStatus" id="mouStatus">Active &nbsp;&nbsp;
+                                <input type="radio" (click)="no1($event)" name="mouStatus" id="mouStatus">In-Active
+                            </label>
+
+                            <label *ngIf="mouStatus==1">
+                                <label>MOU Status:</label>&nbsp;&nbsp;
+                                <input type="radio" checked="checked" [checked]="true" (click)="yes1($event)"
+                                    name="mouStatus" id="mouStatus">Active &nbsp;&nbsp;
+                                <input type="radio" checked="checked" [checked]="true" (click)="no1($event)"
+                                    name="mouStatus" id="mouStatus">In-Active
+                            </label>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="accordion">
+                        <div class="card shadow-sm">
+                            <div class="accordion-item">
+                                <div class="card-header bg-color">
+                                    <h5 class="mb-0" style="font-size: 12pt;">Fire Distinguisher :</h5>
+                                </div>
+                                <div class="row p-4">
+                                    <div class="col-lg-4 col-xxl-4 mb-3">
+                                        <label for="certification" class="form-label">Certification Number<span
+                                                class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="certification" name="certification"
+                                            placeholder="Certification Number" maxlength="100"
+                                            formControlName="certification"
+                                            [(ngModel)]="updateEmpanelHospitalData.certification">
+                                    </div>
+                                    <div class="col-lg-4 col-xxl-4 mb-3">
+                                        <label for="formdate3" class="form-label">Certification Number Validate From
+                                            <span class="text-danger">*</span></label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control datepicker" id="formdate3"
+                                                name="formdate3" placeholder="Validate From"
+                                                formControlName="validateFrom1"
+                                                [(ngModel)]="updateEmpanelHospitalData.validateFrom1">
+                                            <label class="input-group-text bg-light border-start-0" for="formdate3">
+                                                <i class="iconbsky-calendar"></i>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-xxl-4 mb-3">
+                                        <label for="formdate4" class="form-label">Certification Number Validate To <span
+                                                class="text-danger">*</span></label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control datepicker" id="formdate4"
+                                                name="formdate4" placeholder="Validate To"
+                                                formControlName="validateFrom2"
+                                                [(ngModel)]="updateEmpanelHospitalData.validateFrom2">
+                                            <label class="input-group-text bg-light border-start-0" for="formdate4">
+                                                <i class="iconbsky-calendar"></i>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row p-4">
+                                    <div class="col-lg-4 col-xxl-4" id="Upload">
+                                        <div class="file-upload mb-xl-4 text-center">
+                                            <p class="mb-1 text-start">Upload Fire Distinguisher Document<span
+                                                    class="text-danger"
+                                                    *ngIf="!previousuploadedfiredistingusher">*</span></p>
+                                            <div class="file-upload-content">
+                                                <a class="btn btn-danger  text-white btn-sm remove-img"><i
+                                                        class="fas fa-times"></i></a>
+                                                <img class="file-upload-image" src="#" alt="your image" />
+                                            </div>
+                                            <div class="image-upload-wrap rounded">
+                                                <input class="file-upload-input" id="uploaddocument1" type='file'
+                                                    onCut="return false " onDrag="return false " onDrop="return false "
+                                                    (change)="handleFileInput2($event)">
+                                                <div class="drag-text" *ngIf="!flag2">
+                                                    <h5><i class="iconbsky-upload-icon d-block fs-4"></i><span
+                                                            class="text-danger">Drag or
+                                                            select a file to upload </span>
+                                                    </h5>
+                                                </div>
+                                                <div class="drag-text" *ngIf="flag2">
+                                                    <h5><i class="iconbsky-upload-icon d-block fs-4"></i><span
+                                                            class="text-danger">{{firedictriguesUpload.name}}</span>
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                            <p class="small pt-1 " style="text-align: right;"><img
+                                                    src="./assets/img/pdf.png " alt="Download Document " width="20 "> <a
+                                                    target="_blank" class="dbtn"
+                                                    (click)="SeedownloadfiletreatFireDistinguisher($event,previousuploadedfiredistingusher,'LicenceAndCertificate/','BuildAndInfra/') ">
+                                                    Download</a></p>
+                                            <div>
+                                                <p class="mb-0">
+                                                    <strong>Upload Fire Distinguisher Document uploaded below 8MB.</strong>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="accordion">
+                        <div class="card shadow-sm">
+                            <div class="accordion-item">
+                                <div class="card-header bg-color">
+                                    <h5 class="mb-0" style="font-size: 12pt;">Clinical Certificate :</h5>
+                                </div>
+                                <div class="row p-4">
+                                    <div class="col-lg-4 col-xxl-4 mb-3">
+                                        <label for="hospitalregistration" class="form-label">Hospital Registration Case
+                                            No.<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="hospitalregistration"
+                                            name="hospitalregistration" placeholder="Hospital Registration Case No."
+                                            maxlength="100" formControlName="hospitalregistration"
+                                            [(ngModel)]="updateEmpanelHospitalData.hospitalregistration">
+                                    </div>
+                                    <div class="col-lg-4 col-xxl-4 mb-3">
+                                        <label for="formdate5" class="form-label">Hospital Registration Case
+                                            No. Validate From <span class="text-danger">*</span></label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control datepicker" id="formdate5"
+                                                name="formdate5" placeholder="Validate From"
+                                                formControlName="validateFrom3"
+                                                [(ngModel)]="updateEmpanelHospitalData.validateFrom3">
+                                            <label class="input-group-text bg-light border-start-0" for="formdate5">
+                                                <i class="iconbsky-calendar"></i>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-xxl-4 mb-3">
+                                        <label for="formdate6" class="form-label">Hospital Registration Case
+                                            No. Validate To <span class="text-danger">*</span></label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control datepicker" id="formdate6"
+                                                name="formdate6" placeholder="Validate To"
+                                                formControlName="validateFrom4"
+                                                [(ngModel)]="updateEmpanelHospitalData.validateFrom4">
+                                            <label class="input-group-text bg-light border-start-0" for="formdate6">
+                                                <i class="iconbsky-calendar"></i>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row p-4">
+                                    <div class="col-lg-4 col-xxl-4" id="Upload">
+                                        <div class="file-upload mb-xl-4 text-center">
+                                            <p class="mb-1 text-start">Upload Clinical Certificate Document<span
+                                                    class="text-danger" *ngIf="!previousuploadedclinical">*</span></p>
+                                            <div class="file-upload-content">
+                                                <a class="btn btn-danger  text-white btn-sm remove-img"><i
+                                                        class="fas fa-times"></i></a>
+                                                <img class="file-upload-image" src="#" alt="your image" />
+                                            </div>
+                                            <div class="image-upload-wrap rounded">
+                                                <input class="file-upload-input" id="notficationdoc" type='file'
+                                                    onCut="return false " onDrag="return false " onDrop="return false "
+                                                    (change)="handleFileInput3($event)">
+                                                <div class="drag-text" *ngIf="!flag3">
+                                                    <h5><i class="iconbsky-upload-icon d-block fs-4"></i><span
+                                                            class="text-danger">Drag or
+                                                            select a file to upload </span>
+                                                    </h5>
+                                                </div>
+                                                <div class="drag-text" *ngIf="flag3">
+                                                    <h5><i class="iconbsky-upload-icon d-block fs-4"></i><span
+                                                            class="text-danger">{{clicnicalUpload.name}}</span>
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                            <p class="small pt-1 " style="text-align: right;"><img
+                                                    src="./assets/img/pdf.png " alt="Download Document " width="20 "> <a
+                                                    target="_blank" class="dbtn"
+                                                    (click)="SeeClinicalCertificate($event,previousuploadedclinical,'LicenceAndCertificate/','RegisAndCert/') ">
+                                                    Download</a></p>
+                                            <p class="mb-0">
+                                                <strong>Upload Clinical Certificate Document uploaded below 8MB.</strong>
+                                            </p>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="d-grid gap-2 d-md-flex">
+                        <button type="submit" value="Submit" class="btn btn-success" (click)="update()">Update</button>
+                        <button type="reset" class="btn btn-secondary" (click)="resetVal()">Reset</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

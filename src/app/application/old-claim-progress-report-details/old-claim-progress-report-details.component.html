@@ -1,0 +1,84 @@
+<div class="content">
+    <div class="container-fluid p-0">
+        <div class="form-cointainer">
+            <div class="main-tab">
+                <div class="row justify-content-between">
+                    <div class="col-lg-12">
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a routerLinkActive="active" class="nav-link active">Old Claim Progress Report Details</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="content-box">
+                <div class="row">
+                    <div class="col-lg-4 col-xxl-4" style="padding-top: 10px;">
+                        <b style="padding-left: 7px;">{{pageHeading}}</b>
+                    </div>
+                    <div class="col-lg-4 col-xxl-4" style="text-align: right;">
+                        <button class="btn btn-outline-success btn-sm mx-1" style="margin-top: 1px;" (click)="downloadReport('xcl')">
+                            <i class="bi bi-file-earmark-spreadsheet" style="font-size: 13pt;"></i>
+                        </button>
+                        <button class="btn btn-outline-danger btn-sm mx-1" style="margin-top: 1px;" (click)="downloadReport('pdf')">
+                            <i class="bi bi-file-earmark-pdf" style="font-size: 13pt;"></i>
+                        </button>
+                    </div>
+                    <div class="col-lg-4 col-xxl-4">
+                        <div class="input-group">
+                            <input type="text" id="txtsearchDate" class="form-control" placeholder="Search here" name="txtsearchDate"
+                               autocomplete="off" [(ngModel)]="txtsearchDate">
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="height: 10pt;"></div>
+                <div class="row">
+                    <div class="table-responsive">
+                        <table aria-describedby="mydesc" class="table table-striped mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Sl No.</th>
+                                    <th>Claim No.</th>
+                                    <th>URN</th>
+                                    <th>Invoice No.</th>
+                                    <th>Hospital Name</th>
+                                    <th>Hospital Code</th>
+                                    <th>Actual Date Of Admission</th>
+                                    <th>Actual Date Of Discharge</th>
+                                    <th>Old Claim Status</th>
+                                    <th>Claim Amount (₹)</th>
+                                    <th>Current Claim Status</th>
+                                    <th>Details</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let claim of countprogressreport | filter:txtsearchDate;index as i">
+                                    <td>{{i+1}}</td>
+                                    <td>{{claim.claimNo}}</td>
+                                    <td>{{claim.urn}}</td>
+                                    <td>{{claim.invoiceNo}}</td>
+                                    <td>{{claim.hospitalName}}</td>
+                                    <td>{{claim.hospitalCode}}</td>
+                                    <td>{{claim.actualDateOfAdmission}}</td>
+                                    <td>{{claim.actualDateOfDischarge}}</td>
+                                    <td>{{claim.oldClaimStatus}}</td>
+                                    <td>{{claim.claimAmount | currency:'':''}}</td>
+                                    <td>{{claim.currentStatus}}</td>
+                                    <td class="text-center">
+                                        <a class="btn btn-outline-success btn-sm" (click)="onAction(claim.transactionDetailsId,claim.urn,claim.transId)">Details</a>
+                                    </td>
+                                </tr>
+                                <tr *ngIf="countprogressreport?.length==0">
+                                    <td colspan="12" style="text-align: center;">
+                                        <strong class="text-danger">NO DATA FOUND!!</strong>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>    
+        </div>
+    </div>
+</div>

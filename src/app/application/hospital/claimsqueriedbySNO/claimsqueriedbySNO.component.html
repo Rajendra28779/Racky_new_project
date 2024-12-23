@@ -1,0 +1,231 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/claimsqueriedbySNO" class="nav-link active">Claims Queried by
+                            SNA</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="content-box mb-3">
+        <div class="col-xxl-10">
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <div class="mb-xl-3">
+                            <div class="mb-xl-3">
+                                <label for="EnterFullName" class="form-label">Scheme Name<span class="text-danger">*</span></label>
+                                <input class="form-control" type="text" placeholder="Scheme Name" autocomplete="off" maxlength="30" id="schemename" [(ngModel)]="schemeName" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4 ">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3 ">
+                        <label class="control-label">Scheme Category Name<span class="text-danger"></span></label>
+                        <select class="form-select" name="schemacategory" id="schemacategory" (change)="getschemacategoryid($event.target.value)" style="margin-top: 9px;">
+                            <option value="" selected >All</option>
+                            <ng-container *ngFor="let item of schemeList">
+                                <option value={{item.schemeCategoryId}}>{{item.categoryName}}</option>
+                            </ng-container>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xxl-10">
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label class="control-label mb-2">Actual Date of Discharge From</label><span class="text-danger">*</span>
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="datepickerforquerysna" name="fromDate" autocomplete="off">
+                            <label class="input-group-text bg-transparent border-start-0" for="datepickerforquerysna"><i
+                                    class="iconbsky-calendar"></i> </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label class="control-label mb-2">To</label><span class="text-danger">*</span>
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="datepickerfortosna" name="toDate" autocomplete="off">
+                            <label class="input-group-text bg-transparent border-start-0" for="datepickerfortosna"><i
+                                    class="iconbsky-calendar"></i> </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xxl-10">
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label class="control-label mb-2">Package Category</label>
+                        <select class="form-select" id="Package" aria-label="Disabled select example" placeholder="Enter Package Category... " autocomplete="off" (change)="getPackageSchemeName($event.target.value)">
+                            <option value="" selected disabled>Select Package Category</option>
+                            <ng-container *ngFor="let item of packageschemename,index i">
+                                <option >{{item.packageheader}}</option>
+                            </ng-container>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4 ">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3 ">
+                        <label class="control-label mb-2">Package Name</label>
+                        <select class="form-select" id="PackageName" name="PackageName">
+                            <option value="" selected disabled>Select Package Name</option>
+                            <ng-container *ngFor="let pack of packagenamescheme">
+                                <option >{{pack.packagename}}</option>
+                            </ng-container>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label class="control-label mb-2">URN</label>
+                        <input type="text" maxlength="20" class="form-control" id="URNnumberVALUE" aria-label="Disabled select example" placeholder="Enter URN " onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" autocomplete="off">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="d-grid gap-2 d-md-flex">
+                    <button type="submit" class="btn btn-success" (click)="getClaimDetailsList()">Search</button>
+                    <button type="reset" class="btn btn-secondary" (click)="onresetdata()">Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+        <div class="col-lg-6 col-xxl-6 ">
+            <div class="col-sm-*" *ngIf="showPegi">
+                show
+                <select id="pageItem" name="pageItem" class="form-select-sm" [(ngModel)]="pageElement">
+              <option value="50">50</option>
+              <option value="100">100</option>
+              <option value="200">200</option>
+              <option value={{record}}>All</option>
+          </select> entries
+            </div>
+        </div>
+        <div class="col-lg-2 col-xxl-2" style="text-align: end;">
+            <button class="btn btn-success btn-sm mx-1" tooltip="Excel" (click)="downloadReport('excel')"><i class="bi bi-download"></i></button>
+            <button class="btn btn-danger btn-sm mx-1" tooltip="pdf" (click)="downloadReport('pdf')"><i class="bi bi-file-earmark-pdf"></i></button>
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+            <div class="input-group">
+                <input type="text" id="txtsearchDate" class="form-control" autocomplete="off" placeholder="Search" name="txtsearchDate" [(ngModel)]="txtsearchDate">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content-box p-0 overflow-hidden">
+    <div class="table-responsive">
+        <table class="table table-striped mb-0">
+            <thead>
+                <tr>
+                    <th width="60">Sl No.</th>
+                    <th>Claim No.</th>
+                    <th>URN</th>
+                    <th>Patient Name</th>
+                    <th>Case Number</th>
+                    <th>Invoice Number</th>
+                    <th>Package Code</th>
+                    <th>Admission Date</th>
+                    <th>ActualDate Of Admission</th>
+                    <th>Discharge Date</th>
+                    <th>ActualDate Of Discharge</th>
+                    <th>Query On</th>
+                    <th>Description</th>
+                    <th>Remark</th>
+                    <th width="90">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let claim of claimlist |filter:txtsearchDate|
+                    paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};
+                        index as i">
+                    <tr>
+                        <td>{{i+1}} </td>
+                        <td>{{claim.claim_no}} </td>
+                        <td>{{claim.urn}}</td>
+                        <td>{{claim.patientName}}</td>
+                        <td>{{claim.caseno}}</td>
+                        <td>{{claim.invoiceno}}</td>
+                        <td title={{claim.packageName}}>{{claim.packageCode}}</td>
+                        <td>{{claim.dateofadmission }}</td>
+                        <td>{{claim.actualdateofadmission }}</td>
+                        <td>{{claim.dateofdischarge}}</td>
+                        <td>{{claim.actualdateofdischarge}}</td>
+                        <td>{{claim.uPDATEON | date :'dd-MMM-yyyy, h:mm:ss a'}}</td>
+                        <td *ngIf="claim.remarksDes != null"><a href="javascript:void(0)" (click)="viewDescription(claim.remarksDes)">view</a></td>
+                        <td *ngIf="claim.remarksDes == null">--</td>
+                        <td *ngIf="claim.remark != null"><a href="javascript:void(0)" (click)="viewRemark(claim.remark)">view</a></td>
+                        <td *ngIf="claim.remark == null">--</td>
+                        <td class="text-center">
+                            <a class="btn btn-outline-success btn-sm" (click)="onclaim(claim.claimID)">
+                                        Action</a>
+                            <p class="small mb-0 text-danger">{{claim.remainingdayssnaquerydate}}</p>
+                        </td>
+                    </tr>
+                </ng-container>
+                <tr *ngIf="sport">
+                    <td colspan="16">
+                        <p class="mb-0 text-center text-danger fw-bold">NO DATA FOUND!!</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row mt-3" *ngIf="showPegi">
+    <div class="col-sm-4">
+        <div class="col-sm-*">
+            show
+            <select id="pageItem" name="pageItem" class="form-select-sm" [(ngModel)]="pageElement">
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="150">150</option>
+                <option value="200">100</option>
+                <option value={{record}}>All</option>
+            </select> entries
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true" (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+    </div>
+</div>
+<div class="modal justify-content-center" id="appealDisposal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body py-5">
+                <span class="text-center text-success">
+                {{description}}
+            </span>
+
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="modalClose()">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal justify-content-center" id="remarkset" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body py-5">
+                <span class="text-center text-success">
+                {{remarkdata}}
+            </span>
+
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="modal()">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>

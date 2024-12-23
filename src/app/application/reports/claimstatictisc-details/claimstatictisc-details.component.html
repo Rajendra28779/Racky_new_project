@@ -1,0 +1,76 @@
+<!-- <div class="wrapper">
+    <app-sidebarmenu></app-sidebarmenu>
+    <div class="main">
+        <app-appheader></app-appheader> -->
+<main class="content">
+    <div class="container-fluid p-0">
+        <div class="form-cointainer">
+            <div class="main-tab">
+                <div class="row justify-content-between">
+                    <div class="col-lg-12">
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a routerLinkActive="active" class="nav-link active">Claim statistics Details Report</a>
+                            </li>
+                            <li class="col-lg-10">
+                                <div [align]="'start'" class="table-utilities float-end" style="padding-bottom: 1%;">
+                                    <button style="height: 50px;width: 50px;" class="btn btn-success btn-sm mx-1" tooltip="Excel" id="EXCEL" (click)="downloadReport()">
+                                <i class="bi bi-download"></i>
+                              </button>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="content-box">
+                        <div class="row">
+                            <div class="table-responsive">
+                                <table class="table table-striped mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th width="40">Sl#</th>
+                                            <th>Claim No.</th>
+                                            <th>URN</th>
+                                            <th>Invoice Number</th>
+                                            <th>Hospital Name</th>
+                                            <th>Package Name</th>
+                                            <th>Actual Date Of Admission</th>
+                                            <th>Actual Date Of Discharge</th>
+                                            <th>Discharge of Admission</th>
+                                            <th>Discharge of Discharge</th>
+                                            <th>CPD Name</th>
+                                            <th>Hospital Code</th>
+                                            <th>authorized Code</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let claim of detailsdata index as i">
+                                            <td>{{i+1}}</td>
+                                            <td>{{claim.claim_no}}</td>
+                                            <td>{{claim.urn}}</td>
+                                            <td>{{claim.invoiceno}}</td>
+                                            <td>{{claim.hospitalname}}</td>
+                                            <td>{{claim.packagename}}</td>
+                                            <td>{{claim.actualdateofadmission}}</td>
+                                            <td>{{claim.actualdateofdischarge}}</td>
+                                            <td>{{claim.dateofadmission}}</td>
+                                            <td>{{claim.dateofdischarge}}</td>
+                                            <td>{{claim.fullname}}</td>
+                                            <td>{{claim.hospitalcode}}</td>
+                                            <td>{{claim.authorizedcode}}</td>
+                                            <tr *ngIf="detailsdata.length==0">
+                                                <div class=" row ">
+                                                    <span style="color: red;text-align: center;position:absolute ">NO DATA FOUND!!</span>
+                                                </div>
+                                            </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<!-- </div>
+</div> -->

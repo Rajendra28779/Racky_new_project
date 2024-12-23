@@ -1,0 +1,144 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/mosarkarreportdetails" class="nav-link active">MoSarkar Reports </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="content-box mt-3">
+        <div class="col-xxl-10">
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label class="control-label mb-2">Generated From</label><span class="text-danger">*</span>
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="datepicker4" name="fromDate" autocomplete="off">
+                            <label class="input-group-text bg-transparent border-start-0" for="datepicker4"><i
+                                    class="iconbsky-calendar"></i> </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label class="control-label mb-2">Generated To</label><span class="text-danger">*</span>
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="datepicker3" name="toDate" autocomplete="off">
+                            <label class="input-group-text bg-transparent border-start-0" for="datepicker3"><i
+                                    class="iconbsky-calendar"></i> </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label class="control-label mb-2">Search Type</label>
+                        <select class="form-select" id="seach" aria-label="Disabled select example" autocomplete="off">
+                            <ng-container>
+                                <option value="0" selected>Fresh</option>
+                                <option value="1">Inserted</option>
+                                <option value="2">Duplicate</option>
+                            </ng-container>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 ">
+            <div class="d-grid gap-2 d-md-flex ">
+                <button type="submit " class="btn btn-success " (click)="getmosarkardetails() ">Search</button>
+                <button type="reset" class="btn btn-secondary " (click)="getRestdata()">Reset</button>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+        <div class="col-lg-8 col-xxl-8 row">
+            <div class="col-md-9">
+            </div>
+            <div [align]="'start'" class="col-md-3">
+                <button class="btn btn-success" title="Download Excel" (click)="downloadReport('excel')" style="float: right"><i class="bi bi-download" ></i></button>
+            </div>
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+            <div class="input-group">
+                <input type="text" id="txtsearchDate" class="form-control" autocomplete="off" placeholder="Search" name="txtsearchDate" [(ngModel)]="txtsearchDate">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content-box p-0 overflow-hidden ">
+    <div class="table-responsive ">
+        <table class="table table-striped mb-0 " id="claimraise">
+            <thead>
+                <tr>
+                    <th width="60">Sl No.</th>
+                    <th>TRANSACTIONID</th>
+                    <th>DISTRICTCODE</th>
+                    <th>MOSARKARINSTITUTIONID</th>
+                    <th>HOSPITAL_NAME </th>
+                    <th>PATIENTNAME</th>
+                    <th>PATIENTPHONENO</th>
+                    <th>AGE</th>
+                    <th>GENDER</th>
+                    <th>TOTALAMOUNTCLAIMED</th>
+                    <th>INVOICENO</th>
+                    <th>ACTUALDATEOFDISCHARGE</th>
+                    <th>PACKAGENAME</th>
+                    <th>CLAIM_NO</th>
+                    <th>CLAIMID</th>
+                    <th>TRANSACTIONDETAILSID</th>
+                    <th>DISTRICTNAME</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let claim of details | filter:txtsearchDate| paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage}; index as i ">
+                    <tr>
+                        <td *ngIf="currentPage==1 ">{{(i+1)}}</td>
+                        <td *ngIf="currentPage!=1 ">{{(currentPage-1)*pageElement+ i+1}}</td>
+                        <td>{{claim.TRANSACTIONID}}</td>
+                        <td>{{claim.DISTRICTCODE}}</td>
+                        <td>{{claim.MOSARKARINSTITUTIONID}}</td>
+                        <td>{{claim.HOSPITAL_NAME}}</td>
+                        <td>{{claim.PATIENTNAME}}</td>
+                        <td>{{claim.PATIENTPHONENO}}</td>
+                        <td>{{claim.AGE}}</td>
+                        <td>{{claim.GENDER}}</td>
+                        <td>{{claim.TOTALAMOUNTCLAIMED}}</td>
+                        <td>{{claim.INVOICENO}}</td>
+                        <td>{{claim.ACTUALDATEOFDISCHARGE|date:'dd-MMM-yyyy'}}</td>
+                        <td>{{claim.PACKAGENAME}}</td>
+                        <td>{{claim.CLAIM_NO}}</td>
+                        <td>{{claim.CLAIMID}}</td>
+                        <td>{{claim.TRANSACTIONDETAILSID}}</td>
+                        <td>{{claim.DISTRICTNAME}}</td>
+                    </tr>
+                </ng-container>
+                <tr *ngIf="this.details.length==0">
+                    <td colspan="16">
+                        <p class="mb-0 text-center text-danger fw-bold">NO DATA FOUND!!</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row mt-3" *ngIf="showPegi">
+    <div class="col-sm-4 ">
+        <div class="col-sm-* ">
+            show
+            <select id="pageItem" name="pageItem" class="form-select-sm" (change)="pageItemChange()">
+                <option value="500">500</option>
+                <option value="1000">1000</option>
+                <option value="3000">3000</option>
+                <option value="10000">10000</option>
+                <option value={{recoedlength}}>All</option>
+            </select> entries
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true" (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+    </div>
+</div>

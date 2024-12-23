@@ -1,0 +1,399 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/referalForm" routerLinkActive="active"
+                            class="nav-link active">Add</a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/application/patientformview" routerLinkActive="active" class="nav-link">View</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-box">
+        <form [formGroup]="referal" autocomplete="off" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-md-6 col-12 border-end">
+                    <div class="row mb-3">
+                        <label class="col-sm-4 control-label">Scheme Name<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <select class="form-select" formControlName="schemeName" name="schemeName"
+                                    id="schemeName" autocomplete="off" placeholder="Enter Scheme Name">
+                                    <!-- <option value="" selected>Select Scheme Name</option> -->
+                                    <ng-container *ngFor="let v of schemeList">
+                                        <option value="{{v.schemeId}}">{{v.schemeName}}</option>
+                                    </ng-container>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-4 control-label">Category Name<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <select class="form-select" formControlName="categoryName" name="categoryName" (change)="onChangeCategory()"
+                                    id="categoryName" autocomplete="off" placeholder="Enter Category Name">
+                                    <option value="" selected>Select Category Name</option>
+                                    <ng-container *ngFor="let v of schemeCategoryList">
+                                        <option value="{{v.schemeCategoryId}}">{{v.categoryName}}</option>
+                                    </ng-container>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-4 control-label">Enter Card No<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="urn" formControlName="urn" name="urn"
+                                    maxlength="20" autocomplete="off" placeholder="Enter Card No"
+                                    (keypress)="numericOnly($event)">
+                                <label class="input-group-text bg-transparent border-start-0">
+                                    <i class="bi bi-search pe-auto" (click)="search()"></i>
+                                </label>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label class="col-sm-4 control-label">Patient Name<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <select class="form-select" formControlName="patientName" name="patientName"
+                                    id="patientName" autocomplete="off" placeholder="Enter Patient Name"
+                                    (change)="onChangePatientName($event.target.value)">
+                                    <option value="" selected>Select Name</option>
+                                    <ng-container *ngFor="let v of patientName">
+                                        <option>{{v.fullNameEnglish}}</option>
+                                    </ng-container>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label class="col-sm-4 control-label">Age<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <input type="text" class="form-control" formControlName="age" name="age" id="age" (keypress)="numericOnly($event)" maxlength="5"
+                                    autocomplete="off" placeholder="Enter Patient Age" [(ngModel)]="patientAge">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label class="col-sm-4 control-label">Gender<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <!-- <input type="text" class="form-control" formControlName="gender" name="gender"
+                                    autocomplete="off" placeholder="Enter Patient Gender" [(ngModel)]="patientGender"> -->
+                                    <select class="form-select" formControlName="gender" name="gender" [(ngModel)]="patientGender" id="gender"
+                                        autocomplete="off" placeholder="Enter Gender Name">
+                                        <option value="" selected disabled>Select Gender</option>
+                                        <option value="M">Male</option>
+                                        <option value="F">Female</option>
+                                        <option value="O">Other</option>
+                                    </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label class="col-sm-4 control-label">Regd.No<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <input type="text" class="form-control" formControlName="regdno" name="regdno"
+                                    maxlength="20" autocomplete="off" placeholder="Enter Regd.No"
+                                    onkeypress="return /[0-9a-zA-Z ]/i.test(event.key)">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label class="col-sm-4 control-label">Date<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <input type="date" class="form-control" formControlName="referralDate"
+                                    name="referralDate" autocomplete="off">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-md-6 col-12">
+                    <h5><u>Vitals at the time of Referring</u></h5>
+                    <div class="row mb-3">
+
+                        <div class="col-xl-5 col-lg-5 col-md-5">
+                            <label class="control-label">Parameters<span class="text-danger">*</span></label>
+
+                            <div class="input-group">
+                                <select class="form-select" id="vital" name="vital" formControlName="vital">
+                                    <option value="" selected>Select Vitals</option>
+                                    <ng-container *ngFor="let v of vitals">
+                                        <option value="{{v.vitalstatisticsname}} ({{v.vitalStatisticsId}})">
+                                            {{v.vitalstatisticsname}}</option>
+                                    </ng-container>
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <div class="col-xl-5 col-lg-5 col-md-5">
+                            <label class="control-label">Values<span class="text-danger">*</span></label>
+
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="vitalsValue" name="vitalsValue" maxlength="7"
+                                    formControlName="vitalsValue" autocomplete="off" placeholder="Enter vitals value"
+                                    (keyup)="validateVitalParameterInput($event)">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-2 d-flex justify-content-start align-items-center mt-4 p-0">
+                            <button class="btn btn-sm btn-primary" (click)="add()">Add</button>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-striped" *ngIf="addVitals?.length!=0">
+                            <thead>
+                                <tr>
+                                    <th>Sl No.</th>
+                                    <th>Parameters</th>
+                                    <th>Values</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let v of viewVitals; let i = index">
+                                    <td>{{i+1}}</td>
+                                    <td>
+                                        {{v.vital}}
+                                    </td>
+                                    <td>
+                                        {{v.value}}
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-danger" (click)="remove(i)">
+                                            <i class="bi bi-trash3"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="row py-3">
+                <div class="col-md-6 col-12 border-end">
+                    <h6><u>REFERRAL FROM</u></h6>
+                    <div class="row mb-3">
+                        <label class="col-sm-4 control-label">Name of Hospital<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <input type="text" class="form-control" formControlName="fromHospitalName"
+                                    id="fromHospitalName" name="fromHospitalName" autocomplete="off"
+                                    placeholder="Enter Hospital Name">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label class="col-sm-4 control-label">Name of Dr<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <input type="text" class="form-control" formControlName="fromDrName" id="fromDrName"
+                                    name="fromDrName" autocomplete="off" placeholder="Enter Doctor Name">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label class="col-sm-4 control-label">Department<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <input type="text" class="form-control" formControlName="fromDeptName" id="fromDeptName"
+                                    name="fromDeptName" autocomplete="off" placeholder="Enter Department">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label class="col-sm-4 control-label">Date<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <input type="date" class="form-control" formControlName="fromReferralDate"
+                                    id="fromReferralDate" name="fromReferralDate" autocomplete="off">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-12">
+                    <h6><u>REFERRAL TO</u></h6>
+                    <div class="row mb-3">
+                        <label class="col-sm-4 control-label">State Name<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <select class="form-select" name="stateId" id="stateId" formControlName="stateId"
+                                    (change)="OnChangeState($event.target.value)">
+                                    <option value="" selected>Select State</option>
+                                    <ng-container *ngFor="let item of stateList">
+                                        <option value={{item.stateCode}}>{{item.stateName}}</option>
+                                    </ng-container>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label class="col-sm-4 control-label">District Name<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <select class="form-select" name="districtId" id="districtId"
+                                    (change)="OnChangeDistrict($event.target.value)" formControlName="districtId">
+                                    <option value="" selected>Select District</option>
+                                    <ng-container *ngFor="let item of districtList">
+                                        <option value={{item.districtcode}}>{{item.districtname}}</option>
+                                    </ng-container>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label class="col-sm-4 control-label">Hospital Name<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <select class="form-select" name="toHospital" id="toHospital"
+                                    formControlName="toHospital">
+                                    <option value="" selected>Select Hospital Name</option>
+                                    <option *ngFor="let item of hospitalList" [value]="item.hospitalName">
+                                        {{item.hospitalName}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label class="col-sm-4 control-label">Reason for Referring<span
+                                class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <textarea type="text" class="form-control" id="reasonForRefer"
+                                    formControlName="reasonForRefer" #myInput [maxLength]="maxChars"
+                                    name="reasonForRefer" autocomplete="off"
+                                    placeholder="Enter Reason for Referring"></textarea>
+                            </div>
+                            <span class="text-danger small">Characters Remaining:
+                                {{maxChars - myInput.value.length}}</span>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label class="col-sm-4 control-label">Date<span class="text-danger">*</span></label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <input type="date" class="form-control" formControlName="toReferralDate"
+                                    id="toReferralDate" name="toReferralDate" autocomplete="off">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-4 control-label">Provisional / Final Diagnosis</label>
+                <div class="col-sm-8">
+                    <div class="input-group">
+                        <textarea class="form-control" formControlName="diagnosis" name="diagnosis" autocomplete="off"
+                            placeholder="Enter Final Diagnosis" #myInput1 [maxLength]="maxChars"></textarea>
+                    </div>
+                    <span class="text-danger small">Characters Remaining: {{maxChars - myInput1.value.length}}</span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-4 control-label">Brief History & Details of the Patient</label>
+                <div class="col-sm-8">
+                    <div class="input-group">
+                        <textarea class="form-control" formControlName="briefHistory" name="briefHistory"
+                            autocomplete="off" placeholder="Enter Brief History & Details of the Patient" #myInput2
+                            [maxLength]="maxChars"></textarea>
+                    </div>
+                    <span class="text-danger small">Characters Remaining: {{maxChars - myInput2.value.length}}</span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-4 control-label">Treatment Given</label>
+                <div class="col-sm-8">
+                    <div class="input-group">
+                        <textarea class="form-control" formControlName="treatmentGiven" name="treatmentGiven"
+                            autocomplete="off" placeholder="Enter Treatment Given" #myInput3
+                            [maxLength]="maxChars"></textarea>
+                    </div>
+                    <span class="text-danger small">Characters Remaining: {{maxChars - myInput3.value.length}}</span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-4 control-label">Investigation Remark</label>
+                <div class="col-sm-8">
+                    <div class="input-group">
+                        <textarea class="form-control" formControlName="investigationRemark" name="investigationRemark"
+                            autocomplete="off" placeholder="Enter investigation Remark" #myInput4
+                            [maxLength]="maxChars"></textarea>
+                    </div>
+                    <span class="text-danger small">Characters Remaining: {{maxChars - myInput4.value.length}}</span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-4 control-label">Treatment Advised</label>
+                <div class="col-sm-8">
+                    <div class="input-group">
+                        <textarea class="form-control" formControlName="treatmentAdvised" name="treatmentAdvised"
+                            autocomplete="off" placeholder="Enter Treatment Advised" #myInput5
+                            [maxLength]="maxChars"></textarea>
+                    </div>
+                    <span class="text-danger small">Characters Remaining: {{maxChars - myInput5.value.length}}</span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-4 control-label">Document</label>
+                <div class="col-sm-8">
+                    <div class="input-group">
+                        <input type="file" class="form-control" id="document" formControlName="document" name="document"
+                            (change)="handleFileInput($event)">
+                    </div>
+                    <span class="text-danger">Select a file to upload(Maximum size: 3MB) Upload only pdf, jpeg and
+                        jpg</span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="d-grid gap-2 d-md-flex">
+                        <button type="submit" value="Submit" class="btn btn-success" (click)="save()">Submit</button>
+                        <button type="reset" class="btn btn-secondary" (click)="reset()">Reset</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

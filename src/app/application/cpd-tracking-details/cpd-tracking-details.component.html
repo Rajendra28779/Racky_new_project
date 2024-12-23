@@ -1,0 +1,1377 @@
+<div class="main-tab">
+    <div class="row justify-content-between">
+        <div class="col-lg-12">
+            <ul class="nav nav-tabs border-bottom mx-3">
+                <li class="nav-item">
+                    <a routerLink="/application/trackingdetailscpd" routerLinkActive="active" class="nav-link active">Tracking Details</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-lg-12">
+            <div class="card shadow-sm mx-3 mt-3 mt-xl-4 ">
+                <div class="card-header">
+                    <h5 class="mb-0">Claim Details :</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row gx-xl-5 treatment-details">
+                        <div class="col-xl">
+                            <div class="d-flex align-items-center">
+                                <div>
+                                    <p class="text-muted mb-0">URN</p>
+                                    <p class="mb-0 fw-bold">{{item.URN}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl border-start">
+                            <div class="d-flex align-items-center">
+                                <div>
+                                    <p class="text-muted mb-0"> Invoice Number</p>
+                                    <p class="mb-0 fw-bold">{{item.INVOICENO}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl border-start">
+                            <div class="d-flex align-items-center">
+                                <div>
+                                    <p class="text-muted mb-0">Claim Number</p>
+                                    <p class="mb-0 fw-bold">{{item.CLAIM_NO}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="card shadow-sm mt-3 mt-xl-4 ">
+                                <div class="card-header">
+                                    <h5 class="mb-0">Patient Details</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row gx-xl-5 treatment-details">
+                                        <div class="col-xl">
+                                            <p class="small text-muted mb-0">Name</p>
+                                            <h6 class="mb-0">
+                                                {{item.PATIENTNAME}}
+                                            </h6>
+                                        </div>
+                                        <div class="col-xl border-start">
+                                            <div class="d-flex align-items-center">
+                                                <div>
+                                                    <p class="small text-muted mb-0">AGE</p>
+                                                    <h6 class="mb-0 ">
+                                                        {{item.AGE}} Years
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl border-start">
+                                            <div class="d-flex align-items-center">
+                                                <div>
+                                                    <p class="small text-muted mb-0">GENDER</p>
+                                                    <h6 class="mb-0">
+                                                        <span *ngIf=" item.GENDER=='F' ">
+                                                            Female
+                                                        </span>
+                                                        <span *ngIf=" item.GENDER=='M' ">
+                                                            Male
+                                                        </span>
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl border-start">
+                                            <div class="d-flex align-items-center">
+                                                <div>
+                                                    <p class="small text-muted mb-0">Address</p>
+                                                    <h6 class="mb-0 ">
+                                                        {{item.Address}}
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl border-start">
+                                            <div class="d-flex align-items-center">
+                                                <div>
+                                                    <p class="small text-muted mb-0">Mobile No</p>
+                                                    <h6 class="mb-0 ">
+                                                        {{item.PATIENTPHONENO}}
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-header border-top">
+                                    <h5 class="mb-0">Treatment Details</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row gx-xl-5 treatment-details">
+                                        <div class="col-lg-3">
+                                            <p class="small text-muted mb-0">Date of Admission - Date of Discharge
+                                            </p>
+                                            <h6 class="mb-0">
+                                                <i class="iconbsky-calendar small"></i> {{item.DATEOFADMISSION| date: 'dd-MMM-yyyy'}} -
+                                                <i class="iconbsky-calendar small ps-2"></i> {{item.DATEOFDISCHARGE| date: 'dd-MMM-yyyy'}}
+                                            </h6>
+                                        </div>
+                                        <div class="col-lg-3 border-start">
+                                            <div class="col-xl">
+                                                <p class="small text-muted mb-0">Actual Date of Admission and Actual Date of Discharge</p>
+                                                <h6 class="mb-0"><i class="iconbsky-calendar small"></i> {{ item.ACTUALDATEOFADMISSION | date: 'dd-MMM-yyyy'}} -
+
+                                                    <i class="iconbsky-calendar small ps-2"></i> {{ item.ACTUALDATEOFDISCHARGE | date: 'dd-MMM-yyyy'}}
+                                                </h6>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl border-start">
+                                            <div class="d-flex align-items-center">
+                                                <div>
+                                                    <p class="small text-muted mb-0">Package Rate(₹)</p>
+                                                    <h6 class="mb-0"> {{item.PACKAGERATE |currency:'':''}}
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl border-start">
+                                            <div class="d-flex align-items-center">
+                                                <div>
+                                                    <p class="small text-muted mb-0">Blocked Amount(₹)
+                                                    </p>
+                                                    <h6 class="mb-0 "> {{item.TOTALAMOUNTBLOCKED| currency:'':''}}
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl border-start">
+                                            <div class="d-flex align-items-center">
+                                                <div>
+                                                    <p class="small text-muted mb-0">Authorized Code</p>
+                                                    <h6 class="mb-0 ">{{ item.AUTHORIZEDCODE }}</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl">
+                                            <div class="d-flex align-items-center">
+                                                <div>
+                                                    <p class="small text-muted mb-0">Procedure</p>
+                                                    <h6 class="mb-0">{{item.PROCEDURENAME}}
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <hr class="mt-xl-4">
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="d-flex align-items-center">
+                                                <div>
+                                                    <p class="small text-muted mb-0">Packages</p>
+                                                    <h6 class="mb-0">{{item.PACKAGENAME}}</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl border-start">
+                                            <div class="d-flex align-items-center">
+                                                <div>
+                                                    <p class="small text-muted mb-0">Claim Case Number
+                                                    </p>
+                                                    <h6 class="mb-0 ">{{item.claimCaseNo}}</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl border-start">
+                                            <div class="d-flex align-items-center">
+                                                <div>
+                                                    <p class="small text-muted mb-0">Claim Bill Number
+                                                    </p>
+                                                    <h6 class="mb-0 ">{{ item.claimBillNo}}</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 border-start">
+                                            <div class="d-flex align-items-center">
+                                                <div>
+                                                    <p class="small text-muted mb-0">Mortality(As per Hospital)
+                                                    </p>
+                                                    <h6 class="mb-0">{{item.MORTALITY}}</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 border-start">
+                                            <div class="d-flex align-items-center">
+                                                <div>
+                                                    <!-- <p class="small text-muted mb-0">Referral Code</p>
+                                                    <h6 class="mb-0">{{item.REFERRALCODE}}</h6> -->
+                                                    <p class="small text-muted mb-0">Referral Authstatus
+                                                    </p>
+                                                    <h6 class="mb-0">{{item.REFERRALAUTHSTATUS}}</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <hr class="mt-xl-4">
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="d-flex align-items-center">
+                                                <div>
+                                                    <p class="small text-muted mb-0">IMPLANT DATA
+                                                    </p>
+                                                    <h6 class="mb-0">{{item.IMPLANT_DATA}}</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 border-start">
+                                            <div class="d-flex align-items-center">
+                                                <div>
+                                                    <p class="small text-muted mb-0">NABH Flag</p>
+                                                    <h6 class="mb-0">{{item.NABHFlag}}</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 border-start">
+                                            <div class="d-flex align-items-center">
+                                                <div>
+                                                    <p class="small text-muted mb-0">Authentication Mode
+                                                    </p>
+                                                    <h6 class="mb-0 text-danger">
+                                                        {{item.VERIFICATIONMODE}}</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 border-start">
+                                            <div class="d-flex align-items-center">
+                                                <div>
+                                                    <p class="small text-muted mb-0"> Is Patient OTP Verified
+                                                    </p>
+                                                    <h6 class="mb-0">{{item.ISPATIENTOTPVERIFIED}}</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal justify-content-center" id="appealDisposal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-body py-5">
+                                    <span class="text-center text-success">
+                                        {{dtls}}
+                                    </span>
+
+                                </div>
+                                <div class="modal-footer justify-content-center">
+                                    <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="modalClose()">Ok</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm mx-3 mt-3 mt-xl-4 ">
+                <div class="card-header">
+                    <h5 class="mb-0">Pre-Auth Log</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row gx-xl-5 treatment-details">
+
+                        <!-- <div class="col-12">
+                                            <hr class="mt-xl-4">
+                                        </div> -->
+                        <!-- <div class="col-lg-3 border-start">
+                                            <div class="d-flex align-items-center">
+                                                <div>
+                                                    <p class="small text-muted mb-0">Referral Authstatus
+                                                    </p>
+                                                    <h6 class="mb-0">{{item.REFERRALAUTHSTATUS}}</h6>
+                                                </div>
+                                            </div>
+                                        </div> -->
+
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table class="table mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th width="40" rowspan="2">Sl#</th>
+                                            <th rowspan="2">Pre-Auth Code</th>
+                                            <th rowspan="2">Claimed Amount (₹)</th>
+                                            <th rowspan="2">Approved Amount (₹)</th>
+                                            <th rowspan="2">Claimed Date</th>
+                                            <th rowspan="2">Approved Date</th>
+                                            <th rowspan="2">Remark</th>
+                                            <th colspan="3" style="text-align:center">
+                                                Documents</th>
+                                            <th rowspan="2">Details</th>
+                                        </tr>
+                                        <tr>
+                                            <th>Doc1</th>
+                                            <th>Doc2</th>
+                                            <th>Doc3</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <ng-container *ngIf="check">
+                                            <tr *ngFor="let auth of preAuth ,index as i">
+                                                <td>{{i+1}}</td>
+                                                <td>{{auth.preauthCode}}</td>
+                                                <td>{{auth.claimedAmount | currency:'':''}}
+                                                </td>
+                                                <td>{{auth.approvedAmount | currency:'':''}}
+                                                </td>
+                                                <td>{{auth.claimedDate | date: 'dd-MMM-yyyy, h:mm:ss a'}}</td>
+                                                <td>{{auth.approvedDate | date: 'dd-MMM-yyyy, h:mm:ss a'}}</td>
+                                                <td>{{auth.preAuthRemarks}}</td>
+                                                <td *ngIf="auth.aditionalDoc1 != undefined">
+                                                    <a href="javascript:void(0);" (click)="downloadAction($event,auth.aditionalDoc1,auth.hospitalCode,auth.claimedDate,'')"><i
+                                                                            class="bi bi-file-earmark-pdf"
+                                                                            style="color:red;font-size:15px;"></i></a>
+                                                </td>
+                                                <td *ngIf="auth.aditionalDoc1 == undefined">
+                                                    --</td>
+                                                <td *ngIf="auth.aditionalDoc2 != undefined">
+                                                    <a href="javascript:void(0);" (click)="downloadAction($event,auth.aditionalDoc2,auth.hospitalCode,auth.claimedDate,'')"><i
+                                                                            class="bi bi-file-earmark-pdf"
+                                                                            style="color:red;font-size:15px;"></i></a>
+                                                </td>
+                                                <td *ngIf="auth.aditionalDoc2 == undefined">
+                                                    --</td>
+                                                <td *ngIf="auth.aditionalDoc3 != undefined">
+                                                    <a href="javascript:void(0);" (click)="downloadAction($event,auth.aditionalDoc3,auth.hospitalCode,auth.claimedDate,'')"><i
+                                                                            class="bi bi-file-earmark-pdf"
+                                                                            style="color:red;font-size:15px;"></i></a>
+                                                </td>
+                                                <td *ngIf="auth.aditionalDoc3 == undefined">
+                                                    --</td>
+                                                <td><a href="javascript:void(0)" (click)="preauthLogDetails(auth.urnNo,item.AUTHORIZEDCODE,auth.hospitalCode)">Click
+                                                                        here</a></td>
+                                            </tr>
+                                        </ng-container>
+                                        <tr *ngIf="!check">
+                                            <td colspan="16" align="center"><strong class="text-danger">No data
+                                                                    found</strong>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- /////////////////////////////////////////////////////////////////////////////PACKAGE DETAILS//////////////////////////////////////////////////////////////////////////////////////////////                                    -->
+            <div class="card shadow-sm mx-3 mt-3 mt-xl-4 ">
+                <div class="card-header">
+                    <h5 class="mb-0">Package Details</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row gx-xl-5 treatment-details">
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th class="fw-500 text-success" width="250px">Package Details</th>
+                                            <th width="150px">Code</th>
+                                            <th>Name</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Package</td>
+                                            <td>{{item?.packageCode1}}</td>
+                                            <td><a href="javascript:void(0);" *ngIf="item?.packageName1!='NA'" class="mb-0 p-0" style="cursor: pointer;" data-bs-target="#packageDetailsModal" data-bs-toggle="modal" title="Click here to get package details"
+                                                    (click)="getPackageDetails(item?.packageCode1,item?.subPackageCode1,item?.procedureCode1)">{{item?.packageName1}} <i class="bi bi-box-arrow-up-right"></i></a><span *ngIf="item?.packageName1=='NA'">
+                                                <p class="mb-0 p-0">{{item?.packageName1}}</p>
+                                            </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Sub-Package</td>
+                                            <td>{{item?.subPackageCode1}}</td>
+                                            <td>{{item?.subPackageName1}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Procedure </td>
+                                            <td>{{item?.procedureCode1}}</td>
+                                            <td>{{item?.procedureName1}}</td>
+                                            <td> <span class="mb-0 p-0" id="procedureNameId"></span>
+                                                <span id="showMoreId" (click)="showProcedureName()"></span>
+                                                <span id="showMoreId1" (click)="hideProcedureName()"></span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="table-responsive">
+                                <table class="table mb-0">
+                                    <tr>
+                                        <th class="text-success border-bottom" width="30%">Override Code</th>
+                                        <th class="width15"></th>
+                                        <th class="text-success border-bottom" colspan="2" width="40%">Referal Hospital</th>
+                                        <th class="width15"></th>
+                                        <th class="text-success border-bottom">Treatment</th>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <a href="javascript:void(0);" *ngIf="item?.OVERRIDECODE!='NA'" class="ps-0 fw-500" style="cursor: pointer;" data-bs-target="#OverridecodedetailsModal" data-bs-toggle="modal" title="Click here to get override code details" (click)="getOverridedetails(item?.OVERRIDECODE)">
+                                        {{item?.OVERRIDECODE}} <i class="bi bi-box-arrow-up-right"></i>
+                                    </a>
+                                            <span *ngIf="item?.OVERRIDECODE=='NA'">
+                                        <p class="ps-0 fw-500">NA</p>
+                                    </span>
+                                        </td>
+                                        <td></td>
+                                        <td width="10%"> <span class="tdfont">Parent</span>
+                                            <div class="ps-0 fw-500">{{item?.FROMHOSPITALNAME}}</div>
+                                        </td>
+
+                                        <td>
+                                            <span class="tdfont">Others</span>
+                                            <div class="ps-0 fw-500">{{item?.TOHOSPITAL}} </div>
+                                        </td>
+                                        <td></td>
+                                        <td>
+                                            <span class="tdfont">Days</span>
+                                            <div class="ps-0 fw-500">{{ item?.TREATMENTDAY }}</div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <hr class="mt-xl-4">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-success" colspan="">Admission Doctor Name</th>
+                                            <th class="width15"></th>
+                                            <th class="text-success" width="40%">Remark At the Time of Discharge</th>
+                                            <th class="width15"></th>
+                                            <th class="text-success">Discharge Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="ps-0 fw-500">{{ item?.DOCTORNAME }}</div>
+                                            </td>
+                                            <td></td>
+                                            <td>
+                                                <div class="ps-0 fw-500">{{item?.DISREMARKS}} </div>
+                                            </td>
+                                            <td></td>
+                                            <td>
+                                                <div class="ps-0 fw-500">{{item?.TRANSACTIONDESCRIPTION}}</div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-lg-12 accordion">
+                                    <div class="card shadow-sm treatment-history">
+                                        <div class="accordion-item" id="headingVital">
+                                            <div class="accordion-button collapsed card-header bg-color" data-bs-toggle="collapse" data-bs-target="#collapseVital" aria-expanded="false" aria-controls="collapseTwo">
+                                                <h5 class="mb-0" style="font-size: 12pt;">Vital Parameters</h5>
+                                            </div>
+                                            <div id="collapseVital" class="accordion-collapse collapse hide" aria-labelledby="headingVital" data-bs-parent="#accordionExample">
+                                                <div class="card-body">
+                                                    <div class="table-responsive">
+                                                        <table class="table mb-0 border" style="width:100%">
+                                                            <thead class="bgcolor-th">
+                                                                <tr>
+                                                                    <th colspan="2" class="text-center border-bottom" style="width:50%">Admission</th>
+                                                                    <th colspan="2" class="text-center border-start border-bottom" style="width:50%">Discharge</th>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th class="text-center">Parameter</th>
+                                                                    <th class="text-center border-start">Value</th>
+                                                                    <th class="text-center border-start">Parameter</th>
+                                                                    <th class="text-center border-start">Value</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr *ngFor="let vital of vitalArray,index as i">
+                                                                    <td class="text-center">{{vital.ADM_VITALSIGN}}</td>
+                                                                    <td class="text-center border-start">{{vital.ADM_VITALVALUE}}</td>
+                                                                    <td class="text-center border-start">{{vital.DIS_VITALSIGN}}</td>
+                                                                    <td class="text-center border-start">{{vital.DIS_VITALVALUE}}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm mx-3 mt-3 mt-xl-4 ">
+                <div class="card-header">
+                    <h5 class="mb-0">Highend Drugs,Implant,Ward Details
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row gx-xl-5 treatment-details">
+
+                        <div class="col-lg-12 accordion mb-3">
+                            <div class="card shadow-sm treatment-history">
+                                <div class="accordion-item" id="headingSeven">
+                                    <div class="accordion-button collapsed card-header bg-color" data-bs-toggle="collapse" data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseTwo">
+                                        <h5 class="mb-0" style="font-size: 12pt;">Highend Drugs</h5>
+                                    </div>
+                                    <div id="collapseSeven" class="accordion-collapse collapse show" aria-labelledby="headingSeven" data-bs-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="table mb-0" style="width:100%">
+                                                    <thead class="bgcolor-th">
+                                                        <tr>
+                                                            <th>Sl#</th>
+                                                            <th>Code</th>
+                                                            <th>Name</th>
+                                                            <th>Unit Price(₹)</th>
+                                                            <th>Unit</th>
+                                                            <th>Total Price(₹)</th>
+                                                            <th>Recommended Dose</th>
+                                                            <th>Pre-Auth Required</th>
+                                                            <th>Activity Done On</th>
+                                                        </tr>
+                                                    </thead>
+
+                                                    <tbody>
+                                                        <ng-container *ngIf="highEndDrugList.length > 0">
+                                                            <tr *ngFor="let highEndDrug of highEndDrugList; index as i">
+                                                                <td>{{i+1}}</td>
+                                                                <td>{{highEndDrug.code}}</td>
+                                                                <td>{{highEndDrug.name}}</td>
+                                                                <td>{{highEndDrug.unitPrice | currency:"":""}}</td>
+                                                                <td>{{highEndDrug.unit}}</td>
+                                                                <td>{{highEndDrug.totalPrice | currency:"":""}}</td>
+                                                                <td>{{highEndDrug.recommendedDose}}</td>
+                                                                <td>{{highEndDrug.preAuthRequired}}</td>
+                                                                <td>{{highEndDrug.activityDoneOn}}</td>
+                                                            </tr>
+                                                        </ng-container>
+                                                        <tr *ngIf="highEndDrugList.length === 0">
+                                                            <td colspan="9" align="center"><strong class="text-danger">No Data Found</strong></td>
+                                                        </tr>
+                                                    </tbody>
+
+                                                    <tfoot *ngIf="highEndDrugList.length > 0">
+                                                        <tr>
+                                                            <td colspan="5" style="text-align: center"><strong>Total</strong></td>
+                                                            <td><strong>{{highEndDrugTotalPrice | currency:"":""}}</strong></td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 accordion mb-3">
+                            <div class="card shadow-sm treatment-history">
+                                <div class="accordion-item" id="headingEight">
+                                    <div class="accordion-button collapsed card-header bg-color" data-bs-toggle="collapse" data-bs-target="#collapseEight" aria-expanded="false" aria-controls="collapseTwo">
+                                        <h5 class="mb-0" style="font-size: 12pt;">Implant</h5>
+                                    </div>
+                                    <div id="collapseEight" class="accordion-collapse collapse show" aria-labelledby="headingEight" data-bs-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="table mb-0" style="width:100%">
+                                                    <thead class="bgcolor-th">
+                                                        <tr>
+                                                            <th>Sl#</th>
+                                                            <th>Code</th>
+                                                            <th>Implant Name</th>
+                                                            <th>Procedure Code</th>
+                                                            <th>Unit Price(₹)</th>
+                                                            <th>Unit</th>
+                                                            <th>Total Amount(₹)</th>
+                                                            <th>Action On</th>
+                                                        </tr>
+                                                    </thead>
+
+                                                    <tbody>
+                                                        <ng-container *ngIf="implantDataList.length > 0">
+                                                            <tr *ngFor="let implantData of implantDataList; index as i">
+                                                                <td>{{i+1}}</td>
+                                                                <td>{{implantData.code}}</td>
+                                                                <td>{{implantData.implantName}}</td>
+                                                                <td title="{{implantData.procedureName}}">{{implantData.procedureCode}}</td>
+                                                                <td>{{implantData.unitPrice | currency:"":""}}</td>
+                                                                <td>{{implantData.unit}}</td>
+                                                                <td>{{implantData.totalAmount | currency:"":""}}</td>
+                                                                <td>{{implantData.activityOn}}</td>
+                                                            </tr>
+                                                        </ng-container>
+                                                        <tr *ngIf="implantDataList.length === 0">
+                                                            <td colspan="9" align="center"><strong class="text-danger">No Data Found</strong></td>
+                                                        </tr>
+                                                    </tbody>
+
+                                                    <tfoot *ngIf="implantDataList.length > 0">
+                                                        <tr>
+                                                            <td colspan="4" style="text-align: center"><strong>Total</strong></td>
+                                                            <td><strong>{{implantTotalUnitPrice | currency:"":""}}</strong></td>
+                                                            <td><strong>{{implantTotalUnit}}</strong></td>
+                                                            <td><strong>{{implantTotalPrice | currency:"":""}}</strong></td>
+                                                        </tr>
+                                                    </tfoot>
+
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 accordion">
+                            <div class="card shadow-sm treatment-history">
+                                <div class="accordion-item" id="headingNine">
+                                    <div class="accordion-button collapsed card-header bg-color" data-bs-toggle="collapse" data-bs-target="#collapseNine" aria-expanded="false" aria-controls="collapseTwo">
+                                        <h5 class="mb-0" style="font-size: 12pt;">Ward</h5>
+                                    </div>
+                                    <div id="collapseNine" class="accordion-collapse collapse show" aria-labelledby="headingNine" data-bs-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="table mb-0" style="width:100%">
+                                                    <thead class="bgcolor-th">
+                                                        <tr>
+                                                            <th>Sl#</th>
+                                                            <th>Ward Name</th>
+                                                            <th>Ward Amount(₹)</th>
+                                                            <th>Ward Block Date</th>
+                                                            <th>Pre-Auth Required</th>
+                                                            <th>Activity Done On</th>
+                                                        </tr>
+                                                    </thead>
+
+                                                    <tbody>
+                                                        <ng-container *ngIf="wardDataList.length > 0">
+                                                            <tr *ngFor="let wardData of wardDataList; index as i">
+                                                                <td>{{i+1}}</td>
+                                                                <td>{{wardData.wardName}}</td>
+                                                                <td>{{wardData.wardAmount | currency:"":""}}</td>
+                                                                <td>{{wardData.wardBlockDate}}</td>
+                                                                <td>{{wardData.preAuthRequired}}</td>
+                                                                <td>{{wardData.activityDoneOn}}</td>
+                                                            </tr>
+                                                        </ng-container>
+                                                        <tr *ngIf="wardDataList.length === 0">
+                                                            <td colspan="9" align="center"><strong class="text-danger">No Data Found</strong></td>
+                                                        </tr>
+                                                    </tbody>
+
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm mx-3 mt-3 mt-xl-4 ">
+                <div class="card-body">
+                    <h5 class="mb-0">Diagnosis Details (ICD-11)</h5>
+                    <div class="row gx-xl-5 treatment-details">
+                        <div class="content-box">
+                            <div class="row">
+                                <div class="table-responsive">
+                                    <table id="treatmentTable" class="table mb-0 border">
+                                        <thead>
+                                            <tr>
+                                                <th width="50">Sl#</th>
+                                                <th>Code</th>
+                                                <th>Name</th>
+                                                <th>Mode</th>
+                                                <th>Details View</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <ng-container *ngFor="let item of icdTableData; index as i">
+                                                <tr>
+                                                    <td>{{i+1}}</td>
+                                                    <td width="50">{{item.icdCode}}</td>
+                                                    <td width="100">{{item.icdName}}</td>
+                                                    <td width="100">{{item.icdMode == '1'?"Primary Diagnosis":"Secondary Diagnosis"}}</td>
+                                                    <td width="100" (click)="item.isExpand = !item.isExpand">
+                                                        <i class="btn btn-outline-success bi bi-plus" *ngIf="!item.isExpand"></i>
+                                                        <i class="btn btn-outline-danger bi bi-file-minus" *ngIf="item.isExpand"></i>
+                                                    </td>
+                                                    <td width="100"><i class="btn btn-outline-danger bi bi-trash" (click)="removeIcd(i)"></i></td>
+                                                </tr>
+                                                <tr *ngIf="item?.isExpand">
+                                                    <td colspan="12">
+                                                        <table class="table mb-0 border">
+                                                            <thead>
+                                                                <th>Code</th>
+                                                                <th>Name</th>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr *ngFor="let dt of item?.subList">
+                                                                    <td>{{ dt.icdSubCode }}</td>
+                                                                    <td>{{ dt.icdSubName }}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </ng-container>
+                                            <tr *ngIf="!icdTableData?.length">
+                                                <td colspan="8" align="center" *ngIf="isVisible"><strong class="text-danger">No data
+                                           found</strong></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="card shadow-sm mx-3 mt-3 mt-xl-4 document-upload">
+                <div class="card-header">
+                    <h5 class="mb-0">Latest Documents Uploaded</h5>
+                </div>
+                <div class="card-body uploaded-doc">
+                    <div class="row gx-xl-5 treatment-details justify-content-between">
+                        <div class="col-lg-6 col-xxl-6 border-end pt-xl-2">
+                            <div class="row">
+
+                                <div class="col-6 col-lg-3 col-xxl-3 text-center mb-4" *ngIf="item.DISCHARGESLIP != undefined">
+                                    <a href="javascript:void(0);" (click)="downloadAction($event,item.DISCHARGESLIP,item.HOSPITALCODE,item.DATEOFADMISSION)">
+                                        <img src="./assets/img/pdf.png" alt="Admission Slip" class="mb-2" [width]="100">
+                                        <span class="d-block">Discharge Docs</span>
+                                    </a>
+                                </div>
+                                <div class="col-6 col-lg-3 col-xxl-3 text-center mb-4" *ngIf="item.DISCHARGESLIP == undefined">
+                                    <span class="d-block">--</span>
+                                    <span class="d-block">Discharge Docs</span>
+                                </div>
+                                <div class="col-6 col-lg-3 col-xxl-3 text-center mb-4" *ngIf="item.ADITIONALDOCS != undefined">
+                                    <a href="javascript:void(0);" (click)="downloadAction($event,item.ADITIONALDOCS,item.HOSPITALCODE,item.DATEOFADMISSION)">
+                                        <img src="./assets/img/pdf.png" alt="Admission Slip" class="mb-2" [width]="100">
+                                        <span class="d-block">Additional Docs</span>
+                                    </a>
+                                </div>
+                                <div class="col-6 col-lg-3 col-xxl-3 text-center mb-4" *ngIf="item.ADITIONALDOCS == undefined">
+                                    <span class="d-block mt-3">--</span>
+                                    <span class="d-block mt-5">Additional Docs</span>
+                                </div>
+                                <div class="col-6 col-lg-3 col-xxl-3 text-center mb-4" *ngIf="item.ADITIONAL_DOC1 != undefined">
+                                    <a href="javascript:void(0);" (click)="downloadAction($event,item.ADITIONAL_DOC1,item.HOSPITALCODE,item.DATEOFADMISSION)">
+                                        <img src="./assets/img/pdf.png" alt="Admission Slip" class="mb-2" [width]="100">
+                                        <span class="d-block">Additional Docs1</span>
+                                    </a>
+                                </div>
+                                <div class="col-6 col-lg-3 col-xxl-3 text-center mb-4" *ngIf="item.ADITIONAL_DOC1 == undefined">
+                                    <span class="d-block mt-3">--</span>
+                                    <span class="d-block mt-5">Additional Docs1</span>
+                                </div>
+                                <div class="col-6 col-lg-3 col-xxl-3 text-center mb-4" *ngIf="item.ADITIONAL_DOC2 != undefined">
+                                    <a href="javascript:void(0);" (click)="downloadAction($event,item.ADITIONAL_DOC2,item.HOSPITALCODE,item.DATEOFADMISSION)">
+                                        <img src="./assets/img/pdf.png" alt="Admission Slip" class="mb-2" [width]="100">
+                                        <span class="d-block">Additional Docs2</span>
+                                    </a>
+                                </div>
+                                <div class="col-6 col-lg-3 col-xxl-3 text-center mb-4" *ngIf="item.ADITIONAL_DOC2 == undefined">
+                                    <span class="d-block mt-3">--</span>
+                                    <span class="d-block mt-5">Additional Docs2</span>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-xxl-6">
+                            <div class="row gx-5">
+                                <div class="col-6 col-lg-3 col-xxl-3 text-center mb-4" *ngIf="item.PRESURGERYPHOTO !=undefined">
+                                    <a href="javascript:void(0);" (click)="downloadAction($event,item.PRESURGERYPHOTO,item.HOSPITALCODE,item.DATEOFADMISSION)">
+                                        <img src="./assets/img/male-profile.jpg" alt="Pre-Surgery" class=" mb-2" [width]="100">
+                                        <span class="d-block">Pre-Surgery</span>
+                                    </a>
+                                </div>
+                                <div class="col-6 col-lg-3 col-xxl-3 text-center mb-4" *ngIf="item.PRESURGERYPHOTO == undefined">
+                                    <span class="d-block mt-3">--</span>
+                                    <span class="d-block mt-5">Pre-Surgery</span>
+                                </div>
+                                <div class="col-6 col-lg-3 col-xxl-3 text-center mb-4" *ngIf="item.POSTSURGERYPHOTO !=undefined">
+                                    <a href="javascript:void(0);" (click)="downloadAction($event,item.POSTSURGERYPHOTO,item.HOSPITALCODE,item.DATEOFADMISSION)">
+                                        <img src="./assets/img/male-profile.jpg" alt="Post-Surgery" class="mb-2" [width]="100">
+                                        <span class="d-block">Post-Surgery</span>
+                                    </a>
+                                </div>
+                                <div class="col-6 col-lg-3 col-xxl-3 text-center mb-4" *ngIf="item.POSTSURGERYPHOTO == undefined">
+                                    <span class="d-block mt-3">--</span>
+                                    <span class="d-block mt-5">Post-Surgery</span>
+                                </div>
+                                <div class="col-6 col-lg-3 col-xxl-3 text-center mb-4" *ngIf="item.PATIENT_PHOTO != undefined">
+                                    <a href="javascript:void(0);" (click)="downloadAction($event,item.PATIENT_PHOTO,item.HOSPITALCODE,item.DATEOFADMISSION)">
+                                        <img src="./assets/img/male-profile.jpg" alt="Post-Surgery" class="mb-2">
+                                        <span class="d-block">Patient Photo</span>
+                                    </a>
+                                </div>
+                                <div class="col-6 col-lg-3 col-xxl-3 text-center mb-4" *ngIf="item.PATIENT_PHOTO == undefined">
+                                    <a href="javascript:void(0);">
+                                        <p class="mt-3">--</p>
+                                    </a>
+                                    <span class="d-block mt-5">Patient Photo</span>
+                                </div>
+                                <div class="col-6 col-lg-3 col-xxl-3 text-center mb-4" *ngIf="item.INTRA_SURGERY_PHOTO != undefined">
+
+                                    <a href="javascript:void(0);" (click)="downloadAction($event,item.INTRA_SURGERY_PHOTO,item.HOSPITALCODE,item.DATEOFADMISSION)">
+                                        <img src="./assets/img/male-profile.jpg" alt="Post-Surgery" class="mb-2">
+                                        <span class="d-block">Intra-Surgery
+                                            photo</span>
+                                    </a>
+                                </div>
+                                <div class="col-6 col-lg-3 col-xxl-3 text-center mb-4" *ngIf="item.INTRA_SURGERY_PHOTO == undefined">
+                                    <a href="javascript:void(0);">
+                                        <p class="mt-3">--</p>
+                                    </a>
+                                    <span class="d-block mt-5">Intra-Surgery
+                                        photo</span>
+                                </div>
+                                <div class="col-6 col-lg-3 col-xxl-3 text-center mb-4" *ngIf="item.SPECIMEN_REMOVAL_PHOTO != undefined">
+                                    <a href="javascript:void(0);" (click)="downloadAction($event,item.SPECIMEN_REMOVAL_PHOTO,item.HOSPITALCODE,item.DATEOFADMISSION)">
+                                        <img src="./assets/img/male-profile.jpg" alt="Post-Surgery" class="mb-2">
+                                        <span class="d-block">Specimen Removal
+                                            Photo</span>
+                                    </a>
+                                </div>
+                                <div class="col-6 col-lg-3 col-xxl-3 text-center mb-4" *ngIf="item.SPECIMEN_REMOVAL_PHOTO == undefined">
+                                    <a href="javascript:void(0);">
+                                        <p class="mt-3">--</p>
+                                    </a>
+                                    <span class="d-block mt-5">Specimen Removal
+                                        Photo</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="card shadow-sm mx-3 mb-3 mt-3 mt-xl-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Action Taken History</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row gx-xl-5 treatment-details">
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table class="table mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th width="40">Sl#</th>
+                                            <!-- <th>Action By</th> -->
+                                            <th>Action On</th>
+                                            <th>Action Type</th>
+
+                                            <th>Amount (₹)</th>
+                                            <th>Remark</th>
+
+                                            <th>Description</th>
+                                            <th>Discharge Slip</th>
+
+                                            <th>Additional Docs</th>
+
+                                            <th>Additional Docs1</th>
+                                            <th>Additional Docs2</th>
+                                            <th>Pre-Surgery</th>
+                                            <th>Post-Surgery</th>
+                                            <th>Intra-Surgery</th>
+                                            <th>Specimen-Removal</th>
+                                            <th>Patient-Photo</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let action2 of actiontable; index as i">
+                                            <td>{{i+1}}</td>
+                                            <!-- <td>{{action2.username}} </td> -->
+                                            <td> {{ action2.actionon| date :'dd-MMM-yyyy, h:mm:ss a'}}
+                                            </td>
+                                            <td>{{ action2.ACTIONTYPE}}</td>
+
+                                            <td>{{ action2.APPROVEDAMOUNT | currency:"INR" }}</td>
+                                            <td>{{ action2.remark}}</td>
+
+                                            <td *ngIf="action2.remarks != undefined">
+                                                <a href="javascript:void(0);" (click)="viewDescription(action2.remarks)">view</a>
+                                            </td>
+                                            <td *ngIf="action2.remarks == undefined">--</td>
+
+
+                                            <td *ngIf="action2.discharge_slip != undefined">
+                                                <a href="javascript:void(0);" (click)="downloadAction($event,action2.discharge_slip,action2.HOSPITALCODE,action2.ACTUALDATEOFADMISSION)"><i
+                                                            class="bi bi-file-earmark-pdf text-danger"
+                                                            style="font-size:24px;"></i></a>
+                                            </td>
+
+                                            <td *ngIf="action2.discharge_slip == undefined">--</td>
+                                            <td *ngIf="action2.additional_doc !=undefined"><a href="javascript:void(0);" (click)="downloadAction($event,action2.additional_doc,action2.HOSPITALCODE,action2.ACTUALDATEOFADMISSION)"><i
+                                                            class="bi bi-file-earmark-pdf text-danger"
+                                                            style="font-size:24px"></i></a>
+                                            </td>
+                                            <td *ngIf="action2.additional_doc == undefined">--</td>
+
+
+
+
+                                            <td *ngIf="action2.additionaldoc1 != undefined"><a href="javascript:void(0);" (click)="downloadAction($event,action2.additionaldoc1,action2.HOSPITALCODE,action2.ACTUALDATEOFADMISSION)"><i
+                                                            class="bi bi-file-earmark-pdf text-danger"
+                                                            style="font-size:24px"></i></a>
+                                            </td>
+                                            <td *ngIf="action2.additionaldoc1 == undefined">--</td>
+                                            <td *ngIf="action2.additionaldoc2 != undefined"><a href="javascript:void(0);" (click)="downloadAction($event,action2.additionaldoc2,action2.HOSPITALCODE,action2.ACTUALDATEOFADMISSION)"><i
+                                                            class="bi bi-file-earmark-pdf text-danger"
+                                                            style="font-size:24px"></i></a>
+                                            </td>
+                                            <td *ngIf="action2.additionaldoc2 == undefined">--</td>
+                                            <td *ngIf="action2.presurgeryphoto != undefined"><a href="javascript:void(0);" (click)="downloadAction($event,action2.presurgeryphoto,action2.HOSPITALCODE,action2.DATEOFADMISSION)"><i
+                                                            class="bi bi-file-earmark-image text-danger"
+                                                            style="font-size:24px"></i></a>
+                                            </td>
+                                            <td *ngIf="action2.presurgeryphoto == undefined">--</td>
+                                            <td *ngIf="action2.postsurgeryphoto != undefined"><a href="javascript:void(0);" (click)="downloadAction($event,action2.postsurgeryphoto,action2.HOSPITALCODE,action2.DATEOFADMISSION)"><i
+                                                            class="bi bi-file-earmark-image text-danger"
+                                                            style="font-size:24px"></i></a>
+                                            </td>
+                                            <td *ngIf="action2.postsurgeryphoto == undefined">--
+                                            </td>
+                                            <td *ngIf="action2.intra_surgery_photo != undefined"><a href="javascript:void(0);" (click)="downloadAction($event,action2.intra_surgery_photo,action2.HOSPITALCODE,action2.DATEOFADMISSION)"><i
+                                                            class="bi bi-file-earmark-image text-danger"
+                                                            style="font-size:24px"></i></a>
+                                            </td>
+                                            <td *ngIf="action2.intra_surgery_photo == undefined">--
+                                            </td>
+
+
+                                            <td *ngIf="action2.specimen_removal_photo != undefined">
+                                                <a href="javascript:void(0);" (click)="downloadAction($event,action2.postsurgeryphoto,action2.HOSPITALCODE,action2.DATEOFADMISSION)"><i
+                                                            class="bi bi-file-earmark-image text-danger"
+                                                            style="font-size:24px"></i></a>
+                                            </td>
+
+                                            <td *ngIf="action2.specimen_removal_photo == undefined">
+                                                --</td>
+                                            <td *ngIf="action2.patient_photo != undefined"><a href="javascript:void(0);" (click)="downloadAction($event,action2.patient_photo,action2.HOSPITALCODE,action2.DATEOFADMISSION)"><i
+                                                            class="bi bi-file-earmark-image text-danger"
+                                                            style="font-size:24px"></i></a>
+                                            </td>
+                                            <td *ngIf="action2.patient_photo == undefined">--</td>
+                                        </tr>
+                                        <tr *ngIf="!isactiontable">
+                                            <div class="row">
+                                                <span class="text-danger fw-bold" style="text-align: center;position:absolute">NO
+                                                        DATA
+                                                        FOUND!!</span>
+                                            </div>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- PACKAGE DETAILS POPUP -->
+    <div class="modal fade" id="packageDetailsModal" aria-labelledby="exampleModalLabel" data-bs-backdrop="static" tabindex="-1" aria-hidden="true" data-bs-focus="false">
+        <div class="modal-dialog modal-xl modal-lg modal-dialog-centered" style="max-width: 75%;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Package Details</h5>
+                    <button type="button" #closebutton class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Current Package Details -->
+                    <div class="accordion custom-accrodion" id="otpExample">
+                        <div class="accordion-item mb-3 border-0">
+                            <h5 class="accordion-header" id="headingOne">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#packageOne" aria-expanded="true" aria-controls="packageOne">
+                      Current Package Details
+                      </button>
+                            </h5>
+                            <div id="packageOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#otpExample">
+                                <div class="accordion-body p-0">
+                                    <div class="table-responsive mb-2 custom-tbl">
+                                        <table class="table table-striped border">
+                                            <thead class="tbl-topfix bgcolor-th">
+                                                <tr>
+                                                    <th width="6%">Sl#</th>
+                                                    <th>
+                                                        Hospital Category
+                                                    </th>
+                                                    <th width="10%">
+                                                        Package Details
+                                                        <div class="fw-normal"> Code | Name </div>
+                                                    </th>
+                                                    <th>
+                                                        Sub Package Code
+                                                        <div class="fw-normal"> Procedure Code </div>
+                                                    </th>
+                                                    <th>
+                                                        Amount
+                                                        <div class="fw-normal"> Maximum Days </div>
+                                                    </th>
+                                                    <th>
+                                                        Pre-Auth Docs
+                                                    </th>
+                                                    <th>
+                                                        Claim Docs
+                                                    </th>
+                                                    <th>
+                                                        Ward Type
+                                                    </th>
+                                                    <th>
+                                                        Day Care
+                                                    </th>
+                                                    <th width="15%">
+                                                        Package Type
+                                                        <div class="fw-normal"> Exception | Category </div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let item of pkgDetailsData index as i">
+                                                    <td data-th=" Sl#">{{i+1}}</td>
+                                                    <td data-th=" Hospital Category">
+                                                        <div class="mob-sec">
+                                                            <div class="fw-500"> {{item.hospitalCatName}} </div>
+                                                        </div>
+                                                    </td>
+                                                    <td data-th="Package & Sub-Package">
+                                                        <div class="mob-sec">
+                                                            <div class="fw-500"> {{item.packageCode}} </div>
+                                                            <div class="fw-normal"> {{item.packageName}} </div>
+                                                        </div>
+                                                    </td>
+                                                    <td data-th="Procedure Code">
+                                                        <div class="mob-sec">
+                                                            <div class="fw-500">{{item.subPackageCode}} </div>
+                                                            <div class="fw-normal">
+                                                                <div class="badge bg-outline-grey" role="alert"> {{item.procedureCode}} </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td data-th="Amount | Days ">
+                                                        <div class="mob-sec">
+                                                            <div class="fw-500"> {{item.amount | currency:'':''}} </div>
+                                                            <div class="fw-normal"> <span class="badge bg-outline-success"> {{item.MaximumDays}} Days </span> </div>
+                                                        </div>
+                                                    </td>
+                                                    <td data-th="Pre-Auth Docs">
+                                                        <div class="mob-sec">
+                                                            <div class="fw-500">
+                                                                <span id="preAuthDocId">
+                                                    {{item.preAuthDocs.length>30?item.preAuthDocs.substring(0, 30) + '...':item.preAuthDocs}}
+                                                </span>
+                                                                <span style="cursor: pointer; color: #1d89c9" id="showMoreId6" (click)="showPreDoc1(item.preAuthDocs)">
+                                                    {{item.preAuthDocs.length>30?'Show More':''}}
+                                                </span>
+                                                                <span style="cursor: pointer; color: #1d89c9" id="showMoreId7" (click)="hidePreDoc1(item.preAuthDocs)"></span>
+                                                                <!-- {{item.preAuthDocs}}  -->
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td data-th="Claim Docs">
+                                                        <div class="mob-sec">
+                                                            <div class="fw-500">
+                                                                <span id="claimProcessDocId">
+                                                    {{item.claimProcessDocs.length>30?item.claimProcessDocs.substring(0, 30) + '...':item.claimProcessDocs}}
+                                                </span>
+                                                                <span style="cursor: pointer; color: #1d89c9" id="showMoreId8" (click)="showClaimDoc1(item.claimProcessDocs)">
+                                                    {{item.claimProcessDocs.length>30?'Show More':''}}
+                                                </span>
+                                                                <span style="cursor: pointer; color: #1d89c9" id="showMoreId9" (click)="hideClaimDoc1(item.claimProcessDocs)"></span>
+                                                                <!-- {{item.claimProcessDocs}}  -->
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td data-th="Type Details">
+                                                        <div class="mob-sec">
+                                                            <div class="fw-500"> {{wardDataList[0].wardName}} </div>
+                                                        </div>
+                                                    </td>
+                                                    <td data-th="Type Details">
+                                                        <div class="mob-sec">
+                                                            <div class="fw-500"> {{item.DayCare}} </div>
+                                                        </div>
+                                                    </td>
+                                                    <td data-th="Package Type">
+                                                        <div class="mob-sec">
+                                                            <div class="fw-500"> {{item.exceptionType}} </div>
+                                                            <div class="fw-normal"> <span class="badge bg-outline-success"> {{item.packageCatType}} </span> </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr *ngIf="pkgDetailsData?.length==0">
+                                                    <td colspan="14" class="text-center"><strong class="text-danger">No data found</strong></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Current Package Details -->
+                    <!-- Overall Package Details -->
+                    <div class="accordion custom-accrodion" id="otpExample">
+                        <div class="accordion-item mb-3 border-0">
+                            <h5 class="accordion-header" id="headingOne">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#packageTwo" aria-expanded="true" aria-controls="packageTwo">
+                      Overall Package Details
+                      </button>
+                            </h5>
+                            <div id="packageTwo" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#otpExample">
+                                <div class="accordion-body p-0">
+                                    <div class="table-responsive mb-2 custom-tbl" style="max-height: 400px;">
+                                        <table class="table table-striped border">
+                                            <thead class="tbl-topfix bgcolor-th">
+                                                <tr>
+                                                    <th width="6%">Sl#</th>
+                                                    <th>
+                                                        Hospital Category
+                                                    </th>
+                                                    <th width="10%">
+                                                        Package Details
+                                                        <div class="fw-normal"> Code | Name </div>
+                                                    </th>
+                                                    <th width="10%">
+                                                        Sub Package Details
+                                                        <div class="fw-normal"> Code | Name </div>
+                                                    </th>
+                                                    <th>
+                                                        Procedure Code
+                                                    </th>
+                                                    <th>
+                                                        Amount
+                                                        <div class="fw-normal"> Maximum Days </div>
+                                                    </th>
+                                                    <th>
+                                                        Pre-Auth Docs
+                                                    </th>
+                                                    <th>
+                                                        Claim Docs
+                                                    </th>
+                                                    <th>
+                                                        Ward Type
+                                                    </th>
+                                                    <th>
+                                                        Day Care
+                                                    </th>
+                                                    <th width="15%">
+                                                        Package Type
+                                                        <div class="fw-normal"> Exception | Category </div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let item of overAllDetailsData index as i">
+                                                    <td data-th=" Sl#">{{i+1}}</td>
+                                                    <td data-th=" Hospital Category">
+                                                        <div class="mob-sec">
+                                                            <div class="fw-500"> {{item.hospitalCatName}} </div>
+                                                        </div>
+                                                    </td>
+                                                    <td data-th="Package & Sub-Package">
+                                                        <div class="mob-sec">
+                                                            <div class="fw-500"> {{item.packageCode}} </div>
+                                                            <div class="fw-normal"> {{item.packageName}} </div>
+                                                        </div>
+                                                    </td>
+                                                    <td data-th="Procedure Code">
+                                                        <div class="mob-sec">
+                                                            <div class="fw-500">{{item.subPackageCode}} </div>
+                                                            <div class="fw-normal">{{item.subCategoryName}} </div>
+                                                        </div>
+                                                    </td>
+                                                    <td data-th="Procedure Code">
+                                                        <div class="mob-sec">
+                                                            <div class="fw-500">{{item.procedureCode}} </div>
+                                                        </div>
+                                                    </td>
+                                                    <td data-th="Amount | Days ">
+                                                        <div class="mob-sec">
+                                                            <div class="fw-500"> {{item.amount | currency:'':''}} </div>
+                                                            <div class="fw-normal"> <span class="badge bg-outline-success"> {{item.MaximumDays}} Days </span> </div>
+                                                        </div>
+                                                    </td>
+                                                    <td data-th="Pre-Auth Docs">
+                                                        <div class="mob-sec">
+                                                            <div class="fw-500">
+                                                                <span id="preAuthDocId{{i+1}}">
+                                                    {{item.preAuthDocs.length>30?item.preAuthDocs.substring(0, 30) + '...':item.preAuthDocs}}
+                                                </span>
+                                                                <span style="cursor: pointer; color: #1d89c9" id="showMoreId2{{i+1}}" (click)="showPreDoc((i+1),item.preAuthDocs)">
+                                                    {{item.preAuthDocs.length>30?'Show More':''}}
+                                                </span>
+                                                                <span style="cursor: pointer; color: #1d89c9" id="showMoreId3{{i+1}}" (click)="hidePreDoc((i+1),item.preAuthDocs)"></span>
+                                                                <!-- {{item.preAuthDocs}}  -->
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td data-th="Claim Docs">
+                                                        <div class="mob-sec">
+                                                            <div class="fw-500">
+                                                                <span id="claimProcessDocId{{i+1}}">
+                                                    {{item.claimProcessDocs.length>30?item.claimProcessDocs.substring(0, 30) + '...':item.claimProcessDocs}}
+                                                </span>
+                                                                <span style="cursor: pointer; color: #1d89c9" id="showMoreId4{{i+1}}" (click)="showClaimDoc((i+1),item.claimProcessDocs)">
+                                                    {{item.claimProcessDocs.length>30?'Show More':''}}
+                                                </span>
+                                                                <span style="cursor: pointer; color: #1d89c9" id="showMoreId5{{i+1}}" (click)="hideClaimDoc((i+1),item.claimProcessDocs)"></span>
+                                                                <!-- {{item.claimProcessDocs}}  -->
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td data-th="Type Details">
+                                                        <div class="mob-sec">
+                                                            <div class="fw-500"> {{item.WardType}} </div>
+                                                        </div>
+                                                    </td>
+                                                    <td data-th="Type Details">
+                                                        <div class="mob-sec">
+                                                            <div class="fw-500"> {{item.DayCare}} </div>
+                                                        </div>
+                                                    </td>
+                                                    <td data-th="Package Type">
+                                                        <div class="mob-sec">
+                                                            <div class="fw-500"> {{item.exceptionType}} </div>
+                                                            <div class="fw-normal"> <span class="badge bg-outline-success"> {{item.packageCatType}} </span> </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr *ngIf="overAllDetailsData?.length==0">
+                                                    <td colspan="14" class="text-center"><strong class="text-danger">No data found</strong></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Overall Package Details -->
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- PACKAGE DETAILS POPUP -->
+</div>
+
+<!-- OVVERIDECODE DETAILS -->
+<div class="modal fade" id="OverridecodedetailsModal" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-focus="false">
+    <div class="modal-dialog modal-xl modal-lg modal-dialog-centered" style="max-width: 70%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Override Details</h5>
+                <button type="button" #closebutton class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive mb-2 custom-tbl">
+                    <table class="table table-striped border">
+                        <thead class="tbl-topfix bgcolor-th">
+                            <tr>
+                                <th width="6%">Sl#</th>
+                                <th width="10%"> URN </th>
+                                <th width="15%">
+                                    Hospital Description
+                                </th>
+                                <th width="10%">
+                                    No of Days
+                                    <div class="fw-normal"> Status </div>
+                                </th>
+                                <th width="13%">
+                                    Override Date
+                                    <div class="fw-normal"> Requested | Approval </div>
+                                </th>
+                                <th width="15%">
+                                    DC Details
+                                    <div class="fw-normal"> Name | Phone | Remarks</div>
+                                </th>
+                                <th width="10%">
+                                    Created On
+                                </th>
+                                <th width="10%">
+                                    File Name
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of overridedetails index as i">
+                                <td data-th="Sl#"> {{i+1}} </td>
+                                <td data-th="URN">
+                                    <div class="fw-500"> {{item.urnnumber}} </div>
+                                </td>
+                                <td data-th="Description">
+                                    <div class="mob-sec  fx-width">
+                                        <div class="fw-normal mb-1"> {{item.hospitaldescription}} </div>
+                                    </div>
+                                </td>
+                                <td data-th="No of Days">
+                                    <div class="mob-sec">
+                                        <div class="fw-500"> {{item.noofdays}} </div>
+                                        <div class="fw-normal"> <span class="badge bg-outline-success"> {{item.approvedtypes}} </span> </div>
+                                    </div>
+                                </td>
+                                <td data-th="Date Details">
+                                    <div class="mob-sec">
+                                        <div class="fw-500"> {{item.requestedday | date: 'dd-MMM-yyyy '}} </div>
+                                        <div class="fw-normal"> {{item.approvalday| date: 'dd-MMM-yyyy '}} </div>
+                                    </div>
+                                </td>
+                                <td data-th="Name">
+                                    <div class="mob-sec">
+                                        <div class="fw-500"> {{item.fullname}} </div>
+                                        <div class="fw-normal"> {{item.phone}} </div>
+                                        <div class="badge bg-outline-grey fw-normal text-start mt-1">
+                                            <p class="m-0"> {{item.Dcdcdescription}} </p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-th="Created On">
+                                    <div class="mob-sec">
+                                        <div class="fw-500"> {{item.createdon.toString().substring(0,11)}} </div>
+                                        <div class="fw-normal"> {{item.createdon.toString().substring(12,23)}} </div>
+                                    </div>
+                                </td>
+                                <td data-th="File Name" *ngIf="item.pdffile == 'N/A'">--</td>
+                                <td data-th="File Name" *ngIf="item.pdffile != 'N/A'"><a href="javascript:void(0);" (click)="downloadAction($event,item.pdffile,item.hospitalcode,actionDtls?.dateOfAdmission)"><i
+                            class="bi bi-file-earmark-pdf text-danger" style="color:red;font-size:20px"></i></a>
+                                </td>
+                            </tr>
+                            <tr *ngIf="overridedetails?.length==0">
+                                <td colspan="14" class="text-center" align="center"><strong class="text-danger">No Data Found</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

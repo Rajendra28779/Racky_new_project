@@ -1,0 +1,112 @@
+<div class="content">
+    <div class="form-cointainer">
+        <div class="main-tab">
+            <div class="row justify-content-between">
+                <div class="col-lg-8">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a routerLinkActive="active" class="nav-link active">Mortality Report Details</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-lg-4 col-xxl-4">
+                Actual Date of Discharge From : <strong>{{fromdate!=null?fromdate:"N/A"}}</strong>
+            </div>
+            <div class="col-lg-4 col-xxl-4">
+                To : <strong>{{todate!=null?todate:"N/A"}}</strong>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-lg-3 col-xxl-3">
+                State Name : <strong>{{stateNamedropdown!=null?stateNamedropdown:"N/A"}}</strong>
+            </div>
+            <div class="col-lg-3 col-xxl-3">
+                District Name : <strong>{{Districtdropdown!=null?Districtdropdown:"N/A"}}</strong>
+            </div>
+            <div class="col-lg-4 col-xxl-4">
+                Hospital Details : <strong>{{hospitalnamedropdown!=null?hospitalnamedropdown:"N/A"}}</strong>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+            <div class="col-lg-8 col-xxl-8 row">
+                <div class="col-md-9">
+                    <div style="padding-top: 10px; font-weight: bold; color: green"></div>
+                </div>
+                <div [align]="'start'" class="col-md-3">
+                    <button class="btn btn-danger" title="Download PDF" (click)="downloadReport('pdf')" style="float:right; margin-left: 5px;"><i class="bi bi-file-earmark-pdf"></i></button>
+                    <button class="btn btn-success" title="Download Excel" (click)="downloadReport('excel')" style="float: right"><i class="bi bi-download" ></i></button>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-xxl-4">
+                <div class="input-group">
+                    <input type="text" id="txtsearchDate" class="form-control" autocomplete="off" placeholder="Search" name="txtsearchDate" [(ngModel)]="txtsearchDate">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped mb-0">
+            <thead>
+                <tr>
+                    <th class="text-center">Sl#</th>
+                    <th class="text-center">State Name</th>
+                    <th class="text-center">District Name</th>
+                    <th class="text-center">Hospital Details</th>
+                    <th class="text-center">URN</th>
+                    <th class="text-center">Patient Name</th>
+                    <th class="text-center">Age</th>
+                    <th class="text-center">Actual Date Of Admission</th>
+                    <th class="text-center">Actual Date Of Discharge</th>
+                    <th class="text-center">Package Name</th>
+                    <th class="text-center">Mortality</th>
+                    <th class="text-center">Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let claim of detailsdata | filter:txtsearchDate| paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage}; index as i ">
+                    <tr>
+                        <td class="text-center" *ngIf="currentPage==1 ">{{(i+1)}}</td>
+                        <td class="text-center" *ngIf="currentPage!=1 ">{{(currentPage-1)*pageElement+ i+1}}</td>
+                        <td class="text-center">{{claim.stateName}}</td>
+                        <td class="text-center">{{claim.districtName}}</td>
+                        <td class="text-center">{{claim.hospitalName}}({{claim.hospitalCode}})</td>
+                        <td class="text-center">{{claim.urn}}</td>
+                        <td class="text-center">{{claim.patientname}}</td>
+                        <td class="text-center">{{claim.age}}</td>
+                        <td class="text-center">{{claim.actualdateofAdmission | date:'dd-MMM-YYYY'}}</td>
+                        <td class="text-center">{{claim.actualdateofDischarge | date:'dd-MMM-YYYY'}}</td>
+                        <td title="{{claim.packagename}}" class="text-center">{{claim.packagecode}}</td>
+                        <td class="text-center">{{claim.moratlity}}</td>
+                        <td title="Details"><a class="btn btn-outline-primary btn-sm me-1" (click)="TrackingDetails(claim)">click here</a></td>
+                    </tr>
+                </ng-container>
+                <tr *ngIf="this.detailsdata.length==0">
+                    <div class="row">
+                        <span style="color: red;text-align: center;position:absolute">NO DATA FOUND!!</span>
+                    </div>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="row mt-3" *ngIf="showPegi">
+        <div class="col-sm-4 ">
+            <div class="col-sm-* ">
+                show
+                <select id="pageItem" name="pageItem" class="form-select-sm" (change)="pageItemChange()">
+                    <option value="200">200</option>
+                    <option value="400">400</option>
+                    <option value="800">800</option>
+                    <option value="1000">1000</option>
+                    <option value={{record}}>All</option>
+                </select> entries
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true" (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+        </div>
+    </div>
+</div>

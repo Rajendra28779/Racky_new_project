@@ -1,0 +1,196 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/claimQueryBySNA" routerLinkActive="active"
+                            class="nav-link active">Claim Query By SNA</a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    <div class="content-box mt-3">
+        <div class="col-xxl-10">
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label class="control-label mb-2"> Actual Discharge Date From </label><span
+                            class="text-danger">*</span>
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="datepicker3"
+                                name="fromDate" autocomplete="off">
+                            <label class="input-group-text bg-transparent border-start-0" for="datepicker3"><i
+                                    class="iconbsky-calendar"></i> </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label class="control-label mb-2">Actual Discharge Date To </label><span
+                            class="text-danger">*</span>
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="datepicker4" name="toDate"
+                                autocomplete="off">
+                            <label class="input-group-text bg-transparent border-start-0" for="datepicker4"><i
+                                    class="iconbsky-calendar"></i> </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label class="control-label mb-2">Tagged Hospital Name</label>
+                        <ng-autocomplete #auto [data]="taggedList" placeholder="Select Tageed Hospital"
+                            (selected)="selectEvent($event)" [itemTemplate]="itemTemplate"
+                            [notFoundTemplate]="notFoundTemplate" [searchKeyword]="keyword" spellcheck="false"
+                            (inputCleared)="onReset1()" [initialValue]="hospitalName">
+                        </ng-autocomplete>
+                        <ng-template #itemTemplate let-item>
+                            <a [innerHTML]="item.hospitalName"></a>
+                        </ng-template>
+                        <ng-template #notFoundTemplate let-notFound>
+                            <div [innerHTML]="notFound"></div>
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-2">
+                <div class="d-grid gap-2 d-md-flex">
+                    <button type="submit" class="btn btn-success" (click)="Search()">Search</button>
+                    <button type="reset" class="btn btn-secondary" (click)="ResetFields()">Reset</button>
+                </div>
+            </div>
+        </div>
+    </div><br>
+    <div class="row">
+        <div class="col-md-4">
+            <p>No of List : {{listcount}}</p>
+        </div>
+        <div class="col-md-2"></div>
+
+        <div class="col-md-1"></div>
+        <div class="col-md-1">
+            <button class="btn btn-success btn-sm mx-1" tooltip="Excel" (click)="downloadReport('excel')"><i class="bi bi-download"></i></button>
+                <button class="btn btn-danger btn-sm mx-1" tooltip="pdf" (click)="downloadReport('pdf')"><i class="bi bi-file-earmark-pdf"></i></button>
+        </div>
+        <div class="col-md-4">
+            <div class="input-group">
+                <input type="text" id="txtsearchDate" class="form-control" placeholder="Search" name="txtsearchDate"
+                    [(ngModel)]="txtsearchDate" autocomplete="off">
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="content-box p-0 overflow-hidden ">
+        <div class="table-responsive ">
+            <table class="table table-striped mb-0">
+                <thead>
+                    <tr>
+                        <th width="60">Sl No.</th>
+                        <th>Claim No.</th>
+                        <th>URN</th>
+                        <th>Patient Name</th>
+                        <th>Hospital Details</th>
+                        <th>Invoice Number</th>
+                        <th>Package Code</th>
+                        <th>Admission Date</th>
+                        <th>ActualDate Of Admission</th>
+                        <th>Discharge Date</th>
+                        <th>ActualDate Of Discharge</th>
+                        <!-- <th>Remark</th> -->
+                        <th>Query On</th>
+                        <th>Description</th>
+                        <th>Remark</th>
+                        <th>Amount(₹)</th>
+                        <th width="90">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let claim of list |filter:txtsearchDate|
+                    paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};
+                        index as i">
+                        <tr>
+                            <td *ngIf="currentPage==1 ">{{(i+1)}}</td>
+                            <td *ngIf="currentPage!=1 ">{{(currentPage-1)*pageElement+ i+1}}</td>
+                            <td>{{claim.claim_no}} </td>
+                            <td>{{claim.urn}}</td>
+                            <td>{{claim.patientName}}</td>
+                            <td>{{claim.hospitalName}}({{claim.hospitalCode}})</td>
+                            <td>{{claim.invoiceno}}</td>
+                            <td title={{claim.packageName}}>{{claim.packageCode}}</td>
+                            <td>{{claim.dateofadmission }}</td>
+                            <td>{{claim.actualdateofadmission }}</td>
+                            <td>{{claim.dateofdischarge}}</td>
+                            <td>{{claim.actualdateofdischarge}}</td>
+                            <td>{{claim.uPDATEON | date :'dd-MMM-yyyy, h:mm:ss a'}}</td>
+                            <td *ngIf="claim.remarksDes != null"><a href="javascript:void(0)" (click)="viewDescription(claim.remarksDes)">view</a></td>
+                            <td *ngIf="claim.remarksDes == null">--</td>
+                            <td *ngIf="claim.remark != null"><a href="javascript:void(0)" (click)="viewRemark(claim.remark)">view</a></td>
+                            <td *ngIf="claim.remark == null">--</td>
+                            <td>{{claim.snoapprovedamount | currency:"INR ":''}}</td>
+                            <td class="text-center">
+                                <a class="btn btn-outline-success btn-sm" (click)="onclaim(claim.claimID)">
+                                        Action</a>
+                                <p class="small mb-0 text-danger">{{claim.getDaysleft}}</p>
+                            </td>
+                        </tr>
+                    </ng-container>
+                    <tr *ngIf="this.list?.length==0">
+                        <td colspan="16">
+                            <p class="mb-0 text-center text-danger fw-bold">NO DATA FOUND!!</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="row mt-3" *ngIf="showPegi ">
+    <div class="col-sm-4 ">
+        <div class="col-sm-* ">
+            show
+            <select id="pageItem" name="pageItem" class="form-select-sm" (change)="pageItemChange()">
+                <option value="10 ">10</option>
+                <option value="20 ">20</option>
+                <option value="30 ">30</option>
+                <option value="40 ">40</option>
+            </select> entries
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true" (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+    </div>
+</div>
+<div class="modal justify-content-center" id="appealDisposal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body py-5">
+                <span class="text-center text-success">
+                {{description}}
+            </span>
+
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="modalClose()">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal justify-content-center" id="remarkset" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body py-5">
+                <span class="text-center text-success">
+                {{remarkdata}}
+            </span>
+
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="modal()">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>

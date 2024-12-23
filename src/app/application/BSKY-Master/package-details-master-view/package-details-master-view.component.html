@@ -1,0 +1,236 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/packageDetailsMaster" routerLinkActive="active"
+                            class="nav-link" style="color: #1f723f;">Add</a>
+                    </li>
+                    <!-- <li class="nav-item" *ngIf="isVisibleUpdate">
+                        <a routerLink="/application/packageDetailsMaster" routerLinkActive="active" class="nav-link active">Update</a>
+                    </li> -->
+                    <li class="nav-item">
+                        <a routerLink="/application/packageDetailsMasterView" routerLinkActive="active"
+                            class="nav-link active">View</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-3 col-xxl-3 ">
+        <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3 ">
+          <label class="control-label" style="margin-top: 8px">Scheme Category<span class="text-danger"></span></label>
+          <select class="form-select" name="schemacategory" id="schemacategory" (change)="setCategory($event)">
+            <ng-container *ngFor="let item of schemeList">
+              <option value={{item.schemeCategoryId}}>{{item.categoryName}}</option>
+           </ng-container>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-xxl-3 ">
+        <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3 ">
+          <label class="control-label mb-2">Package Header</label>
+          <select class="form-select" id="Package" aria-label="Disabled select example" placeholder="Enter Package Category... "
+          autocomplete="off" (change)="setPackageHeader($event)">
+            <option value="" selected disabled>Select Package Header</option>
+            <ng-container *ngFor="let item of packageschemename,index i">
+              <option value="{{item.packageHeaderCode}}">{{item.packageheader}}</option>
+            </ng-container>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-xxl-3">
+        <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+          <label class="control-label mb-2">Mandatory Pre-auth</label>
+          <select class="form-select" id="mandatePreauth" aria-label="Disabled select example" autocomplete="off" (change)="setPreauthtype($event)">
+            <option value="" selected disabled>Select Pre-auth</option>
+            <option value="Y">YES</option>
+            <option value="N">NO</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-xxl-3">
+        <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+          <label class="control-label mb-2">Exception Package</label>
+          <select class="form-select" id="expPackage" aria-label="Disabled select example" autocomplete="off" (change)="setException($event)">
+            <option value="" selected disabled>Select Exception Type</option>
+            <option value="Y">YES</option>
+            <option value="N">NO</option>
+          </select>
+        </div>
+      </div>
+
+
+    </div>
+    <div class="row">
+      <div class="col-lg-3 col-xxl-3 ">
+        <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3 ">
+          <label class="control-label mb-2">Package Cayegory Type</label>
+          <select class="form-select" id="Packagetype" aria-label="Disabled select example" placeholder="Enter Package Category... " autocomplete="off" (change)="setPackageType($event)">
+            <option value="" selected>Select Package Category</option>
+            <option value="2">OPEN</option>
+            <option value="1">REFERRAL</option>
+            <option value="3">RESERVED</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="d-grid gap-2 d-md-flex">
+          <button type="submit" class="btn btn-success" (click)="getAllPackageDetails()">Search</button>
+          <button type="reset" class="btn btn-secondary">Reset</button>
+      </div>
+      </div>
+    </div>
+    <!-- <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+        <div class="col-lg-4 col-xxl-4"></div>
+        <div class="col-lg-4 col-xxl-4">
+            <button class="btn btn-success btn-sm mx-1" style="margin-top: 10px" tooltip="Excel"
+                (click)="downloadList(1)">
+                <i class="bi bi-file-earmark-spreadsheet"></i>
+            </button>
+            <button class="btn btn-danger btn-sm mx-1" style="margin-top: 10px" tooltip="pdf" (click)="downloadList(2)">
+                <i class="bi bi-file-earmark-pdf"></i>
+            </button>
+
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+            <input type="text" id="textsearchData" class="form-control" placeholder="Search here" name="textsearchData"
+                [(ngModel)]="textsearchData">
+        </div>
+    </div> -->
+    <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+        <div class="col-lg-3 col-xxl-3">
+          <div class="col-sm-*" *ngIf="showPegi">
+            show
+            <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+                <!-- <option value="50">50</option> -->
+                <option value="100">100</option>
+                <option value="200">200</option>
+                <option value="500">500</option>
+                <option value={{record}}>All</option>
+            </select> entries
+        </div>
+        </div>
+        <div class="col-lg-3 col-xxl-3" style="font-weight: 500;">Count : <span style="color: #1f723f;">{{record}}</span></div>
+        <div class="col-lg-2 col-xxl-2">
+            <div class="table-utilities float-end">
+                <button class="btn btn-success btn-sm mx-1" tooltip="Excel" (click)="downloadList(1)"><i
+                        class="bi bi-download"></i>
+                </button>
+                &nbsp;
+                <button class="btn btn-danger btn-sm me-1" type="submit" (click)="downloadList(2)"><i
+                        class="bi bi-file-earmark-pdf"></i></button>
+            </div>
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+            <div class="input-group">
+                <input type="text" id="txtsearchDate" class="form-control" placeholder="Search here"
+                    name="txtsearchDate" [(ngModel)]="textsearchData" autocomplete="off">
+            </div>
+        </div>
+    </div>
+    <div class="form-cointainer">
+        <div class="main-tab">
+            <div class="row justify-content-between">
+                <div class="table-responsive">
+                    <table class="table table-sm table-striped">
+                        <thead>
+                            <tr class="small">
+                                <th width="50">Sl#</th>
+                                <th>Package Header Code</th>
+                                <th>Package Header</th>
+                                <th>Package Subcategory Code</th>
+                                <th>Package Subcategory Name</th>
+                                <th>Procedure Code</th>
+                                <th>Procedure Description</th>
+                                <th>Preauth Required</th>
+                                <th>Package Category Type</th>
+                                <th>Maximum Days</th>
+                                <th>Day Care</th>
+                                <th>Fixed/Variable length of stay</th>
+                                <th>Mandatory Documents For Pre-Authorization</th>
+                                <th>Mandatory Documents For Claim Processing</th>
+                                <th>Package Extention</th>
+                                <th>Price Editable</th>
+                                <th>Package Under Exception</th>
+                                <th>Surgical/ Medical</th>
+                                <th>Extension Of Stay Allow</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngIf="record>0">
+                                <tr class="small"
+                                    *ngFor="let item of packageDetailList | filter:textsearchData | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage}; index as i">
+                                    <td *ngIf="currentPage==1">{{i+1}}</td>
+                                    <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+i+1}}</td>
+                                    <td>{{item.packageHeaderCode}}</td>
+                                    <td>{{item.packageHeader}}</td>
+                                    <td>{{item.packageSubcatagoryCode}}</td>
+                                    <td>{{item.packageSubcatagoryName}}</td>
+                                    <td>{{item.procedureCode}}</td>
+                                    <td>{{item.procedureDescription}}</td>
+                                    <td>{{item.mandatoryPreauth}}</td>
+                                    <td>{{item.packageCatagoryType}}</td>
+                                    <td>{{item.maximumDays}}</td>
+                                    <!-- <td>{{item.dayCare}}</td> -->
+                                    <td *ngIf="item.dayCare!=null">{{item.dayCare}}</td>
+                                    <td *ngIf="item.dayCare==null">N/A</td>
+                                    <td>{{item.stayType}}</td>
+                                    <td>{{item.preauthDocs}}</td>
+                                    <td>{{ isFullRemark[i] ? item.claimProcessDocs : (item.claimProcessDocs?.length > 39 ? (item.claimProcessDocs | slice:0:30) : item.claimProcessDocs) }}
+                                      <span *ngIf="item.claimProcessDocs?.length > 39 && !isFullRemark[i]" style="cursor: pointer; color: #0a54bd" (click)="toggleRemark(i)"><span style="font-weight: 500; font-size: 14px">view more</span></span>
+                                      <span *ngIf="isFullRemark[i]" style="cursor: pointer; color: #0849be" (click)="toggleRemark(i)"><span style="font-weight: 500; font-size: 14px">view less</span></span>
+                                    </td>
+                                    <td>{{item.packageExtention}}</td>
+                                    <td>{{item.priceEditable}}</td>
+                                    <td>{{item.ispackageException}}</td>
+                                    <td>{{item.isSurgical}}</td>
+                                    <td>{{item.extnofstay}}</td>
+                                    <td>
+                                        <div class="d-flex justify-content-between">
+                                            <a class="btn btn-outline-primary btn-sm me-1" (click)="edit(item.id)">
+                                                <i class="bi bi-pencil"></i></a>
+                                            <a class="btn btn-outline-danger btn-sm" (click)="delete(item.id)"><i
+                                                    class="bi bi-trash3"></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                            <tr *ngIf="record==0">
+                                <td colspan="14" class="text-center"><strong class="text-danger">No record
+                                        found</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row" *ngIf="showPegi">
+                    <div class="col-sm-4">
+                        <div class="col-sm-*">
+                            show
+                            <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+                                <option value="100">100</option>
+                                <option value="200">200</option>
+                                <option value="300">300</option>
+                                <option value="400">400</option>
+                                <option value={{record}}>All</option>
+                            </select> entries
+                        </div>
+                    </div>
+                    <div class="col-sm-8 text-right">
+                        <pagination-controls id="listing_pagination" [maxSize]="100" [directionLinks]="true"
+                            (pageChange)="currentPage = $event" class="text-end"
+                            (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,26 @@
+[
+  {
+    "pagetitle":"View Application List",
+    "tabList":[
+      {"tabName":"Take Action","tabUrl":"../../take-action/","tabClass":"active"}
+      
+    ],
+    "utils":[
+      {"utilName":"back"}
+      ],
+    "messages":
+      {
+        "successMsg":"Action taken successfully",
+        "chooseAction":"Choose the action",
+        "choosePriority":"Choose the priority",
+        "chooseRemark":"Enter the remark",
+      "errorMsg":"Error in database",
+      "warningtype":"You want to delete this record",
+      "deleteMsg":"Record has been deleted"
+      }
+     
+    
+  }
+]
+
+

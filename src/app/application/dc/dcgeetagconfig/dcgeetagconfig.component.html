@@ -1,0 +1,261 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+    <div class="col-lg-4">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a routerLink="/application/dcgeoyagconfig" routerLinkActive="active" class="nav-link active">Allow DC For Geo Tagging</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="cointainer">
+    <div class="row">
+      <div class="col-lg-3 col-xxl-3">
+        <div class="mb-xl-3">
+            <label class="control-label">Group type<span class="text-danger">*</span></label>
+            <select class="form-select" name="group" id="group" [(ngModel)]="group"
+                (change)="getuserDetailsbygroup($event.target.value)">
+                <option value="" selected disabled>Select Group type</option>
+                <option value=6>DC</option>
+                <option value=27>ADC</option>
+            </select>
+        </div>
+      </div>
+      <div class="col-lg-4 col-xxl-4">
+        <div class="mb-xl-3">
+          <label class="control-label">DC/ADC Name<span class="text-danger">*</span></label>
+          <ng-autocomplete #auto [data]="dcList" placeholder="Select DC/ADC Name" (selected)="selectEvent($event)"
+            (inputCleared)="clearEvent()" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate"
+            [searchKeyword]="keyword" spellcheck="false">
+          </ng-autocomplete>
+          <ng-template #itemTemplate let-item>
+            <a [innerHTML]="item.fullName"></a>
+          </ng-template>
+          <ng-template #notFoundTemplate let-notFound>
+            <div [innerHTML]="notFound"></div>
+          </ng-template>
+        </div>
+      </div>
+      <div class="col-lg-6 col-xxl-6" *ngIf="showdc">
+        <div class="card shadow-sm basic-info bg-light">
+          <div class="card-body ">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="d-flex">
+                  <span class="text-success me-3">
+                    <i class="bi bi-person-fill larger-icon"></i>
+                  </span>
+                  <div>
+                    <p class="mb-0 fw-500">{{dc?.fullName}}</p>
+                    <p class="mb-0 text-muted">{{dc?.mobileNo}}</p>
+                    <p class="mb-0 text-muted">{{dc?.emailId}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="showdc" style="margin-top: 1ch;">
+      <div  class="card shadow">
+        <div  class="card-body">
+          <div class="row">
+            <div class="col-lg-10">
+              <p class="cardheading">Tagged CDMO Details :-</p>
+            </div>
+            <div class="col-2" style="text-align:end ;">
+              <button class="btn btn-success btn-sm mx-1" style="margin-top: 10px" tooltip="Excel" (click)="downloadCdmo(1)">
+              <i class="bi bi-file-earmark-spreadsheet"></i>
+              </button>
+              <button class="btn btn-danger btn-sm mx-1" style="margin-top: 10px" tooltip="pdf" (click)="downloadCdmo(2)">
+              <i class="bi bi-file-earmark-pdf"></i>
+              </button>
+            </div>
+          </div>
+          <div class="table-responsive ">
+            <table class="table table-striped">
+              <caption></caption>
+              <thead>
+                <tr>
+                  <th>Sl No</th>
+                  <th>CDMO Name</th>
+                  <th>Mobile No</th>
+                  <th>Uplode Image</th>
+                  <th>Lattitude</th>
+                  <th>Longitude</th>
+                  <th style="text-align: center;">Allow for Geo-tagging</th>
+                  <th style="text-align: center;">Log</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of cdmolist, index as i">
+                  <td>{{i+1}}</td>
+                  <td>{{item.fullname}}</td>
+                  <td>{{item.mobileno}}</td>
+                  <td *ngIf="item.dcimage==null">N/A</td>
+                  <td *ngIf="item.dcimage!=null">
+                    <a href="javascript:void(0);" (click)="downLoaddcuploadDoc($event,item.dcimage,'CDMO')" >
+                      <i class="bi bi-file-earmark-image" style="font-size: 21px;margin-left: 30px;"></i>
+                    </a>
+                  </td>
+                  <td>{{item.lattitude}}</td>
+                  <td>{{item.longitude}}</td>
+                  <td style="text-align: center;" *ngIf="item.geotag==0" title="Allow For Geo tagging">
+                    <button style="text-align: center;" class="btn btn-outline-primary btn-sm me-1" (click)="onaction(item.userId,1)">
+                      Allow
+                    </button>
+                  </td>
+                  <td style="text-align: center;" *ngIf="item.geotag==1" title="Already Allowed to Geo tagging">
+                    <button style="text-align: center;" class="btn btn-secondary btn-sm me-1" disabled>
+                    Allowed
+                    </button>
+                  </td>
+                  <td style="text-align: center;">
+                    <button style="text-align: center;" class="btn btn-outline-warning btn-sm me-1" (click)="log(item)"
+                    data-bs-toggle="modal" data-bs-target="#log">Log</button>
+                  </td>
+                </tr>
+                <tr *ngIf="cdmolist?.length==0">
+                  <td colspan="10" style="text-align:center;"><strong class="text-danger">No data found</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="row">
+            <div class="col-lg-10">
+              <p  class="cardheading">Tagged Referral Hospital Details :-</p>
+            </div>
+            <div class="col-2" style="text-align:end ;">
+              <button class="btn btn-success btn-sm mx-1" style="margin-top: 10px" tooltip="Excel" (click)="downloadREFH(1)">
+              <i class="bi bi-file-earmark-spreadsheet"></i>
+              </button>
+              <button class="btn btn-danger btn-sm mx-1" style="margin-top: 10px" tooltip="pdf" (click)="downloadREFH(2)">
+              <i class="bi bi-file-earmark-pdf"></i>
+              </button>
+            </div>
+          </div>
+          <div class="table-responsive ">
+            <table class="table table-striped">
+              <caption></caption>
+              <thead>
+                <tr>
+                  <th>Sl No</th>
+                  <th>State Name</th>
+                  <th>District Name</th>
+                  <th>Hospital Name</th>
+                  <th>Uplode Image</th>
+                  <th>Lattitude</th>
+                  <th>Longitude</th>
+                  <th style="text-align: center;">Allow for Geo-tagging</th>
+                  <th style="text-align: center;">Log</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of refhosplist ,index as i">
+                  <td>{{i+1}}</td>
+                  <td>{{item.state}}</td>
+                  <td>{{item.district}}</td>
+                  <td>{{item.hospitalName}}</td>
+                  <td *ngIf="item.dcimage==null">N/A</td>
+                  <td *ngIf="item.dcimage!=null">
+                    <a href="javascript:void(0);" (click)="downLoaddcuploadDoc($event,item.dcimage,'REFH')" >
+                      <i class="bi bi-file-earmark-image" style="font-size: 21px;margin-left: 30px;"></i>
+                    </a>
+                  </td>
+                  <td>{{item.lattitude}}</td>
+                  <td>{{item.longitude}}</td>
+                  <td style="text-align: center;" *ngIf="item.geotag==0" title="Allow For Geo tagging">
+                    <button style="text-align: center;" class="btn btn-outline-primary btn-sm me-1" (click)="onaction(item.userId,2)">
+                    Allow
+                    </button>
+                  </td>
+                  <td style="text-align: center;" *ngIf="item.geotag==1" title="Already Allowed to Geo tagging">
+                    <button style="text-align: center;" class="btn btn-secondary btn-sm me-1" disabled>
+                    Allowed
+                    </button>
+                  </td>
+                  <td style="text-align: center;">
+                    <button style="text-align: center;" class="btn btn-outline-warning btn-sm me-1" (click)="log1(item)"
+                    data-bs-toggle="modal" data-bs-target="#log">Log</button>
+                  </td>
+                </tr>
+                <tr *ngIf="refhosplist?.length==0">
+                  <td colspan="10" style="text-align:center;"><strong class="text-danger">No data found</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Attendance Details-->
+<div class="modal fade" id="log" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="max-width: 70%;">
+    <div class="modal-content">
+      <div class="modal-header row">
+        <div class="col-9">
+          <h5 class="modal-title">
+            DC Name :- {{dc?.fullName}}<br>
+            Tagged to :- {{tagged}}
+          </h5>
+        </div>
+        <div class="col-2" style="text-align:end ;">
+          <button class="btn btn-success btn-sm mx-1" style="margin-top: 10px" tooltip="Excel" (click)="downloadLog(1)">
+          <i class="bi bi-file-earmark-spreadsheet"></i>
+          </button>
+          <button class="btn btn-danger btn-sm mx-1" style="margin-top: 10px" tooltip="pdf" (click)="downloadLog(2)">
+          <i class="bi bi-file-earmark-pdf"></i>
+          </button>
+        </div>
+        <div class="col-1">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive example-container1" style="margin-top:1ch;">
+          <table class="table table-striped">
+            <caption></caption>
+            <thead>
+              <tr>
+                <th>Sl No</th>
+                <th>Lattitude</th>
+                <th>Longitude</th>
+                <th>Upload Image</th>
+                <th>Status</th>
+                <th>GeoTag Status</th>
+                <th>Updated By</th>
+                <th>Updated On</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of loglist ,index as i">
+                <td>{{i+1}}</td>
+                <td>{{item.lattitude}}</td>
+                <td>{{item.longitude}}</td>
+                <td *ngIf="item.dcimage==null">N/A</td>
+                  <td *ngIf="item.dcimage!=null">
+                    <a href="javascript:void(0);" (click)="downLoaddcuploadDoclog($event,item.dcimage)" >
+                      <i class="bi bi-file-earmark-image" style="font-size: 21px;margin-left: 30px;"></i>
+                    </a>
+                  </td>
+                <td>{{item.status}}</td>
+                <td>{{item.geotagstatus}}</td>
+                <td>{{item.updatedby}}</td>
+                <td>{{item.updatedon}}</td>
+              </tr>
+              <tr *ngIf="loglist?.length==0">
+                <td colspan="10" style="text-align:center;"><strong class="text-danger">No data found</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

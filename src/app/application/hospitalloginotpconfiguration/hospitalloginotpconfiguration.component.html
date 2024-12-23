@@ -1,0 +1,219 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+      <div class="row justify-content-between">
+          <div class="col-lg-10">
+              <ul class="nav nav-tabs">
+                  <li class="nav-item">
+                      <a routerLink="/application/hosploginotpconfig" routerLinkActive="active" class="nav-link active">Hospital Login OTP Configuration</a>
+                  </li>
+              </ul>
+          </div>
+      </div>
+  </div>
+  <div class="content-box">
+      <div class="row">
+          <div class="col-lg-3 col-xxl-3">
+              <div class="mb-xl-3">
+                  <label class="control-label">State Name</label>
+                  <select class="form-select" name="stateId" id="stateId" (change)="OnChangeState($event.target.value)">
+                  <option value="" selected>Select State</option>
+                  <ng-container *ngFor="let item of stateList">
+                      <option value={{item.stateCode}}>{{item.stateName}}</option>
+                  </ng-container>
+              </select>
+              </div>
+          </div>
+          <div class="col-lg-3 col-xxl-3">
+              <div class="mb-xl-3">
+                  <label class="control-label">District Name</label>
+                  <select class="form-select" name="districtId" id="districtId">
+                  <option value="" selected>Select District</option>
+                  <ng-container *ngFor="let item of districtList">
+                      <option value={{item.districtcode}}>{{item.districtname}}</option>
+                  </ng-container>
+              </select>
+      </div>
+    </div>
+    <div class="col-lg-3 col-xxl-3">
+      <div class="mb-xl-3">
+        <label class="control-label">OTP Mandatory</label>
+              <select class="form-select" name="otpreq" id="otpreq">
+                  <option value="" selected>--Select--</option>
+                      <option value="0">OTP Required</option>
+                      <option value="1">OTP Not Required</option>
+              </select>
+      </div>
+    </div>
+    <div class="col-lg-2 col-xxl-2">
+      <div class="mb-xl-3">
+          <button type="submit" class="btn btn-success"  style="margin-top: 2ch;" (click)="Search()">Search</button>
+
+      </div>
+  </div>
+  <div class="content-box">
+      <div class="row">
+          <div class="col-3">
+              <div class="col-sm-*" style="margin-top:2ch;" *ngIf="showPegi">
+                  show
+                  <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+          <option value="20">20</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+          <option value="200">200</option>
+          <option value="300">300</option>
+          <option value={{totalcount}}>All</option>
+        </select> entries
+              </div>
+          </div>
+          <div class="col-2" style="margin-top:2ch;">
+              <b>Total : {{totalcount}}</b>
+          </div>
+          <div class="col-2 mt-2ch" style="text-align:end ;">
+              <button class="btn btn-success btn-sm mx-1" style="margin-top: 10px" tooltip="Excel" (click)="downloadList(1)">
+      <i class="bi bi-file-earmark-spreadsheet"></i>
+      </button>
+              <button class="btn btn-danger btn-sm mx-1" style="margin-top: 10px" tooltip="pdf" (click)="downloadList(2)">
+      <i class="bi bi-file-earmark-pdf"></i>
+      </button>
+          </div>
+          <div class="col-5">
+              <input type="text " id="txtsearchDate " name="txtsearchDate " [(ngModel)]="txtsearchDate" maxlength="20 " class="form-control " placeholder="Search here...... " autocomplete="off" style=" margin-right: 0px; margin-left: 0px;">
+          </div>
+      </div>
+      <div class="table-responsive " style="margin-top:1ch;">
+          <table class="table table-striped mb-0">
+              <thead>
+                  <tr>
+                      <th width="50">Sl#</th>
+                      <th>Hospital Name</th>
+                      <th>Hospital Code</th>
+                      <th>Hospital MobileNo</th>
+                      <th>Hospital emailId</th>
+                      <th style="text-align:center ;">
+                          Login OTP Required <br>
+                          <input type="checkbox" name="otpenable" id="otpenable" class="me-2 text-center" [checked]="checkall" (click)="allselectitem()">
+                      </th>
+                      <!-- <th>Log Details</th> -->
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let v of list | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage},index as i">
+                      <td *ngIf="currentPage==1 ">{{(i+1)}}</td>
+                      <td *ngIf="currentPage!=1 ">{{(currentPage-1)*pageElement+ i+1}}</td>
+                      <td>{{v.hospitalName}}</td>
+                      <td>{{v.hospitalCode}}</td>
+                      <td>{{v.mobileNo}}</td>
+                      <td>{{v.emailId}}</td>
+                      <td style="text-align:center ;">
+                          <input type="checkbox" name="otpenable" id="otpenable" class="me-2 text-center" [checked]="v.status==0" (click)="selectitem(v)">
+                      </td>
+                      <!-- <td>
+                          <a href="javascript:void(0)" (click)="getlogdata(v)" data-bs-target="#hospitallog" data-bs-toggle="modal">
+                              <i class="bi bi-eye" style="color:blue;"></i></a>
+                      </td> -->
+                  </tr>
+                  <tr *ngIf="totalcount==0">
+                      <td colspan="6" align="center">
+                          <strong class="text-danger">NO DATA FOUND!!</strong>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+      </div><br>
+      <div class="row" *ngIf="showPegi">
+          <div class="col-sm-4">
+              <div class="col-sm-*">
+                  show
+                  <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+          <option value="20">20</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+          <option value="200">200</option>
+          <option value="300">300</option>
+          <option value={{totalcount}}>All</option>
+        </select> entries
+              </div>
+          </div>
+          <div class="col-sm-8 text-right">
+              <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true" (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)">
+              </pagination-controls>
+          </div>
+      </div>
+  </div>
+
+  <div class="col-lg-2 col-xxl-2">
+      <div class="mb-xl-3">
+          <button type="submit" class="btn btn-success" [disabled]="!showsubmitbutton" style="margin-top: 3ch;" (click)="Submit()">Submit</button>
+      </div>
+  </div>
+
+</div>
+
+
+<!-- Hospital Log POPUP -->
+<div class="modal fade" id="hospitallog" aria-labelledby="exampleModalLabel" data-bs-backdrop="static" tabindex="-1" aria-hidden="true" data-bs-focus="false">
+  <div class="modal-dialog modal-xl modal-lg modal-dialog-centered">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Hospital Log Details</h5>
+              <button type="button" #closebutton class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <div class="row">
+                  <div class="col-lg-5">
+                      <b>Name :- {{result?.hospitalName}} ({{result?.hospitalCode}})</b>
+                  </div>
+                  <div class="col-lg-6">
+                      <b>Catagory :- {{data?.categoryName}}</b>
+                  </div>
+              </div>
+              <div class="row" style="margin-top:1ch;">
+                  <div class="col-lg-5">
+                      <b>Email :- {{result?.emailId}}</b>
+                  </div>
+                  <div class="col-lg-2">
+                      <b>Mobile :- {{result?.mobile}}</b>
+                  </div>
+                  <div class="col-2 mt-2ch" style="text-align:end ;">
+                      <button class="btn btn-success btn-sm mx-1" style="margin-top: 10px" tooltip="Excel" (click)="downloadList1(1)">
+              <i class="bi bi-file-earmark-spreadsheet"></i>
+              </button>
+                      <button class="btn btn-danger btn-sm mx-1" style="margin-top: 10px" tooltip="pdf" (click)="downloadList1(2)">
+              <i class="bi bi-file-earmark-pdf"></i>
+              </button>
+                  </div>
+                  <div class="col-lg-3">
+                      <input type="text " id="txtsearchDate " name="txtsearchDate" [(ngModel)]="txtsearchmodal" maxlength="20" class="form-control " placeholder="Search here...... " autocomplete="off" style=" margin-right: 0px; margin-left: 0px;">
+                  </div>
+              </div>
+              <div class="table-responsive mb-2 custom-tbl example-container" style="margin-top:1ch;">
+                  <table class="table table-striped border">
+                      <thead class="tbl-topfix bgcolor-th">
+                          <tr>
+                              <th width="7%">Sl#</th>
+                              <th>Login Otp Required</th>
+                              <th>Updated By</th>
+                              <th>Updated On</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr *ngFor="let item of logdetails | filter:txtsearchmodal , index as i" class="mob-box">
+                              <td>{{i+1}}</td>
+                              <td *ngIf="item.patientOtpRequired!=1">Yes</td>
+                              <td *ngIf="item.patientOtpRequired==1">No</td>
+                              <td>{{item.createname}}</td>
+                              <td>{{item.createdOn | date :'dd-MMM-yyyy, h:mm:ss a'}}</td>
+                          </tr>
+                          <tr *ngIf="logdetailstotal==0" align="center">
+                              <td class="text-center" data-th="No Data Found" colspan="14" align="center"><strong class="text-danger">No Data found</strong></td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+          <!-- section otp -->
+      </div>
+  </div>
+</div>
+
+<!-- AUTHENTICATION MODE POPUP -->

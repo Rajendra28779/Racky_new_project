@@ -1,0 +1,86 @@
+        <div class="form-cointainer">
+            <div class="main-tab">
+                <div class="row justify-content-between">
+                    <div class="col-lg-12">
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a routerLinkActive="active" class="nav-link active">Treatment History As Per URN</a>
+                            </li>
+                            <li class="col-lg-10">
+                                <div [align]="'start'" class="table-utilities float-end" style="padding-bottom: 1%;">
+                                    <button class="btn btn-success btn-sm mx-1" style="margin-top: 10px;" tooltip="Excel"
+                                        (click)="downloadReport()">
+                                        <i class="bi bi-download"></i>
+                                    </button>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="content-box">
+                <div class="row">
+                    <div class="table-responsive">
+                        <table class="table table-striped mb-0">
+                            <thead>
+                                <tr>
+                                    <th width="50">Sl#</th>
+                                    <th>Claim No.</th>
+                                    <th>URN</th>
+                                    <th>Package Code</th>
+                                    <th>Patient Name</th>
+                                    <th>Hospital Name</th>
+                                    <th>Admission Date</th>
+                                    <th>Actual Admission Date</th>
+                                    <th>Discharge Date</th>
+                                    <th>Actual Discharge Date</th>
+                                    <th>Hospital Claim Amount(₹)</th>
+                                    <th>CPD Approved Amount(₹)</th>
+                                    <th>SNA Approved Amount(₹)</th>
+                                    <th>Status</th>
+                                    <th>CPD Name</th>
+                                    <th>Action</th>
+                                    <th>Details</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngIf="trtData?.length">
+                                    <tr *ngFor="let item of trtData; index as i">
+                                        <td>{{i+1}}</td>
+                                        <td width="100" *ngIf="item.claimNo!=null">{{item.claimNo}}</td>
+                                        <td width="100" *ngIf="item.claimNo==null"></td>
+                                        <td width="100">{{item.urn}}</td>
+                                        <td width="100" title={{item.packagename}}>{{item.packagecode}}</td>
+                                        <td width="100">{{item.patientname}}</td>
+                                        <td width="100">{{item.hospitalName}}</td>
+                                        <td width="100">{{item.dateofadmission}}</td>
+                                        <td width="100">{{item.actualdateofadmission}}</td>
+                                        <td width="100">{{item.dateofdischarge}}</td>
+                                        <td width="100">{{item.actualdateofdischarge}}</td>
+                                        <td width="100">{{item.totalamountclaimed}}</td>
+                                        <td width="100" *ngIf="item.cpdapprovedamount==null"></td>
+                                        <td width="100" *ngIf="item.cpdapprovedamount!=null">{{item.cpdapprovedamount}}</td>
+                                        <td width="100" *ngIf="item.snoapprovedamount==null"></td>
+                                        <td width="100" *ngIf="item.snoapprovedamount!=null">{{item.snoapprovedamount}}</td>
+                                        <td width="100">{{item.actiontype}}</td>
+                                        <td width="150" *ngIf="item.cpdName!=null">{{item.cpdName}}</td>
+                                        <td width="150" *ngIf="item.cpdName==null"></td>
+                                        <td width="150" *ngIf="item.transactiondetailsid==txnId  || item.pendingAt!=2"></td>
+                                        <td width="150" *ngIf="item.transactiondetailsid!=txnId && item.pendingAt==2"><a class="btn btn-outline-success btn-sm"
+                                            (click)="onAction(item.transactiondetailsid,item.urn,item.packagecode,item.claimStatus)">Action</a></td>
+                                        <td width="100"><a href="javascript:void(0)"
+                                                (click)="getDetails(item.transactiondetailsid,item.claimid,item.claimRaiseStatus,item.urn,item.packagecode)">Click
+                                                here</a></td>
+                                    </tr>
+                                </ng-container>
+                                <tr *ngIf="! trtData?.length">
+                                    <td colspan="8" align="center" *ngIf="isVisible"><strong class="text-danger">No data
+                                            found</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+

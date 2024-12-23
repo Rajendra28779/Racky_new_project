@@ -1,0 +1,491 @@
+<div class="content">
+  <div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/blockedcaselogreportdtls" routerLinkActive="active" class="nav-link active">1.0 Blocked Case Log Details</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- <div class="col-lg-6 ">
+                <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+            </div> -->
+        </div>
+    </div>
+
+
+        <!-- Hospital information -->
+        <!-- <div  class="col-lg-12 col-xl-12 col-xxl-12 mb-4">
+          <div  class="card shadow-sm basic-info">
+             <div  class="card-header bg-color text-white">
+                <h5  class="mb-0"> Hospital Information</h5>
+             </div>
+             <div  class="card-body">
+                <div class="row treatment-details">
+                   <div  class="col-xl-4 col-lg-4">
+                      <div  class="d-flex align-items-center  border-end">
+                         <div >
+                            <p  class="small text-muted mb-1">Hospital Name</p>
+                            <h6  class="mb-0"> {{result?.hname}}  </h6>
+                         </div>
+                      </div>
+                   </div>
+                   <div  class="col-xl-2 col-lg-2">
+                      <div  class="d-flex align-items-center  border-end">
+                         <div >
+                            <p  class="small text-muted mb-1">Hospital Code</p>
+                            <h6  class="mb-0"> {{result?.hcode}}  </h6>
+                         </div>
+                      </div>
+                   </div>
+                   <div  class="col-xl-3 col-lg-3">
+                      <div  class="d-flex align-items-center border-end">
+                         <div >
+                            <p  class="small text-muted mb-1">Hospital State</p>
+                            <h6  class="mb-0"> {{result?.hstate}} </h6>
+                         </div>
+                      </div>
+                   </div>
+                   <div  class="col-xl-3 col-lg-3">
+                      <div  class="d-flex align-items-center">
+                         <div >
+                            <p  class="small text-muted mb-1">Hospital District</p>
+                            <h6  class="mb-0"> {{result?.hdist}} </h6>
+                         </div>
+                      </div>
+                   </div>
+                   <div  class="col-12">
+                    <hr  class="mt-xl-3">
+                 </div>
+                 <div  class="col-xl-4 col-lg-4">
+                  <div  class="d-flex align-items-center  border-end">
+                     <div >
+                        <p  class="small text-muted mb-1">Hospital Catagory</p>
+                        <h6  class="mb-0"> {{result?.hcatgory}}  </h6>
+                     </div>
+                  </div>
+               </div>
+               <div  class="col-xl-4 col-lg-4">
+                <div  class="d-flex align-items-center  border-end">
+                   <div >
+                      <p  class="small text-muted mb-1">Hospital Email Id</p>
+                      <h6  class="mb-0"> {{result?.hemail}}  </h6>
+                   </div>
+                </div>
+             </div>
+             <div  class="col-xl-4 col-lg-4">
+              <div  class="d-flex align-items-center ">
+                 <div >
+                    <p  class="small text-muted mb-1">Hospital Contact No</p>
+                    <h6  class="mb-0"> {{result?.hphone}}  </h6>
+                 </div>
+              </div>
+           </div>
+                </div>
+             </div>
+          </div>
+       </div> -->
+        <!-- Hospital information -->
+                 <!-- patient information -->
+                 <div  class="col-lg-12 col-xl-12 col-xxl-12 mb-4">
+                  <div  class="card shadow-sm basic-info">
+                     <div  class="card-header bg-color text-white">
+                        <h5  class="mb-0"> Patient Information</h5>
+                     </div>
+                     <div  class="card-body">
+                        <div class="row treatment-details">
+                          <div  class="col-xl-4 col-lg-4">
+                            <div  class="d-flex align-items-center  border-end">
+                               <div >
+                                  <p  class="small text-muted mb-1">Hospital Name </p>
+                                  <h6  class="mb-0"> {{result?.hname}} ({{result?.hcode}})</h6>
+                               </div>
+                            </div>
+                         </div>
+                           <div  class="col-xl-3 col-lg-3">
+                              <div  class="d-flex align-items-center  border-end">
+                                 <div >
+                                    <p  class="small text-muted mb-1">URN</p>
+                                    <h6  class="mb-0"> {{result?.urn}}  </h6>
+                                 </div>
+                              </div>
+                           </div>
+                           <div  class="col-xl-3 col-lg-3">
+                              <div  class="d-flex align-items-center  border-end">
+                                 <div >
+                                    <p  class="small text-muted mb-1">Patient Name</p>
+                                    <h6  class="mb-0"> {{result?.patient}}  </h6>
+                                 </div>
+                              </div>
+                           </div>
+                           <div  class="col-xl-2 col-lg-2">
+                              <div  class="d-flex align-items-center ">
+                                 <div >
+                                    <p  class="small text-muted mb-1">Mobile No </p>
+                                    <h6  class="mb-0"> {{result?.pphoneno}} </h6>
+                                 </div>
+                              </div>
+                           </div>
+                           <div  class="col-12">
+                            <hr  class="mt-xl-3">
+                         </div>
+                           <div  class="col-xl-2 col-lg-2">
+                              <div  class="d-flex align-items-center  border-end">
+                                 <div >
+                                    <p  class="small text-muted mb-1"> Gender </p>
+                                    <h6  class="mb-0"> {{result?.gender}} </h6>
+                                 </div>
+                              </div>
+                           </div>
+                           <div  class="col-xl-2 col-lg-2">
+                              <div  class="d-flex align-items-center border-end">
+                                 <div >
+                                    <p  class="small text-muted mb-1"> Age </p>
+                                    <h6  class="mb-0"> {{result?.age}} Years</h6>
+                                 </div>
+                              </div>
+                           </div>
+                           <div  class="col-xl-3 col-lg-3">
+                              <div  class="d-flex align-items-center  border-end">
+                                 <div >
+                                    <p  class="small text-muted mb-1">State </p>
+                                    <h6  class="mb-0">{{result?.pstate}} </h6>
+                                 </div>
+                              </div>
+                           </div>
+                           <div  class="col-xl-3 col-lg-3">
+                              <div  class="d-flex align-items-center border-end">
+                                 <div >
+                                    <p  class="small text-muted mb-1">District </p>
+                                    <h6  class="mb-0"> {{result?.pdist}} </h6>
+                                 </div>
+                              </div>
+                           </div>
+                           <!-- <div  class="col-xl-2 col-lg-2">
+                              <div  class="d-flex align-items-center border-end">
+                                 <div >
+                                    <p  class="small text-muted mb-1"> Block </p>
+                                    <h6  class="mb-0"> {{result?.block}} </h6>
+                                 </div>
+                              </div>
+                           </div> -->
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <!-- patient information -->
+               <!--Treatment Information-->
+               <div  class="col-lg-12 col-xl-12 col-xxl-12 mb-4">
+                <div  class="card shadow-sm basic-info">
+                   <div  class="card-header bg-color text-white">
+                      <h5  class="mb-0"> Treatment Information</h5>
+                   </div>
+                   <div  class="card-body">
+                      <div class="row treatment-details">
+                         <div  class="col-xl-3 col-lg-3">
+                            <div  class="d-flex align-items-center  border-end">
+                               <div >
+                                  <p  class="small text-muted mb-1">Actual Date Of Admission</p>
+                                  <h6  class="mb-0"><i class="iconbsky-calendar small ps-2"></i> {{result?.adateadd}}  </h6>
+                               </div>
+                            </div>
+                         </div>
+                         <div  class="col-xl-3 col-lg-3">
+                            <div  class="d-flex align-items-center  border-end">
+                               <div >
+                                  <p  class="small text-muted mb-1"> Date Of Admission</p>
+                                  <h6  class="mb-0"><i class="iconbsky-calendar small ps-2"></i> {{result?.dateadd}}  </h6>
+                               </div>
+                            </div>
+                         </div>
+                         <div  class="col-xl-3 col-lg-3">
+                            <div  class="d-flex align-items-center  border-end">
+                               <div >
+                                  <p  class="small text-muted mb-1">Actual Date Of Discharge</p>
+                                  <h6  class="mb-0"><i class="iconbsky-calendar small ps-2"></i> {{result?.adatedis}} </h6>
+                               </div>
+                            </div>
+                         </div>
+                         <div  class="col-xl-3 col-lg-3">
+                            <div  class="d-flex align-items-center ">
+                               <div >
+                                  <p  class="small text-muted mb-1"> Date Of Discharge </p>
+                                  <h6  class="mb-0"> <i class="iconbsky-calendar small ps-2"></i> {{result?.datedis}} </h6>
+                               </div>
+                            </div>
+                         </div>
+
+                         <div  class="col-12">
+                            <hr  class="mt-xl-3">
+                         </div>
+                         <div  class="col-xl-3 col-lg-3">
+                            <div  class="d-flex align-items-center  border-end">
+                               <div >
+                                  <p  class="small text-muted mb-1">Package code </p>
+                                  <h6  class="mb-0">{{result?.phcode}} </h6>
+                               </div>
+                            </div>
+                         </div>
+                         <div  class="col-xl-3 col-lg-3">
+                            <div  class="d-flex align-items-center border-end">
+                               <div >
+                                  <p  class="small text-muted mb-1">Package Description</p>
+                                  <h6  class="mb-0"> {{result?.phname}} </h6>
+                               </div>
+                            </div>
+                         </div>
+                         <div  class="col-xl-3 col-lg-3">
+                            <div  class="d-flex align-items-center border-end">
+                               <div >
+                                  <p  class="small text-muted mb-1"> Subcatagory code </p>
+                                  <h6  class="mb-0"> {{result?.pscode}} </h6>
+                               </div>
+                            </div>
+                         </div>
+                         <div  class="col-xl-3 col-lg-3">
+                            <div  class="d-flex align-items-center ">
+                               <div >
+                                  <p  class="small text-muted mb-1"> Subcatagory name </p>
+                                  <h6  class="mb-0"> {{result?.psname}} </h6>
+                               </div>
+                            </div>
+                         </div>
+                         <div  class="col-12">
+                          <hr  class="mt-xl-3">
+                       </div>
+                       <div  class="col-xl-3 col-lg-3">
+                        <div  class="d-flex align-items-center border-end">
+                           <div >
+                              <p  class="small text-muted mb-1"> Procedure Code</p>
+                              <h6  class="mb-0"> {{result?.pcode}} </h6>
+                           </div>
+                        </div>
+                     </div>
+                       <div  class="col-xl-6 col-lg-6">
+                        <div  class="d-flex align-items-center border-end">
+                           <div >
+                              <p  class="small text-muted mb-1"> Procedure Name</p>
+                              <h6  class="mb-0"> {{result?.pname}} </h6>
+                           </div>
+                        </div>
+                     </div>
+                       <div  class="col-xl-3 col-lg-3">
+                        <div  class="d-flex align-items-center ">
+                          <div >
+                            <p  class="small text-muted mb-1">Amount Blocked (₹)</p>
+                            <!-- <h6  class="mb-0"> {{result?.amountblocked}} </h6> -->
+                            <h6  class="mb-0" *ngIf="result?.amountblocked!='N/A'"> {{result?.amountblocked | currency:"":""}}  </h6>
+                              <h6  class="mb-0" *ngIf="result?.amountblocked=='N/A'"> N/A </h6>
+                         </div>
+                        </div>
+                     </div>
+                     <div  class="col-12">
+                      <hr  class="mt-xl-3">
+                   </div>
+                   <div  class="col-xl-3 col-lg-3">
+                    <div  class="d-flex align-items-center border-end">
+                       <div >
+                          <p  class="small text-muted mb-1">Claimed Blocked (₹)</p>
+                          <!-- <h6  class="mb-0"> {{result?.amountblocked}} </h6> -->
+                          <h6  class="mb-0" *ngIf="result?.claimedamount!='NA'"> {{result?.claimedamount | currency:"":""}}  </h6>
+                            <h6  class="mb-0" *ngIf="result?.claimedamount=='NA'"> N/A </h6>
+                       </div>
+                    </div>
+                 </div>
+                       <div  class="col-xl-4 col-lg-4">
+                        <div  class="d-flex align-items-center border-end">
+                           <div >
+                              <p  class="small text-muted mb-1">Status</p>
+                              <h6  class="mb-0"> {{result?.status}} </h6>
+                           </div>
+                        </div>
+                     </div>
+                       <!-- <div  class="col-xl-5 col-lg-5">
+                        <div  class="d-flex align-items-center">
+                           <div >
+                              <p  class="small text-muted mb-1">Is Patient MobileNo Verified</p>
+                              <h6  class="mb-0"> {{result?.mobverify}} </h6>
+                           </div>
+                        </div>
+                     </div> -->
+                      </div>
+                   </div>
+                </div>
+             </div>
+               <!--Treatment Information -->
+
+               <div class="col-lg-12 col-xl-12 col-xxl-12">
+                <div class="row mt-4">
+                    <div class="col-lg-12 accordion">
+                        <div class="card shadow-sm treatment-history">
+                            <div class="accordion-item" id="headingSeven">
+                                <div class="accordion-button collapsed card-header bg-color" data-bs-toggle="collapse" data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseTwo">
+                                    <h5 class="mb-0 bg-color text-white" style="font-size: 12pt;" >High End Drugs</h5>
+                                </div>
+                                <div id="collapseSeven" class="accordion-collapse collapse show" aria-labelledby="headingSeven" data-bs-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table mb-0 border" style="width:100%">
+                                                <thead class="bgcolor-th">
+                                                    <tr>
+                                                        <th>Sl#</th>
+                                                        <th>Code</th>
+                                                        <th>Name</th>
+                                                        <th>Unit Price</th>
+                                                        <th>Unit</th>
+                                                        <th>Total Price</th>
+                                                        <th>Recomidose</th>
+                                                        <th>Pre-Auth Required</th>
+                                                        <th>Activity Done On</th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                    <ng-container *ngIf="highEndDrugList.length > 0">
+                                                        <tr *ngFor="let highEndDrug of highEndDrugList; index as i">
+                                                            <td>{{i+1}}</td>
+                                                            <td>{{highEndDrug.code}}</td>
+                                                            <td>{{highEndDrug.name}}</td>
+                                                            <td>{{highEndDrug.unitPrice}}</td>
+                                                            <td>{{highEndDrug.unit}}</td>
+                                                            <td>{{highEndDrug.totalPrice}}</td>
+                                                            <td>{{highEndDrug.recommendedDose}}</td>
+                                                            <td>{{highEndDrug.preAuthRequired}}</td>
+                                                            <td>{{highEndDrug.activityDoneOn}}</td>
+                                                        </tr>
+                                                    </ng-container>
+                                                    <tr *ngIf="highEndDrugList.length === 0">
+                                                        <td colspan="9" align="center"><strong class="text-danger">No Data Found</strong></td>
+                                                    </tr>
+                                                </tbody>
+
+                                                <tfoot *ngIf="highEndDrugList.length > 0">
+                                                    <tr>
+                                                        <td colspan="5" style="text-align: center">Total</td>
+                                                        <td>{{highEndDrugTotalPrice}}</td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 col-xl-12 col-xxl-12">
+                <div class="row mt-4">
+                    <div class="col-lg-12 accordion">
+                        <div class="card shadow-sm treatment-history">
+                            <div class="accordion-item" id="headingEight">
+                                <div class="accordion-button collapsed card-header bg-color" data-bs-toggle="collapse" data-bs-target="#collapseEight" aria-expanded="false" aria-controls="collapseTwo">
+                                    <h5 class="mb-0 bg-color text-white" style="font-size: 12pt;">Implant</h5>
+                                </div>
+                                <div id="collapseEight" class="accordion-collapse collapse show" aria-labelledby="headingEight" data-bs-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table mb-0 border" style="width:100%">
+                                                <thead class="bgcolor-th">
+                                                    <tr>
+                                                        <th>Sl#</th>
+                                                        <th>Code</th>
+                                                        <th>Implant Name</th>
+                                                        <th>Procedure Code</th>
+                                                        <th>Unit Price</th>
+                                                        <th>Unit</th>
+                                                        <th>Total Amount</th>
+                                                        <th>Action On</th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                    <ng-container *ngIf="implantDataList.length > 0">
+                                                        <tr *ngFor="let implantData of implantDataList; index as i">
+                                                            <td>{{i+1}}</td>
+                                                            <td>{{implantData.code}}</td>
+                                                            <td>{{implantData.implantName}}</td>
+                                                            <td title={{implantData.procedureName}}>{{implantData.procedureCode}}</td>
+                                                            <td>{{implantData.unitPrice}}</td>
+                                                            <td>{{implantData.unit}}</td>
+                                                            <td>{{implantData.totalAmount}}</td>
+                                                            <td>{{implantData.activityOn}}</td>
+                                                        </tr>
+                                                    </ng-container>
+                                                    <tr *ngIf="implantDataList.length === 0">
+                                                        <td colspan="9" align="center"><strong class="text-danger">No Data Found</strong></td>
+                                                    </tr>
+                                                </tbody>
+
+                                                <tfoot *ngIf="implantDataList.length > 0">
+                                                    <tr>
+                                                        <td colspan="4" style="text-align: center">Total</td>
+                                                        <td>{{implantTotalUnitPrice}}</td>
+                                                        <td>{{implantTotalUnit}}</td>
+                                                        <td>{{implantTotalPrice}}</td>
+                                                    </tr>
+                                                </tfoot>
+
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 col-xl-12 col-xxl-12">
+                <div class="row mt-4">
+                    <div class="col-lg-12 accordion">
+                        <div class="card shadow-sm treatment-history">
+                            <div class="accordion-item" id="headingNine">
+                                <div class="accordion-button collapsed card-header bg-color" data-bs-toggle="collapse" data-bs-target="#collapseNine" aria-expanded="false" aria-controls="collapseTwo">
+                                    <h5 class="mb-0 bg-color text-white" style="font-size: 12pt;">Ward</h5>
+                                </div>
+                                <div id="collapseNine" class="accordion-collapse collapse show" aria-labelledby="headingNine" data-bs-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table mb-0 border" style="width:100%">
+                                                <thead class="bgcolor-th">
+                                                    <tr>
+                                                        <th>Sl#</th>
+                                                        <th>Ward Name</th>
+                                                        <th>Ward Amount</th>
+                                                        <th>Ward Block Date</th>
+                                                        <th>Pre-Auth Required</th>
+                                                        <th>Activity Done On</th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                    <ng-container *ngIf="wardDataList.length > 0">
+                                                        <tr *ngFor="let wardData of wardDataList; index as i">
+                                                            <td>{{i+1}}</td>
+                                                            <td>{{wardData.wardName}}</td>
+                                                            <td>{{wardData.wardAmount}}</td>
+                                                            <td>{{wardData.wardBlockDate}}</td>
+                                                            <td>{{wardData.preAuthRequired}}</td>
+                                                            <td>{{wardData.activityDoneOn}}</td>
+                                                        </tr>
+                                                    </ng-container>
+                                                    <tr *ngIf="wardDataList.length === 0">
+                                                        <td colspan="9" align="center"><strong class="text-danger">No Data Found</strong></td>
+                                                    </tr>
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+  </div>
+  </div>
+
+

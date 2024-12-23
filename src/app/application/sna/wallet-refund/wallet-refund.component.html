@@ -1,0 +1,939 @@
+<div class="form-cointainer claim-detail">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/snoapproval" routerLinkActive="active" class="nav-link active">Claim</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-6 ">
+                <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+            </div>
+        </div>
+    </div>
+    <div class="content-box p-0 border-0 bg-transparent">
+        <div class="row">
+            
+             <!-- patient information -->
+             <div  class="col-lg-12 col-xl-12 col-xxl-12">
+                <div  class="card shadow-sm basic-info">
+                    <div style="height: 35pt;" class="card-header bg-color text-white">
+                        <h5 style="font-size: 12pt;" class="mb-0"> Basic Information</h5>
+                    </div>
+                    <div  class="card-body">
+                        <div class="row treatment-details">
+                            <div  class="col-xl-4 col-lg-4">
+                                <div  class="d-flex align-items-center  border-end">
+                                    <div >
+                                        <p  class="small text-muted mb-1">Hospital</p>
+                                        <h6  class="mb-0"> {{ claimDetails?.HOSPITALNAME}} ({{  claimDetails?.HOSPITALCODE }})  </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div  class="col-xl-4 col-lg-4">
+                                <div  class="d-flex align-items-center  border-end">
+                                    <div >
+                                        <p  class="small text-muted mb-1">URN</p>
+                                        <h6  class="mb-0"> {{claimDetails?.URN}}  </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div  class="col-xl-4 col-lg-4">
+                                <div  class="d-flex align-items-center">
+                                    <div >
+                                        <p  class="small text-muted mb-1">Invoice Number</p>
+                                        <h6  class="mb-0"> {{claimDetails?.INVOICENO}} </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div  class="col-12">
+                                <hr  class="mt-xl-3">
+                            </div>
+                            <div  class="col-xl-4 col-lg-4">
+                                <div  class="d-flex align-items-center  border-end">
+                                    <div >
+                                        <p  class="small text-muted mb-1">Claim Number </p>
+                                        <h6 class="mb-0">{{ claimDetails?.CLAIMNO}}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div  class="col-xl-4 col-lg-4">
+                                <div  class="d-flex align-items-center  border-end">
+                                    <div >
+                                        <p  class="small text-muted mb-1">Patient Name</p>
+                                        <h6  class="mb-0"> {{claimDetails?.PATIENTNAME}}  </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div  class="col-xl-4 col-lg-4">
+                                <div  class="d-flex align-items-center">
+                                    <div >
+                                        <p  class="small text-muted mb-1">Patient Mobile No </p>
+                                        <h6  class="mb-0"> {{claimDetails?.MOBILE}} </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div  class="col-12">
+                                <hr  class="mt-xl-3">
+                            </div>
+                            <div  class="col-xl-4 col-lg-4">
+                                <div  class="d-flex align-items-center  border-end">
+                                    <div >
+                                        <p  class="small text-muted mb-1">Age </p>
+                                        <h6  class="mb-0">{{claimDetails?.AGE}} </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div  class="col-xl-4 col-lg-4">
+                                <div  class="d-flex align-items-center border-end">
+                                    <div >
+                                        <p  class="small text-muted mb-1">Gender</p>
+                                        <h6  class="mb-0" *ngIf="  claimDetails?.GENDER=='F' "> Female </h6>
+                                        <h6  class="mb-0" *ngIf="  claimDetails?.GENDER=='M' "> Male </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div  class="col-xl-4 col-lg-4">
+                                <div  class="d-flex align-items-center">
+                                    <div>
+                                        <p  class="small text-muted mb-1">Address</p>
+                                        <h6  class="mb-0"> {{claimDetails?.Address}} </h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-12">
+                <div class="card shadow-sm mt-3 mt-xl-4 ">
+                    <div style="height: 35pt;" class="card-header bg-color text-white">
+                        <h5 style="font-size: 12pt;" class="mb-0">Treatment Details</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row gx-xl-5 treatment-details">
+                            <div class="col-xl">
+                                <p class="small text-muted mb-0">Date of Admission - Date of Discharge
+                                </p>
+                                <h6 class="mb-0"><i class="iconbsky-calendar small"></i> {{ claimDetails?.DATEOFADMISSION | date: 'dd-MMM-yyyy'}} -
+
+                                    <i class="iconbsky-calendar small ps-2"></i> {{ claimDetails?.DATEOFDISCHARGE | date: 'dd-MMM-yyyy'}}
+                                </h6>
+                            </div>
+                            <div class="col-xl border-start">
+                                <div class="col-xl">
+                                    <p class="small text-muted mb-0">Actual Date of Admission and Discharge</p>
+                                    <h6 class="mb-0"><i class="iconbsky-calendar small"></i> {{ claimDetails?.ACTUALDATEOFADMISSION | date: 'dd-MMM-yyyy'}} -
+
+                                        <i class="iconbsky-calendar small ps-2"></i> {{ claimDetails?.ACTUALDATEOFDISCHARGE | date: 'dd-MMM-yyyy'}}
+                                    </h6>
+                                </div>
+                            </div>
+                            <div class="col-xl border-start">
+                                <div class="d-flex align-items-center">
+                                    <!-- <i class="iconbsky-package-amount mt-2 me-3 fs-1"></i> -->
+                                    <div>
+                                        <p class="small text-muted mb-0">Package Rate (₹)</p>
+                                        <h6 class="mb-0"> {{  claimDetails?.PACKAGERATE | currency:"":"" }}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl border-start">
+                                <div class="d-flex align-items-center">
+                                    <!-- <i class="iconbsky-block-amount mt-2 me-3 fs-1"></i> -->
+                                    <div>
+                                        <p class="small text-muted mb-0">Blocked Amount (₹)</p>
+                                        <h6 class="mb-0 ">{{  claimDetails?.TOTALAMOUNTBLOCKED | currency:"":"" }}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl border-start">
+                                <div class="d-flex align-items-center">
+                                    <!-- <i class="iconbsky-block-amount mt-2 me-3 fs-1"></i> -->
+                                    <div>
+                                        <p class="small text-muted mb-0">Package Code</p>
+                                        <h6 class="mb-0 ">{{  claimDetails?.PackageCode }}</h6>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <hr class="mt-xl-4">
+                            </div>
+
+                            <div class="col-lg-3 ">
+                                <div class="d-flex align-items-center">
+                                    <!-- <i class="iconbsky-block-amount mt-2 me-3 fs-1"></i> -->
+                                    <div>
+                                        <p class="small text-muted mb-0">Procedure</p>
+                                        <h6 class="mb-0">{{ claimDetails?.PROCEDURENAME}}
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 border-start">
+                                <div class="d-flex align-items-center">
+                                    <!-- <i class="iconbsky-block-amount mt-2 me-3 fs-1"></i> -->
+                                    <div>
+                                        <p class="small text-muted mb-0">Packages</p>
+                                        <h6 class="mb-0">{{ claimDetails?.PACKAGENAME}}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl border-start">
+                                <div class="d-flex align-items-center">
+                                    <!-- <i class="iconbsky-block-amount mt-2 me-3 fs-1"></i> -->
+                                    <div>
+                                        <p class="small text-muted mb-0">Claim Case Number</p>
+                                        <h6 class="mb-0 ">{{ claimDetails?.claimCaseNo}}</h6>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-xl border-start">
+                                <div class="d-flex align-items-center">
+                                    <!-- <i class="iconbsky-block-amount mt-2 me-3 fs-1"></i> -->
+                                    <div>
+                                        <p class="small text-muted mb-0">Claim Bill Number</p>
+                                        <h6 class="mb-0 ">{{  claimDetails?.claimBillNo}}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="col-lg-3 border-start">
+                                <div class="d-flex align-items-center">
+                                    <i class="iconbsky-block-amount mt-2 me-3 fs-1"></i>
+                                    <div>
+                                        <p class="small text-muted mb-0">Mortality</p>
+                                        <h6 class="mb-0">{{ claimDetails?.MORTALITY}}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 border-start">
+                                <div class="d-flex align-items-center">
+                                    <i class="iconbsky-block-amount mt-2 me-3 fs-1"></i>
+                                    <div>
+                                        <p class="small text-muted mb-0">Referral Code</p>
+                                        <h6 class="mb-0">{{ claimDetails?.REFERRALCODE}}</h6>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <div class="col-12">
+                                <hr class="mt-xl-4">
+                            </div>
+                            <!-- <div class="col-xl">
+                                <p class="small text-muted mb-0">Actual Date of Admission and Discharge</p>
+                                <h6 class="mb-0"><i class="iconbsky-calendar small"></i> {{ claimDetails?.ACTUALDATEOFADMISSION | date: 'dd-MMM-yyyy'}} -
+
+                                    <i class="iconbsky-calendar small ps-2"></i> {{ claimDetails?.ACTUALDATEOFDISCHARGE | date: 'dd-MMM-yyyy'}}
+                                </h6>
+                            </div> -->
+                            <div class="col-xl">
+                                <div class="d-flex align-items-center">
+                                    <!-- <i class="iconbsky-package-amount mt-2 me-3 fs-1"></i> -->
+                                    <div>
+                                        <p class="small text-muted mb-0">Mortality (As per Hospital)</p>
+                                        <h6 class="mb-0"> {{  claimDetails?.MORTALITY}}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl border-start">
+                                <div class="d-flex align-items-center">
+                                    <!-- <i class="iconbsky-package-amount mt-2 me-3 fs-1"></i> -->
+                                    <div>
+                                        <p class="small text-muted mb-0">Mortality (As per CPD)</p>
+                                        <h6 class="mb-0" *ngIf="claimDetails?.CPDMORTALITY == 'Y'">Yes</h6>
+                                        <h6 class="mb-0" *ngIf="claimDetails?.CPDMORTALITY == 'N'">No</h6>
+                                        <h6 class="mb-0" *ngIf="claimDetails?.CPDMORTALITY == undefined || claimDetails?.CPDMORTALITY == ''">N/A</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl border-start">
+                                <div class="d-flex align-items-center">
+                                    <!-- <i class="iconbsky-block-amount mt-2 me-3 fs-1"></i> -->
+                                    <div>
+                                        <p class="small text-muted mb-0">Referral Code</p>
+                                        <h6 class="mb-0 ">{{  claimDetails?.REFERRALCODE }}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl border-start">
+                                <div class="d-flex align-items-center">
+                                    <!-- <i class="iconbsky-block-amount mt-2 me-3 fs-1"></i> -->
+                                    <div>
+                                        <p class="small text-muted mb-0">NABH Flag</p>
+                                        <h6 class="mb-0 ">{{  claimDetails?.NABHFlag }}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl border-start">
+                                <div class="d-flex align-items-center">
+                                    <!-- <i class="iconbsky-block-amount mt-2 me-3 fs-1"></i> -->
+                                    <div>
+                                        <p class="small text-muted mb-0">Implant Data</p>
+                                        <h6 class="mb-0 ">{{  claimDetails?.IMPLANTDATA }}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <hr class="mt-xl-4">
+                            </div>
+                            <div class="col-xl">
+                                <div class="d-flex align-items-center">
+                                    <div>
+                                        <p class="small text-muted mb-0">Authentication Mode</p>
+                                        <h6 class="mb-0" style="color: red;">{{claimDetails?.verification}}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl border-start">
+                                <div class="d-flex align-items-center">
+                                    <div>
+                                        <p class="small text-muted mb-0">Is Patient OTP Verified</p>
+                                        <h6 class="mb-0" >{{claimDetails?.ispatient}}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl border-start">
+                                <div class="d-flex align-items-center">
+                                    <div>
+                                        <p class="small text-muted mb-0">Referral Auth Status</p>
+                                        <h6 class="mb-0" >{{claimDetails?.Referalstatus}}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <hr class="my-xl-4">
+                                <h5>Pre-Auth Log</h5>
+                                <div class="table-responsive">
+                                    <table class="table mb-0 border" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th width="40" rowspan="2">Sl No</th>
+                                                <th rowspan="2">Pre-Auth Code</th>
+                                                <th rowspan="2">Claimed Amount (₹)</th>
+                                                <th rowspan="2">Approved Amount (₹)</th>
+                                                <th rowspan="2">Claimed Date</th>
+                                                <th rowspan="2">Approved Date</th>
+                                                <th rowspan="2">Remark</th>
+                                                <th colspan="3" style="text-align:center">Documents</th>
+                                                <th rowspan="2">Details</th>
+                                            </tr>
+                                            <tr>
+                                                <th>Doc1</th>
+                                                <th>Doc2</th>
+                                                <th>Doc3</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <ng-container *ngIf="check">
+                                                <tr *ngFor="let prteAuth of preAuth,index as i">
+                                                    <td>{{i+1}}</td>
+                                                    <td>{{prteAuth.preauthCode}}</td>
+                                                    <td>{{prteAuth.claimedAmount | currency:"":""}}</td>
+                                                    <td>{{prteAuth.approvedAmount | currency:"":""}}</td>
+                                                    <td>{{prteAuth.claimedDate | date :'dd-MMM-yyyy'}}</td>
+                                                    <td>{{prteAuth.approvedDate | date :'dd-MMM-yyyy'}}</td>
+                                                    <td>{{prteAuth.preAuthRemarks}}</td>
+                                                    <td *ngIf="prteAuth.aditionalDoc1 != undefined"><a href="javascript:void(0);" (click)="downloadAction($event,prteAuth.aditionalDoc1,prteAuth.hospitalCode,prteAuth.claimedDate,'')"><i class="bi bi-file-earmark-pdf" style="color:red;font-size:15px;"></i></a></td>
+                                                    <td *ngIf="prteAuth.aditionalDoc1 == undefined">--</td>
+                                                    <td *ngIf="prteAuth.aditionalDoc2 != undefined"><a href="javascript:void(0);" (click)="downloadAction($event,prteAuth.aditionalDoc2,prteAuth.hospitalCode,prteAuth.claimedDate,'')"><i class="bi bi-file-earmark-pdf" style="color:red;font-size:15px;"></i></a></td>
+                                                    <td *ngIf="prteAuth.aditionalDoc2 == undefined">--</td>
+                                                    <td *ngIf="prteAuth.aditionalDoc3 != undefined"><a href="javascript:void(0);" (click)="downloadAction($event,prteAuth.aditionalDoc3,prteAuth.hospitalCode,prteAuth.claimedDate,'')"><i class="bi bi-file-earmark-pdf" style="color:red;font-size:15px;"></i></a></td>
+                                                    <td *ngIf="prteAuth.aditionalDoc3 == undefined">--</td>
+                                                    <td><a href="javascript:void(0)" (click)="preAuthLogDetail(prteAuth.urnNo, claimDetails?.AUTHORIZEDCODE,prteAuth.hospitalCode)">Click here</a></td>
+                                                </tr>
+                                            </ng-container>
+                                            <tr *ngIf="!check">
+                                                <td colspan="10" align="center"><strong class="text-danger">No data found</strong></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- <div class="card-body" *ngIf="check">
+                                    <ul class="list-unstyled">
+                                        <li><i class="iconbsky-list-icon me-2"></i> Check more information.<a href="javascript:void(0)" (click)="preAuthLogDetails( claimDetails?.URN, claimDetails?.AUTHORIZEDCODE, claimDetails?.HOSPITALCODE)">
+                                                Click here</a>
+                                        </li>
+                                    </ul>
+                                    <hr>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-lg-12">
+                <div class="card shadow-sm document-upload">
+                    <div style="height: 40pt;" class="card-header collapsed bg-color text-white">
+                        <div class="row col-lg-12">
+                            <div class="col-lg-10">
+                                <h5 style="font-size: 12pt; font-weight: 550; padding-top: 3px;">Latest Document Submitted</h5>
+                            </div>
+                            <div class="col-lg-2" style="padding-top: 0px;">
+                                <button class="btn btn-light" style="height: 21pt; font-size: 8pt;float: right" (click)="viewAllDocument(claimDetails?.DISCHARGESLIP,claimDetails?.ADITIONALDOCS,claimDetails?.ADITIONAL_DOC1,claimDetails?.ADITIONAL_DOC2, claimDetails?.PRESURGERYPHOTO, claimDetails?.POSTSURGERYPHOTO, claimDetails?.PATIENT_PHOTO, claimDetails?.INTRA_SURGERY_PHOTO, claimDetails?.SPECIMEN_REMOVAL_PHOTO)"><span class="bi bi-download" style="margin-right: 5px;"></span>Download All</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body uploaded-doc">
+                        <div class="row gx-5 justify-content-between">
+                            <div class="col-lg-6 col-xxl-6 border-end pt-xl-2">
+                                <div class="row">
+                                    <!-- <div class="col-6 col-lg-3 col-xxl-3 text-center mb-4 " *ngIf=" claimDetails?.ADMINSSIONSLIP != undefined">
+                                        <a href="javascript:void(0);" (click)="downloadAction($event, claimDetails?.ADMINSSIONSLIP, claimDetails?.HOSPITALCODE, claimDetails?.ACTUALDATEOFADMISSION)">
+                                            <img src="./assets/img/pdf.png" alt="Admission Slip" class="mb-2">
+                                            <span class="d-block">Adminssion Slip</span>
+                                        </a>
+                                    </div>
+                                    <div style="margin-top: 12%;" class="col-6 col-lg-3 col-xxl-3 text-center mb-4" *ngIf=" claimDetails?.ADMINSSIONSLIP == undefined">
+                                        <span class="d-block">--</span>
+                                        <span class="d-block">Admission Slip</span>
+                                    </div> -->
+                                    <div class="col-6 col-lg-3 col-xxl-3 text-center mb-4">
+                                        <a href="javascript:void(0);" (click)="downloadAction($event, claimDetails?.DISCHARGESLIP, claimDetails?.HOSPITALCODE, claimDetails?.DATEOFADMISSION)">
+                                            <img src="../../../../assets/img/pdf.png" alt="Admission Slip" class="mb-2">
+                                            <span class="d-block">Discharge Docs</span>
+                                        </a>
+                                    </div>
+                                    <div style="margin-top: 12%;" class="col-6 col-lg-3 col-xxl-3 text-center mb-4" *ngIf=" claimDetails?.DISCHARGESLIP == undefined">
+                                        <span class="d-block">--</span>
+                                        <span class="d-block">Discharge Docs</span>
+                                    </div>
+                                    <div class="col-6 col-lg-3 col-xxl-3 text-center mb-4" *ngIf=" claimDetails?.ADITIONALDOCS != undefined">
+                                        <a href="javascript:void(0);" (click)="downloadAction($event, claimDetails?.ADITIONALDOCS, claimDetails?.HOSPITALCODE, claimDetails?.DATEOFADMISSION)">
+                                            <img src="../../../../assets/img/pdf.png" alt="Admission Slip" class="mb-2">
+                                            <span class="d-block">Additional Docs</span>
+                                        </a>
+                                    </div>
+                                    <div style="margin-top: 12%;" class="col-6 col-lg-3 col-xxl-3 text-center mb-4" *ngIf=" claimDetails?.ADITIONALDOCS == undefined">
+                                        <span class="d-block">--</span>
+                                        <span class="d-block">Additional Docs</span>
+                                    </div>
+                                    <div class="col-6 col-lg-3 col-xxl-3 text-center mb-4" *ngIf=" claimDetails?.ADITIONAL_DOC1 != undefined">
+                                        <a href="javascript:void(0);" (click)="downloadAction($event, claimDetails?.ADITIONAL_DOC1, claimDetails?.HOSPITALCODE, claimDetails?.DATEOFADMISSION)">
+                                            <img src="../../../../assets/img/pdf.png" alt="Admission Slip" class="mb-2">
+                                            <span class="d-block">Aditional Docs 1</span>
+                                        </a>
+                                    </div>
+                                    <div style="margin-top: 12%;" class="col-6 col-lg-3 col-xxl-3 text-center mb-4" *ngIf=" claimDetails?.ADITIONAL_DOC1 == undefined">
+                                        <span class="d-block">--</span>
+                                        <span class="d-block">Additional Docs 1</span>
+                                    </div>
+                                    <div class="col-6 col-lg-3 col-xxl-3 text-center mb-4" *ngIf=" claimDetails?.ADITIONAL_DOC2 != undefined">
+                                        <a href="javascript:void(0);" (click)="downloadAction($event, claimDetails?.ADITIONAL_DOC2, claimDetails?.HOSPITALCODE, claimDetails?.DATEOFADMISSION)">
+                                            <img src="../../../../assets/img/pdf.png" alt="Admission Slip" class="mb-2">
+                                            <span class="d-block">Additional Docs 2</span>
+                                        </a>
+                                    </div>
+                                    <div style="margin-top: 12%;" class="col-6 col-lg-3 col-xxl-3 text-center mb-4" *ngIf=" claimDetails?.ADITIONAL_DOC2 == undefined">
+                                        <span class="d-block">--</span>
+                                        <span class="d-block">Additional Docs 2</span>
+                                    </div>
+
+                                </div>
+                              <!-- <button (click)="downloadAllFile(claimDetails?.DISCHARGESLIP,claimDetails?.ADITIONALDOCS,claimDetails?.ADITIONAL_DOC1,claimDetails?.ADITIONAL_DOC2)">Download All</button> -->
+                            </div>
+                            <div class="col-lg-6 col-xxl-6">
+                                <div class="row gx-5">
+                                    <div class="col-6 col-xxl-4 text-center" *ngIf=" claimDetails?.PRESURGERYPHOTO != undefined">
+                                        <a href="javascript:void(0);" (click)="downloadAction($event, claimDetails?.PRESURGERYPHOTO, claimDetails?.HOSPITALCODE, claimDetails?.DATEOFADMISSION)">
+                                            <img src="../../../../assets/img/male-profile.jpg" alt="Pre-Surgery" class=" mb-2">
+                                            <span class="d-block mb-3">Pre-Surgery</span>
+                                        </a>
+                                    </div>
+                                    <div class="col-6 col-xxl-4 text-center" *ngIf=" claimDetails?.PRESURGERYPHOTO == undefined">
+                                        <a href="javascript:void(0);">
+                                            <p>--</p>
+                                        </a>
+                                        <span class="d-block mb-3">Pre-Surgery</span>
+                                    </div>
+                                    <div class="col-6 col-xxl-4 text-center" *ngIf=" claimDetails?.POSTSURGERYPHOTO != undefined">
+                                        <a href="javascript:void(0);" (click)="downloadAction($event, claimDetails?.POSTSURGERYPHOTO, claimDetails?.HOSPITALCODE, claimDetails?.DATEOFADMISSION)">
+                                            <img src="../../../../assets/img/male-profile.jpg" alt="Post-Surgery" class="mb-2">
+                                            <span class="d-block mb-3">Post-Surgery</span>
+                                        </a>
+                                    </div>
+                                    <div class="col-6 col-xxl-4 text-center" *ngIf=" claimDetails?.POSTSURGERYPHOTO == undefined">
+                                        <a href="javascript:void(0);">
+                                            <p>--</p>
+                                        </a>
+                                        <span class="d-block mb-3">Post-Surgery</span>
+                                    </div>
+                                    <div class="col-6 col-xxl-4 text-center" *ngIf=" claimDetails?.PATIENT_PHOTO != undefined">
+                                        <a href="javascript:void(0);" (click)="downloadAction($event, claimDetails?.PATIENT_PHOTO, claimDetails?.HOSPITALCODE, claimDetails?.DATEOFADMISSION)">
+                                            <img src="../../../../assets/img/male-profile.jpg" alt="Post-Surgery" class="mb-2">
+                                            <span class="d-block mb-3">Patient Photo</span>
+                                        </a>
+                                    </div>
+                                    <div class="col-6 col-xxl-4 text-center" *ngIf=" claimDetails?.PATIENT_PHOTO == undefined">
+                                        <a href="javascript:void(0);">
+                                            <p>--</p>
+                                        </a>
+                                        <span class="d-block mb-3">Patient Photo</span>
+                                    </div>
+                                    <div class="col-6 col-xxl-4 text-center" *ngIf=" claimDetails?.INTRA_SURGERY_PHOTO != undefined">
+                                        <a href="javascript:void(0);" (click)="downloadAction($event, claimDetails?.INTRA_SURGERY_PHOTO, claimDetails?.HOSPITALCODE, claimDetails?.DATEOFADMISSION)">
+                                            <img src="../../../../assets/img/male-profile.jpg" alt="Post-Surgery" class="mb-2">
+                                            <span class="d-block mb-3">Intra-Surgery photo</span>
+                                        </a>
+                                    </div>
+                                    <div class="col-6 col-xxl-4 text-center" *ngIf=" claimDetails?.INTRA_SURGERY_PHOTO == undefined">
+                                        <a href="javascript:void(0);">
+                                            <p>--</p>
+                                        </a>
+                                        <span class="d-block mb-3">Intra-Surgery photo</span>
+                                    </div>
+                                    <div class="col-6 col-xxl-4 text-center" *ngIf=" claimDetails?.SPECIMEN_REMOVAL_PHOTO != undefined">
+                                        <a href="javascript:void(0);" (click)="downloadAction($event, claimDetails?.SPECIMEN_REMOVAL_PHOTO, claimDetails?.HOSPITALCODE, claimDetails?.DATEOFADMISSION)">
+                                            <img src="../../../../assets/img/male-profile.jpg" alt="Post-Surgery" class="mb-2">
+                                            <span class="d-block mb-3">Specimen Removal Photo</span>
+                                        </a>
+                                    </div>
+                                    <div class="col-6 col-xxl-4 text-center" *ngIf=" claimDetails?.SPECIMEN_REMOVAL_PHOTO == undefined">
+                                        <a href="javascript:void(0);">
+                                            <p>--</p>
+                                        </a>
+                                        <span class="d-block mb-3">Specimen Removal Photo</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-lg-12">
+                <div class="card shadow-sm treatment-history">
+                    <div style="height: 35pt;" class="card-header bg-color text-white">
+                        <h5 style="font-size: 12pt;" class="mb-0">Treatment History</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled">
+                            <li><i class="iconbsky-list-icon me-2"></i> Check all discharged treatment information.
+                                <!-- <a href="javascript:void(0)" (click)="treatmentdetails()"> Click here</a> -->
+                            </li>
+                            <div class="content-box">
+                                <div class="row">
+                                    <div class="table-responsive">
+                                        <table class="table mb-0" id="treatmentTable">
+                                            <thead>
+                                                <tr>
+                                                    <th width="50">Sl No</th>
+                                                    <th>Claim No.</th>
+                                                    <th>URN</th>
+                                                    <th>Package Code</th>
+                                                    <th>Patient Name</th>
+                                                    <th>Hospital Name</th>
+                                                    <th>Admission Date</th>
+                                                    <th>Actual Admission Date</th>
+                                                    <th>Discharge Date</th>
+                                                    <th>Actual Discharge Date</th>
+                                                    <th>Hospital Claim Amount(₹)</th>
+                                                    <th>CPD Approved Amount(₹)</th>
+                                                    <th>SNA Approved Amount(₹)</th>
+                                                    <th>Status</th>
+                                                    <th>CPD Name</th>
+                                                    <th>Action</th>
+                                                    <th>Details</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <ng-container *ngIf="trtData?.length">
+                                                    <tr *ngFor="let item of trtData; index as i">
+                                                        <td>{{i+1}}</td>
+                                                        <td width="100" *ngIf="item.claimNo!=null">{{item.claimNo}}</td>
+                                                        <td width="100" *ngIf="item.claimNo==null"></td>
+                                                        <td width="100">{{item.urn}}</td>
+                                                        <td width="100" title={{item.packagename}}>{{item.packagecode}}</td>
+                                                        <td width="100">{{item.patientname}}</td>
+                                                        <td width="100">{{item.hospitalName}} ({{item.hospitalCode}})</td>
+                                                        <td width="100">{{item.dateofadmission}}</td>
+                                                        <td width="100">{{item.actualdateofadmission}}</td>
+                                                        <td width="100">{{item.dateofdischarge}}</td>
+                                                        <td width="100">{{item.actualdateofdischarge}}</td>
+                                                        <td width="100">{{item.totalamountclaimed}}</td>
+                                                        <td width="100" *ngIf="item.cpdapprovedamount==null"></td>
+                                                        <td width="100" *ngIf="item.cpdapprovedamount!=null">{{item.cpdapprovedamount}}</td>
+                                                        <td width="100" *ngIf="item.snoapprovedamount==null"></td>
+                                                        <td width="100" *ngIf="item.snoapprovedamount!=null">{{item.snoapprovedamount}}</td>
+                                                        <td width="100">{{item.actiontype}}</td>
+                                                        <td width="150" *ngIf="item.cpdName!=null">{{item.cpdName}}</td>
+                                                        <td width="150" *ngIf="item.cpdName==null"></td>
+                                                        <td width="150" *ngIf="item.transactiondetailsid==txnId  || item.pendingAt!=2"></td>
+                                                        <td width="150" *ngIf="item.transactiondetailsid!=txnId && item.pendingAt==2"><a class="btn btn-outline-success btn-sm"
+                                                            (click)="onAction(item.transactiondetailsid,item.urn,item.packagecode,item.claimStatus)">Action</a></td>
+                                                        <td width="100"><a href="javascript:void(0)"
+                                                                (click)="getDetails(item.transactiondetailsid,item.claimid,item.claimRaiseStatus,item.urn,item.packagecode)">Click
+                                                                here</a></td>
+                                                    </tr>
+                                                </ng-container>
+                                                <tr *ngIf="! trtData?.length">
+                                                    <td colspan="15" align="center" *ngIf="isVisible"><strong class="text-danger">No data
+                                                            found</strong></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <li><i class="iconbsky-list-icon me-2"></i> Check all discharged treatment information
+                                admitted on {{ claimDetails?.DATEOFADMISSION | date: 'dd-MMM-yyyy'}}. <a
+                                    href="javascript:void(0)" (click)="packagedetails()">Click here</a></li> -->
+                            <!-- <li><i class="iconbsky-list-icon me-2"></i> Total no. of discharge for this package till now. <span class="text-primary"> 2 times</span></li>
+                            <li><i class="iconbsky-list-icon me-2"></i> Total no. of discharge for this package for this patient till now. <span class="text-primary">1 time</span></li> -->
+                        </ul>
+                        <ul class="list-unstyled">
+                            <li><i class="iconbsky-list-icon me-2"></i> Check Old Claim information.
+                                <!-- <a href="javascript:void(0)" (click)="Oldtreatmentdetails()"> Click here</a> -->
+                                </li>
+                                <div class="content-box">
+                                    <div class="row">
+                                        <div class="table-responsive">
+                                            <table class="table mb-0" id="oldTreatmentTable">
+                                                <thead>
+                                                    <tr>
+                                                        <th width="50">Sl No</th>
+                                                        <th>URN</th>
+                                                        <!-- <th>Chip Serial No.</th> -->
+                                                        <th>Patient Name</th>
+                                                        <th>Hospital Name</th>
+                                                        <th>Date of Admission</th>
+                                                        <th>Actual Date of Admission</th>
+                                                        <th>Date of Discharge</th>
+                                                        <th>Actual Date of Discharge</th>
+                                                        <th>Claim Status</th>
+                                                        <th>Approved Amount(₹)</th>
+                                                        <th>Approved Date</th>
+                                                        <th>SNA Approved Amount(₹)</th>
+                                                        <th>SNA Approved Date</th>
+                                                        <th>Remarks</th>
+                                                        <th>SNA Remarks</th>
+                                                        <!-- <th>TPA Final Status</th>
+                                                        <th>TPA Final Decission Date</th> -->
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <ng-container *ngIf="oldTrtData?.length">
+                                                        <tr *ngFor="let item of oldTrtData; index as i">
+                                                            <td>{{i+1}}</td>
+                                                            <td width="100">{{item.urn}}</td>
+                                                            <!-- <td width="100">{{item.chipno}}</td> -->
+                                                            <td width="100">{{item.patientName}}</td>
+                                                            <td width="100">{{item.hospitalName}} ({{item.hospitalCode}})</td>
+                                                            <td width="100">{{item.dateOfAdmission | date :'dd-MMM-yyyy'}}</td>
+                                                            <td width="100">{{item.actualDateOfAdmission | date :'dd-MMM-yyyy'}}</td>
+                                                            <td width="100">{{item.dateOfDischarge | date :'dd-MMM-yyyy'}}</td>
+                                                            <td width="100">{{item.actualDateOfDischarge | date :'dd-MMM-yyyy'}}</td>
+                                                            <td width="100">{{item.claimstatus}}</td>
+                                                            <td width="100">{{item.approvedamount }}</td>
+                                                            <td width="100">{{item.approveddate | date :'dd-MMM-yyyy'}} </td>
+                                                            <td width="100">{{item.snaapprovedamount}}</td>
+                                                            <td width="100">{{item.snaapproveddate | date :'dd-MMM-yyyy'}} </td>
+                                                            <td width="100">{{item.remarks}}</td>
+                                                            <td width="100">{{item.snaremarks}}</td>
+                                                            <!-- <td width="100">{{item.tpafinalstatus}}</td>
+                                                            <td width="100">{{item.tpafinaldecisiondate | date :'dd-MMM-yyyy, h:mm:ss a'}} </td> -->
+                                                        </tr>
+                                                    </ng-container>
+                                                    <tr *ngIf="oldTrtData?.length==0">
+                                                        <td colspan="15" align="center">
+                                                            <strong class="text-danger">No data found</strong>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-lg-12">
+                <div class="card shadow-sm treatment-history">
+                    <div style="height: 35pt;" class="card-header bg-color text-white">
+                        <h5 style="font-size: 12pt;" class="mb-0">Multiple Package Blocking</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table mb-0 border" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th width="40" rowspan="2">Sl No</th>
+                                        <th rowspan="2">Patient Name</th>
+                                        <th rowspan="2">Date of Admission</th>
+                                        <th rowspan="2">Date of Discharge</th>
+                                        <th rowspan="2">Package Name</th>
+                                        <th rowspan="2">Claim Raised</th>
+                                        <th rowspan="2">Details</th>
+                                    </tr>
+
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngIf="multiFlag">
+                                        <tr *ngFor="let multiPack of multiPackList,index as i">
+                                            <td>{{i+1}}</td>
+
+                                            <td>{{multiPack.patientName}}</td>
+                                            <td>{{multiPack.actualDateof | date :'dd-MMM-yyyy'}}</td>
+                                            <td>{{multiPack.actualDischarge | date :'dd-MMM-yyyy'}}</td>
+                                            <td>{{multiPack.packageName }}</td>
+                                            <td>{{multiPack.claimStatus }}</td>
+                                            <td><a href="javascript:void(0)" (click)="multiPackageDetails(multiPack.urn,multiPack.authorizedcode,multiPack.hospitalcode,multiPack.transctionId)">Click here</a></td>
+                                        </tr>
+                                    </ng-container>
+                                    <tr *ngIf="!multiFlag">
+                                        <td colspan="8" align="center"><strong class="text-danger">No data found</strong></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                <!-- <div class="card-body" *ngIf ="claimlist1.preAuthLogList.length>0">
+                            <ul class="list-unstyled">
+                                <li><i class="iconbsky-list-icon me-2"></i> Check more information.<a href="javascript:void(0)" (click)="preauthLogDetails()"> Click here</a></li>
+                            </ul>
+                            <hr>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-lg-12">
+                <div class="card shadow-sm treatment-history">
+                    <div style="height: 35pt;" class="card-header bg-color text-white">
+                        <h5 style="font-size: 12pt;" class="mb-0">Action Taken History</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table mb-0 border">
+                                <thead>
+                                    <tr>
+                                        <th>Sl No</th>
+                                        <th>Action By</th>
+                                        <th>Action On</th>
+                                        <th>Action Type</th>
+                                        <th>Action Amount (₹)</th>
+                                        <th>Remark</th>
+                                        <th>Description</th>
+                                        <th>Discharge Slip</th>
+                                        <th>Additional Docs</th>
+                                        <th>Additional Docs1</th>
+                                        <th>Additional Docs2</th>
+                                        <th>Pre Surgery</th>
+                                        <th>Post Surgery</th>
+                                        <th>Intra Surgery</th>
+                                        <th>Specimen Removal</th>
+                                        <th>Patient Photo</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let action of claimLog; index as i">
+                                        <td>{{i+1}}</td>
+                                        <td>{{action.ACTIONBY}}</td>
+                                        <td>{{action.ACTIONON | date :'dd-MMM-yyyy'}}</td>
+                                        <td>{{action.ACTIONTYPE}}</td>
+                                        <td>{{action.APPROVEDAMOUNT | currency:'':''}}</td>
+                                        <td>{{action.REMARKS}}</td>
+                                        <!-- <td>{{action.DESCRIPTION}}</td> -->
+                                        <td *ngIf="action.DESCRIPTION != undefined"><a href="javascript:void(0)" (click)="viewDescription(action.DESCRIPTION)">view</a></td>
+                                        <td *ngIf="action.DESCRIPTION == undefined">--</td>
+                                        <td *ngIf="action.DISCHARGESLIP != undefined"><a href="javascript:void(0);" (click)="downloadAction($event,action.DISCHARGESLIP,action.HOSPITALCODE,action.DATEOFADMISSION)"><i
+                                                    class="bi bi-file-earmark-pdf" style="color:red;font-size:24px;"></i></a>
+                                        </td>
+                                        <td *ngIf="action.DISCHARGESLIP == undefined">--</td>
+                                        <td *ngIf="action.ADITIONALDOCS != undefined"><a href="javascript:void(0);" (click)="downloadAction($event,action.ADITIONALDOCS,action.HOSPITALCODE,action.DATEOFADMISSION)"><i
+                                                    class="bi bi-file-earmark-pdf" style="color:red;font-size:24px"></i></a>
+                                        </td>
+                                        <td *ngIf="action.ADITIONALDOCS == undefined">--</td>
+                                        <td *ngIf="action.ADDITIONALDOC1 != undefined"><a href="javascript:void(0);" (click)="downloadAction($event,action.ADDITIONALDOC1,action.HOSPITALCODE,action.DATEOFADMISSION)"><i
+                                                    class="bi bi-file-earmark-pdf" style="color:red;font-size:24px"></i></a>
+                                        </td>
+                                        <td *ngIf="action.ADDITIONALDOC1 == undefined">--</td>
+                                        <td *ngIf="action.ADDITIONALDOC2 != undefined"><a href="javascript:void(0);" (click)="downloadAction($event,action.ADDITIONALDOC2,action.HOSPITALCODE,action.DATEOFADMISSION)"><i
+                                                    class="bi bi-file-earmark-pdf" style="color:red;font-size:24px"></i></a>
+                                        </td>
+                                        <td *ngIf="action.ADDITIONALDOC2 == undefined">--</td>
+                                        <td *ngIf="action.PRESURGERY != undefined"><a href="javascript:void(0);" (click)="downloadAction($event,action.PRESURGERY,action.HOSPITALCODE,action.DATEOFADMISSION)"><i
+                                                    class="bi bi-file-earmark-image" style="color:red;font-size:24px"></i></a>
+                                        </td>
+                                        <td *ngIf="action.PRESURGERY == undefined">--</td>
+                                        <td *ngIf="action.POSTSURGERY != undefined"><a href="javascript:void(0);" (click)="downloadAction($event,action.POSTSURGERY,action.HOSPITALCODE,action.DATEOFADMISSION)"><i
+                                                    class="bi bi-file-earmark-image" style="color:red;font-size:24px"></i></a>
+                                        </td>
+                                        <td *ngIf="action.POSTSURGERY == undefined">--</td>
+                                        <td *ngIf="action.INTRA_SURGERY_PHOTO != undefined"><a href="javascript:void(0);" (click)="downloadAction($event,action.INTRA_SURGERY_PHOTO,action.HOSPITALCODE,action.DATEOFADMISSION)"><i
+                                                    class="bi bi-file-earmark-image" style="color:red;font-size:24px"></i></a>
+                                        </td>
+                                        <td *ngIf="action.INTRA_SURGERY_PHOTO == undefined">--</td>
+                                        <td *ngIf="action.SPECIMEN_REMOVAL_PHOTO != undefined"><a href="javascript:void(0);" (click)="downloadAction($event,action.SPECIMEN_REMOVAL_PHOTO,action.HOSPITALCODE,action.DATEOFADMISSION)"><i
+                                                    class="bi bi-file-earmark-image" style="color:red;font-size:24px"></i></a>
+                                        </td>
+                                        <td *ngIf="action.SPECIMEN_REMOVAL_PHOTO == undefined">--</td>
+                                        <td *ngIf="action.PATIENT_PHOTO != undefined"><a href="javascript:void(0);" (click)="downloadAction($event,action.PATIENT_PHOTO,action.HOSPITALCODE,action.DATEOFADMISSION)"><i
+                                                    class="bi bi-file-earmark-image" style="color:red;font-size:24px"></i></a>
+                                        </td>
+                                        <td *ngIf="action.PATIENT_PHOTO == undefined">--</td>
+                                    </tr>
+                                    <tr *ngIf="claimLog?.length==0">
+                                        <td colspan="16" align="center"><strong class="text-danger">No data found</strong></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-lg-12">
+                <div class="card shadow-sm treatment-history">
+                    <div style="height: 35pt;" class="card-header bg-color text-white">
+                        <h5 style="font-size: 12pt;" class="mb-0">Current Balance Details</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="treatmentTable" class="table mb-0 border">
+                                <thead>
+                                    <tr>
+                                        <th>Family Fund</th>
+                                        <th>Family Insufficient Fund</th>
+                                        <th>Female Fund</th>
+                                        <th>Female Insufficient Fund</th>
+                                        <th>Blocked Amount</th>
+                                        <th>Claimed Amount</th>
+                                        <th>Policy Start Date</th>
+                                        <th>Policy End Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngIf="currentbalance?.length!=0">
+                                        <tr *ngFor="let item of currentbalance;">
+                                            <td>{{item.AVAILABLEBALANCE | currency:'':''}}</td>
+                                            <td>{{item.FF_INSUFFICIENTAMOUNT | currency:'':''}}</td>
+                                            <td>{{item.FEMALEFUND | currency:'':''}}</td>
+                                            <td>{{item.INSUFFICIENTAMOUNT | currency:'':''}}</td>
+                                            <td>{{item.AMOUNTBLOCKED | currency:'':''}}</td>
+                                            <td>{{item.CLAIMEDAMOUNT | currency:'':''}}</td>
+                                            <td>{{item.PolicyStartDate}}</td>
+                                            <td>{{item.PolicyEnddate}}</td>
+                                        </tr>
+                                    </ng-container>
+                                    <tr>
+                                        <td colspan="8" align="center" *ngIf="currentbalance?.length==0"><strong class="text-danger">No data found</strong></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-lg-12">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-2 col-xxl-2">
+                                <label class="col-form-label">Hospital Blocked Amount:</label>
+                            </div>
+                            <div class="col-lg-2 col-xxl-2">
+                                <label class="col-form-label text-success">
+                                    <b>{{totalAmountBlocked | currency : 'INR' : 'symbol'}}</b>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2 col-xxl-2">
+                                <label class="col-form-label">SNA Approved Amount:</label>
+                            </div>
+                            <div class="col-lg-2 col-xxl-2">
+                                <label class="col-form-label text-success">
+                                    <b>{{snoapprovedamount | currency : 'INR' : 'symbol'}}</b>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2 col-xxl-2">
+                                <label class="col-form-label">Balance Amount:</label>
+                            </div>
+                            <div class="col-lg-2 col-xxl-2">
+                                <label class="col-form-label text-success">
+                                    <b>{{balanceAmount | currency : 'INR' : 'symbol'}}</b>
+                                </label>
+                            </div>
+                        </div>
+                            <!-- <div class="col-lg-3 col-xxl-3">
+                                <label class="col-form-label">Hospital Blocked Amount</label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1"><i class="bi bi-currency-rupee"></i></span>
+                                    <input type="text" class="form-control" id="amount" name="amount" maxlength="8"
+                                        (keypress)="approved_Amount($event)" value="{{claimDetails?.TOTALAMOUNTBLOCKED}}" readonly>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-xxl-3">
+                                <label class="col-form-label">Approved Amount</label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1"><i class="bi bi-currency-rupee"></i></span>
+                                    <input type="text" class="form-control" id="amount" name="amount" maxlength="8"
+                                        (keypress)="approved_Amount($event)" value="{{snoapprovedamount}}" readonly>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-xxl-3">
+                                <label class="col-form-label">Balance Amount</label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1"><i class="bi bi-currency-rupee"></i></span>
+                                    <input type="text" class="form-control" id="amount" name="amount" maxlength="8"
+                                        (keypress)="approved_Amount($event)" value="{{claimDetails?.TOTALAMOUNTBLOCKED - snoapprovedamount}}" readonly>
+                                </div>
+                            </div> -->
+                        <!-- </div> -->
+                        <div style="height: 10pt;"></div>
+                        <div class="row">
+                            <div class="col-lg-4 col-xxl-4" [formGroup]="myGroup">
+                                <label class="col-form-label">Remarks<span class="text-danger">*</span></label>
+                                <textarea class="form-control" rows="4" id="remarks" name="remarks" formControlName="remarks" maxlength="500" placeholder="Enter Remarks" #myInput [maxlength]="maxChars" (keypress)="keyPress($event)"></textarea>
+                                <span class="text-danger small">Characters Remaining: {{maxChars - myInput.value.length}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-grid gap-2 d-sm-block mt-3 mt-xl-4">
+            <button (click)="submitDetails()" class="btn btn-primary me-2" id="Refund">Refund</button>
+            <!-- <button (click)="submitDetails($event, claimDetails?.CLAIMID)" class="btn btn-primary me-2" id="Query" [disabled]="isQuery">Query</button>
+            <button (click)="submitDetails($event, claimDetails?.CLAIMID)" class="btn btn-danger me-2" id="Reject" [disabled]="isReject">Reject</button>
+            <button (click)="submitDetails($event, claimDetails?.CLAIMID)" class="btn btn-warning me-2" id="Investigate" [disabled]="isInvestigate">Investigate</button>
+            <button (click)="submitDetails($event, claimDetails?.CLAIMID)" class="btn btn-info" id="Revert" [disabled]="isRevert">Revert</button> -->
+        </div>
+    </div>
+</div>
+<div class="modal justify-content-center" id="appealDisposal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body py-5">
+                <span class="text-center text-success">
+            {{dtls}}
+           </span>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="modalClose()">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>

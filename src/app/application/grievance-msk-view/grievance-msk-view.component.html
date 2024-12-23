@@ -1,0 +1,311 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+      <div class="row justify-content-between">
+          <div class="col-12">
+              <ul class="nav nav-tabs">
+                  <li class="nav-item">
+                      <a routerLink="/application/mskgrievance" routerLinkActive="active" class="nav-link " style="color: #1f723f;">Add</a>
+                  </li>
+                  <li class="nav-item">
+                      <a routerLink="/application/mskgrievanceview" routerLinkActive="active" class="nav-link active">View</a>
+                  </li>
+              </ul>
+          </div>
+      </div>
+  </div>
+
+  <div class="content-box">
+    <div class="row">
+      <div class="col-lg-3 col-xxl-3">
+        <div class="mb-xl-3">
+          <label class="control-label">Hospital State Name<span class="text-danger">*</span></label>
+            <select class="form-select" name="stateId" id="stateId"
+                (change)="OnChangeState($event.target.value)">
+                <option value=21 selected >Odisha</option>
+            </select>
+        </div>
+      </div>
+      <div class="col-lg-3 col-xxl-3">
+        <div class="mb-xl-3">
+          <label class="control-label">Hospital District Name</label>
+          <select class="form-select" name="districtId" id="districtId"
+              (change)="OnChangeDistrict($event.target.value)">
+              <option value="">Select District</option>
+              <ng-container *ngFor="let item of districtList">
+                  <option value={{item.districtcode}}>{{item.districtname}}</option>
+              </ng-container>
+          </select>
+        </div>
+      </div>
+      <div class="col-lg-4 col-xxl-4">
+        <div class="mb-xl-3">
+          <label class="control-label">Hospital Name</label>
+            <ng-autocomplete #auto [data]="hospitalList" placeholder="Select Name"
+              (selected)="selectEvent1($event)" [itemTemplate]="itemTemplate1"
+              [notFoundTemplate]="notFoundTemplate1" [searchKeyword]="keyword1" spellcheck="false"
+              (inputCleared)="onReset2()">
+            </ng-autocomplete>
+            <ng-template #itemTemplate1 let-item>
+              <a [innerHTML]="item.hospitalName"></a>
+          </ng-template>
+            <ng-template #notFoundTemplate1 let-notFound>
+                <div [innerHTML]="notFound"></div>
+            </ng-template>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-xxl-4">
+      <div class="mb-xl-3">
+          <button type="submit" class="btn btn-success"   (click)="Search()">Search</button>&nbsp;
+          <button type="button" class="btn btn-secondary"(click)="reset()">Reset</button>
+      </div>
+   </div>
+  </div>
+  <div class="content-box" style="margin-top: 1ch;">
+    <div class="row">
+      <div class="col-3" style="margin-top: 2ch;">
+        <div class="col-sm-*" *ngIf="showPegi">
+          show
+          <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+            <option value="100">100</option>
+            <option value="200">200</option>
+            <option value="300">300</option>
+            <option value={{totalcount}}>All</option>
+          </select> entries
+        </div>
+      </div>
+      <div class="col-2" style="margin-top: 2ch;">
+        Total : {{totalcount}}
+      </div>
+      <div class="col-2" style="text-align:end ;">
+        <button class="btn btn-success btn-sm mx-1" style="margin-top: 10px" tooltip="Excel" (click)="downloadList(1)">
+      <i class="bi bi-file-earmark-spreadsheet"></i>
+  </button>
+    </div>
+      <div class="col-5">
+        <input type="text " id="txtsearchDate " name="txtsearchDate " [(ngModel)]="txtsearchDate" maxlength="20 "
+          class="form-control " placeholder="Search here...... " autocomplete="off"
+          style=" margin-right: 0px; margin-left: 0px;">
+      </div>
+    </div>
+    <div class="table-responsive" style="margin-top: 1ch;">
+      <table aria-describedby="mydesc" class="table table-striped mb-0">
+        <thead>
+          <tr>
+            <th style="width: 50;">Sl#</th>
+            <th>Registration No</th>
+            <th>Grievance Type</th>
+            <th>Case Type</th>
+            <th>Beneficiary Name</th>
+            <th>Hospital District Name</th>
+            <th>Hospital Name and Code</th>
+            <th>Grievance On</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let v of list | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage},index as i">
+            <td *ngIf="currentPage==1 ">{{(i+1)}}</td>
+            <td *ngIf="currentPage!=1 ">{{(currentPage-1)*pageElement+ i+1}}</td>
+            <td>{{v.applicationno}}</td>
+            <td>{{v.grivtype}}</td>
+            <td>{{v.casetype}}</td>
+            <td>{{v.benificiary}}</td>
+            <td>{{v.hospitaldist}}</td>
+            <td>{{v.hospitalname}}</td>
+            <td>{{v.createon}}</td>
+            <td style="text-align: center" title="Action" >
+              <button style="text-align: center;" data-bs-toggle="modal"
+              data-bs-target="#remark" class="btn btn-outline-success btn-sm me-1" (click)="onaction(v)">Details</button>
+            </td>
+          </tr>
+          <tr *ngIf="totalcount==0">
+            <td colspan="10" style="text-align: center;">
+              <strong class="text-danger">NO DATA FOUND!!</strong>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div><br>
+    <div class="row" *ngIf="showPegi">
+      <div class="col-sm-4">
+        <div class="col-sm-*">
+          show
+          <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+            <option value="100">100</option>
+            <option value="200">200</option>
+            <option value="300">300</option>
+            <option value={{totalcount}}>All</option>
+          </select> entries
+        </div>
+      </div>
+      <div class="col-sm-8 text-right">
+        <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true"
+          (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)">
+        </pagination-controls>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="remark" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="max-width: 75%;">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">
+                  <b style="color: #1f723f;">Registration No :-<span style="color:crimson;"> {{grivance?.applicationno}}</span></b>
+              </h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-lg-3 col-xxl-3 border-end">
+                <div class="mb-xl-3">
+                  <h6><b style="color: rgb(80, 80, 233);">Grievance Medium</b></h6>
+                    <p style="margin-left: 3ch; color: black">{{grivance?.grievanceMedium}}</p>
+                </div>
+              </div>
+              <div class="col-lg-3 col-xxl-3 border-end">
+                <div class="mb-xl-3">
+                  <h6><b style="color: rgb(80, 80, 233);">Case Type</b></h6>
+                    <p style="margin-left: 3ch;color: black">{{grivance?.casetype}}</p>
+                </div>
+              </div>
+              <div class="col-lg-2 col-xxl-2 border-end">
+                <div class="mb-xl-3">
+                  <h6><b style="color: rgb(80, 80, 233);">Priority Type</b></h6>
+                    <p style="margin-left: 3ch;color: black">{{grivance?.priority}}</p>
+                </div>
+              </div>
+              <div class="col-lg-4 col-xxl-4 ">
+                <div class="mb-xl-3">
+                  <h6><b style="color: rgb(80, 80, 233);">Grievance On</b></h6>
+                    <p style="margin-left: 3ch;color: black">{{grivance?.createon}}</p>
+                </div>
+              </div>
+              <hr>
+              <h5 class="modal-title" style="margin-left: 2ch; color: #1f723f;">Beneficiary Details</h5>
+              <hr>
+              <div class="col-lg-3 col-xxl-3 border-end">
+                <div class="mb-xl-3">
+                  <h6><b style="color: rgb(80, 80, 233);">Full Name</b></h6>
+                    <p style="margin-left: 3ch;color: black">{{grivance?.benificiary}}</p>
+                </div>
+              </div>
+              <div class="col-lg-3 col-xxl-3 border-end">
+                <div class="mb-xl-3">
+                  <h6><b style="color: rgb(80, 80, 233);">Gender</b></h6>
+                    <p style="margin-left: 3ch;color: black">{{grivance?.gender}}</p>
+                </div>
+              </div>
+              <div class="col-lg-3 col-xxl-3 border-end">
+                <div class="mb-xl-3">
+                  <h6><b style="color: rgb(80, 80, 233);">Date of Birth</b></h6>
+                    <p style="margin-left: 3ch;color: black">{{grivance?.dateofbirth}}</p>
+                </div>
+              </div>
+              <div class="col-lg-3 col-xxl-3 ">
+                <div class="mb-xl-3">
+                  <h6><b style="color: rgb(80, 80, 233);">Mobile No</b></h6>
+                    <p style="margin-left: 3ch;color: black">{{grivance?.contactno}}</p>
+                </div>
+              </div>
+              <hr>
+              <div class="col-lg-2 col-xxl-2 border-end">
+                <div class="mb-xl-3">
+                  <h6><b style="color: rgb(80, 80, 233);">State Name</b></h6>
+                    <p style="margin-left: 3ch;color: black">{{grivance?.state}}</p>
+                </div>
+              </div>
+              <div class="col-lg-3 col-xxl-3 border-end">
+                <div class="mb-xl-3">
+                  <h6><b style="color: rgb(80, 80, 233);">District Name</b></h6>
+                    <p style="margin-left: 3ch;color: black">{{grivance?.dist}}</p>
+                </div>
+              </div>
+              <div class="col-lg-3 col-xxl-3 border-end">
+                <div class="mb-xl-3">
+                  <h6><b style="color: rgb(80, 80, 233);">Block Name</b></h6>
+                    <p style="margin-left: 3ch;color: black">{{grivance?.block}}</p>
+                </div>
+              </div>
+              <div class="col-lg-3 col-xxl-3 ">
+                <div class="mb-xl-3">
+                  <h6><b style="color: rgb(80, 80, 233);">Email Id</b></h6>
+                    <p style="margin-left: 3ch;color: black">{{grivance?.email}}</p>
+                </div>
+              </div>
+              <hr>
+              <h5 class="modal-title" style="margin-left: 2ch; color: #1f723f;">Grievance Details</h5>
+              <hr>
+              <div class="col-lg-3 col-xxl-3 border-end" >
+                <div class="mb-xl-3">
+                  <h6><b style="color: rgb(80, 80, 233);">Grievance Type</b></h6>
+                    <p style="margin-left: 3ch;color: black">{{grivance?.grivtype}}</p>
+                </div>
+              </div>
+              <div class="col-lg-3 col-xxl-3 border-end">
+                <div class="mb-xl-3">
+                  <h6><b style="color: rgb(80, 80, 233);">Citizen Feedback</b></h6>
+                    <p style="margin-left: 3ch;color: black">{{grivance?.cityzen}}</p>
+                </div>
+              </div>
+              <div class="col-lg-6 col-xxl-6 ">
+                <div class="mb-xl-3">
+                  <h6><b style="color: rgb(80, 80, 233);">Description</b></h6>
+                    <p style="margin-left: 3ch;color: black">{{grivance?.grivdesc}}</p>
+                </div>
+              </div>
+              <hr>
+              <div class="col-lg-3 col-xxl-3 border-end">
+                <div class="mb-xl-3">
+                  <h6><b style="color: rgb(80, 80, 233);">Hospital State Name</b></h6>
+                    <p style="margin-left: 3ch;color: black">{{grivance?.hospitalsate}}</p>
+                </div>
+              </div>
+              <div class="col-lg-3 col-xxl-3 border-end">
+                <div class="mb-xl-3">
+                  <h6><b style="color: rgb(80, 80, 233);">Hospital District Name</b></h6>
+                    <p style="margin-left: 3ch;color: black">{{grivance?.hospitaldist}}</p>
+                </div>
+              </div>
+              <div class="col-lg-6 col-xxl-6 border-end">
+                <div class="mb-xl-3">
+                  <h6><b style="color: rgb(80, 80, 233);">Hospital Name</b></h6>
+                    <p style="margin-left: 3ch;color: black">{{grivance?.hospitalname}}</p>
+                </div>
+              </div>
+          </div>
+          <hr>
+              <h5 class="modal-title" style="margin-left: 2ch; color: #1f723f;">Uploded Document</h5>
+          <div class="row">
+            <div class="col-lg-12 col-xxl-12">
+              <div class="table-responsive  example-container">
+                <table aria-describedby="mydesc" class="table table-striped">
+                  <thead>
+                    <tr style="text-align: center;">
+                      <th style="width: 80;">Sl No</th>
+                      <th>Supporting Document</th>
+                      <th>Audio/Video</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of doclist index as j" style="text-align: center;">
+                      <td>{{j+1}}</td>
+                      <td><i class="bi bi-file-earmark-pdf-fill" style="color:rgb(20, 114, 238);  font-size: 3ch;" (click)="downlorddoc(item.docname)"></i></td>
+                      <td *ngIf="item.medianame!=null"><i class="bi bi-file-earmark-play-fill" style="color:rgb(20, 114, 238);  font-size: 3ch;" (click)="downlorddoc(item.medianame)"></i></td>
+                      <td *ngIf="item.medianame==null">N/A</td>
+                    </tr>
+                    <tr *ngIf="! doclist?.length">
+                      <td colspan="5" style="text-align: center;"><strong class="text-danger">No data found</strong></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          </div>
+      </div>
+  </div>
+</div>

@@ -1,0 +1,111 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+    <div class="row justify-content-between">
+      <div class="col-lg-4">
+        <ul class="nav nav-tabs ">
+          <li class="nav-item">
+            <a routerLink="/application/postmasteradd" routerLinkActive="active" class="nav-link " style="color: green;">Add</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/application/postmasterview" routerLinkActive="active" class="nav-link active">View</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-lg-6 ">
+        <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-3" style=" margin-top: 1ch;">
+        <div class="col-sm-*" *ngIf="showPegi">
+          show
+          <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+            <option value="10">20</option>
+            <option value="20">50</option>
+            <option value="30">100</option>
+            <option value={{countpostlist}}>ALL</option>
+          </select> entries
+        </div>
+      </div>
+      <!-- <div class="col-3" style=" margin-top: 1ch;">
+        <b>Total No Of Record : {{countgllist}}</b>
+      </div> -->
+      <div class="col-2">
+            <div class="table-utilities float-end">
+              <button class="btn btn-success btn-sm mx-1" tooltip="Excel" (click)="downloadReport(1)">
+                  <i class="bi bi-download"></i>
+              </button>
+              &nbsp;
+              <button class="btn btn-danger btn-sm me-1" type="submit" (click)="downloadReport(2)"><i
+                      class="bi bi-file-earmark-pdf"></i></button>
+          </div>
+      </div>
+      <div class="col-5">
+        <input type="text " id="txtsearchDate " name="txtsearchDate " [(ngModel)]="txtsearchDate" maxlength="20 "
+          class="form-control " placeholder="Search here...... " autocomplete="off"
+          style=" margin-right: 0px; margin-left: 0px;">
+      </div>
+    </div>
+    <br>
+    <div class="table-responsive">
+      <table class="table table-striped mb-0">
+        <thead>
+          <tr>
+            <th width="50">Sl#</th>
+            <th>Post Name</th>
+            <th>Description</th>
+            <th>Created By</th>
+            <th>Created On</th>
+            <th>Status</th>
+            <th width="100">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr *ngFor="let v of postlist | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage},index as i">
+            <td *ngIf="currentPage==1 ">{{(i+1)}}</td>
+            <td *ngIf="currentPage!=1 ">{{(currentPage-1)*pageElement+ i+1}}</td>
+            <td>{{v.POST_NAME}}</td>
+            <td> {{v.POST_DESCRIPTION}} </td>
+            <td> {{v.CREATED_BY}} </td>
+            <td> {{v.CREATEDON}} </td>
+            <td> {{v.STATUSFLAG}} </td>
+            <td>
+              <a class="btn btn-outline-primary btn-sm me-1" *ngIf="v.configurationstatus==1" (click)="edit(v)"><i
+                  class="bi bi-pencil"></i></a>
+                  <a class="btn btn-outline-secondary btn-sm me-1" *ngIf="v.configurationstatus==0" [disabled]="true">
+                    <i class="bi bi-pencil" [disabled]="true"></i></a>
+            </td>
+          </tr>
+          <tr *ngIf="!showPegi">
+            <div class="row ">
+              <span style="color: red;text-align: center;position:absolute ">NO DATA FOUND!!</span>
+            </div>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+  <div class="row" *ngIf="showPegi">
+    <div class="col-sm-4">
+      <div class="col-sm-*">
+        show
+        <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+          <option value="10">20</option>
+          <option value="20">50</option>
+          <option value="30">100</option>
+          <option value={{countpostlist}}>ALL</option>
+        </select> entries
+      </div>
+    </div>
+    <div class="col-sm-8 text-right">
+      <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true"
+        (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)">
+      </pagination-controls>
+    </div>
+
+
+  </div>
+</div>

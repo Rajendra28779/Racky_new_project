@@ -1,0 +1,21 @@
+[
+    {
+      "pagetitle":"Add PlugIn",
+      "tabList":[
+        {"tabName":"View","tabUrl":"../viewplugin"},
+        {"tabName":"Add","tabUrl":"../addplugin","tabClass":"active add d-none"},
+        {"tabName":"Edit ","tabUrl":"","tabClass":"active edit d-none"}
+       
+        ],
+      "utils":[
+        {"utilName":"mandatory"}
+       
+       
+        ],
+      "messages":{
+  
+      }
+    }
+  ]
+
+

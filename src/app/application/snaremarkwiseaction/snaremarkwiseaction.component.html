@@ -1,0 +1,210 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/snaremarkwiseaction" class="nav-link active">SNA Remarkwise Action Report</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="searchCriteriaBox bg-light p-3">
+        <div class="row">
+            <div class="col-lg-4 col-xxl-4">
+                <div class="mb-xl-3">
+                    <label class="control-label">Actual Date of Discharge From<span
+                            class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <input type="text" class="form-control border-end-0 datepicker" id="datepicker1" name="fromDate">
+                        <label class="input-group-text bg-transparent border-start-0" for="datepicker1"><i
+                                class="iconbsky-calendar"></i> </label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-xxl-4">
+                <div class="mb-xl-3">
+                    <label class="control-label">Actual Date of Discharge To<span
+                            class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <input type="text" class="form-control border-end-0 datepicker" id="datepicker2" name="toDate">
+                        <label class="input-group-text bg-transparent border-start-0" for="datepicker2"><i
+                                class="iconbsky-calendar"></i> </label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-xxl-4" *ngIf="snahide">
+                <label class="control-label">SNA Doctor Name<span class="text-danger">*</span></label>
+                <ng-autocomplete #auto [data]="snoList" placeholder="Select SNA Name" (selected)="selectEvent($event)" (inputCleared)="clearEvent()" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" [searchKeyword]="keyword" spellcheck="false">
+                </ng-autocomplete>
+
+                <ng-template #itemTemplate let-item>
+                    <a [innerHTML]="item.fullName"></a>
+                </ng-template>
+
+                <ng-template #notFoundTemplate let-notFound>
+                    <div [innerHTML]="notFound"></div>
+                </ng-template>
+            </div>
+        </div>
+        <div class="row" *ngIf="snahtmlhide">
+            <div class="col-lg-4 col-xxl-4">
+                <div class="mb-xl-3">
+                    <label class="control-label">State Name</label>
+                    <select class="form-select" id="statecode1" [(ngModel)]="stateId" aria-label="Disabled select example" (change)="getDistrict($event.target.value)">
+                        <option value="" selected>Select State</option>
+                        <option *ngFor="let state of statelist"
+                            [value]="state.stateCode">{{state.stateName}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-xxl-4">
+                <div class="mb-xl-3">
+                    <label class="control-label">District Name</label>
+                    <select class="form-select" id="distcode1" [(ngModel)]="distId" aria-label="Disabled select example" (change)="getHospital($event.target.value)">
+                        <option value="" selected>Select District</option>
+                        <option *ngFor="let district of distList"
+                            [value]="district.DISTRICTCODE">{{district.DISTRICTNAME}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-4 col-xxl-4">
+                <div class="mb-xl-3">
+                    <label class="control-label">Hospital Name</label>
+                    <select class="form-select" name="hospitalcode" id="hospitalcode" [(ngModel)]="hospitalId">
+                        <option value="" selected>Select Hospital Name</option>
+                        <option *ngFor="let c of hospitalList" [value]="c.HOSPITALCODE">
+                            {{c.HOSPITALNAME}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="adminhtmlhide">
+            <div class="col-md-4">
+                <label class="control-label">State Name</label>
+                <select class="form-select" name="stateId" id="stateId" (change)="OnChangeState($event.target.value)">
+                    <option value="" selected>Select State</option>
+                    <ng-container *ngFor="let item of stateList">
+                        <option value={{item.stateCode}}>{{item.stateName}}</option>
+                    </ng-container>
+                </select>
+
+            </div>
+            <div class="col-md-4">
+                <label class="control-label">District Name</label>
+                <select class="form-select" name="districtId" id="districtId" (change)="OnChangeDistrict($event.target.value)">
+                    <option value="" selected>Select District</option>
+                    <ng-container *ngFor="let item of districtList">
+                        <option value={{item.districtcode}}>{{item.districtname}}</option>
+                    </ng-container>
+                </select>
+
+            </div>
+            <div class="col-md-4">
+                <label class="control-label">Hospital Name</label>
+                <select class="form-select" name="hospital" id="hospital">
+                    <option value="" selected>Select Hospital</option>
+                    <ng-container *ngFor="let item of hospitalList1">
+                        <option value={{item.hospitalCode}}>{{item.hospitalName}}</option>
+                    </ng-container>
+                </select>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col align-self-end">
+                <div class="col-lg-12">
+                    <button type="submit" class="btn btn-success" (click)="getActionDetails()">Search</button> &nbsp;
+                    <button type="reset" class="btn btn-secondary" (click)="ResetField()">Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+        <div class="col-lg-4 col-xxl-4" style="padding-top: 10px; padding-left: 37px;">
+            <!-- <b>Note:<span style="color: rgb(238, 13, 32);">Percentage Calculated Through Total Rejected By SNA And Total SNA Action</span></b> -->
+        </div>
+        <div class="col-lg-4 col-xxl-4" style="text-align: right; padding-top: 1px;">
+            <div class="form-group">
+                <button class="btn btn-outline-success btn-sm me-1" type="submit" (click)="downloadReport('excel')">
+                <i class="bi bi-file-earmark-spreadsheet" style="font-size: 13pt;"></i>
+            </button> &nbsp;
+                <button class="btn btn-outline-danger btn-sm me-1" type="submit" (click)="downloadReport('pdf')">
+                <i class="bi bi-file-earmark-pdf" style="font-size: 13pt;"></i>
+            </button>
+            </div>
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+            <input type="text" id="txtsearchDate" class="form-control" placeholder="Search here" name="txtsearchDate" [(ngModel)]="txtsearchDate" autocomplete="off">
+        </div>
+    </div>
+</div>
+<div class="content-box p-0 overflow-hidden">
+    <div class="table-responsive">
+        <table class="table table-striped mb-0">
+            <thead>
+                <tr>
+                    <th>Sl No</th>
+                    <th>Hospital Details</th>
+                    <th>Total Discharge</th>
+                    <th>Claim Submitted</th>
+                    <th>Claim Not Submitted</th>
+                    <th>SNA Approved</th>
+                    <th>Action By SNA</th>
+                    <th>SNA Action</th>
+                    <th>Percentage of Action</th>
+                    <th>Total</th>
+                    <th>Remark Wise Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let claim of snaactiondata | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};
+                index as i">
+                    <td *ngIf="currentPage==1">{{(i+1)}}</td>
+                    <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+ i+1}}</td>
+                    <td>{{claim.hospitalname}}({{claim.Hospitalcode}})</td>
+                    <td>{{claim.totaldischarge}}</td>
+                    <td>{{claim.claimsubmited}}</td>
+                    <td>{{claim.claimnotsubmitted}}</td>
+                    <td>{{claim.snaapproved}}</td>
+                    <td>{{claim.actionbysna}}</td>
+                    <td>{{claim.snaaction}}</td>
+                    <td>{{claim.snaactionpercentage}}%</td>
+                    <td>{{claim.total}}</td>
+                    <td *ngIf="claim.remarkwisedetails==0 && btn">
+                        <a class="btn btn-primary btn-sm disabled">Click</a>
+                    </td>
+                    <td *ngIf="claim.remarkwisedetails!=0">
+                        <a class="btn btn-outline-success btn-sm" href="javascript:void(0);" (click)="gesnaactioncountdetails(claim.hospitalname,claim.Hospitalcode,
+                        claim.totaldischarge,claim.claimsubmited,claim.claimnotsubmitted,claim.snaapproved,claim.actionbysna,claim.snaaction,claim.snaactionpercentage,claim.remarkwisedetails
+                        )">Click</a>
+                    </td>
+                </tr>
+                <tr *ngIf="snaactiondata.length==0">
+                    <td colspan="14" class="text-center text-danger"><strong>NO DATA FOUND!!</strong></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row" style="margin-top: 20px;" *ngIf="showPegi">
+    <div class="col-sm-6">
+        <div class="col-sm-*">
+            show
+            <select id="pageItem" name="pageItem" class="custom-select-sm" (change)="pageItemChange()">
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="200">200</option>
+                <option value="500">500</option>
+                <option value="{{snarejectiondata?.length}}">All</option>
+            </select> entries
+        </div>
+    </div>
+    <div class="col-sm-6 text-right">
+        <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true" class="text-end" (pageChange)="currentPage = $event" (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+    </div>
+</div>

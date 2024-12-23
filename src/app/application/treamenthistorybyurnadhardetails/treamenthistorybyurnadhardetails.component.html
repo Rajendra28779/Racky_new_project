@@ -1,0 +1,438 @@
+<div class="content">
+<div class="form-cointainer">
+  <div class="main-tab">
+      <div class="row justify-content-between">
+          <div class="col-lg-4">
+              <ul class="nav nav-tabs">
+                  <li class="nav-item">
+                      <a routerLink="/treatmenthistorydetails" routerLinkActive="active" class="nav-link active">Treatment History Details</a>
+                  </li>
+              </ul>
+          </div>
+          <!-- <div class="col-lg-6 ">
+              <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+          </div> -->
+      </div>
+  </div>
+
+  <div class="col-xl-12 col-lg-12 mb-2 mt-2">
+    <h3 style="margin-left: 2ch;"> Case No - <span class="num_bg"> {{result?.caseno}} </span> </h3>
+ </div>
+      <!-- Hospital information -->
+      <div  class="col-lg-12 col-xl-12 col-xxl-12 mb-4">
+        <div  class="card shadow-sm basic-info">
+           <div  class="card-header bg-color text-white">
+              <h5  class="mb-0"> Hospital Information</h5>
+           </div>
+           <div  class="card-body">
+              <div class="row treatment-details">
+                 <div  class="col-xl-4 col-lg-4">
+                    <div  class="d-flex align-items-center  border-end">
+                       <div >
+                          <p  class="small text-muted mb-1">Hospital Name</p>
+                          <h6  class="mb-0"> {{result?.hname}}  </h6>
+                       </div>
+                    </div>
+                 </div>
+                 <div  class="col-xl-2 col-lg-2">
+                    <div  class="d-flex align-items-center  border-end">
+                       <div >
+                          <p  class="small text-muted mb-1">Hospital Code</p>
+                          <h6  class="mb-0"> {{result?.hcode}}  </h6>
+                       </div>
+                    </div>
+                 </div>
+                 <div  class="col-xl-3 col-lg-3">
+                    <div  class="d-flex align-items-center border-end">
+                       <div >
+                          <p  class="small text-muted mb-1">Hospital State</p>
+                          <h6  class="mb-0"> {{result?.hstate}} </h6>
+                       </div>
+                    </div>
+                 </div>
+                 <div  class="col-xl-3 col-lg-3">
+                    <div  class="d-flex align-items-center">
+                       <div >
+                          <p  class="small text-muted mb-1">Hospital District</p>
+                          <h6  class="mb-0"> {{result?.hdist}} </h6>
+                       </div>
+                    </div>
+                 </div>
+                 <div  class="col-12">
+                  <hr  class="mt-xl-3">
+               </div>
+               <div  class="col-xl-4 col-lg-4">
+                <div  class="d-flex align-items-center  border-end">
+                   <div >
+                      <p  class="small text-muted mb-1">Hospital Catagory</p>
+                      <h6  class="mb-0"> {{result?.hcatgory}}  </h6>
+                   </div>
+                </div>
+             </div>
+             <div  class="col-xl-4 col-lg-4">
+              <div  class="d-flex align-items-center  border-end">
+                 <div >
+                    <p  class="small text-muted mb-1">Hospital Email Id</p>
+                    <h6  class="mb-0"> {{result?.hemail}}  </h6>
+                 </div>
+              </div>
+           </div>
+           <div  class="col-xl-4 col-lg-4">
+            <div  class="d-flex align-items-center ">
+               <div >
+                  <p  class="small text-muted mb-1">Hospital Contact No</p>
+                  <h6  class="mb-0"> {{result?.hphone}}  </h6>
+               </div>
+            </div>
+         </div>
+              </div>
+           </div>
+        </div>
+     </div>
+      <!-- Hospital information -->
+               <!-- patient information -->
+               <div  class="col-lg-12 col-xl-12 col-xxl-12 mb-4">
+                <div  class="card shadow-sm basic-info">
+                   <div  class="card-header bg-color text-white">
+                      <h5  class="mb-0"> Patient Information</h5>
+                   </div>
+                   <div  class="card-body">
+                      <div class="row treatment-details">
+                         <div  class="col-xl-3 col-lg-3">
+                            <div  class="d-flex align-items-center  border-end">
+                               <div >
+                                  <p  class="small text-muted mb-1">URN</p>
+                                  <h6  class="mb-0"> {{result?.urn}}  </h6>
+                               </div>
+                            </div>
+                         </div>
+                         <div  class="col-xl-3 col-lg-3">
+                            <div  class="d-flex align-items-center  border-end">
+                               <div >
+                                  <p  class="small text-muted mb-1">Patient Name</p>
+                                  <h6  class="mb-0"> {{result?.patient}}  </h6>
+                               </div>
+                            </div>
+                         </div>
+                         <div  class="col-xl-2 col-lg-2">
+                            <div  class="d-flex align-items-center  border-end">
+                               <div >
+                                  <p  class="small text-muted mb-1">Mobile No </p>
+                                  <h6  class="mb-0"> {{result?.pphoneno}} </h6>
+                               </div>
+                            </div>
+                         </div>
+                         <div  class="col-xl-2 col-lg-2">
+                            <div  class="d-flex align-items-center  border-end">
+                               <div >
+                                  <p  class="small text-muted mb-1"> Gender </p>
+                                  <h6  class="mb-0"> {{result?.gender}} </h6>
+                               </div>
+                            </div>
+                         </div>
+                         <div  class="col-xl-2 col-lg-2">
+                            <div  class="d-flex align-items-center ">
+                               <div >
+                                  <p  class="small text-muted mb-1"> Age </p>
+                                  <h6  class="mb-0"> {{result?.age}} </h6>
+                               </div>
+                            </div>
+                         </div>
+                         <div  class="col-12">
+                            <hr  class="mt-xl-3">
+                         </div>
+                         <div  class="col-xl-3 col-lg-3">
+                            <div  class="d-flex align-items-center  border-end">
+                               <div >
+                                  <p  class="small text-muted mb-1">State </p>
+                                  <h6  class="mb-0">{{result?.pstate}} </h6>
+                               </div>
+                            </div>
+                         </div>
+                         <div  class="col-xl-3 col-lg-3">
+                            <div  class="d-flex align-items-center border-end">
+                               <div >
+                                  <p  class="small text-muted mb-1">District </p>
+                                  <h6  class="mb-0"> {{result?.pdist}} </h6>
+                               </div>
+                            </div>
+                         </div>
+                         <div  class="col-xl-2 col-lg-2">
+                            <div  class="d-flex align-items-center border-end">
+                               <div >
+                                  <p  class="small text-muted mb-1"> Block </p>
+                                  <h6  class="mb-0"> {{result?.block}} </h6>
+                               </div>
+                            </div>
+                         </div>
+                         <div  class="col-xl-2 col-lg-2">
+                            <div  class="d-flex align-items-center border-end">
+                               <div >
+                                  <p  class="small text-muted mb-1"> Panchyat </p>
+                                  <h6  class="mb-0"> {{result?.panchayat}} </h6>
+                               </div>
+                            </div>
+                         </div>
+                         <div  class="col-xl-2 col-lg-2">
+                            <div  class="d-flex align-items-center ">
+                               <div >
+                                  <p  class="small text-muted mb-1"> Village </p>
+                                  <h6  class="mb-0"> {{result?.village}} </h6>
+                               </div>
+                            </div>
+                         </div>
+                      </div>
+                   </div>
+                </div>
+             </div>
+             <!-- patient information -->
+             <!--Treatment Information-->
+             <div  class="col-lg-12 col-xl-12 col-xxl-12 mb-4">
+              <div  class="card shadow-sm basic-info">
+                 <div  class="card-header bg-color text-white">
+                    <h5  class="mb-0"> Treatment Information</h5>
+                 </div>
+                 <div  class="card-body">
+                    <div class="row treatment-details">
+                       <div  class="col-xl-3 col-lg-3">
+                          <div  class="d-flex align-items-center  border-end">
+                             <div >
+                                <p  class="small text-muted mb-1">Actual Date Of Admission</p>
+                                <h6  class="mb-0"><i class="iconbsky-calendar small ps-2"></i> {{result?.adateadd}}  </h6>
+                             </div>
+                          </div>
+                       </div>
+                       <div  class="col-xl-3 col-lg-3">
+                          <div  class="d-flex align-items-center  border-end">
+                             <div >
+                                <p  class="small text-muted mb-1"> Date Of Admission</p>
+                                <h6  class="mb-0"><i class="iconbsky-calendar small ps-2"></i> {{result?.dateadd}}  </h6>
+                             </div>
+                          </div>
+                       </div>
+                       <div  class="col-xl-3 col-lg-3">
+                          <div  class="d-flex align-items-center  border-end">
+                             <div >
+                                <p  class="small text-muted mb-1">Actual Date Of Discharge</p>
+                                <h6  class="mb-0"><i class="iconbsky-calendar small ps-2"></i> {{result?.adatedis}} </h6>
+                             </div>
+                          </div>
+                       </div>
+                       <div  class="col-xl-3 col-lg-3">
+                          <div  class="d-flex align-items-center ">
+                             <div >
+                                <p  class="small text-muted mb-1"> Date Of Discharge </p>
+                                <h6  class="mb-0"> <i class="iconbsky-calendar small ps-2"></i> {{result?.datedis}} </h6>
+                             </div>
+                          </div>
+                       </div>
+
+                       <div  class="col-12">
+                          <hr  class="mt-xl-3">
+                       </div>
+                       <div  class="col-xl-3 col-lg-3">
+                          <div  class="d-flex align-items-center  border-end">
+                             <div >
+                                <p  class="small text-muted mb-1">Package code </p>
+                                <h6  class="mb-0">{{result?.phcode}} </h6>
+                             </div>
+                          </div>
+                       </div>
+                       <div  class="col-xl-3 col-lg-3">
+                          <div  class="d-flex align-items-center border-end">
+                             <div >
+                                <p  class="small text-muted mb-1">Package Description</p>
+                                <h6  class="mb-0"> {{result?.phname}} </h6>
+                             </div>
+                          </div>
+                       </div>
+                       <div  class="col-xl-3 col-lg-3">
+                          <div  class="d-flex align-items-center border-end">
+                             <div >
+                                <p  class="small text-muted mb-1"> Subcatagory code </p>
+                                <h6  class="mb-0"> {{result?.pscode}} </h6>
+                             </div>
+                          </div>
+                       </div>
+                       <div  class="col-xl-3 col-lg-3">
+                          <div  class="d-flex align-items-center ">
+                             <div >
+                                <p  class="small text-muted mb-1"> Subcatagory name </p>
+                                <h6  class="mb-0"> {{result?.psname}} </h6>
+                             </div>
+                          </div>
+                       </div>
+                       <div  class="col-12">
+                        <hr  class="mt-xl-3">
+                     </div>
+                     <div  class="col-xl-3 col-lg-3">
+                      <div  class="d-flex align-items-center border-end">
+                         <div >
+                            <p  class="small text-muted mb-1"> Procedure Code</p>
+                            <h6  class="mb-0"> {{result?.pcode}} </h6>
+                         </div>
+                      </div>
+                   </div>
+                     <div  class="col-xl-6 col-lg-6">
+                      <div  class="d-flex align-items-center border-end">
+                         <div >
+                            <p  class="small text-muted mb-1"> Procedure Name</p>
+                            <h6  class="mb-0"> {{result?.pname}} </h6>
+                         </div>
+                      </div>
+                   </div>
+                     <div  class="col-xl-3 col-lg-3">
+                      <div  class="d-flex align-items-center ">
+                         <div >
+                            <p  class="small text-muted mb-1"> Package Cost (₹)</p>
+                            <!-- <h6  class="mb-0"> {{result?.pcost}} </h6> -->
+                            <h6  class="mb-0" *ngIf="result?.pcost!='N/A'"> {{result?.pcost | currency:"":""}}  </h6>
+                          <h6  class="mb-0" *ngIf="result?.pcost=='N/A'"> N/A </h6>
+                         </div>
+                      </div>
+                   </div>
+                   <div  class="col-12">
+                    <hr  class="mt-xl-3">
+                 </div>
+                 <div  class="col-xl-3 col-lg-3">
+                  <div  class="d-flex align-items-center border-end">
+                     <div >
+                        <p  class="small text-muted mb-1">Amount Blocked (₹)</p>
+                        <!-- <h6  class="mb-0"> {{result?.amountblocked}} </h6> -->
+                        <h6  class="mb-0" *ngIf="result?.amountblocked!='N/A'"> {{result?.amountblocked | currency:"":""}}  </h6>
+                          <h6  class="mb-0" *ngIf="result?.amountblocked=='N/A'"> N/A </h6>
+                     </div>
+                  </div>
+               </div>
+                     <div  class="col-xl-4 col-lg-4">
+                      <div  class="d-flex align-items-center border-end">
+                         <div >
+                            <p  class="small text-muted mb-1">Patient Authentication Mode</p>
+                            <h6  class="mb-0"> {{result?.authmode}} </h6>
+                         </div>
+                      </div>
+                   </div>
+                     <div  class="col-xl-5 col-lg-5">
+                      <div  class="d-flex align-items-center">
+                         <div >
+                            <p  class="small text-muted mb-1">Is Patient MobileNo Verified</p>
+                            <h6  class="mb-0"> {{result?.mobverify}} </h6>
+                         </div>
+                      </div>
+                   </div>
+                    </div>
+                 </div>
+              </div>
+           </div>
+             <!--Treatment Information -->
+              <!--Pre Auth Details-->
+              <div  class="col-lg-12 col-xl-12 col-xxl-12 mb-4">
+                <div  class="card shadow-sm basic-info">
+                   <div  class="card-header bg-color text-white">
+                      <h5  class="mb-0"> Pre Auth Details</h5>
+                   </div>
+                   <div  class="card-body">
+                      <div class="row treatment-details">
+                        <div class="table-responsive">
+                          <table class="table table-striped mb-0">
+                            <thead>
+                              <tr>
+                                <th width="50" rowspan="2">Sl#</th>
+                                <th rowspan="2">Hospital Upload Date</th>
+                                <th rowspan="2">Hospital Description</th>
+                                <th rowspan="2">SNA Approved Date</th>
+                                <th rowspan="2">SNA Remark</th>
+                                <th rowspan="2">Approved Amount (₹)</th>
+                                <th rowspan="2">SNA Description</th>
+                                <th colspan="3" style="text-align: center;">Document</th>
+                              </tr>
+                              <tr>
+                                <th>Doc 1</th>
+                                <th>Doc 2</th>
+                                <th>Doc 3</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let v of preauth,index as i">
+                                <td>{{i+1}}</td>
+                                <td>{{v.hupdate | date :'dd-MMM-yyyy'}}</td>
+                                <td>{{v.hdescription}}</td>
+                                <td>{{v.pappdate | date :'dd-MMM-yyyy'}}</td>
+                                <td>{{v.psnaremark}}</td>
+                                <td>{{v.psappamount | currency:"":""}}</td>
+                                <td>{{v.psnadescription}}</td>
+                                <td *ngIf="v.preauthdoc1==null">N/A</td>
+                                <td *ngIf="v.preauthdoc1!=null"><a title="PDF File" (click)="download(v.preauthdoc1,result?.adateadd,result?.hcode)"><i
+                                  class="bi bi-file-earmark-pdf me-2"></i></a></td>
+                                <td *ngIf="v.preauthdoc2==null">N/A</td>
+                                <td *ngIf="v.preauthdoc2!=null"><a title="PDF File" (click)="download(v.preauthdoc2,result?.adateadd,result?.hcode)"><i
+                                  class="bi bi-file-earmark-pdf me-2"></i></a></td>
+                                <td *ngIf="v.preauthdoc3==null">N/A</td>
+                                <td *ngIf="v.preauthdoc2!=null"><a title="PDF File" (click)="download(v.preauthdoc2,result?.adateadd,result?.hcode)"><i
+                                  class="bi bi-file-earmark-pdf me-2"></i></a></td>
+                                <td>{{v.activityDoneOn}}</td>
+                              </tr>
+                            <tr *ngIf="preauth?.length==0">
+                              <div class="row ">
+                                <span style="color: red;text-align: center;position:absolute ">NO DATA FOUND!!</span>
+                              </div>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      </div>
+                   </div>
+                </div>
+                </div>
+                <br>
+                <!--Pre Auth Details-->
+                <!--High End Drugs-->
+              <div  class="col-lg-12 col-xl-12 col-xxl-12 mb-4">
+                <div  class="card shadow-sm basic-info">
+                   <div  class="card-header bg-color text-white">
+                      <h5  class="mb-0"> High End Drugs</h5>
+                   </div>
+                   <div  class="card-body">
+                      <div class="row treatment-details">
+                        <div class="table-responsive">
+                          <table class="table table-striped mb-0">
+                            <thead>
+                              <tr>
+                                <th width="50">Sl#</th>
+                                <th>Code</th>
+                                <th>Name</th>
+                                <th>Unit Price</th>
+                                <th>Unit</th>
+                                <th>Total Price</th>
+                                <th>Recommended Dose</th>
+                                <th>PreAuth Required</th>
+                                <th>Activity Done On</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let v of highenddrug,index as i">
+                                <td>{{i+1}}</td>
+                                <td>{{v.code}}</td>
+                                <td>{{v.name}}</td>
+                                <td>{{v.unitPrice}}</td>
+                                <td>{{v.unit}}</td>
+                                <td>{{v.totalPrice}}</td>
+                                <td>{{v.recommendedDose}}</td>
+                                <td>{{v.preAuthRequired}}</td>
+                                <td>{{v.activityDoneOn}}</td>
+                              </tr>
+                            <tr *ngIf="highenddrug?.length==0">
+                              <div class="row ">
+                                <span style="color: red;text-align: center;position:absolute ">NO DATA FOUND!!</span>
+                              </div>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                        </div>
+                      </div>
+                   </div>
+                </div>
+                <!--High End Drugs-->
+</div>
+</div>

@@ -1,0 +1,137 @@
+<div class="content">
+
+    <div class="form-cointainer">
+        <div class="main-tab mb-3">
+            <div class="row justify-content-between ">
+                <div class="col-lg-4">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a routerLink="packagewisedischargeclaimdetails" class="nav-link active">Package Wise Discharge Claim Details</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-xxl-4 mb-3">
+                Actual Date Of Discharge From : <strong>{{fromDate}}</strong>
+            </div>
+            <div class="col-lg-4 col-xxl-4 mb-3">
+                Actual Date Of Discharge To : <strong>{{toDate}}</strong>
+            </div> 
+            <div class="col-lg-4 col-xxl-4 mb-3" *ngIf="showsdh">
+                State : <strong>{{stateNam}}</strong> 
+            </div>
+            <div class="col-lg-4 col-xxl-4 mb-3" *ngIf="showsdh">
+                District : <strong>{{disName}}</strong>
+            </div>
+            <div class="col-lg-4 col-xxl-4 mb-3">
+                Hospital : <strong>{{hopName}}</strong>
+            </div>
+            <div class="col-lg-4 col-xxl-4 mb-3">
+                Package Header : <strong>{{packageheder}}</strong> 
+            </div>
+
+        </div>
+        <div class="row" style="margin-top: 10px;margin-bottom: 1px;">
+            <div class="col-lg-6 col-xxl-6">
+                <div class="row" *ngIf="showPegi">
+                    <div class="col-sm-4">
+                        <div class="col-sm-*">
+                            show
+                            <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                                <option value="200">200</option>
+                                <option value="500">500</option>
+                                <option value={{record}}>All</option>
+                            </select> entries
+                        </div>
+                    </div>
+                   
+            
+                </div>
+            </div>
+            <div class="col-lg-2 col-xxl-2">
+                <div class="table-utilities float-end">
+                    <button class="btn btn-success btn-sm mx-1" tooltip="Excel" (click)="downloadReport(1)"><i
+                            class="bi bi-download"></i>
+                    </button>
+                 
+                    <button class="btn btn-danger btn-sm me-1" type="submit" (click)="downloadReport(2)"><i
+                            class="bi bi-file-earmark-pdf"></i></button>
+                </div>
+            </div>
+            <div class="col-lg-4 col-xxl-4">
+                <div class="input-group" style="margin-bottom: 15px;">
+                    <input type="text" id="txtsearchDate" class="form-control" placeholder="Search here"
+                        name="txtsearchDate" [(ngModel)]="txtsearchDate" autocomplete="off">
+                </div>
+            </div>
+        </div>
+
+
+        <div class="table-responsive">
+            <table class="table table-striped  mb-0">
+                <thead>
+                    <tr>
+                        <th>Sl#</th>
+                        <th> Package Code</th>
+                        <th >Package Name</th>
+                        <th>No. of Discharge</th>
+                        <th >Discharge Amount</th>
+                        <th >No. of Claims</th>
+                        <th>Claim Amount</th>
+                        <th >Paid Amount</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container>
+                        <tr
+                            *ngFor="let item of gramwisedata | filter:txtsearchDate |
+                        paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};index as i">
+                            <td *ngIf="currentPage==1">{{i+1}}</td>
+                            <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+i+1}}</td>
+                            <td><a href="javascript:void(0);" (click)="view(item.packageCod)">{{item.packageCod}} </a>
+                            </td>
+                            <td>{{item.packageName}}</td>
+                            <td>{{item.noOfDischrge}}</td>
+                            <td>{{item.dischargeAmt | currency:'':''}}</td>
+                            <td>{{item.noOfClaim}}</td>
+                            <td>{{item.claimedAmt | currency:'':''}}</td>
+                            <td>{{item.paidAmt | currency:'':''}}</td>
+                        </tr>
+                    </ng-container>
+                    <tr *ngIf="!showPegi">
+                        <div class="row">
+                            <span style="color: red;text-align: center;position:absolute">NO DATA
+                                FOUND!!</span>
+                        </div>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+    <div class="row" *ngIf="showPegi">
+        <div class="col-sm-4">
+            <div class="col-sm-*">
+                show
+                <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                    <option value="200">200</option>
+                    <option value="500">500</option>
+                    <option value={{record}}>All</option>
+                </select> entries
+            </div>
+        </div>
+        <div class="col-sm-8 text-right">
+            <pagination-controls id="listing_pagination" [maxSize]="50" [directionLinks]="true"
+                (pageChange)="currentPage = $event" class="text-end"
+                (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+        </div>
+
+    </div>
+</div>

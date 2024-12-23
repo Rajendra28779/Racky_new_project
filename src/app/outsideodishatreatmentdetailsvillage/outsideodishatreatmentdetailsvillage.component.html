@@ -1,0 +1,120 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/Outsideodishatreatmentdetailsvillage" class="nav-link active">Patient Treated Outside Odisha
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-4">
+        <div class="col-lg-4 col-xxl-4">
+            Actual Date of Discharge From: <strong>{{ActualDateofDischargeFrom}}</strong>
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+            Actual Date of Discharge To : <strong>{{ActualDateofDischargeTo}}</strong>
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+            State Name : <strong>ODISHA</strong>
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+            Beneficiary District Name : <strong>{{districtName}}</strong>
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+            Beneficiary Block Name : <strong>{{blockname}}</strong>
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+            Beneficiary Panchayat Name : <strong>{{gpname}}</strong>
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+            <div class="table-utilities float-end">
+                <button class="btn btn-success btn-sm mx-1 me-2" tooltip="pdf" (click)="downloadReportExcel()"><i
+                        class="bi bi-file-earmark-pdf"></i>
+                </button>
+                <button class="btn btn-danger btn-sm me-1" tooltip="Excel" (click)="downloadReportpdf()"><i
+                        class="bi bi-download"></i></button>
+            </div>
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+            <input type="text" id="txtsearchDate" class="form-control" placeholder="Search here...." name="txtsearchDate" [(ngModel)]="txtsearchDate" autocomplete="off">
+        </div>
+    </div>
+    <div class="content-box p-0 overflow-hidden">
+        <div class="table-responsive">
+            <table class="table table-striped mb-0">
+                <thead>
+                    <tr>
+                        <th class="text-center">Sl No.</th>
+                        <th class="text-center">Beneficiary Village Name </th>
+                        <th class="text-center">URN</th>
+                        <th class="text-center">Patient Name</th>
+                        <th class="text-center">Hospital Name</th>
+                        <th class="text-center">Hospital Code</th>
+                        <th class="text-center">Treatment Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let claim of getOutlistdataVillage | filter:txtsearchDate| paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage}; index as i ">
+                        <tr>
+                            <td class="text-center" *ngIf="currentPage==1 ">{{(i+1)}}</td>
+                            <td class="text-center" *ngIf="currentPage!=1 ">{{(currentPage-1)*pageElement+ i+1}}</td>
+                            <td class="text-center">{{claim.villagename}}</td>
+                            <td class="text-center">{{claim.urn}}</td>
+                            <td class="text-center">{{claim.patientname}}</td>
+                            <td class="text-center">{{claim.hospitalname}}</td>
+                            <td class="text-center">{{claim.hospitalcode}}</td>
+                            <td class="text-center">{{claim.amount|currency:'':''}}</td>
+                        </tr>
+                    </ng-container>
+                    <tr *ngIf="this.getOutlistdataVillage.length!=0">
+                        <td><strong></strong> </td>
+                        <td><strong></strong> </td>
+                        <td><strong></strong> </td>
+                        <td><strong></strong> </td>
+                        <td><strong></strong> </td>
+                        <td class="text-center"><strong>Total</strong></td>
+                        <td class="text-center"><strong>{{footer1}}</strong></td>
+                    </tr>
+                    <tr *ngIf="this.getOutlistdataVillage.length==0">
+                        <td colspan="16">
+                            <p class="mb-0 text-center text-danger fw-bold">NO DATA FOUND!!</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row mt-3" *ngIf="showPegi">
+        <div class="col-sm-4 ">
+            <div class="col-sm-* ">
+                show
+                <select id="pageItem" name="pageItem" class="form-select-sm" (change)="pageItemChange()">
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                    <option value="150">150</option>
+                    <option value="200">200</option>
+                    <option value={{record}}>All</option>
+                </select> entries
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true" (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+        </div>
+    </div>
+</div>

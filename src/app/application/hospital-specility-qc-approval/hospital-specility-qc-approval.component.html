@@ -1,0 +1,231 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-10">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/hospitalspclityqcAppoval" routerLinkActive="active"
+                            class="nav-link active">Hospital Speciality Approval</a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/application/hospitalspclityqcAppovalview" routerLinkActive="active"
+                            class="nav-link " style="color: #1f723f;">Approval Status</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="content-box">
+        <div class="row">
+            <div class="col-lg-4 col-xxl-4">
+                <div class="mb-xl-3">
+                    <label class="control-label">State Name<span class="text-danger"></span></label>
+                    <select class="form-select" name="stateId" id="stateId"
+                        (change)="OnChangeState($event.target.value)">
+                        <option value="" selected>Select State</option>
+                        <ng-container *ngFor="let item of stateList">
+                            <option value={{item.stateCode}}>{{item.stateName}}</option>
+                        </ng-container>
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-4 col-xxl-4">
+                <div class="mb-xl-3">
+                    <label class="control-label">District Name<span class="text-danger"></span></label>
+                    <select class="form-select" name="districtId" id="districtId">
+                        <option value="" selected>Select District</option>
+                        <ng-container *ngFor="let item of districtList">
+                            <option value={{item.districtcode}}>{{item.districtname}}</option>
+                        </ng-container>
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-4 col-xxl-4">
+                <div class="d-grid gap-2 d-md-flex">
+                    <button type="submit" class="btn btn-success" style="margin-top: 27px;"
+                        (click)="search()">search</button>
+                    <input type="button" value="Reset" class="btn btn-secondary" style="margin-top: 27px;"
+                        (click)="onReset()">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+    <div class="col-lg-8 col-xxl-8 row">
+        <div class="col-md-9">
+            <div style="padding-top: 10px; font-weight: bold; color: green">Total Records:{{record}}</div>
+        </div>
+        <div [align]="'start'" class="col-md-3">
+            <button class="btn btn-danger" title="Download PDF" (click)="downloadReport('pdf')"
+                style="float:right; margin-left: 5px;"><i class="bi bi-file-earmark-pdf"></i></button>
+            <button class="btn btn-success" title="Download Excel" (click)="downloadReport('excel')"
+                style="float: right"><i class="bi bi-download"></i></button>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-xxl-4">
+        <div class="input-group">
+            <input type="text" id="txtsearchDate" class="form-control" autocomplete="off" placeholder="Search"
+                name="txtsearchDate" [(ngModel)]="txtsearchDate">
+        </div>
+    </div>
+</div>
+<div class="content-box p-0 overflow-hidden ">
+    <div class="table-responsive ">
+        <table class="table table-striped mb-0 " id="claimraise">
+            <thead>
+                <tr>
+                    <th class="text-center">Sl No.</th>
+                    <th class="text-center">State Name </th>
+                    <th class="text-center">District Name</th>
+                    <th class="text-center">Hospital Code</th>
+                    <th class="text-center">Hospital Name</th>
+                    <th class="text-center">Applied On</th>
+                    <th class="text-center">Action</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container>
+                    <tr
+                        *ngFor="let v of data | filter:txtsearchDate| paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage}; index as i">
+                        <td class="text-center" *ngIf="currentPage==1 ">{{(i+1)}}</td>
+                        <td class="text-center" *ngIf="currentPage!=1 ">{{(currentPage-1)*pageElement+ i+1}}</td>
+                        <td class="text-center">{{v.statename}}</td>
+                        <td class="text-center">{{v.districtname}}</td>
+                        <td class="text-center">{{v.hospitalCode}}</td>
+                        <td class="text-center">{{v.hospitalName}}</td>
+                        <td class="text-center">{{v.appliedon}}</td>
+                        <td class="text-center ">
+                            <a class="btn btn-outline-success btn-sm "
+                                (click)="clickaction(v.hospitalid,v.hospitalName,v.hospitalCode)">Take Action</a>
+                            <!-- data-bs-target="#specialitymodal" data-bs-toggle="modal" -->
+                        </td>
+                    </tr>
+                </ng-container>
+                <tr *ngIf="this.data.length==0">
+                    <td colspan="16">
+                        <p class="mb-0 text-center text-danger fw-bold">NO DATA FOUND!!</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row mt-3" *ngIf="showPegi">
+    <div class="col-sm-4 ">
+        <div class="col-sm-* ">
+            show
+            <select id="pageItem" name="pageItem" class="form-select-sm" (change)="pageItemChange()">
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="150">150</option>
+                <option value="200">200</option>
+                <option value={{record}}>All</option>
+            </select> entries
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true"
+            (pageChange)="currentPage = $event" class="text-end"
+            (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+    </div>
+</div>
+<ng-template #specialitymodal id="specialitymodal" let-modal class="modal-xl">
+    <div class="modal-header">
+        <h5 class="modal-title">Speciality Details:-{{hospitalname}}({{hospitalcode}})</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+            (click)="modalClose()"></button>
+        <!-- <button type="button" (click)="modalClose()" class="btn-close" data-bs-dismiss="modal"
+            aria-label="Close"></button> -->
+    </div>
+    <div class="modal-body">
+        <div clas></div>
+        <div>
+            <h5 class="modal-title text-success mb-2">Existing Package Procedure :-</h5>
+        </div>
+        <div class="table-responsive">
+            <table class="table mb-3">
+                <thead class="bgcolor-th">
+                    <tr>
+                        <th class="text-center">Sl#</th>
+                        <th class="text-center">Speciality Code</th>
+                        <th class="text-center">Speciality Name</th>
+                        <th class="text-center">Speciality Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let specialityexisting of detailsExistingcase,index as i">
+                        <td class="text-center">{{i+1}}</td>
+                        <td class="text-center">{{specialityexisting.specialityname}}</td>
+                        <td class="text-center">{{specialityexisting.specilaitycode}}</td>
+                        <td class="text-center">{{specialityexisting.hospitalTypeName}}</td>
+                    </tr>
+                    <tr align="center" *ngIf="this.detailsExistingcase.length==0">
+                        <td class="text-center" data-th="No Data Found" colspan="14" align="center"><strong
+                                class="text-danger">No Data found</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <h5 class="modal-title text-warning mb-2">Pending For Approval :-</h5>
+        </div>
+        <div class="table-responsive">
+            <table class="table mb-0">
+                <thead class="bgcolor-th">
+                    <tr>
+                        <th><input type="checkbox" id="allCheck" (change)="checkAllCheckBox($event.target.checked)">
+                        </th>
+                        <th>Sl#</th>
+                        <th>Speciality Code</th>
+                        <th>Speciality Name</th>
+                        <th style="width:350px;">Speciality Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let specialitypending of detailspendingcase,index as i">
+                        <td><input id="{{specialitypending.specialityid}}" type="checkbox"
+                                (change)="tdCheck($event,specialitypending.specialityid)"></td>
+                        <td>{{i+1}}</td>
+                        <td>{{specialitypending.specialityname}}</td>
+                        <td>{{specialitypending.specilaitycode}}</td>
+                        <td>
+                            <select class="form-select" name="hospitalTypeId{{specialitypending.specialityid}}"
+                                id="hospitalTypeId{{specialitypending.specialityid}}"
+                                (change)="onSelectType($event.target.value ,specialitypending.specialityid)">
+                                <option value="0" selected hidden disabled>Select Speciality Type</option>
+                                <ng-container *ngFor="let item of catList">
+                                    <option value={{item.categoryId}}>{{item.categoryName}}</option>
+                                </ng-container>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr align="center" *ngIf="this.detailspendingcase.length==0">
+                        <td class="text-center" data-th="No Data Found" colspan="14" align="center"><strong
+                                class="text-danger">No Data found</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="p-3">
+        <div class="alert alert-danger mt-0 mb-0 d-flex small">
+            <div class="align-items-center d-flex">
+                <div>
+                    <p class="mb-0 pe-2 border-end "><i class="bi bi-info-circle-fill fs-5 me-2 "></i>Note:-</p>
+                </div>
+                <div>
+                    <p class="mb-0"><strong>If You Are Approving It Will Immediately Reflect In TMS.</strong> </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-success" data-bs-dismiss="modal"
+            (click)="onSubmitrecords(1)">Approve</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+            (click)="onSubmitrecords(2)">Reject</button>
+    </div>
+</ng-template>

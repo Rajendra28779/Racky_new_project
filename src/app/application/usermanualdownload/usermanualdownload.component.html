@@ -1,0 +1,106 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/DownloadUsermanual" routerLinkActive="active" class="nav-link active">Download UserManual Document</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="content-box">
+        <div class="row">
+            <div class="col-lg-4 col-xxl-4">
+                <div class="mb-xl-3">
+                    <label class="control-label">Bucket Name<span
+                        class="text-danger">*</span></label>
+                    <select class="form-select" name="bucket" id="bucket" (change)="Onchangebucketname($event.target.value)">
+                    <option value="" selected disabled>Select Bucket Name</option>
+                    <ng-container *ngFor="let item of list">
+                        <option value={{item.primary_link_id}}>{{item.primary_link_name}}</option>
+                    </ng-container>
+                </select>
+                </div>
+            </div>
+            <div class="col-lg-3 col-xxl-3">
+                <div class="mb-xl-3">
+                    <div class="d-grid gap-2 d-md-flex" style="margin-top: 2ch;">
+                        <button type="submit" class="btn btn-success" (click)="Search()">Search</button>
+                        <button type="reset" class="btn btn-secondary" (click)="ResetField()">Reset</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><br>
+    <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+        <div class="col-lg-8 col-xxl-8 row">
+            <div class="col-md-9">
+                <div style="padding-top: 10px; font-weight: bold; color: green">Total Records:{{record}}</div>
+            </div>
+            <div [align]="'start'" class="col-md-3">
+                <button class="btn btn-danger" title="Download PDF" (click)="downloadReport('pdf')" style="float:right; margin-left: 5px;"><i class="bi bi-file-earmark-pdf"></i></button>
+                <button class="btn btn-success" title="Download Excel" (click)="downloadReport('excel')" style="float: right"><i class="bi bi-download" ></i></button>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-xxl-4">
+            <div class="input-group">
+                <input type="text" id="txtsearchDate" class="form-control" autocomplete="off" placeholder="Search" name="txtsearchDate" [(ngModel)]="txtsearchDate">
+            </div>
+        </div>
+    </div>
+    <div class="content-box p-0 overflow-hidden ">
+        <div class="table-responsive ">
+            <table class="table table-striped mb-0 ">
+                <thead>
+                    <tr>
+                        <th class="text-center" width="60">Sl No.</th>
+                        <!-- <th class="text-center">User Type</th> -->
+                        <th class="text-center">Bucket Name</th>
+                        <th class="text-center">Description</th>
+                        <th class="text-center">Published On</th>
+                        <th class="text-center">Document</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let claim of list | filter:txtsearchDate| paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage}; index as i ">
+                        <tr>
+                            <td class="text-center" *ngIf="currentPage==1 ">{{(i+1)}}</td>
+                            <td class="text-center" *ngIf="currentPage!=1 ">{{(currentPage-1)*pageElement+ i+1}}</td>
+                            <!-- <td class="text-center">{{claim.user_type_name}}</td> -->
+                            <td class="text-center">{{claim.primary_link_name}}</td>
+                            <td class="text-center">{{claim.remarks}}</td>
+                            <td class="text-center">{{claim.created_on}}</td>
+                            <td class="text-center" *ngIf="claim.user_manual_document != undefined"><a style="cursor:pointer ;" (click)="downloaddoc($event,claim.user_manual_document,2)"><i class="bi bi-download" style="color:red;font-size:24px;"></i></a></td>
+                            <td class="text-center" *ngIf="claim.user_manual_document == undefined">--</td>
+                        </tr>
+                    </ng-container>
+                    <tr *ngIf="this.list.length==0">
+                        <td colspan="16">
+                            <p class="mb-0 text-center text-danger fw-bold">NO DATA FOUND!!</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- <div class="row mt-3" *ngIf="showPegi">
+    <div class="col-sm-4 ">
+        <div class="col-sm-* ">
+            show
+            <select id="pageItem" name="pageItem" class="form-select-sm" (change)="pageItemChange()">
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="150">150</option>
+                <option value="200">200</option>
+                <option value={{record}}>All</option>
+            </select> entries
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true" (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+    </div>
+</div> -->

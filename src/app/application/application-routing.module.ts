@@ -1,0 +1,1303 @@
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { AddComponent } from './add/add.component';
+import { ApplicationComponent } from './application.component';
+import { CreatecpdComponent } from './sno/createcpd/createcpd.component';
+import { CreatesnoComponent } from './sno/createsno/createsno.component';
+import { GrievanceComponent } from './grievance/grievance.component';
+import { ClaimraiseComponent } from './hospital/claimraise/claimraise.component';
+import { ClaimraisedetailsComponent } from './hospital/claimraisedetails/claimraisedetails.component';
+import { PaidComponent } from './hospital/paid/paid.component';
+import { PendingclaimComponent } from './hospital/pendingclaim/pendingclaim.component';
+import { QueryComponent } from './hospital/query/query.component';
+import { ViewComponent } from './view/view.component';
+import { CreategroupComponent } from './creategroup/creategroup.component';
+import { SnoactionComponent } from './sna/snoaction/snoaction.component';
+import { DischargeclaimComponent } from './reports/dischargeclaim/dischargeclaim.component';
+import { KhurdaComponent } from './reports/khurda/khurda.component';
+import { CategorywisetreatComponent } from './reports/categorywisetreat/categorywisetreat.component';
+import { CardiologyComponent } from './reports/cardiology/cardiology.component';
+import { MultiplepackageComponent } from './reports/multiplepackage/multiplepackage.component';
+import { OngoingicuComponent } from './reports/ongoingicu/ongoingicu.component';
+import { HospitalwisepaidComponent } from './reports/hospitalwisepaid/hospitalwisepaid.component';
+import { ClaimquerybycpdComponent } from './hospital/claimquerybycpd/claimquerybycpd.component';
+import { CpdrejectedactionComponent } from './sna/cpdrejectedaction/cpdrejectedaction.component';
+import { ClaimsqueriedbySNOComponent } from './hospital/claimsqueriedbySNO/claimsqueriedbySNO.component';
+import { ClaimsqueriedbySNOdetailsComponent } from './hospital/claimsqueriedbySNOdetails/claimsqueriedbySNOdetails.component';
+import { ClaimquerybyCPDdetailsComponent } from './hospital/claimqueryby-cpddetails/claimqueryby-cpddetails.component';
+import { SNOConfigurationComponent } from './sno/sno-configuration/sno-configuration.component';
+import { UserGroupComponent } from './BSKY-Master/user-group/user-group.component';
+import { UserSubGroupComponent } from './BSKY-Master/user-sub-group/user-sub-group.component';
+import { GroupTypeComponent } from './BSKY-Master/group-type/group-type.component';
+import { GroupTypeViewComponent } from './BSKY-Master/group-type-view/group-type-view.component';
+import { CPDConfigurationComponent } from './CPD/cpdconfiguration/cpdconfiguration.component';
+import { TreatmenthistoryPerUrnPackageComponent } from 'src/app/application/treatmenthistory-per-urn-package/treatmenthistory-per-urn-package.component';
+import { ViewSubGroupComponent } from './BSKY-Master/view-sub-group/view-sub-group.component';
+import { ViewcpdComponent } from 'src/app/application/sno/viewcpd/viewcpd.component';
+import { UsergroupViewComponent } from './BSKY-Master/usergroup-view/usergroup-view.component';
+import { TreatmenthistoryPerUrnComponent } from './treatmenthistory-per-urn/treatmenthistory-per-urn.component';
+import { SnoReActionComponent } from './sna/sno-re-action/sno-re-action.component';
+import { UserHospitalComponent } from './BSKY-Master/user-hospital/user-hospital.component';
+import { UserHospitalViewComponent } from './BSKY-Master/user-hospital-view/user-hospital-view.component';
+import { CpdconfigurationdetailsComponent } from './CPD/cpdconfigurationdetails/cpdconfigurationdetails.component';
+import { SnoconfigurationdetailsComponent } from './sno/snoconfigurationdetails/snoconfigurationdetails.component';
+import { CpdReApprovalActionComponent } from './CPD/claim_management/cpd-re-approval-action/cpd-re-approval-action.component';
+import { CreatesnoviewComponent } from './sno/createsnoview/createsnoview.component';
+import { DcapprovalComponent } from './dcapproval/dcapproval.component';
+import { DcactionComponent } from './dcaction/dcaction.component';
+import { UnprocessedactionComponent } from './sna/unprocessedaction/unprocessedaction.component';
+import { CpdrevertComponent } from './CPD/claim_management/cpdrevert/cpdrevert.component';
+import { CpdrevertactionComponent } from './CPD/claim_management/cpdrevertaction/cpdrevertaction.component';
+import { CpdleaveapproveComponent } from 'src/app/application/cpdleaveapprove/cpdleaveapprove.component';
+import { PendingclaimdetailsComponent } from './hospital/pendingclaimdetails/pendingclaimdetails.component';
+import { SNARejectListHospitalComponent } from './hospital/snareject-list-hospital/snareject-list-hospital.component';
+import { CPDRejectListHospitalComponent } from './hospital/cpdreject-list-hospital/cpdreject-list-hospital.component';
+import { CpdleaveapproveactionComponent } from './cpdleaveapproveaction/cpdleaveapproveaction.component';
+import { CpdleaveviewComponent } from 'src/app/application/cpdleaveview/cpdleaveview.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { RejectrequestsnaComponent } from './rejectrequestsna/rejectrequestsna.component';
+import { RejectrequestsnadetailsComponent } from './rejectrequestsnadetails/rejectrequestsnadetails.component';
+import { CpdLeaveActionComponent } from './cpd-leave-action/cpd-leave-action.component';
+import { CpdLeaveHistoryComponent } from './CPD/hr/cpd-leave-history/cpd-leave-history.component';
+import { FunctionMasterComponent } from './admin-console/function-master/function-master.component';
+import { GlobalLinkComponent } from './admin-console/global-link/global-link.component';
+import { PrimaryLinkComponent } from './admin-console/primary-link/primary-link.component';
+import { ViewfnmasterComponent } from './admin-console/viewfnmaster/viewfnmaster.component'
+import { ViewgllinkComponent } from './admin-console/viewgllink/viewgllink.component'
+import { ViewpmlinkComponent } from './admin-console/viewpmlink/viewpmlink.component'
+import { CpdrejectlisthospitaldetailsComponent } from './hospital/cpdrejectlisthospitaldetails/cpdrejectlisthospitaldetails.component';
+import { SnarejectlisthospitaldetailsComponent } from './hospital/snarejectlisthospitaldetails/snarejectlisthospitaldetails.component';
+import { UserMenuMappingComponent } from './admin-console/user-menu-mapping/user-menu-mapping.component';
+import { ClaimProcessedComponent } from 'src/app/application/sna/claim-processed/ClaimProcessedComponent';
+import { SnaBulkApprovedComponent } from './sna-bulk-approved/sna-bulk-approved.component';
+import { SnanoncompliancequeryrequestComponent } from './sna/snanoncompliancequeryrequest/snanoncompliancequeryrequest.component';
+import { SnanoncompliancequeryrequestdetailsComponent } from './sna/snanoncompliancequeryrequestdetails/snanoncompliancequeryrequestdetails.component';
+import { CpdprofileComponent } from './profile/cpdprofile/cpdprofile.component';
+import { SnarejectedlistComponent } from '../snarejectedlist/snarejectedlist.component';
+import { FoFloatReportComponent } from './fo-float-report/fo-float-report.component';
+import { FinancialofficerdetailsComponent } from '../financialofficerdetails/financialofficerdetails.component';
+import { FinancialofficerdetailservicedetailsComponent } from '../financialofficerdetailservicedetails/financialofficerdetailservicedetails.component';
+import { AuditorFloatReportComponent } from './auditor-float-report/auditor-float-report.component';
+import { FloateDetailsComponent } from './admin-console/floate-details/floate-details.component';
+import { SnaViewFloatComponent } from './sna-view-float/sna-view-float.component';
+import { SnafloatactionComponent } from './snafloataction/snafloataction.component';
+import { CreateuserComponent } from './BSKY-Master/createuser/createuser.component';
+import { ViewuserComponent } from './BSKY-Master/viewuser/viewuser.component';
+import { SnaFloatReportComponent } from './sna-float-report/sna-float-report.component';
+import { UserInactiveComponent } from './user-inactive/user-inactive.component';
+import { SysrejectedreportsComponent } from './sno/sysrejectedreports/sysrejectedreports.component';
+import { HospitalprofileComponent } from './profile/hospitalprofile/hospitalprofile.component';
+import { DcConfigurationComponent } from './dc/dc-configuration/dc-configuration.component';
+import { DcconfigurationdetailsComponent } from './dc/dcconfigurationdetails/dcconfigurationdetails.component';
+import { DcresetpasswordComponent } from './dcresetpassword/dcresetpassword.component';
+import { UserprofileComponent } from './profile/userprofile/userprofile.component';
+import { HoispitalinfoReportComponent } from 'src/app/application/admin-console/hoispitalinfo-report/hoispitalinfo-report.component';
+import { QueryLoginComponent } from './query-login/query-login.component';
+import { QueryBuilderComponent } from './query-builder/query-builder.component';
+import { QueryAuthGuard } from './Services/query-auth.guard';
+import { SnadoctorTagComponent } from 'src/app/application/snadoctor-tag/snadoctor-tag.component'
+import { HospitalmasterComponent } from './hospitalmaster/hospitalmaster.component';
+import { DoctorsDetailsComponent } from './doctors-details/doctors-details.component';
+import { QueryTypeComponent } from './query-type/query-type.component';
+import { QuerytypeviewComponent } from './querytypeview/querytypeview.component';
+import { GroupMenuMappingComponent } from './admin-console/group-menu-mapping/group-menu-mapping.component';
+import { DischargedetailsHistoryComponent } from './hospital/dischargedetails-history/dischargedetails-history.component';
+import { HospitalMasterUserComponent } from './BSKY-Master/hospital-master-user/hospital-master-user.component';
+import { HospitalMasterUserDetailsComponent } from './BSKY-Master/hospital-master-user-details/hospital-master-user-details.component';
+import { AdminInternalLoginComponent } from './admin-internal-login/admin-internal-login.component';
+import { CpdmappingComponent } from './cpdmapping/cpdmapping.component';
+import { TreatmentHistoryComponent } from '../treatment-history/treatment-history.component';
+import { CPDActionReportComponent } from './CPD/mis_report/cpdaction-report/cpdaction-report.component';
+import { ViewnotificationComponent } from './notificationview/viewnotification.component';
+import { NotificationComponent } from './notification/notification.component';
+import { CpdLeaveactionAdminComponent } from './cpd-leaveaction-admin/cpd-leaveaction-admin.component';
+import { CpdLeaveviewAdminComponent } from './cpd-leaveview-admin/cpd-leaveview-admin.component';
+import { RunCpdScheduleComponent } from './run-cpd-schedule/run-cpd-schedule.component';
+import { NonComplianceQueryCPDToSNAComponent } from './sna/non-compliance-query-cpdto-sna/non-compliance-query-cpdto-sna.component';
+import { NonComplianceQueryCPDToSNAActionComponent } from './sna/non-compliance-query-cpdto-snaaction/non-compliance-query-cpdto-snaaction.component';
+import { NotificationDetailsReportComponent } from './notification-details-report/notification-details-report.component';
+import { TreatmentHistorySnaComponent } from './treatment-history-sna/treatment-history-sna.component';
+import { SnasysrejbtnEnableComponent } from './sna/snasysrejbtn-enable/snasysrejbtn-enable.component';
+import { SnasysrejbtnEnableActionComponent } from './sna/snasysrejbtn-enable-action/snasysrejbtn-enable-action.component';
+import { PackageMasterComponent } from './package-master/package-master.component';
+import { PackageMasterViewComponent } from './package-master-view/package-master-view.component';
+import { SnaapprovedComponent } from './Payment/snaapproved/snaapproved.component';
+import { FloatListComponent } from './Payment/float-list/float-list.component';
+import { FloatdetailsComponent } from './Payment/floatdetails/floatdetails.component';
+import { PaymentfreezListComponent } from './Payment/paymentfreez-list/paymentfreez-list.component';
+import { TransactionClaimDumpComponent } from './transaction-claim-dump/transaction-claim-dump.component';
+import { UrnwiseactionComponent } from './sna/urnwiseaction/urnwiseaction.component';
+import { ViewFoatListComponent } from './Payment/view-foat-list/view-foat-list.component';
+import { PendingClaimSnareportsComponent } from './reports/pending-claim-snareports/pending-claim-snareports.component';
+import { HospitalWiseClaimReportComponent } from './hospital-wise-claim-report/hospital-wise-claim-report.component';
+import { PreauthApprovalComponent } from './preauth-approval/preauth-approval.component';
+import { PackageDetailsMasterComponent } from './BSKY-Master/package-details-master/package-details-master.component';
+import { PackageDetailsMasterViewComponent } from './BSKY-Master/package-details-master-view/package-details-master-view.component';
+import { FpOverrideCodeComponent } from './fp-override-code/fp-override-code.component';
+import { HospitalPackageMappingComponent } from './BSKY-Master/hospital-package-mapping/hospital-package-mapping.component';
+import { HospitalPackageMappingViewComponent } from './BSKY-Master/hospital-package-mapping-view/hospital-package-mapping-view.component';
+import { HighEndDrugsComponent } from './BSKY-Master/high-end-drugs/high-end-drugs.component';
+import { HighEndDrugsViewComponent } from './BSKY-Master/high-end-drugs-view/high-end-drugs-view.component';
+import { PackageHeaderComponent } from './package-header/package-header.component';
+import { PackageHeaderViewComponent } from './package-header-view/package-header-view.component';
+import { PackageSubCatagoryComponent } from './package-sub-catagory/package-sub-catagory.component';
+import { PackageSubcatagoryViewComponent } from './package-subcatagory-view/package-subcatagory-view.component';
+import { VitalStatisticsViewComponent } from './BSKY-Master/vital-statistics-view/vital-statistics-view.component';
+import { VitalStatisticsComponent } from './BSKY-Master/vital-statistics/vital-statistics.component';
+import { ImplantMasterViewComponent } from './BSKY-Master/implant-master-view/implant-master-view.component';
+import { ImplantMasterComponent } from './BSKY-Master/implant-master/implant-master.component';
+import { NonComplianceExtnComponent } from './non-compliance-extn/non-compliance-extn.component';
+import { FloatgenerationComponent } from './float-generation/floatgeneration/floatgeneration.component';
+import { ViewfloatreportComponent } from './float-generation/viewfloatreport/viewfloatreport.component';
+import { UnprocessedmasterConfigurationComponent } from './BSKY-Master/unprocessedmaster-configuration/unprocessedmaster-configuration.component';
+import { UnprocessedMasterViewComponent } from './BSKY-Master/unprocessed-master-view/unprocessed-master-view.component';
+import { HospitalAuthClaimMngmtComponent } from './hospital-auth-claim-mngmt/hospital-auth-claim-mngmt.component';
+//=======Empanelment========================
+import { ViewApplicationListComponent } from './form-application/view-application-list/view-application-list.component';
+import { ViewFormListComponent } from './form-application/view-form-list/view-form-list.component';
+import { PendingApplicationComponent } from './form-application/pending-application/pending-application.component';
+import { TakeActionComponent } from './form-application/take-action/take-action.component';
+import { ApplicationSummaryComponent } from './form-application/application-summary/application-summary.component';
+import { ApprovedApplicationComponent } from './form-application/approved-application/approved-application.component';
+import { RejectedApplicationComponent } from './form-application/rejected-application/rejected-application.component';
+import { RevertedApplicationComponent } from './form-application/reverted-application/reverted-application.component';
+import { DynamicformsComponent } from './form-application/dynamicforms/dynamicforms.component';
+import { NoteingComponent } from './form-application/noteing/noteing.component';
+import { CardPolicyUpdateComponent } from './BSKY-Master/card-policy-update/card-policy-update.component';
+import { HospitalAuthClaimQryCPDComponent } from './hospital-auth-claim-qry-cpd/hospital-auth-claim-qry-cpd.component';
+import { PatientReferalComponent } from './patient-referal/patient-referal.component';
+import { UnprocessedforAdminComponent } from './unprocessedfor-admin/unprocessedfor-admin.component';
+import { HospitalAuthClaimQrySNAComponent } from './hospital-auth-claim-qry-sna/hospital-auth-claim-qry-sna.component';
+import { GrievanceByComponent } from './BSKY-Master/grievance-by/grievance-by.component';
+import { GrievanceByViewComponent } from './BSKY-Master/grievance-by-view/grievance-by-view.component';
+import { HospitalOperatorComponent } from '.././application/hospital/hospital-operator/hospital-operator.component';
+import { ViewHospitalOperatorComponent } from '.././application/hospital/view-hospital-operator/view-hospital-operator.component';
+import { GrievanceTypeComponent } from './BSKY-Master/grievance-type/grievance-type.component';
+import { GrievanceTypevieComponent } from './BSKY-Master/grievance-typevie/grievance-typevie.component';
+import { GrievanceMediumComponent } from './BSKY-Master/grievance-medium/grievance-medium.component';
+import { CallCenterExecutiveAddComponent } from './call-center-executive-add/call-center-executive-add.component';
+import { CallCenterExecutiveViewComponent } from './call-center-executive-view/call-center-executive-view.component';
+import { PatientReferralViewComponent } from './patient-referral-view/patient-referral-view.component';
+import { NotConnectedAddComponent } from './not-connected-add/not-connected-add.component';
+import { NotConnectedViewComponent } from './not-connected-view/not-connected-view.component';
+import { NonComplianceQuerySNAToSNAComponent } from './sna/non-compliance-query-snato-sna/non-compliance-query-snato-sna.component';
+import { NonComplianceQuerySNAToSNAViewComponent } from './sna/non-compliance-query-snato-snaview/non-compliance-query-snato-snaview.component';
+import { SnaexecutivemappingComponent } from './sno/snaexecutivemapping/snaexecutivemapping.component';
+import { NoncompleincequeryreportComponent } from './noncompleincequeryreport/noncompleincequeryreport.component';
+import { GrievanceMediumViewComponent } from './BSKY-Master/grievance-medium-view/grievance-medium-view.component';
+import { CDMOConfigurationComponent } from './cdmo/cdmo-configuration/cdmoconfiguration/cdmoconfiguration.component';
+import { SnoapprovalComponent } from './sna/snoapproval/snoapproval.component';
+import { SnoreapprovalComponent } from './sna/snoreapproval/snoreapproval.component';
+import { CpdrejectedComponent } from './sna/cpdrejected/cpdrejected.component';
+import { UntaggedHospitalsComponent } from './sno/untagged-hospitals/untagged-hospitals.component';
+import { CdmoconfigurationdetailsComponent } from './cdmo/cdmoconfigurationdetails/cdmoconfigurationdetails/cdmoconfigurationdetails.component';
+import { AbstractFloatGenerationComponent } from './float-generation/abstract-float-generation/abstract-float-generation.component';
+import { HospitaldashboardComponent } from './dashboard/hospitaldashboard/hospitaldashboard.component';
+import { SnaDashboardComponent } from './dashboard/sna-dashboard/sna-dashboard.component';
+import { PostPaymentListComponent } from './Payment/post-payment-list/post-payment-list.component';
+import { BankMasterComponent } from './BSKY-Master/bank-master/bank-master.component';
+import { BankMasterViewComponent } from './BSKY-Master/bank-master-view/bank-master-view.component';
+import { ViewSnaExecutiveComponent } from './sno/view-sna-executive/view-sna-executive.component';
+import { ViewPreauthApprovalComponent } from './view-preauth-approval/view-preauth-approval.component';
+import { DcComplianceComponent } from './sna/dc-compliance/dc-compliance.component';
+import { DcComplianceActionComponent } from './sna/dc-compliance-action/dc-compliance-action.component';
+import { HospempanelmentdownlordpdfComponent } from './hospempanelmentdownlordpdf/hospempanelmentdownlordpdf.component';
+import { CpdactionComponent } from './CPD/claim_management/cpdaction/cpdaction.component';
+import { CpdapprovalComponent } from './CPD/claim_management/cpdapproval/cpdapproval.component';
+import { CpdreapprovalComponent } from './CPD/claim_management/cpdreapproval/cpdreapproval.component';
+import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
+import { SwathyaMitraHospitalConfigurationComponent } from './admin-console/swathya-mitra-hospital-configuration/swathya-mitra-hospital-configuration.component';
+import { SwathyaMitraHospitalConfigurationViewComponent } from './admin-console/swathya-mitra-hospital-configuration-view/swathya-mitra-hospital-configuration-view.component';
+import { PaidreportComponent } from './paidreport/paidreport.component';
+import { MessageMasterComponent } from './BSKY-Master/message-master/message-master.component';
+import { ViewMessageMasterComponent } from './BSKY-Master/view-message-master/view-message-master.component';
+import { CpdNamewsiseCountReportComponent } from './cpd-namewsise-count-report/cpd-namewsise-count-report.component';
+import { CpdnamewisedetailsComponent } from './cpdnamewisedetails/cpdnamewisedetails.component';
+import { RunUnprocessedClaimComponent } from './run-unprocessed-claim/run-unprocessed-claim.component';
+import { GrievanceTakeActionComponent } from './form-application/grievance-take-action/grievance-take-action.component';
+import { PendingGrievanceApplicationComponent } from './pending-grievance-application/pending-grievance-application.component';
+import { CpdDashboardComponent } from './dashboard/cpd-dashboard/cpd-dashboard.component';
+import { FpOverrideViewComponent } from './fp-override-view/fp-override-view.component';
+import { PaymentFreezeComponentUpdate } from './sna/payment-freeze/payment-freeze.component';
+import { TsuCpdMappingComponent } from './tsu-report/tsu-cpd-mapping/tsu-cpd-mapping.component';
+import { TsuDcMappingComponent } from './tsu-report/tsu-dc-mapping/tsu-dc-mapping.component';
+import { TsuSnaMappingComponent } from './tsu-report/tsu-sna-mapping/tsu-sna-mapping.component';
+import { TsuUserMasterComponent } from './tsu-report/tsu-user-master/tsu-user-master.component';
+import { TsuHospitalMasterComponent } from './tsu-report/tsu-hospital-master/tsu-hospital-master.component';
+import { TsuCpdMasterComponent } from './tsu-report/tsu-cpd-master/tsu-cpd-master.component';
+import { PaymentFreezeActionComponent } from './Payment/payment-freeze-action/payment-freeze-action.component';
+import { CceOutboundCallComponent } from './cce-outbound-call/cce-outbound-call.component';
+import { PaymentFreezeViewComponent } from './Payment/payment-freeze-view/payment-freeze-view.component';
+import { ActionWiseFloatGenerationComponent } from './float-generation/action-wise-float-generation/action-wise-float-generation.component';
+import { CceOutboundCallViewComponent } from './cce-outbound-call-view/cce-outbound-call-view.component';
+import { PaymentfrezzereportComponent } from './reports/paymentfrezzereport/paymentfrezzereport.component';
+import { WarddetailsAddComponent } from './BSKY-Master/warddetails-add/warddetails-add.component';
+import { WarddetailsViewComponent } from './BSKY-Master/warddetails-view/warddetails-view.component';
+import { WardMasterViewComponent } from './BSKY-Master/ward-master-view/ward-master-view.component';
+import { WardMasterComponent } from './BSKY-Master/ward-master/ward-master.component';
+import { RemarksAddComponent } from './BSKY-Master/remarks-add/remarks-add.component';
+import { RemarksViewComponent } from './BSKY-Master/remarks-view/remarks-view.component';
+import { ApplicationGrievanceSummaryComponent } from './form-application/application-grievance-summary/application-grievance-summary.component';
+import { GrievanceApplicationSummaryComponent } from './form-application/grievance-application-summary/grievance-application-summary.component';
+import { GrievancePreviewComponent } from './form-application/grievance-preview/grievance-preview.component';
+import { UnlockUserComponent } from "./admin-console/unlock-user/unlock-user.component";
+import { DgoCallCenterComponent } from './dgo-call-center/dgo-call-center.component';
+import { DgoCallCenterViewComponent } from './dgo-call-center-view/dgo-call-center-view.component';
+import { GrievanceApplicationCeoComponent } from './form-application/grievance-application-ceo/grievance-application-ceo.component';
+import { InternalGrivanceComponent } from './internal-grivance/internal-grivance.component';
+import { InternalGrievanceViewComponent } from './internal-grievance-view/internal-grievance-view.component';
+import { GrievanceCCEComponent } from './grievance-cce/grievance-cce.component';
+import { GrievanceCCEViewComponent } from './grievance-cce-view/grievance-cce-view.component';
+import { SnawisependingreportComponent } from './snawisependingreport/snawisependingreport.component';
+import { CceReportComponent } from './BSKY-Master/cce-report/cce-report.component';
+import { CceReportTotalConnectedComponent } from './BSKY-Master/cce-report-total-connected/cce-report-total-connected.component';
+import { HospitalwiseFloatListComponent } from './Payment/hospitalwise-float-list/hospitalwise-float-list.component';
+import { SupervisorCceComponent } from './supervisor-cce/supervisor-cce.component';
+import { SupervisorCceViewComponent } from './supervisor-cce-view/supervisor-cce-view.component';
+import { OngoingTreatmentReportComponent } from './ongoing-treatment-report/ongoing-treatment-report.component';
+import { HospitalwiseCcedataComponent } from './BSKY-Master/hospitalwise-ccedata/hospitalwise-ccedata.component';
+import { ReAssignAddComponent } from './re-assign-add/re-assign-add.component';
+import { ReAssignViewComponent } from './re-assign-view/re-assign-view.component';
+import { OngoingtreatmentHospitalwiseReportComponent } from './ongoingtreatment-hospitalwise-report/ongoingtreatment-hospitalwise-report.component';
+import { SmhospitalconfigurationComponent } from './smhospitalconfiguration/smhospitalconfiguration.component';
+import { SmhospitalconfigurationviewComponent } from './smhospitalconfigurationview/smhospitalconfigurationview.component';
+import { ReportMasterLinkComponent } from './admin-console/report-master-link/report-master-link.component';
+import { SnaPreauthDetailsComponent } from './sna-preauth-details/sna-preauth-details.component';
+import { RationCardSchedularReportComponent } from './ration-card-schedular-report/ration-card-schedular-report.component';
+import { CheckcardbalanceComponent } from './reports/checkcardbalance/checkcardbalance.component';
+import { ChechbeneficiaryComponent } from './reports/chechbeneficiary/chechbeneficiary.component';
+import { OldprocessedclaimlistComponent } from './sna/oldprocessedclaimlist/oldprocessedclaimlist.component';
+import { OldprocessedclaimDetailsComponent } from './sna/oldprocessedclaim-details/oldprocessedclaim-details.component';
+import { QcadminformComponent } from './qcadminform/qcadminform.component';
+import { SnaExecHsptlFloatGenComponent } from './float-generation/sna-exec-hsptl-float-gen/sna-exec-hsptl-float-gen.component';
+import { HospitalWisePackageDataReportComponent } from './reports/hospital-wise-package-data-report/hospital-wise-package-data-report.component';
+import { SnaExecViewfloatrptComponent } from './float-generation/sna-exec-viewfloatrpt/sna-exec-viewfloatrpt.component';
+import { ApplicationSummeryQcComponent } from './form-application/application-summery-qc/application-summery-qc.component';
+import { CpdwiseunprocessedComponent } from './cpdwiseunprocessed/cpdwiseunprocessed.component';
+import { OldclaimquerybysnaComponent } from './hospital/oldclaimquerybysna/oldclaimquerybysna.component';
+import { OldclaimquerybysnadetailsComponent } from './hospital/oldclaimquerybysnadetails/oldclaimquerybysnadetails.component';
+import { FloatReportComponent } from './Payment/float-report/float-report.component';
+import { InternalcommAddComponent } from './Internal-Communication/internalcomm-add/internalcomm-add.component';
+import { InternalcommViewComponent } from './Internal-Communication/internalcomm-view/internalcomm-view.component';
+import { OldclaimResettlementComponent } from './sna/oldclaim-resettlement/oldclaim-resettlement.component';
+import { OldclaimResettlementDetailsComponent } from './sna/oldclaim-resettlement-details/oldclaim-resettlement-details.component';
+import { InternalcommTaskComponent } from './Internal-Communication/internalcomm-task/internalcomm-task.component';
+import { BulkExtensionOfNonComplianceComponent } from './bulk-extension-of-non-compliance/bulk-extension-of-non-compliance.component';
+import { GrievanceReportComponent } from './form-application/grievance-report/grievance-report.component';
+import { SnaViewPreauthDetailsComponent } from './sna-view-preauth-details/sna-view-preauth-details.component';
+import { SmcreateuserComponent } from './smcreateuser/smcreateuser.component';
+import { SmviewuserComponent } from './smviewuser/smviewuser.component';
+import { WalletRefundComponent } from './sna/wallet-refund/wallet-refund.component';
+import { WalletRefundedClaimsComponent } from './sna/wallet-refunded-claims/wallet-refunded-claims.component';
+import { ClaimsOnHoldComponent } from './sna/claims-on-hold/claims-on-hold.component';
+import { HoldactionComponent } from './sna/holdaction/holdaction.component';
+import { QcadminformviewComponent } from './qcadminformview/qcadminformview.component';
+import { SystemadminSnarejectedComponent } from './hospital/systemadmin-snarejected/systemadmin-snarejected.component';
+import { DcDashboardComponent } from './dashboard/dc-dashboard/dc-dashboard.component';
+import { SystemadminsnarejectedlistComponent } from './sna/systemadminsnarejectedlist/systemadminsnarejectedlist.component';
+import { TestingProcessExecutionComponent } from './testing-process-execution/testing-process-execution.component';
+import { UrnwiseactionreportDetailsComponent } from './reports/urnwiseactionreport-details/urnwiseactionreport-details.component';
+import { FloatDistributionComponent } from './Payment/float-distribution/float-distribution.component';
+import { RunsnawiseunprocessedComponent } from './runsnawiseunprocessed/runsnawiseunprocessed.component';
+import { NonComplianceExtnviewComponent } from './non-compliance-extnview/non-compliance-extnview.component';
+import { HospitalbackdateconfigComponent } from './BSKY-Master/hospitalbackdateconfig/hospitalbackdateconfig.component';
+import { HospitalbackdateconfigviewComponent } from './BSKY-Master/hospitalbackdateconfigview/hospitalbackdateconfigview.component';
+import { HospitalbackdateconfigviewreportComponent } from './BSKY-Master/hospitalbackdateconfigviewreport/hospitalbackdateconfigviewreport.component';
+import { DischargereportComponent } from './dischargereport/dischargereport.component';
+import { SNAWisePaymentStatusComponent } from './snawise-payment-status/snawise-payment-status.component';
+import { HospitalwisesummaryreportComponent } from './hospitalwisesummaryreport/hospitalwisesummaryreport.component';
+import { CpdactionwiseperformanceComponent } from './cpdactionwiseperformance/cpdactionwiseperformance.component';
+import { GrievanceDashboardComponent } from './dashboard/grievance-dashboard/grievance-dashboard.component';
+import { FloatVerifiedListComponent } from './Payment/float-verified-list/float-verified-list.component';
+import { ViewVerifiedListComponent } from './Payment/view-verified-list/view-verified-list.component';
+import { PaymentFreezeDetailsComponent } from './Payment/payment-freeze-details/payment-freeze-details.component';
+import { ViewDistributionComponent } from './Payment/view-distribution/view-distribution.component';
+import { OldClaimFloatgenerationComponent } from './float-generation/old-claim-floatgeneration/old-claim-floatgeneration.component';
+import { OldClaimPaymentFreezeComponent } from './Payment/old-claim-payment-freeze/old-claim-payment-freeze.component';
+import { OldClaimPostPaymentComponent } from './Payment/old-claim-post-payment/old-claim-post-payment.component';
+import { OldFloatViewReportsComponent } from './float-generation/old-float-view-reports/old-float-view-reports.component';
+import { SnawiseClaimsubmitReportComponent } from './reports/snawise-claimsubmit-report/snawise-claimsubmit-report.component';
+import { SnamonthwiseclaimsubmitreportComponent } from './reports/snamonthwiseclaimsubmitreport/snamonthwiseclaimsubmitreport.component';
+import { OldClaimPaymentViewComponent } from './Payment/old-claim-payment-view/old-claim-payment-view.component';
+import { ForemarkComponent } from './BSKY-Master/foremark/foremark.component';
+import { ForemarkviewComponent } from './BSKY-Master/foremarkview/foremarkview.component';
+import { HospitalwisedischargeandclaimComponent } from './reports/hospitalwisedischargeandclaim/hospitalwisedischargeandclaim.component';
+import { CpdwisemaximumminimumlimitComponent } from './cpdwisemaximumminimumlimit/cpdwisemaximumminimumlimit.component';
+import { EmpanelmentDetailUpdationComponent } from './empanelment-detail-updation/empanelment-detail-updation.component';
+import { DBSchedulerReportComponent } from './dbscheduler-report/dbscheduler-report.component';
+import { ViewcpdwisemaximumminimumlimitComponent } from './viewcpdwisemaximumminimumlimit/viewcpdwisemaximumminimumlimit.component';
+import { ShasqcDashbordComponent } from './dashboard/shasqc-dashbord/shasqc-dashbord.component';
+import { PostPaymentReversalComponent } from './Payment/post-payment-reversal/post-payment-reversal.component';
+import { HospitalincentivereportComponent } from './hospitalincentivereport/hospitalincentivereport.component';
+import { SchedulerReportDetailsComponent } from "./reports/scheduler-report-details/scheduler-report-details.component";
+import { MailServiceComponent } from "./BSKY-Master/mail-service/mail-service.component";
+import { MailServiceConfigurationComponent } from "./configuration/mail-service-configuration/mail-service-configuration.component";
+import { BlockedDataApprovalComponent } from "./sna/old-blocked-data-monitoring/blocked-data-approval/blocked-data-approval.component";
+import { BlockedDataApprovalDetailsComponent } from "./sna/old-blocked-data-monitoring/blocked-data-approval-details/blocked-data-approval-details.component";
+import { ViewBlockedDataApprovedComponent } from "./sna/old-blocked-data-monitoring/view-blocked-data-approved/view-blocked-data-approved.component";
+import { UpdatedynamicformsComponent } from './form-application/updatedynamicforms/updatedynamicforms.component';
+import { UpdateformapplyComponent } from './form-application/updateformapply/updateformapply.component';
+import { OldclaimQueryToHospitalToSNAComponent } from './sna/oldclaim-query-to-hospital-to-sna/oldclaim-query-to-hospital-to-sna.component';
+import { SnaOldclaimProcessedListComponent } from './sna/sna-oldclaim-processed-list/sna-oldclaim-processed-list.component';
+import { OldReCLaimPendingAtSNAComponent } from './hospital/old-re-claim-pending-at-sna/old-re-claim-pending-at-sna.component';
+import { HospitalexclusionapplyComponent } from './hospitalexclusionapply/hospitalexclusionapply.component';
+import { HospitalexclusionapproveComponent } from './hospitalexclusionapprove/hospitalexclusionapprove.component';
+import { PostPaymentViewComponent } from './Payment/post-payment-view/post-payment-view.component';
+import { HospitalinclusionapplyComponent } from './hospitalinclusionapply/hospitalinclusionapply.component';
+import { HospitalinclusionapproveComponent } from './hospitalinclusionapprove/hospitalinclusionapprove.component';
+import { HospitalcpdtaggingreportComponent } from './hospitalcpdtaggingreport/hospitalcpdtaggingreport.component';
+import { FloatlistCeoComponent } from './Payment/floatlist-ceo/floatlist-ceo.component';
+import { SnaReconsiderDetailsPageComponent } from './sna/sna-reconsider-details-page/sna-reconsider-details-page.component';
+import { EnableHospitalDischargeComponent } from './enable-hospital-discharge/enable-hospital-discharge.component';
+import { CpdremarkComponent } from './BSKY-Master/cpdremark/cpdremark.component';
+import { CpdremarkviewComponent } from './BSKY-Master/cpdremarkview/cpdremarkview.component';
+import { SnaremarkComponent } from './BSKY-Master/snaremark/snaremark.component';
+import { SnaremarkviewComponent } from './BSKY-Master/snaremarkview/snaremarkview.component';
+import { ApplicationGrievanceSummaryCDMOComponent } from './form-application/application-grievance-summary-cdmo/application-grievance-summary-cdmo.component';
+import { GrievanceTakeActionCDMOComponent } from './form-application/grievance-take-action-cdmo/grievance-take-action-cdmo.component';
+import { GrievanceApplicationSummaryCDMOComponent } from './form-application/grievance-application-summary-cdmo/grievance-application-summary-cdmo.component';
+import { RunsnawiseunprocessedviewComponent } from './runsnawiseunprocessedview/runsnawiseunprocessedview.component';
+import { HospitalwiseongoingtreatmentdetailsComponent } from './hospitalwiseongoingtreatmentdetails/hospitalwiseongoingtreatmentdetails.component';
+import { BenificaryGenderWiseComponent } from './reports/benificary-gender-wise/benificary-gender-wise.component';
+import { AuthenticationonlivestatusComponent } from './authenticationonlivestatus/authenticationonlivestatus.component';
+import { PackagewisedischargeclaimComponent } from './reports/packagewisedischargeclaim/packagewisedischargeclaim.component';
+import { CreatereferaldoctoruserComponent } from './Referral/createreferaldoctoruser/createreferaldoctoruser.component';
+import { ReferalDoctorConfigurationviewComponent } from './Referral/referal-doctor-configurationview/referal-doctor-configurationview.component';
+import { ViewreferaldoctoruserComponent } from './Referral/viewreferaldoctoruser/viewreferaldoctoruser.component'
+import { ReferalDoctorConfigurationComponent } from './Referral/referal-doctor-configuration/referal-doctor-configuration.component';
+import { ReferralresonComponent } from './Referral/referralreson/referralreson.component';
+import { CpdMappingReportComponent } from './reports/cpd-mapping-report/cpd-mapping-report.component';
+import { PaymentfreezreportComponent } from './reports/paymentfreezreport/paymentfreezreport.component';
+import { MnthWiseDischargeMeComponent } from './reports/mnth-wise-discharge-me/mnth-wise-discharge-me.component';
+import { ReferralHospitalComponent } from './Referral/referral-hospital/referral-hospital.component';
+import { ReferralHospitalviewComponent } from './Referral/referral-hospitalview/referral-hospitalview.component';
+import { HospitaltypemasterComponent } from './Referral/hospitaltypemaster/hospitaltypemaster.component';
+import { SummaryComponent } from './payment/summary/summary.component';
+import { RevertbyfodetailsComponent } from './payment/revertbyfodetails/revertbyfodetails.component';
+import { DynamicConfigurationAddComponent } from './dynamicreport/dynamic-configuration-add/dynamic-configuration-add.component';
+import { DynamicConfigurationViewComponent } from './dynamicreport/dynamic-configuration-view/dynamic-configuration-view.component';
+import { DynamicReportComponent } from './dynamicreport/dynamic-report/dynamic-report.component';
+import { SnaremarkwiseactionComponent } from './snaremarkwiseaction/snaremarkwiseaction.component';
+import { DynamicreportdetailsComponent } from './dynamicreport/dynamicreportdetails/dynamicreportdetails.component';
+import { DynamicreportclaimdetailsComponent } from './dynamicreport/dynamicreportclaimdetails/dynamicreportclaimdetails.component';
+import { MeclaimdetailsComponent } from './dynamicreport/meclaimdetails/meclaimdetails.component';
+import { MeactiontakenviewComponent } from './dynamicreport/meactiontakenview/meactiontakenview.component';
+import { CasespecificreportComponent } from './dynamicreport/casespecificreport/casespecificreport.component';
+import { GrievanceCceResettlementComponent } from './grievance-cce-resettlement/grievance-cce-resettlement.component';
+import { DgoQueryBucketComponent } from './dgo-query-bucket/dgo-query-bucket.component';
+import { GrievanceMskComponent } from './grievance-msk/grievance-msk.component';
+import { MosarkarreportComponent } from './mosarkarreport/mosarkarreport.component';
+import { GrievanceQueryForDGOComponent } from './form-application/grievance-query-for-dgo/grievance-query-for-dgo.component';
+import { GrievanceQuerySettleForGOComponent } from './form-application/grievance-query-settle-for-go/grievance-query-settle-for-go.component';
+import { DCInitialTakeActionComponent } from './dcinitial-take-action/dcinitial-take-action.component';
+import { DGOInitialTakeActionComponent } from './dgoinitial-take-action/dgoinitial-take-action.component';
+import { GOInitialTakeActionComponent } from './goinitial-take-action/goinitial-take-action.component';
+import { HospitalenrollmentlistComponent } from './hospitalenrollmentlist/hospitalenrollmentlist.component';
+import { EnrollmentdetailsComponent } from './enrollmentdetails/enrollmentdetails.component';
+import { RecomplyenrollmentComponent } from './recomplyenrollment/recomplyenrollment.component';
+import { HospitalotpconfigurationComponent } from './hospitalotpconfiguration/hospitalotpconfiguration.component';
+import { DGODashboardComponent } from './dashboard/dgodashboard/dgodashboard.component';
+import { OldBlockDatareportComponent } from './reports/old-block-datareport/old-block-datareport.component';
+import { SurgicalMedicalMappingComponent } from './surgical-medical-mapping/surgical-medical-mapping.component';
+import { UsermanualuploadsectionComponent } from './usermanualuploadsection/usermanualuploadsection.component';
+import { ViewusermanuluploadsectionComponent } from './viewusermanuluploadsection/viewusermanuluploadsection.component';
+import { UsermanualdownloadComponent } from './usermanualdownload/usermanualdownload.component';
+import { GrievanceCCEFeedbackReportComponent } from './grievance-ccefeedback-report/grievance-ccefeedback-report.component';
+import { HospitalSpecilityAddComponent } from './BSKY-Master/hospital-specility-add/hospital-specility-add.component';
+import { HospitalCivilinfraAddComponent } from './BSKY-Master/hospital-civilinfra-add/hospital-civilinfra-add.component';
+import { HospitaldoctorprofileComponent } from './hospitaldoctorprofile/hospitaldoctorprofile.component';
+import { HospitaldoctorprofileviewComponent } from './hospitaldoctorprofileview/hospitaldoctorprofileview.component';
+import { SpecialityWiseDistrictReportComponent } from './reports/speciality-wise-district-report/speciality-wise-district-report.component';
+import { HospitalCivilInfraViewComponent } from './BSKY-Master/hospital-civil-infra-view/hospital-civil-infra-view.component';
+import { HospitalCivilInfraViewDetailsComponent } from './BSKY-Master/hospital-civil-infra-view-details/hospital-civil-infra-view-details.component';
+import { HospitalspecialistupdationreportComponent } from './BSKY-Master/hospitalspecialistupdationreport/hospitalspecialistupdationreport.component';
+import { TreatingdoctorrconfigurationComponent } from './treatingdoctorrconfiguration/treatingdoctorrconfiguration.component';
+import { SmfaceregistrationComponent } from './smfaceregistration/smfaceregistration.component';
+import { DbschedulerAddComponent } from './dbscheduler-add/dbscheduler-add.component';
+import { TreatingdoctorlogComponent } from './treatingdoctorlog/treatingdoctorlog.component';
+import { DbschedulerViewComponent } from './dbscheduler-view/dbscheduler-view.component';
+import { SmfaceregistrationviewComponent } from './smfaceregistrationview/smfaceregistrationview.component';
+import { GrievanceMskViewComponent } from './grievance-msk-view/grievance-msk-view.component';
+import { MnthWiseFloatdtlsRertComponent } from './reports/mnth-wise-floatdtls-rert/mnth-wise-floatdtls-rert.component';
+import { ExpiredBeneficiaryRprtComponent } from './reports/expired-beneficiary-rprt/expired-beneficiary-rprt.component';
+import { UnboundlingpackageViewComponent } from './unboundlingpackage-view/unboundlingpackage-view.component';
+import { UnboundlingpackageAddComponent } from './unboundlingpackage-add/unboundlingpackage-add.component';
+import { MultipledoctortreatedbysamedoctorComponent } from './multipledoctortreatedbysamedoctor/multipledoctortreatedbysamedoctor.component';
+import { MedicalinfracategoryComponent } from './HE-Master/medicalinfracategory/medicalinfracategory.component';
+import { MedicalinfracategoryviewComponent } from './HE-Master/medicalinfracategoryview/medicalinfracategoryview.component';
+import { MedicalinfrasubcategoryaddComponent } from './HE-Master/medicalinfrasubcategoryadd/medicalinfrasubcategoryadd.component';
+import { MedicalinfrasubcategoryviewComponent } from './HE-Master/medicalinfrasubcategoryview/medicalinfrasubcategoryview.component';
+import { MedicalExpertiseMasterComponent } from './HE-Master/medical-expertise-master/medical-expertise-master.component';
+import { MedicalExpertiseMasterViewComponent } from './HE-Master/medical-expertise-master-view/medical-expertise-master-view.component';
+import { TypeofexpertiseComponent } from './HE-Master/typeofexpertise/typeofexpertise.component';
+import { TypeofexpertiseviewComponent } from './HE-Master/typeofexpertiseview/typeofexpertiseview.component';
+import { FacilityDetailMasterComponent } from './HE-Master/facility-detail-master/facility-detail-master.component';
+import { FacilityDetailViewComponent } from './HE-Master/facility-detail-view/facility-detail-view.component';
+import { SearchbynameComponent } from './searchbyname/searchbyname.component';
+import { MakeAliveBeneficiaryRptComponent } from './reports/make-alive-beneficiary-rpt/make-alive-beneficiary-rpt.component';
+import { ExpiredbeneficiaryDtlsComponent } from './reports/expiredbeneficiary-dtls/expiredbeneficiary-dtls.component';
+import { CpdPaymentCalculationComponent } from "./reports/cpd-payment-calculation/cpd-payment-calculation.component";
+import { OldblockGenericSearchComponent } from './misreports/oldblock-generic-search/oldblock-generic-search.component';
+import { OldblockDataViewlistComponent } from './misreports/oldblock-data-viewlist/oldblock-data-viewlist.component';
+import { PackageUpdationComponent } from './BSKY-Master/package-updation/package-updation.component';
+import { HospitalSpecilityQcApprovalComponent } from './hospital-specility-qc-approval/hospital-specility-qc-approval.component';
+import { OldclmprocessblockrprtComponent } from './reports/oldclmprocessblockrprt/oldclmprocessblockrprt.component';
+import { OldprocessdischargerptComponent } from './reports/oldprocessdischargerpt/oldprocessdischargerpt.component';
+import { ProcedureTaggingComponent } from './BSKY-Master/procedure-tagging/procedure-tagging.component';
+import { HospitalSpecialityQcApprovalViewComponent } from './hospital/hospital-speciality-qc-approval-view/hospital-speciality-qc-approval-view.component';
+import { ApprovalstatusreportComponent } from './BSKY-Master/approvalstatusreport/approvalstatusreport.component';
+import { SnafloaterevertComponent } from './snafloaterevert/snafloaterevert.component';
+import { HospitalloginotpconfigurationComponent } from './hospitalloginotpconfiguration/hospitalloginotpconfiguration.component';
+import { SnabulkapprovedrevertComponent } from './snabulkapprovedrevert/snabulkapprovedrevert.component';
+import { FunctionMasterUnlinkedComponent } from './admin-console/function-master-unlinked/function-master-unlinked.component';
+import { ViewFunctionMasterUnlinkedComponent } from './admin-console/view-function-master-unlinked/view-function-master-unlinked.component';
+import { HospitalOperatorApprovalComponent } from './hospital-operator-approval/hospital-operator-approval.component';
+import { HospitalOperatorListreportComponent } from './hospital-operator-listreport/hospital-operator-listreport.component';
+import { HospitaloperatorprofileComponent } from './profile/hospitaloperatorprofile/hospitaloperatorprofile.component';
+import { AbstractmereportComponent } from './dynamicreport/abstractmereport/abstractmereport.component';
+import { DctaggedreportComponent } from './reports/dctaggedreport/dctaggedreport.component';
+import { UserOtpRequiredComponent } from './BSKY-Master/user-otp-required/user-otp-required.component';
+import { DbschedulerLogComponent } from './dbscheduler-log/dbscheduler-log.component';
+import { SnafloatedetailsforrevertComponent } from './snafloatedetailsforrevert/snafloatedetailsforrevert.component';
+import { SnaapplyforunfrezefloateoldComponent } from './snaapplyforunfrezefloateold/snaapplyforunfrezefloateold.component';
+import { SnaappliedlistforunfreezefloateComponent } from './snaappliedlistforunfreezefloate/snaappliedlistforunfreezefloate.component';
+import { SupervisorCceDCRevertedComponent } from './supervisor-cce-dcreverted/supervisor-cce-dcreverted.component';
+import { DynamicreportsubdetailsComponent } from './dynamicreport/dynamicreportsubdetails/dynamicreportsubdetails.component';
+import { CCEOutboundCallShasCEOComponent } from './cceoutbound-call-shas-ceo/cceoutbound-call-shas-ceo.component';
+import { QuestionmasterComponent } from './survey-form/questionmaster/questionmaster.component';
+import { SurveymasterComponent } from './survey-form/surveymaster/surveymaster.component';
+import { QuestionmasterviewComponent } from './survey-form/questionmasterview/questionmasterview.component';
+import { SurveymasterviewComponent } from './survey-form/surveymasterview/surveymasterview.component';
+import { SurveygoupmappingComponent } from './survey-form/surveygoupmapping/surveygoupmapping.component';
+import { SurveygoupmappingviewComponent } from './survey-form/surveygoupmappingview/surveygoupmappingview.component';
+import { SurveyquestionmappingComponent } from './survey-form/surveyquestionmapping/surveyquestionmapping.component';
+import { SurveyquestionmappingviewComponent } from './survey-form/surveyquestionmappingview/surveyquestionmappingview.component';
+import { TriggerReportforuserComponent } from './dynamicreport/trigger-reportforuser/trigger-reportforuser.component';
+import { ClaimProcessedActionComponent } from './sna/claim-processed-action/claim-processed-action.component';
+import { UrnwiseDetailsActionComponent } from './sna/urnwise-details-action/urnwise-details-action.component';
+import { SystemAdminSnaRejectedActionComponent } from './sna/system-admin-sna-rejected-action/system-admin-sna-rejected-action.component';
+import { PackagecalculatorComponent } from './packagecalculator/packagecalculator.component';
+import { SpecialfloateverificationreportComponent } from './specialfloateverificationreport/specialfloateverificationreport.component';
+import { SnamappingreportComponent } from '../snamappingreport/snamappingreport.component';
+import { HospitalenrollmentactiontakenreportComponent } from './hospitalenrollmentactiontakenreport/hospitalenrollmentactiontakenreport.component';
+import { OldClaimProgressReportComponent } from './old-claim-progress-report/old-claim-progress-report.component';
+import { CpdDraftComponent } from './CPD/claim_management/cpd-draft/cpd-draft.component';
+import { CpdDraftActionComponent } from './CPD/claim_management/cpd-draft-action/cpd-draft-action.component';
+import { DishonordeactivationComponent } from '../dishonordeactivation/dishonordeactivation.component';
+import { CpdhosptaltaggingreportComponent } from './sno/cpdhosptaltaggingreport/cpdhosptaltaggingreport.component';
+import { CpdspecialitymappingComponent } from './sno/cpdspecialitymapping/cpdspecialitymapping.component';
+import { CpdspecialitymappingviewComponent } from './sno/cpdspecialitymappingview/cpdspecialitymappingview.component';
+import { CpdspecialitysummaryreportComponent } from './sno/cpdspecialitysummaryreport/cpdspecialitysummaryreport.component';
+import { ClaimDraftViewReportComponent } from './reports/claim-draft-view-report/claim-draft-view-report.component';
+import { StatedashboareddataComponent } from './statedashboareddata/statedashboareddata.component';
+import { ImplantprocedureconfigComponent } from './implantprocedureconfig/implantprocedureconfig.component';
+import { ImplantprocedureconfigviewComponent } from './implantprocedureconfigview/implantprocedureconfigview.component';
+import { SmhelpdeskregisterrptComponent } from './swasthyamitrareview/smhelpdeskregisterrpt/smhelpdeskregisterrpt.component';
+import { SmpendingreportComponent } from './swasthyamitrareview/smpendingreport/smpendingreport.component';
+import { SmscoringComponent } from './swasthyamitrareview/smscoring/smscoring.component';
+import { SmscoringviewComponent } from './swasthyamitrareview/smscoringview/smscoringview.component';
+import { SmscoringreportComponent } from './swasthyamitrareview/smscoringreport/smscoringreport.component';
+import { CpdEmpanelRequestListComponent } from './CPD/hr/cpd-empanel-request-list/cpd-empanel-request-list.component';
+import { CpdFreshApplicationDetailsComponent } from './CPD/hr/cpd-fresh-application-details/cpd-fresh-application-details.component';
+import { CpdEmpanelViewComponent } from './CPD/hr/cpd-empanel-view/cpd-empanel-view.component';
+import { CpdECardInfoComponent } from './CPD/hr/cpd-e-card-info/cpd-e-card-info.component';
+import { CpdEmpaneledApprovedListComponent } from './CPD/hr/cpd-empaneled-approved-list/cpd-empaneled-approved-list.component';
+import { CpdEmpaneledApproveDetailsComponent } from './CPD/hr/cpd-empaneled-approve-details/cpd-empaneled-approve-details.component';
+import { PackageTaggingReportComponent } from './BSKY-Master/package-tagging-report/package-tagging-report.component';
+import { CpdregistrationpreviewdetailspreviewComponent } from './CPD/hr/cpdregistrationpreviewdetailspreview/cpdregistrationpreviewdetailspreview.component';
+import { CpdEmpaneledViewListComponent } from './CPD/hr/cpd-empaneled-view-list/cpd-empaneled-view-list.component';
+import { SmincentivereportComponent } from './swasthyamitrareview/smincentivereport/smincentivereport.component';
+import { CpdPostPaymentComponent } from './CPD/payment/cpd-post-payment/cpd-post-payment.component';
+import { CpdPostPaymentViewComponent } from './CPD/payment/cpd-post-payment-view/cpd-post-payment-view.component';
+import { HospitalSpecialityRequestComponent } from './hospital-speciality-request/hospital-speciality-request.component';
+import { ViewSpecialityRequestComponent } from './view-speciality-request/view-speciality-request.component';
+import { SpecialityRequestDetailsComponent } from './speciality-request-details/speciality-request-details.component';
+import { MobilenouupdateComponent } from './admin-console/mobilenouupdate/mobilenouupdate.component';
+import { MoboilenoupdatelogComponent } from './admin-console/moboilenoupdatelog/moboilenoupdatelog.component';
+import { SchemewisepackagemappingComponent } from './schemewisepackagemapping/schemewisepackagemapping.component';
+import { SchemewisehospitalmappingreportComponent } from './schemewisehospitalmappingreport/schemewisehospitalmappingreport.component';
+import { UnprocessedclaimComponent } from './sna/unprocessedclaim/unprocessedclaim.component';
+import { DcCdmomappingComponent } from './dc/dc-cdmomapping/dc-cdmomapping.component';
+import { DcCdmomappingviewComponent } from './dc/dc-cdmomappingview/dc-cdmomappingview.component';
+import { CheckCardBalanceLogComponent } from './reports/check-card-balance-log/check-card-balance-log.component';
+import { AssemblyConstituencyReportComponent } from './assembly-constituency-report/assembly-constituency-report.component';
+import { MDRmasterComponent } from './MDR_Master/mdrmaster/mdrmaster.component';
+import { MdrmasterviewComponent } from './MDR_Master/mdrmasterview/mdrmasterview.component';
+import { OutOfPocketExpenditureComponent } from './out-of-pocket-expenditure/out-of-pocket-expenditure.component';
+import { OutOfPocketExpenditureviewComponent } from './out-of-pocket-expenditureview/out-of-pocket-expenditureview.component';
+import { MdrproceduremappingComponent } from './MDR_Master/mdrproceduremapping/mdrproceduremapping.component';
+import { DcHospitalmappingComponent } from './dc/dc-hospitalmapping/dc-hospitalmapping.component';
+import { DcHospitalmappingviewComponent } from './dc/dc-hospitalmappingview/dc-hospitalmappingview.component';
+import { WhatsappuserConfigurationComponent } from './whatsappuser-configuration/whatsappuser-configuration.component';
+import { WhatsappUserConfigurationViewComponent } from './whatsapp-user-configuration-view/whatsapp-user-configuration-view.component';
+import { MdrprodeduremappingviewComponent } from './MDR_Master/mdrprodeduremappingview/mdrprodeduremappingview.component';
+import { DcfaceregistrationComponent } from './dc/dcfaceregistration/dcfaceregistration.component';
+import { DcfaceregistrationviewComponent } from './dc/dcfaceregistrationview/dcfaceregistrationview.component';
+
+import { TaggingHistoryComponent } from './tagging-history/tagging-history.component';
+import { PostmasterAddComponent } from './postmaster-add/postmaster-add.component';
+import { PostmasterViewComponent } from './postmaster-view/postmaster-view.component';
+import { OnlinePostConfigurationComponent } from './online-post-configuration/online-post-configuration.component';
+import { OnlinePostConfigurationViewComponent } from './online-post-configuration-view/online-post-configuration-view.component';
+import { DraftFloatListComponent } from './Payment/draft-float-list/draft-float-list.component';
+import { AllowfohospitalattedanceComponent } from './dc/allowfohospitalattedance/allowfohospitalattedance.component';
+import { FloatlistCeoviewComponent } from './Payment/floatlist-ceoview/floatlist-ceoview.component';
+import { OldclaimNoncomplianceComponent } from './sna/oldclaim-noncompliance/oldclaim-noncompliance.component';
+import { PostpaymentnewComponent } from './Payment/postpaymentnew/postpaymentnew.component';
+import { OldblockcasesComponent } from './oldblockcases/oldblockcases.component';
+import { FloatlistdetailsComponent } from './floatlistdetails/floatlistdetails.component';
+import { ManagedduplicatedbenbeneficiaryComponent } from './managedduplicatedbenbeneficiary/managedduplicatedbenbeneficiary.component';
+import { MobileattendancegroupconfigurationComponent } from '../mobileattendancegroupconfiguration/mobileattendancegroupconfiguration.component';
+import { MobileattendanceuserconfigurationComponent } from '../mobileattendanceuserconfiguration/mobileattendanceuserconfiguration.component';
+import { MobileattendancegroupwiseconfigurationComponent } from '../mobileattendancegroupwiseconfiguration/mobileattendancegroupwiseconfiguration.component';
+import { MobileattendanceconfigurationviewComponent } from '../mobileattendanceconfigurationview/mobileattendanceconfigurationview.component';
+import {
+  HospitalUidAuthConfigurationComponent
+} from "./admin-console/hospital-uid-auth-configuration/hospital-uid-auth-configuration.component";
+import { TemporaryOverrideCodeComponent } from './admin-console/temporary-override-code/temporary-override-code.component';
+import { TemporaryOverrideCodeViewComponent } from './admin-console/temporary-override-code-view/temporary-override-code-view.component';
+
+import { HospitalUidAuthConfigurationViewComponent } from './admin-console/hospital-uid-auth-configuration-view/hospital-uid-auth-configuration-view.component';
+import { ManageduplicatebenificaryviewComponent } from './manageduplicatebenificaryview/manageduplicatebenificaryview.component';
+import { HospitalDeactivationProcessComponent } from './BSKY-Master/hospital-deactivation-process/hospital-deactivation-process.component';
+import { HospitalDeactivionProcessviewComponent } from './BSKY-Master/hospital-deactivion-processview/hospital-deactivion-processview.component';
+import { PartialClaimRaisedComponent } from './hospital/partial-claim-raised/partial-claim-raised.component';
+import { PartialClaimSnoapprovalComponent } from './sna/partial-claim-snoapproval/partial-claim-snoapproval.component';
+import { PartialClaimApprovalDetailsComponent } from './sna/partial-claim-approval-details/partial-claim-approval-details.component';
+import { GrieancePartiaalClaimComponent } from './Partial-Float/grieance-partiaal-claim/grieance-partiaal-claim.component';
+import { PartialclaimraiseComponent } from './Partial-Float/partialclaimraise/partialclaimraise.component';
+import { PartialclaimraisedetailsComponent } from './Partial-Float/partialclaimraisedetails/partialclaimraisedetails.component';
+import { PartialclaimraiseviewComponent } from './Partial-Float/partialclaimraiseview/partialclaimraiseview.component';
+import { NewfreshraisclaimedComponent } from './NewHospitalRaisedClaim/newfreshraisclaimed/newfreshraisclaimed.component';
+import { SnaLeaveApplyComponent } from './HR/sna-leave-apply/sna-leave-apply.component';
+import { SnaLeaveViewComponent } from './HR/sna-leave-view/sna-leave-view.component';
+import { CasewiseHospitalclaimSubmitComponent } from './NewHospitalRaisedClaim/casewise-hospitalclaim-submit/casewise-hospitalclaim-submit.component';
+import { PartialClaimDcComplianceComponent } from './sna/partial-claim-dc-compliance/partial-claim-dc-compliance.component';
+import { PcDcComplianceActionComponent } from './sna/pc-dc-compliance-action/pc-dc-compliance-action.component';
+import { PartialClaimDcComponent } from './Partial-Float/partial-claim-dc/partial-claim-dc.component';
+import { PartialClaimDcDetailsComponent } from './Partial-Float/partial-claim-dc-details/partial-claim-dc-details.component';
+import { PartialClaimDcViewComponent } from './Partial-Float/partial-claim-dc-view/partial-claim-dc-view.component';
+import { PartialClaimSnoReapprovalComponent } from './sna/partial-claim-sno-reapproval/partial-claim-sno-reapproval.component';
+import { PartialClaimQuereidComponent } from './Partial-Float/partial-claim-quereid/partial-claim-quereid.component';
+import { PartialClaimSnaViewComponent } from './Partial-Float/partial-claim-sna-view/partial-claim-sna-view.component';
+import { PartialClaimSnaViewDetailsComponent } from './Partial-Float/partial-claim-sna-view-details/partial-claim-sna-view-details.component';
+import { PartialClaimHospitalNoncomplianceComponent } from './Partial-Float/partial-claim-hospital-noncompliance/partial-claim-hospital-noncompliance.component';
+import { PartialClaimDcNoncomplianceComponent } from './Partial-Float/partial-claim-dc-noncompliance/partial-claim-dc-noncompliance.component';
+import { PcSnoReapprovalActionComponent } from './sna/pc-sno-reapproval-action/pc-sno-reapproval-action.component';
+import { FreshClaimAllocationComponent } from './CPD/claim_management/fresh-claim-allocation/fresh-claim-allocation.component';
+import { ManualCpdAllotmentComponent } from './CPD/manual-cpd-allotment/manual-cpd-allotment.component';
+import { MobileAttendanceMasterComponent } from './mobile-attendance-master/mobile-attendance-master.component';
+import { MobileAttendanceMasterViewComponent } from './mobile-attendance-master-view/mobile-attendance-master-view.component';
+import { CasewiseHospitalQueriedbycpdComponent } from './NewHospitalRaisedClaim/casewise-hospital-queriedbycpd/casewise-hospital-queriedbycpd.component';
+import { CasewiseQueriedbycpdsubmitComponent } from './NewHospitalRaisedClaim/casewise-queriedbycpdsubmit/casewise-queriedbycpdsubmit.component';
+import { CasewisehospitalqueriedbysnaComponent } from './NewHospitalRaisedClaim/casewisehospitalqueriedbysna/casewisehospitalqueriedbysna.component';
+import { CasewiseQueriedbysnasubmitComponent } from './NewHospitalRaisedClaim/casewise-queriedbysnasubmit/casewise-queriedbysnasubmit.component';
+
+import { CpdfreshcaseDetailsComponent } from './CPD/claim_management/cpdfreshcase-details/cpdfreshcase-details.component';
+import { CpdfreshclaimDetailsComponent } from './CPD/claim_management/cpdfreshclaim-details/cpdfreshclaim-details.component';
+import { CasewisehospitaldetailsComponent } from '../casewisehospitaldetails/casewisehospitaldetails.component';
+import { HospitalFaceauthRadiousConfigComponent } from './BSKY-Master/hospital-faceauth-radious-config/hospital-faceauth-radious-config.component';
+import { FreshClaimDetailsComponent } from './sna/claim-management/fresh-claim-details/fresh-claim-details.component';
+import { ShasceoDashboardComponent } from './dashboard/shasceo-dashboard/shasceo-dashboard.component';
+import { CasewiseNonUploadingInitialDocumentComponent } from './NewHospitalRaisedClaim/casewise-non-uploading-initial-document/casewise-non-uploading-initial-document.component';
+import { FreshClaimCaseDetailsComponent } from './sna/claim-management/fresh-claim-case-details/fresh-claim-case-details.component';
+import { SnaCpdInvestigatedlistComponent } from './sna/claim-management/sna-cpd-investigatedlist/sna-cpd-investigatedlist.component';
+import { CpdCaseResettlementComponent } from './CPD/claim_management/cpd-case-resettlement/cpd-case-resettlement.component';
+import { CpdCaseResettlementActionComponent } from './CPD/claim_management/cpd-case-resettlement-action/cpd-case-resettlement-action.component';
+import { CpdrejectiontohospitalComponent } from './NewHospitalRaisedClaim/cpdrejectiontohospital/cpdrejectiontohospital.component';
+import { SnaClaimDetailsViewComponent } from './sna/claim-management/sna-claim-details-view/sna-claim-details-view.component';
+import { CpdrejectiontohospitaldetailsComponent } from './NewHospitalRaisedClaim/cpdrejectiontohospitaldetails/cpdrejectiontohospitaldetails.component';
+import { SnaCaseResettlemntComponent } from './sna/claim-management/sna-case-resettlemnt/sna-case-resettlemnt.component';
+import { SnaCaseClaimActionResettlementComponent } from './sna/claim-management/sna-case-claim-action-resettlement/sna-case-claim-action-resettlement.component';
+import { NoncompliancecpdquerytohospitalComponent } from './NewHospitalRaisedClaim/noncompliancecpdquerytohospital/noncompliancecpdquerytohospital.component';
+import { NoncompliancesnaquerytohospitalComponent } from './NewHospitalRaisedClaim/noncompliancesnaquerytohospital/noncompliancesnaquerytohospital.component';
+import { CpdCaseReconsiderComponent } from './CPD/claim_management/cpd-case-reconsider/cpd-case-reconsider.component';
+import { CpdCaseReconsiderActionComponent } from './CPD/claim_management/cpd-case-reconsider-action/cpd-case-reconsider-action.component';
+import { ExtnsnStayApproveListComponent } from './sna/extnsn-stay-approve-list/extnsn-stay-approve-list.component';
+import { ExtnsnStayAprvDetailsComponent } from './sna/extnsn-stay-aprv-details/extnsn-stay-aprv-details.component';
+import { CsmdcconfigurationComponent } from './csmdcconfiguration/csmdcconfiguration.component';
+import { CsmdcconfigurationviewComponent } from './csmdcconfigurationview/csmdcconfigurationview.component';
+import { CeoDashboardComponent } from './dashboard/ceo-dashboard/ceo-dashboard.component';
+import { ExtensionOfStayViewComponent } from './sna/extension-of-stay-view/extension-of-stay-view.component';
+import { DcgeetagconfigComponent } from './dc/dcgeetagconfig/dcgeetagconfig.component';
+import { UsermobiletrackingConfigComponent } from './dc/usermobiletracking-config/usermobiletracking-config.component';
+import { WardChangeComponent } from './ward-change/ward-change.component';
+import { WardChangeApvDtlsComponent } from './ward-change-apv-dtls/ward-change-apv-dtls.component';
+import { WardChangeApvViewComponent } from './ward-change-apv-view/ward-change-apv-view.component';
+import { CsmdcstatendistrictmappingComponent } from './csmdcstatendistrictmapping/csmdcstatendistrictmapping.component';
+import { CsmdcstatendistrictmappingviewComponent } from './csmdcstatendistrictmappingview/csmdcstatendistrictmappingview.component';
+
+const routes: Routes = [{
+  path: '', component: ApplicationComponent, children: [
+    { path: 'internalLogin', component: AdminInternalLoginComponent },
+    { path: 'claimraise', component: ClaimraiseComponent },
+    { path: 'claimraise/:id', component: ClaimraisedetailsComponent },
+    { path: 'RejectedClaim/:id', component: PendingclaimdetailsComponent },
+    { path: 'RejectedClaim', component: PendingclaimComponent },
+    { path: 'query', component: QueryComponent },
+    { path: 'paid', component: PaidComponent },
+    { path: 'enablehospitaldischarge', component: EnableHospitalDischargeComponent },
+    { path: 'grievance', component: GrievanceComponent },
+    { path: 'claimprocessed', component: ClaimProcessedComponent },
+    { path: 'createsnoview', component: CreatesnoviewComponent },
+    { path: 'createsno', component: CreatesnoComponent },
+    { path: 'createcpd', component: CreatecpdComponent },
+    { path: 'snoapproval', component: SnoapprovalComponent },
+    { path: 'snoapproval/action', component: SnoactionComponent },
+    { path: 'snoreapproval', component: SnoreapprovalComponent },
+    { path: 'snoreapproval/action', component: SnoReActionComponent },
+    { path: 'cpdrejectedaction/action', component: CpdrejectedactionComponent },
+    { path: 'snabulkapproval', component: SnaBulkApprovedComponent },
+    { path: 'cpdapproval', component: CpdapprovalComponent },
+    { path: 'cpddraftlist', component: CpdDraftComponent },
+    { path: 'cpddraftaction', component: CpdDraftActionComponent },
+    { path: 'cpdapproval/:id', component: CpdactionComponent },
+    { path: 'cpdreapproval', component: CpdreapprovalComponent },
+    { path: 'cpdreapproval/:id', component: CpdReApprovalActionComponent },
+    { path: 'creategroup', component: CreategroupComponent },
+    { path: 'dischargeclaim', component: DischargeclaimComponent },
+    { path: 'dischargeclaim/:id', component: KhurdaComponent },
+    { path: 'categorywisetreat', component: CategorywisetreatComponent },
+    { path: 'cardiology', component: CardiologyComponent },
+    { path: 'multiplepackage', component: MultiplepackageComponent },
+    { path: 'ongoingicu', component: OngoingicuComponent },
+    { path: 'hospitalwisepaid', component: HospitalwisepaidComponent },
+    { path: 'demo', component: AddComponent },
+    { path: 'demo/:id', component: ViewComponent },
+    { path: 'snaConfiguration', component: SNOConfigurationComponent },
+    { path: 'userGroup', component: UserGroupComponent },
+    { path: 'userSubGroup', component: UserSubGroupComponent },
+    { path: 'viewsubgroup', component: ViewSubGroupComponent },
+    { path: 'claimquerybycpd', component: ClaimquerybycpdComponent },
+    { path: 'claimsqueriedbyCPDdetails/:claimID', component: ClaimquerybyCPDdetailsComponent },
+    { path: 'cpdrejected', component: CpdrejectedComponent },
+    { path: 'claimsqueriedbySNO', component: ClaimsqueriedbySNOComponent },
+    { path: 'claimsqueriedbySNOdetails/:claimID', component: ClaimsqueriedbySNOdetailsComponent },
+    { path: 'cpdleaveapply', component: CpdLeaveActionComponent },
+    { path: 'cpdleavehistory', component: CpdLeaveHistoryComponent },
+    { path: 'cpdleaveapprove', component: CpdleaveapproveComponent },
+    { path: 'cpdleaveapproveaction', component: CpdleaveapproveactionComponent },
+    { path: 'Viewcpd', component: ViewcpdComponent },
+    { path: 'Viewcpdleavedetails', component: CpdleaveviewComponent },
+    { path: 'viewgroup', component: UsergroupViewComponent },
+    { path: 'userGroup/:id', component: UserGroupComponent },
+    { path: 'grievancemediumView', component: GrievanceMediumViewComponent },
+    { path: 'paymentFreezeAction', component: PaymentFreezeActionComponent },
+    { path: 'paymentFreezeView', component: PaymentFreezeViewComponent },
+    { path: 'snareconsider', component: SnaReconsiderDetailsPageComponent },
+    //Dashboard
+    { path: 'sna-dashboard', component: SnaDashboardComponent },
+    { path: 'cpd-dashboard', component: CpdDashboardComponent },
+    { path: 'hospital-dashboard', component: HospitaldashboardComponent },
+    { path: 'dc-dashboard', component: DcDashboardComponent },
+    { path: 'go-dashboard', component: GrievanceDashboardComponent },
+    { path: 'shasqc-dashboard', component: ShasqcDashbordComponent },
+    { path: 'dashboard', component: DashboardComponent },
+    { path: 'dgo-dashboard', component: DGODashboardComponent },
+    { path: 'treamentHistoryPerUrn', component: TreatmenthistoryPerUrnComponent },
+    { path: 'grouptype', component: GroupTypeComponent },
+    { path: 'groupList', component: GroupTypeViewComponent },
+    { path: 'cpdConfiguration', component: CPDConfigurationComponent },
+    { path: 'dcapproval', component: DcapprovalComponent },
+    { path: 'dcapproval/:id', component: DcactionComponent },
+    { path: 'serchbypackage', component: TreatmenthistoryPerUrnPackageComponent },
+    { path: 'cpdConfigurationdetails', component: CpdconfigurationdetailsComponent },
+    { path: 'snaConfigurationdetails', component: SnoconfigurationdetailsComponent },
+    { path: 'userhospital', component: UserHospitalComponent },
+    { path: 'viewhospital', component: UserHospitalViewComponent },
+    { path: 'unProcessedClaimList/:id', component: UnprocessedactionComponent },
+    { path: 'unProcessedClaimList', component: UnprocessedclaimComponent },
+    { path: 'cpdrevert', component: CpdrevertComponent },
+    { path: 'cpdrevert/:id', component: CpdrevertactionComponent },
+    { path: 'SNARejectedlist', component: SNARejectListHospitalComponent },
+    { path: 'SNARejectedlist/:id', component: SnarejectlisthospitaldetailsComponent },
+    { path: 'CPDRejectedlist', component: CPDRejectListHospitalComponent },
+    { path: 'CPDRejectedlist/:id', component: CpdrejectlisthospitaldetailsComponent },
+    { path: 'ResetPassword', component: ResetPasswordComponent },
+    { path: 'SystemRejectedClaimRequest', component: RejectrequestsnaComponent },
+    { path: 'SystemRejectedClaimRequest/:id', component: RejectrequestsnadetailsComponent },
+    { path: 'NoncomplianceQueryRequest', component: SnanoncompliancequeryrequestComponent },
+    { path: 'NoncomplianceQueryRequest/:id', component: SnanoncompliancequeryrequestdetailsComponent },
+    { path: 'cpdprofile', component: CpdprofileComponent },
+    { path: 'hospitalprofile', component: HospitalprofileComponent },
+    { path: 'userprofile', component: UserprofileComponent },
+    { path: 'snarejetedlist', component: SnarejectedlistComponent },
+    { path: 'fofloatreport', component: FoFloatReportComponent },
+    { path: 'fodetails', component: FinancialofficerdetailsComponent },
+    { path: 'fodetailsdetails/:id', component: FinancialofficerdetailservicedetailsComponent },
+    { path: 'createuser', component: CreateuserComponent },
+    { path: 'viewuser', component: ViewuserComponent },
+    { path: 'snafloatreport', component: SnaFloatReportComponent },
+    { path: 'sysrejectedreports', component: SysrejectedreportsComponent },
+    { path: 'dcConfiguration', component: DcConfigurationComponent },
+    { path: 'dcConfigurationdetails', component: DcconfigurationdetailsComponent },
+    { path: 'snadoctortag', component: SnadoctorTagComponent },
+    { path: 'floatgeneration', component: FloatgenerationComponent },
+    { path: 'ExtensionOfNonCompliance', component: NonComplianceExtnComponent },
+    { path: 'ExtensionOfNonComplianceview', component: NonComplianceExtnviewComponent },
+    { path: 'untaggedHospitals', component: UntaggedHospitalsComponent },
+    { path: 'hospitalWiseFloatGeneration', component: AbstractFloatGenerationComponent },
+    { path: 'actionWiseFloatGeneration', component: ActionWiseFloatGenerationComponent },
+    { path: 'hospitalWiseFloatSnaExecutive', component: SnaExecHsptlFloatGenComponent },
+    { path: 'viewfloatreportSnaExecutive', component: SnaExecViewfloatrptComponent },
+    { path: 'cpdwieperformance', component: CpdactionwiseperformanceComponent },
+    //Admin console routes
+    { path: 'rationcardschedularreportcomponent', component: RationCardSchedularReportComponent },
+    { path: 'functionmaster', component: FunctionMasterComponent },
+    { path: 'unlinkedfunctionmaster', component: FunctionMasterUnlinkedComponent },
+    { path: 'viewunlinkedfunctionmaster', component: ViewFunctionMasterUnlinkedComponent },
+    { path: 'globallink', component: GlobalLinkComponent },
+    { path: 'primarylink', component: PrimaryLinkComponent },
+    { path: 'viewfnmaster', component: ViewfnmasterComponent },
+    { path: 'viewgllink', component: ViewgllinkComponent },
+    { path: 'viewpmlink', component: ViewpmlinkComponent },
+    { path: 'userMenuMapping', component: UserMenuMappingComponent },
+    { path: 'groupMenuMapping', component: GroupMenuMappingComponent },
+    { path: 'hospitalinforeport', component: HoispitalinfoReportComponent },
+    { path: 'unlockUser', component: UnlockUserComponent },
+    { path: 'getReportList', component: ReportMasterLinkComponent },
+    { path: 'checkcardbalance', component: CheckcardbalanceComponent },
+    { path: 'checkcardbalancelog', component: CheckCardBalanceLogComponent },
+    { path: 'checkbeneficiary', component: ChechbeneficiaryComponent },
+    { path: 'searchbyname', component: SearchbynameComponent },
+    { path: 'hospitalbackdateconfig', component: HospitalbackdateconfigComponent },
+    { path: 'hospitalbackdateconfigview', component: HospitalbackdateconfigviewComponent },
+    { path: 'hospitalbackdateconfigviewrpt', component: HospitalbackdateconfigviewreportComponent },
+    { path: 'hospotpconfig', component: HospitalotpconfigurationComponent },
+    { path: 'hosploginotpconfig', component: HospitalloginotpconfigurationComponent },
+    { path: 'hospfaceauthradiouspconfig', component: HospitalFaceauthRadiousConfigComponent },
+    //Rajendra
+    { path: 'hospitaldeactivationprocess', component: HospitalDeactivationProcessComponent },
+    { path: 'hospitaldeactivationprocessview', component: HospitalDeactivionProcessviewComponent },
+    { path: 'dccdmomapping', component: DcCdmomappingComponent },
+    { path: 'dccdmomappingview', component: DcCdmomappingviewComponent },
+    { path: 'dcgovthospitalmapping', component: DcHospitalmappingComponent },
+    { path: 'dcgovthospitalmappingview', component: DcHospitalmappingviewComponent },
+    { path: 'dcfacereregistration', component: DcfaceregistrationComponent },
+    { path: 'dcfacereregistrationview', component: DcfaceregistrationviewComponent },
+    { path: 'allowforhospitalattendance', component: AllowfohospitalattedanceComponent },
+    { path: 'allowgroupformobileattendance', component: MobileattendancegroupconfigurationComponent },
+    { path: 'usermobileattendanceconfig', component: MobileattendanceuserconfigurationComponent },
+    { path: 'groupmobileattendanceconfig', component: MobileattendancegroupwiseconfigurationComponent },
+    { path: 'mobileattendanceconfigview', component: MobileattendanceconfigurationviewComponent },
+    { path: 'mobileattendancemaster', component: MobileAttendanceMasterComponent },
+    { path: 'mobileattendancemasterview', component: MobileAttendanceMasterViewComponent },
+
+    { path: 'grievancePartialClaim', component: GrieancePartiaalClaimComponent },
+    { path: 'partialClaimRaise', component: PartialclaimraiseComponent },
+    { path: 'partialClaimRaiseview', component: PartialclaimraiseviewComponent },
+    { path: 'partialClaimRaise/action', component: PartialclaimraisedetailsComponent },
+    { path: 'dcPartialClaim', component: PartialClaimDcComponent },
+    { path: 'dcPartialClaim/action', component: PartialClaimDcDetailsComponent },
+    { path: 'dcPartialClaimview', component: PartialClaimDcViewComponent },
+    { path: 'hospPartialClaimqueried', component: PartialClaimQuereidComponent },
+    { path: 'partialclaimsnaview', component: PartialClaimSnaViewComponent },
+    { path: 'partialclaimsnaview/details', component: PartialClaimSnaViewDetailsComponent },
+
+
+    { path: 'snaleaveapply', component: SnaLeaveApplyComponent },
+    { path: 'snaleaveapplyview', component: SnaLeaveViewComponent },
+
+    { path: 'schemewisehospitalmapping', component: SchemewisepackagemappingComponent },
+    { path: 'schemewisehospitalmappingrpt', component: SchemewisehospitalmappingreportComponent },
+    { path: 'hospitalspclityadd', component: HospitalSpecilityAddComponent },
+    { path: 'hospitalciviinfraadd', component: HospitalCivilinfraAddComponent },
+    { path: 'hospitalciviinfraview', component: HospitalCivilInfraViewComponent },
+    { path: 'hospitalciviinfraview/:id', component: HospitalCivilInfraViewDetailsComponent },
+    { path: 'hospitalspecialistupdationreport', component: HospitalspecialistupdationreportComponent },
+    { path: 'packageupdation', component: PackageUpdationComponent },
+    { path: 'proceduretagging', component: ProcedureTaggingComponent },
+    { path: 'snaoldfloateunfrezeeapply', component: SnaapplyforunfrezefloateoldComponent },
+    { path: 'snaoldfloateunfrezeeapprove', component: SnaappliedlistforunfreezefloateComponent },
+    { path: 'specialfloatreport', component: SpecialfloateverificationreportComponent },
+    { path: 'oldblockgenericsearch', component: OldblockGenericSearchComponent },
+    { path: 'oldblockdataviewlist', component: OldblockDataViewlistComponent },
+    { path: 'dishonordeactivation', component: DishonordeactivationComponent },
+    { path: 'implantprocedureconfig', component: ImplantprocedureconfigComponent },
+    { path: 'implantprocedureconfigview', component: ImplantprocedureconfigviewComponent },
+    //auditor float report routes
+    { path: 'auditorfloatreport', component: AuditorFloatReportComponent },
+    { path: 'floatedetails', component: FloateDetailsComponent },
+    { path: 'userInactive', component: UserInactiveComponent },
+    { path: 'snafloaterevert', component: SnafloaterevertComponent },
+    { path: 'snafloaterevertdetails', component: SnafloatedetailsforrevertComponent },
+    { path: 'viewSnaflot', component: SnaViewFloatComponent },
+    { path: 'snafloatdetails/:id', component: SnafloatactionComponent },
+    { path: 'hospincentive', component: HospitalincentivereportComponent },
+    //MDR
+    { path: 'mdrdocumentmaster', component: MDRmasterComponent },
+    { path: 'mdrdocumentmasterview', component: MdrmasterviewComponent },
+    { path: 'mdrproceduremapping', component: MdrproceduremappingComponent },
+    { path: 'mdrproceduremappingview', component: MdrprodeduremappingviewComponent },
+    //dcresetpassword report routes
+    { path: 'dcresetpassword', component: DcresetpasswordComponent },
+    { path: 'querylogin', component: QueryLoginComponent },
+    { path: 'querybuilder', component: QueryBuilderComponent, canActivate: [QueryAuthGuard] },
+    { path: 'hospitaldetails', component: HospitalmasterComponent },
+    { path: 'doctorstag', component: DoctorsDetailsComponent },
+    { path: 'querytype', component: QueryTypeComponent },
+    { path: 'querytypeview', component: QuerytypeviewComponent },
+    { path: 'dischargelistHistoryHospital', component: DischargedetailsHistoryComponent },
+    { path: 'hospitalgroupMapping', component: HospitalMasterUserComponent },
+    { path: 'hospitalgroupMappingDetails', component: HospitalMasterUserDetailsComponent },
+    { path: 'cpdmapping', component: CpdmappingComponent },
+    { path: 'snamapping', component: SnamappingreportComponent },
+    { path: 'treatmenthistory', component: TreatmentHistoryComponent },
+    { path: 'cpdactionReportComponent', component: CPDActionReportComponent },
+    { path: 'cpdleaveapplyadmin', component: CpdLeaveactionAdminComponent },
+    { path: 'cpdleavehistoryadmin', component: CpdLeaveviewAdminComponent },
+    { path: 'notification', component: NotificationComponent },
+    { path: 'viewnotification', component: ViewnotificationComponent },
+    { path: 'runcpdschedule', component: RunCpdScheduleComponent },
+    { path: 'NonComplianceQueryCPDToSNA', component: NonComplianceQueryCPDToSNAComponent },
+    { path: 'NonComplianceQueryCPDToSNA/:id', component: NonComplianceQueryCPDToSNAActionComponent },
+    { path: 'OldProcessedClaimList', component: OldprocessedclaimlistComponent },
+    { path: 'OldProcessedClaimList/:id', component: OldprocessedclaimDetailsComponent },
+    { path: 'notificationdetailsreport', component: NotificationDetailsReportComponent },
+    { path: 'treatmenthistoryforsna', component: TreatmentHistorySnaComponent },
+    { path: 'sysrejectedbtnenable', component: SnasysrejbtnEnableComponent },
+    { path: 'sysrejectedbtnenable/:id', component: SnasysrejbtnEnableActionComponent },
+    { path: 'hospitalwise', component: OngoingtreatmentHospitalwiseReportComponent },
+    { path: 'addpackage', component: PackageMasterComponent },
+    { path: 'viewpackage', component: PackageMasterViewComponent },
+    { path: 'ongoingtreatmentreport', component: OngoingTreatmentReportComponent },
+    { path: 'snaapproved', component: SnaapprovedComponent },
+    { path: 'floatlist', component: FloatListComponent },
+    { path: 'floatdetails', component: FloatdetailsComponent },
+    { path: 'paymentFreezeList', component: PaymentfreezListComponent },
+    { path: 'urnwiseaction', component: UrnwiseactionComponent },
+    { path: 'transactionclaimdump', component: TransactionClaimDumpComponent },
+    { path: 'viewfloatlist', component: ViewFoatListComponent },
+    { path: 'snapendingclaim', component: PendingClaimSnareportsComponent },
+    { path: 'floatdistribution', component: FloatDistributionComponent },
+    /* Hospital Operator / grivance /message*/
+    { path: 'hospitalopreator', component: HospitalOperatorComponent },
+    { path: 'viewhospitalopreator', component: ViewHospitalOperatorComponent },
+    { path: 'hospitalopreatorapprove', component: HospitalOperatorApprovalComponent },
+    { path: 'hospitalopreatorreport', component: HospitalOperatorListreportComponent },
+    { path: 'hospitalopreatorprofile', component: HospitaloperatorprofileComponent },
+    { path: 'messagemaster', component: MessageMasterComponent },
+    { path: 'viewmessagemaster', component: ViewMessageMasterComponent },
+    { path: 'paymentfreezereport', component: PaymentfrezzereportComponent },
+    /* TSU-REPORT*/
+    { path: 'tsucpdmapping', component: TsuCpdMappingComponent },
+    { path: 'tsudcmapping', component: TsuDcMappingComponent },
+    { path: 'tsusnamapping', component: TsuSnaMappingComponent },
+    { path: 'tsuusermaster', component: TsuUserMasterComponent },
+    { path: 'tsucpdmaster', component: TsuCpdMasterComponent },
+    { path: 'tsuhospmatser', component: TsuHospitalMasterComponent },
+    { path: 'mobilenoupdate', component: MobilenouupdateComponent },
+    { path: 'mobilenoupdatelog', component: MoboilenoupdatelogComponent },
+
+    { path: 'cpdinvestigatedcaselist', component: SnaCpdInvestigatedlistComponent },
+
+    { path: 'oldclaimnoncompliance', component: OldclaimNoncomplianceComponent },
+    { path: 'shasceoDashboard', component: ShasceoDashboardComponent },
+    /*SWasthya Mitra*/
+    { path: 'smconfiguration', component: SmhospitalconfigurationComponent },
+    { path: 'viewsmconfiguration', component: SmhospitalconfigurationviewComponent },
+    { path: 'smuserview', component: SmviewuserComponent },
+    { path: 'smusercreate', component: SmcreateuserComponent },
+    { path: 'smfaceregistration', component: SmfaceregistrationComponent },
+    { path: 'smfaceregistrationview', component: SmfaceregistrationviewComponent },
+    { path: 'smhelpdeskregister', component: SmhelpdeskregisterrptComponent },
+    { path: 'smpendingreport', component: SmpendingreportComponent },
+    { path: 'smscoringadd', component: SmscoringComponent },
+    { path: 'smscoringview', component: SmscoringviewComponent },
+    { path: 'smscoringreport', component: SmscoringreportComponent },
+    { path: 'smfinalincentivereport', component: SmincentivereportComponent },
+    { path: 'untagginghistory', component: TaggingHistoryComponent },
+
+    /*Referral Doctor*/
+    { path: 'referaldoctorcreate', component: CreatereferaldoctoruserComponent },
+    { path: 'referaldoctorview', component: ViewreferaldoctoruserComponent },
+    { path: 'referaldoctormapping', component: ReferalDoctorConfigurationComponent },
+    { path: 'referaldoctormappingview', component: ReferalDoctorConfigurationviewComponent },
+    { path: 'referralreson', component: ReferralresonComponent },
+    { path: 'referalhospital', component: ReferralHospitalComponent },
+    { path: 'referalhospitalview', component: ReferralHospitalviewComponent },
+    { path: 'referalhospitaltype', component: HospitaltypemasterComponent },
+    { path: 'hospitalexclusionapply', component: HospitalexclusionapplyComponent },
+    { path: 'hospitalexclusionapprove', component: HospitalexclusionapproveComponent },
+    { path: 'hospitalinclusionapply', component: HospitalinclusionapplyComponent },
+    { path: 'hospitalinclusionapprove', component: HospitalinclusionapproveComponent },
+    { path: 'hospitalcpdtaggingreport', component: HospitalcpdtaggingreportComponent },
+    { path: 'cpdhospitaltaggingreport', component: CpdhosptaltaggingreportComponent },
+    { path: 'cpdspecialitymapping', component: CpdspecialitymappingComponent },
+    { path: 'cpdspecialitymappingview', component: CpdspecialitymappingviewComponent },
+    { path: 'cpdspecialitysummaryreport', component: CpdspecialitysummaryreportComponent },
+    { path: 'statedashboarddata', component: StatedashboareddataComponent },
+    /*Dynamic Configuration report*/
+    { path: 'dynamicconfigurationadd', component: DynamicConfigurationAddComponent },
+    { path: 'dynamicconfigurationview', component: DynamicConfigurationViewComponent },
+    { path: 'mandereport', component: DynamicReportComponent },
+    { path: 'mereportdetails', component: DynamicreportdetailsComponent },
+    { path: 'mereportsubdetails', component: DynamicreportsubdetailsComponent },
+    { path: 'mereportclaimdetails', component: DynamicreportclaimdetailsComponent },
+    { path: 'meclaimdetails', component: MeclaimdetailsComponent },
+    { path: 'meactiontakenlist', component: MeactiontakenviewComponent },
+    { path: 'mecasespecificremark', component: CasespecificreportComponent },
+    { path: 'meabstractreport', component: AbstractmereportComponent },
+    { path: 'metriggerreport', component: TriggerReportforuserComponent },
+    { path: 'mskgrievance', component: GrievanceMskComponent },
+    { path: 'mskgrievanceview', component: GrievanceMskViewComponent },
+    { path: 'liveauthenticationrpt', component: AuthenticationonlivestatusComponent },
+    { path: 'dbschedulerreport', component: DBSchedulerReportComponent },
+    { path: 'dbscheduleradd', component: DbschedulerAddComponent },
+    { path: 'dbschedulerview', component: DbschedulerViewComponent },
+    { path: 'dbschedulerlog', component: DbschedulerLogComponent },
+    /*internal communoication*/
+    { path: 'intcommadd', component: InternalcommAddComponent },
+    { path: 'intcommview', component: InternalcommViewComponent },
+    { path: 'intcommtask', component: InternalcommTaskComponent },
+    /*Survey Form*/
+    { path: 'questionmstsurvey', component: QuestionmasterComponent },
+    { path: 'viewquestionmstsurvey', component: QuestionmasterviewComponent },
+    { path: 'surveymater', component: SurveymasterComponent },
+    { path: 'viewsurveymater', component: SurveymasterviewComponent },
+    { path: 'surveygroupmapping', component: SurveygoupmappingComponent },
+    { path: 'viewsurveygroupmapping', component: SurveygoupmappingviewComponent },
+    { path: 'surveyquestionmapping', component: SurveyquestionmappingComponent },
+    { path: 'viewsurveyquestionmapping', component: SurveyquestionmappingviewComponent },
+    { path: 'snawiseclaimsubmitreport', component: SnawiseClaimsubmitReportComponent },
+    { path: 'snamonthwiseclaimsubmitreport', component: SnamonthwiseclaimsubmitreportComponent },
+    { path: 'hospitalwisedischargeandclaim', component: HospitalwisedischargeandclaimComponent },
+    { path: 'cpdnamewisecountreport', component: CpdNamewsiseCountReportComponent },
+    { path: 'cpdnamewisedetails', component: CpdnamewisedetailsComponent },
+    { path: 'noncompleincequeryreport', component: NoncompleincequeryreportComponent },
+    { path: 'hospitalwiseclaimreport', component: HospitalWiseClaimReportComponent },
+    { path: 'claimToRaise', component: HospitalAuthClaimMngmtComponent },
+    { path: 'claimQueryByCPD', component: HospitalAuthClaimQryCPDComponent },
+    { path: 'claimQueryBySNA', component: HospitalAuthClaimQrySNAComponent },
+    { path: 'NonComplianceQuerySNAToSNA', component: NonComplianceQuerySNAToSNAComponent },
+    { path: 'NonComplianceQuerySNAToSNA/:id', component: NonComplianceQuerySNAToSNAViewComponent },
+    { path: 'snaExecutiveMapping', component: SnaexecutivemappingComponent },
+    { path: 'ViewsnaExecutiveMapping', component: ViewSnaExecutiveComponent },
+    { path: 'dcCompliance', component: DcComplianceComponent },
+    { path: 'dcCompliance/:id', component: DcComplianceActionComponent },
+    { path: 'callcenterexe', component: DgoCallCenterComponent },
+    { path: 'callcenterexeview', component: DgoCallCenterViewComponent },
+    { path: 'oldclaimQueriedBySNA', component: OldclaimquerybysnaComponent },
+    { path: 'oldclaimQueriedBySNA/:id', component: OldclaimquerybysnadetailsComponent },
+    { path: 'oldClaimResettlement', component: OldclaimResettlementComponent },
+    { path: 'oldClaimResettlement/:id', component: OldclaimResettlementDetailsComponent },
+    { path: 'BulkExtensionOfNonCompliance', component: BulkExtensionOfNonComplianceComponent },
+    { path: 'snawisepaymentstatus', component: SNAWisePaymentStatusComponent },
+    /* TMS */
+    { path: 'preauth', component: PreauthApprovalComponent },
+    { path: 'preauthdetails', component: SnaPreauthDetailsComponent },
+    { path: 'viewpreauthapproval', component: ViewPreauthApprovalComponent },
+    { path: 'viewpreauthdetails', component: SnaViewPreauthDetailsComponent },
+    { path: 'packageDetailsMaster', component: PackageDetailsMasterComponent },
+    { path: 'packageDetailsMasterView', component: PackageDetailsMasterViewComponent },
+    { path: 'packageDetailsMaster/:id', component: PackageDetailsMasterComponent },
+    { path: 'overridecode', component: FpOverrideCodeComponent },
+    { path: 'hospitalpackagemapping', component: HospitalPackageMappingComponent },
+    { path: 'hospitalpackagemappingview', component: HospitalPackageMappingViewComponent },
+    { path: 'hospitalpackagemapping/:id', component: HospitalPackageMappingComponent },
+    { path: 'grievanceby', component: GrievanceByComponent },
+    { path: 'highEndDrugs', component: HighEndDrugsComponent },
+    { path: 'highEndDrugsView', component: HighEndDrugsViewComponent },
+    { path: 'highEndDrugs/:id', component: HighEndDrugsComponent },
+    { path: 'packageHeader', component: PackageHeaderComponent },
+    { path: 'packageHeader/:headerId', component: PackageHeaderComponent },
+    { path: 'packageHeaderView', component: PackageHeaderViewComponent },
+    { path: 'grievancebyView', component: GrievanceByViewComponent },
+    { path: 'pkgSubCatagory', component: PackageSubCatagoryComponent },
+    { path: 'packageSubCategoryView', component: PackageSubcatagoryViewComponent },
+    { path: 'pkgSubCatagory/:subcategoryId', component: PackageSubCatagoryComponent },
+    { path: 'addVitalStatistics', component: VitalStatisticsComponent },
+    { path: 'vitalStatisticsView', component: VitalStatisticsViewComponent },
+    { path: 'addVitalStatistics/:vitalStatisticsId', component: VitalStatisticsComponent },
+    { path: 'implant', component: ImplantMasterComponent },
+    { path: 'implantView', component: ImplantMasterViewComponent },
+    { path: 'implant/:implantId', component: ImplantMasterComponent },
+    { path: 'viewfloatreport', component: ViewfloatreportComponent },
+    { path: 'grievancetypeview', component: GrievanceTypevieComponent },
+    { path: 'rununprocessedclaim', component: RunUnprocessedClaimComponent },
+    { path: 'snawisepending', component: SnawisependingreportComponent },
+    { path: 'addunprocess', component: UnprocessedmasterConfigurationComponent },
+    { path: 'viewunprocess', component: UnprocessedMasterViewComponent },
+    { path: 'grievancetype', component: GrievanceTypeComponent },
+    { path: 'cardpolicy', component: CardPolicyUpdateComponent },
+    { path: 'grievancemedium', component: GrievanceMediumComponent },
+    { path: 'referalForm', component: PatientReferalComponent },
+    { path: 'patientformview', component: PatientReferralViewComponent },
+    { path: 'viewoverride', component: FpOverrideViewComponent },
+    { path: 'cceoutbound', component: CceOutboundCallComponent },
+    { path: 'cceoutboundview', component: CceOutboundCallViewComponent },
+    { path: 'cceoutboundcallForShasCeo', component: CCEOutboundCallShasCEOComponent },
+    { path: 'dcInitialTakeAction', component: DCInitialTakeActionComponent },
+    /* TMS */
+    /*Empanelment  */
+    { path: 'empanelmentViewApplicationList', component: ViewApplicationListComponent },
+    { path: 'empanelmentViewFormList', component: ViewFormListComponent },
+    { path: 'empanelmentPendingApplicationList', component: PendingApplicationComponent },
+    { path: 'downlordpreviewform', component: HospempanelmentdownlordpdfComponent },
+    { path: 'view-application-list/:id', component: ViewApplicationListComponent },
+    { path: 'take-action/:id', component: TakeActionComponent },
+    { path: 'pending-application/:id', component: PendingApplicationComponent },
+    { path: 'application-summary/:id', component: ApplicationSummaryComponent },
+    { path: 'approved-application/:id', component: ApprovedApplicationComponent },
+    { path: 'rejected-application/:id', component: RejectedApplicationComponent },
+    { path: 'reverted-application/:id', component: RevertedApplicationComponent },
+    { path: 'dynamicForms/:id', component: DynamicformsComponent },
+    { path: 'noting/:id', component: NoteingComponent },
+    { path: 'Unprocessedadmin', component: UnprocessedforAdminComponent },
+    { path: 'shasqcadminform', component: QcadminformComponent },
+    { path: 'shasqcadminformview', component: QcadminformviewComponent },
+    { path: 'applicationsummeryqc', component: ApplicationSummeryQcComponent },
+    { path: 'application-summery-qc/:id', component: ApplicationSummeryQcComponent },
+    { path: 'foremark', component: ForemarkComponent },
+    { path: 'foremarkview', component: ForemarkviewComponent },
+    { path: 'empanelmentdetailupdation', component: EmpanelmentDetailUpdationComponent },
+    { path: 'updateformapply', component: UpdateformapplyComponent },
+    { path: 'updatedynamicforms', component: UpdatedynamicformsComponent },
+    { path: 'approvalstatusreport', component: ApprovalstatusreportComponent },
+    /*Mis Reports */
+    /* CCE */
+    { path: 'cceadd', component: CallCenterExecutiveAddComponent },
+    { path: 'cceview', component: CallCenterExecutiveViewComponent },
+    { path: 'notConnectedadd', component: NotConnectedAddComponent },
+    { path: 'notConnectedview', component: NotConnectedViewComponent },
+    { path: 'supervisorcce', component: SupervisorCceComponent },
+    { path: 'supervisorcceview', component: SupervisorCceViewComponent },
+    { path: 'supervisorccedcReverted', component: SupervisorCceDCRevertedComponent },
+    { path: 'reAssignadd', component: ReAssignAddComponent },
+    { path: 'reAssignview', component: ReAssignViewComponent },
+    /* CCE */
+    { path: 'cdmoConfiguration', component: CDMOConfigurationComponent },
+    { path: 'cdmoConfigurationview', component: CdmoconfigurationdetailsComponent },
+    { path: 'postpaymentlist', component: PostPaymentListComponent },
+    { path: 'addbankmaster', component: BankMasterComponent },
+    { path: 'viewbankmaster', component: BankMasterViewComponent },
+    { path: 'paidreport', component: PaidreportComponent },
+    { path: 'swasthyamitrhospitalconfiguration', component: SwathyaMitraHospitalConfigurationComponent },
+    { path: 'swasthyamitrhospitalconfigurationview', component: SwathyaMitraHospitalConfigurationViewComponent },
+    //Grievance
+    { path: 'grievance-take-action/:id', component: GrievanceTakeActionComponent },
+    { path: 'pending-grievance-application/:id', component: PendingGrievanceApplicationComponent },
+    { path: 'pendinggrievanceapplication', component: PendingGrievanceApplicationComponent },
+    { path: 'grievance-application-summary/:id', component: ApplicationGrievanceSummaryComponent },
+    { path: 'grievanceQueryForDGO/:id', component: GrievanceQueryForDGOComponent },
+    { path: 'grievanceQuerySettleForGO/:id', component: GrievanceQuerySettleForGOComponent },
+    { path: 'grievance-summary/:id', component: GrievanceApplicationSummaryComponent },
+    { path: 'grievance-summary-cdmo/:id', component: GrievanceApplicationSummaryCDMOComponent, },
+    { path: 'grievance-preview/:id', component: GrievancePreviewComponent },
+    { path: 'grievance-summary-ceo/:id', component: GrievanceApplicationCeoComponent },
+    { path: 'grievance-application-cdmo/:id', component: ApplicationGrievanceSummaryCDMOComponent },
+    { path: 'grievance-take-action-CDMO/:id', component: GrievanceTakeActionCDMOComponent },
+    { path: 'grievancereport', component: GrievanceReportComponent },
+    { path: 'grievanceCCEFeedbackReport', component: GrievanceCCEFeedbackReportComponent },
+    { path: 'excelpaymentfreeze', component: PaymentFreezeComponentUpdate },
+    { path: 'wardAdd', component: WardMasterComponent },
+    { path: 'wardView', component: WardMasterViewComponent },
+    { path: 'wardAdd/:wardMasterId', component: WardMasterComponent },
+    { path: 'warddetailsAdd', component: WarddetailsAddComponent },
+    { path: 'warddetailsView', component: WarddetailsViewComponent },
+    { path: 'warddetailsAdd/:wardMasterId', component: WarddetailsAddComponent },
+    { path: 'remarks', component: RemarksAddComponent },
+    { path: 'remarksView', component: RemarksViewComponent },
+    { path: 'remarks/:id', component: RemarksAddComponent },
+    { path: 'floatSummary', component: SummaryComponent },
+    { path: 'internalgrivance', component: InternalGrivanceComponent },
+    { path: 'internalgrivanceview', component: InternalGrievanceViewComponent },
+    { path: 'grievanceCCE', component: GrievanceCCEComponent },
+    { path: 'grievanceCCEView', component: GrievanceCCEViewComponent },
+    { path: 'grievanceCCEResettlement', component: GrievanceCceResettlementComponent },
+    { path: 'goInitialTakeAction', component: GOInitialTakeActionComponent },
+    { path: 'grievanceDGOQuery', component: DgoQueryBucketComponent },
+    { path: 'revertedfloatdetails', component: RevertbyfodetailsComponent },
+    { path: 'dgoInitialTakeAction', component: DGOInitialTakeActionComponent },
+    { path: 'cceReport', component: CceReportComponent },
+    { path: 'cceReportTotalConnected', component: CceReportTotalConnectedComponent },
+    { path: 'hospitalwisefloatlist', component: HospitalwiseFloatListComponent },
+    { path: 'hsptlwiseccedata', component: HospitalwiseCcedataComponent },
+    { path: 'cpdwiseunprocesse', component: CpdwiseunprocessedComponent },
+    { path: 'schedulerReportDetails', component: SchedulerReportDetailsComponent },
+    { path: 'mailService', component: MailServiceComponent },
+    { path: 'mailServiceConfiguration', component: MailServiceConfigurationComponent },
+    { path: 'blockedDataApproval', component: BlockedDataApprovalComponent },
+    { path: 'blockedDataApprovalDetails', component: BlockedDataApprovalDetailsComponent },
+    { path: 'viewBlockedDataApproved', component: ViewBlockedDataApprovedComponent },
+    //  master HE
+    { path: 'medicalinfracategoryadd', component: MedicalinfracategoryComponent },
+    { path: 'medicalinfracategoryview', component: MedicalinfracategoryviewComponent },
+    { path: 'medicalinfrasubcategoryadd', component: MedicalinfrasubcategoryaddComponent },
+    { path: 'medicalinfrasubcategoryview', component: MedicalinfrasubcategoryviewComponent },
+    { path: 'medicalexpertise', component: MedicalExpertiseMasterComponent },
+    { path: 'medicalexpertiseview', component: MedicalExpertiseMasterViewComponent },
+    { path: 'typeofexpertise', component: TypeofexpertiseComponent },
+    { path: 'typeofexpertiseview', component: TypeofexpertiseviewComponent },
+    { path: 'facilitydetailadd', component: FacilityDetailMasterComponent },
+    { path: 'facilitydetailview', component: FacilityDetailViewComponent },
+    { path: 'hospitalwisepackagedata', component: HospitalWisePackageDataReportComponent },
+    { path: 'floatReport', component: FloatReportComponent },
+    { path: 'claimprocessed/walletrefund', component: WalletRefundComponent },
+    { path: 'walletRefundedClaims', component: WalletRefundedClaimsComponent },
+    { path: 'claimsOnHold', component: ClaimsOnHoldComponent },
+    { path: 'claimsOnHold/action', component: HoldactionComponent },
+    { path: 'systemadminsnarejected', component: SystemadminSnarejectedComponent },
+    { path: 'systemadminsnarejectedList', component: SystemadminsnarejectedlistComponent },
+    { path: 'systemadminsnarejected', component: SystemadminSnarejectedComponent },
+    { path: 'testingProcessExecution', component: TestingProcessExecutionComponent },
+    { path: 'urnwiseactionreportsdetails', component: UrnwiseactionreportDetailsComponent },
+    { path: 'runsnawiseunprocessed', component: RunsnawiseunprocessedComponent },
+    { path: 'runsnawiseunprocessedview', component: RunsnawiseunprocessedviewComponent },
+    { path: 'dischargereportlist', component: DischargereportComponent },
+    { path: 'hospitalwisesumarryreport', component: HospitalwisesummaryreportComponent },
+    { path: 'floatverifiedlist', component: FloatVerifiedListComponent },
+    { path: 'viewverifiedlist', component: ViewVerifiedListComponent },
+    { path: 'paymentFreezeDetails', component: PaymentFreezeDetailsComponent },
+    { path: 'viewdistribution', component: ViewDistributionComponent },
+    { path: 'oldfloatgeneration', component: OldClaimFloatgenerationComponent },
+    { path: 'oldclaimpaymentfreeze', component: OldClaimPaymentFreezeComponent },
+    { path: 'oldclaimpostpayment', component: OldClaimPostPaymentComponent },
+    { path: 'oldfloatviewreport', component: OldFloatViewReportsComponent },
+    { path: 'snawiseclaimsubmitreport', component: SnawiseClaimsubmitReportComponent },
+    { path: 'oldclaimpaymentview', component: OldClaimPaymentViewComponent },
+    { path: 'cpdwisemaximumandminimumlimitset', component: CpdwisemaximumminimumlimitComponent },
+    { path: 'viewcpdwisemaximumandminimumlimitset', component: ViewcpdwisemaximumminimumlimitComponent },
+    { path: 'postPaymentReversal', component: PostPaymentReversalComponent },
+    { path: 'OldCLaimQueried', component: OldclaimQueryToHospitalToSNAComponent },
+    { path: 'OldSnaProcessedClaimList', component: SnaOldclaimProcessedListComponent },
+    { path: 'QueryReClaimedAndPendingAtSNA', component: OldReCLaimPendingAtSNAComponent },
+    { path: 'postpaymentview', component: PostPaymentViewComponent },
+    { path: 'floatlistceo', component: FloatlistCeoComponent },
+    { path: 'cpdremarkadd', component: CpdremarkComponent },
+    { path: 'cpdremarkview', component: CpdremarkviewComponent },
+    { path: 'snaremarkadd', component: SnaremarkComponent },
+    { path: 'snaremarkview', component: SnaremarkviewComponent },
+    { path: 'hospitalwiseongoingtreatmentdtls', component: HospitalwiseongoingtreatmentdetailsComponent },
+    { path: 'benificarygenderwiserprt', component: BenificaryGenderWiseComponent },
+    { path: 'packagewisedischargeclaim', component: PackagewisedischargeclaimComponent },
+    { path: 'cpdMappingReport', component: CpdMappingReportComponent },
+    { path: 'paymentfreezreports', component: PaymentfreezreportComponent },
+    { path: 'downloaddischargeadmissiondumpreport', component: MnthWiseDischargeMeComponent },
+    { path: 'snaremarkwiseaction', component: SnaremarkwiseactionComponent },
+    { path: 'mosarkarreportdetails', component: MosarkarreportComponent },
+    { path: 'hospitalenrollmentlist', component: HospitalenrollmentlistComponent },
+    { path: 'hospitalenrollmentview/Action', component: EnrollmentdetailsComponent },
+    { path: 'recomplyenrollmentlist', component: RecomplyenrollmentComponent },
+    { path: 'oldblockdatareport', component: OldBlockDatareportComponent },
+    { path: 'surgicalmedicalmapping', component: SurgicalMedicalMappingComponent },
+    { path: 'usermanualuploadesction', component: UsermanualuploadsectionComponent },
+    { path: 'viewusermanualuploadesction', component: ViewusermanuluploadsectionComponent },
+    { path: 'DownloadUsermanual', component: UsermanualdownloadComponent },
+    { path: 'hospitaldoctorprofile', component: HospitaldoctorprofileComponent },
+    { path: 'hospitaldoctorprofileview', component: HospitaldoctorprofileviewComponent },
+    { path: 'districtwiseunavalabilityofspecility', component: SpecialityWiseDistrictReportComponent },
+    { path: 'treatingdoctorrconfiguration', component: TreatingdoctorrconfigurationComponent },
+    { path: 'treatingdoctorlogdetails', component: TreatingdoctorlogComponent },
+    { path: 'monthwsefloatdetailsreport', component: MnthWiseFloatdtlsRertComponent },
+    { path: 'packgaeunbundlingmaster', component: UnboundlingpackageAddComponent },
+    { path: 'packgaeunbundlingmasterview', component: UnboundlingpackageViewComponent },
+    { path: 'expiredbeneficiaryreport', component: ExpiredBeneficiaryRprtComponent },
+    { path: 'multiplesurgerysamedoctor', component: MultipledoctortreatedbysamedoctorComponent },
+    { path: 'CPDPaymentCalculation', component: CpdPaymentCalculationComponent },
+    { path: 'makealivereport', component: MakeAliveBeneficiaryRptComponent },
+    { path: 'expiredbeneficiaryreport/expiredbeneficiarydetails', component: ExpiredbeneficiaryDtlsComponent },
+    { path: 'hospitalspclityqcAppoval', component: HospitalSpecilityQcApprovalComponent },
+    { path: 'oldclaimprocessblockingreport', component: OldclmprocessblockrprtComponent },
+    { path: 'oldclaimprocessdischargereport', component: OldprocessdischargerptComponent },
+    { path: 'hospitalspclityqcAppovalview', component: HospitalSpecialityQcApprovalViewComponent },
+    { path: 'bulkapproverevertAction', component: SnabulkapprovedrevertComponent },
+    { path: 'onedctaggedhospitalreport', component: DctaggedreportComponent },
+    { path: 'userotpconfig', component: UserOtpRequiredComponent },
+    { path: 'claimprocessedaction', component: ClaimProcessedActionComponent },
+    { path: 'urnwisedetailsaction', component: UrnwiseDetailsActionComponent },
+    { path: 'systemadminrejectaction', component: SystemAdminSnaRejectedActionComponent },
+    { path: 'packagecalculator', component: PackagecalculatorComponent },
+    { path: 'hospitalenrollmentactiontakenreport', component: HospitalenrollmentactiontakenreportComponent },
+    { path: 'oldClaimProgressReport', component: OldClaimProgressReportComponent },
+    { path: 'claimDraftView', component: ClaimDraftViewReportComponent },
+    { path: 'cpdempanellist', component: CpdEmpanelRequestListComponent },
+    { path: 'cpdempaneldetails', component: CpdFreshApplicationDetailsComponent },
+    { path: 'cpdempanelview', component: CpdEmpanelViewComponent },
+    { path: 'cpdecardinfo', component: CpdECardInfoComponent },
+    { path: 'cpdempanelapprovelist', component: CpdEmpaneledApprovedListComponent },
+    { path: 'cpdempanelarrovedetails', component: CpdEmpaneledApproveDetailsComponent },
+    { path: 'packagetaggingreport', component: PackageTaggingReportComponent },
+    { path: 'cpdempanelpreview', component: CpdregistrationpreviewdetailspreviewComponent },
+    { path: 'cpdempanelapprovedview', component: CpdEmpaneledViewListComponent },
+    { path: 'cpdpostpayment', component: CpdPostPaymentComponent },
+    { path: 'cpdpostpaymentview', component: CpdPostPaymentViewComponent },
+    { path: 'hosspecialityrequest', component: HospitalSpecialityRequestComponent },
+    { path: 'viewspecialityrequest', component: ViewSpecialityRequestComponent },
+    { path: 'specialitydetails', component: SpecialityRequestDetailsComponent },
+    { path: 'assemblyConstituencyReport', component: AssemblyConstituencyReportComponent },
+    { path: 'outOfpocketexpenditure', component: OutOfPocketExpenditureComponent },
+    { path: 'outOfpocketexpenditureview', component: OutOfPocketExpenditureviewComponent },
+    { path: 'whatsappuserconfiguration', component: WhatsappuserConfigurationComponent },
+    { path: 'whatsappuserconfigurationview', component: WhatsappUserConfigurationViewComponent },
+    { path: 'postmasteradd', component: PostmasterAddComponent },
+    { path: 'postmasterview', component: PostmasterViewComponent },
+    { path: 'onlinepostconfiguration', component: OnlinePostConfigurationComponent },
+    { path: 'onlinepostconfigurationview', component: OnlinePostConfigurationViewComponent },
+    { path: 'draftfloatlist', component: DraftFloatListComponent },
+    { path: 'floatlistceoView', component: FloatlistCeoviewComponent },
+    { path: 'postpaymentupdatenew', component: PostpaymentnewComponent },
+    { path: '1.0Admissionand2.0Discharge', component: OldblockcasesComponent },
+    { path: 'floatlistdetails', component: FloatlistdetailsComponent },
+    { path: 'managedduplicatebenificiary', component: ManagedduplicatedbenbeneficiaryComponent },
+    { path: 'managedduplicatebenificiaryview', component: ManageduplicatebenificaryviewComponent },
+    { path: 'hospitalUIDAuthConfig', component: HospitalUidAuthConfigurationComponent },
+    { path: 'temporarycode', component: TemporaryOverrideCodeComponent },
+    { path: 'temporarycodeview', component: TemporaryOverrideCodeViewComponent },
+    { path: 'hospitalUIDAuthConfigview', component: HospitalUidAuthConfigurationViewComponent },
+    { path: 'CasewiseHospClaimraise', component: NewfreshraisclaimedComponent },
+    { path: 'partialclaimraised', component: PartialClaimSnoapprovalComponent },
+    { path: 'partialclaimsnodetails/forward', component: PartialClaimApprovalDetailsComponent },
+    { path: 'casewiseHospitalclaimSubmit', component: CasewiseHospitalclaimSubmitComponent },
+    { path: 'partialdccompliance', component: PartialClaimDcComplianceComponent },
+    { path: 'partialdccompliance/action', component: PcDcComplianceActionComponent },
+    { path: 'partialclaimreapproval', component: PartialClaimSnoReapprovalComponent },
+    { path: 'partialclaimreapproval/action', component: PcSnoReapprovalActionComponent },
+    { path: 'partialclaimhosnoncom', component: PartialClaimHospitalNoncomplianceComponent },
+    { path: 'partialclaimdcnoncom', component: PartialClaimDcNoncomplianceComponent },
+    { path: 'freshcaseallocation', component: FreshClaimAllocationComponent },
+    { path: 'unassignedclaimlist', component: ManualCpdAllotmentComponent },
+    { path: 'casewiseClaimQueriedByCPD', component: CasewiseHospitalQueriedbycpdComponent },
+    { path: 'CasewiseQueriedbycpdsubmit', component: CasewiseQueriedbycpdsubmitComponent },
+    { path: 'casewiseClaimQueriedBySNA', component: CasewisehospitalqueriedbysnaComponent },
+    { path: 'CasewiseQueriedbysnasubmit', component: CasewiseQueriedbysnasubmitComponent },
+    { path: 'cpdfreshcasedetails', component: CpdfreshcaseDetailsComponent },
+    { path: 'cpdfreshcaseclaimdetails', component: CpdfreshclaimDetailsComponent },
+    { path: 'nonUploadingInitialDocument', component: CasewiseNonUploadingInitialDocumentComponent },
+    { path: 'cpdApprovedCase', component: FreshClaimDetailsComponent },
+    { path: 'cpdcasereconsider', component: CpdCaseReconsiderComponent },
+    { path: 'cpdcasereconsideraction', component: CpdCaseReconsiderActionComponent },
+    { path: 'cpdcaseresettlement', component: CpdCaseResettlementComponent },
+    { path: 'cpdcaseresettlementaction', component: CpdCaseResettlementActionComponent },
+    { path: 'cpdrejectiontohospital', component: CpdrejectiontohospitalComponent },
+    { path: 'cpdApprovedCase', component: FreshClaimDetailsComponent },
+    { path: 'cpdApprovedDeatailsCase', component: FreshClaimCaseDetailsComponent },
+    { path: 'snaApprovalClaimDetails', component: SnaClaimDetailsViewComponent },
+    { path: 'cpdrejectiontohospitalDetails', component: CpdrejectiontohospitaldetailsComponent },
+
+    { path: 'snaCaseResettlement', component: SnaCaseResettlemntComponent },
+    { path: 'snaCaseResettlementDeatils', component: SnaCaseClaimActionResettlementComponent },
+    { path: 'caseDetails', component: CpdrejectiontohospitaldetailsComponent },
+    { path: 'noncompliancecpdquerytohospital', component: NoncompliancecpdquerytohospitalComponent },
+    { path: 'noncompliancesnaquerytohospital', component: NoncompliancesnaquerytohospitalComponent },
+    { path: 'extensionrequest', component: ExtnsnStayApproveListComponent },
+    { path: 'extensionrequestdetails', component: ExtnsnStayAprvDetailsComponent },
+    { path: 'csmDCConfigurationAdd', component: CsmdcconfigurationComponent},
+    { path: 'csmDCConfigurationView', component: CsmdcconfigurationviewComponent},
+    { path: 'ceodashboard', component: CeoDashboardComponent},
+    { path: 'viewextensionapproval', component: ExtensionOfStayViewComponent},
+    { path: 'dcgeoyagconfig', component: DcgeetagconfigComponent},
+    { path: 'usermobiletrackingconfig', component: UsermobiletrackingConfigComponent},
+    { path: 'wardchangerqst', component: WardChangeComponent},
+    { path: 'wardchangerqstdetails', component: WardChangeApvDtlsComponent},
+    { path: 'wardchangerqstview', component: WardChangeApvViewComponent},
+    { path: 'csmdcstateanddistrictmapping', component: CsmdcstatendistrictmappingComponent},
+    { path: 'csmdcstatendistrictmappingview', component: CsmdcstatendistrictmappingviewComponent},
+  ]
+}];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+export class ApplicationRoutingModule { }

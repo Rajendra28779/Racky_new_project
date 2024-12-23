@@ -1,0 +1,157 @@
+<div class="content">
+
+  <div class="form-cointainer">
+      <div class="main-tab">
+          <div class="row justify-content-between">
+              <div class="col-lg-8">
+                  <ul class="nav nav-tabs">
+                      <li class="nav-item">
+                          <a routerLinkActive="active" class="nav-link active">Beneficiary Block Wise Treatment Report</a>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-3 col-xxl-3">
+          District Name : <strong>{{districtName}}</strong>
+          <!-- <p> No. Of RationCard Issued : <strong>{{rationcardno}}</strong></p> -->
+      </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6 col-xxl-6"></div>
+          <div class="col-lg-2 col-xxl-2">
+              <div class="table-utilities float-end">
+                  <button class="btn btn-success btn-sm mx-1 me-2" tooltip="Excel" (click)="downloadReport(1)"><i
+                          class="bi bi-download"></i>
+                  </button>
+                  <!-- <button class="btn btn-danger btn-sm me-1" type="submit" (click)="downloadReport(2)"><i
+                          class="bi bi-file-earmark-pdf"></i></button> -->
+              </div>
+          </div>
+          <div class="col-lg-4 col-xxl-4">
+              <input type="text" id="txtsearchDate" class="form-control" placeholder="Search here...." name="txtsearchDate" [(ngModel)]="txtsearchDate" autocomplete="off">
+          </div>
+      </div>
+      <!-- </div> -->
+
+      <div class="table-responsive" style="margin-top: 1ch;">
+          <table class="table table-striped ">
+              <thead>
+                  <tr>
+                      <th>Sl#</th>
+                      <th class="text-center">Block Name</th>
+                      <th class="text-center">No. Of RationCard Issued</th>
+                      <th class="text-center">Issued Male</th>
+                      <th class="text-center">Issued Female</th>
+                      <th class="text-center">Issued Other</th>
+                      <!-- <th class="text-center">Total Family Member</th> -->
+                      <th class="text-center">Total Claim Treated Cases</th>
+                      <th class="text-center">Unique Beneficiary Treated</th>
+                      <th class="text-center">Total Claim Treated Amount</th>
+                      <th class="text-center">Details</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <ng-container>
+                      <tr *ngFor="let item of getblockdata | filter:txtsearchDate |
+                      paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};index as i">
+                          <td *ngIf="currentPage==1">{{i+1}}</td>
+                          <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+i+1}}</td>
+                          <td class="text-center"><a href="javascript:void(0);" (click)="view(item.districtId,item.blockId,item.districtName,item.blockName)">{{item.blockName}}
+                          </a></td>
+                          <td class="text-center">{{item.benificiary}}</td>
+                          <td class="text-center">{{item.male}}</td>
+                          <td class="text-center">{{item.female}}</td>
+                          <td class="text-center">{{item.other}}</td>
+                          <!-- <td class="text-center">{{item.totalFamilyMember}}</td> -->
+                          <td class="text-center">{{item.totalClaimTreatedcase}}</td>
+                          <td class="text-center">{{item.uniqueBenefCasetreded}}</td>
+                          <td class="text-center">{{item.totalTreatedAmount |currency:'':''}}</td>
+                          <td class="text-center" style="text-align: center;">
+                            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#exampleModal1"
+                                (click)="viewdata(item)">
+                                <i class="bi bi-eye" style="color: blue;"></i>
+                            </a>
+                        </td>
+                      </tr>
+                  </ng-container>
+                  <tr *ngIf="showPegi">
+                      <td><b>Total</b></td>
+                      <td></td>
+                      <td class="text-center"><b>{{sum}}</b></td>
+                      <td class="text-center"><b>{{sum1}}</b></td>
+                      <td class="text-center"><b>{{sum2}}</b></td>
+                      <td class="text-center"><b>{{sum3}}</b></td>
+                      <!-- <td class="text-center"><b>{{sum4}}</b></td> -->
+                      <td class="text-center"><b>{{sum4}}</b></td>
+                      <td class="text-center"><b>{{sum5 }}</b></td>
+                      <td class="text-center"><b>{{sum6 |currency:'':''}}</b></td>
+                      <td class="text-center"></td>
+                  </tr>
+                  <tr *ngIf="!showPegi">
+                      <div class="row">
+                          <span style="color: red;text-align: center;position:absolute">NO DATA
+                          FOUND!!</span>
+                      </div>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+  </div>
+  <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="max-width: 65%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    <!-- <span>{{namedc}} - Tagged Hospitals</span> -->
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+                    <div class="row">
+                        <div class="col-lg-4 col-xxl-4 mb-3">
+                          <div class="mb-xl-3">
+                            District Name:- <b>{{ this.disName}}</b>
+                          </div>
+                        </div>
+                        <div class="col-lg-3 col-xxl-3 mb-3">
+                            <div class="mb-xl-3">
+                                Block Name:- <b> {{ this.blockName}}</b>
+                               </div>
+                        </div>
+                       
+                    <div class="col-lg-5 col-xxl-5 mb-3">
+                        Total No. of Ration card issued:-<b> {{this.benificiary}}</b>
+        
+                    </div>
+                  
+                </div>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            
+                            <th class="text-center">Treated Male </th>
+                            <th class="text-center">Treated Female</th>
+                            <th class="text-center">Treated Others </th> 
+                            <th class="text-center">Treated Male amount</th>
+                            <th class="text-center">Treated female amount </th>
+                            <th class="text-center">Treated others amount </th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                                <td class="text-center">{{this.treatedMale}} </td>
+                                <td class="text-center">{{this.treatedFeMale}} </td>
+                                <td class="text-center">{{this.treatedOther}} </td>
+                                <td class="text-center">{{ this.treatedMaleAmt |currency:'':''}} </td>
+                                <td class="text-center">{{ this.treatedFemaleAmt |currency:'':''}} </td>
+                                <td class="text-center">{{this.treatedOtherAmt |currency:'':''}} </td>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

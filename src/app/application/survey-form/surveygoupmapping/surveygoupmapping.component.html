@@ -1,0 +1,65 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+    <div class="row justify-content-between">
+      <div class="col-lg-4">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a routerLink="/application/surveygroupmapping" routerLinkActive="active" class="nav-link active">Add</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/application/viewsurveygroupmapping" routerLinkActive="active" class="nav-link " style="color: #1f723f;">View</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-5 col-xxl-5">
+      <div class="mb-xl-3">
+        <label class="form-label">Survey Name<span class="text-danger">*</span></label>
+        <ng-autocomplete #auto [data]="surveylist" placeholder="Select Survey Name" (selected)="selectEvent($event)"
+          [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" [searchKeyword]="keyword"
+          spellcheck="false" (inputCleared)="onReset()">
+        </ng-autocomplete>
+        <ng-template #itemTemplate let-item>
+          <a [innerHTML]="item.surveyName"></a>
+        </ng-template>
+        <ng-template #notFoundTemplate let-notFound>
+          <div [innerHTML]="notFound"></div>
+        </ng-template>
+      </div>
+    </div>
+    <div class="col-lg-5 col-xxl-5" *ngIf="showgroup">
+      <div class="mb-xl-3">
+        <label class="form-label">Group Name<span class="text-danger">*</span></label>
+        <div class="table-responsive example-container">
+          <table class="table table-striped mb-0">
+            <caption></caption>
+            <thead style="position: sticky;">
+              <tr>
+                <th>Sl#</th>
+                <th>Group Name</th>
+                <th>Select All
+                  <input type="checkbox" class="me-2 text-center" [checked]="checkall" (click)="allselectitem()">
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let v of grouplist ,index as i">
+                <td>{{(i+1)}}</td>
+                <td>{{v.typeName}}</td>
+                <td style="text-align:center;">
+                  <input type="checkbox" name="enable" id="enable" class="me-2 text-center" [checked]="v.status==0" (click)="selectitem(v)">
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="margin: top 3ch;">
+    <input type="submit" value="Submit" class="btn btn-success" (click)="submit()">&nbsp;&nbsp;
+    <input type="button" value="Reset" class="btn btn-secondary" (click)="Reset()">
+  </div>
+</div>

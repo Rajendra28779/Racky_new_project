@@ -1,0 +1,254 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+      <div class="row justify-content-between">
+          <div class="col-lg-4">
+              <ul class="nav nav-tabs">
+                  <li class="nav-item">
+                      <a routerLink="/application/dbscheduleradd" routerLinkActive="active" class="nav-link " style="color: #1f723f;">Add</a>
+                  </li>
+                  <li class="nav-item">
+                      <a routerLink="/application/dbschedulerview" routerLinkActive="active" class="nav-link active">View</a>
+                  </li>
+                  <li class="nav-item">
+                    <a routerLink="/application/dbschedulerlog" routerLinkActive="active" class="nav-link " style="color: #1f723f;">Log</a>
+                </li>
+              </ul>
+          </div>
+      </div>
+      <div class="content-box">
+        <div class="row">
+          <div class="col-5" style="margin-top: 2ch;">
+            <b>Total : {{totalcount}}</b>
+          </div>
+          <div class="col-2" style="text-align:end ;">
+            <button class="btn btn-success btn-sm mx-1" style="margin-top: 10px" tooltip="Excel" (click)="downloadList(1)">
+          <i class="bi bi-file-earmark-spreadsheet"></i>
+      </button>
+            <button class="btn btn-danger btn-sm mx-1" style="margin-top: 10px" tooltip="pdf" (click)="downloadList(2)">
+            <i class="bi bi-file-earmark-pdf"></i>
+        </button>
+        </div>
+          <div class="col-5">
+            <input type="text " id="txtsearchDate " name="txtsearchDate " [(ngModel)]="txtsearchDate" maxlength="40 "
+              class="form-control " placeholder="Search here...... " autocomplete="off"
+              style=" margin-right: 0px; margin-left: 0px;">
+          </div>
+        </div>
+        <div class="table-responsive" style="margin-top: 1ch;">
+          <table class="table table-striped mb-0">
+            <thead>
+              <tr>
+                <th width="50">Sl#</th>
+                <th>Procedure Name</th>
+                <th>Scheduler Name</th>
+                <th>Running Interval</th>
+                <th>Running Time</th>
+                <th>Remark</th>
+                <th>Status</th>
+                <th>Edit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let v of list | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage},index as i">
+                <td *ngIf="currentPage==1 ">{{(i+1)}}</td>
+                <td *ngIf="currentPage!=1 ">{{(currentPage-1)*pageElement+ i+1}}</td>
+                <td>{{v.procedurename}}</td>
+                <td>{{v.schedularname}}</td>
+                <td>{{v.runninginterval}}</td>
+                <td>{{v.runningtime}}</td>
+                <td style="text-align: center;"><i class="bi bi-info-circle-fill" data-bs-toggle="modal" style="color: #1f723f;"
+                  data-bs-target="#remark" (click)="view(v.proceduredescrioption)"></i></td>
+                <td>{{v.statusflag }}</td>
+                <td> <a class="btn btn-outline-primary btn-sm me-1" (click)="edit(v)">
+                          <i class="bi bi-pencil"></i></a></td>
+              </tr>
+              <tr *ngIf="totalcount==0">
+                <td colspan="10" align="center">
+                  <strong class="text-danger">NO DATA FOUND!!</strong>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div><br>
+        <div class="row" *ngIf="showPegi">
+          <div class="col-sm-4">
+            <div class="col-sm-*">
+              show
+              <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+                <option value="100">100</option>
+                <option value="200">200</option>
+                <option value="300">300</option>
+                <option value={{totalcount}}>All</option>
+              </select> entries
+            </div>
+          </div>
+          <div class="col-sm-8 text-right">
+            <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true"
+              (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)">
+            </pagination-controls>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="remark" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="max-width: 40%;">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">
+                  <span>Remark Description</span>
+              </h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <p style="color: rgb(80, 80, 233);">{{remark}}</p>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal modal-custom-backdrop" id="editscheduler" tabindex="-1" aria-labelledby="exampleModalLabel" style="backdrop-filter: blur(5px);"
+        aria-hidden="true">
+        <div class="modal-dialog " style="max-width: 70%;">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                  <span>Edit Scheduler Details</span>
+              </h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="close()" ></button>
+              </div>
+              <div class="modal-body" style="background-color: rgb(247, 240, 240);">
+                <div class="row">
+                  <div class="col-lg-6 col-xxl-6">
+                      <div class="mb-xl-3">
+                          <label class="form-label">Procedure Name<span class="text-danger">*</span></label>
+                          <input class="form-control" type="text" placeholder="Enter Procedure Name" autocomplete="off" id="procedurename" maxlength="200"
+                          (keypress)="keyPress1($event)" [(ngModel)]="editeddata.procedurename" disabled>
+                      </div>
+                  </div>
+                  <div class="col-lg-6 col-xxl-6">
+                      <div class="mb-xl-3">
+                          <label class="form-label">Scheduler Name<span class="text-danger">*</span></label>
+                          <input class="form-control" type="text" placeholder="Enter Scheduler Name" autocomplete="off" id="schedularname"
+                          (keypress)="keyPress2($event)" maxlength="55" [(ngModel)]="editeddata.schedularname">
+                      </div>
+                  </div>
+                  <div class="col-lg-6 col-xxl-6">
+                    <div class="row">
+                      <div class="col-lg-6 col-xxl-6">
+                        <label class="form-label">Running Interval<span class="text-danger">*</span></label>
+                        <select class="form-select" name="interval" id="runninginterval" [(ngModel)]="editeddata.runninginterval" disabled>
+                        <option value="">--Select-- </option>
+                        <option value="Daily">Daily</option>
+                        <option value="Weakly">Weakly</option>
+                        <option value="Monthly">Monthly</option>
+                        </select>
+                      </div>
+                      <div class="col-lg-6 col-xxl-6">
+                        <label class="form-label">Running time<span class="text-danger">*</span></label>
+                        <div class="input-group">
+                          <input type="text" onkeydown="return false;" class="form-control border-end-0 timepicker" placeholder="Running time" disabled
+                          autocomplete="off" id="runningtime" [(ngModel)]="editeddata.runningtime">
+                          <label class="input-group-text bg-transparent border-start-0" >
+                            <i class="bi bi-clock"></i>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-xxl-6">
+                      <div class="mb-xl-3">
+                          <label class="form-label">Description<span class="text-danger">*</span></label>
+                          <textarea class="form-control"  placeholder="Enter Remark" autocomplete="off" id="proceduredescrioption" maxlength="1000" style="height: 40pt;"
+                          onkeyup="this.value=this.value.replace(/[^0-9.a-zA-Z@/_(), ]/g,'');" #myInput  (keypress)="keyPress($event)" [(ngModel)]="editeddata.proceduredescrioption"></textarea>
+                          <span class="text-danger small">Characters Remaining: {{maxChars - myInput.value.length}}</span>
+                      </div>
+                  </div>
+                  <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                      <label>Status:</label>&nbsp;&nbsp;<br>
+                      <label *ngIf="status==0">
+                          <input type="radio" checked="checked" [checked]="true" (click)="yes($event)"
+                          name="status" id="status">Active &nbsp;&nbsp;
+                          <input type="radio" (click)="no($event)"
+                          name="status" id="status">In-Active
+                      </label>
+
+                      <label *ngIf="status==1">
+                          <input type="radio" (click)="yes($event)"
+                          name="status" id="status">Active &nbsp;&nbsp;
+                          <input type="radio" checked="checked" [checked]="true" (click)="no($event)"
+                          name="status" id="status">In-Active
+                      </label>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-xxl-5" >
+                  <div class="mb-xl-3">
+                    <label class="form-label">Remark<span class="text-danger">*</span></label>
+                    <textarea class="form-control"  placeholder="Enter Remark" autocomplete="off" id="remarks" maxlength="500" style="height: 30pt;"
+                    onkeyup="this.value=this.value.replace(/[^0-9.a-zA-Z@/_(), ]/g,'');" #myInput1  (keypress)="keyPress($event)"></textarea>
+                    <span class="text-danger small">Characters Remaining: {{maxChars1 - myInput1.value.length}}</span>
+                  </div>
+                </div>
+                  <div class="col-lg-3 col-xxl-3" style="margin-top:3ch;text-align:end;">
+                    <button type="button" class="btn btn-success" (click)="update()">Update</button>&nbsp;
+                    <input type="button" value="Cancel" class="btn btn-secondary" (click)="close()">
+                  </div>
+                </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+
+  <!-- Modal -->
+<div class="modal modal-custom-backdrop" id="exampleOtpModal" tabindex="-1" aria-labelledby="exampleModalLabel" style="backdrop-filter: blur(5px);"
+aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-success" id="exampleModalLabel" >Enter OTP<span
+          class="required-asterisk text-danger">
+          *</span></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closemodeal()"></button>
+      </div>
+        <div class="modal-body py-5">
+
+
+            <div class="row">
+                    <div class="iconinput">
+                        <input type="text" class="form-control usertext userinput" id="otpId" name="otpId" maxlength="6"
+                            placeholder="Enter OTP" autocomplete="off"  onkeyup="this.value=this.value.replace(/[^0-9]/g,'');">
+                    </div>
+            </div>
+            <div class="d-flex pt-4 pb-3">
+                <div class="pe-2 text-secondary">
+                    <i class="feather-iconsmartphone text-secondary fs-1-2" id="phoneId"></i>
+                </div>
+                    <input type="text" id="mobileNoId" class="form-control text-secondary p-0 border-0" readonly>
+            </div>
+            <div class="d-flex pt-4 pb-2 position-absolute bottom--10">
+
+                <div class="pe-2 text-secondary">
+                    <p id="timerdivId"><i class="feather-iconclock fs-1-2"></i> Time Left : </p>
+                </div>
+                <div>
+                    <input type="text" id="timeCounter" class="form-control text-danger p-0 border-0" readonly>
+                </div>
+            </div>
+        </div>
+        <!-- <p class="small text-end text-secondary" >
+          <a (click)="backToLogin()">Back to Login &nbsp;  </a>
+        </p> -->
+        <div class="modal-footer d-flex justify-content-center align-items-center">
+            <button type="button" id="sendId" class="btn btn-success" (click)="validateOtp()">Submit</button>
+            <button type="button" id="reSendId" class="btn btn-success" (click)="onResendOtp()">Resend
+                OTP</button>
+        </div>
+    </div>
+</div>
+</div>
+

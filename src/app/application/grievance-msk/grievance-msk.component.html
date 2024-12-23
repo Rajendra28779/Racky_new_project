@@ -1,0 +1,350 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+      <div class="row justify-content-between">
+          <div class="col-12">
+              <ul class="nav nav-tabs">
+                  <li class="nav-item">
+                      <a routerLink="/application/mskgrievance" routerLinkActive="active" class="nav-link active">Add</a>
+                  </li>
+                  <li class="nav-item">
+                    <a routerLink="/application/mskgrievanceview" routerLinkActive="active" class="nav-link " style="color: #1f723f;">View</a>
+                </li>
+              </ul>
+          </div>
+      </div>
+  </div>
+
+  <div class="content-box">
+    <form [formGroup]="group">
+        <div class="row">
+            <div class="col-lg-4 col-xxl-4">
+              <label class="control-label">Grievance by </label><span class="text-danger">*</span>
+              <select class="form-select" name="grivby" id="grivby">
+                <option value=9 selected>Others</option>
+              </select>
+           </div>
+            <div class="col-lg-4 col-xxl-4">
+                <label class="control-label">Grievance Medium</label><span class="text-danger">*</span>
+                <select class="form-select" name="grivmdm" id="grivmdm" (change)="changeGrievanceMedium($event.target.value)">
+                  <option value="" selected>Select</option>
+                  <option *ngFor="let c of grievanceMediumlist" [value]="c.id">{{c.grivancemediumname}}</option>
+              </select>
+            </div>
+            <div class="col-lg-4 col-xxl-4">
+              <label class="control-label">Case Type</label>
+              <div class="row">
+                <div class="col-md-5"><input type="radio" name="casetype" id="casetype1" (click)="case(1,'Complaint')"  class="me-2">Complaint</div>
+                <div class="col-md-6"><input type="radio" name="casetype" id="casetype2" (click)="case(2,'Enquiry')" class="me-2">Enquiry</div>
+                <div class="col-md-5"><input type="radio" name="casetype" id="casetype3" (click)="case(3,'Request')" class="me-2">Request</div>
+                <div class="col-md-6"><input type="radio" name="casetype" id="casetype4" (click)="case(4,'Suggestion')" class="me-2">Suggestion</div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-xxl-4">
+              <label class="control-label">Priority </label><span class="text-danger">*</span><br>
+              <input type="radio" name="priority" id="priority" value="1" [checked]="checkMoSarkar" (click)="priorityType(1,'High')">&nbsp;&nbsp;High &nbsp;&nbsp;
+              <input type="radio" name="priority" id="priority" value="2" [disabled]="checkMoSarkar" (click)="priorityType(2,'Medium')">&nbsp;&nbsp;Medium&nbsp;&nbsp;
+              <input type="radio" name="priority" id="priority" value="3" [disabled]="checkMoSarkar" (click)="priorityType(3,'Low')">&nbsp;&nbsp;Low
+            </div>
+        </div><hr>
+        <h5 style="font-weight: bold; margin-top: 1ch;">Beneficiary Details</h5>
+      <div class="row">
+            <div class="col-lg-4 col-xxl-4">
+              <div class="mb-xl-3">
+                  <label for="EnterFullName" class="form-label">Full Name<span class="text-danger">*</span></label>
+                  <input class="form-control" type="text" placeholder="Enter Full Name" autocomplete="off" id="fullname" maxlength="50"
+                  onkeyup="this.value=this.value.replace(/[^a-zA-Z0-9. ]/g,'');"
+                  (change)="validateName()" >
+              </div>
+            </div>
+            <div class="col-lg-4 col-xxl-4">
+              <label class="control-label">Gender </label><br>
+              <div class="row  mt-2">
+                <div class="col-md-3"><input type="radio" name="gender1" id="gender1" (click)="gender('Male')" class="me-2">Male</div>
+                <div class="col-md-4"><input type="radio" name="gender2" id="gender2" (click)="gender('Female')" class="me-2">Female</div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-xxl-4">
+              <div class="mb-xl-3">
+                  <label class="control-label">Date of Birth</label>
+                  <div class="input-group mt-2">
+                      <input type="text" class="form-control border-end-0 datepicker" formControlName="dob" id="dob" name="dob"
+                       placeholder="Date Of Birth" onkeydown="return false;" autocomplete="off">
+                      <label class="input-group-text bg-transparent border-start-0" for="dob"><i class="iconbsky-calendar"></i> </label>
+                  </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-xxl-4">
+              <div class="mb-xl-3">
+                  <label for="EnterMobileno" class="form-label">Mobile No.</label>
+                  <input class="form-control" type="text" placeholder="Enter Mobile no." autocomplete="off" maxlength="10" id="mobile"
+                  onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" minlength=10 (keyup)=validatePhoneNo()>
+                  <!-- <button *ngIf="showDuration && verifystatus==0" style="margin-top: 5px;" type="submit" class="btn btn-success" (click)="generateotp()">Verify</button>
+                  <p *ngIf="verifystatus==1" for="EnterMobileno" class="text-success"><span class="text-danger">*</span>OTP Verified Sucessfully</p> -->
+              </div>
+            </div>  
+          <div class="col-lg-4 col-xxl-4">
+            <label class="control-label">State Name</label><span class="text-danger">*</span>
+            <div class="mb-xl-3 mt-2">
+            <select class="form-select" name="stateId" id="stateId">
+                <option value="21" selected>Odisha</option>
+            </select></div>
+          </div>
+          <div class="col-lg-4 col-xxl-4">
+            <label class="control-label">District Name<span class="text-danger">*</span></label>
+            <div class="mb-xl-3 mt-2">
+              <select class="form-select" name="districtId" id="districtId" (change)="OnChangeDistrict($event.target.value)">
+                  <option value="">Select District</option>
+                  <ng-container *ngFor="let item of districtList">
+                      <option value={{item.districtcode}}>{{item.districtname}}</option>
+                  </ng-container>
+              </select></div>
+          </div>
+          <div class="col-lg-4 col-xxl-4">
+            <label class="control-label">Block Name</label>
+            <div class="mb-xl-3 mt-2">
+              <select class="form-select" name="blockId" id="blockId">
+              <option value="">Select Block</option>
+                <ng-container *ngFor="let item of blocklist">
+                  <option value={{item.blockcode}}>{{item.blockname}}</option>
+                </ng-container>
+              </select>
+              </div>
+          </div>
+          <div class="col-lg-4 col-xxl-4">
+              <div class="mb-xl-3">
+                  <label for="EnterEmailID" class="form-label">Email ID</label>
+                  <input class="form-control" type="text" placeholder="Enter Email ID" id="email" autocomplete="off" maxlength="100"
+                  (change)=validateEmail() >
+              </div>
+          </div>
+      </div><hr>
+      <h5 style="font-weight: bold; margin-top: 1ch;">Grievance Details</h5>
+      <div class="row">
+            <div class="col-lg-4 col-xxl-4">
+              <label class="control-label">Grievance Type</label><span class="text-danger">*</span>
+              <select class="form-select" id="grivtype">
+                  <option value="" selected>Select Grievance Type</option>
+                  <ng-container *ngFor="let item of grievancetypelist">
+                    <option value={{item.grievancetypeid}} >{{item.grievancetypename}}</option>
+                  </ng-container>
+              </select>
+            </div>
+            <div class="col-lg-4 col-xxl-4">
+              <label class="control-label">Hospital State Name</label><span class="text-danger">*</span>
+              <select class="form-select" name="hospstate" id="hospstate"
+                  (change)="OnChangeState($event.target.value)">
+                  <option value="" selected>Select State</option>
+                  <ng-container *ngFor="let item of stateList">
+                      <option value={{item.stateCode}}>{{item.stateName}}</option>
+                  </ng-container>
+              </select>
+            </div>
+            <div class="col-lg-4 col-xxl-4">
+                <label class="control-label">Hospital District Name</label><span class="text-danger">*</span>
+                <select class="form-select" name="hospdist" id="hospdist"
+                    (change)="OnChangeDistricthosp($event.target.value)">
+                    <option value="" selected>Select District</option>
+                    <ng-container *ngFor="let item of districtListforhosp">
+                        <option value={{item.districtcode}}>{{item.districtname}}</option>
+                    </ng-container>
+                </select>
+            </div>
+            <div class="col-lg-4 col-xxl-4 mt-2">
+                <div class="mb-xl-3 mt-2">
+                  <label class="control-label">Hospital Name</label><ng-container *ngIf="!checkMandatory"><span class="text-danger">*</span></ng-container>
+                <select class="form-select" name="hospital" id="hospital" (change)="onChangeHospital($event.target.value)">
+                    <option value="" selected>Select Hospital</option>
+                    <ng-container *ngFor="let item of hospitalList">
+                        <option value={{item.hospitalCode}}>{{item.hospitalName}}</option>
+                    </ng-container>
+                </select></div>
+            </div>
+            <ng-container *ngIf="checkNewsPaper">
+              <div class="col-lg-4 col-xxl-4 mt-2">
+                <div class="mb-xl-3 mt-2">
+                  <label class="control-label">DC Name</label><span class="text-danger">*</span>
+                <select class="form-select" name="dcId" id="dcId">
+                    <option value="" selected>Select</option>
+                    <ng-container *ngFor="let item of dcList">
+                        <option value={{item.userId}}>{{item.fullName}}</option>
+                    </ng-container>
+                </select></div>
+            </div>
+            </ng-container>
+            <div class="col-lg-4 col-xxl-4 mt-2">
+              <div class="mb-xl-3 mt-2">
+                  <label for="User Address" class="control-label">Grivance Description</label>
+                  <textarea class="form-control"  placeholder="Enter Grivance Description" autocomplete="off" id="desc" maxlength="250" style="height: 30pt;"
+                      onkeyup="this.value=this.value.replace(/[^0-9.a-zA-Z@/_(), ]/g,'');" #myInput (keypress)="keyPress($event)"></textarea>
+                  <span class="text-danger small">Characters Remaining: {{maxChars - myInput.value.length}}</span>
+              </div>
+            </div>
+            <ng-container *ngIf="checkMoSarkar">
+              <div class="col-lg-4 col-xxl-4 mt-2">
+                <div class="mb-xl-3 mt-2">
+                  <label class="control-label">Citizen Feedback </label><span class="text-danger">*</span>
+                  <div class="row mt-2">
+                    <div class="col-md-5"><input type="radio" name="feedback" id="feedback1" (click)="citizen('Outstanding')"
+                        class="me-1">Outstanding</div>
+                    <div class="col-md-3"><input type="radio" name="feedback" id="feedback2" (click)="citizen('Good')"
+                        class="me-1">Good</div>
+                    <div class="col-md-3"><input type="radio" name="feedback" id="feedback3" (click)="citizen('Poor')"
+                        class="me-1">Poor</div>
+                    <div class="col-md-5"><input type="radio" name="feedback" id="feedback4" (click)="citizen('Average')"
+                        class="me-2">Average</div>
+                    <div class="col-md-6"><input type="radio" name="feedback" id="feedback5" (click)="citizen('Very Poor')"
+                        class="me-2">Very Poor</div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+            <div class="col-lg-4 col-xxl-4">
+              <div class="mb-xl-3" [hidden]="!checkMoSarkar">
+                  <label class="control-label">Date of service taken</label><span class="text-danger">*</span>
+                  <div class="input-group mt-2">
+                      <input type="text" class="form-control border-end-0 datepicker" id="servicedate" name="servicedate"
+                      placeholder="Enter Service Taken Date" onkeydown="return false;" formControlName="servicedate" autocomplete="off">
+                      <label class="input-group-text bg-transparent border-start-0" for="servicedate"><i class="iconbsky-calendar"></i> </label>
+                  </div>
+              </div>
+            </div>   
+      </div><hr>
+      <h5 style="font-weight: bold; margin-top: 1ch;">Upload Files</h5>
+        <div class="row">
+          <div class="col-lg-4 col-xxl-4">
+            <label class="control-label">Upload Supporting Document</label><span class="text-danger">*</span>
+            <div class="file-upload mb-xl-4 text-center ">
+              <div class="file-upload-content">
+                  <a class="btn btn-danger  text-white btn-sm remove-img"><i
+                          class="fas fa-times"></i></a>
+                  <img class="file-upload-image" src="#" alt="your image" />
+              </div>
+              <div class="image-upload-wrap rounded">
+                  <input class="file-upload-input"  id="grivdoc" type='file'  accept=".pdf,.jpeg,.jpg,.png,.docx" onCut="return false " onDrag="return false " onDrop="return false " (change)="handleFileInput($event)">
+                  <div class="drag-text" *ngIf="!flag">
+                    <h5><i class="iconbsky-upload-icon d-block fs-4"></i><span class="text-danger">Drag or select a file to upload </span>
+                    </h5>
+                </div>
+                <div class="drag-text" *ngIf="flag">
+                  <h5><i class="iconbsky-upload-icon d-block fs-4"></i><span class="text-danger">{{fileToUpload.name}}</span></h5>
+              </div>
+              </div>
+              <span class="text-danger" style="font-size:15px;">1 file upto 5 mb or less (pdf,jpeg,jpg,png,docx)</span>
+          </div>
+          </div>
+          <div class="col-lg-4 col-xxl-4" >
+            <label class="control-label">Upload Audio/Video</label>
+            <div class="file-upload mb-xl-4 text-center ">
+              <div class="file-upload-content">
+                  <a class="btn btn-danger  text-white btn-sm remove-img"><i
+                          class="fas fa-times"></i></a>
+                  <img class="file-upload-image" src="#" alt="your image" />
+              </div>
+              <div class="image-upload-wrap rounded">
+                  <input class="file-upload-input"  id="vdodoc" type='file' accept=".mp4,.mp3"  onCut="return false " onDrag="return false " onDrop="return false " (change)="handleFileInput1($event)">
+                  <div class="drag-text" *ngIf="!flag1">
+                    <h5><i class="iconbsky-upload-icon d-block fs-4"></i><span class="text-danger">Drag or select a file to upload </span>
+                    </h5>
+                </div>
+                <div class="drag-text" *ngIf="flag1">
+                  <h5><i class="iconbsky-upload-icon d-block fs-4"></i><span class="text-danger">{{fileToUpload1.name}}</span>
+                  </h5>
+              </div>
+              </div>
+              <span class="text-danger" style="font-size:15px;">1 file upto 30 mb or less (video,audio)</span>
+          </div>
+          </div>
+          <div class="col-lg-4 col-xxl-4">
+            <input type="button" class="btn btn-primary mt-4" value="Add More" [disabled]="addmorebtn" (click)="addmoredoc()">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12 col-xxl-12" *ngIf="filelist.length!=0">
+            <div class="main-tab">
+                  <div class="table-responsive">
+                      <table aria-describedby="mydesc" class="table table-striped" mb-0>
+                          <thead>
+                              <tr>
+                                  <th>Sl No</th>
+                                  <th>Upload Supporting Document</th>
+                                  <th>Upload Audio/Video</th>
+                                  <th style="text-align: center;">Remove</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr *ngFor="let item of filelist; index as i">
+                                  <td>{{i+1}}</td>
+                                  <td><i class="bi bi-arrow-down" (click)="downlorddoc(item.docfile)"></i>{{item.docname}}</td>
+                                  <td *ngIf="item.vdoname!=''"> <i class="bi bi-arrow-down" (click)="downlorddoc(item.vdofile)"></i>{{item.vdoname}}</td>
+                                  <td *ngIf="item.vdoname==''"> {{item.vdoname}}</td>
+                                  <td style="text-align: center;">
+                                      <a class="btn btn-outline-danger btn-sm me-1" (click)="remove(item)">
+                                          <i class="bi bi-trash3"></i>
+                                      </a>
+                                  </td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </div>
+          </div>
+          </div>
+        </div><hr>
+        <div class="row">
+          <h5 style="font-weight: bold; margin-top: 1ch;">Declaration</h5>
+          <div class="col-lg-12 col-xxl-12">
+            <input type="checkbox" name="declear" id="declear" class="me-2" [checked]="declea" (click)="declear($event)"> I hereby state that the facts mentioned above are true to best of my knowledge and belief.
+          </div>
+        </div><hr>
+            <div class="mt-2">
+                <div class="d-grid gap-2 d-md-flex" style="text-align:end ;">
+                    <button type="submit" class="btn btn-success" (click)="sabmit()">Submit</button>
+                    <button type="reset" class="btn btn-secondary" (click)="ResetField()">Reset</button>
+                </div>
+            </div>
+          </form>
+    </div>
+</div>
+<div class="modal " id="exampleOtpModal" style="backdrop-filter: blur(5px);" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title text-success" id="exampleModalLabel">Enter OTP<span
+                      class="required-asterisk text-danger">
+                      *</span></h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                  (click)="closemodeal()"></button>
+          </div>
+          <div class="modal-body py-5">
+
+
+              <div class="row">
+                  <div class="iconinput">
+                      <input type="text" class="form-control usertext userinput" id="otpId" name="otpId"
+                          maxlength="6" placeholder="Enter OTP" autocomplete="off"
+                          onkeyup="this.value=this.value.replace(/[^0-9]/g,'');">
+                  </div>
+              </div>
+              <div class="d-flex pt-4 pb-3">
+                  <div class="pe-2 text-secondary">
+                      <i class="feather-iconsmartphone text-secondary fs-1-2" id="phoneId"></i>
+                  </div>
+                  <input type="text" id="mobileNoId" class="form-control text-secondary p-0 border-0" readonly>
+              </div>
+              <div class="d-flex pt-4 pb-2 position-absolute bottom--10">
+
+                  <div class="pe-2 text-secondary">
+                      <p id="timerdivId"><i class="feather-iconclock fs-1-2"></i> Time Left : </p>
+                  </div>
+                  <div>
+                      <input type="text" id="timeCounter" class="form-control text-danger p-0 border-0" readonly>
+                  </div>
+              </div>
+          </div>
+          <div class="modal-footer d-flex justify-content-center align-items-center">
+              <button type="button" id="sendId" class="btn btn-success" (click)="validateOtp()">Submit</button>
+              <button type="button" id="reSendId" class="btn btn-success" (click)="onResendOtp()">Resend
+                  OTP</button>
+          </div>
+      </div>
+  </div>
+</div>

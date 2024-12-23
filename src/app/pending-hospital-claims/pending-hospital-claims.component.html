@@ -1,0 +1,149 @@
+<div class="content">
+  <div class="container-fluid p-0">
+    <div class="form-cointainer">
+      <div class="main-tab">
+        <div class="row justify-content-between">
+          <div class="col-lg-12">
+            <ul class="nav nav-tabs">
+              <li class="nav-item">
+                <a routerLinkActive="active" class="nav-link active">Pending Hospital Claims Not Verified Since {{days}} Days</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-box">
+
+        <div class="col-xxl-12" *ngIf="actionCode == 2">
+          <div class="row">
+
+            <div class="col-lg-3 col-xxl-3">
+              <div class="mb-xl-3">
+                <label class="control-label">Hospital Name</label>
+                <select class="form-select" name="hospitalCode" id="hospitalCode">
+                  <ng-container *ngIf="hospitalList">
+                    <option value="">Select Hospital</option>
+                    <option *ngFor="let item of hospitalList" value="{{item.hospitalCode}}">{{item.hospitalName}}</option>
+                  </ng-container>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-lg-3 col-xxl-3">
+              <div class="mb-xl-3">
+                <label class="control-label">Days</label>
+                <select class="form-select" name="days" id="days" [(ngModel)]="days">
+                  <option *ngFor="let day of daysOptions" [value]="day">{{ day }} Day{{ day > 1 ? 's' : '' }}</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-lg-3 col-xxl-3">
+              <div class="mb-xl-3">
+                <label class="control-label"></label>
+                <div class="input-group">
+                  <button type="submit" class="btn btn-success" (click)="searchFilter()">Search</button>
+                  <button type="submit" class="btn btn-secondary" (click)="ResetField()" style="margin-left: 1rem;">Reset</button>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="col-lg-3 col-xxl-3">
+              <div class="mb-xl-3">
+              </div>
+            </div>
+
+            <div class="col-lg-4 col-xxl-4">
+              <div class="mb-xl-3">
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col-lg-5 col-xxl-5" style="padding-top: 10px;">
+            <b style="padding-left: 7px;">Total Claims Pending : <span style="color: #048020">{{totalClaimsCount}}</span></b>
+          </div>
+          <div class="col-lg-4 col-xxl-4" align="right">
+            <button class="btn btn-success btn-sm mx-1" style="margin-top: 1px;" (click)="downloadReport('excel')">
+              <i class="bi bi-file-earmark-excel" style="font-size: 13pt;"></i>
+            </button>
+            <button class="btn btn-danger btn-sm mx-1" style="margin-top: 1px;" (click)="downloadReport('pdf')">
+              <i class="bi bi-file-earmark-pdf" style="font-size: 13pt;"></i>
+            </button>
+          </div>
+          <div class="col-lg-3 col-xxl-3">
+            <div class="input-group">
+              <input type="text" id="txtsearchDate" class="form-control" placeholder="Search here" name="txtsearchDate"
+                     [(ngModel)]="txtSearch">
+            </div>
+          </div>
+        </div>
+        <div class="row" style="height: 10pt;"></div>
+        <div class="row">
+          <div class="table-responsive">
+            <table class="table table-striped mb-0">
+
+              <thead>
+              <tr>
+                <th>Sl No.</th>
+                <th>Claim No.</th>
+                <th>Case No.</th>
+                <th>URN</th>
+                <th>Hospital Name</th>
+                <th>Package Code</th>
+                <th>Actual Date Of Admission</th>
+                <th>Actual Date Of Discharge</th>
+                <th>Pending For</th>
+              </tr>
+              </thead>
+
+              <tbody>
+              <tr *ngFor="let item of pendingHospitalClaims| filter:txtSearch | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage}; index as i">
+                <td>{{i + 1}}</td>
+                <td>{{item.claimNo}}</td>
+                <td>{{item.caseNo}}</td>
+                <td>{{item.urn}}</td>
+                <td>{{item.hospitalName}}</td>
+                <td title="{{item.packageName}}" class="bold-on-hover">{{item.packageCode}}</td>
+                <td>{{item.actualDateOfAdmission | date: 'dd-MMM-yyyy'}}</td>
+                <td>{{item.actualDateOfDischarge | date: 'dd-MMM-yyyy'}}</td>
+                <td>{{item.claimStatus}}</td>
+              </tr>
+
+              <tr *ngIf="pendingHospitalClaims.length==0">
+                <td colspan="9" align="center">
+                  <strong class="text-danger">No Data Found!</strong>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top: 20px;" *ngIf="showPagination">
+    <div class="col-sm-6">
+      <div class="col-sm-*">
+        show
+        <select id="pageItem" name="pageItem" class="custom-select-sm" (change)="pageItemChange($event)">
+          <option value="10" selected>20</option>
+          <option value="50" >50</option>
+          <option value="100">100</option>
+          <option value="250">250</option>
+          <option value="500">500</option>
+          <option value="{{pendingHospitalClaims}}">ALL</option>
+        </select> entries
+      </div>
+    </div>
+    <div class="col-sm-6" style="text-align: right">
+      <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true" (pageChange)="currentPage = $event" (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+    </div>
+  </div>
+</div>

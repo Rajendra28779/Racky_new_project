@@ -1,0 +1,19 @@
+[
+    {
+      "pagetitle":"Add Menu ",
+      "tabList":[
+        {"tabName":"View","tabUrl":"../viewmenu"},
+        {"tabName":"Add","tabUrl":"../menu","tabClass":"active add d-none"},
+        {"tabName":"Edit","tabUrl":"","tabClass":"active edit d-none"}
+       
+        ],
+      "utils":[
+        {"utilName":"mandatory"}
+       
+       
+        ]
+      
+    }
+  ]
+
+

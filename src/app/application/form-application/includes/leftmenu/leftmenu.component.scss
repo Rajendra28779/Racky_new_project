@@ -1,0 +1,242 @@
+
+
+ 
+//   .sidemenu-container{
+ 
+//       .navbar-brand {
+//          display: block;
+//          text-align: center;
+//          margin: 0;
+//          display: flex;
+//          flex-flow: column;
+//          border-bottom: 0px solid #272727;
+//          padding: 1.5rem 1rem;
+//          background:var(--base-color-800);
+//         align-items:center;
+       
+//          img {
+             
+//               max-width: fit-content;
+//                @media screen and (min-width:768px) {
+//                 max-width: fit-content;
+//                }
+//          }
+        
+//           p{
+//             margin-bottom: 0;
+//             color: var(--bs-gray-200);
+//             text-transform: uppercase;
+//             font-size: 1rem;
+//             margin-top: 0.6rem;
+//             letter-spacing: 6px;
+//           } 
+//       }
+//       .navbar {
+//           padding:.4em;
+//           overflow: hidden;
+//           max-height: 85vh;
+//           overflow: hidden;
+//           overflow-y: auto;
+//           align-items: flex-start;
+//           .navbar-nav {
+            
+//               .nav-item {
+//                 border-radius:5px;
+//                  margin-bottom: 1px;
+//                  overflow: hidden;
+
+//                   .nav-link {
+//                     padding: 0.5rem 0.6rem;
+                      
+//                      color:var(--bs-gray-200);
+//                      border-radius:0;
+//                      display: flex;
+//                      align-items: center;
+//                      justify-content: flex-start;
+                     
+//                      border-left: 0px solid rgba(0,0,0,0);    
+//                       span {
+//                           display: inline-block;
+//                           font-size:.9rem;
+//                       }
+//                       i {
+//                           margin-right: .6rem;
+//                           display: inline-block;
+//                           color:var(--base-color-300);
+//                           font-size: 1.4rem;
+//                           border: 1px solid var(--base-color-600);
+//                           border-radius: 4px;
+//                           span{
+//                            font-size: 1.5rem;
+//                           }
+//                       }
+//                       &:hover,
+//                       &:focus {
+//                            color: var(--bs-gray-200);
+//                           background: var(--base-color-700); 
+                              
+//                               border-left-color: #ff9800;
+//                               i{
+//                               color:second-color;
+//                               }
+//                       }
+                  
+//                       &.dropdown-indicator {
+//                           position: relative;
+//                           background: var(--base-color-800); 
+//                           color:var(--bs-gray-200);
+
+// &:after {
+//     border: 0px;
+//     margin: 0px;
+//       content: '\ef13';
+//       position: absolute;
+//       right: 15px;
+//       font-family: icons;
+//       font-size: 0.8rem;
+//           top: 50%;
+//            transition:all ease-in-out .2s;
+//            transform: rotate(90deg) translateY(8%) translateX(5%);
+  
+     
+//       top: 15px;
+// }      
+
+//                       }
+//                       &.collapsed{ 
+//                         background: transparent; 
+//                        // color:var(--bs-gray-200);
+//                         &:after {
+//                        border: 0px;
+//                        margin: 0px;
+//                          content: '\ef13';
+//                          position: absolute;
+//                          right: 15px;
+//                          font-family: icons;
+//                          font-size: 0.8rem;
+//                              top: 50%;
+//                               transition:all ease-in-out .2s;
+//                             transform: translateY(-50%) ;
+//                      }
+                   
+                   
+//                    }
+//                       @media screen and (min-width:768px) {
+//                         font-weight: 400;
+                        
+//                        }
+//                   }
+//                   &.active {
+//                       .nav-link {
+//                           color: var(--white);
+//                           background: var(--base-color-700); 
+//                             border-left-color: #ff9800;
+//                             &.dropdown-indicator {
+                               
+//                                 background: var(--base-color-800); 
+                                
+//                             }
+                         
+//                       }
+//                   }
+//                   .sub-menu {
+//                       margin: 0;
+                      
+//                       padding: 0;
+//                       border-radius: 0;
+//                       border: 0;
+                      
+//                       padding-left:1.8rem;
+//                       position: relative;
+                     
+//                      border-bottom: 0px solid #f2f2f2;
+//                      border-left:0px solid #ff9800;
+//                       background: var(--base-color-800);
+//                          overflow: hidden;
+//                          max-height: 300px;
+//                          overflow: hidden;
+//                          overflow-y: auto;
+
+//                       .dropdown-item {
+//                           padding: .6rem 1rem;
+//                           margin-bottom: 0;
+//                           position: relative;
+//                           font-size: .8rem;
+//                           color:#dedede;
+//                           border-radius:0;
+//                           border-left:0px solid transparent;
+//                           white-space: pre-wrap;
+//                               &:before{
+//                                 content: "";
+//                                 width: 1px;
+//                                 background: var(--base-color-700);
+//                                 position: absolute;
+//                                 left: -7px;
+//                                 top: 0px;
+//                                 bottom: 0;
+                             
+//                               }
+//                           &:hover,&:focus {
+//                               color:#ff9800;
+//                              background:transparent;
+                              
+//                           }
+//                          &.active{
+//                              color:#ff9800;
+//                                background:transparent;
+ 
+                                
+//                          }
+                        
+                        
+                       
+//                       }
+                     
+ 
+                       
+                       
+//                   }
+              
+//               }
+//           }
+//       }
+//   }
+//   footer {
+//     position:absolute;
+//     bottom: 0;
+//     right: 0;
+//     padding:.5rem 1rem;
+//     background:transparent;
+//     left: 0;
+//     box-shadow:none;
+//     text-align:center;
+//     color:var(--bs-gray-200);
+       
+//     p {
+//         margin-bottom: 0;
+//         font-size: .8rem;
+//     }
+// }
+// @media screen and (min-width:992px) {
+//   /* width */
+//  .sidemenu-container .navbar::-webkit-scrollbar, .sidemenu-container .sub-menu::-webkit-scrollbar {
+//     width: 6px;
+//   }
+  
+//   /* Track */
+//    .sidemenu-container .navbar::-webkit-scrollbar-track,  .sidemenu-container .sub-menur::-webkit-scrollbar-track {
+//     box-shadow: inset 0 0 5px rgba(0,0,0,0); 
+//     border-radius: 0px;
+//   }
+   
+//   /* Handle */
+//    .sidemenu-container .navbar::-webkit-scrollbar-thumb,.sidemenu-container .sub-menu::-webkit-scrollbar-thumb {
+//     background: rgba(0,0,0,.2); 
+//     border-radius: 0px;
+//   }
+  
+//   /* Handle on hover */
+//    .sidemenu-container .navbar::-webkit-scrollbar-thumb:hover,   .sidemenu-container .sub-menu::-webkit-scrollbar-thumb:hover {
+//     background: var(--white-theme-color); 
+//   }
+// }

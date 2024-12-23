@@ -1,0 +1,133 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+      <div class="row justify-content-between">
+          <div class="col-lg-4">
+              <ul class="nav nav-tabs">
+                  <li class="nav-item">
+                      <a routerLink="/application/dbscheduleradd" routerLinkActive="active" class="nav-link " style="color: #1f723f;">Add</a>
+                  </li>
+                  <li class="nav-item">
+                      <a routerLink="/application/dbschedulerview" routerLinkActive="active" class="nav-link " style="color: #1f723f;">View</a>
+                  </li>
+                  <li class="nav-item">
+                    <a routerLink="/application/dbschedulerlog" routerLinkActive="active" class="nav-link active" >Log</a>
+                </li>
+              </ul>
+          </div>
+      </div>
+
+      <div class="content-box">
+        <div class="row">
+          <div class="col-lg-4 col-xxl-4">
+            <div class="mb-xl-3">
+              <label class="control-label">Scheduler Name<span class="text-danger">*</span></label>
+              <div class="input-group">
+                <select class="form-select" name="schedular" id="schedular">
+                  <option value="" disabled selected>Select Schedular Name</option>
+                  <ng-container *ngFor="let v of schedulerlist">
+                    <option value={{v.id}}>{{v.schedularname}}</option>
+                  </ng-container>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-xxl-4" style="margin-top:2ch;">
+            <div class="d-grid gap-2 d-md-flex">
+                <button type="submit" class="btn btn-success" (click)="search()">Search</button>
+                <button type="reset" class="btn btn-secondary" (click)="ResetField()">Reset</button>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <div class="row" *ngIf="showdata">
+          <div class="col-6">
+            <b>Procedure Name : {{schedulername?.procedurename}}</b>
+          </div>
+          <div class="col-6">
+            <b>Scheduler Name : {{schedulername?.schedularname}}</b>
+          </div>
+          <div class="col-6" style="margin-top: 1ch;">
+            <b>Current Status : {{schedulername?.statusflag}}</b>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-3" style="margin-top: 2ch;" >
+            <div class="col-sm-*" *ngIf="showPegi">
+              show
+              <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+                <option value="100">100</option>
+                <option value="200">200</option>
+                <option value="300">300</option>
+                <option value={{totalcount}}>All</option>
+              </select> entries
+            </div>
+          </div>
+          <div class="col-3" style="margin-top: 2ch;">
+            <b>Total : {{totalcount}}</b>
+          </div>
+          <div class="col-2" style="text-align:end ;">
+            <button class="btn btn-success btn-sm mx-1" style="margin-top: 10px" tooltip="Excel" (click)="downloadList(1)">
+          <i class="bi bi-file-earmark-spreadsheet"></i>
+      </button>
+            <button class="btn btn-danger btn-sm mx-1" style="margin-top: 10px" tooltip="pdf" (click)="downloadList(2)">
+            <i class="bi bi-file-earmark-pdf"></i>
+        </button>
+        </div>
+          <div class="col-4">
+            <input type="text " id="txtsearchDate " name="txtsearchDate " [(ngModel)]="txtsearchDate" maxlength="40 "
+              class="form-control " placeholder="Search here...... " autocomplete="off"
+              style=" margin-right: 0px; margin-left: 0px;">
+          </div>
+        </div>
+        <div class="table-responsive" style="margin-top: 1ch;">
+          <table class="table table-striped mb-0">
+            <thead>
+              <tr>
+                <th width="50">Sl#</th>
+                <th>Scheduler Name</th>
+                <th>Updated By</th>
+                <th>Updated On</th>
+                <th>Remark</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let v of list | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage},index as i">
+                <td *ngIf="currentPage==1 ">{{(i+1)}}</td>
+                <td *ngIf="currentPage!=1 ">{{(currentPage-1)*pageElement+ i+1}}</td>
+                <td>{{v.schedulerName}}</td>
+                <td>{{v.createdName}}</td>
+                <td>{{v.createdOn}}</td>
+                <td>{{v.remark}}</td>
+                <td>{{v.status }}</td>
+              </tr>
+              <tr *ngIf="totalcount==0">
+                <td colspan="10" align="center">
+                  <strong class="text-danger">NO DATA FOUND!!</strong>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div><br>
+        <div class="row" *ngIf="showPegi">
+          <div class="col-sm-4">
+            <div class="col-sm-*">
+              show
+              <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+                <option value="100">100</option>
+                <option value="200">200</option>
+                <option value="300">300</option>
+                <option value={{totalcount}}>All</option>
+              </select> entries
+            </div>
+          </div>
+          <div class="col-sm-8 text-right">
+            <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true"
+              (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)">
+            </pagination-controls>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>

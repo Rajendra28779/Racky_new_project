@@ -1,0 +1,137 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/notConnectedadd" routerLinkActive="active" class="nav-link">Add</a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/application/notConnectedview" routerLinkActive="active"
+                            class="nav-link active">View</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-4 col-xxl-4"></div>
+            <div class="col-lg-4 col-xxl-4">
+                <div class="input-group">
+                    <button class="btn btn-outline-success btn-sm me-3" type="submit" (click)="downloadList()">
+                        <i class="bi bi-download"></i>
+                    </button>
+                    <input type="text" id="txtsearchDate" class="form-control" placeholder="Search" name="txtsearchDate"
+                        autocomplete="off" [(ngModel)]="txtsearchDate">
+                </div>
+            </div>
+        </div>
+        <div class="content-box mt-3">
+            <div class="table-responsive card">
+              <div class="row mt-2" *ngIf="showPegi">
+                <div class="col-sm-4">
+                    <div class="col-sm-*">
+                        show
+                        <select id="pageItem" name="pageItem" class="custom-select-sm"[(ngModel)]="pageElement">
+                          <option value="100">100</option>
+                          <option value="200">200</option>
+                          <option value="300">300</option>
+                          <option value={{record}}>All</option>
+                        </select> entries
+                    </div>
+                </div>
+              </div>
+                <table class="table table-striped table-sm">
+                    <thead>
+                        <tr>
+                            <th width="50">Sl#</th>
+                            <th width="350">Mobile No. Active Status</th>
+                            <th width="350">Call Response Category</th>
+                            <th width="250">URN</th>
+                            <!-- <th width="50">Transaction ID</th> -->
+                            <!-- <th width="100">Invoice No.</th> -->
+                            <th width="200">Patient Name</th>
+                            <th width="100">Patient Phone No.</th>
+                            <th width="200">Alternate Phone No.</th>
+                            <th width="100">Not Connected Attempt Count</th>
+                            <th width="100">District Name</th>
+                            <th width="50">Block Name</th>
+                            <!-- <th width="50">Panchayat Name</th> -->
+                            <!-- <th width="50">Village Name</th> -->
+                            <th width="250">Allotted Date</th>
+                            <th width="50">Date Of Admission</th>
+                            <!-- <th width="50">Total Amount Blocked</th> -->
+                            <th width="50">Hospital District</th>
+                            <th width="200">Hospital Name</th>
+                            <!-- <th width="50">Procedure Name</th> -->
+                            <!-- <th width="250">Package Name</th> -->
+                            <!-- <th width="200">Case No.</th> -->
+                            <th width="200">Question 1</th>
+                            <th width="200">Question 2</th>
+                            <th width="200">Question 3</th>
+                            <th width="200">Question 4</th>
+                            <th width="200">Remarks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngIf="!cceNotConnectedView?.length">
+                            <td colspan="13" class="text-center"><strong class="text-danger">No data
+                                    found</strong></td>
+                        </tr>
+                        <tr *ngFor="let ccee of cceNotConnectedView | filter:txtsearchDate | paginate: {id: 'listing_pagination',
+                                itemsPerPage: pageElement, currentPage: currentPage}; index as i">
+                            <td *ngIf="currentPage==1">{{i+1}}</td>
+                            <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+ i+1}}</td>
+                            <!-- <td>
+                                <span *ngIf="ccee.status == 1">Yes</span>
+                                <span *ngIf="ccee.status == 2">No</span>
+                                <span *ngIf="ccee.status == 3">Not Connected</span>
+                            </td> -->
+                            <td>{{ccee.status}}</td>
+                            <td>{{ccee.categoryName}}</td>
+                            <td>{{ccee.urn}}</td>
+                            <!-- <td>{{ccee.transactionId}}</td> -->
+                            <!-- <td>{{ccee.invoice}}</td> -->
+                            <td>{{ccee.patientName}}</td>
+                            <td>{{ccee.patientContactNumber}}</td>
+                            <td>{{ccee.alternatePhoneno}}</td>
+                            <td>{{ccee.attemptCount}}</td>
+                            <td>{{ccee.districtName}}</td>
+                            <td>{{ccee.blockName}}</td>
+                            <!-- <td>{{ccee.panchayatName}}</td> -->
+                            <!-- <td>{{ccee.villageName}}</td> -->
+                             <td>{{ccee.allottedDate}}</td>
+                            <td>{{ccee.admissionDate | date:'dd-MMM-yyyy'}}</td>
+                            <!-- <td>{{ccee.totalAmoutClaimed}}</td> -->
+                            <td>{{ccee.hospitalDistrict}}</td>
+                            <td>{{ccee.hospitalName}}</td>
+                            <!-- <td>{{ccee.procedureName}}</td> -->
+                            <!-- <td>{{ccee.packageName}}</td> -->
+                            <!-- <td>{{ccee.caseNo}}</td> -->
+                            <td>{{ccee.question1Response}}</td>
+                            <td>{{ccee.question2Response}}</td>
+                            <td>{{ccee.question3Response}}</td>
+                            <td>{{ccee.question4Response}}</td>
+                            <td>{{ccee.executiveRemarks}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row mt-2" *ngIf="showPegi">
+            <div class="col-sm-4">
+                <div class="col-sm-*">
+                    show
+                    <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+                      <option value="100">100</option>
+                      <option value="200">200</option>
+                      <option value="300">300</option>
+                      <option value={{record}}>All</option>
+                    </select> entries
+                </div>
+            </div>
+            <div class="col-sm-8 text-right">
+                <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true"
+                    (pageChange)="currentPage = $event" class="text-end"
+                    (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>

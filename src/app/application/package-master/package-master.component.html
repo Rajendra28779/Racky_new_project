@@ -1,0 +1,88 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item" *ngIf="isSaveData">
+                        <a routerLink="/application/addpackage" routerLinkActive="active" class="nav-link active">Add</a>
+                    </li>
+                    <li class="nav-item" *ngIf="!isSaveData">
+                        <a routerLink="/application/addpackage" routerLinkActive="active" class="nav-link active">Update</a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/application/viewpackage" routerLinkActive="active" class="nav-link" style="color: #1f723f;">View</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-6 ">
+                <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+            </div>
+            <div class="content-box">
+                <div class="row">
+                    <form [formGroup]="packageMaster" autocomplete="off" id="subUpdate">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                    <label for="procedureCode" class="form-label">Procedure Code:<span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="procedureCode" maxlength="10"
+                                        name="procedureCode" [(ngModel)]="packageUpdate.procedureCode"
+                                        formControlName="procedureCode" placeholder="Enter Procedure Code"
+                                        onkeyup="this.value=this.value.replace(/[^A-Z]/g,'');"
+                                        oninput="this.value = this.value.toUpperCase()" (keyup)="keyfunction1($event.target)"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                        <div class="mb-3">
+                                        <label for="procedures" class="form-label">Procedure Name:<span
+                                        class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="procedures" maxlength="100"
+                                        name="procedures" [(ngModel)]="packageUpdate.procedures" 
+                                        formControlName="procedures" placeholder="Enter Procedure Name"
+                                        onkeyup="this.value=this.value.replace(/[^0-9.a-zA-Z&/_()- ]/g,'');"
+                                        (keyup)="keyfunction2($event.target)"/> 
+                                        </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div>
+                                    <div class="col-lg-4" *ngIf="!isSaveData">
+                                    <div class="mb-3">
+                                        <label>Status:</label>&nbsp;&nbsp;
+                                        <label *ngIf="statusFlag==0">
+                                            <input type="radio" checked="checked" [checked]="true" (click)="yes($event)"
+                                                name="statusFlag"  id="statusFlag">Active &nbsp;&nbsp;
+                                            <input type="radio" (click)="no($event)" name="statusFlag" id="statusFlag">In-Active
+                                        </label>
+                                        <label *ngIf="statusFlag==1">
+                                            <input type="radio" (click)="yes($event)" name="statusFlag" id="statusFlag">Active
+                                            &nbsp;&nbsp;
+                                            <input type="radio" checked="checked" [checked]="true" (click)="no($event)"
+                                                name="statusFlag"  id="statusFlag">In-Active
+                                        </label>
+                                    </div>
+                                    </div> 
+                                    <div *ngIf="isSaveData">
+                                        <button type="button" class="btn btn-success"
+                                            (click)="saveData()">Submit</button>&nbsp;&nbsp;
+                                        <button type="reset" (click)="resetData()" class="btn btn-secondary "
+                                            style="padding: 7px 16px 7px 16px;">Reset</button>
+                                    </div>
+                                     <div *ngIf="!isSaveData">
+                                        <button class="btn btn-success"
+                                            (click)="update()">Update</button>&nbsp;&nbsp;
+                                        <button (click)="resetData()" type="reset" class="btn btn-secondary"
+                                            style="padding: 7px 16px 7px 16px;">Cancel</button>
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

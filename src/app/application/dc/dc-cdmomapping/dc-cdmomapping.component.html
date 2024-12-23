@@ -1,0 +1,177 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+    <div class="col-lg-4">
+      <ul class="nav nav-tabs">
+        <li class="nav-item" *ngIf="!isedit">
+          <a routerLink="/application/dccdmomapping" routerLinkActive="active" class="nav-link active">Add</a>
+        </li>
+        <li class="nav-item" *ngIf="isedit">
+          <a routerLink="/application/dccdmomapping" routerLinkActive="active" class="nav-link active">Update</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/application/dccdmomappingview" routerLinkActive="active" class="nav-link"
+            style="color: #1f723f;">View</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="cointainer">
+    <div class="row">
+      <div class="col-lg-3 col-xxl-3">
+        <div class="mb-xl-3">
+            <label class="control-label">Group type<span class="text-danger">*</span></label>
+            <select class="form-select" name="group" id="group" [(ngModel)]="group" [disabled]="isedit"
+                (change)="getuserDetailsbygroup($event.target.value)">
+                <option value="" selected disabled>Select Group type</option>
+                <option value=6>DC</option>
+                <option value=27>ADC</option>
+            </select>
+        </div>
+      </div>
+      <div class="col-lg-4 col-xxl-4" *ngIf="!isedit">
+        <div class="mb-xl-3">
+          <label class="control-label">DC/ADC Name<span class="text-danger">*</span></label>
+          <ng-autocomplete #auto [data]="dcList" placeholder="Select DC/ADC Name" (selected)="selectEvent($event)"
+            (inputCleared)="clearEvent()" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate"
+            [searchKeyword]="keyword" spellcheck="false">
+          </ng-autocomplete>
+
+          <ng-template #itemTemplate let-item>
+            <a [innerHTML]="item.fullName"></a>
+          </ng-template>
+
+          <ng-template #notFoundTemplate let-notFound>
+            <div [innerHTML]="notFound"></div>
+          </ng-template>
+        </div>
+      </div>
+      <div class="col-lg-4 col-xxl-4" *ngIf="isedit">
+        <div class="mb-xl-3">
+            <label class="control-label">DC/ADC Name<span class="text-danger">*</span></label>
+            <input class="form-control" type="text" [value]="dc?.fullName" disabled="disabled" />
+        </div>
+      </div>
+      <div class="col-lg-6 col-xxl-6" *ngIf="showdc">
+        <div class="card shadow-sm basic-info bg-light">
+          <div class="card-body ">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="d-flex">
+                  <span class="text-success me-3">
+                    <i class="bi bi-person-fill larger-icon"></i>
+                  </span>
+                  <div>
+                    <p class="mb-0 fw-500">{{dc?.fullName}}</p>
+                    <p class="mb-0 text-muted">{{dc?.mobileNo}}</p>
+                    <p class="mb-0 text-muted">{{dc?.emailId}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="showdc" style="margin-top:1ch;">
+      <div class="col-lg-4 col-xxl-4">
+        <div class="mb-xl-3">
+          <label class="control-label">CDMO Name<span class="text-danger">*</span></label>
+          <!-- MULTI SELECT DROPDOWN FOR CDMO -->
+          <ng-multiselect-dropdown #multiSelect [placeholder]="placeHolder" [data]="cdmoList" [settings]="settingcdmo"
+            id="hospitalCode" (onSelect)=onItemSelect($event) (onDeSelect)="onItemDeSelect($event)"
+            (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)">
+          </ng-multiselect-dropdown>
+          <!-- MULTI SELECT DROPDOWN FOR CDMO -->
+          <!-- <ng-autocomplete #auto [data]="cdmoList" placeholder="Select CDMO Name" (selected)="selectEvent1($event)"
+            (inputCleared)="clearEvent1()" [itemTemplate]="itemTemplate1" [notFoundTemplate]="notFoundTemplate1"
+            [searchKeyword]="keyword1" spellcheck="false" [(ngModel)]="cdmoname">
+          </ng-autocomplete>
+          <ng-template #itemTemplate1 let-item>
+            <a [innerHTML]="item.fullName"></a>
+          </ng-template>
+          <ng-template #notFoundTemplate1 let-notFound>
+            <div [innerHTML]="notFound"></div>
+          </ng-template> -->
+        </div>
+      </div>
+      <div class="col-lg-3 col-xxl-3">
+        <div class="mb-xl-3">
+            <label class="control-label">Working State<span class="text-danger">*</span></label>
+            <select class="form-select" name="stateId" id="stateId" [(ngModel)]="state"
+                (change)="OnChangeState($event.target.value)">
+                <option value="" selected disabled>Select State</option>
+                <ng-container *ngFor="let item of stateList">
+                    <option value={{item.stateCode}}>{{item.stateName}}</option>
+                </ng-container>
+            </select>
+        </div>
+      </div>
+      <div class="col-lg-3 col-xxl-3">
+        <div class="mb-xl-3">
+            <label class="control-label">Working District<span class="text-danger">*</span></label>
+            <select class="form-select" name="districtId" id="districtId" [(ngModel)]="district">
+                <option value="" selected>Select District</option>
+                <ng-container *ngFor="let item of districtList">
+                    <option value={{item.districtcode}}>{{item.districtname}}</option>
+                </ng-container>
+            </select>
+        </div>
+      </div>
+    </div>
+    <div class="row"  >
+      <div class="col-lg-4 col-xxl-4" style="margin-top:2ch;"></div>
+      <div class="col-lg-6 col-xxl-6" style="margin-top:2ch;">
+        <div class="form-cointainer" *ngIf="selectcdmolist.length!=0">
+          <div class="main-tab">
+            <div class="row justify-content-between">
+              <div class="table-responsive">
+                <table class="table table-striped" mb-0>
+                  <caption></caption>
+                  <thead>
+                    <tr>
+                      <th>Sl No</th>
+                      <th>Tagged CDMO</th>
+                      <th>State Name</th>
+                      <th>District Name</th>
+                      <th style="text-align: center;">Remove</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of selectcdmolist; index as i">
+                      <td>{{i+1}}</td>
+                      <td>{{item.cdmoname}}</td>
+                      <td>{{item.stateName}}</td>
+                      <td>{{item.districtName}}</td>
+                      <td style="text-align: center;">
+                        <a class="btn btn-outline-danger btn-sm me-1" (click)="remove(item)">
+                          <i class="bi bi-trash3"></i>
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+                <div class="row" *ngIf="showdc">
+                  <div class="col-lg-12">
+                      <div class="d-grid gap-2 d-md-flex" *ngIf="!isedit">
+                          <button type="submit" class="btn btn-success"
+                              (click)="submit()">Submit</button>
+                          <input type="button" value="Reset" class="btn btn-secondary"
+                              (click)="onReset()">
+                      </div>
+                      <div *ngIf="isedit">
+                          <button type="button" class="btn btn-success"
+                              (click)="updateDcDetails()">Update</button>&nbsp;
+                          <input type="button" value="Cancel" class="btn btn-secondary"
+                              (click)="cancel()">
+                      </div>
+                  </div>
+                </div>
+  </div>
+</div>

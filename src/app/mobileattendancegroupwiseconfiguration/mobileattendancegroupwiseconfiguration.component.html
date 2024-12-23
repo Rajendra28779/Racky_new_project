@@ -1,0 +1,68 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+    <div class="col-lg-10">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a routerLink="/application/usermobileattendanceconfig" routerLinkActive="active" class="nav-link " style="color: #1f723f;">User Wise Config</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/application/groupmobileattendanceconfig" routerLinkActive="active" class="nav-link active">Group Wise Config</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/application/mobileattendanceconfigview" routerLinkActive="active" class="nav-link" style="color: #1f723f;">View</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="content-box">
+    <div class="row">
+      <div class="col-lg-3 col-xxl-3">
+        <div class="mb-xl-3">
+            <label class="control-label">Group type<span class="text-danger">*</span></label>
+            <select class="form-select" name="groupId" id="groupId" (change)="onchangegroup($event.target.value)">
+              <option value="" selected>Select Group</option>
+              <ng-container *ngFor="let item of groupList">
+                  <option value={{item.typeId}}>{{item.groupTypeName}}</option>
+              </ng-container>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6 col-xxl-6">
+        <div class="table-responsive example-container" style="margin-top: 1ch;">
+          <table class="table table-striped mb-0">
+            <caption></caption>
+            <thead>
+              <tr>
+                <th>Sl#</th>
+                <th>Attendance Location</th>
+                <th Style="text-align: center;">Allow for Attendance</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="let v of configgrouplist ,index as i">
+                <td>{{(i+1)}}</td>
+                <td>{{v.groupname}}</td>
+                <td style="text-align:center ;">
+                  <input type="checkbox" class="me-2 text-center" [checked]="v.tempstatus==0" (click)="selectitem(v)">
+                </td>
+              </tr>
+              <tr *ngIf="configgrouplist.length==0">
+                <td colspan="6" Style="text-align: center;">
+                  <strong class="text-danger">NO DATA FOUND!!</strong>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div>
+      <button type="button" class="btn btn-success" (click)="Submit()">Submit</button>&nbsp;
+      <input type="reset" value="Reset" class="btn btn-secondary" (click)="resetVal()">
+    </div>
+  </div>
+</div>

@@ -1,0 +1,93 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item" *ngIf="hidestatusadd">
+                        <a routerLink="/application/usermanualuploadesction" routerLinkActive="active" class="nav-link active">Add</a>
+                    </li>
+                    <li class="nav-item" *ngIf="hidestatusupdate">
+                        <a routerLink="/application/usermanualuploadesction" routerLinkActive="active" class="nav-link active">Update</a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/application/viewusermanualuploadesction" routerLinkActive="active" class="nav-link">View</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="content-box">
+        <div class="row">
+            <div class="col-lg-4 col-xxl-4">
+                <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                    <label class="control-label mb-2">User Type</label><span class="text-danger">*</span>
+                    <select class="form-select" id="usertype" aria-label="Disabled select example" placeholder="Enter Package Category... " [(ngModel)]="grouptypenamedata" autocomplete="off" (change)="getprimarylink($event.target.value)">
+                            <option value="" selected disabled>Select User Type</option>
+                            <ng-container *ngFor="let item of grouptydata,index i">
+                                <option value={{item.typrid}}>{{item.grouptypename}}</option>
+                            </ng-container>
+                        </select>
+                </div>
+            </div>
+            <div class="col-lg-4 col-xxl-4">
+                <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                    <label class="control-label mb-2">Bucket Name</label><span class="text-danger">*</span>
+                    <select class="form-select" id="usertype" aria-label="Disabled select example" placeholder="Enter Package Category... " [(ngModel)]="primarylinkidnamedata" autocomplete="off" (change)="getPrimarylinkid($event.target.value)">
+                            <option value="" selected disabled>Select Bucket Name</option>
+                            <ng-container *ngFor="let item of primarylinkname,index i">
+                                <option value={{item.primaryLinkId}}>{{item.primaryLinkName}}</option>
+                            </ng-container>
+                        </select>
+                </div>
+            </div>
+        </div>
+        <div class="row ">
+            <div class="alert alert-danger mt-4 mb-4 d-flex small ">
+                <div>
+                    <p class="mb-0 pe-3 me-3 border-end ">
+                        <i class="bi bi-info-circle-fill fs-5 me-2 "></i> Guideline for Upload
+                    </p>
+                </div>
+                <div>
+                    <p class="mb-0 ">
+                        <strong>Document</strong> should be in<strong>.jpg,.jpeg,pdf</strong> format Upload below
+                        <strong>8MB.</strong>(*) Indicates mandatory
+                    </p>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3 col-xxl-3 ">
+                <div class="file-upload ">
+                    <p class="mb-1 ">Document<span class="text-danger">*</span><strong class="required-field "></strong></p>
+                    <div class="file-upload-content ">
+                        <a class="btn btn-danger text-white btn-sm remove-img "><i
+                                class="fas fa-times "></i>
+                        </a>
+                        <img class="file-upload-image " src="# " alt="your image " />
+                    </div>
+                    <div class="image-upload-wrap text-center rounded " id="tratemnet">
+                        <input class="file-upload-input " type='file' id="Treatment" accept=".pdf,.jpeg,.jpg" onCut="return false " onDrag="return false " onDrop="return false " (change)="TreatmentDetailsSlip($event) " />
+                        <div class="drag-text " *ngIf="lengthforfilevalue==1">
+                            <small><i class="iconbsky-upload-icon d-block fs-4 "></i>{{traetmentvalue}}</small>
+                        </div>
+                        <div class="drag-text" *ngIf="lengthforfilevalue!=1">
+                            <h5><i class="iconbsky-upload-icon d-block fs-4 "></i> Select a file to upload</h5>
+                        </div>
+                    </div>
+                    <p class="small pt-1 "><img src="./assets/img/pdf.png " alt="Download Document " width="20 "> <a target="_blank " style="cursor:pointer ;" (click)="downloadfiletreatmentbill()">
+                            Download</a></p>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col-lg-6 col-xxl-5">
+                    <label class="col-form-label">Description</label><span class="text-danger">*</span>
+                    <textarea class="form-control" rows="4" id="remarks" name="remarks" maxlength="1000" placeholder="Enter description" #myInput (keypress)="keyPress($event)" [(ngModel)]="description"></textarea>
+                    <span class="text-danger small">Characters Remaining: {{maxChars - myInput.value.length}}</span>
+                </div>
+            </div>
+            <div class="d-grid gap-2 d-sm-block mt-3 mt-xl-4">
+                <button class="btn btn-success me-2" id="submit" (click)="getsubmit()">Submit</button>
+                <button class="btn btn-primary me-2" id="reset" (click)="reset()">Reset</button>
+            </div>
+        </div>
+    </div>
+</div>

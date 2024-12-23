@@ -1,0 +1,230 @@
+<div class="form-container claim-detail">
+    <div class="main-tab mb-4">
+        <div class="row justify-content-between align-items-center">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/caseDetails" class="nav-link active">Case Details</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-6 text-end">
+                <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-box p-0 border-0 bg-transparent">
+        <div class="row g-4">
+            <!-- Basic Information Card -->
+            <!-- Patient Information Card -->
+            <div class="col-xl-4 col-lg-4 col-md-12 col-12">
+                <div class="card_custom">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-12">
+                        <div class="card_primary">
+                            <h5> {{cpdqueryhsptldtls[0]?.patientName}} </h5>
+                            <span class="position-absolute"> </span>
+                            <ul class="list-unstyled mb-0 address_new">
+                                <li id="age">
+
+                                    <div class="address_listhead"> Age : </div>
+                                    <div> {{cpdqueryhsptldtls[0]?.age}},
+                                        <b class="fw-500 ms-2"> Gender - </b> {{cpdqueryhsptldtls[0]?.gender}}
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="address_listhead"> Mob No. :</div>
+                                    <div> {{cpdqueryhsptldtls[0]?.patientPhoneNumber}} </div>
+                                </li>
+                                <li>
+                                    <div class="address_listhead"> Address :</div>
+                                    <div>
+                                        {{cpdqueryhsptldtls[0]?.villagename}}, {{cpdqueryhsptldtls[0]?.panchayatname}}, {{cpdqueryhsptldtls[0]?.blockname}}, {{cpdqueryhsptldtls[0]?.districtname}}, {{cpdqueryhsptldtls[0]?.stateName}} </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-8 col-lg-8 col-md-6 col-12">
+                <div class="card_custom">
+                    <div class="row list_inform">
+                        <div class="col-xl-4 col-lg-4 col-md-12 col-12">
+                            <div class="card_success">
+                                <span class="position-absolute"> </span>
+                                <div class="mb-2">
+                                    <img src="../../../../assets/img/casenum.svg">
+                                </div>
+                                <div>
+                                    <label class="text-muted mb-0">Case Number</label>
+                                    <p class="basic_text" id="UrnNumber">{{cpdqueryhsptldtls[0]?.caseNumber}}</p>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-4 col-md-6 col-12">
+                            <div class="card_warning">
+                                <span class="position-absolute"> </span>
+                                <div class="mb-2">
+                                    <img src="../../../../assets/img/urn.svg">
+                                </div>
+                                <div>
+                                    <label class="text-muted mb-0">URN Number</label>
+                                    <p class="basic_text" id="UrnNumber">{{cpdqueryhsptldtls[0]?.urn}}</p>
+                                </div>
+                                <div>
+                                    <label class="text-muted mb-0">Blocking Invoice Number</label>
+                                    <p class="basic_text" id="Invoice">
+                                        {{cpdqueryhsptldtls[0]?.blockingInvoiceNumber}}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-4 col-lg-4 col-md-6 col-12">
+                            <div class="card_danger">
+                                <span class="position-absolute"> </span>
+                                <div class="mb-2">
+                                    <img src="../../../../assets/img/invoicenum.svg">
+                                </div>
+                                <div>
+                                    <label class="text-muted mb-0">Claim Bill Number</label>
+                                    <p class="basic_text" id="Invoice">
+                                        {{cpdqueryhsptldtls[0]?.claimbillno}}</p>
+                                </div>
+                                <div>
+                                    <label class="text-muted mb-0">Claim Case Number</label>
+                                    <p class="basic_text" id="Invoice">
+                                        {{cpdqueryhsptldtls[0]?.claimcaseno}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-responsive table_fixed mt-4">
+                <table class="table border table-striped table-hover">
+                    <thead class="table-primary">
+                        <tr>
+                            <th class="fw-500"> Sl# </th>
+                            <th class="fw-500"> Speciality Code </th>
+                            <th>
+                                <div class="fw-bold"> Procedure Code </div>
+                                <div> Name </div>
+                            </th>
+
+                            <th class="mw-130">
+                                <div class="fw-bold"> Package Type </div>
+                                <div> Amount </div>
+                            </th>
+                            <th class="fw-500"> HED (₹)</th>
+                            <th class="fw-500"> Implant (₹)</th>
+                            <th class="fw-500"> Blocked Amount (₹)</th>
+                            <th class="fw-500"> Calculated % </th>
+                            <!-- <th class="fw-500"> System Calculated Discharge Amount (₹)</th> -->
+                            <th class="fw-500"> Hospital Discharge Amount (₹)</th>
+                            <th class="fw-500"> Claim Amount (₹)</th>
+                            <th class="text-center fw-500"> Details </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of cpdqueryhsptldtls1; let i = index" [ngClass]="{'red-row': item.deletedstatus === '1'}">
+                            <td>{{ i + 1 }}</td>
+                            <td title="{{item.specialityName}}">{{ item.specialityCode }}</td>
+                            <td>
+                                <div class="fw-bold"> {{ item.procedureCode }} </div>
+                                <div>
+                                    <span *ngIf="!item.exp">
+                                    {{ item.procedureName | slice: 0:20 }}
+                                    <span *ngIf="item.procedureName.length > 20">...</span>
+                                    </span>
+
+                                    <span *ngIf="item.exp">{{ item.procedureName }}&nbsp;&nbsp;</span>
+
+                                    <a href="javascript:void(0)" (click)="item.exp = !item.exp">
+                                    {{ item.exp ? 'Show Less' : 'Show More' }}
+                                </a>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="fw-bold"> {{ item.packageType }} </div>
+                                <div> {{ item.packageAmount }} </div>
+                            </td>
+                            <td>{{ item.totalHedCost }}</td>
+                            <td>{{ item.totalImplantCost }}</td>
+                            <td>{{ item.actualPackageCost }}</td>
+                            <td>{{ item.calculatedPercentage }}</td>
+                            <!-- <td>{{ item.systemCalculatedDischargeAmount }}</td> -->
+                            <td>{{ item.hospitalDischargeAmount }}</td>
+                            <td>{{ item.modifiedAmount }}</td>
+                            <td class="text-center">
+                                <button class="btn btn-sm btn-outline-success" [ngbTooltip]="'View'" title="View" (click)="openDetails(item.transactiondetailsId, item.urn, item.authorizedCode, item.hospitalCode)">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="7"></td>
+                            <!-- Empty cells to span across unused columns -->
+                            <td class="fw-bold">Total</td>
+                            <!-- Label for the total -->
+                            <!-- <td class="fw-bold">{{ getSum('systemCalculatedDischargeAmount') | currency: 'INR':'symbol':'1.0-2' }}</td> -->
+                            <!-- Sum of system calculated amounts -->
+                            <td class="fw-bold">{{ getSum('hospitalDischargeAmount') | currency: 'INR':'symbol':'1.0-2' }}</td>
+                            <!-- Sum of hospital discharge amounts -->
+                            <td class="fw-bold">{{ getSum('modifiedAmount') | currency: 'INR':'symbol':'1.0-2' }}</td>
+                            <!-- Sum of modified amounts -->
+                        </tr>
+                    </tfoot>
+
+                </table>
+            </div>
+
+            <div class="col-lg-12">
+                <h5>Action Taken History</h5>
+                <div class="table-responsive table_fixed mt-4">
+                    <table class="table border table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Sl#</th>
+                                <th>Action On</th>
+                                <th>Action Type</th>
+                                <th>Action By</th>
+                                <th>Claimed Amount (₹)</th>
+                                <th>Action Amount (₹)</th>
+                                <th>Remarks</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let claim of getactiontakenData , index as i">
+                                <td>{{i+1}}</td>
+                                <td>{{claim.actionon}}</td>
+                                <td>{{claim.actiontype}}</td>
+                                <td>{{claim.actionby}}</td>
+                                <td *ngIf="claim.claimedamount != null">{{claim.claimedamount | number}}</td>
+                                <td *ngIf="claim.claimedamount == null">--</td>
+                                <td *ngIf="claim.actionamount != null">{{claim.actionamount | number}}</td>
+                                <td *ngIf="claim.actionamount == null">--</td>
+                                <td *ngIf="claim.remarks != null">{{claim.remarks}}</td>
+                                <td *ngIf="claim.remarks == null">--</td>
+                                <td>
+                                    <span *ngIf="!claim.expanded">{{claim.description | slice:0:20}}</span>
+                                    <span *ngIf="!claim.expanded && claim.description.length > 20">...</span>
+                                    <span *ngIf="claim.expanded">{{claim.description}}</span>
+                                    <a href="javascript:void(0)" (click)="claim.expanded = !claim.expanded">
+                                        {{claim.expanded ? 'Show Less' : 'Show More'}}
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

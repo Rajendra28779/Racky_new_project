@@ -1,0 +1,28 @@
+[
+  {
+    "pagetitle":"View Application Summary",
+    "tabList":[
+      {"tabName":"Pending Applications","tabUrl":"../../pending-application"},
+      {"tabName":"Application Summary","tabUrl":"../../application-summary","tabClass":"active"},
+      {"tabName":"Approved Applications","tabUrl":"../../approved-application"},
+      {"tabName":"Rejected Applications","tabUrl":"../../rejected-application"},
+      {"tabName":"Sent for Resubmission","tabUrl":"../../reverted-application"}
+      
+    ],
+    "utils":[
+      {"utilName":"print"},   
+      {"utilName":"back"}
+      ],
+    "messages":
+      {
+        "successMsg":"Date saved successfully",
+        "errorMsg":"Error in database",
+        "warningtype":"You want to delete this record",
+        "deleteMsg":"Record has been deleted"
+      }
+     
+    
+  }
+]
+
+

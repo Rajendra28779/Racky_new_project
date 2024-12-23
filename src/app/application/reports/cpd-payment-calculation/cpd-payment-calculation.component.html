@@ -1,0 +1,121 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+    <div class="row justify-content-between">
+      <div class="col-lg-4">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a routerLink="/application/CPDPaymentCalculation" class="nav-link active">CPD Payment Calculation
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="content-box">
+        <div class="col-xxl-12">
+          <div class="row">
+
+            <div class="col-lg-3 col-xxl-3">
+              <div class="mb-xl-3">
+                <label class="control-label">CPD Allotted Date From</label><span class="text-danger">*</span>
+                <div class="input-group">
+                  <input type="text" class="form-control border-end-0 datepicker" id="fromDate" name="fromDate">
+                  <label class="input-group-text bg-transparent border-start-0" for="fromDate"><i class="iconbsky-calendar"></i> </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-3 col-xxl-3">
+              <div class="mb-xl-3">
+                <label class="control-label">CPD Allotted Date To</label><span class="text-danger">*</span>
+                <div class="input-group">
+                  <input type="text" class="form-control border-end-0 datepicker" id="toDate" name="toDate">
+                  <label class="input-group-text bg-transparent border-start-0" for="toDate"><i class="iconbsky-calendar"></i> </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-3 col-xxl-3">
+              <div class="mb-xl-3">
+                <label class="control-label">Select CPD<span class="text-danger">*</span></label>
+
+                <ng-autocomplete #auto [data]="cpdUserList" name="cpdUser" id="cpdUser" placeholder="Select CPD User" (selected)="OnChangeRemark($event)"
+                                 [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" [searchKeyword]="keyword" spellcheck="false" [ngModel]="data">
+                </ng-autocomplete>
+
+                <ng-template #itemTemplate let-item>
+                  <a [innerHTML]="item.fullname"></a>
+                </ng-template>
+
+                <ng-template #notFoundTemplate let-notFound>
+                  <div [innerHTML]="notFound"></div>
+                </ng-template>
+              </div>
+            </div>
+
+            <div class="col-lg-3 col-xxl-3">
+              <div class="mb-xl-3">
+                <label class="control-label"></label>
+                <div class="input-group">
+                  <button type="submit" class="btn btn-success" (click)="searchFilter()">Search</button>
+                  <button type="submit" class="btn btn-secondary" (click)="resetField()" style="margin-left: 1rem;">Reset</button>
+                </div>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" style="margin-top: 10px;margin-bottom: 10px;" *ngIf="responseData?.responseList.length > 0">
+        <div class="col-lg-9 col-xxl-9 row">
+          <div class="col-md-9">
+            <div style="padding-top: 10px; font-weight: bold; color: green">Record Counts : {{ responseData?.responseList?.length}}</div>
+          </div>
+          <div [align]="'start'" class="col-md-3">
+            <button class="btn btn-danger" title="Download PDF" (click)="downloadReport('pdf')" style="float:right; margin-left: 5px;"><i class="bi bi-file-earmark-pdf"></i></button>
+            <button class="btn btn-success" title="Download Excel" (click)="downloadReport('excel')" style="float: right"><i class="bi bi-download" ></i></button>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-xxl-3">
+          <div class="input-group">
+            <input type="text" id="txtsearchDate" class="form-control" autocomplete="off" placeholder="Search" name="txtsearchDate" [(ngModel)]="txtsearchDate">
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="content-box p-0 overflow-hidden" *ngIf="responseData?.responseList.length > 0">
+    <div class="table-responsive">
+      <table class="table table-striped mb-0">
+        <thead>
+        <tr>
+          <th>Sl#</th>
+          <th>CPD Name</th>
+          <th>Process Description</th>
+          <th>Total Claims</th>
+          <th>Total Amount Paid</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let response of responseData?.responseList | filter:txtsearchDate;  index as i">
+          <td> {{(i+1)}}</td>
+          <td> {{response.fullName}} </td>
+          <td> {{response.claimDesc}} </td>
+          <td><a href="javascript:void(0)" style="font-weight: bold;" (click)="showPaymentOfUser(response.userId, response.actionCode, response.fullName, response.claimDesc)">{{response.totalClaims}}</a></td>
+          <td>{{response.totalAmountPaid}}</td>
+        </tr>
+        </tbody>
+
+        <tfoot>
+        <tr>
+          <td colspan="3" style="font-weight: bold; text-align: center">Total</td>
+          <td style="font-weight: bold">{{responseData?.totalClaimsCount}}</td>
+          <td style="font-weight: bold">{{responseData?.totalAmount}}</td>
+        </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>

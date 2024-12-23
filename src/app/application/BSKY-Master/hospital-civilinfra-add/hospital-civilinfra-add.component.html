@@ -1,0 +1,1572 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+    <div class="row justify-content-between">
+      <div class="col-lg-10">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a routerLink="/application/hospitalciviinfraadd" routerLinkActive="active" class="nav-link active">Hospital
+              Civil Infrastructure Updation</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/application/hospitalciviinfraview" routerLinkActive="active" class="nav-link"
+              style="color: #1f723f;">View</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="showfilter">
+    <div class="col-lg-3 col-xxl-3">
+      <div class="mb-xl-3">
+        <label class="control-label">State Name<span class="text-danger">*</span></label>
+        <select class="form-select" name="stateId" id="stateId" (change)="OnChangeState($event.target.value)">
+          <option value="" selected>Select State</option>
+          <ng-container *ngFor="let item of stateList">
+            <option value={{item.stateCode}}>{{item.stateName}}</option>
+          </ng-container>
+        </select>
+      </div>
+    </div>
+    <div class="col-lg-3 col-xxl-3">
+      <div class="mb-xl-3">
+        <label class="control-label">District Name<span class="text-danger">*</span></label>
+        <select class="form-select" name="districtId" id="districtId" (change)="getHospitalList()">
+          <option value="" selected>Select District</option>
+          <ng-container *ngFor="let item of districtList">
+            <option value={{item.districtcode}}>{{item.districtname}}</option>
+          </ng-container>
+        </select>
+      </div>
+    </div>
+    <div class="col-lg-5 col-xxl-5">
+      <div class="mb-xl-3">
+        <label class="control-label">Hospital Name<span class="text-danger">*</span></label>
+        <div class="input-group">
+          <ng-autocomplete #auto [data]="hospitalList" placeholder="Select Hospital" (selected)="selectEvent2($event)"
+            (inputCleared)="clearEvent2()" [itemTemplate]="itemTemplate2" [notFoundTemplate]="notFoundTemplate2"
+            [searchKeyword]="keyword2" spellcheck="false">
+          </ng-autocomplete>
+          <ng-template #itemTemplate2 let-item>
+            <a [innerHTML]="item.hospitalName"></a>
+          </ng-template>
+          <ng-template #notFoundTemplate2 let-notFound>
+            <div [innerHTML]="notFound"></div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="!showfilter">
+    <div class="col-lg-6 col-xxl-6">
+      <div class="mb-xl-3">
+        <label class="control-label">Hospital Name<span class="text-danger">*</span></label>
+        <input type="text" class="form-control" [disabled]="true" placeholder="Hospital Name" [value]="hospitalname">
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane">
+    <!-- <h5 class="mb-2"></h5> -->
+    <form [formGroup]="civilInfrastructureForm" autocomplete="off">
+      <hr>
+      <h5 class="mb-2">General</h5>
+      <hr>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="standardisedArchDesign" class="form-label">Standardised Architectural
+              Design</label>
+            <select class="form-select" aria-label="Default select example" id="standardisedArchDesign"
+              formControlName="standardisedArchDesign"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['standardisedArchDesign'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['standardisedArchDesign'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['standardisedArchDesign'].errors['required']">
+                Please Select Standardised Architectural Design</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="fireFightingSystem" class="form-label">Fire Fighting System
+              <!-- <span class="text-danger">*</span> -->
+            </label>
+            <select class="form-select" aria-label="Default select example" id="fireFightingSystem"
+              formControlName="fireFightingSystem"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['fireFightingSystem'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['fireFightingSystem'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['fireFightingSystem'].errors['required']">
+                Please Select Fire Fighting System</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="bioMedicalWasteManagement" class="form-label">Bio-Medical Waste
+              Management</label>
+            <select class="form-select" aria-label="Default select example" id="bioMedicalWasteManagement"
+              formControlName="bioMedicalWasteManagement"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['bioMedicalWasteManagement'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['bioMedicalWasteManagement'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['bioMedicalWasteManagement'].errors['required']">
+                Please Select Bio-Medical Waste Management</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="dutyStaffRoom" class="form-label">Duty Staff Room</label>
+            <select class="form-select" aria-label="Default select example" id="dutyStaffRoom"
+              formControlName="dutyStaffRoom"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['dutyStaffRoom'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['dutyStaffRoom'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['dutyStaffRoom'].errors['required']">
+                Please Select Duty Staff Room
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="cattleTrapAtEntranceAndExit" class="form-label">Cattle Trap at Entrance
+              and Exit</label>
+            <select class="form-select" aria-label="Default select example" id="cattleTrapAtEntranceAndExit"
+              formControlName="cattleTrapAtEntranceAndExit"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['cattleTrapAtEntranceAndExit'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['cattleTrapAtEntranceAndExit'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['cattleTrapAtEntranceAndExit'].errors['required']">
+                Please Select Cattle Trap at Entrance and Exit</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="areaBed" class="form-label">Area/Bed (Sq. Ft)
+              <!-- <span class="text-danger">*</span> -->
+            </label>
+            <input type="text" class="form-control" id="areaBed" formControlName="areaBed" placeholder="Enter here"
+              maxlength="5" (input)="checkFieldValidation('civil', $event , 'areaBed', 'mobileNumber')"
+              onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['areaBed'].errors }">
+            <div *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['areaBed'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['areaBed'].errors['required']">Please Enter Area/Bed (Sq. Ft)
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="backUpElectricitySupply" class="form-label">Back-Up Electrcity
+              Supply</label>
+            <select class="form-select" aria-label="Default select example" id="backUpElectricitySupply"
+              formControlName="backUpElectricitySupply"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['backUpElectricitySupply'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['backUpElectricitySupply'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['backUpElectricitySupply'].errors['required']">
+                Please Select Back-Up Electrcity Supply</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="noOfFloors" class="form-label">Number of Floors
+              <!-- <span class="text-danger">*</span> -->
+            </label>
+            <input type="text" class="form-control" id="noOfFloors" formControlName="noOfFloors" maxlength="3"
+              placeholder="Enter here" (input)="checkFieldValidation('civil', $event , 'noOfFloors', 'mobileNumber')"
+              onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['noOfFloors'].errors }">
+            <div *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['noOfFloors'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['noOfFloors'].errors['required']">
+                Please Enter Number of Floors
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="liftProvision" class="form-label">Lift Provision</label>
+            <select class="form-select" aria-label="Default select example" id="liftProvision"
+              formControlName="liftProvision"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['liftProvision'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['liftProvision'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['liftProvision'].errors['required']">
+                Please Select Lift Provision
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="Hospital2" class="form-label">Ramp Provision</label>
+            <select class="form-select" aria-label="Default select example" id="rampProvision"
+              formControlName="rampProvision"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['rampProvision'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['rampProvision'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['rampProvision'].errors['required']">
+                Please Select Ramp Provision
+              </div>
+            </div>
+          </div>
+        </div>
+        <h5 class="mb-2">Wards</h5>
+        <hr>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="totalBedStrength" class="form-label">Total Bed Strength
+              <!-- <span class="text-danger">*</span> -->
+            </label>
+            <input type="text" class="form-control" id="totalBedStrength" placeholder="Enter here"
+              formControlName="totalBedStrength" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"
+              (input)="checkFieldValidation('civil', $event , 'totalBedStrength', 'mobileNumber')" maxlength="4"
+              disabled
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['totalBedStrength'].errors }">
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['totalBedStrength'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['totalBedStrength'].errors['required']">
+                Please Enter Total Bed Strength
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="noOfInPatientBeds" class="form-label">Number of InPatient Beds
+              <!-- <span class="text-danger">*</span> -->
+            </label>
+            <input type="text" class="form-control" id="noOfInPatientBeds" placeholder="Enter here"
+              formControlName="noOfInPatientBeds" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"
+              (input)="checkFieldValidation('civil', $event , 'noOfInPatientBeds', 'mobileNumber')" maxlength="4"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['noOfInPatientBeds'].errors }"
+              (input)="civilInfraTotalBedsCount()">
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['noOfInPatientBeds'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['noOfInPatientBeds'].errors['required']">
+                Please Enter Number of InPatient Beds</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="fullyEquipiedOperationTheatre" class="form-label">Fully Equiped
+              Operation Theatre </label>
+            <select class="form-select" aria-label="Default select example" id="fullyEquipiedOperationTheatre"
+              formControlName="fullyEquipiedOperationTheatre"
+              (change)="onChangeCivilInfra('onCall' ,$event.target, 'OperationTheatre')"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['fullyEquipiedOperationTheatre'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['fullyEquipiedOperationTheatre'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['fullyEquipiedOperationTheatre'].errors['required']">
+                Please Select Fully Equiped Operation Theatre</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3" *ngIf="showOperationTheatre">
+            <label for="totalNoOfBedsFullyEquipedOperationTheatre" class="form-label">Total No
+              Of Beds Fully Equiped
+              Operation Theatre</label>
+            <input type="text" class="form-control" placeholder="Enter here"
+              id="totalNoOfBedsFullyEquipedOperationTheatre" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"
+              formControlName="totalNoOfBedsFullyEquipedOperationTheatre" maxlength="4"
+              (input)="checkFieldValidation('civil', $event , 'totalNoOfBedsFullyEquipedOperationTheatre', 'mobileNumber')"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['totalNoOfBedsFullyEquipedOperationTheatre'].errors }"
+              (input)="civilInfraTotalBedsCount()">
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['totalNoOfBedsFullyEquipedOperationTheatre'].errors"
+              class="invalid-feedback">
+              <div
+                *ngIf="civilInfrastructureFormControl['totalNoOfBedsFullyEquipedOperationTheatre'].errors['required']">
+                Please Enter Total No Of Beds Fully Equiped Operation Theatre</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="opd" class="form-label">OPD </label>
+            <select class="form-select" aria-label="Default select example" id="opd" formControlName="opd"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['opd'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['opd'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['opd'].errors['required']">Please Select OPD
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3" *ngIf="showBedsInopd">
+            <label for="totallNoOfBedHDU" class="form-label">Total No Of Bed OPD
+              <!-- <span class="text-danger">*</span> -->
+            </label>
+            <input type="text" class="form-control" id="totallNoOfBedopd" placeholder="Enter here"
+              formControlName="totallNoOfBedopd" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"
+              (input)="checkFieldValidation('civil', $event , 'totallNoOfBedopd', 'mobileNumber')" maxlength="4"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['totallNoOfBedopd'].errors }">
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['totallNoOfBedopd'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['totallNoOfBedopd'].errors['required']">
+                Please Enter Total No Of Bed OPD</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="hdu" class="form-label">HDU</label>
+            <select class="form-select" aria-label="Default select example" id="hdu" formControlName="hdu"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['hdu'].errors }"
+              (change)="onChangeCivilInfra('onCall', $event.target, 'HDU')">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['hdu'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['hdu'].errors['required']">Please Select HDU
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3" *ngIf="showBedsInHdu">
+            <label for="totallNoOfBedHDU" class="form-label">Total No Of Bed HDU
+              <!-- <span class="text-danger">*</span> -->
+            </label>
+            <input type="text" class="form-control" id="totallNoOfBedHDU" placeholder="Enter here"
+              formControlName="totallNoOfBedHDU" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"
+              (input)="checkFieldValidation('civil', $event , 'totallNoOfBedHDU', 'mobileNumber')" maxlength="4"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['totallNoOfBedHDU'].errors }"
+              (input)="civilInfraTotalBedsCount()">
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['totallNoOfBedHDU'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['totallNoOfBedHDU'].errors['required']">
+                Please Enter Total No Of Bed HDU</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="generalWard" class="form-label">General Ward
+              <!-- <span class="text-danger">*</span> -->
+            </label>
+            <select class="form-select" aria-label="Default select example" id="generalWard"
+              formControlName="generalWard"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['generalWard'].errors }"
+              (change)="onChangeCivilInfra('onCall', $event.target, 'genaralword')">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['generalWard'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['generalWard'].errors['required']">
+                Please Select Total No Of General Ward
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3" *ngIf="showNoOfgenaral">
+            <label for="totalNoOfBedICU" class="form-label">Total No Of Bed in General Ward
+              <!-- <span class="text-danger">*</span> -->
+            </label>
+            <input type="text" class="form-control" id="totalgeneralWard" placeholder="Enter here"
+              formControlName="totalgeneralWard" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"
+              (input)="checkFieldValidation('civil', $event , 'totalgeneralWard', 'mobileNumber')" maxlength="4"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['totalNoOfBedICU'].errors }"
+              (input)="civilInfraTotalBedsCount()">
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['totalgeneralWard'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['totalgeneralWard'].errors['required']">
+                Please Enter Total No Of Bed ICU</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="icu" class="form-label">ICU With Ventilitor</label>
+            <select class="form-select" aria-label="Default select example" id="icu" formControlName="icu"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['icu'].errors }"
+              (change)="onChangeCivilInfra('onCall', $event.target, 'ICU')">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['icu'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['icu'].errors['required']">Please Select ICU With Ventilitor
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3" *ngIf="showNoOfIcu">
+            <label for="totalNoOfBedICU" class="form-label">Total No Of Bed in ICU With Ventilitor
+              <!-- <span class="text-danger">*</span> -->
+            </label>
+            <input type="text" class="form-control" id="totalNoOfBedICU" placeholder="Enter here"
+              formControlName="totalNoOfBedICU" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"
+              (input)="checkFieldValidation('civil', $event , 'totalNoOfBedICU', 'mobileNumber')" maxlength="4"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['totalNoOfBedICU'].errors }"
+              (input)="civilInfraTotalBedsCount()">
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['totalNoOfBedICU'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['totalNoOfBedICU'].errors['required']">
+                Please Enter Total No Of Bed ICU With Ventilitor</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="icu" class="form-label">ICU With Out Ventilitor</label>
+            <select class="form-select" aria-label="Default select example" id="icuwov" formControlName="icuwov"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['icuwov'].errors }"
+              (change)="onChangeCivilInfra('onCall', $event.target, 'ICUwov')">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['icuwov'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['icuwov'].errors['required']">Please Select ICU With Out
+                Ventilitor</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3" *ngIf="showNoOfIcuwov">
+            <label for="totalNoOfBedICU" class="form-label">Total No Of Bed in ICU With Out Ventilitor
+              <!-- <span class="text-danger">*</span> -->
+            </label>
+            <input type="text" class="form-control" id="totalNoOfBedICUwov" placeholder="Enter here"
+              formControlName="totalNoOfBedICUwov" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"
+              (input)="checkFieldValidation('civil', $event , 'totalNoOfBedICUwov', 'mobileNumber')" maxlength="4"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['totalNoOfBedICUwov'].errors }"
+              (input)="civilInfraTotalBedsCount()">
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['totalNoOfBedICUwov'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['totalNoOfBedICUwov'].errors['required']">
+                Please Enter Total No Of Bed ICU</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="casualty" class="form-label">Casualty
+              <!-- <span class="text-danger">*</span> -->
+            </label>
+            <select class="form-select" aria-label="Default select example" id="casualty" formControlName="casualty"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['casualty'].errors }"
+              (change)="onChangeCivilInfra('onCall', $event.target, 'Casualty')">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['casualty'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['casualty'].errors['required']">
+                Please Select Casualty</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3" *ngIf="showCasuality">
+            <label for="totalNoOfBedCasualty" class="form-label">Total No Of Bed Casualty
+              <!-- <span class="text-danger">*</span> -->
+            </label>
+            <input type="text" class="form-control" id="totalNoOfBedCasualty" placeholder="Enter here"
+              formControlName="totalNoOfBedCasualty" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"
+              (input)="checkFieldValidation('civil', $event , 'totalNoOfBedCasualty', 'mobileNumber')" maxlength="4"
+              (input)="civilInfraTotalBedsCount()"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['totalNoOfBedCasualty'].errors }">
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['totalNoOfBedCasualty'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['totalNoOfBedCasualty'].errors['required']">
+                Please Enter Total No Of Bed Casualty</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="labourRoom" class="form-label">Labour Room
+              <!-- <span class="text-danger">*</span> -->
+            </label>
+            <select class="form-select" aria-label="Default select example" id="labourRoom" formControlName="labourRoom"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['labourRoom'].errors }"
+              (change)="onChangeCivilInfra('onCall', $event.target, 'LabourRoom')">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['labourRoom'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['labourRoom'].errors['required']">
+                Please Select Labour Room</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3" *ngIf="showLabourRoom">
+            <label for="totalNoOfRoomLabourRoom" class="form-label">Total No Of Bed in Labour
+              Room</label>
+            <input type="text" class="form-control" id="totalNoOfRoomLabourRoom" placeholder="Enter here"
+              formControlName="totalNoOfRoomLabourRoom" maxlength="4"
+              onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"
+              (input)="checkFieldValidation('civil', $event , 'totalNoOfRoomLabourRoom', 'mobileNumber')"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['totalNoOfRoomLabourRoom'].errors }"
+              (input)="civilInfraTotalBedsCount()">
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['totalNoOfRoomLabourRoom'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['totalNoOfRoomLabourRoom'].errors['required']">
+                Please Enter Total No Of Bed in Labour Room</div>
+            </div>
+          </div>
+        </div>
+
+        <h5 class="mb-2">Facilities</h5>
+        <hr>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="bloodBank" class="form-label">Blood Bank
+              <!-- <span class="text-danger">*</span> -->
+            </label>
+            <select class="form-select" aria-label="Default select example" id="bloodBank" formControlName="bloodBank"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['bloodBank'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['bloodBank'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['bloodBank'].errors['required']">
+                Please Select Blood Bank</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="cssd" class="form-label">CSSD</label>
+            <select class="form-select" aria-label="Default select example" id="cssd" formControlName="cssd"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['cssd'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['cssd'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['cssd'].errors['required']">Please Select CSSD
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="dietAndKitchenFacility" class="form-label">Diet and Kitchen
+              Facility</label>
+            <select class="form-select" aria-label="Default select example" id="dietAndKitchenFacility"
+              formControlName="dietAndKitchenFacility"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['dietAndKitchenFacility'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['dietAndKitchenFacility'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['dietAndKitchenFacility'].errors['required']">
+                Please Select Diet and Kitchen Facility</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="linenAndLaundry" class="form-label">Linen and Laundry</label>
+            <select class="form-select" aria-label="Default select example" id="linenAndLaundry"
+              formControlName="linenAndLaundry"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['linenAndLaundry'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['linenAndLaundry'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['linenAndLaundry'].errors['required']">
+                Please Select Linen and Laundry
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="stores" class="form-label">Stores</label>
+            <select class="form-select" aria-label="Default select example" id="stores" formControlName="stores"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['stores'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['stores'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['stores'].errors['required']">Please Select Stores
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="medicalRecordsDepartment" class="form-label">Medical Records
+              Department</label>
+            <select class="form-select" aria-label="Default select example" id="medicalRecordsDepartment"
+              formControlName="medicalRecordsDepartment"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['medicalRecordsDepartment'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['medicalRecordsDepartment'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['medicalRecordsDepartment'].errors['required']">
+                Please Select Medical Records Department</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="ambulanceService" class="form-label">Ambulance service</label>
+            <select class="form-select" aria-label="Default select example" id="ambulanceService"
+              formControlName="ambulanceService"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['ambulanceService'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['ambulanceService'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['ambulanceService'].errors['required']">
+                Please Select Ambulance service
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="patientAttendantFacility" class="form-label">Patient Attendant
+              Facility</label>
+            <select class="form-select" aria-label="Default select example" id="patientAttendantFacility"
+              formControlName="patientAttendantFacility"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['patientAttendantFacility'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['patientAttendantFacility'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['patientAttendantFacility'].errors['required']">
+                Please Select Patient Attendant Facility</div>
+            </div>
+          </div>
+        </div>
+        <h5 class="mb-2">Diagnostic Services</h5>
+        <hr>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="diagnosticCentreRadiologyBasic" class="form-label">Diagnostic Centre-
+              Radiology (Basic)</label>
+            <select class="form-select" aria-label="Default select example" id="diagnosticCentreRadiologyBasic"
+              formControlName="diagnosticCentreRadiologyBasic"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['diagnosticCentreRadiologyBasic'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['diagnosticCentreRadiologyBasic'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['diagnosticCentreRadiologyBasic'].errors['required']">
+                Please Select Diagnostic Centre- Radiology (Basic)</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="diagnosticCentreRadiologyAdvanced" class="form-label">Diagnostic Centre-
+              Radiology
+              (Advanced)</label>
+            <select class="form-select" aria-label="Default select example" id="diagnosticCentreRadiologyAdvanced"
+              formControlName="diagnosticCentreRadiologyAdvanced"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['diagnosticCentreRadiologyAdvanced'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['diagnosticCentreRadiologyAdvanced'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['diagnosticCentreRadiologyAdvanced'].errors['required']">
+                Please Select Diagnostic Centre- Radiology (Advanced)</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="diagnosticCentreClinicalLabAndDiagnostics" class="form-label">Diagnostic
+              Centre- Clinical
+              Lab
+              and Diagnostics</label>
+            <select class="form-select" aria-label="Default select example"
+              id="diagnosticCentreClinicalLabAndDiagnostics" formControlName="diagnosticCentreClinicalLabAndDiagnostics"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['diagnosticCentreClinicalLabAndDiagnostics'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['diagnosticCentreClinicalLabAndDiagnostics'].errors"
+              class="invalid-feedback">
+              <div
+                *ngIf="civilInfrastructureFormControl['diagnosticCentreClinicalLabAndDiagnostics'].errors['required']">
+                Please Select Diagnostic Centre- Clinical Lab and Diagnostics</div>
+            </div>
+          </div>
+        </div>
+        <h5 class="mb-2">Fully Equiped Operation Theatre</h5>
+        <hr>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="wallsShouldBeCovered" class="form-label">Walls should be covered with
+              tiles/ anti-bacterial/
+              microbial paint</label>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="wallsShouldBeCovered"
+                formControlName="wallsShouldBeCovered" (change)="civilCheckBoxes('onCall', $event, 'Walls')">
+              <label class="form-check-label" for="wallsShouldBeCovered">
+                Walls should be covered with tiles/ anti-bacterial/ microbial paint
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="availabilityOfSeparateOTs" class="form-label">Availability of separate
+              OTs for septic and
+              aseptic cases</label>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="availabilityOfSeparateOTs"
+                formControlName="availabilityOfSeparateOTs"
+                (change)="civilCheckBoxes('onCall', $event, 'Availability')">
+              <label class="form-check-label" for="availabilityOfSeparateOTs">
+                Availability of separate OTs for septic and aseptic cases
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="availabilityOfPreOperative" class="form-label">Availability of
+              Pre-operative waiting room
+              with
+              toilet
+              facilities</label>
+            <select class="form-select" aria-label="Default select example" id="availabilityOfPreOperative"
+              formControlName="availabilityOfPreOperative"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['availabilityOfPreOperative'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['availabilityOfPreOperative'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['availabilityOfPreOperative'].errors['required']">
+                Please Select Availability of Pre-operative waiting room. . .</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="availabilityOfPostOperative" class="form-label">Availability of well
+              equipied post-operative
+              ward (Recovery
+              room) with ventilator, beds and resuscitation measures</label>
+            <select class="form-select" aria-label="Default select example" id="availabilityOfPostOperative"
+              formControlName="availabilityOfPostOperative"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['availabilityOfPostOperative'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['availabilityOfPostOperative'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['availabilityOfPostOperative'].errors['required']">
+                Please Select Availability of well equipied post-operative ward. . .</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="separateChangingRooms" class="form-label">Separate changing rooms for
+              medical & para-medical
+              staff</label>
+            <select class="form-select" aria-label="Default select example" id="separateChangingRooms"
+              formControlName="separateChangingRooms"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['separateChangingRooms'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['separateChangingRooms'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['separateChangingRooms'].errors['required']">
+                Please Select Separate changing rooms for medical. . .</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="dedicatedScrubArea" class="form-label">Dedicated scrub area</label>
+            <select class="form-select" aria-label="Default select example" id="dedicatedScrubArea"
+              formControlName="dedicatedScrubArea"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['dedicatedScrubArea'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['dedicatedScrubArea'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['dedicatedScrubArea'].errors['required']">
+                Please Select Dedicated scrub area</div>
+            </div>
+          </div>
+        </div>
+        <h5 class="mb-2">Dedicated scrub area</h5>
+        <hr>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="waitingRoomForPatientsAndRelatives" class="form-label">Waiting room for
+              patients and
+              relatives</label>
+            <select class="form-select" aria-label="Default select example" id="waitingRoomForPatientsAndRelatives"
+              formControlName="waitingRoomForPatientsAndRelatives"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['waitingRoomForPatientsAndRelatives'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['waitingRoomForPatientsAndRelatives'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['waitingRoomForPatientsAndRelatives'].errors['required']">
+                Please Select Waiting room for patients and relatives</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="registrationCounter" class="form-label">Registration counter</label>
+            <select class="form-select" aria-label="Default select example" id="registrationCounter"
+              formControlName="registrationCounter"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['registrationCounter'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['registrationCounter'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['registrationCounter'].errors['required']">
+                Please Select Registration counter</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="doctorConsultantRooms" class="form-label">Doctor/ Consultant
+              rooms</label>
+            <select class="form-select" aria-label="Default select example" id="doctorConsultantRooms"
+              formControlName="doctorConsultantRooms"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['doctorConsultantRooms'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['doctorConsultantRooms'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['doctorConsultantRooms'].errors['required']">
+                Please Select Doctor/ Consultant rooms</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="dressingRoom" class="form-label">Dressing room</label>
+            <select class="form-select" aria-label="Default select example" id="dressingRoom"
+              formControlName="dressingRoom"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['dressingRoom'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['dressingRoom'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['dressingRoom'].errors['required']">
+                Please Select Dressing room
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="injectionRoom" class="form-label">Injection room</label>
+            <select class="form-select" aria-label="Default select example" id="injectionRoom"
+              formControlName="injectionRoom"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['injectionRoom'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['injectionRoom'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['injectionRoom'].errors['required']">
+                Please Select Injection room
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="pharmacyWindow" class="form-label">Pharmacy window</label>
+            <select class="form-select" aria-label="Default select example" id="pharmacyWindow"
+              formControlName="pharmacyWindow"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['pharmacyWindow'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['pharmacyWindow'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['pharmacyWindow'].errors['required']">
+                Please Select Pharmacy window
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="plasterRoom" class="form-label">Plaster room</label>
+            <select class="form-select" aria-label="Default select example" id="plasterRoom"
+              formControlName="plasterRoom"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['plasterRoom'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['plasterRoom'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['plasterRoom'].errors['required']">
+                Please Select Plaster room
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="separateStandForStaffPublicVehicles" class="form-label">Separate stand
+              for staff/public
+              vehicles</label>
+            <select class="form-select" aria-label="Default select example" id="separateStandForStaffPublicVehicles"
+              formControlName="separateStandForStaffPublicVehicles"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['separateStandForStaffPublicVehicles'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['separateStandForStaffPublicVehicles'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['separateStandForStaffPublicVehicles'].errors['required']">
+                Please Select Separate stand for staff/public vehicles</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="sanitaryFitments" class="form-label">Sanitary fitments</label>
+            <select class="form-select" aria-label="Default select example" id="sanitaryFitments"
+              formControlName="sanitaryFitments"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['sanitaryFitments'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['sanitaryFitments'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['sanitaryFitments'].errors['required']">
+                Please Select Sanitary fitments
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h5 class="mb-2">HDU</h5>
+        <hr>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="hduMultiSignMonitoringSystem" class="form-label">Multi-sign monitoring
+              system </label>
+            <select class="form-select" aria-label="Default select example" id="hduMultiSignMonitoringSystem"
+              formControlName="hduMultiSignMonitoringSystem"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['hduMultiSignMonitoringSystem'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['hduMultiSignMonitoringSystem'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['hduMultiSignMonitoringSystem'].errors['required']">
+                Please Select Multi-sign monitoring system</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="hduOxygenSupply" class="form-label">Oxygen supply
+              <!-- <span class="text-danger">*</span> -->
+            </label>
+            <select class="form-select" aria-label="Default select example" id="hduOxygenSupply"
+              formControlName="hduOxygenSupply"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['hduOxygenSupply'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['hduOxygenSupply'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['hduOxygenSupply'].errors['required']">
+                Please Select Oxygen supply
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="hduPipedSuctionAndMedicalGases" class="form-label">Piped suction &
+              medical gases</label>
+            <select class="form-select" aria-label="Default select example" id="hduPipedSuctionAndMedicalGases"
+              formControlName="hduPipedSuctionAndMedicalGases"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['hduPipedSuctionAndMedicalGases'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['hduPipedSuctionAndMedicalGases'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['hduPipedSuctionAndMedicalGases'].errors['required']">
+                Please Select Piped suction & medical gases</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="hduInfusionOfIonotropicSupport" class="form-label">Infusion of
+              ionotropic support</label>
+            <select class="form-select" aria-label="Default select example" id="hduInfusionOfIonotropicSupport"
+              formControlName="hduInfusionOfIonotropicSupport"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['hduInfusionOfIonotropicSupport'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['hduInfusionOfIonotropicSupport'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['hduInfusionOfIonotropicSupport'].errors['required']">
+                Please Select Infusion of ionotropic support</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="hduEquipmentForMaintenanceOfBodyTemperature" class="form-label">Equipment for maintenance of
+              body temperature</label>
+            <select class="form-select" aria-label="Default select example"
+              id="hduEquipmentForMaintenanceOfBodyTemperature"
+              formControlName="hduEquipmentForMaintenanceOfBodyTemperature"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['hduEquipmentForMaintenanceOfBodyTemperature'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['hduEquipmentForMaintenanceOfBodyTemperature'].errors"
+              class="invalid-feedback">
+              <div
+                *ngIf="civilInfrastructureFormControl['hduEquipmentForMaintenanceOfBodyTemperature'].errors['required']">
+                Please Select Equipment for maintenance of body temperature</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="hduWeighingScale" class="form-label">Weighing scale
+              <!-- <span class="text-danger">*</span> -->
+            </label>
+            <select class="form-select" aria-label="Default select example" id="hduWeighingScale"
+              formControlName="hduWeighingScale"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['hduWeighingScale'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['hduWeighingScale'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['hduWeighingScale'].errors['required']">
+                Please Select Weighing scale
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="hduManpowerForMonitoring" class="form-label">Manpower for 24x7
+              monitoring (nursing staff to
+              patient ratio
+              of 1:2) </label>
+            <select class="form-select" aria-label="Default select example" id="hduManpowerForMonitoring"
+              formControlName="hduManpowerForMonitoring"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['hduManpowerForMonitoring'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['hduManpowerForMonitoring'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['hduManpowerForMonitoring'].errors['required']">
+                Please Select Manpower for 24x7 monitoring</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="hduEmergencyCashCart" class="form-label">Emergency cash cart</label>
+            <select class="form-select" aria-label="Default select example" id="hduEmergencyCashCart"
+              formControlName="hduEmergencyCashCart"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['hduEmergencyCashCart'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['hduEmergencyCashCart'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['hduEmergencyCashCart'].errors['required']">
+                Please Select Emergency cash cart</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="hduUninterruptedElectricSupply" class="form-label">Uninterrupted
+              electric supply</label>
+            <select class="form-select" aria-label="Default select example" id="hduUninterruptedElectricSupply"
+              formControlName="hduUninterruptedElectricSupply"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['hduUninterruptedElectricSupply'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['hduUninterruptedElectricSupply'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['hduUninterruptedElectricSupply'].errors['required']">
+                Please Select Uninterrupted electric supply</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="hduHeating" class="form-label">Heating
+              <!-- <span class="text-danger">*</span> -->
+            </label>
+            <select class="form-select" aria-label="Default select example" id="hduHeating" formControlName="hduHeating"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['hduHeating'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['hduHeating'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['hduHeating'].errors['required']">
+                Please Select Heating</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="hduAirConditioning" class="form-label">Air conditioning
+              <!-- <span class="text-danger">*</span> -->
+            </label>
+            <select class="form-select" aria-label="Default select example" id="hduAirConditioning"
+              formControlName="hduAirConditioning"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['hduAirConditioning'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['hduAirConditioning'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['hduAirConditioning'].errors['required']">
+                Please Select Air conditioning
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="hduTotalNoOfBed" class="form-label">Total No Of Bed HDU</label>
+            <input type="text" class="form-control" id="hduTotalNoOfBed" placeholder="Enter here"
+              formControlName="hduTotalNoOfBed" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"
+              (input)="checkFieldValidation('civil', $event , 'hduTotalNoOfBed', 'mobileNumber')" maxlength="4"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['hduTotalNoOfBed'].errors }">
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['hduTotalNoOfBed'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['hduTotalNoOfBed'].errors['required']">
+                Please Enter Total No Of Bed HDU
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h5 class="mb-2">ICU</h5>
+        <hr>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="icuMultiSignMonitoringSystem" class="form-label">Multi-sign monitoring
+              system </label>
+            <select class="form-select" aria-label="Default select example" id="icuMultiSignMonitoringSystem"
+              formControlName="icuMultiSignMonitoringSystem"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['icuMultiSignMonitoringSystem'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['icuMultiSignMonitoringSystem'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['icuMultiSignMonitoringSystem'].errors['required']">
+                Please Select Multi-sign monitoring system</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="icuOxygenSupply" class="form-label">Oxygen supply
+              <!-- <span class="text-danger">*</span> -->
+            </label>
+            <select class="form-select" aria-label="Default select example" id="icuOxygenSupply"
+              formControlName="icuOxygenSupply"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['icuOxygenSupply'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['icuOxygenSupply'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['icuOxygenSupply'].errors['required']">
+                Please Select Oxygen supply
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="icuPipedSuctionAndMedicalGases" class="form-label">Piped suction &
+              medical gases </label>
+            <select class="form-select" aria-label="Default select example" id="icuPipedSuctionAndMedicalGases"
+              formControlName="icuPipedSuctionAndMedicalGases"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['icuPipedSuctionAndMedicalGases'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['icuPipedSuctionAndMedicalGases'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['icuPipedSuctionAndMedicalGases'].errors['required']">
+                Please Select Piped suction & medical gases</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="icuInfusionOfIonotropicSupport" class="form-label">Infusion of
+              ionotropic support</label>
+            <select class="form-select" aria-label="Default select example" id="icuInfusionOfIonotropicSupport"
+              formControlName="icuInfusionOfIonotropicSupport"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['icuInfusionOfIonotropicSupport'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['icuInfusionOfIonotropicSupport'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['icuInfusionOfIonotropicSupport'].errors['required']">
+                Please Select Infusion of ionotropic support</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="icuEquipmentForMaintenanceOfBodyTemperature" class="form-label">Equipment for maintenance of
+              body temperature </label>
+            <select class="form-select" aria-label="Default select example"
+              id="icuEquipmentForMaintenanceOfBodyTemperature"
+              formControlName="icuEquipmentForMaintenanceOfBodyTemperature"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['icuEquipmentForMaintenanceOfBodyTemperature'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['icuEquipmentForMaintenanceOfBodyTemperature'].errors"
+              class="invalid-feedback">
+              <div
+                *ngIf="civilInfrastructureFormControl['icuEquipmentForMaintenanceOfBodyTemperature'].errors['required']">
+                Please Select Equipment for maintenance of body temperature</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="icuWeighingScale" class="form-label">Weighing scale
+              <!-- <span class="text-danger">*</span> -->
+            </label>
+            <select class="form-select" aria-label="Default select example" id="icuWeighingScale"
+              formControlName="icuWeighingScale"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['icuWeighingScale'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['icuWeighingScale'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['icuWeighingScale'].errors['required']">
+                Please Select Weighing scale
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="icuManpowerForMonitoring" class="form-label">Manpower for 24x7
+              monitoring (nursing staff to
+              patient ratio
+              of 1:2) </label>
+            <select class="form-select" aria-label="Default select example" id="icuManpowerForMonitoring"
+              formControlName="icuManpowerForMonitoring"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['icuManpowerForMonitoring'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['icuManpowerForMonitoring'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['icuManpowerForMonitoring'].errors['required']">
+                Please Select Manpower for 24x7 monitoring</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="icuEmergencyCashCart" class="form-label">Emergency cash cart</label>
+            <select class="form-select" aria-label="Default select example" id="icuEmergencyCashCart"
+              formControlName="icuEmergencyCashCart"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['icuEmergencyCashCart'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['icuEmergencyCashCart'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['icuEmergencyCashCart'].errors['required']">
+                Please Select Emergency cash cart</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="icuUninterruptedElectricSupply" class="form-label">Uninterrupted
+              electric supply</label>
+            <select class="form-select" aria-label="Default select example" id="icuUninterruptedElectricSupply"
+              formControlName="icuUninterruptedElectricSupply"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['icuUninterruptedElectricSupply'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['icuUninterruptedElectricSupply'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['icuUninterruptedElectricSupply'].errors['required']">
+                Please Select Uninterrupted electric supply</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="icuHeating" class="form-label">Heating
+              <!-- <span class="text-danger">*</span> -->
+            </label>
+            <select class="form-select" aria-label="Default select example" id="icuHeating" formControlName="icuHeating"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['icuHeating'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['icuHeating'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['icuHeating'].errors['required']">
+                Please Select Heating</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="icuAirConditioning" class="form-label">Air conditioning
+              <!-- <span class="text-danger">*</span> -->
+            </label>
+            <select class="form-select" aria-label="Default select example" id="icuAirConditioning"
+              formControlName="icuAirConditioning"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['icuAirConditioning'].errors }">
+              <option value="" selected disabled>Select</option>
+              <option *ngFor="let civil of civilInfraArray" [value]="civil.id">{{civil.name}}
+              </option>
+            </select>
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['icuAirConditioning'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['icuAirConditioning'].errors['required']">
+                Please Select Air conditioning
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="icuTotalNoOfBed" class="form-label">Total No Of Bed ICU</label>
+            <input type="text" class="form-control" id="icuTotalNoOfBed" placeholder="Enter here"
+              formControlName="icuTotalNoOfBed" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"
+              (input)="checkFieldValidation('civil', $event , 'icuTotalNoOfBed', 'mobileNumber')" maxlength="4"
+              [ngClass]="{ 'is-invalid': isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['icuTotalNoOfBed'].errors }">
+            <div
+              *ngIf="isSubmitHospitalCivilInfrastructureForm && civilInfrastructureFormControl['icuTotalNoOfBed'].errors"
+              class="invalid-feedback">
+              <div *ngIf="civilInfrastructureFormControl['icuTotalNoOfBed'].errors['required']">
+                Please Enter Total No Of Bed ICU
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row ">
+        <div class="col-12 d-flex justify-content-center gap-2">
+          <button type="submit" class="btn btn-success" (click)="submitCivilInfrastructure()">
+            Submit </button>
+          <button type="reset" class="btn btn-secondary" (click)="reset()">Reset </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

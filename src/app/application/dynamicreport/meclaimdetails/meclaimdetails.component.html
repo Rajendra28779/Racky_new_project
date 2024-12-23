@@ -1,0 +1,557 @@
+
+<div >
+
+  <div class="main-tab">
+      <div class="row justify-content-between">
+          <div class="col-lg-4">
+              <ul class="nav nav-tabs">
+                  <li class="nav-item">
+                      <a routerLink="/application/meclaimdetails" routerLinkActive="active"
+                          class="nav-link active">ME Trigger Claim Details</a>
+                  </li>
+              </ul>
+          </div>
+          <div class="col-lg-6 ">
+            <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+        </div>
+      </div>
+
+      <div class="card shadow-sm mt-3 mt-xl-4 ">
+          <div class="card-header">
+              <h5 class="mb-0 ">Hospital Details</h5>
+          </div>
+          <div class="card-body">
+              <div class="row gx-xl-5 treatment-details">
+                  <div class="col-xl">
+                      <p class="mb-0">{{itemvalue?.hospitalname}} ({{itemvalue?.hospitalcode}})
+                      </p>
+                  </div>
+                  <div class="col-xl border-start">
+                      <div class="d-flex align-items-center">
+                          <!-- <i class="iconbsky-package-amount mt-2 me-3 fs-1"></i> -->
+                          <div>
+                              <p class="text-muted mb-0">URN</p>
+                              <p class="mb-0 fw-bold">{{itemvalue?.urn}}</p>
+                          </div>
+                      </div>
+                  </div>
+                  <!-- <div class="col-xl border-start">
+                      <div class="d-flex align-items-center"> -->
+                          <!-- <i class="iconbsky-package-amount mt-2 me-3 fs-1"></i> -->
+                          <!-- <div>
+                              <p class="text-muted mb-0">Claim Number</p>
+                              <p class="mb-0 fw-bold">{{claimno}}</p> -->
+                              <!-- <p class="mb-0 fw-bold" *nfIf="claimno==null">N/A</p> -->
+                          <!-- </div>
+                      </div>
+                  </div> -->
+                  <div class="col-xl border-start">
+                      <div class="d-flex align-items-center">
+                          <!-- <i class="iconbsky-package-amount mt-2 me-3 fs-1"></i> -->
+                          <div>
+                              <p class="text-muted mb-0">Hospital Claim Case Number</p>
+                              <p class="mb-0 fw-bold">{{hopitalclmcaseno}}</p>
+                              <!-- <p class="mb-0 fw-bold" *nfIf="claimno==null">N/A</p> -->
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-xl border-start">
+                      <div class="d-flex align-items-center">
+                          <!-- <i class="iconbsky-package-amount mt-2 me-3 fs-1"></i> -->
+                          <div>
+                              <p class="text-muted mb-0">TMS Case Number</p>
+                              <p class="mb-0 fw-bold">{{caseno}}</p>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-xl border-start">
+                      <div class="d-flex align-items-center">
+                          <!-- <i class="iconbsky-block-amount mt-2 me-3 fs-1"></i> -->
+                          <div>
+                              <p class="text-muted mb-0"> SNA Doctor Name</p>
+                              <p class="mb-0 fw-bold">{{snaname}}</p>
+                          </div>
+                      </div>
+                  </div>
+
+              </div>
+          </div>
+      </div>
+
+      <div class="row">
+          <div class="col-lg-12">
+              <div class="">
+                  <div class="card shadow-sm mt-3 mt-xl-4 ">
+                      <div class="card-header">
+                          <h5 class="mb-0">Patient Details</h5>
+                      </div>
+
+                      <div class="card-body">
+                          <div class="row gx-xl-5 treatment-details">
+                              <div class="col-xl">
+                                  <p class="small text-muted mb-0">Name</p>
+                                  <p class="mb-0 fw-bold">
+                                      {{itemvalue?.patientname}}
+                                  </p>
+                              </div>
+
+                              <div class="col-xl border-start">
+                                  <div class="d-flex align-items-center">
+                                      <div>
+                                          <p class="small text-muted mb-0">AGE</p>
+                                          <p class="mb-0 fw-bold">
+                                              <!-- <i class="iconbsky-age"></i> -->
+                                              {{itemvalue?.age}} Years
+                                          </p>
+                                      </div>
+                                  </div>
+                              </div>
+
+                              <div class="col-xl border-start">
+                                  <div class="d-flex align-items-center">
+                                      <div>
+                                          <p class="small text-muted mb-0">GENDER</p>
+                                          <p class="mb-0 fw-bold">
+                                              {{itemvalue?.gender}}
+                                          </p>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-xl border-start">
+                                  <div class="d-flex align-items-center">
+                                      <div>
+                                          <p class="small text-muted mb-0">Mobile No</p>
+                                          <p class="mb-0 fw-bold">
+                                              <!-- <i class="iconbsky-location"></i> -->
+                                              {{itemvalue?.PATIENTPHONENO!=null?itemvalue?.PATIENTPHONENO:'N/A' }}
+                                          </p>
+                                      </div>
+                                  </div>
+                              </div>
+
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+
+      <div class="row">
+      <div class="col-lg-12">
+          <div class="card shadow-sm mt-3 mt-xl-4 ">
+              <div class="card-header">
+                  <h5 class="mb-0">Treatment Details</h5>
+              </div>
+              <div class="card-body">
+                  <div class="row gx-xl-5 treatment-details">
+                      <div class="col-xl">
+                          <p class="small text-muted mb-0">Date Of Admission - Date Of
+                              Discharge
+                          </p>
+                          <p class="mb-0 fw-bold">
+                              <!-- <i class="iconbsky-calendar small"></i> -->
+                              {{itemvalue?.dateofadmission}}
+
+                              <!-- <i class="iconbsky-calendar small ps-2"></i> -->
+                              {{itemvalue?.dateofdischarge}}
+                          </p>
+                      </div>
+                      <div class="col-xl border-start">
+                          <div class="d-flex align-items-center">
+                              <!-- <i class="iconbsky-package-amount mt-2 me-3 fs-1"></i> -->
+                              <div>
+                                  <p class="small text-muted mb-0">Package Rate(₹)</p>
+                                  <p class="mb-0 fw-bold"> {{itemvalue?.PACKAGERATE|
+                                      currency:'':''}}
+                                  </p>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-xl border-start">
+                          <div class="d-flex align-items-center">
+                              <!-- <i class="iconbsky-block-amount mt-2 me-3 fs-1"></i> -->
+                              <div>
+                                  <p class="small text-muted mb-0">Blocked Amount(₹)
+                                  </p>
+                                  <p class="mb-0 fw-bold"> {{itemvalue?.totalamountblocked|
+                                      currency:'':''}}
+                                  </p>
+                                  <p class="small text-muted mb-0">Claimed Amount (₹)</p>
+                                  <p class="mb-0 fw-bold">
+                                      {{ itemvalue?.totalamountclaimed | currency : "" : "" }}
+                                  </p>
+
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-xl border-start">
+                          <div class="d-flex align-items-center">
+                              <!-- <i class="iconbsky-block-amount mt-2 me-3 fs-1"></i> -->
+                              <div>
+                                  <p class="small text-muted mb-0">Authorized Code</p>
+                                  <p class="mb-0 fw-bold">{{itemvalue?.authorizedcode}}</p>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-lg-3 ">
+                          <div class="d-flex align-items-center">
+                              <!-- <i class="iconbsky-block-amount mt-2 me-3 fs-1"></i> -->
+                              <div>
+                                  <p class="small text-muted mb-0">Procedure</p>
+                                  <p class="mb-0 fw-bold">{{itemvalue?.procedurename}}
+                                  </p>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-12">
+                          <hr class="mt-xl-4">
+                      </div>
+                      <div class="col-lg-3">
+                          <div class="d-flex align-items-center">
+                              <!-- <i class="iconbsky-block-amount mt-2 me-3 fs-1"></i> -->
+                              <div>
+                                  <p class="small text-muted mb-0">Packages</p>
+                                  <p class="mb-0 fw-bold">{{itemvalue?.packagename}}</p>
+                              </div>
+                          </div>
+                      </div>
+
+
+                      <div class="col-lg-3 border-start">
+                          <div class="d-flex align-items-center">
+                              <!-- <i class="iconbsky-block-amount mt-2 me-3 fs-1"></i> -->
+                              <div>
+                                  <p class="small text-muted mb-0">Mortality</p>
+                                  <p class="mb-0 fw-bold">{{itemvalue?.mortality}}</p>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-lg-3 border-start">
+                          <div class="d-flex align-items-center">
+                              <!-- <i class="iconbsky-block-amount mt-2 me-3 fs-1"></i> -->
+                              <div>
+                                  <p class="small text-muted mb-0">Referral Code</p>
+                                  <p class="mb-0 fw-bold">{{itemvalue?.referralcode!='
+                                      '?itemvalue?.referralcode:'N/A'}}
+                                  </p>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-12">
+                          <hr class="mt-xl-4">
+                      </div>
+
+                      <div class="col-xl">
+                          <p class="small text-muted mb-0">Actual Date Of Admission - Actual
+                              Date Of Discharge
+                          </p>
+                          <p class="mb-0 fw-bold">
+                              <!-- <i class="iconbsky-calendar small"></i> -->
+                              {{itemvalue?.actualdateofadmission}} -
+
+                              <!-- <i class="iconbsky-calendar small ps-2"></i> -->
+                              {{itemvalue?.actualdateofdischarge}}
+                          </p>
+                      </div>
+                      <div class="col-lg-3 border-start">
+                          <div class="d-flex align-items-center">
+                              <!-- <i class="iconbsky-block-amount mt-2 me-3 fs-1"></i> -->
+                              <div>
+                                  <p class="small text-muted mb-0">IMPLANT DATA
+                                  </p>
+                                  <p class="mb-0 fw-bold">{{itemvalue?.implant_data!='
+                                      '?itemvalue?.implant_data:'N/A'}}
+                                  </p>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-lg-3 border-start">
+                          <div class="d-flex align-items-center">
+                              <!-- <i class="iconbsky-block-amount mt-2 me-3 fs-1"></i> -->
+                              <div>
+                                  <p class="small text-muted mb-0">NABH Flag</p>
+                                  <p class="mb-0 fw-bold">
+                                      {{itemvalue?.nabh?itemvalue?.nabh:'N/A'}}
+                                  </p>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+      <div class=" row ">
+          <div class="col-lg-12 mt-3">
+              <h5>Pre-Auth Log</h5>
+              <div class="table-responsive ">
+                  <table class="table mb-0 ">
+                      <thead>
+                          <tr>
+                              <th width="60 " rowspan="2">Sl No.</th>
+                              <th rowspan="2">Pre Auth Code</th>
+                              <th rowspan="2">Claimed Amount(₹)</th>
+                              <th rowspan="2">Approved Amount(₹)</th>
+                              <th rowspan="2">Pre-Auth Date</th>
+                              <th rowspan="2">Approved Date</th>
+                              <th rowspan="2">Remarks</th>
+                              <th colspan="3" style="text-align:center">Documents</th>
+                              <th rowspan="2">Details</th>
+                          </tr>
+                          <tr>
+                              <th>Doc1</th>
+                              <th>Doc2</th>
+                              <th>Doc3</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <ng-container>
+                              <tr *ngFor="let auth of datavalue index as i">
+                                  <td>{{i+1}}</td>
+                                  <td>{{auth.preauthCode}}</td>
+                                  <td>{{auth.claimedAmount | currency:'':''}}</td>
+                                  <td>{{auth.approvedAmount | currency:'':''}}</td>
+                                  <td>{{auth.claimedDate | date :'dd-MMM-yyyy, h:mm:ss a'}}</td>
+                                  <td>{{auth.approvedDate | date :'dd-MMM-yyyy, h:mm:ss a'}}</td>
+                                  <td>{{auth.preAuthRemarks}}</td>
+                                  <td *ngIf="auth.aditionalDoc1 != undefined"><a href="javascript:void(0);"
+                                          (click)="downloadAction($event,auth.aditionalDoc1,auth.hospitalCode,auth.claimedDate,'')"><i
+                                              class="bi bi-file-earmark-pdf" style="color:red;font-size:15px;"></i></a>
+                                  </td>
+                                  <td *ngIf="auth.aditionalDoc1 == undefined">--</td>
+                                  <td *ngIf="auth.aditionalDoc2 != undefined"><a href="javascript:void(0);"
+                                          (click)="downloadAction($event,auth.aditionalDoc2,auth.hospitalCode,auth.claimedDate,'')"><i
+                                              class="bi bi-file-earmark-pdf" style="color:red;font-size:15px;"></i></a>
+                                  </td>
+                                  <td *ngIf="auth.aditionalDoc2 == undefined">--</td>
+                                  <td *ngIf="auth.aditionalDoc3 != undefined"><a href="javascript:void(0);"
+                                          (click)="downloadAction($event,auth.aditionalDoc3,auth.hospitalCode,auth.claimedDate,'')"><i
+                                              class="bi bi-file-earmark-pdf" style="color:red;font-size:15px;"></i></a>
+                                  </td>
+                                  <td *ngIf="auth.aditionalDoc3 == undefined">--</td>
+                                  <td><a href="javascript:void(0)" (click)="preauthLogDetails()">Click
+                                          here</a></td>
+                              </tr>
+                          </ng-container>
+                          <tr *ngIf="!query">
+                              <td colspan="13" align="center"><strong class="text-danger">No data
+                                      found</strong></td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="row mt-4 ">
+      <div class="col-lg-12 ">
+          <div class="card shadow-sm basic-info ">
+              <div class="card-header ">
+                  <h5 class="mb-0 ">Documents Uploaded During Patient Discharge :-</h5>
+              </div>
+              <div class="card-body ">
+                  <div class="row gx-2 justify-content-between document-upload ">
+                      <div class="col-lg-12 col-xxl-12 ">
+                          <div class="row uploaded-doc ">
+                              <div class="row">
+                                  <div class="col-6 col-lg-3 col-xxl-3 text-center "
+                                      *ngIf="itemvalue?.dischargeslip != undefined">
+                                      <!-- <a style="cursor:pointer ;" (click)="downloadActionforDischarge($event,userdetailsByid1?.dischargeslip,userdetailsByid1?.hospitalcode,userdetailsByid1?.dateofadmission)">
+                                      <img src="./assets/img/pdf.png" alt="Patient Photo " class="mb-2 rounded " Width="80">
+                                      <span class="d-block ">Discharge Slip</span>
+                                  </a> -->
+                                      <a style="cursor:pointer ;"
+                                          (click)="downloadActionforDischarge($event,itemvalue?.dischargeslip,itemvalue?.hospitalcode,itemvalue?.dateofadmission)">
+                                          <img src="./assets/img/pdf.png" alt="Patient Photo " class="mb-2 rounded "
+                                              Width="80">
+                                          <span class="d-block ">Discharge Slip</span>
+                                      </a>
+                                  </div>
+                                  <div class="col-6 col-lg-3 col-xxl-3 text-center "
+                                      *ngIf="itemvalue?.dischargeslip == undefined">
+                                      <span class="d-block ">--</span>
+                                      <span class="d-block ">Discharge Slip</span>
+                                  </div>
+                                  <div class="col-6 col-lg-3 col-xxl-3 text-center "
+                                      *ngIf="itemvalue?.presurgeryphoto != undefined">
+                                      <a style="cursor:pointer ;"
+                                          (click)="downloadActionforDischarge($event,itemvalue?.presurgeryphoto,itemvalue?.hospitalcode,itemvalue?.dateofadmission)">
+                                          <img src="./assets/img/male-profile.jpg " alt="Patient Photo "
+                                              class="mb-2 rounded " Width="80">
+                                          <span class="d-block ">Pre-Surgery</span>
+                                      </a>
+                                  </div>
+                                  <div class="col-6 col-lg-3 col-xxl-3 text-center "
+                                      *ngIf="itemvalue?.presurgeryphoto == undefined">
+                                      <span class="d-block ">--</span>
+                                      <span class="d-block ">Pre-Surgery</span>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-6 col-lg-3 col-xxl-3 text-center "
+                                      *ngIf="itemvalue?.postsurgeryphoto != undefined">
+                                      <a style="cursor:pointer ;"
+                                          (click)="downloadActionforDischarge($event,itemvalue?.postsurgeryphoto,itemvalue?.hospitalcode,itemvalue?.dateofadmission)">
+                                          <img src="./assets/img/male-profile.jpg " alt="Patient Photo "
+                                              class="mb-2 rounded " Width="80">
+                                          <span class="d-block ">Post-Surgery</span>
+                                      </a>
+                                  </div>
+                                  <div class="col-6 col-lg-3 col-xxl-3 text-center "
+                                      *ngIf="itemvalue?.postsurgeryphoto == undefined">
+                                      <span class="d-block ">--</span>
+                                      <span class="d-block ">Post-Surgery</span>
+                                  </div>
+                                  <div class="col-6 col-lg-3 col-xxl-3 text-center "
+                                      *ngIf="itemvalue?.intra_surgery_photo != undefined">
+                                      <a style="cursor:pointer ;"
+                                          (click)="downloadActionforDischarge($event,itemvalue?.intra_surgery_photo,itemvalue?.hospitalcode,itemvalue?.dateofadmission)">
+                                          <img src="./assets/img/male-profile.jpg " alt="Patient Photo "
+                                              class="mb-2 rounded " Width="80">
+                                          <span class="d-block ">Intra Surgery</span>
+                                      </a>
+                                  </div>
+                                  <div class="col-6 col-lg-3 col-xxl-3 text-center "
+                                      *ngIf="itemvalue?.intra_surgery_photo == undefined">
+                                      <span class="d-block ">--</span>
+                                      <span class="d-block ">Intra Surgery</span>
+                                  </div>
+                                  <div class="col-6 col-lg-3 col-xxl-3 text-center "
+                                      *ngIf="itemvalue?.specimen_removal_photo != undefined">
+                                      <a style="cursor:pointer ;"
+                                          (click)="downloadActionforDischarge($event,itemvalue?.specimen_removal_photo,itemvalue?.hospitalcode,itemvalue?.dateofadmission)">
+                                          <img src="./assets/img/male-profile.jpg " alt="Patient Photo "
+                                              class="mb-2 rounded " Width="80">
+                                          <span class="d-block ">Specimen Removal</span>
+                                      </a>
+                                  </div>
+                                  <div class="col-6 col-lg-3 col-xxl-3 text-center "
+                                      *ngIf="itemvalue?.specimen_removal_photo == undefined">
+                                      <span class="d-block ">--</span>
+                                      <span class="d-block ">Specimen Removal</span>
+                                  </div>
+                                  <div class="col-6 col-lg-3 col-xxl-3 text-center "
+                                      *ngIf="itemvalue?.patient_photo != undefined">
+                                      <a style="cursor:pointer ;"
+                                          (click)="downloadActionforDischarge($event,itemvalue?.patient_photo,itemvalue?.hospitalcode,userdetailsByid1?.dateofadmission)">
+                                          <img src="./assets/img/male-profile.jpg " alt="Patient Photo "
+                                              class="mb-2 rounded " Width="80">
+                                          <span class="d-block ">Patient Photo</span>
+                                      </a>
+                                  </div>
+                                  <div class="col-6 col-lg-3 col-xxl-3 text-center "
+                                      *ngIf="itemvalue?.patient_photo == undefined">
+                                      <span class="d-block ">--</span>
+                                      <span class="d-block ">Patient Photo</span>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <!-- <br> -->
+  <div class="col-lg-12 col-xl-12 col-xxl-12">
+    <div class="row mt-4">
+        <div class="col-lg-12 accordion">
+            <div class="card shadow-sm treatment-history">
+                <div class="accordion-item" id="data">
+                    <div class="accordion-button collapsed card-header bg-color" data-bs-toggle="collapse" data-bs-target="#collapse" aria-expanded="false" aria-controls="collapse">
+                        <h5 class="mb-0" style="font-size: 12pt;">M And E Remark History</h5>
+                    </div>
+                    <div id="collapse" class="accordion-collapse collapse show" aria-labelledby="data" data-bs-parent="#accordionExample">
+                        <div class="card-body">
+                            <div class="table-responsive treatment-history-table-class">
+                                <table class="table mb-0 border treatment-history-table-head-class ">
+                                    <thead class="bgcolor-th">
+                                        <tr>
+                                            <th>Sl#</th>
+                                            <th>Remark By</th>
+                                            <th>Remark On</th>
+                                            <th>Remark Type</th>
+                                            <th width="200">Remark</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let action of claimLog index as i">
+                                            <td>{{i+1}}</td>
+                                            <td>{{action.actionby1}}</td>
+                                            <td>{{action.actionon1}}</td>
+                                            <td>{{action.actiontype}}</td>
+                                            <td>{{action.remark}}</td>
+                                        </tr>
+                                        <tr *ngIf="claimLog?.length==0">
+                                            <td colspan="16" align="center"><strong class="text-danger">No data found</strong></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+  <div class="col-lg-12">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div class="row">
+              <div class="col-lg-5 col-xxl-5" *ngIf="showage">
+                <label class="col-form-label">Age Remark</label>
+                <div class="row">
+                  <div class="col-lg-4 col-xxl-4">
+                    <select class="form-select" name="year" id="year" [(ngModel)]="year">
+                      <option value="" selected>Select</option>
+                      <ng-container *ngFor="let item of nolist">
+                          <option value={{item}}>{{item}}</option>
+                      </ng-container>
+                  </select>
+                  </div>
+                  <div class="col-lg-2 col-xxl-2">
+                    Year
+                  </div>
+                  <!-- <div class="col-lg-4 col-xxl-4">
+                    <select class="form-select" name="month" id="month" [(ngModel)]="month">
+                      <option value="" selected>Select</option>
+                          <option value=0>0</option>
+                          <option value=1>1</option>
+                          <option value=2>2</option>
+                          <option value=3>3</option>
+                          <option value=4>4</option>
+                          <option value=5>5</option>
+                          <option value=6>6</option>
+                          <option value=7>7</option>
+                          <option value=8>8</option>
+                          <option value=9>9</option>
+                          <option value=10>10</option>
+                          <option value=11>11</option>
+                  </select>
+                  </div> -->
+                  <!-- <div class="col-lg-2 col-xxl-2">
+                    Month
+                  </div> -->
+                </div>
+              </div>
+                <div class="col-lg-5 col-xxl-5">
+                    <label class="col-form-label">Remark</label><span class="text-danger">*</span>
+                    <textarea class="form-control" id="remarks" name="remarks"  maxlength="1000" placeholder="Enter Remark" #myInput [maxlength]="maxChars"
+                    [disabled]="desablebtn"  (keypress)="keyPress($event)" [(ngModel)]="remark"></textarea>
+                    <span class="text-danger small">Characters Remaining: {{maxChars - myInput.value.length}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="d-grid gap-2 d-sm-block mt-3 mt-xl-4">
+    <button (click)="submitDetails()" class="btn btn-success me-2" id="Approve" *ngIf="showremark">Submit</button>
+    <button (click)="submitDetails()" class="btn btn-success me-2" id="Approve" *ngIf="!showremark" [disabled]="desablebtn">Update</button>
+</div>
+
+  </div>

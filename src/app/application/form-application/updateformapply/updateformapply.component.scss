@@ -1,0 +1,218 @@
+//@import "../../../assets/scss/variables";
+// @import "../../../assets/scss/icons";
+// @import "../../../styles.scss";
+
+.dynamic-ctrls {
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 0;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: calc(-1 * var(--bs-gutter-y));
+    margin-right: calc(-.5 * var(--bs-gutter-x));
+    margin-left: calc(-.5 * var(--bs-gutter-x));
+}
+
+.onegrid{
+  flex: 0 0 100%;
+   display:flex;
+  align-items: flex-start;
+  padding: 0 0rem;
+  margin-bottom: 1rem;
+  .fulldtls{
+      flex: 0 0 100%;
+      display:flex;
+     align-items: flex-start;
+  }
+  .form-group{
+      margin-bottom: 0;
+
+  }
+  label{
+      flex: 0 0 25%;
+      max-width: 25%;
+      padding: 0 1rem;
+  }
+ .control-holder{
+  flex: 0 0 75%;
+  max-width: 75%;
+  padding: 0 1rem;
+      label{
+          flex: auto;
+
+          padding: 0;
+
+      }
+      .form-check-inline{
+          .form-check-label{
+
+              display: inline;
+              line-height: 1.5;}
+      }
+ }
+ &.fullwidthSection{
+  margin-bottom: 1rem;
+  .control-holder{
+      padding: 0 1rem;
+      flex: 0 0 100%;
+  max-width: 100%;
+       .control-holder{
+          flex: 0 0 75%;
+          max-width: 75%;margin-bottom: 1rem}
+  }
+ }
+}
+.twogrid{flex: 0 0 50%;
+
+ align-items: center;
+ padding: 0 1rem;
+ .fulldtls{
+
+  display:block;
+ align-items: flex-start;
+}
+ .form-group{
+     margin-bottom: 1rem;
+
+ }
+ label{
+   display: inline-block;
+   padding:0rem;
+ }
+.control-holder{
+width: 100%;
+.form-check-inline{
+  .form-check-label{
+
+      display: inline;
+      line-height: 1.5;}
+}
+}
+&.fullwidthSection{
+    width: 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+    margin-bottom: 1rem;
+    .fulldtlsTwo{
+        display: flex;
+        flex-wrap: wrap;
+margin-left: -1rem;
+margin-right: -1rem;
+  }
+    .fulldtlsinner{
+      flex: 0 0 50%;
+      padding:0 1rem;
+    }
+}
+}
+.threegrid{flex: 0 0 33.33%;
+
+  align-items: center;
+  padding: 0 1rem;
+  &.fullwidthSection{
+      width: 100%;
+      flex: 0 0 100%;
+      max-width: 100%;
+  }
+  .fulldtls{
+      display:block;
+     align-items: flex-start;
+  }
+  .form-group{
+      margin-bottom: 1rem;
+
+  }
+  label{
+    display: inline-block;
+    padding: 0rem;
+  }
+ .control-holder{
+ width: 100%;
+ .form-check-inline{
+  .form-check-label{
+
+      display: inline;
+      line-height: 1.5;}
+}
+ }
+ &.fullwidthSection{
+  width: 100%;
+  flex: 0 0 100%;
+  max-width: 100%;
+  margin-bottom: 1rem;
+  .fulldtlsTwo{
+      display: flex;
+      flex-wrap: wrap;
+margin-left: -1rem;
+margin-right: -1rem;
+}
+  .fulldtlsinner{
+    flex: 0 0 33.33%;
+    padding:0 1rem;
+  }
+}
+
+}
+
+ ::ng-deep .ck-editor__editable {
+  min-height: 200px !important;
+}
+.fullgrid{
+
+  flex-flow: column;
+  .control-holder{
+      width: 100%;
+      max-width: 100%;
+  }
+}
+.mr-3 {
+    margin-right: 1rem
+}
+
+.nav-pills {
+    // padding: 0 14px;
+    padding: 0 1.3rem 0 0;
+}
+
+.nav-link {
+    color: var(--bs-link-color);
+    text-align: left;
+    margin-bottom: .5rem;
+    background-color: var(--bs-gray-100);
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link {
+    color: var(--bs-white);
+    background-color: var(--bs-link-color);
+    // padding: 0.3rem 4rem;
+    text-align: left;
+    // margin-bottom: .5rem;
+}
+
+.nav-pills .nav-link:hover {
+    color: var(--white);
+    background-color: var(--bs-link-color);
+    // padding: 0.3rem 4rem;
+}
+
+.bg-theme-light {
+    background-color: #e4faed87;
+}
+
+.menu-box {
+    height: 100%;
+    // margin: 0 1.3rem;
+    border-right: 1px dashed var(--bs-gray-300);
+}
+
+.pb-08 {
+    padding-bottom: 0.8rem;
+}
+
+.custom-border {
+    display: block;
+    width: 3rem;
+    height: 0.2rem;
+    background-color: #0d784c;
+    border-radius: 0.1rem;
+}

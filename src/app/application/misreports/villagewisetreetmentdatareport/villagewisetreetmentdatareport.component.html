@@ -1,0 +1,105 @@
+<div class="content">
+  <div class="form-cointainer">
+      <div class="main-tab">
+          <div class="row justify-content-between">
+              <div class="col-lg-12">
+                  <ul class="nav nav-tabs">
+                      <li class="nav-item">
+                          <a routerLinkActive="active" class="nav-link active">Beneficiary Village Wise Treatment Report</a>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+      </div>
+      <div class="row" >
+          <div class="col-lg-3 col-xxl-3">
+              District Name : <strong>{{districtName}}</strong>
+          </div>
+          <div class="col-lg-3 col-xxl-3">
+              Block Name :<strong>{{blockName}}</strong>
+          </div>
+          <div class="col-lg-3 col-xxl-3">
+              Gram Panchayat Name : <strong>{{gramname}}</strong>
+          </div>
+      </div>
+      <div class="row" style="margin-top: 1ch;">
+          <div class="col-lg-6 col-xxl-6"></div>
+          <div class="col-lg-2 col-xxl-2">
+              <div class="table-utilities float-end">
+                  <button class="btn btn-success btn-sm mx-1" tooltip="Excel" (click)="downloadReport(1)"><i
+                          class="bi bi-download"></i>
+                  </button>
+                  <button class="btn btn-danger btn-sm me-1" type="submit" (click)="downloadReport(2)"><i
+                          class="bi bi-file-earmark-pdf"></i></button>
+              </div>
+          </div>
+          <div class="col-lg-4 col-xxl-4">
+
+              <input type="text" id="txtsearchDate" class="form-control" placeholder="Search here...." name="txtsearchDate" [(ngModel)]="txtsearchDate" autocomplete="off">
+
+          </div>
+      </div>
+      <div class="table-responsive" style="margin-top: 1ch;">
+          <table class="table table-striped mb-0">
+              <thead>
+                  <tr>
+                      <th>Sl No#</th>
+                      <th>Village Name</th>
+                      <th>Issued Male</th>
+                      <th>Issued Female</th>
+                      <th>Issued Others</th>
+                      <th>Treated Male</th>
+                      <th>Treated Female</th>
+                      <th>Treated Others</th>
+                      <th>Treated Male Amount</th>
+                      <th>Treated Female Amount</th>
+                      <th>Treated Others Amount</th>
+                  </tr>
+              </thead>
+              <tbody>
+
+                  <ng-container>
+                      <tr *ngFor="let item of getvillagedata | filter:txtsearchDate |
+                      paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};index as i">
+                          <td *ngIf="currentPage==1">{{i+1}}</td>
+                          <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+i+1}}</td>
+                          <!-- <a href="javascript:void(0);" (click)="view(item.districtId,item.blockId,item.gramId,item.villageId,item.districtName,item.blockName,item.gramName,item.villageName)"></a> -->
+                          <td>{{item.villageName}}</td>
+                          <td>{{item.male}}</td>
+                          <td>{{item.female}}</td>
+                          <td>{{item.other}}</td>
+                          <td>{{item.treatedMale}}</td>
+                          <td>{{item.treatedFeMale}}</td>
+                          <td>{{item.treatedOther}}</td>
+                          <td>{{item.treatedMaleAmount}}</td>
+                          <td>{{item.treatedFeMaleAmount}}</td>
+                          <td>{{item.treatedOtherAmount}}</td>
+                      </tr>
+                  </ng-container>
+                  <tr *ngIf="showPegi">
+                      <td></td>
+                      <td><b>Total</b></td>
+                      <td><b>{{sum}}</b></td>
+                      <td><b>{{sum1}}</b></td>
+                      <td><b>{{sum2}}</b></td>
+                      <td><b>{{sum3}}</b></td>
+                      <td><b>{{sum4}}</b></td>
+                      <td><b>{{sum5}}</b></td>
+                      <td><b>{{sum6}}</b></td>
+                      <td><b>{{sum7}}</b></td>
+                      <td><b>{{sum8}}</b></td>
+                  </tr>
+                  <tr *ngIf="!showPegi">
+                      <div class="row">
+                          <span style="color: red;text-align: center;position:absolute">NO DATA
+                              FOUND!!</span>
+                      </div>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+      <!-- </div> -->
+      <!-- </div> -->
+
+  </div>
+</div>

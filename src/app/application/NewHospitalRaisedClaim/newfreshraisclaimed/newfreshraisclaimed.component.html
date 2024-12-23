@@ -1,0 +1,147 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/CasewiseHospClaimraise" class="nav-link active"> Casewise Hospital Claimraise</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="content-box mt-3">
+        <div class="row">
+            <div class="col-lg-4 col-xxl-4">
+                <div class="mb-3">
+                    <label for="schemename" class="form-label">Scheme Name<span class="text-danger">*</span></label>
+                    <input class="form-control" type="text" placeholder="Scheme Name" autocomplete="off" maxlength="30" id="schemename" [(ngModel)]="schemeName" disabled>
+                </div>
+            </div>
+            <div class="col-lg-4 col-xxl-4">
+                <div class="mb-3">
+                    <label class="control-label">Scheme Category Name</label>
+                    <select class="form-select" name="schemacategory" id="schemacategory" (change)="getschemacategoryid($event.target.value)">
+                        <option value="" selected>All</option>
+                        <ng-container *ngFor="let item of schemeList">
+                            <option value="{{item.schemeCategoryId}}">{{item.categoryName}}</option>
+                        </ng-container>
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-4 col-xxl-4">
+                <div class="mb-3">
+                    <label class="control-label mb-2">Actual Date of Discharge From<span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <input type="text" class="form-control border-end-0 datepicker" id="datepicker4" name="fromDate" autocomplete="off">
+                        <label class="input-group-text bg-transparent border-start-0" for="datepicker4"><i class="iconbsky-calendar"></i></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-xxl-4">
+                <div class="mb-3">
+                    <label class="control-label mb-2">Actual Date of Discharge To<span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <input type="text" class="form-control border-end-0 datepicker" id="datepicker3" name="toDate" autocomplete="off">
+                        <label class="input-group-text bg-transparent border-start-0" for="datepicker3"><i class="iconbsky-calendar"></i></label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-xxl-4">
+                <div class="mb-3">
+                    <label class="control-label mb-2">URN</label>
+                    <input type="text" maxlength="20" class="form-control" id="URNnumber" placeholder="Enter URN" autocomplete="off" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');">
+                </div>
+            </div>
+            <div class="col-lg-4 col-xxl-4">
+                <div class="mb-3">
+                    <label class="control-label mb-2">Case Number</label>
+                    <input type="text" maxlength="40" class="form-control" id="case" placeholder="Enter Case Number" autocomplete="off" (keyup)="keyFunc1($event.target)" oninput="this.value = this.value.toUpperCase()" onkeyup="this.value=this.value.replace(/[^0-9.a-zA-Z/]/g,'');">
+                </div>
+            </div>
+            <div class="col-lg-12 ">
+                <div class="d-grid gap-2 d-md-flex ">
+                    <button type="submit " class="btn btn-success " (click)="getnewClaimDetails() ">Search</button>
+                    <button type="reset" class="btn btn-secondary " (click)="getRestdata()">Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+        <div class="col-lg-8 col-xxl-8 row">
+            <div class="col-md-9">
+                <div style="padding-top: 10px; font-weight: bold; color: green">Total Records: {{record!=null?record:0}}
+                </div>
+            </div>
+            <div [align]="'start'" class="col-md-3">
+                <button class="btn btn-danger" title="Download PDF" (click)="downloadReport('pdf')" style="float:right; margin-left: 5px;"><i class="bi bi-file-earmark-pdf"></i></button>
+                <button class="btn btn-success" title="Download Excel" (click)="downloadReport('excel')" style="float: right"><i class="bi bi-download"></i></button>
+            </div>
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+            <div class="input-group">
+                <input type="text" id="txtsearchDate" class="form-control" autocomplete="off" placeholder="Search" name="txtsearchDate" [(ngModel)]="txtsearchDate">
+            </div>
+        </div>
+    </div>
+    <div class="content-box p-0 overflow-hidden ">
+        <div class="table-responsive ">
+            <table class="table table-striped mb-0 ">
+                <thead>
+                    <tr>
+                        <th class="text-center">Sl No.</th>
+                        <th class="text-center">URN</th>
+                        <th class="text-center">Case Number</th>
+                        <th class="text-center">Patient Name</th>
+                        <th class="text-center">Date of Admission</th>
+                        <th class="text-center">Claim Raised By</th>
+                        <th class="text-center">Amount(₹)</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let claim of newclaimlist | filter:txtsearchDate| paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage}; index as i ">
+                        <tr>
+                            <td class="text-center" *ngIf="currentPage==1 ">{{(i+1)}}</td>
+                            <td class="text-center" *ngIf="currentPage!=1 ">{{(currentPage-1)*pageElement+ i+1}}</td>
+                            <td class="text-center"> {{claim.urn}}</td>
+                            <td class="text-center"> {{claim.caseno}}</td>
+                            <td class="text-center"> {{claim.patientName}}</td>
+                            <td class="text-center"> {{claim.dateofadmission}}</td>
+                            <td class="text-center"> {{claim.claimraisedby}}</td>
+                            <td class="text-center"> {{claim.currenttotalamount | currency:"":""}}</td>
+                            <td class="text-center ">
+                                <a class="btn btn-outline-success btn-sm " (click)="onAction(claim.caseid) ">Action</a>
+                                <p class="small mb-0 text-danger ">{{claim.daysleft}} daysleft</p>
+                            </td>
+                        </tr>
+                    </ng-container>
+                    <tr *ngIf="this.newclaimlist.length==0">
+                        <td colspan="16">
+                            <p class="mb-0 text-center text-danger fw-bold">NO DATA FOUND!!</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row mt-3" *ngIf="showPegi">
+        <div class="col-sm-4 ">
+            <div class="col-sm-* ">
+                show
+                <select id="pageItem" name="pageItem" class="form-select-sm" (change)="pageItemChange()">
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                    <option value="150">150</option>
+                    <option value="200">200</option>
+                    <option value={{record}}>All</option>
+                </select> entries
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true" (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+        </div>
+    </div>
+</div>

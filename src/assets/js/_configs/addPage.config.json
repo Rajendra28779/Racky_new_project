@@ -1,0 +1,34 @@
+[
+    {
+      "pagetitle":"Add Page",
+      "tabList":[
+        {"tabName":"View","tabUrl":"../viewpage"},
+        {"tabName":"Add","tabUrl":"../addpage","tabClass":"active add d-none"},
+        {"tabName":"Edit","tabUrl":"","tabClass":"active edit d-none"}
+       
+        ],
+      "utils":[
+        {"utilName":"mandatory"}
+       
+       
+        ],
+      "messages":{
+        "successMsg":"New Page Created Successfully",
+        "updatesuccessMsg":"Page Updated Successfully",
+        "errorMsg":"Error in Page creation",
+        "page":"Page Name can't be blank",
+        "snippet":"Page Snippet can't be blank",
+        "metatitle":"MetaTitle can't be blank",
+        "metaKeyword":"MetaKeyword can't be blank",
+        "metaDescription":"MetaDescription can't be blank",
+        "linkType":"LinkType  can't be blank",
+        "pageType":"PageType  can't be blank",
+        "pluginPage":"PluginPage  can't be blank",
+        "content":"Page Content  can't be blank",
+        "validImg":"Please enter a valid image  format",
+        "fileSize":"File size can't be more than 1MB"
+      }
+    }
+  ]
+
+

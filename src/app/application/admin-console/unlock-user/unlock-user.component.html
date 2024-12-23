@@ -1,0 +1,75 @@
+<div class="form-container">
+
+  <div class="main-tab">
+    <div class="row justify-content-between">
+      <div class="col-lg-4">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a routerLink="/application/unlockUser" class="nav-link active">Unlock User</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-lg-6 col-xxl-4"></div>
+      <div class="col-lg-2 col-xxl-3">
+        <div class="input-group" style="margin-bottom: 15px;">
+          <input type="text" id="searchData" class="form-control" placeholder="Search here" name="searchData" autocomplete="off" [(ngModel)]="searchData">
+        </div>
+    </div>
+  </div>
+
+  <div class="main-tab">
+    <div class="row justify-content-between">
+      <div class="table-responsive">
+
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Sl No.</th>
+            <th>User Name</th>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>User Type</th>
+            <th width="8%">Action</th>
+          </tr>
+          </thead>
+
+          <tbody>
+          <tr *ngFor="let user of lockedUserList | filter:searchData |
+          paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};
+          index as i">
+            <td *ngIf="currentPage==1">{{i+1}}</td>
+            <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+i+1}}</td>
+            <td>{{user.userName}}</td>
+            <td>{{user.fullname}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.phone}}</td>
+            <td>{{user.groupId.groupTypeName}}</td>
+            <td><a class="btn btn-outline-success btn-sm me-1" (click)="unlockUser(user.userId)">Unlock User</a></td>
+          </tr>
+          </tbody>
+        </table>
+
+      </div>
+      <div class="row" *ngIf="showPagination">
+        <div class="col-sm-4">
+          <div class="col-sm-*">
+            show
+            <select id="pageItem" name="pageItem" class="custom-select-sm" (change)="pageItemChange($event)">
+              <option value="10">10</option>
+              <option value="20">20</option>
+              <option value="30">30</option>
+              <option value="40">40</option>
+            </select> entries
+          </div>
+        </div>
+        <div class="col-sm-8 text-right">
+          <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true"
+                               (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

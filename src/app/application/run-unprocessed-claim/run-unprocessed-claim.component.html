@@ -1,0 +1,229 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div>
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/rununprocessedclaim" class="nav-link active">Unprocessed Summary</a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/application/snawisepending" class="nav-link " style="color: #1f723f;">SNA Wise Unprocessed Claim</a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/application/cpdwiseunprocesse" routerLinkActive="active" class="nav-link" style="color: #1f723f;">CPD Wise Unprocessed Claim</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="content-box">
+        <div class="col-xxl-10">
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Actual Date Of Discharge From</label><span class="text-danger">*</span>
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="datepicker1" name="fromDate">
+                            <label class="input-group-text bg-transparent border-start-0" for="datepicker1"><i
+                                    class="iconbsky-calendar"></i> </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Actual Date Of Discharge To</label><span class="text-danger">*</span>
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="datepicker2" name="toDate">
+                            <label class="input-group-text bg-transparent border-start-0" for="datepicker2"><i
+                                    class="iconbsky-calendar"></i>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="col-lg-4 col-xxl-4">
+                <div class="mb-xl-3">
+                    <label class="control-label">Non-Compliance Type</label><span class="text-danger">*</span>
+                    <select class="form-select" id="actionType" aria-label="Disabled select example" [(ngModel)]="actionId">
+                        <option value="" selected disabled>Select</option>
+                        <option value="NONUPLOAD" >Non-Uploading Initial Doc</option>
+                        <option value="NONCOMPLIANCE">Non-compliance of Query SNA</option>
+                      </select>
+                </div>
+            </div> -->
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="control-label">State Name</label>
+                    <select class="form-select" name="stateId" id="stateId" (change)="OnChangeState($event.target.value)">
+                        <option value="" selected>Select State</option>
+                        <ng-container *ngFor="let item of stateList">
+                            <option value={{item.stateCode}}>{{item.stateName}}</option>
+                        </ng-container>
+                    </select>
+
+                </div>
+                <div class="col-md-4">
+                    <label class="control-label">District Name</label>
+                    <select class="form-select" name="districtId" id="districtId" (change)="OnChangeDistrict($event.target.value)">
+                        <option value="" selected>Select District</option>
+                        <ng-container *ngFor="let item of districtList">
+                            <option value={{item.districtcode}}>{{item.districtname}}</option>
+                        </ng-container>
+                    </select>
+
+                </div>
+                <div class="col-md-4">
+                    <label class="control-label">Hospital Name</label>
+                    <select class="form-select" name="hospital" id="hospital">
+                        <option value="" selected>Select Hospital</option>
+                        <ng-container *ngFor="let item of hospitalList">
+                            <option value={{item.hospitalCode}}>{{item.hospitalName}}</option>
+                        </ng-container>
+                    </select>
+
+                </div>
+
+                <!-- <div class="mt-2">
+                    <div class="d-grid gap-2 d-md-flex">
+                        <button type="submit" class="btn btn-success" (click)="Search()">Search</button>
+                        <button type="reset" class="btn btn-secondary" (click)="ResetField()">Reset</button>
+
+                    </div>
+                </div> -->
+
+            </div>
+            <div class="row mt-2">
+                <div class="col align-self-end">
+                    <div class="col-lg-12">
+                        <button class="btn btn-success mr-2" (click)="Search()">Search</button> &nbsp;
+                        <button class="btn btn-secondary" (click)="ResetField()">Reset</button>
+                        <div [align]="'start'" class="table-utilities float-end" style="padding-bottom: 1%;">
+                            <button class="btn btn-success btn-sm mx-1" style="margin-top: 10px" tooltip="Excel" (click)="downloadList(1)">
+                              <i class="bi bi-file-earmark-spreadsheet"></i>
+                            </button>
+                            <button class="btn btn-danger btn-sm mx-1" style="margin-top: 10px" tooltip="Excel" (click)="downloadList(2)">
+                              <i class="bi bi-file-earmark-pdf"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-cointainer">
+        <div class="content-box">
+            <div class="row">
+                <div class="col-lg-12 ">
+                    <div class="">
+                        <div class="card-header pt-0 border-bottom">
+                            <h5 class="mb-0 "><span style="font-size: 15pt; color: #1f723f;">Count Details</span></h5>
+                        </div>
+                        <div class="card-body">
+                            <!-- <div class="row gx-xl-5 treatment-details mb-3"> -->
+                                <!-- <div class="col-xxl-6 col-xl-6">
+                                    <div class="d-flex align-items-center ">
+                                        <div>
+                                            <p class="text-muted mb-0 ">Total Discharged</p>
+                                            <h6 class="mb-0 fs-1-3">
+                                                <a href="javascript:void(0);" style="color: green">{{snoclaimlist[0]?.discharge}}</a>
+                                            </h6>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <!-- <div class="col-xxl-6 col-xl-6 border-start">
+                                    <div class="d-flex align-items-center ">
+                                        <div>
+                                            <p class="text-muted mb-0 ">Total Claim Submitted</p>
+                                            <h6 class="mb-0 fs-1-3">
+                                                <a href="javascript:void(0);" style="color: green">{{snoclaimlist[0]?.claim}}</a>
+                                            </h6>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <!-- <div class="col-xxl-4 col-xl-4 border-start">
+                              <div class="d-flex align-items-center ">
+                                  <div>
+                                      <p class="text-muted mb-0 ">Pending at CPD as Fresh</p>
+                                      <h6 class="mb-0 fs-1-3">
+                                          <a href="javascript:void(0);" style="color: green" >0</a></h6>
+                                  </div>
+                              </div>
+                          </div> -->
+                            <!-- </div> -->
+                            <!-- <div class="col-12 ">
+                                <hr class="mt-xl-3 mb-xl-3">
+                            </div> -->
+                            <!-- <div class="row gx-xl-5 treatment-details mb-3">
+                                <div class="col-xxl-4 col-xl-4">
+                                    <div class="d-flex align-items-center ">
+                                        <div>
+                                            <p class="text-muted mb-0 ">Pending at CPD as Fresh</p>
+                                            <h6 class="mb-0 fs-1-3">
+                                                <a href="javascript:void(0);" style="color: green">{{snoclaimlist[0]?.freshCpd}}</a>
+                                            </h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xxl-4 col-xl-4 border-start">
+                                    <div class="d-flex align-items-center ">
+
+                                        <div>
+                                            <p class="text-muted mb-0 ">Pending at CPD as Re settlement</p>
+                                            <h6 class="mb-0 fs-1-3">
+                                                <a href="javascript:void(0);" style="color: green">{{snoclaimlist[0]?.cpdResettlement}} </a>
+                                            </h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xxl-4 col-xl-4 border-start">
+                                    <div class="d-flex align-items-center ">
+
+                                        <div>
+                                            <p class="text-muted mb-0 ">Pending At Hospital After Query from CPD (With in 7 days from Query)</p>
+                                            <h6 class="mb-0 fs-1-3">
+                                                <a href="javascript:void(0);" style="color: green">{{snoclaimlist[0]?.hosPending}}</a>
+                                            </h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                              <!-- ----- -->
+                              <div class="table-responsive">
+                                <table class="table table-striped mb-0">
+                                  <thead>
+                                    <tr>
+                                      <th>Total Discharged</th>
+                                      <th>Total Claim Submitted</th>
+                                      <th>Pending at CPD as Fresh</th>
+                                      <th>Pending at CPD as Re settlement</th>
+                                      <th>Pending At Hospital After Query from CPD (With in 7 days from Query)</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                      <td><a href="javascript:void(0);" (click)="details(1,snoclaimlist[0]?.discharge)" style="color: green; text-align: center; font-weight: bold;">{{snoclaimlist[0]?.discharge}}</a></td>
+                                      <td><a href="javascript:void(0);" (click)="details(2,snoclaimlist[0]?.claim)" style="color: green; text-align: center; font-weight: bold;">{{snoclaimlist[0]?.claim}}</a></td>
+                                      <td><a href="javascript:void(0);" (click)="details(3,snoclaimlist[0]?.freshCpd)" style="color: green; text-align: center; font-weight: bold;">{{snoclaimlist[0]?.freshCpd}}</a></td>
+                                      <td><a href="javascript:void(0);" (click)="details(4,snoclaimlist[0]?.cpdResettlement)" style="color: green; text-align: center; font-weight: bold;">{{snoclaimlist[0]?.cpdResettlement}} </a></td>
+                                      <td><a href="javascript:void(0);" (click)="details(5,snoclaimlist[0]?.hosPending)" style="color: green; text-align: center; font-weight: bold;">{{snoclaimlist[0]?.hosPending}}</a></td>
+                                  </tbody>
+                                </table>
+                              </div>
+                              <!-- ----- -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- <div class="col-xxl-10" *ngIf="snoclaimlist[0]?.freshCpd!=0">
+        <div class="d-grid gap-2 d-md-flex">
+            <div class="mt-2">
+                <div class="d-grid gap-2 d-md-flex">
+                    <button type="submit" class="btn btn-success" (click)="RunUnprocessed()">Run Unprocessed</button>
+                </div>
+            </div>
+        </div>
+    </div> -->

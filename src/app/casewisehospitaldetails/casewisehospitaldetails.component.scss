@@ -1,0 +1,390 @@
+.custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background-color: #f0fdf4;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #74c08f;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: rgb(2, 71, 2);
+}
+
+.custom-scrollbar {
+    scrollbar-color: #85ab92 #e9ebea;
+}
+
+.fs-4 {
+    font-size: 1.2rem !important;
+}
+
+.uploaded-doc a {
+    color: #000;
+}
+
+.doc_list_card {
+    border: 0;
+    box-shadow: 0px 0px 6px -1px #e4e4e4;
+    padding: var(--bs-card-spacer-y) var(--bs-card-spacer-x);
+    color: var(--bs-card-color);
+    transition: 0.5s;
+    border: 1px solid #ededed;
+}
+
+.package_content p {
+    white-space: initial;
+}
+
+.doc_list_card:hover i {
+    transform: scale(1.2);
+}
+
+.doc_list_card:hover {
+    box-shadow: 1px 0px 9px 3px #e4e4e4;
+    transition: 0.5s;
+}
+
+.uploaded-doc small {
+    color: #898989;
+}
+
+.list_doc a {
+    width: 100%;
+}
+
+.list_doc i {
+    font-size: 1.5rem;
+}
+
+.modal-content {
+    border-radius: 10px;
+}
+
+.modal-header {
+    background-color: #e2f5e9;
+    color: #3a8c58;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+hr {
+    margin: 1rem 0 1rem 0;
+    border-color: #a7a7a7;
+}
+
+.badge-success {
+    background-color: #CCEEDC;
+    color: #137E3F;
+    font-size: 0.9rem;
+    font-weight: normal;
+}
+
+.badge-danger {
+    background-color: #FFF0F0;
+    color: #E94343;
+    font-size: 0.9rem;
+    font-weight: normal;
+}
+
+.treatment_list {
+    display: flex;
+    align-items: center;
+    column-gap: 3rem;
+    font-size: 14px;
+}
+
+.treatment_list .treatment_item {
+    width: 100%;
+}
+
+.treatment_list label {
+    font-weight: normal;
+}
+
+.treatment_list p {
+    font-weight: 500;
+    margin: 0;
+    color: #000;
+}
+
+.treat_heading {
+    color: #0B744C;
+    font-size: 1rem;
+}
+
+.text-success {
+    color: #1da33c !important;
+}
+
+.document-upload .uploaded-doc a {
+    display: block;
+    padding: 1rem;
+}
+
+.document-upload .required-field::before {
+    content: "*";
+    color: #f00;
+}
+
+.fw-500 {
+    font-weight: 500 !important;
+}
+
+.fw-600 {
+    font-weight: 600;
+}
+
+.btn-outline-info {
+    --bs-btn-color: #4b818c;
+    --bs-btn-border-color: #4b818c;
+    --bs-btn-hover-color: #000;
+    --bs-btn-hover-bg: #4b818c;
+    --bs-btn-hover-border-color: #4b818c;
+}
+
+:not(.btn-check)+.btn:hover,
+.btn:first-child:hover {
+    color: #fff;
+    background-color: var(--bs-btn-hover-bg);
+    border-color: var(--bs-btn-hover-border-color);
+}
+
+.upload__brd {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+
+.upload__brd .pre_text {
+    background: #e2f5e9;
+    padding: 6px;
+}
+
+.icon_pre_upload {
+    font-size: 2rem;
+    margin-right: 1rem;
+}
+
+.upload__sec {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    text-align: center;
+    margin-bottom: 0rem;
+}
+
+.upload__sec img {
+    margin: 0;
+    padding: 0;
+    height: 7rem;
+    padding: 0.5rem 0rem;
+}
+
+.upload__sec .card {
+    padding: 1rem;
+}
+
+.card_custom .card-body {
+    background: #eff1fa;
+    padding: 1.2rem;
+    border-radius: 6px;
+    min-height: 12rem;
+    position: relative;
+    border: 1px solid #DEE3F3;
+}
+
+.table_fixed {
+    max-height: 400px;
+    overflow-y: auto;
+    z-index: 0;
+}
+
+.mw-130 {
+    min-width: 130px;
+}
+
+.table_fixed thead {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.bg_grey {
+    background: #f8f9fa !important;
+}
+
+.table_bg_grey {
+    background: #f4f4f4 !important;
+}
+
+.radius-0 .btn {
+    border-radius: 0;
+}
+
+.card_custom .address_new {
+    font-size: 15px;
+}
+
+.table th:first-child,
+.table th:last-child {
+    border-radius: 0;
+}
+
+.card_primary {
+    background: #f2f0ff;
+    overflow: hidden;
+    position: relative;
+    padding: 1rem 1rem;
+    border: 1px solid #e6e3f5;
+    border-radius: 5px;
+    height: 100%;
+    min-height: 10rem;
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.card_primary h5 {
+    color: #000;
+}
+
+.card_primary span {
+    background: #d1cafd;
+    position: absolute;
+    height: 100px;
+    width: 100px;
+    right: -2rem;
+    top: -2rem;
+    box-shadow: inset 0 0 0 20px;
+    border-radius: 9999px;
+    opacity: 1 !important;
+    color: #e5e2ff;
+}
+
+.shadow-sec {
+    box-shadow: 0px 2px 9px -1px #ddd;
+}
+
+.custom__table th,
+.custom__table td {
+    padding: 0.6rem;
+    text-align: left;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+.custom__table .table {
+    margin: 0;
+}
+
+.custom__table .table-responsive {
+    margin-bottom: 1.5rem;
+}
+
+.custom__table th {
+    position: sticky;
+    top: -1px;
+}
+
+.custom__table .case_bg {
+    background: #dcfce7;
+}
+
+.custom__table .table-responsive {
+    max-height: 22rem;
+}
+
+.table th {
+    background: #dfe9e3;
+    font-weight: 500;
+    color: #3d3d3d;
+}
+
+.address_new li {
+    display: flex;
+    align-items: start;
+    column-gap: 2rem;
+}
+
+.address_new .address_listhead {
+    min-width: 70px;
+    font-weight: 500;
+}
+
+.list_doc .d-block {
+    font-size: 0.9rem;
+}
+
+.cpdnew__section section {
+    margin-bottom: 2rem;
+}
+
+.cpd_heading {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.cpd_heading h5 {
+    font-size: 1.3rem;
+    color: #333;
+    font-weight: 500;
+}
+
+.cpd_heading::after {
+    content: "";
+    position: absolute;
+    left: 15px;
+    bottom: 0;
+    width: 3rem;
+    border-bottom: 2px solid #93cdb7;
+}
+
+
+/* media query */
+
+@media screen and (max-width: 1440px) {
+    .treat__content {
+        padding-right: 1rem;
+        font-size: 0.9rem;
+    }
+    .treat__content {
+        padding-right: 1rem;
+        line-height: 18px;
+    }
+    .card_primary {
+        padding: 0.8rem;
+    }
+    .card_custom .card-body {
+        padding: 0.8rem;
+    }
+    .patient_text {
+        font-size: 1.1rem;
+    }
+    .card_custom .address_new {
+        font-size: 0.9rem;
+        line-height: 20px;
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .upload__sec {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.custom-spacing {
+    margin-left: 1.88rem;
+    /* This is equivalent to 4.5 in Bootstrap spacing */
+    margin-right: 1.79rem;
+    /* Optional: If you need the same space on the right side */
+}
+
+
+/* media query */

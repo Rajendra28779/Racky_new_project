@@ -1,0 +1,120 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/facilitydetailadd" routerLinkActive="active" class="nav-link"
+                            style="color: #1f723f;">Add</a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/application/facilitydetailview" routerLinkActive="active"
+                            class="nav-link active">View</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 10px;margin-bottom: 1px;">
+        <div class="col-lg-6 col-xxl-6">
+            <div class="row" *ngIf="showPegi">
+                <div class="col-sm-4">
+                    <div class="col-sm-*">
+                        show
+                        <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                            <option value={{record}}>All</option>
+
+
+                        </select> entries
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-lg-2 col-xxl-2">
+            <div class="table-utilities float-end">
+                <button class="btn btn-success btn-sm mx-1" tooltip="Excel" (click)="downloadReport(1)"><i
+                        class="bi bi-download"></i>
+                </button>
+                <button class="btn btn-danger btn-sm me-1" type="submit" (click)="downloadReport(2)"><i
+                        class="bi bi-file-earmark-pdf"></i></button>
+            </div>
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+            <div class="input-group">
+                <input type="text" id="txtsearchDate" class="form-control" placeholder="Search here..."
+                    name="txtsearchDate" [(ngModel)]="txtsearchDate" autocomplete="off">
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="main-tab">
+    <div class="table-responsive">
+        <table class="table table-striped mb-0">
+            <thead>
+                <tr>
+                    <th>Sl#</th>
+                    <th>Facility Name</th>
+                    <th>Created By</th>
+                    <th>Created On</th>
+                    <th>Status</th>
+                    <th [width]="100">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngIf="record>0">
+                    <tr *ngFor="let rmrk of remarkView | filter:txtsearchDate | 
+                                paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};
+                     index as i">
+                        <!-- <td hidden>{{rmrk.id}}</td> -->
+                        <td *ngIf="currentPage==1">{{(i+1)}}</td>
+                        <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+ i+1}}</td>
+                        <td>{{rmrk.facilityName}}</td>
+                        <td>{{rmrk.createdBy.fullname}}</td>
+                        <td>{{rmrk.createdOn |date: 'dd-MMM-yyyy'}}</td>
+                        <td *ngIf="rmrk.statusFlag==0">Active</td>
+                        <td *ngIf="rmrk.statusFlag==1">In-Active</td>
+                        <td>
+                            <div class="d-flex justify-content-center">
+                                <a class="btn btn-outline-primary btn-sm me-2" (click)="edit(rmrk.facilityDetailId)"><i
+                                        class="bi bi-pencil"></i></a>
+
+                            </div>
+                        </td>
+
+                    </tr>
+                </ng-container>
+                <tr *ngIf="record==0">
+                    <div class="row">
+                        <span style="color: red;text-align: center;position:absolute">NO DATA FOUND!!</span>
+                    </div>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    </div>
+
+
+    <div class="row" *ngIf="showPegi">
+        <div class="col-sm-4">
+            <div class="col-sm-*">
+                show
+                <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                    <option value={{record}}>All</option>
+
+                </select> entries
+            </div>
+        </div>
+        <div class="col-sm-8 text-right">
+            <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true"
+                (pageChange)="currentPage = $event" class="text-end"
+                (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+        </div>
+    </div>
+</div>

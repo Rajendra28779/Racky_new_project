@@ -1,0 +1,141 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/snawisepaymentstatus" class="nav-link active">SNA Wise Payment Status</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="content-box mt-3">
+        <div class="col-xxl-10">
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label class="control-label mb-2">Actual Date Of Discharge From</label><span class="text-danger">*</span>
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="date1" name="fromDate">
+                            <label class="input-group-text bg-transparent border-start-0" for="date1"><i class="iconbsky-calendar"></i> </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label class="control-label mb-2">Actual Date Of Discharge To</label><span class="text-danger">*</span>
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="date2" name="toDate" >
+                            <label class="input-group-text bg-transparent border-start-0" for="date2"><i class="iconbsky-calendar"></i> </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label class="control-label">Hospital Name</label>
+                        <ng-autocomplete #auto2 [data]="hospitalList" placeholder="Select Hospital" (selected)="selectEvent2($event)" (inputCleared)="clearEvent2()" [itemTemplate]="itemTemplate2" [notFoundTemplate]="notFoundTemplate2" [searchKeyword]="keyword2" spellcheck="false">
+                        </ng-autocomplete>
+                        <ng-template #itemTemplate2 let-item>
+                            <a [innerHTML]="item.hospitalName"></a>
+                        </ng-template>
+                        <ng-template #notFoundTemplate2 let-notFound>
+                            <div [innerHTML]="notFound"></div>
+                        </ng-template>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="d-grid gap-2 d-md-flex">
+                        <button type="submit" class="btn btn-success" (click)="search()">Search</button>
+                        <button type="reset" class="btn btn-secondary" (click)="ResetField()">Reset</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3 mt-3">
+        <div class="col-lg-4 col-xxl-4">
+        </div>
+         <div class="col-lg-4 col-xxl-4">
+            <div class="table-utilities input-group" style="margin-left: 267px; margin-top: 5px; ">
+              <button class="btn btn-success btn-sm mx-1" style="border-radius: 4px;" tooltip="Excel" (click)="downloadReport('excel')">
+                <i class="bi bi-download"></i>
+              </button>
+              <button class="btn btn-danger btn-sm mx-1" style="border-radius: 4px;" tooltip="pdf" (click)="downloadReport('pdf')">
+                <i class="bi bi-file-earmark-pdf"></i>
+              </button>
+            </div>
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+            <div class="input-group" >
+                <input type="text" id="txtsearchDate" class="form-control"
+                    placeholder="Search" name="txtsearchDate" [(ngModel)]="txtsearchDate" autocomplete="off">
+            </div>
+        </div>
+    </div>
+    <div class="content-box p-0 overflow-hidden">
+        <div class="table-responsive">
+            <table class="table table-striped mb-0">
+                <thead>
+                    <tr>
+                        <th>Sl#</th>
+                        <th>SNA Doctor Name</th>
+                        <th>Hospital Claim Amount</th>
+                        <th>CPD Approved Amount</th>
+                        <th>SNA Approved Amount</th>
+                        <th>SNA Rejected Amount</th>
+                        <th>Payment Freeze Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let claim of SNAWiseData | filter:txtsearchDate
+                    index as i">
+                        <!-- <td *ngIf="currentPage==1">{{(i+1)}}</td>
+                        <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+ i+1}}</td> -->
+                        <td >{{(i+1)}}</td>
+                        <td> {{claim.SnaDoctorName}}</td>
+                        <td> {{claim.HospitalClaimAmount | currency:'':''}}</td>
+                        <td> {{claim.CpdApprovedAmount | currency:'':''}}</td>
+                        <td> {{claim.SnaApprovedAmount | currency:'':''}}</td>
+                        <td> {{claim.SnaRejectedAmount | currency:'':''}}</td>
+                        <td> {{claim.SnaPaymentFreezeAmount | currency:'':''}}</td>
+                    </tr>
+                    <tr *ngIf="SNAWiseData?.length!=0">
+                        <td></td>
+                        <td><b>Total</b></td>
+                        <td><b>{{hospitalClaimAmount | currency:'':''}}</b></td>
+                        <td><b>{{cpdApprovedAmount | currency:'':''}}</b></td>
+                        <td><b>{{snaApprovedAmount | currency:'':''}}</b></td>
+                        <td><b>{{snaRejectedAmount | currency:'':''}}</b></td>
+                        <td><b>{{snaPaymentFreezeAmount | currency:'':''}}</b></td>
+                      </tr>
+                    <tr *ngIf="SNAWiseData?.length==0">
+                        <td colspan="13">
+                            <p class="mb-0 text-center text-danger fw-bold">NO DATA FOUND!!</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- <div class="row mt-3" *ngIf="showPegi">
+        <div class="col-sm-6">
+            <div class="col-sm-*">
+                show
+                <select id="pageItem" name="pageItem" class="form-select-sm" (change)="pageItemChange()">
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                </select> entries
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true"
+                (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+        </div>
+    </div> -->
+</div>
+

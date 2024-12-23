@@ -1,0 +1,378 @@
+<div class="form-cointainer claim-detail">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/hospitalenrollmentview/Action" class="nav-link active" *ngIf="viewonly">Action</a>
+                        <a routerLink="/application/hospitalenrollmentview/Action" class="nav-link active" *ngIf="!viewonly">Details</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-6 ">
+                <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 ">
+        <div class="card shadow-sm mt-3 mt-xl-4 ">
+            <div class="card-header ">
+                <h5 class="mb-0 ">Scheme Details</h5>
+            </div>
+            <div class="card-body ">
+                <div class="row gx-xl-5 treatment-details ">
+                    <div class="col-xl ">
+                        <p class="small text-muted mb-0 ">Scheme Name
+                        </p>
+                        <h6 class="mb-0 ">
+                            {{enrollmentdetials[0]?.schemename}}
+                        </h6>
+                    </div>
+                    <div class="col-xl border-start ">
+                        <div class="d-flex align-items-center ">
+                            <div>
+                                <p class="small text-muted mb-0 ">Scheme Type</p>
+                                <h6 class="mb-0 ">
+                                    {{enrollmentdetials[0]?.schemetype}}
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl border-start ">
+                        <div class="d-flex align-items-center ">
+                            <div>
+                                <p class="small text-muted mb-0 ">Policy Start Date</p>
+                                <h6 class="mb-0 ">
+                                    {{enrollmentdetials[0]?.policystart| date:'dd-MMM-yyyy'}}
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl border-start ">
+                        <div class="d-flex align-items-center ">
+                            <div>
+                                <p class="small text-muted mb-0 ">Policy End Date</p>
+                                <h6 class="mb-0 ">
+                                    {{enrollmentdetials[0]?.policyenddate| date:'dd-MMM-yyyy'}}
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl border-start ">
+                        <div class="d-flex align-items-center ">
+                            <div>
+                                <p class="small text-muted mb-0 ">Register Date</p>
+                                <h6 class="mb-0 ">
+                                    {{enrollmentdetials[0]?.registrationdate | date:'dd-MMM-yyyy'}}
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 ">
+        <div class="card shadow-sm mt-3 mt-xl-4 ">
+            <div class="card-header ">
+                <h5 class="mb-0 ">Member Details</h5>
+            </div>
+            <div class="card-body ">
+                <div class="row gx-xl-4 treatment-details ">
+                    <div class="col-xl ">
+                        <p class="small text-muted mb-0 ">Member Name</p>
+                        <h6 class="mb-0 ">
+                            {{enrollmentdetials[0]?.membername}}
+                        </h6>
+                    </div>
+                    <div class="col-xl border-start ">
+                        <div class="col-xl ">
+                            <p class="small text-muted mb-0 ">Date Of Birth</p>
+                            <h6 class="mb-0">
+                                {{enrollmentdetials[0]?.dob | date:'dd-MMM-yyyy'}}
+                            </h6>
+                        </div>
+                    </div>
+                    <div class="col-xl border-start ">
+                        <div class="d-flex align-items-center ">
+                            <div>
+                                <p class="small text-muted mb-0 ">Age</p>
+                                <h6 class="mb-0 ">
+                                    {{enrollmentdetials[0]?.age}}
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl border-start ">
+                        <div class="d-flex align-items-center ">
+                            <div>
+                                <p class="small text-muted mb-0 ">Gender</p>
+                                <h6 class="mb-0 ">
+                                    {{enrollmentdetials[0]?.gender}}
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 ">
+                    <hr class="mt-xl-4 ">
+                </div>
+                <div class="row gx-xl-4 treatment-details ">
+                    <div class="col-xl ">
+                        <p class="small text-muted mb-0 ">State Name</p>
+                        <h6 class="mb-0 ">
+                            {{enrollmentdetials[0]?.statename}}
+                        </h6>
+                    </div>
+                    <div class="col-xl border-start ">
+                        <div class="d-flex align-items-center ">
+                            <div>
+                                <p class="small text-muted mb-0 ">District Name</p>
+                                <h6 class="mb-0 ">
+                                    {{enrollmentdetials[0]?.districtname}}
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl border-start ">
+                        <div class="d-flex align-items-center ">
+                            <div>
+                                <p class="small text-muted mb-0 ">Block Name</p>
+                                <h6 class="mb-0 ">
+                                    {{enrollmentdetials[0]?.blockname}}
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-xl border-start " *ngIf="enrollmentdetials[0]?.panchayatname!='null'">
+                        <div class="col-xl ">
+                            <p class="small text-muted mb-0 ">Panchayat Name</p>
+                            <h6 class="mb-0">
+                                {{enrollmentdetials[0]?.panchayatname}}
+                            </h6>
+                        </div>
+                    </div>
+                    <div class="col-xl border-start " *ngIf="enrollmentdetials[0]?.panchayatname=='null'">
+                        <div class="col-xl ">
+                            <p class="small text-muted mb-0 ">Panchayat Name</p>
+                            <h6 class="mb-0">
+                                N/A
+                            </h6>
+                        </div>
+                    </div>
+
+                    <div class="col-xl border-start " *ngIf="enrollmentdetials[0]?.villagename=='null'">
+                        <div class="col-xl ">
+                            <p class="small text-muted mb-0 ">Village Name</p>
+                            <h6 class="mb-0">
+                                N/A
+                            </h6>
+                        </div>
+                    </div>
+
+                    <div class="col-xl border-start " *ngIf="enrollmentdetials[0]?.villagename!='null'">
+                        <div class="col-xl ">
+                            <p class="small text-muted mb-0 ">Village Name</p>
+                            <h6 class="mb-0">
+                                {{enrollmentdetials[0]?.villagename}}
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 ">
+                    <hr class="mt-xl-4 ">
+                </div>
+                <div class="row gx-xl-4 treatment-details ">
+                    <!-- <div class="col-xl ">
+                        <p class="small text-muted mb-0 ">Policy Start Date</p>
+                        <h6 class="mb-0 ">
+                            {{enrollmentdetials[0]?.policystart| date:'dd-MMM-yyyy'}}
+                        </h6>
+                    </div> -->
+                    <!-- <div class="col-xl border-start ">
+                        <div class="d-flex align-items-center ">
+                            <div>
+                                <p class="small text-muted mb-0 ">Policy End Date</p>
+                                <h6 class="mb-0 ">
+                                    {{enrollmentdetials[0]?.policyenddate| date:'dd-MMM-yyyy'}}
+                                </h6>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="col-xl border-start ">
+                        <div class="d-flex align-items-center ">
+                            <div>
+                                <p class="small text-muted mb-0 ">Authenticator Name</p>
+                                <h6 class="mb-0 ">
+                                    {{enrollmentdetials[0]?.authenticatorname}}
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-xl border-start ">
+                        <div class="d-flex align-items-center ">
+                            <div>
+                                <p class="small text-muted mb-0 ">Aadhaar Number</p>
+                                <h6 class="mb-0 ">
+                                    {{enrollmentdetials[0]?.mskadhaar}}
+                                </h6>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="col-xl border-start ">
+                        <div class="d-flex align-items-center ">
+                            <div>
+                                <p class="small text-muted mb-0 ">Relation With Authenticator</p>
+                                <h6 class="mb-0 ">
+                                    {{enrollmentdetials[0]?.relationwithauthenticator}}
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl border-start ">
+                        <div class="d-flex align-items-center ">
+                            <div>
+                                <p class="small text-muted mb-0 ">Relation With Family Head</p>
+                                <h6 class="mb-0 ">
+                                    {{enrollmentdetials[0]?.relationwithfamilyhead}}
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl border-start ">
+                        <div class="col-xl ">
+                            <p class="small text-muted mb-0 ">Authenticator Mobile Number</p>
+                            <h6 class="mb-0">
+                                {{enrollmentdetials[0]?.authenticatormobile}}
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4 ">
+        <div class="col-lg-12 ">
+            <div class="card shadow-sm basic-info ">
+                <div class="card-header ">
+                    <h5 class="mb-0 " style="color:red;">Latest Documents Uploaded:-</h5>
+                </div>
+                <div class="card-body ">
+                    <div class="row gx-2 justify-content-between document-upload ">
+                        <div class="col-lg-12 col-xxl-12 ">
+                            <div class="row uploaded-doc ">
+                                <div class="col-6 col-lg-3 col-xxl-3 text-center " *ngIf="enrollmentdetials[0]?.declarationdoc != undefined">
+                                    <a style="cursor:pointer ;" (click)="downloadactionforenrollment($event,enrollmentdetials[0]?.declarationdoc,enrollmentdetials[0]?.hospitalcode,enrollmentdetials[0]?.registrationdate,enrollmentdetials[0]?.statecode,enrollmentdetials[0]?.districtcode,enrollmentdetials[0]?.blockcode)">
+                                        <img src="./assets/img/pdf.png" alt="Patient Photo " class="mb-2 rounded " Width="80">
+                                        <span class="d-block ">Declaration Document</span>
+                                    </a>
+                                </div>
+                                <div class="col-6 col-lg-3 col-xxl-3 text-center " *ngIf="enrollmentdetials[0]?.declarationdoc == undefined">
+                                    <span class="d-block ">--</span>
+                                    <span class="d-block ">Declaration Document</span>
+                                </div>
+                                <div class="col-6 col-lg-3 col-xxl-3 text-center " *ngIf="enrollmentdetials[0]?.identitydoc != undefined">
+                                    <a style="cursor:pointer ;" (click)="downloadactionforenrollment($event,enrollmentdetials[0]?.identitydoc,enrollmentdetials[0]?.hospitalcode,enrollmentdetials[0]?.registrationdate,enrollmentdetials[0]?.statecode,enrollmentdetials[0]?.districtcode,enrollmentdetials[0]?.blockcode)">
+                                        <img src="./assets/img/pdf.png" alt="Patient Photo " class="mb-2 rounded " Width="80">
+                                        <span class="d-block ">Document</span>
+                                    </a>
+                                </div>
+                                <div class="col-6 col-lg-3 col-xxl-3 text-center " *ngIf="enrollmentdetials[0]?.identitydoc == undefined">
+                                    <span class="d-block ">--</span>
+                                    <span class="d-block ">Document</span>
+                                </div>
+
+                                <div class="col-6 col-lg-3 col-xxl-3 text-center " *ngIf="enrollmentdetials[0]?.compliedoc != undefined">
+                                    <a style="cursor:pointer ;" (click)="downloadactionforenrollment($event,enrollmentdetials[0]?.compliedoc,enrollmentdetials[0]?.hospitalcode,enrollmentdetials[0]?.registrationdate,enrollmentdetials[0]?.statecode,enrollmentdetials[0]?.districtcode,enrollmentdetials[0]?.blockcode)">
+                                        <img src="./assets/img/pdf.png" alt="Patient Photo " class="mb-2 rounded " Width="80">
+                                        <span class="d-block ">Query Complied Document</span>
+                                    </a>
+                                </div>
+                                <div class="col-6 col-lg-3 col-xxl-3 text-center " *ngIf="enrollmentdetials[0]?.compliedoc == undefined">
+                                    <span class="d-block ">--</span>
+                                    <span class="d-block ">Query Complied Document</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12" *ngIf="actiontakenhidestatus">
+        <hr class="my-xl-4">
+        <h5>Action Taken History</h5>
+        <div class="table-responsive">
+            <table class="table mb-0">
+                <thead>
+                    <tr>
+                        <th>Sl#</th>
+                        <th>Action On</th>
+                        <th>Action By</th>
+                        <th>Action Type</th>
+                        <th>Remarks</th>
+                        <th>Description</th>
+                        <th>Complied Remark</th>
+                        <th>Declaration Document</th>
+                        <th>Identity Document</th>
+                        <th>Query Complied Document</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let claim of actiontaken , index as i">
+                        <td>{{i+1}}</td>
+                        <td>{{claim.actiontakenon | date :'dd-MMM-yyyy, h:mm:ss a'}}</td>
+                        <td>{{claim.actionby}}</td>
+                        <td>{{claim.actiontype}}</td>
+                        <td *ngIf="claim.remark != null">{{claim.remark}}</td>
+                        <td *ngIf="claim.remark == null">--</td>
+                        <td *ngIf="claim.description != null">{{claim.description}}</td>
+                        <td *ngIf="claim.description == null">--</td>
+                        <td *ngIf="claim.compliedremark != null">{{claim.compliedremark}}</td>
+                        <td *ngIf="claim.compliedremark == null">--</td>
+                        <td *ngIf="claim.declarationdoc != undefined"><a style="cursor:pointer ;" (click)="downloadactionforenrollment($event,claim.declarationdoc,claim.hospitalcode,enrollmentdetials[0]?.registrationdate,claim.statecode,claim.districtcode,claim.blockcode)"><i class="bi bi-file-earmark-pdf" style="color:red;font-size:24px;"></i></a></td>
+                        <td *ngIf="claim.declarationdoc == undefined">--</td>
+                        <td *ngIf="claim.identitydoc != undefined"><a style="cursor:pointer ;" (click)="downloadactionforenrollment($event,claim.identitydoc,claim.hospitalcode,enrollmentdetials[0]?.registrationdate,claim.statecode,claim.districtcode,claim.blockcode)"><i class="bi bi-file-earmark-pdf" style="color:red;font-size:24px"></i></a></td>
+                        <td *ngIf="claim.identitydoc == undefined">--</td>
+                        <td *ngIf="claim.complieddoc != undefined"><a style="cursor:pointer ;" (click)="downloadactionforenrollment($event,claim.complieddoc,claim.hospitalcode,enrollmentdetials[0]?.registrationdate,claim.statecode,claim.districtcode,claim.blockcode)"><i class="bi bi-file-earmark-pdf" style="color:red;font-size:24px"></i></a></td>
+                        <td *ngIf="claim.complieddoc == undefined">--</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row mt-4 " *ngIf="viewonly">
+        <div class="col-lg-12 ">
+            <div class="card shadow-sm basic-info ">
+                <div class="card-body ">
+                    <div class="col-lg-6">
+                        <label class="col-form-label">Remarks <span class="text-danger">*</span></label>
+                        <ng-autocomplete #auto [data]="allremarks" name="id" id="id" placeholder="Select Remark" (selected)="getId($event)" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" [searchKeyword]="keyword" (inputCleared)="clearEvent()" spellcheck="false">
+                        </ng-autocomplete>
+
+                        <ng-template #itemTemplate let-item>
+                            <a [innerHTML]="item.remarks"></a>
+                        </ng-template>
+
+                        <ng-template #notFoundTemplate let-notFound>
+                            <div [innerHTML]="notFound"></div>
+                        </ng-template>
+                    </div>
+                    <div class="col-lg-6 col-xxl-5">
+                        <label class="col-form-label">Description<span class="text-danger">*</span></label>
+                        <textarea class="form-control" rows="4" id="remarks" name="remarks" maxlength="1000" placeholder="Enter description" #myInput [maxlength]="maxChars" (keypress)="keyPress($event)" [(ngModel)]="description"></textarea>
+                        <span class="text-danger small">Characters Remaining: {{maxChars - myInput.value.length}}</span>
+                    </div>
+                    <br>
+                    <div class="col-lg-6 col-xxl-5">
+                        <button class="btn btn-success me-2" (click)="getapproval(enrollmentdetials[0]?.acknowledgementno,enrollmentdetials[0]?.enrregid,'A')" id="EnrollApprove" [disabled]="isApproved">Approve</button>
+                        <button class="btn btn-primary me-2" (click)="getapproval(enrollmentdetials[0]?.acknowledgementno,enrollmentdetials[0]?.enrregid,'C')" id="EnrolQuery" [disabled]="isQuery">Query</button>
+                        <button class="btn btn-danger me-2" (click)="getapproval(enrollmentdetials[0]?.acknowledgementno,enrollmentdetials[0]?.enrregid,'B')" id="EnrolReject" [disabled]="isReject">Reject</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

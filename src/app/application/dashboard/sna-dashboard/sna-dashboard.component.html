@@ -1,0 +1,952 @@
+<div class="container-fluid">
+  <div class="content-box">
+    <div class="row">
+      <div class="col-xxl-9 col-xl-9 col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-4">
+        <div class="card h-40">
+          <div class="card-header text-bg-success">
+            <h6>Total Discharged<span class="nm-tx">{{claimCount?.totalDischarge}}</span></h6>
+          </div>
+          <div class="card-group totldis h-40">
+            <div class="card p-0 border-bottom-0">
+              <div class="number text-center h-40" style="padding-top: 10px; height: 40pt;">{{claimCount?.nonUploading}}</div>
+              <div class="bg-secondary text-left h-40 px-3 py-3 col-lg-px-3 col-lg-py-3" style="height: 53pt;">
+                <div class="card-text">
+                  Document Upload Pending
+                  <small class="sm-txt">(Within 7 days of discharge)</small>
+                </div>
+              </div>
+            </div>
+            <div class="card p-0 border-bottom-0">
+              <div class="number text-center h-40" style="padding-top: 10px; height: 40pt;">{{claimCount?.nonUploadingInit}}</div>
+              <div class="bg-secondary text-left h-40 px-3 py-3 col-lg-px-3 col-lg-py-3" style="height: 53pt;">
+                <div class="card-text">
+                  Non Uploading Initial Document
+                  <small class="sm-txt">(After 7 days of discharge)</small>
+                </div>
+              </div>
+            </div>
+            <div class="card p-0 border-bottom-0">
+              <div class="number text-center h-40" style="padding-top: 10px; height: 40pt;">{{claimCount?.totalclaimRasied}}</div>
+              <div class="bg-secondary text-left h-40 px-3 py-3 col-lg-px-3 col-lg-py-3" style="height: 53pt;">
+                <div class="card-text">Total Claim Raised</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xxl-3 col-xl-3 col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-4">
+        <div class="card h-100" style="padding: 10px; padding-bottom: 0;">
+          <div class="row">
+            <div class="mb-xl-3" style="padding: 25px; padding-bottom: 0; padding-top: 5px;">
+              <label class="control-label" style="color: green; font-weight: bold;">Month</label><span class="text-danger">*</span>
+              <div class="input-group">
+                <select class="form-control" id="month" [(ngModel)]="month" aria-label="Disabled select example" (change)="getCountDetails()">
+                  <option value="" disabled>Select Month</option>
+                  <option *ngFor="let month of monthList" [value]="month.monthId">{{month.monthName}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="mb-xl-3" style="padding: 25px; padding-top: 0; padding-bottom: 0;">
+              <label class="control-label" style="color: green; font-weight: bold;">Year</label><span class="text-danger">*</span>
+              <div class="input-group">
+                <select class="form-control" id="year" [(ngModel)]="year" aria-label="Disabled select example" (change)="getCountDetails()">
+                  <option value="" disabled>Select Year</option>
+                  <option *ngFor="let x of yearList" [value]="x">{{x}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <h4 style="font-size: 15pt;" class="mb-3 font-w"></h4>
+
+      <div class="col-xxl-4 col-lg-4 col-md-7 col-sm-6 col-xs-12 mb-4">
+        <div class="card h-80">
+          <div class="card-header text-bg-default p-0">
+            <div class="d-flex px-xxl-4 p-xxl-2 p-xl-2 px-xl-3 p-lg-2 px-lg-2 p-md-2 px-md-3 p-xs-2 align-items-center">
+              <div class="w-100">
+                <h5><div class="number-lg" style="font-size: 14pt;">Pending At Hospital</div></h5>
+              </div>
+              <div class="flex-shrink-1">
+                <div class="number-light text-success">{{claimCount?.pendingatHsptl}}</div>
+              </div>
+            </div>
+            <div class="progress">
+              <div
+                class="progress-bar bg-successnew w-100"
+                role="progressbar"
+                aria-valuenow="25"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              ></div>
+            </div>
+          </div>
+          <div class="card-body st-report p-0">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item px-xxl-4 px-lg-3">
+                <div class="d-flex align-items-center" style="height: 40pt;">
+                  <div class="w-100">
+                    <label class="card-title mb-0" style="font-size: 12pt;">
+                      CPD Query
+                      <p class="small-l">
+                        <small>(Within 7 days)</small>
+                      </p>
+                    </label>
+                  </div>
+                  <div class="flex-shrink-1"><h4 style="font-size: 15pt;">{{claimCount?.cpdQuerywithin7}}</h4></div>
+                </div>
+              </li>
+
+              <li class="list-group-item px-xxl-4 px-lg-3">
+                <div class="d-flex align-items-center" style="height: 40pt;">
+                  <div class="w-100">
+                    <label class="card-title mb-0" style="font-size: 12pt;">
+                      SNA Query
+                      <p class="small-l">
+                        <small>(Within 7 days)</small>
+                      </p>
+                    </label>
+                  </div>
+                  <div class="flex-shrink-1"><h4 style="font-size: 15pt;">{{claimCount?.snaQuerywithin7}}</h4></div>
+                </div>
+              </li>
+
+            </ul>
+          </div>
+        </div>
+        <br>
+        <div class="card h-60">
+          <div class="card-header text-bg-default p-0">
+            <div class="d-flex px-xxl-4 p-xxl-2 p-xl-2 px-xl-3 p-lg-2 px-lg-2 p-md-2 px-md-3 p-xs-2 align-items-center">
+              <div class="w-100">
+                <h5><div class="number-lg" style="font-size: 14pt;">Non Compliance By Hospital</div></h5>
+
+              </div>
+              <div class="flex-shrink-1">
+                <div class="number-light text-danger">{{claimCount?.systemRejected}}</div>
+              </div>
+            </div>
+            <div class="progress">
+              <div
+                class="progress-bar w-100 bg-danger"
+                role="progressbar"
+                aria-valuenow="25"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              ></div>
+            </div>
+          </div>
+          <div class="card-body st-report p-0">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item px-xxl-4 px-lg-3">
+                <div class="d-flex align-items-center" style="height: 38pt;">
+                  <div class="w-100">
+                    <label class="card-title mb-0" style="font-size: 12pt;">
+                      System Rejected
+                      <p class="small-l">
+                        <small>(Non compliance of CPD Query)</small>
+                      </p>
+                    </label>
+                  </div>
+                  <div class="flex-shrink-1"><h4 style="font-size: 15pt;">{{claimCount?.cpdQueryafter7}}</h4></div>
+                </div>
+              </li>
+              <li class="list-group-item px-xxl-4 px-lg-3">
+                <div class="d-flex align-items-center" style="height: 38pt;">
+                  <div class="w-100">
+                    <label class="card-title mb-0" style="font-size: 12pt;">
+                      System Rejected
+                      <p class="small-l">
+                        <small>(Non compliance of SNA Query)</small>
+                      </p>
+                    </label>
+                  </div>
+                  <div class="flex-shrink-1"><h4 style="font-size: 15pt;">{{claimCount?.snaQueryafter7}}</h4></div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-xxl-4 col-lg-4 col-md-5 col-sm-6 col-xs-12 mb-4">
+        <div class="card h-60">
+          <div class="card-header text-bg-default p-0">
+            <div class="d-flex px-xxl-4 p-xxl-2 p-xl-2 px-xl-3 p-lg-2 px-lg-2 p-md-2 px-md-3 p-xs-2 align-items-center">
+              <div class="w-100">
+                <h5><div class="number-lg" style="font-size: 14pt;">Pending At CPD</div></h5>
+
+              </div>
+              <div class="flex-shrink-1">
+                <div class="number-light text-warning">{{claimCount?.tpendingatCPD}}</div>
+              </div>
+            </div>
+            <div class="progress">
+              <div
+                class="progress-bar bg-warning w-100"
+                role="progressbar"
+                aria-valuenow="25"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              ></div>
+            </div>
+          </div>
+          <div class="card-body st-report p-0">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item px-xxl-4 px-lg-3">
+                <div class="d-flex align-items-center" style="height: 40pt;">
+                  <div class="w-100">
+                    <label class="card-title mb-0" style="font-size: 12pt;">
+                      Fresh Claim
+                      <!-- <p class="small-l"><small>(Fresh)</small></p> -->
+                    </label>
+                  </div>
+                  <div class="flex-shrink-1"><h4 style="font-size: 15pt;">{{claimCount?.pendingatCPD}}</h4></div>
+                </div>
+              </li>
+              <li class="list-group-item px-xxl-4 px-lg-3">
+                <div class="d-flex align-items-center" style="height: 40pt;">
+                  <div class="w-100">
+                    <label class="card-title mb-0" style="font-size: 12pt;">
+                      Resettlement
+                      <!-- <p class="small-l">
+                        <small>(Resettlement)</small>
+                      </p> -->
+                    </label>
+                  </div>
+                  <div class="flex-shrink-1"><h4 style="font-size: 15pt;">{{claimCount?.pendatcpdRstl}}</h4></div>
+                </div>
+              </li>
+              <li class="list-group-item px-xxl-4 px-lg-3">
+                <div class="d-flex align-items-center" style="height: 40pt;">
+                  <div class="w-100">
+                    <label class="card-title mb-0" style="font-size: 12pt;">
+                      SNA Reverted
+                      <!-- <p class="small-l">
+                        <small>(Query by SNA)</small>
+                      </p> -->
+                    </label>
+                  </div>
+                  <div class="flex-shrink-1"><h4 style="font-size: 15pt;">{{claimCount?.pendatcpdRvrt}}</h4></div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <br>
+        <div class="card h-30">
+          <div class="card-header text-bg-default p-0">
+            <div class="d-flex px-xxl-4 p-xxl-2 p-xl-2 px-xl-3 p-lg-2 px-lg-2 p-md-2 px-md-3 p-xs-2 align-items-center">
+              <div class="w-100">
+                <h5><div class="number-lg" style="font-size: 14pt;">Pending At DC</div></h5>
+
+              </div>
+              <div class="flex-shrink-1">
+                <div class="number-light text-success">{{claimCount?.pendingatDC}}</div>
+              </div>
+            </div>
+            <div class="progress">
+              <div
+                class="progress-bar bg-success w-100"
+                role="progressbar"
+                aria-valuenow="25"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              ></div>
+            </div>
+          </div>
+          <div class="card-body st-report p-0">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item px-xxl-4 px-lg-3">
+                <div class="d-flex align-items-center" style="height: 36pt;">
+                  <div class="w-100">
+                    <label class="card-title mb-0" style="font-size: 12pt;">
+                      SNA Investigated
+                      <!-- <p class="small-l"><small>(Fresh)</small></p> -->
+                    </label>
+                  </div>
+                  <div class="flex-shrink-1"><h4 style="font-size: 15pt;">{{claimCount?.pendingatDC}}</h4></div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-xxl-4 col-lg-4 col-md-12 col-sm-12 col-xs-12 mb-4">
+        <div class="card h-99">
+          <div class="card-header text-bg-default p-0">
+            <div class="d-flex px-xxl-4 p-xxl-2 p-xl-2 px-xl-3 p-lg-2 px-lg-2 p-md-2 px-md-3 p-xs-2 align-items-center">
+              <div class="w-100">
+                <h5>
+                  <div class="number-lg" style="font-size: 14pt;">Pending At SNA</div>
+                  <!-- <p class="small-p mb-md-0">
+                    Pending |
+                    <span class="text-secondary m-0"> Auto Approved </span>
+                  </p> -->
+                </h5>
+              </div>
+              <div class="flex-shrink-1">
+                <div class="number-light text-primary">{{claimCount?.pendingatSNA}}</div>
+              </div>
+            </div>
+            <div class="progress">
+              <div
+                class="progress-bar bg-primary w-100"
+                role="progressbar"
+                aria-valuenow="25"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              ></div>
+            </div>
+          </div>
+          <div class="card-body st-report p-0">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item px-xxl-4 px-lg-3">
+                <div class="d-flex align-items-center" style="height: 20pt;">
+                  <div class="w-100">
+                    <label class="card-title mb-0" style="font-size: 12pt;">
+                      CPD Approved
+                      <!-- <p class="small-l"><small>(Fresh)</small></p> -->
+                    </label>
+                  </div>
+                  <div class="flex-shrink-1"><h4 style="font-size: 15pt;">{{claimCount?.cpdapproved}}</h4></div>
+                </div>
+              </li>
+
+              <li class="list-group-item px-xxl-4 px-lg-3">
+                <div class="d-flex align-items-center" style="height: 20pt;">
+                  <div class="w-100">
+                    <label class="card-title mb-0" style="font-size: 12pt; color: goldenrod;">
+                      Mortality Pending To Review of CPD Approved
+                    </label>
+                  </div>
+                  <div class="flex-shrink-1"><h4 style="font-size: 15pt; color: goldenrod;">{{claimCount?.mortality}}</h4></div>
+                </div>
+              </li>
+
+              <li class="list-group-item px-xxl-4 px-lg-3">
+                <div class="d-flex align-items-center" style="height: 20pt;">
+                  <div class="w-100">
+                    <label class="card-title mb-0" style="font-size: 12pt;">
+                      CPD Rejected
+                      <!-- <p class="small-l">
+                        <small>(Resettlement)</small>
+                      </p> -->
+                    </label>
+                  </div>
+                  <div class="flex-shrink-1"><h4 style="font-size: 15pt;">{{claimCount?.cpdrejected}}</h4></div>
+                </div>
+              </li>
+
+              <li class="list-group-item px-xxl-4 px-lg-3">
+                <div class="d-flex align-items-center" style="height: 20pt;">
+                  <div class="w-100">
+                    <label class="card-title mb-0" style="font-size: 12pt;">
+                      SNA Resettlement
+                      <!-- <p class="small-l">
+                        <small>(Query by SNA)</small>
+                      </p> -->
+                    </label>
+                  </div>
+                  <div class="flex-shrink-1"><h4 style="font-size: 15pt;">{{claimCount?.resettlement}}</h4></div>
+                </div>
+              </li>
+
+              <li class="list-group-item px-xxl-4 px-lg-3">
+                <div class="d-flex align-items-center" style="height: 20pt;">
+                  <div class="w-100">
+                    <label class="card-title mb-0" style="font-size: 12pt;">
+                      Unprocessed Claim
+                      <!-- <p class="small-l">
+                        <small>(Query by SNA)</small>
+                      </p> -->
+                    </label>
+                  </div>
+                  <div class="flex-shrink-1"><h4 style="font-size: 15pt;">{{claimCount?.unprocessed}}</h4></div>
+                </div>
+              </li>
+
+              <li class="list-group-item px-xxl-4 px-lg-3">
+                <div class="d-flex align-items-center" style="height: 20pt;">
+                  <div class="w-100">
+                    <label class="card-title mb-0" style="font-size: 12pt;">
+                      DC Compliance
+                      <!-- <p class="small-l">
+                        <small>(Query by SNA)</small>
+                      </p> -->
+                    </label>
+                  </div>
+                  <div class="flex-shrink-1"><h4 style="font-size: 15pt;">{{claimCount?.dcCompliance}}</h4></div>
+                </div>
+              </li>
+
+              <li class="list-group-item px-xxl-4 px-lg-3">
+                <div class="d-flex align-items-center" style="height: 20pt;">
+                  <div class="w-100">
+                    <label class="card-title mb-0" style="font-size: 12pt;">
+                      Claims On Hold
+                      <!-- <p class="small-l">
+                        <small>(Query by SNA)</small>
+                      </p> -->
+                    </label>
+                  </div>
+                  <div class="flex-shrink-1"><h4 style="font-size: 15pt;">{{claimCount?.onHold}}</h4></div>
+                </div>
+              </li>
+
+              <li class="list-group-item px-xxl-4 px-lg-3">
+                <div class="d-flex align-items-center" style="height: 20pt;">
+                  <div class="w-100">
+                    <label class="card-title mb-0" style="font-size: 12pt;">
+                      System Admin SNA Rejected
+                      <!-- <p class="small-l">
+                        <small>(Query by SNA)</small>
+                      </p> -->
+                    </label>
+                  </div>
+                  <div class="flex-shrink-1"><h4 style="font-size: 15pt;">{{claimCount?.sysadminrej}}</h4></div>
+                </div>
+              </li>
+
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <h4 style="font-size: 15pt;" class="mb-3 font-w"></h4>
+      <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 mb-4">
+        <div class="card h-40 st-report card-group" style="height: 155pt;">
+          <div class="col-xxl-5 col-xl-6 col-lg-6 col-md-6 col-sm-4 col-xs-12 w-40" style="height: 153pt;">
+            <div class="card border-bottom-0 h-100 justify-content-center text-center bg-secondary">
+              <div class="d-flex h-50 flex-direction-column justify-content-center">
+                <div class="number-circle" style="color: red; font-weight: bold;" *ngIf="claimCount?.percent1!='.00'">
+                  {{claimCount?.percent1!=null?claimCount?.percent1:0}}%
+                </div>
+                <div class="number-circle" style="color: red; font-weight: bold;" *ngIf="claimCount?.percent1=='.00'">
+                  0%
+                </div>
+                <label class="font-big">
+                  Action Percentage
+                  <p class="small-l">
+                    <small>(Approved & Rejected)</small>
+                  </p>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="col-xxl-7 col-xl-6 col-lg-6 col-md-6 col-sm-8 col-xs-12 new-bottom text-left c-count w-60" style="height: 180pt;">
+            <div class="card border-right-0 justify-content-center b-radius px-xxl-3" style="height: 50pt;">
+              <div class="text-primary number-circle" style="font-size: 16pt;">{{claimCount?.tcpdApproved}}</div>
+              <label class="card-title mb-0" style="font-size: 12pt;">Total CPD Approved</label>
+            </div>
+            <div class="card border-right-0 justify-content-center b-radius px-xxl-3" style="height: 50pt;">
+              <div class="text-success number-circle" style="font-size: 16pt;">{{claimCount?.snaAprvdOfCpdAprvd}}</div>
+              <label class="card-title mb-0" style="font-size: 12pt;">Approved Of CPD Approved</label>
+            </div>
+            <div class="card border-bottom-0 border-right-0 justify-content-center b-radius px-xxl-3" style="height: 50pt;">
+              <div class="text-warning number-circle" style="font-size: 16pt;">{{claimCount?.snaRjctdOfCpdAprvd}}</div>
+              <label class="card-title mb-0" style="font-size: 12pt;">Rejected Of CPD Approved</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xxl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 mb-4">
+        <div class="card h-100">
+          <div class="card-header text-bg-default p-0">
+            <div class="d-flex px-xxl-4 p-xxl-2 p-xl-2 px-xl-3 p-lg-2 px-lg-2 p-md-2 px-md-3 p-xs-2 align-items-center">
+              <div class="w-100">
+                <h5><div class="number-lg" style="font-size: 14pt;">SNA Action Taken</div></h5>
+
+              </div>
+              <div class="flex-shrink-1">
+                <div class="number-light text-danger">{{claimCount?.snaActionTaken}}</div>
+              </div>
+            </div>
+            <div class="progress">
+              <div
+                class="progress-bar bg-danger w-100"
+                role="progressbar"
+                aria-valuenow="25"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              ></div>
+            </div>
+          </div>
+          <div class="card-body st-report p-0">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item px-xxl-4 px-lg-3">
+                <div class="d-flex align-items-center" style="height: 45pt;">
+                  <div class="w-100">
+                    <label class="card-title mb-0" style="font-size: 12pt;">
+                      Total SNA Approved
+                      <!-- <p class="small-l"><small>(Fresh)</small></p> -->
+                    </label>
+                  </div>
+                  <div class="flex-shrink-1"><h4 style="font-size: 15pt;">{{claimCount?.snaapproved}}</h4></div>
+                </div>
+              </li>
+
+              <li class="list-group-item px-xxl-4 px-lg-3">
+                <div class="d-flex align-items-center" style="height: 45pt;">
+                  <div class="w-100">
+                    <label class="card-title mb-0" style="font-size: 12pt;">
+                      Total SNA Rejected
+                      <!-- <p class="small-l">
+                        <small>(Resettlement)</small>
+                      </p> -->
+                    </label>
+                  </div>
+                  <div class="flex-shrink-1"><h4 style="font-size: 15pt;">{{claimCount?.snarejected}}</h4></div>
+                </div>
+              </li>
+
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h4 style="font-size: 15pt;" class="mb-3 font-w"></h4>
+    <div class="alert alert-danger mt-4 mb-4 d-flex small ">
+      <div>
+        <p class="mb-0 pe-3 me-3 border-end ">
+          <i class="bi bi-info-circle-fill fs-5 me-2 "></i> NOTE
+        </p>
+      </div>
+      <div>
+        <p class="mb-0 ">
+          <strong>Preauth</strong> details is shown as per <strong>Hospital Upload Date</strong>
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xxl-4 col-lg-4 col-md-6 col-sm-6 col-xs-12 mb-4">
+        <div class="card h-100">
+          <div class="card-header text-bg-default p-0">
+            <div class="d-flex px-xxl-4 p-xxl-2 p-xl-2 px-xl-3 p-lg-2 px-lg-2 p-md-2 px-md-3 p-xs-2 align-items-center">
+              <div class="w-100">
+                <h5><div class="number-lg" style="font-size: 14pt;">Preauth Pending</div></h5>
+
+              </div>
+              <div class="flex-shrink-1">
+                <div class="number-light text-danger">{{totalCountP}}</div>
+              </div>
+            </div>
+            <div class="progress">
+              <div
+                class="progress-bar bg-danger w-100"
+                role="progressbar"
+                aria-valuenow="25"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              ></div>
+            </div>
+          </div>
+
+          <!-- <div class="border"> -->
+              <!-- <div class="px-xxl-4 px-xl-3 py-xxl-3 py-xl-2 py-lg-2 px-lg-3 px-md-4 py-md-2 small-gap">
+
+                  <div class="row">
+                      <div class="col-xxl-6 col-xl-6 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                          <label class="card-complhead">{{totalCountP}}</label>
+                      </div>
+
+                      <div class="col-xxl-6 col-xl-6 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                          <div class="warning-v" *ngIf="pendingPer; else default">{{pendingPer | number: '1.0-0' }}%
+                          </div>
+                          <ng-template #default>
+                              <div class="warning-v">0%</div>
+                          </ng-template>
+                          <div class="progress">
+                              <div class="progress-bar bg-warning" role="progressbar" aria-label="Success example"
+                                  [style.width]="pendingPer + '%'" [attr.aria-valuenow]="pendingPer" aria-valuemin="0"
+                                  aria-valuemax="100"></div>
+                          </div>
+                      </div>
+                  </div>
+              </div> -->
+
+              <!-- <div class="border-top"></div> -->
+              <div class="row p-new">
+                  <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 py-xxl-3 py-xl-2 py-lg-2 px-xxl-4 px-xl-0 px-lg-2">
+                      <div class="d-flex bd-highlight circle-center">
+                          <div class="px-xxl-2 py-xxl-2 px-xl-0 py-xl-1 px-lg-0 py-lg-2">
+                              <div class="circle-pending">
+                                  <img src="../../../assets/img/pending.png" class="img-responsive text-center"
+                                      width="32">
+                              </div>
+                          </div>
+                          <div class="px-xxl-2 py-xxl-2 px-xl-2 py-xl-1 px-lg-0 py-lg-2">
+                              <label class="card-head color-bl color-p"
+                                  *ngIf="claimCount?.fresh; else fresh">{{claimCount?.fresh}}</label>
+                              <ng-template #fresh><span class="card-head b-green color-p">0</span></ng-template>
+                              <div class="card-small"> Fresh cases </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 py-xxl-3 py-xl-1 py-lg-2 px-xxl-4 px-xl-0 px-lg-2 border-start">
+                      <div class="d-flex bd-highlight circle-center">
+                          <div class="px-xxl-2 py-xxl-2 px-xl-0 py-xl-1 px-lg-0 py-lg-2">
+                              <div class="circle-pending">
+                                  <img src="../../../assets/img/revert.png" class="img-responsive text-center"
+                                      width="32">
+                              </div>
+                          </div>
+                          <div class="px-xxl-2 py-xxl-2 px-xl-2 py-xl-1 px-lg-0 py-lg-2">
+                              <label class="card-head b-green color-p"
+                                  *ngIf="claimCount?.querycomplied; else querycomplied">{{claimCount?.querycomplied}}</label>
+                              <ng-template #querycomplied><span
+                                      class="card-head b-green color-p">0</span></ng-template>
+                              <div class="card-small"> Query Complied </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          <!-- </div> -->
+        </div>
+      </div>
+
+      <div class="col-xxl-8 col-lg-8 col-md-6 col-sm-6 col-xs-12 mb-4">
+        <div class="card h-100">
+          <div class="card-header text-bg-default p-0">
+            <div class="d-flex px-xxl-4 p-xxl-2 p-xl-2 px-xl-3 p-lg-2 px-lg-2 p-md-2 px-md-3 p-xs-2 align-items-center">
+              <div class="w-100">
+                <h5><div class="number-lg" style="font-size: 14pt;">Preauth SNA Action Taken List</div></h5>
+
+              </div>
+              <div class="flex-shrink-1">
+                <div class="number-light text-success">{{totalCountC}}</div>
+              </div>
+            </div>
+            <div class="progress">
+              <div
+                class="progress-bar bg-successnew w-100"
+                role="progressbar"
+                aria-valuenow="25"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              ></div>
+            </div>
+          </div>
+
+          <!-- <div class="border"> -->
+              <!-- <div class="px-xxl-4 px-xl-3 py-xxl-3 py-xl-2 py-lg-2 px-lg-3 px-md-4 py-md-2 small-gap">
+
+                  <div class="row">
+                      <div class="col-xxl-8 col-xl-8 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                          <label class="card-complhead">{{totalCountC}}</label>
+                      </div>
+                      <div class="col-xxl-4 col-xl-4 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                          <div class="percent-v" *ngIf="completePer; else deflt">{{completePer | number: '1.0-0' }}%
+                          </div>
+                          <ng-template #deflt>
+                              <div class="percent-v">0%</div>
+                          </ng-template>
+                          <div class="progress">
+                              <div class="progress-bar bg-success" role="progressbar" aria-label="Success example"
+                                  [style.width]="completePer + '%'" [attr.aria-valuenow]="completePer"
+                                  aria-valuemin="0" aria-valuemax="100"></div>
+                          </div>
+                      </div>
+                  </div>
+              </div> -->
+
+              <div class="border-top"></div>
+
+              <div class="row p-new">
+                  <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-4 col-sm-4 col-xs-12 py-xxl-3 py-xl-2 py-lg-2 px-xxl-4 px-xl-0 px-lg-2">
+                      <div class="d-flex bd-highlight circle-center">
+                          <div class="px-xxl-2 py-xxl-2 px-xl-0 py-xl-1 px-lg-0 py-lg-2">
+                              <div class="circle-completed">
+                                  <img src="../../../assets/img/approved.png" class="img-responsive text-center"
+                                      width="32">
+                              </div>
+                          </div>
+                          <div class="px-xxl-2 py-xxl-2 px-xl-2 py-xl-1 px-lg-0 py-lg-2">
+                              <label class="card-head color-g"
+                                  *ngIf="claimCount?.approve; else approve">{{claimCount?.approve}}</label>
+                              <ng-template #approve><span class="card-head b-green color-g">0</span></ng-template>
+                              <div class="card-small"> Approved </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-4 col-sm-4 col-xs-12 border-start py-xxl-3 py-xl-2 py-lg-2 px-xxl-4 px-xl-0 px-lg-2">
+                      <div class="d-flex bd-highlight circle-center">
+                          <div class="px-xxl-2 py-xxl-2 px-xl-0 py-xl-1 px-lg-0 py-lg-2">
+                              <div class="circle-completed">
+                                  <img src="../../../assets/img/reject.png" class="img-responsive text-center"
+                                      width="32">
+                              </div>
+                          </div>
+                          <div class="px-xxl-2 py-xxl-2 px-xl-2 py-xl-1 px-lg-0 py-lg-2">
+                              <label class="card-head color-p"
+                                  *ngIf="claimCount?.reject; else reject">{{claimCount?.reject}}</label>
+                              <ng-template #reject><span class="card-head b-green color-p">0</span></ng-template>
+                              <div class="card-small"> Reject Cases </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-xxl-3 col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12 py-xxl-3 py-xl-2 py-lg-2 px-xxl-4 px-xl-0 px-lg-2 border-start">
+                      <div class="d-flex bd-highlight circle-center">
+                          <div class="px-xxl-2 py-xxl-2 px-xl-0 py-xl-1 px-lg-0 py-lg-2">
+                              <div class="circle-pending">
+                                  <img src="../../../assets/img/revert.png" class="img-responsive text-center"
+                                      width="32">
+                              </div>
+                          </div>
+                          <div class="px-xxl-2 py-xxl-2 px-xl-2 py-xl-1 px-lg-0 py-lg-2">
+                              <label class="card-head b-green color-p"
+                                  *ngIf="claimCount?.query; else query">{{claimCount?.query}}</label>
+                              <ng-template #query><span class="card-head b-green color-p">0</span></ng-template>
+                              <div class="card-small"> Query Sent </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-4 col-sm-4 col-xs-12 py-xxl-3 py-xl-2 py-lg-2 px-xxl-4 px-xl-0 px-lg-2 border-start">
+                      <div class="popover__wrapper">
+                          <div class="d-flex bd-highlight circle-center">
+                              <div class="px-xxl-2 py-xxl-2 px-xl-0 py-xl-1 px-lg-0 py-lg-2">
+                                  <div class="circle-completed">
+                                      <img src="../../../assets/img/auto-approve.png"
+                                          class="img-responsive text-center" width="32">
+                                  </div>
+                              </div>
+                              <div class="px-xxl-2 py-xxl-2 px-xl-2 py-xl-1 px-lg-0 py-lg-2">
+                                  <label class="card-head color-g">{{totalOthers}}</label>
+                                  <div class="card-small"> Others </div>
+                              </div>
+
+                              <div class="popover__content">
+                                  <div class="col-xxl-12 col-xl-12 col-lg-12">
+                                      <div class="hidtbl-th p-0 m-0 gap-bt">
+                                          <div class="row px-2">
+                                              <div
+                                                  class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 border-bottom px-4">
+                                                  <div class="text-left p-0">
+                                                      <label class="card-head color-g d-font"
+                                                          *ngIf="claimCount?.autoapprove; else autoapprove">{{claimCount?.autoapprove}}</label>
+                                                      <ng-template #autoapprove><span
+                                                              class="card-head b-green color-g d-font">0</span></ng-template>
+                                                      <span class="card-small"> Auto Approved </span>
+                                                  </div>
+                                              </div>
+
+                                              <div
+                                                  class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 border-bottom px-4">
+                                                  <div class="text-left p-0">
+                                                      <label class="card-head color-p d-font"
+                                                          *ngIf="claimCount?.autoreject; else autoreject">{{claimCount?.autoreject}}</label>
+                                                      <ng-template #autoreject><span
+                                                              class="card-head b-green color-p d-font">0</span></ng-template>
+                                                      <span class="card-small"> Auto Rejected </span>
+                                                  </div>
+                                              </div>
+
+                                              <div
+                                                  class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 border-bottom px-4">
+                                                  <div class="text-left p-0">
+                                                      <label class="card-head color-p d-font"
+                                                          *ngIf="claimCount?.cancelled; else cancelled">{{claimCount?.cancelled}}</label>
+                                                      <ng-template #cancelled><span
+                                                              class="card-head b-green color-p d-font">0</span></ng-template>
+                                                      <span class="card-small"> Cancelled </span>
+                                                  </div>
+                                              </div>
+
+                                              <div
+                                                  class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 px-4">
+                                                  <div class="text-left p-0">
+                                                      <label class="card-head color-p d-font"
+                                                          *ngIf="claimCount?.expired; else expired">{{claimCount?.expired}}</label>
+                                                      <ng-template #expired><span
+                                                              class="card-head b-green color-p d-font ">0</span></ng-template>
+                                                      <span class="card-small"> Expired </span>
+                                                  </div>
+                                              </div>
+
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          <!-- </div> -->
+        </div>
+      </div>
+    </div>
+
+    <h4 style="font-size: 35pt;" class="mb-3 font-w"></h4>
+    <div class="row">
+      <div class="col-xxl-6 col-lg-6 col-md-5 col-sm-6 col-xs-12 mb-4">
+        <div class="card h-100">
+          <div class="card-header text-bg-default p-0">
+            <div class="d-flex px-xxl-4 p-xxl-2 p-xl-2 px-xl-3 p-lg-2 px-lg-2 p-md-2 px-md-3 p-xs-2 align-items-center bg-primary">
+              <div class="w-100">
+                <h5><div class="number-lg" style="font-size: 14pt; color: white;">Notifications</div></h5>
+
+              </div>
+              <div class="flex-shrink-1">
+                <div class="number-light text-primary" style="background-color: white; border-radius: 20px; font-size: 14pt; width: 20pt; text-align: center; font-weight: bold;">
+                  {{list.length}}
+                </div>
+                <!-- <div *ngIf="list.length==0" style="font-size: 14pt;">&nbsp;</div> -->
+              </div>
+            </div>
+            <div class="progress">
+              <div
+                class="progress-bar bg-primary w-100"
+                role="progressbar"
+                aria-valuenow="25"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              ></div>
+            </div>
+          </div>
+          <div class="card-body st-report p-0" style="overflow-y: scroll; height: 120pt;">
+            <ul class="list-group list-group-flush" *ngIf="list.length>0">
+              <ng-container *ngFor="let v of list">
+                <li class="list-group-item">
+                  <span class="text-danger">*</span>
+                  {{v.noticeContent}}
+                  <a href="javasript:void(0)" style="color: green;" *ngIf="v.docpath!=null" (click)="downlordnotification($event,v.docpath)">
+                    <i class="bi bi-download"></i>
+                  </a>
+                </li>
+              </ng-container>
+            </ul>
+            <div *ngIf="list.length==0" style="color: red; text-align: center; font-weight: bold; padding-top: 8%; font-size: 16pt;">
+              You have no new notification
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xxl-6 col-lg-6 col-md-5 col-sm-6 col-xs-12 mb-4">
+        <div class="card h-100">
+          <div class="card-header text-bg-default p-0">
+            <div class="d-flex px-xxl-4 p-xxl-2 p-xl-2 px-xl-3 p-lg-2 px-lg-2 p-md-2 px-md-3 p-xs-2 align-items-center bg-successnew">
+              <div class="w-100">
+                <h5><div class="number-lg" style="font-size: 14pt; color: white;">Hospital Variation</div></h5>
+              </div>
+              <div class="flex-shrink-1">
+                <button type="button" class="btn btn-primary btn-sm btndeletePck me-2" (click)="changeOrderBy()">
+                  <i id="orderBySpan" class="bi bi-arrow-down"></i>
+                </button>
+              </div>
+              <div class="flex-shrink-1">
+                <div class="number-light text-primary" style="background-color: white; border-radius: 20px; font-size: 14pt; width: 20pt; text-align: center; font-weight: bold;">{{hospitalWiseTreatmentList.length}}</div>
+              </div>
+            </div>
+            <div class="progress">
+              <div
+                class="progress-bar bg-primary w-100"
+                role="progressbar"
+                aria-valuenow="25"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              ></div>
+            </div>
+          </div>
+          <div class="card-body st-report p-0" style="overflow-y: scroll; height: 120pt;">
+            <div class="content-box p-0 overflow-hidden" *ngIf="hospitalWiseTreatmentList.length > 0">
+              <div class="table-responsive">
+                <table class="table table-striped mb-0" style="font-size: 14px">
+                  <thead>
+                  <tr>
+                    <th>Sl#</th>
+                    <th>Hospital Name</th>
+                    <th>Hospital Code</th>
+                    <th>Treatments</th>
+                  </tr>
+                  </thead>
+
+                  <tbody>
+                  <tr *ngFor="let hospitalTreatment of hospitalWiseTreatmentList; index as i">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ hospitalTreatment.hospitalName }}</td>
+                    <td>{{ hospitalTreatment.hospitalCode }}</td>
+                    <td style="font-weight: 500">{{ hospitalTreatment.treatmentCount | number: '1.0-0' }}</td>
+                  </tr>
+                  </tbody>
+                  <div class="row" *ngIf="hospitalWiseTreatmentList.length==0">
+                    <h5 style="color: rgb(100, 100, 100);text-align: center;position: absolute">No Data Found !!</h5>
+                  </div>
+                </table>
+              </div>
+            </div>
+<!--            <ul class="list-group list-group-flush" *ngIf="hospitalWiseTreatmentList.length>0">-->
+<!--              <ng-container *ngFor="let v of hospitalWiseTreatmentList">-->
+<!--                <li class="list-group-item">-->
+<!--                  <span>{{v.hospitalName}}</span>-->
+<!--                  <span style="font-weight: 500">{{v.treatmentCount}}</span>-->
+<!--                </li>-->
+<!--              </ng-container>-->
+<!--            </ul>-->
+<!--            <div *ngIf="hospitalWiseTreatmentList.length==0" style="color: red; text-align: center; font-weight: bold; padding-top: 8%; font-size: 16pt;">-->
+<!--              No Data Available!-->
+<!--            </div>-->
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xxl-6 col-lg-6 col-md-5 col-sm-6 col-xs-12 mb-4">
+        <h6>
+          <strong class="text-danger-glow blink" style="color:#da0101; cursor:pointer;" (click)="getPendingClaimsOfHospital(null, 2, 60)">Click Here</strong>
+           to View Hospital List Whose Claims Not Verified Since 60 Days!
+        </h6>
+      </div>
+
+<!--      Modal For Display Hospital Action Not Taken Since 7 Days-->
+<button type="submit" hidden data-bs-toggle="modal" data-bs-target="#modal" id="modalButton"></button>
+
+<div class="modal fade" id="modal" aria-labelledby="exampleModalLabel" tabindex="-1" aria-hidden="true" data-bs-focus="false">
+  <div class="modal-dialog modal-xl modal-lg modal-dialog-centered">
+    <div class="modal-content" style="width: 85%; margin-left: auto; margin-right: auto">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Hospital Action Not Taken Since 60 Days</h5>
+        <button id="closeModal" type="button" #closebutton class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="accordion custom-accrodion" id="otpExample">
+          <div class="accordion-item mb-3 border-0">
+            <div class="table-responsive " style="height: 21rem">
+              <table class="table table-striped mb-0 " id="claimsPending">
+                <thead>
+                <tr>
+                  <th>Sl No.</th>
+                  <th>Hospital Name(Hospital Code)</th>
+                  <th>Claims Pending</th>
+                  <th>Last Verification Date</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr *ngFor="let v of hospitalList; let i=index">
+                  <td>{{i+1}}</td>
+                  <td>{{v.hospitalName}}({{v.hospitalCode}})</td>
+                  <td (click)="getPendingClaimsOfHospital(v.hospitalCode, 1, 60)"><strong style="color: #089928; cursor: pointer">{{v.claimCount}}</strong></td>
+                  <td>{{ v.lastActionDate ? (v.lastActionDate | date: 'dd-MMM-yyyy') : 'N/A' }}</td>
+
+                </tbody>
+
+                <tbody>
+                <tr *ngIf="this.hospitalList.length==0">
+                  <td colspan="3" style="text-align: center; font-weight: bold; font-size: 16pt;">No Hospitals Found!</td>
+                </tr>
+                </tbody>
+
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

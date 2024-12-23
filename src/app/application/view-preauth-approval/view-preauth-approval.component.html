@@ -1,0 +1,865 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/preauth" routerLinkActive="active" class="nav-link">Preauth</a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/application/viewpreauthapproval" routerLinkActive="active" class="nav-link active">SNA Action Taken</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-box">
+        <div class="col-xxl-10">
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label for="EnterFullName" class="form-label">Scheme Name<span
+                                class="text-danger">*</span></label>
+                        <input class="form-control" type="text" placeholder="Scheme Name" autocomplete="off" maxlength="30" id="schemename" [(ngModel)]="schemeName" disabled>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Scheme Category Name<span class="text-danger"></span></label>
+                        <select class="form-select" name="schemacategory" id="schemacategory" (change)="getschemacategoryid($event.target.value)" style="margin-top: 9px;">
+                            <option value="" selected >All</option>
+                            <ng-container *ngFor="let item of schemeList">
+                                <option value={{item.schemeCategoryId}}>{{item.categoryName}}</option>
+                            </ng-container>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Hospital Upload Date From</label><span class="text-danger">*</span>
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="formdateAR" name="fromDate">
+                            <label class="input-group-text bg-transparent border-start-0" for="formdate"><i
+                                    class="iconbsky-calendar"></i> </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">To Date</label><span class="text-danger">*</span>
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="todateAR" name="toDate">
+                            <label class="input-group-text bg-transparent border-start-0" for="todate"><i
+                                    class="iconbsky-calendar"></i> </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Status</label><span class="text-danger"></span>
+                        <select class="form-select" id="statusAR" aria-label="Disabled select example">
+                            <option value="D" selected>Select Status</option>
+                            <option value="Y">Approve</option>
+                            <option value="R">Reject</option>
+                            <option value="A">Auto Approve</option>
+                            <option value="Q">Query</option>
+                            <option value="B">Auto Rejected</option>
+                            <option value="C">Cancelled By Hospital</option>
+                            <option value="E">Expired</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">State Name</label>
+                        <select class="form-select" id="stateAR" aria-label="Disabled select example" (change)="OnChangeState($event)">
+                            <option value="" selected>Select State</option>
+                            <option *ngFor="let c of statelist" [value]="c.stateCode">{{c.stateName}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">District Name</label>
+                        <select class="form-select" id="distAR" aria-label="Disabled select example" (change)="OnChangeDist($event)">
+                            <option value="" selected>Select District</option>
+                            <option *ngFor="let c of distList" [value]="c.DISTRICTCODE">{{c.DISTRICTNAME}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Hospital Name</label>
+                        <select class="form-select" name="hospitalcode" id="hospitalAR">
+                            <option value="" selected>Select Hospital Name</option>
+                            <option *ngFor="let c of hospitalList" [value]="c.HOSPITALCODE">{{c.HOSPITALNAME}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="d-grid gap-2 d-md-flex">
+                <button type="submit" class="btn btn-success" (click)="getPreAuthorizationList()">Search</button>
+                <button type="submit" class="btn btn-secondary" (click)="reset()">Reset</button>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-xxl-4 col-xl-4 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="justify-content-between">
+                <h4 class="mb-2 mt-3 hd-txt"> Pending </h4>
+            </div>
+
+            <div class="border">
+                <div class="px-xxl-4 px-xl-3 py-xxl-3 py-xl-2 py-lg-2 px-lg-3 px-md-4 py-md-2 small-gap">
+
+                    <div class="row">
+                        <div class="col-xxl-6 col-xl-6 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="card-complhead">{{totalCountP}}</label>
+                        </div>
+
+                        <div class="col-xxl-6 col-xl-6 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="warning-v" *ngIf="pendingPer; else default">{{pendingPer | number: '1.0-0' }}%
+                            </div>
+                            <ng-template #default>
+                                <div class="warning-v">0%</div>
+                            </ng-template>
+                            <div class="progress">
+                                <div class="progress-bar bg-warning" role="progressbar" aria-label="Success example" [style.width]="pendingPer + '%'" [attr.aria-valuenow]="pendingPer" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border-top"></div>
+                <div class="row p-new">
+                    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12  border-right py-xxl-3 py-xl-2 py-lg-2 px-xxl-4 px-xl-0 px-lg-2">
+                        <div class="d-flex bd-highlight circle-center">
+                            <div class="px-xxl-2 py-xxl-2 px-xl-0 py-xl-1 px-lg-0 py-lg-2">
+                                <div class="circle-pending">
+                                    <img src="../../../assets/img/pending.png" class="img-responsive text-center" width="32">
+                                </div>
+                            </div>
+                            <div class="px-xxl-2 py-xxl-2 px-xl-2 py-xl-1 px-lg-0 py-lg-2">
+                                <label class="card-head color-bl color-p" *ngIf="preauthCountData?.fresh; else fresh">{{preauthCountData.fresh}}</label>
+                                <ng-template #fresh><span class="card-head b-green color-p">0</span></ng-template>
+                                <div class="card-small"> Fresh cases </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 py-xxl-3 py-xl-1 py-lg-2 px-xxl-4 px-xl-0 px-lg-2">
+                        <div class="d-flex bd-highlight circle-center">
+                            <div class="px-xxl-2 py-xxl-2 px-xl-0 py-xl-1 px-lg-0 py-lg-2">
+                                <div class="circle-pending">
+                                    <img src="../../../assets/img/revert.png" class="img-responsive text-center" width="32">
+                                </div>
+                            </div>
+                            <div class="px-xxl-2 py-xxl-2 px-xl-2 py-xl-1 px-lg-0 py-lg-2">
+                                <label class="card-head b-green color-p" *ngIf="preauthCountData?.querycomplied; else querycomplied">{{preauthCountData.querycomplied}}</label>
+                                <ng-template #querycomplied><span class="card-head b-green color-p">0</span></ng-template>
+                                <div class="card-small"> Query Complied </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-xxl-8 col-xl-8 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="justify-content-between">
+                <h4 class="mb-2 mt-3 hd-txt"> SNA Action Taken List </h4>
+            </div>
+
+            <div class="border">
+                <div class="px-xxl-4 px-xl-3 py-xxl-3 py-xl-2 py-lg-2 px-lg-3 px-md-4 py-md-2 small-gap">
+
+                    <div class="row">
+                        <div class="col-xxl-8 col-xl-8 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="card-complhead">{{totalCountC}}</label>
+                        </div>
+                        <div class="col-xxl-4 col-xl-4 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="percent-v" *ngIf="completePer; else deflt">{{completePer | number: '1.0-0' }}%
+                            </div>
+                            <ng-template #deflt>
+                                <div class="percent-v">0%</div>
+                            </ng-template>
+                            <div class="progress">
+                                <div class="progress-bar bg-success" role="progressbar" aria-label="Success example" [style.width]="completePer + '%'" [attr.aria-valuenow]="completePer" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border-top"></div>
+
+                <div class="row p-new">
+                    <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-4 col-sm-4 col-xs-12 border-right py-xxl-3 py-xl-2 py-lg-2 px-xxl-4 px-xl-0 px-lg-2">
+                        <div class="d-flex bd-highlight circle-center">
+                            <div class="px-xxl-2 py-xxl-2 px-xl-0 py-xl-1 px-lg-0 py-lg-2">
+                                <div class="circle-completed">
+                                    <img src="../../../assets/img/approved.png" class="img-responsive text-center" width="32">
+                                </div>
+                            </div>
+                            <div class="px-xxl-2 py-xxl-2 px-xl-2 py-xl-1 px-lg-0 py-lg-2">
+                                <label class="card-head color-g" *ngIf="preauthCountData?.approve; else approve">{{preauthCountData.approve}}</label>
+                                <ng-template #approve><span class="card-head b-green color-g">0</span></ng-template>
+                                <div class="card-small"> Approved </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-4 col-sm-4 col-xs-12 border-right py-xxl-3 py-xl-2 py-lg-2 px-xxl-4 px-xl-0 px-lg-2">
+                        <div class="d-flex bd-highlight circle-center">
+                            <div class="px-xxl-2 py-xxl-2 px-xl-0 py-xl-1 px-lg-0 py-lg-2">
+                                <div class="circle-completed">
+                                    <img src="../../../assets/img/reject.png" class="img-responsive text-center" width="32">
+                                </div>
+                            </div>
+                            <div class="px-xxl-2 py-xxl-2 px-xl-2 py-xl-1 px-lg-0 py-lg-2">
+                                <label class="card-head color-p" *ngIf="preauthCountData?.reject; else reject">{{preauthCountData.reject}}</label>
+                                <ng-template #reject><span class="card-head b-green color-p">0</span></ng-template>
+                                <div class="card-small"> Reject Cases </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xxl-3 col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12 py-xxl-3 py-xl-2 py-lg-2 px-xxl-4 px-xl-0 px-lg-2 border-right">
+                        <div class="d-flex bd-highlight circle-center">
+                            <div class="px-xxl-2 py-xxl-2 px-xl-0 py-xl-1 px-lg-0 py-lg-2">
+                                <div class="circle-pending">
+                                    <img src="../../../assets/img/revert.png" class="img-responsive text-center" width="32">
+                                </div>
+                            </div>
+                            <div class="px-xxl-2 py-xxl-2 px-xl-2 py-xl-1 px-lg-0 py-lg-2">
+                                <label class="card-head b-green color-p" *ngIf="preauthCountData?.query; else query">{{preauthCountData.query}}</label>
+                                <ng-template #query><span class="card-head b-green color-p">0</span></ng-template>
+                                <div class="card-small"> Query Sent </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-4 col-sm-4 col-xs-12 py-xxl-3 py-xl-2 py-lg-2 px-xxl-4 px-xl-0 px-lg-2">
+
+
+                        <div class="popover__wrapper">
+                            <div class="d-flex bd-highlight circle-center">
+                                <div class="px-xxl-2 py-xxl-2 px-xl-0 py-xl-1 px-lg-0 py-lg-2">
+                                    <div class="circle-completed">
+                                        <img src="../../../assets/img/auto-approve.png" class="img-responsive text-center" width="32">
+                                    </div>
+                                </div>
+                                <div class="px-xxl-2 py-xxl-2 px-xl-2 py-xl-1 px-lg-0 py-lg-2">
+                                    <label class="card-head color-g">{{totalOthers}}</label>
+                                    <div class="card-small"> Others </div>
+                                </div>
+
+                                <div class="popover__content">
+                                    <div class="col-xxl-12 col-xl-12 col-lg-12">
+                                        <div class="hidtbl-th p-0 m-0 gap-bt">
+                                            <div class="row px-2">
+                                                <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 border-bottom px-4">
+                                                    <div class="text-left p-0">
+                                                        <label class="card-head color-g d-font" *ngIf="preauthCountData?.autoapprove; else autoapprove">{{preauthCountData.autoapprove}}</label>
+                                                        <ng-template #autoapprove><span class="card-head b-green color-g d-font">0</span></ng-template>
+                                                        <span class="card-small"> Auto Approved </span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 border-bottom px-4">
+                                                    <div class="text-left p-0">
+                                                        <label class="card-head color-p d-font" *ngIf="preauthCountData?.autoreject; else autoreject">{{preauthCountData.autoreject}}</label>
+                                                        <ng-template #autoreject><span class="card-head b-green color-p d-font">0</span></ng-template>
+                                                        <span class="card-small"> Auto Rejected </span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 border-bottom px-4">
+                                                    <div class="text-left p-0">
+                                                        <label class="card-head color-p d-font" *ngIf="preauthCountData?.cancelled; else cancelled">{{preauthCountData.cancelled}}</label>
+                                                        <ng-template #cancelled><span class="card-head b-green color-p d-font">0</span></ng-template>
+                                                        <span class="card-small"> Cancelled </span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 px-4">
+                                                    <div class="text-left p-0">
+                                                        <label class="card-head color-p d-font" *ngIf="preauthCountData?.expired; else expired">{{preauthCountData.expired}}</label>
+                                                        <ng-template #expired><span class="card-head b-green color-p d-font ">0</span></ng-template>
+                                                        <span class="card-small"> Expired </span>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+        <div class="col-lg-8 col-xxl-8 row">
+            <div class="col-md-9">
+                <div style="padding-top: 10px; font-weight: bold; color: green">Total Records: {{preauthCloseList?.length}}
+                </div>
+            </div>
+            <div [align]="'start'" class="col-md-3">
+                <button class="btn btn-danger" title="Download PDF" (click)="downloadReport(2)" style="float:right; margin-left: 5px;"><i class="bi bi-file-earmark-pdf"></i></button>
+                <button class="btn btn-success" title="Download Excel" (click)="downloadReport(1)" style="float: right"><i class="bi bi-download"></i></button>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-xxl-4">
+            <div class="input-group">
+                <input type="text" id="txtsearchDate" class="form-control" placeholder="Search" name="txtsearchDate" [(ngModel)]="txtsearchDate" autocomplete="off">
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="table-responsive pkg_tbl">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th width="50">Sl No. </th>
+                        <th width="100">
+                            URN
+                            <div class="th-small">Patient Name </div>
+                        </th>
+                        <th width="100">
+                            Hospital Code
+                            <div class="th-small">Name </div>
+                        </th>
+                        <th width="100">
+                            Requested Date
+                            <div class="th-small"> No of Days </div>
+                        </th>
+                        <th width="100"> Last Action On </th>
+                        <th width="100">
+                            Package Code
+                            <div class="th-small"> Package Details </div>
+                        </th>
+                        <th width="130">
+                            Description
+                            <div class="th-small"> Document </div>
+                        </th>
+                        <th width="100">
+                            Status
+                        </th>
+                        <th width="120">
+                            Package Amount
+                            <div class="th-small"> Approved Amount </div>
+                        </th>
+                        <th width="100"> View Details </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngIf="!preauthCloseList?.length">
+                        <td colspan="10" class="text-center"><strong class="text-danger">No data found</strong></td>
+                    </tr>
+                    <ng-container *ngFor="let data of preauthCloseList | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};index as i">
+                        <tr [ngClass]="{'active_trbg' : data.statusFlag}">
+                            <td *ngIf="currentPage==1">{{i+1}}</td>
+                            <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+ i+1}}</td>
+                            <td>
+                                <div class="color-hed">{{data.urnno}}</div>
+                                <div class="th-small">{{data.membername}}</div>
+                            </td>
+                            <td>
+                                <div class="color-hed">{{data.hospitalcode}}</div>
+                                <div class="th-small">{{data.hospitalName}}</div>
+                            </td>
+                            <td>
+                                <div>{{data.hospitaluploaddate}}</div>
+                                <!-- <div>{{data.hospitaluploaddate | date: "d MMM y, h:mm:ss a"}}</div> -->
+                                <div class="th-small badge badge-success py-1 px-2">{{data.noofdays}}</div>
+                            </td>
+                            <td>
+                                <div>{{data.lastactiondate}}</div>
+                                <!-- <div>{{data.lastactiondate | date: "d MMM y, h:mm:ss a"}}</div> -->
+                            </td>
+                            <td>
+                                <div class="color-hed">{{data.procedurecode}}</div>
+                                <div class="th-small">{{data.packageheadername}}</div>
+                                <div class="popover__wrappernew">
+                                    <div class="mt-0" title="Procedure Details">
+                                        <div class="color-hed bg-fa text-success"> <i class="bi bi-info-circle"></i>
+                                        </div>
+                                    </div>
+                                    <div class="popover__contentnew">
+                                        <h4 class="border-bottom mb-2 top-head p-2 text-center text-success"> Procedure Details </h4>
+                                        <div class="col-xxl-12 col-xl-12 col-lg-12">
+                                            <div class="hidtbl-th p-1 m-0 gap-bt">
+                                                <p class="text-danger" *ngIf="data.procedurename==null">
+                                                    Not Available</p>
+                                                <p>{{data.procedurename}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="th-small mt-0">{{data.description}}</div>
+                                <div class="row">
+                                    <div class="d-flex bd-highlight">
+                                        <!-- <div class="w-20 bd-highlight">
+                                            <div class="icon-pdf"> <a href="../../../assets/img/certificate.pdf"
+                                                    title="PDF File"> <i class="bi bi-file-earmark-pdf"></i> </a> </div>
+                                        </div> -->
+                                        <ng-container *ngIf="data.addtional_DOC1">
+                                            <span class="icon-pdf">
+                                                <a target="_blank" title="PDF File"
+                                                    (click)="download(data.addtional_DOC1,data.hospitalcode,data.sdate)">
+                                                    <i class="bi bi-file-earmark-pdf me-2"></i>
+                                                </a>
+                                            </span>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                {{data.status}}
+                            </td>
+                            <td>
+                                <!-- <div> <i class="bi bi-currency-rupee"></i>{{data.amount}}</div> -->
+                                <div><i class="bi bi-currency-rupee"></i>{{data.totalpackagecost}}</div>
+                                <div class="th-small badge badge-success py-1 px-2" *ngIf="data.status == 'APPROVED'">
+                                    <span *ngIf="data.approvedamount"><i
+                                            class="bi bi-currency-rupee"></i>{{data.approvedamount}}</span>
+                                </div>
+                                <div class="th-small badge2 badge-danger py-1 px-2 d-inline-block" *ngIf="data.status == 'R'">Reject</div>
+                            </td>
+                            <!-- <td>{{data.status}}</td> -->
+                            <td>
+                                <button type="button" class="btn btn-outline-success btn-sm me-2" title="View Details" (click)="status(data.statusFlag = !data.statusFlag, data.txnpackagedetailid)"><i
+                                        class="bi bi-eye"></i> 
+                                </button>
+                                <button type="button" class="btn btn-outline-success btn-sm" title="View All Details" (click)="statusSubmit(data.urnno, data.txnpackagedetailid)">  <i
+                                        class="bi bi-arrow-right-square-fill"></i>                                    
+                                </button>
+                            </td>
+                        </tr>
+
+                        <tr *ngIf="data.statusFlag == true">
+                            <td colspan="10" class="m-0 pt-0 pb-0 border-cols">
+                                <div>
+                                    <div class="row">
+                                        <div class="col-xxl-4 col-xl-4 col-lg-4 border-right p-0">
+                                            <div class="p-4 pb-0">
+                                                <div class="col-xxl-12 col-xl-12 col-lg-12 mb-4">
+                                                    <label class="color-hed"> Hospital Description </label>
+                                                    <div class="th-small mb-2">
+                                                        {{data.description}}
+                                                    </div>
+                                                    <div class="mb-2">
+                                                        <ng-container *ngIf="data.addtional_DOC1">
+                                                            <span class="icon-pdf">
+                                                                <a target="_blank" title="PDF File"
+                                                                    (click)="download(data.addtional_DOC1,data.hospitalcode,data.sdate)">
+                                                                    <i class="bi bi-file-earmark-pdf me-2"></i>
+                                                                </a>
+                                                            </span>
+                                                        </ng-container>
+
+                                                        <ng-container *ngIf="data.addtional_DOC2">
+                                                            <span class="icon-pdf">
+                                                                <a target="_blank" title="PDF File"
+                                                                    (click)="download(data.addtional_DOC2,data.hospitalcode,data.sdate)">
+                                                                    <i class="bi bi-file-earmark-pdf me-2"></i>
+                                                                </a>
+                                                            </span>
+                                                        </ng-container>
+
+                                                        <ng-container *ngIf="data.addtional_DOC3">
+                                                            <span class="icon-pdf">
+                                                                <a target="_blank" title="PDF File"
+                                                                    (click)="download(data.addtional_DOC3,data.hospitalcode,data.sdate)">
+                                                                    <i class="bi bi-file-earmark-pdf me-2"></i>
+                                                                </a>
+                                                            </span>
+                                                        </ng-container>
+
+
+                                                        <!-- <span class="icon-pdf"> <a
+                                                            href="../../../assets/img/certificate.pdf"
+                                                            title="PDF File"> <i
+                                                                class="bi bi-file-earmark-pdf me-2"></i> </a>
+                                                    </span> -->
+                                                        <!-- <span class="icon-pdf"> <a
+                                                            href="../../../assets/img/certificate.pdf"
+                                                            title="PDF File"> <i
+                                                                class="bi bi-file-earmark-pdf me-2"></i> </a>
+                                                    </span> -->
+                                                    </div>
+                                                </div>
+
+                                                <!-- <div class="col-xxl-12 col-xl-12 col-lg-12 mb-4">
+                                                    <label class="color-hed"> Action On </label>
+                                                    <div class="th-small mb-2">
+                                                        {{data.approveddate | date}}
+                                                    </div>
+                                                </div> -->
+
+                                                <div class="col-xxl-12 col-xl-12 col-lg-12 mb-4">
+                                                    <label class="color-hed"> SNA Remark | {{data.approveddate | date :
+                                                        'dd-MMM-yyyy'}} </label>
+                                                    <div class="th-small mb-2">
+                                                        {{data.snaremarks}}
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-xxl-12 col-xl-12 col-lg-12 mb-4">
+                                                    <label class="color-hed"> SNA Description </label>
+                                                    <div class="th-small mb-2">
+                                                        {{data.snadescription}}
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-flex bd-highlight border-bottom mb-3">
+                                                    <div class="p-2 px-0 flex-grow-1 bd-highlight">
+                                                        <div class="qry-hed "> Query Details</div>
+                                                    </div>
+                                                    <div class="p-2 px-0 bd-highlight mb-2"> No of Query
+                                                        <span class="badge2 badge-danger ms-2">
+                                                            {{data.querycount}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xxl-12 col-xl-12 col-lg-12 mb-3 border-bottom mb-3" *ngIf="data.querycount != 0">
+                                                    <label class="color-hed"> SNA Remark 1 |
+                                                        {{data.needmoredocs1DATE | date : 'dd-MMM-yyyy'}}
+                                                    </label>
+                                                    <div class="th-small mb-2">
+                                                        {{data.moredocsdescription}}
+                                                    </div>
+                                                    <label class="color-hed" *ngIf="data.replysecond"> Reply From
+                                                        Hospital
+                                                    </label>
+                                                    <div class="th-small mb-2">{{data.replysecond}}</div>
+                                                    <div class="mb-2">
+                                                        <ng-container *ngIf="data.addtional_DOC2">
+                                                            <span class="icon-pdf">
+                                                                <a target="_blank" title="PDF File"
+                                                                    (click)="download(data.addtional_DOC2,data.hospitalcode,data.sdate)">
+                                                                    <i class="bi bi-file-earmark-pdf me-2"></i>
+                                                                </a>
+                                                            </span>
+                                                        </ng-container>
+
+                                                        <!-- <span class="icon-pdf"> <a
+                                                                href="../../../assets/img/certificate.pdf"
+                                                                title="PDF File"> <i
+                                                                    class="bi bi-file-earmark-pdf me-2"></i> </a>
+                                                        </span> -->
+                                                        <!-- <span class="icon-pdf"> <a
+                                                                href="../../../assets/img/certificate.pdf"
+                                                                title="PDF File"> <i
+                                                                    class="bi bi-file-earmark-pdf me-2"></i> </a>
+                                                        </span>
+                                                        <span class="icon-pdf"> <a
+                                                                href="../../../assets/img/certificate.pdf"
+                                                                title="PDF File"> <i
+                                                                    class="bi bi-file-earmark-pdf me-2"></i> </a>
+                                                        </span> -->
+                                                    </div>
+                                                </div>
+                                                <div class="col-xxl-12 col-xl-12 col-lg-12 mb-3" *ngIf="data.querycount == 2">
+                                                    <label class="color-hed"> SNA Remark 2 |
+                                                        {{data.needmoredocs2DATE | date : 'dd-MMM-yyyy'}}
+                                                    </label>
+                                                    <div class="th-small mb-2">
+                                                        {{data.moredocsdescription2}}
+                                                    </div>
+                                                    <label class="color-hed" *ngIf="data.replythird"> Reply From
+                                                        Hospital
+                                                    </label>
+                                                    <div class="th-small mb-2">{{data.replythird}}</div>
+                                                    <div class="mb-2">
+                                                        <ng-container *ngIf="data.addtional_DOC3">
+                                                            <span class="icon-pdf">
+                                                                <a target="_blank" title="PDF File"
+                                                                    (click)="download(data.addtional_DOC3,data.hospitalcode,data.sdate)">
+                                                                    <i class="bi bi-file-earmark-pdf me-2"></i>
+                                                                </a>
+                                                            </span>
+                                                        </ng-container>
+
+                                                        <!-- <span class="icon-pdf"> <a
+                                                                href="../../../assets/img/certificate.pdf"
+                                                                title="PDF File"> <i
+                                                                    class="bi bi-file-earmark-pdf me-2"></i> </a>
+                                                        </span> -->
+                                                        <!-- <span class="icon-pdf"> <a
+                                                                href="../../../assets/img/certificate.pdf"
+                                                                title="PDF File"> <i
+                                                                    class="bi bi-file-earmark-pdf me-2"></i> </a>
+                                                        </span>
+                                                        <span class="icon-pdf"> <a
+                                                                href="../../../assets/img/certificate.pdf"
+                                                                title="PDF File"> <i
+                                                                    class="bi bi-file-earmark-pdf me-2"></i> </a>
+                                                        </span> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xxl-8 col-xl-8 col-lg-8 p-0">
+                                            <div class="p-4 pb-0">
+                                                <table class="table table-striped" width="100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="text-start pt-0 pl-0" align="left"> Package Details </th>
+                                                            <th class="text-end pt-0 pl-0" align="right"> Unit </th>
+                                                            <th class="text-end pt-0 pl-0" align="right"> Price/Unit
+                                                            </th>
+                                                            <th class="text-end pt-0 pl-0" align="right"> Total Price
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="hidtbl-th pl-0 py-2">
+                                                                <div class="mb-2"> {{data.wardname}}</div>
+                                                                <span class="th-small badge badge-success py-1 px-2 mt-0">
+                                                                    Ward
+                                                                </span>
+                                                            </td>
+                                                            <td class="hidtbl-th pl-0" align="right"></td>
+                                                            <td class="hidtbl-th pl-0" align="right">
+                                                                <!-- <i class="bi bi-currency-rupee"></i> -->
+                                                            </td>
+                                                            <td class="hidtbl-th pl-0" align="right">
+                                                                <!-- <span *ngIf="data.wardamount"><i
+                                                                        class="bi bi-currency-rupee"></i>{{data.wardamount}}</span> -->
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="hidtbl-th pl-0 py-2" colspan="4">
+                                                                <span class="th-small badge badge-success py-1 px-2 mt-0">
+                                                                    Implant </span>
+                                                            </td>
+                                                        </tr>
+                                                        <ng-container *ngFor="let imp of implant">
+                                                            <tr *ngIf="!imp.length">
+                                                                <td class="hidtbl-th pl-0">
+                                                                    <div class="mb-2">{{imp.implantname}}</div>
+                                                                </td>
+                                                                <td class="hidtbl-th pl-0" align="right">
+                                                                    {{imp.unit}}
+                                                                </td>
+                                                                <td class="hidtbl-th pl-0" align="right">
+                                                                    <span *ngIf="imp.unitperprice"><i
+                                                                            class="bi bi-currency-rupee"></i>{{imp.unitperprice}}</span>
+                                                                </td>
+                                                                <td class="hidtbl-th pl-0" align="right">
+                                                                    <span *ngIf="imp.amount"><i
+                                                                            class="bi bi-currency-rupee"></i>{{imp.amount}}</span>
+                                                                </td>
+                                                            </tr>
+                                                        </ng-container>
+                                                        <tr>
+                                                            <td class="hidtbl-th pl-0 py-2" colspan="4">
+                                                                <span class="th-small badge badge-success py-1 px-2 mt-0">
+                                                                    HighendDrugs
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                        <ng-container *ngFor="let had of hed">
+                                                            <tr *ngIf="!hedList.length">
+                                                                <td class="hidtbl-th pl-0">
+                                                                    <div class="mb-2">{{had.hedname}}</div>
+                                                                </td>
+                                                                <td class="hidtbl-th pl-0" align="right">
+                                                                    <span *ngIf="had.hedunit">{{had.hedunit}}</span>
+                                                                </td>
+                                                                <td class="hidtbl-th pl-0" align="right">
+                                                                    <span *ngIf="had.hedpriceperunit"><i
+                                                                            class="bi bi-currency-rupee"></i>{{had.hedpriceperunit}}</span>
+                                                                </td>
+                                                                <td class="hidtbl-th pl-0" align="right">
+                                                                    <span *ngIf="had.hedprice"><i
+                                                                            class="bi bi-currency-rupee"></i>{{had.hedprice}}</span>
+                                                                </td>
+                                                            </tr>
+                                                        </ng-container>
+
+                                                        <tr>
+                                                            <td colspan="3" class="border-bottom-0 pl-0 pb-0">
+                                                                <div class="color-hed mb-2"> Package Cost </div>
+                                                            </td>
+                                                            <td align="right" class="border-bottom-0 pl-0 pb-0">
+                                                                <span><i
+                                                                        class="bi bi-currency-rupee"></i>{{data.packagecost}}</span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="3" class="border-bottom-0 pl-0 pb-0">
+                                                                <div class="color-hed mb-2"> Total Package Cost (Package Cost + Total HED Cost + Total Implant Cost) </div>
+                                                            </td>
+                                                            <td align="right" class="border-bottom-0 pl-0 pb-0">
+                                                                <span><i
+                                                                        class="bi bi-currency-rupee"></i>{{data.totalpackagecost}}</span>
+                                                            </td>
+                                                        </tr>
+                                                        <!-- <tr>
+                                                            <td colspan="3" class="border-bottom-0 pl-0 pb-0">
+                                                                <div class="color-hed mb-2"> Block Amount </div>
+                                                            </td>
+                                                            <td align="right" class="border-bottom-0 pl-0 pb-0">
+                                                                <span *ngIf="data.amountblocked"><i
+                                                                        class="bi bi-currency-rupee"></i>{{data.amountblocked}}</span>
+                                                            </td>
+                                                        </tr> -->
+                                                        <tr>
+                                                            <td colspan="3" class="border-bottom-0 pl-0 pb-0">
+                                                                <div class="color-hed mb-2"> Family Available Fund
+                                                                </div>
+                                                            </td>
+                                                            <td align="right" class="border-bottom-0 pl-0 pb-0">
+                                                                <span><i
+                                                                        class="bi bi-currency-rupee"></i>{{data.familyefund}}</span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="3" class="border-bottom-0 pl-0 pb-0">
+                                                                <div class="color-hed mb-2"> Female Available Fund
+                                                                </div>
+                                                            </td>
+                                                            <td align="right" class="border-bottom-0 pl-0 pb-0">
+                                                                <span><i
+                                                                        class="bi bi-currency-rupee"></i>{{data.femalefund}}</span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="3" class="border-bottom-0 pl-0 pb-0">
+                                                                <div class="color-hed mb-2"> Insufficient Amount
+                                                                </div>
+                                                            </td>
+                                                            <td align="right" class="border-bottom-0 pl-0 pb-0">
+                                                                <span><i
+                                                                        class="bi bi-currency-rupee"></i>{{data.insufficientamount}}</span>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <!-- hidden section end -->
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- <div class="content-box p-0 mt-2 overflow-hidden">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered w-auto">
+                <thead>
+                    <tr>
+                        <th width="50">Sl#</th>
+                        <th>Doc1</th>
+                        <th>Doc2</th>
+                        <th>Doc3</th>
+                        <th>More Docs Description</th>
+                        <th>More Docs Description2</th>
+                        <th>No Of Days</th>
+                        <th>Approved Amount</th>
+                        <th>Amount</th>
+                        <th>URN No.</th>
+                        <th>Authority Code</th>
+                        <th>Hospital code</th>
+                        <th>Hospital Auth Code</th>
+                        <th>Requested Date</th>
+                        <th>Member Name</th>
+                        <th>Description</th>
+                        <th>State code</th>
+                        <th>District Code</th>
+                        <th>Policy Start Date</th>
+                        <th>Policy End Date</th>
+                        <th>PDF File Name</th>
+                        <th>Hospital Upload Date</th>
+                        <th>Need More Docs</th>
+                        <th>More Doc PDF Name</th>
+                        <th>More Docs Upload Date</th>
+                        <th>Implant Data</th>
+                        <th>Referral Code</th>
+                        <th>Hospital Name</th>
+                        <th>SNA Remark</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="!preauthList?.length">
+                        <td colspan="17" class="text-center"><strong class="text-danger">No data found</strong></td>
+                    </tr>
+                    <tr
+                        *ngFor="let data of preauthList | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};index as i">
+                        <td *ngIf="currentPage==1">{{i+1}}</td>
+                        <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+ i+1}}</td>
+                        <td><a *ngIf="data.adddocumentsecond" class="btn btn-sm btn-outline-primary"><i
+                                    class="bi bi-download"></i></a></td>
+                        <td><a *ngIf="data.documentsecond" class="btn btn-sm btn-outline-primary"><i
+                                    class="bi bi-download"></i></a></td>
+                        <td><a *ngIf="data.documentsecond" class="btn btn-sm btn-outline-primary"><i
+                                    class="bi bi-download"></i></a></td>
+                        <td>{{data.moredocsdescription}}</td>
+                        <td>{{data.moredocsdescription2}}</td>
+                        <td>{{data.noofdays}}</td>
+                        <td>{{data.approvedamount}}</td>
+                        <td>{{data.amount}}</td>
+                        !-- <td>{{data.id}}</td> --
+                        <td>{{data.urnno}}</td>
+                        <td>{{data.authoritycode}}</td>
+                        <td>{{data.hospitalcode}}</td>
+                        <td>{{data.hospitalauthcode}}</td>
+                        <td>{{data.sdate | date :'dd-MM-yyyy'}}</td>
+                        <td>{{data.membername}}</td>
+                        <td>{{data.description}}</td>
+                        <td>{{data.statecode}}</td>
+                        <td>{{data.districtcode}}</td>
+                        <td>{{data.policystartdate | date : 'dd-MM-YYYY'}}</td>
+                        <td>{{data.policyenddate | date : 'dd-MM-YYYY'}}</td>
+                        <td>{{data.pdfpath}}</td>
+                        <td>{{data.hospitaluploaddate | date :'dd-MMM-yyyy, h:mm:ss a'}}</td>
+                        <td>{{data.needmoredocs}}</td>
+                        <td>{{data.MoreDocPDFName}}</td>
+                        <td>{{data.MoreDocsUploadDate}}</td>
+                        <td>{{data.implantdata}}</td>
+                        <td>{{data.referralcode}}</td>
+                        <td>{{data.hospitalName}}</td>
+                        <td>{{data.snaremarks}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div> -->
+
+    <div class="row mt-2" *ngIf="showPegi">
+        <div class="col-sm-4">
+            <div class="col-sm-*">
+                show
+                <select id="pageItem" name="pageItem" class="custom-select-sm" (change)="pageItemChange()">
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                    <option value="150">150</option>
+                    <option value="200">200</option>
+                </select> entries
+            </div>
+        </div>
+        <div class="col-sm-8 text-right">
+            <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true" (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,325 @@
+<!--
+@Project : GJAY Frontend
+@Author : Sambit Kumar Pradhan
+@Created On : 03/07/2023 - 13:03 AM
+-->
+
+<div class="claim-detail">
+  <div class="form-cointainer" style="min-height: 4rem;" xmlns="http://www.w3.org/1999/html">
+
+    <div class="main-tab">
+      <div class="row justify-content-between">
+        <div class="col-lg-4">
+          <ul class="nav nav-tabs">
+            <li class="nav-item" *ngIf="isVisibleSave">
+              <a (click)="add()" class="nav-link active" id="add" style="color:#116901; cursor: pointer">Add</a>
+            </li>
+            <li class="nav-item" *ngIf="!isVisibleSave">
+              <a (click)="update()" class="nav-link active" id="update" style="color:#116901; cursor: pointer">Update</a>
+            </li>
+            <li class="nav-item">
+              <a (click)="view()" class="nav-link" id="view" style="color:#0f5e01; cursor: pointer">View</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!--  Add Part-->
+    <div class="content-box" *ngIf="isVisible">
+      <form [formGroup]="mailServiceForm" (ngSubmit)="saveMailService()" autocomplete="off">
+
+        <div class="row">
+
+          <div class="col">
+            <div class="row">
+
+              <div class="col">
+                <div class="col">
+                  <label for="mailServiceName" class="form-label">Mail Service Name<span class="text-danger">*</span></label>
+                  <select class="form-select" (change)="selectMailServiceName($event)" id="mailServiceName">
+                    <option value="0" selected hidden *ngIf="!selectedMailServiceId">Select Mail Service</option>
+                    <ng-container *ngFor="let mailService of mailServiceList">
+                      <option [value]="mailService.id" [selected]="mailService.id === selectedMailServiceId">
+                        {{ mailService.mailServiceName }}
+                      </option>
+                    </ng-container>
+                  </select>
+                </div>
+
+                <div class="col" style="margin-top: 1rem;">
+                  <label for="mailSubject" class="form-label">Mail Subject<span class="text-danger">*</span></label>
+                  <input class="form-control" type="text" name="mailSubject" placeholder="Enter Mail Subject"
+                         formControlName="mailSubject" id="mailSubject" maxlength="80"
+                         onkeyup="this.value=this.value.replace(/[^A-Za-z\s]/g,'');"/>
+                </div>
+              </div>
+
+              <div class="col">
+                <label for="mailDescription" class="form-label">Service Description<span class="text-danger">*</span></label>
+                <textarea class="form-control" type="text" name="mailDescription" placeholder="Service Description"
+                          formControlName="mailDescription" id="mailDescription" rows="5" cols="50" disabled></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="row">
+              <div class="col">
+                <label for="mailCCRecipient" class="form-label">Mail CC Recipients<span class="text-danger">*</span></label>
+                <div class="input-group">
+                  <input type="text" formControlName="ccEmail" id="mailCCRecipient" class="form-control me-1" placeholder="Enter CC Email Address"/>
+                  <button type="button" id="addButton" class="btn btn-success" (click)="addCCEmail()"><i class="bi bi-plus fa-lg"></i></button>
+
+                </div>
+                <div id="ccRecipientMailTable">
+                  <div class="table-container" style="height: 6rem; overflow-y: auto;">
+                    <table>
+                      <tr *ngFor="let ccEmail of ccRecipientMailList">
+                        <td class="input-group">
+                          <span class="badge bg-success">{{ccEmail}}</span>
+                          <i class="bi bi-x-square-fill fa-lg" style="color:#d00303; cursor: pointer" (click)="removeCCEmail(ccEmail)"></i>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col">
+                <label for="mailBCCRecipient" class="form-label">Mail BCC Recipients<span class="text-danger">*</span></label>
+                <div class="input-group">
+                  <input type="text" formControlName="bccEmail" id="mailBCCRecipient" class="form-control " placeholder="Enter BCC Email Address"/>
+                  <button type="button" id="addButton1" class="btn btn-success" (click)="addBCCEmail()"><i class="bi bi-plus fa-lg"></i></button>
+                </div>
+                <div id="bccRecipientMailTable">
+                  <div class="table-container" style="height: 6rem; overflow-y: auto">
+                    <table>
+                      <tr *ngFor="let bccEmail of bccRecipientMailList">
+                        <td class="input-group">
+                          <span class="badge bg-success">{{bccEmail}}</span>
+                          <i class="bi bi-x-square-fill fa-lg" style="color:#d00303; cursor: pointer" (click)="removeBCCEmail(bccEmail)"></i>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="row" style="margin-top: 1rem;">
+          <div class="col">
+            <label for="serviceFrequency" class="form-label">Service Frequency<span class="text-danger">*</span></label>
+            <select class="form-select" id="serviceFrequency" (change)="selectServiceFrequency($event)">
+              <option value="0" selected hidden *ngIf="!selectedMailServiceFrequency">Select Service Frequency</option>
+              <ng-container *ngFor="let frequency of [1, 2, 3, 4, 5]">
+                <option value="{{ frequency }}" [selected]="selectedMailServiceFrequency === frequency">
+                  {{ getFrequencyLabel(frequency) }}
+                </option>
+              </ng-container>
+            </select>
+          </div>
+
+          <div *ngIf="!isCustom" class="col">
+            <label for="serviceStartTime" class="form-label">Service Start Time<span class="text-danger">*</span></label>
+            <input type="time" id="serviceStartTime" name="serviceStartTime" class="form-control" formControlName="mailServiceStartTime" required/>
+          </div>
+
+          <div *ngIf="!isCustom" class="col">
+            <div *ngIf="!isVisibleSave">
+                <label class="form-label">Status<span class="text-danger">*</span></label>
+                <div>
+                  <label><input type="radio" name="status" [checked]="activeStatus" (change)="activeStatus = true">&nbsp;Active&emsp;</label>
+                  <label><input type="radio" name="status" [checked]="!activeStatus" (change)="activeStatus = false">&nbsp;In-Active&emsp;</label>
+                </div>
+            </div>
+          </div>
+
+          <div *ngIf="!isCustom" class="col"></div>
+
+          <div *ngIf="isCustom"  class="col">
+            <label for="fromDate" class="form-label">From Date & Time<span class="text-danger">*</span></label>
+            <input type="datetime-local" id="fromDate" name="fromDate" class="form-control" formControlName="mailServiceFrequencyFrom" required/>
+          </div>
+
+          <div *ngIf="isCustom"  class="col">
+            <label for="toDate" class="form-label">To Date & Time<span class="text-danger">*</span></label>
+            <input type="datetime-local" id="toDate" name="toDate" class="form-control" formControlName="mailServiceFrequencyTo" required/>
+          </div>
+
+          <div *ngIf="isCustom"  class="col">
+            <div *ngIf="!isVisibleSave">
+                <label class="form-label">Status<span class="text-danger">*</span></label>
+                <div>
+                  <label><input type="radio" name="status" [checked]="activeStatus" (change)="activeStatus = true">&nbsp;Active&emsp;</label>
+                  <label><input type="radio" name="status" [checked]="!activeStatus" (change)="activeStatus = false">&nbsp;In-Active&emsp;</label>
+                </div>
+              </div>
+          </div>
+        </div>
+
+        <div class="row" style="margin-top: 1rem;">
+          <div class="col">
+            <label for="mailBody" class="form-label">Mail Body<span class="text-danger">*</span></label>
+            <ckeditor [editor]="Editor" (blur)="onChange($event)" formControlName="mailBody" id="mailBody" name="mailBody"></ckeditor>
+          </div>
+
+        </div>
+
+        <div>
+          <button type="submit" class="btn btn-success me-1" style="margin-top: 10px;">
+            <ng-container *ngIf="isVisibleSave">Save</ng-container>
+            <ng-container *ngIf="!isVisibleSave">Update</ng-container>
+          </button>
+          <button type="reset" class="btn btn-danger" style="margin-top: 10px; margin-left: 10px;" (click)="resetMailService()">Reset</button>
+        </div>
+      </form>
+    </div>
+
+
+    <!--  View Part-->
+    <div class="content-box" *ngIf="!isVisible">
+
+      <div class="row" *ngIf="reportList?.length > 0">
+        <div class="col-lg-9 col-xxl-9">
+          <h6 style="color: #0b6c21; margin-left: 4px; margin-top: 10px"><strong>Total Records :  {{reportList?.length}}</strong></h6>
+        </div>
+<!--        <div class="col-lg-3 col-xxl-3">-->
+<!--          <button class="btn btn-success btn-sm mx-1" style="margin-top: 5px; float: right" tooltip="Excel" (click)="downloadReport('excel')">-->
+<!--            <i class="bi bi-file-earmark-spreadsheet"></i>-->
+<!--          </button>-->
+<!--          <button class="btn btn-danger btn-sm mx-1" style="margin-top: 5px; float: right" tooltip="pdf" (click)="downloadReport('pdf')">-->
+<!--            <i class="bi bi-file-earmark-pdf"></i>-->
+<!--          </button>-->
+<!--        </div>-->
+        <div class="col-lg-3 col-xxl-3">
+          <input type="text" id="searchFilter" class="form-control" placeholder="Search here" name="searchFilter" [(ngModel)]="searchFilter">
+        </div>
+      </div>
+
+      <br>
+
+
+      <table class="table table-striped mb-0">
+        <thead>
+        <tr>
+          <th width="50">Sl#</th>
+          <th>Mail Service Name</th>
+          <th>Mail Subject</th>
+          <th>Mail Body</th>
+          <th>Frequency</th>
+          <th>Mail Time</th>
+          <th>Mail CC Recipient</th>
+          <th>Mail BCC Recipient</th>
+          <th>Mail Description</th>
+          <th>Created On</th>
+          <th>Created By</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <ng-container *ngIf="reportList && reportList.length > 0; else noData">
+          <tr *ngFor="let report of reportList; trackBy: trackByReportId">
+            <td>{{ getRowNumber(report) }}</td>
+            <td>{{ report.mstMailService.mailServiceName }}</td>
+            <td>{{ report.mailSubject }}</td>
+            <td><a  href="javascript:void(0)" class="trigger" (click)="viewMailBody(report.mailBody)"><strong>view</strong></a></td>
+            <td>{{ getFrequencyLabel(report.mailFrequency) }}</td>
+            <td>{{ convertTime(report.mailTime) }}</td>
+            <td><a href="javascript:void (0)" class="trigger" (click)="viewRecipientMails('CC Recipient Email Address', report.mailCcRecipient)"><strong>view</strong></a></td>
+            <td><a href="javascript:void (0)" class="trigger" (click)="viewRecipientMails('BCC Recipient Email Address', report.mailBccRecipient)"><strong>view</strong></a></td>
+            <td>{{ report.mstMailService.mailDescription }}</td>
+            <td>{{ report.createdOn | date: 'dd-MMM-yyyy' }}</td>
+            <td>Admin</td>
+            <td>
+              <ng-container *ngIf="Number(report?.statusFlag) == 0">
+                <span style="color: #1da33c; font-weight: 500">Active</span>
+              </ng-container>
+              <ng-container *ngIf="Number(report?.statusFlag) == 1">
+                <span style="color: #c40404; font-weight: 500">In-Active</span>
+              </ng-container>
+            </td>
+            <td><a class="btn btn-outline-success btn-sm me-1" (click)="editMailService(report.id)"><i class="bi bi-pen"></i></a></td>
+          </tr>
+        </ng-container>
+        <ng-template #noData>
+          <tr>
+            <td colspan="12" class="text-center text-danger"><strong>No data found</strong></td>
+          </tr>
+        </ng-template>
+        </tbody>
+      </table>
+
+
+      <div class="row" *ngIf="showPagination" style="margin-top: 1rem">
+        <div class="col-sm-4">
+          <div class="col-sm-*">
+            show
+            <select id="pageItem" name="pageItem" class="custom-select-sm" (change)="pageItemChange($event)">
+              <ng-container *ngFor="let item of [25, 50, 100, 250]">
+                <option [value]="item" [selected]="item === pageElement">{{ item }}</option>
+              </ng-container>
+              <option value="{{ reportList?.length }}">All</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-8 text-right">
+          <pagination-controls id="listing_pagination" [maxSize]="7" [directionLinks]="true"
+                               (pageChange)="currentPage = $event" class="text-end"
+                               (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!--Mail Subject Modal-->
+<div class="modal justify-content-center" id="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="width: 200%; margin-left: -7rem;">
+      <div class="modal-header justify-content-center">
+        <h4 class="text-center">Mail Body</h4>
+      </div>
+      <div class="modal-body py-5 text-center">
+        <ckeditor [editor]="Editor" id="mailBodyModal" [(ngModel)]="mailBodyModal" disabled></ckeditor>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="closeModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Recipient Modal-->
+<div class="modal justify-content-center" id="modal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="width: 100%">
+      <div class="modal-header justify-content-center">
+        <h4 class="text-center">{{recipientMailsHeading}}</h4>
+      </div>
+      <div class="modal-body py-5 text-center">
+        <span class="modalBody">
+          <table class="table mb-0">
+            <tr *ngFor="let mail of recipientMailsModal">
+              <td>{{mail}}</td>
+            </tr>
+          </table>
+        </span>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="closeModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+

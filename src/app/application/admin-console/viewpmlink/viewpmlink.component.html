@@ -1,0 +1,162 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+    <div class="row justify-content-between">
+      <div class="col-lg-4">
+        <ul class="nav nav-tabs ">
+          <li class="nav-item">
+            <a routerLink="/application/primarylink" routerLinkActive="active" class="nav-link " style="color: green;">Add</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/application/viewpmlink" routerLinkActive="active" class="nav-link active">View</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-lg-6 ">
+        <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+      </div>
+    </div>
+    <div class="content-box">
+      <div class="col-xxl-10">
+        <form [formGroup]="group">
+          <div class="row">
+            <div class="col-lg-4 col-xxl-4">
+              <div class="mb-xl-3">
+                <label for="EnterFunctionUrl" class="form-label">Global Name</label>
+                <select class="form-select" id="global" name="global" (change)="getpmlink($event.target.value)"
+                  formControlName="globalLinkId">
+                  <option selected value="">Select</option>
+                  <ng-container *ngFor="let v of globalist">
+                    <option value={{v.globalLinkId}}>{{v.globalLinkName}}</option>
+                  </ng-container>
+                </select>
+              </div>
+            </div>
+            <div class="col-lg-4 col-xxl-4">
+              <div class="mb-xl-3">
+                <label for="EnterFunctionUrl" class="form-label">Primary Link</label>
+                <select class="form-select" id="primary" name="primary" formControlName="primary">
+                  <option selected value="">Select</option>
+                  <ng-container *ngFor="let v of pmlinklist2">
+                    <option value={{v.primaryLinkId}}>{{v.primaryLinkName}}</option>
+                  </ng-container>
+                </select>
+              </div>
+            </div>
+
+            <!-- <div class="col-lg-4 col-xxl-4">
+                <div class="mb-xl-3">
+                  <label for="EnterFunctionUrl" class="form-label">Function Name</label>
+                  <select class="form-select"  id="function" name="function"   formControlName="functionId" >
+                    <option selected  value="">Select</option>
+                    <ng-container *ngFor="let v of functionlist">
+                      <option value={{v.functionId}} >{{v.functionName}}</option>
+                    </ng-container>
+                  </select>
+                </div>
+              </div> -->
+            <div class="row">
+              <div class="col-1"><input type="button" value="Search" class="btn btn-success" (click)="submit()"></div>
+              &nbsp;&nbsp;
+              <div class="col-1"><input type="button" value="Reset" class="btn btn-secondary" (click)="reset()"></div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-3" style="margin-top: 2ch;">
+        <div class="col-sm-*" *ngIf="showPegi">
+          show
+          <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+            <!-- <option value="20">20</option> -->
+            <option value="50">50</option>
+            <option value="100">100</option>
+            <option value="200">200</option>
+            <option value={{countpmlist}}>All</option>
+          </select> entries
+        </div>
+      </div>
+      <div class="col-4" style="margin-top: 2ch;">
+        <b>Total Primary Link : {{countpmlist}}</b>
+      </div>
+      <div class="col-5">
+        <input type="text " id="txtsearchDate " name="txtsearchDate " [(ngModel)]="txtsearchDate" maxlength="20 "
+          class="form-control " placeholder="Search here...... " autocomplete="off"
+          style=" margin-right: 0px; margin-left: 0px;">
+      </div>
+    </div>
+    <br>
+    <div class="table-responsive">
+      <table class="table table-striped mb-0">
+        <thead>
+          <tr>
+            <th width="50">Sl#</th>
+            <th>Global Link Name</th>
+            <th>Primary Link Name</th>
+            <th>Function Name</th>
+            <th>Description</th>
+            <th>Order No</th>
+            <th>Status</th>
+            <th width="80">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr
+            *ngFor="let v of pmlinklist | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage},index as i">
+            <td *ngIf="currentPage==1 ">{{(i+1)}}</td>
+            <td *ngIf="currentPage!=1 ">{{(currentPage-1)*pageElement+ i+1}}</td>
+            <td> {{v.globalLink.globalLinkName}} </td>
+            <td>{{v.primaryLinkName}}</td>
+            <td> {{v.functionMaster.functionName}} </td>
+            <td> {{v.description}} </td>
+            <td>{{v.order}}</td>
+            <td>
+              <p *ngIf="v.bitStatus==0">Active</p>
+              <p *ngIf="v.bitStatus==1">In-Active</p>
+            </td>
+            <td>
+              <a class="btn btn-outline-primary btn-sm me-1" (click)="edit(v.primaryLinkId)"><i
+                  class="bi bi-pencil"></i></a>
+              <!--div *ngIf="v.bitStatus==0">
+                  <a class="btn btn-outline-primary btn-sm me-1" (click)="edit(v.primaryLinkId)"><i class="bi bi-pencil"></i></a>
+                <a class="btn btn-outline-danger btn-sm" (click)="delete(v.primaryLinkId)" ><i class="bi bi-trash3" ></i></a>
+              </div>
+              <div *ngIf="v.bitStatus==1">
+                <a class="btn btn-outline-primary btn-sm me-1" (click)="edit(v.primaryLinkId)"><i class="bi bi-pencil"></i></a>
+                <a class="btn btn-outline-danger btn-sm"  ><i class="bi bi-trash3" ></i></a>
+              </div-->
+            </td>
+          </tr>
+          <tr *ngIf="!showPegi">
+            <span style="color: red;text-align: center;position:absolute ">NO DATA FOUND!!</span>
+          </tr>
+
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+  <div class="row" *ngIf="showPegi">
+    <div class="col-sm-4">
+      <div class="col-sm-*">
+        show
+        <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+          <!-- <option value="20">20</option> -->
+          <option value="50">50</option>
+          <option value="100">100</option>
+          <option value="200">200</option>
+          <option value={{countpmlist}}>All</option>
+        </select> entries
+      </div>
+    </div>
+    <div class="col-sm-8 text-right">
+      <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true"
+        (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)">
+      </pagination-controls>
+    </div>
+
+
+  </div>
+</div>

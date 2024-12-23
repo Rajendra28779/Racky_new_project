@@ -1,0 +1,120 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs ">
+                    <li class="nav-item" *ngIf="isUpdateBtnInVisible">
+                        <a routerLink="/application/pkgSubCatagory" routerLinkActive="active"
+                            class="nav-link active">Add</a>
+                    </li>
+                    <li class="nav-item" *ngIf="!isUpdateBtnInVisible">
+                        <a routerLink="/application/pkgSubCatagory" routerLinkActive="active"
+                            class="nav-link active">Update</a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/application/packageSubCategoryView" routerLinkActive="active" class="nav-link"
+                            style="color: #1f723f;">View</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-6 ">
+                <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-box">
+        <div class="col-xxl-10">
+            <form [formGroup]="pkgSubCatagoryForm">
+
+                <div class="row">
+                    <div class="col-lg-4 col-xxl-4">
+                        <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                            <label class="control-label mb-2">Package Header Code</label><span
+                                class="text-danger">*</span>
+                            <div class="input-group">
+                                <select type="text" class="form-select" formControlName="packageheadercode"
+                                    name="packageheadercode" id="packageheadercode" autocomplete="off">
+                                    <option value="" selected>Select Package Header</option>
+                                    <option *ngFor="let p of packageHeaderView" [value]="p.packageheadercode">
+                                        {{p.packageheadername}}({{p.packageheadercode}})</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-xxl-4">
+                        <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                            <label class="control-label mb-2">Package SubCategory Code</label><span
+                                class="text-danger">*</span>
+                            <div class="input-group">
+                                <input type="text" class="form-control" formControlName="packagesubcategorycode"
+                                    name="packagesubcategorycode" id="packagesubcategorycode" autocomplete="off"
+                                    placeholder="Enter Package SubCategory Code" maxlength="20"
+                                    (change)="validatePSCode()" onkeypress="return /[0-9a-zA-Z ]/i.test(event.key)">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-lg-4 col-xxl-4">
+                        <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                            <label class="control-label mb-2">Package SubCategory Name</label><span
+                                class="text-danger">*</span>
+                            <div class="input-group">
+                                <input type="text" class="form-control" formControlName="packagesubcategoryname"
+                                    name="packagesubcategoryname" id="packagesubcategoryname" autocomplete="off"
+                                    placeholder="Enter Package SubCategory Name" maxlength="30"
+                                    (change)="validatePSCName()" onkeypress="return /[0-9a-zA-Z ]/i.test(event.key)">
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-xxl-4">
+                        <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                            <label class="control-label mb-2">Package Name</label><span
+                                class="text-danger">*</span>
+                            <div class="input-group">
+                                <textarea type="text" class="form-control" formControlName="packagesubcategoryname"
+                                    name="packagesubcategoryname" id="packagesubcategoryname" autocomplete="off"
+                                    placeholder="Enter Package Name" maxlength="30"
+                                    (change)="validatePSCName()" onkeypress="return /[0-9a-zA-Z ]/i.test(event.key)"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-xxl-4">
+                        <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                            <label class="control-label mb-2">Sub Category Name</label><span
+                                class="text-danger">*</span>
+                            <div class="input-group">
+                                <textarea type="text" class="form-control" formControlName="subcategoryName"
+                                    name="subcategoryName" id="subcategoryName" autocomplete="off"
+                                    placeholder="Enter SubCategory Name" maxlength="20"
+                                    (change)="validatePSCode()" onkeypress="return /[0-9a-zA-Z ]/i.test(event.key)"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                   
+
+                </div>
+                <div class="col-lg-12">
+                    <label class="form-label d-none d-md-block">&nbsp;</label>
+                    <div class="d-grid gap-2 d-md-flex">
+                        <div *ngIf="!isUpdateBtnInVisible">
+                            <div>
+                                <button type="button" class="btn btn-success"
+                                    (click)="SubmitCreate()">Update</button>&nbsp;
+                                <input type="button" value="Cancel" class="btn btn-secondary" (click)="Cancel()">
+                            </div>
+                        </div>
+                        <div *ngIf="isUpdateBtnInVisible">
+                            <div>
+                                <button type="button" class="btn btn-success"
+                                    (click)="SubmitCreate()">Submit</button>&nbsp;
+                                <input type="button" value="Reset" class="btn btn-secondary" (click)="ResetForm()">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>

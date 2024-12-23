@@ -1,0 +1,78 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs" routerLinkActive="active">
+                    <li class="nav-item">
+                        <a routerLink="/application/hospitalwisepaid" class="nav-link active">Hospital Wise Paid Claim
+                            Report</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a routerLink="" class="nav-link">View</a>
+                    </li> -->
+                </ul>
+            </div>
+            <div class="col-lg-6 ">
+                <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-box bg-light pt-xl-2">
+        <form>
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="mb-2">
+                        <label class="col-form-label">District</label>
+                        <select class="form-select">
+                            <option selected value="undefined">Select</option>
+                            <option value="1">Cuttack</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+    <div class="content-box mt-3 p-0 overflow-hidden">
+        <div class="table-responsive">
+            <table class="table mb-0">
+                <thead>
+                    <tr>
+                        <th width="50">Sl#</th>
+                        <th>Hospital Name</th>
+                        <th>Total Discharge Amount(<i class="bi bi-currency-rupee"></i>)</th>
+                        <th>Paid Amount(<i class="bi bi-currency-rupee"></i>)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td> 1 </td>
+                        <td>A Jamabahal </td>
+                        <td align="center"> 1500 </td>
+                        <td align="right"> 5500325 </td>
+                    </tr>
+                    <tr>
+                      <td>2</td>
+                      <td>A. Malkangiri</td>
+                      <td align="center"> 1325 </td>
+                      <td align="right"> 8253000 </td>
+                    </tr>
+                    <tr>
+                      <td>3</td>
+                      <td>Abalpur</td>
+                      <td align="center"> 1158 </td>
+                      <td align="right"> 5004500 </td>
+                    </tr>
+                    <tr>
+                      <td>4</td>
+                      <td>Abarsingh SC</td>
+                      <td align="center"> 1500 </td>
+                      <td align="right"> 4500500 </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

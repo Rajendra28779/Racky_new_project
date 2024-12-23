@@ -1,0 +1,134 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+    <div class="row justify-content-between">
+      <div class="col-lg-4">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a routerLink="/application/cpdnamewisecountreport" class="nav-link active">CPD Name Wise Count Report</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="col-xxl-10">
+    <div class="row">
+      <div class="col-lg-4 col-xxl-4">
+        <div class="mb-xl-3">
+          <label class="control-label">Actual Date Of Discharge From <span class="text-danger">*</span></label>
+          <div class="input-group">
+            <input type="text" class="form-control border-end-0 datepicker" id="datepicker1" name="fromDate">
+            <label class="input-group-text bg-transparent border-start-0" for="datepicker1"><i
+                class="iconbsky-calendar"></i> </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-xxl-4">
+        <div class="mb-xl-3">
+          <label class="control-label">Actual Date Of Discharge To <span class="text-danger">*</span></label>
+          <div class="input-group">
+            <input type="text" class="form-control border-end-0 datepicker" id="datepicker2" name="toDate">
+            <label class="input-group-text bg-transparent border-start-0" for="datepicker2"><i
+                class="iconbsky-calendar"></i> </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-12">
+        <div class="d-grid gap-2 d-md-flex">
+          <button type="submit" class="btn btn-success" (click)="search()">Search</button>
+          <button type="reset" class="btn btn-secondary"(click)="resetField()" >Reset</button>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+  <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+    <div class="col-lg-4 col-xxl-4"></div>
+    <div class="col-lg-4 col-xxl-4" >
+      <div class="table-responsive" style="float: right;">
+          <div [align]="'start'" class="table-utilities" style="padding-bottom: 5%;">
+            <button class="btn btn-success btn-sm me-1"
+              (click)="downloadReport('xcl')">
+              <i class="bi bi-file-earmark-spreadsheet"></i>
+            </button>
+            &nbsp;
+            <button class="btn btn-danger btn-sm me-1"
+              (click)="downloadReport('pdf')">
+              <i class="bi bi-file-earmark-pdf"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-xxl-4">
+        <input type="text" id="txtsearchDate" class="form-control" placeholder="Search here" name="txtsearchDate"
+          [(ngModel)]="txtsearchDate">
+      </div>
+    </div>
+    <div class="content-box p-0 overflow-hidden">
+      <div class="table-responsive">
+        <table class="table table-sm table-striped mb-0">
+          <thead>
+            <tr>
+              <th width="40">Sl#</th>
+              <th>CPD Name</th>
+              <th>Approved</th>
+              <th>Rejected</th>
+              <th>Query</th>
+
+              <th>Total Settlement(Approved+Rejected)</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let claim of dataa
+            | filter:txtsearchDate
+            | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};
+              index as i">
+              <td *ngIf="currentPage==1">{{(i+1)}}</td>
+              <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+ i+1}}</td>
+              <td><a href="javascript:void(0);" (click)="Details(claim)">{{claim.FULL_NAME}}</a></td>
+              <td> {{claim.APPROVE}}</td>
+              <td>{{claim.REJECT}}</td>
+
+              <td> {{claim.QUERY}}</td>
+              <td> {{claim.CLAIM}}</td>
+             </tr>
+             <tr *ngIf="showPegi">
+              <td></td>
+              <td><a href="javascript:void(0);"></a>Total</td>
+              <td>{{totalApproveCount}} </td>
+              <td>{{totalApproveCount1}}</td>
+              <td>{{totalApproveCount2}}</td>
+              <td>{{totalApproveCount3}}</td>
+
+              <!-- <td>{{totalApproveCount4}}</td> -->
+
+              <!-- <td>{{totalApproveCount5| currency:'':''}} </td>
+              <td>{{totalApproveCount6| currency:'':''}}</td> -->
+
+
+            </tr>
+            <tr *ngIf="record==0">
+              <td colspan="20" class="text-center text-uppercase"><strong class="text-danger">No data found !!</strong></td>
+            </tr>
+          </tbody>
+        </table>
+
+    <div class="row" style="margin-top: 20px;" *ngIf="showPegi">
+      <div class="col-sm-6">
+        <div class="col-sm-*">
+          show
+          <select id="pageItem" name="pageItem" class="custom-select-sm" (change)="pageItemChange()">
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+          </select> entries
+        </div>
+      </div>
+      <div class="col-sm-6 text-right">
+        <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true"
+          (pageChange)="currentPage = $event"class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+      </div>
+    </div>
+
+  </div>

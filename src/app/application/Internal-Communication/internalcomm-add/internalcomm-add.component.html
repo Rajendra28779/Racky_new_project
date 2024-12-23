@@ -1,0 +1,105 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+      <div class="row justify-content-between">
+          <div class="col-lg-12">
+               <ul class="nav nav-tabs ">
+                <li class="nav-item">
+                <a routerLink="/application/intcommadd" routerLinkActive="active" class="nav-link active">Request</a>
+                </li>
+                  <li class="nav-item">
+                    <a routerLink="/application/intcommview" style="color: rgb(2, 95, 2);" routerLinkActive="active" class="nav-link ">Status</a>
+                    </li>
+                    <li class="nav-item">
+                      <a routerLink="/application/intcommtask" style="color: rgb(2, 95, 2);" routerLinkActive="active" class="nav-link ">My Activity</a>
+                      </li>
+              </ul>
+          </div>
+      </div>
+  </div>
+
+      <div class="content-box">
+        <div class="row">
+          <div class="col-lg-4 col-xxl-4">
+            <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+              <label class="control-label mb-2">Requested By</label><span class="text-danger">*</span>
+              <input type="text" class="form-control" disabled [value]="fullname" />
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 col-xxl-4">
+            <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+              <label class="control-label mb-2">To Whom</label><span class="text-danger">*</span>
+              <select class="form-select" id="towhom"  aria-label="Disabled select example">
+                <option value="A" selected disabled>Select</option>
+                <ng-container *ngFor="let v of intcommuserlist">
+                  <option value={{v.userid}}>{{v.fullname}}</option>
+                </ng-container>
+              </select>
+            </div>
+          </div>
+          <div class="col-lg-6 col-xxl-6">
+            <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+              <label class="control-label mb-2">Requested For</label><span class="text-danger">*</span>
+              <textarea class="form-control"  placeholder="Enter Reason"autocomplete="off" id="reqfor" maxlength="240" #myInput (keypress)="keyPress($event)"></textarea>
+              <span class="text-danger small">Characters Remaining: {{maxChars - myInput.value.length}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-10 col-xxl-10">
+            <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+              <label  class="form-label">Description<span class="text-danger">*</span></label>
+            <ckeditor [editor]="Editor"  [(ngModel)]="model.editorData" (blur)="onChange($event)" ></ckeditor>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-3 col-xxl-3">
+            <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+              <label class="control-label mb-2">Required By</label>
+              <div class="input-group">
+                <input type="text" class="form-control border-end-0 datepicker" id="reqdby" name="toDate">
+                <label class="input-group-text bg-transparent border-start-0" for="todate">
+                  <i class="iconbsky-calendar"></i>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-xxl-3">
+            <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                <label>Priority</label><br>
+                    <span class="mb-xl-8">
+                        <input type="radio" name="priority"  style="margin-top: 1ch;" value="High" (click)="no2('High')"> High &nbsp;&nbsp;
+                        <input type="radio" name="priority" value="Medium" (click)="no2('Medium')"> Medium&nbsp;&nbsp;
+                        <input type="radio" name="priority" value="Low" (click)="no2('Low')"> Low
+                    </span>
+              </div>
+          </div>
+          <div class="col-lg-4 col-xxl-4" id="Upload">
+            <div class="file-upload mb-xl-4 text-center ">
+                <p class="mb-1 text-start">Upload Document</p>
+                <div class="file-upload-content">
+                    <a class="btn btn-danger  text-white btn-sm remove-img"><i
+                            class="fas fa-times"></i></a>
+                    <img class="file-upload-image" src="#" alt="your image" />
+                </div>
+                <div class="image-upload-wrap rounded">
+                    <input class="file-upload-input"  id="notficationdoc"type='file'  onCut="return false " onDrag="return false " onDrop="return false " (change)="handleFileInput($event)">
+                    <div class="drag-text" *ngIf="!flag">
+                      <h5><i class="iconbsky-upload-icon d-block fs-4"></i><span class="text-danger">Drag or select a file to upload </span>
+                      </h5>
+                  </div>
+                    <div class="drag-text" *ngIf="flag" >
+                        <h5><i class="iconbsky-upload-icon d-block fs-4"></i><span class="text-danger">{{fileToUpload.name}}</span>
+                        </h5>
+                    </div>
+                </div>
+                 <p class="small pt-1 " style="text-align: right;" *ngIf="flag"><img src="./assets/img/pdf.png " alt="Download Document " width="20 " > <a target="_blank" class="dbtn" (click)="downloadfiletreatmentbill($event) "> Download</a></p>
+            </div>
+         </div>
+        </div>
+        <input type="button" value="Submit" class="btn btn-success" (click)="submit()">&nbsp;
+        <input type="button" value="Reset" class="btn btn-secondary" (click)="reset()">
+      </div>
+</div>

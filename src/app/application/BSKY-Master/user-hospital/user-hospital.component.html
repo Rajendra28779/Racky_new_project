@@ -1,0 +1,236 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item" *ngIf="isvisiblesave">
+                        <a routerLink="/application/userhospital" routerLinkActive="active" class="nav-link active">Add</a>
+                    </li>
+                    <li class="nav-item" *ngIf="visibleupdate">
+                        <a routerLink="/application/userhospital" routerLinkActive="active" class="nav-link active">Update</a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/application/viewhospital" routerLinkActive="active" class="nav-link" style="color: #1f723f;">View</a>
+                    </li>
+                    <li class="nav-item">
+                      <a routerLink="/application/hospincentive" routerLinkActive="active" class="nav-link"
+                          style="color: #1f723f;">Incentive Report</a>
+                  </li>
+                </ul>
+            </div>
+            <div class="col-lg-6 ">
+                <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+            </div>
+        </div>
+    </div>
+    <div class="content-box">
+        <form [formGroup]="HospitalType" autocomplete="off">
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Hospital Name<span
+                            class="text-danger">*</span></label>
+                        <input class="form-control" type="text" formControlName="hospitalName" autocomplete="off" [(ngModel)]="updateHospital.hospitalName" name="hospitalName" id="hospitalName" placeholder="Enter Hospital Name" maxlength="250" onkeyup="this.value=this.value.replace(/[^a-zA-Z0-9 .,]/g,'');"
+                            (keyup)="keyfunction1($event.target)"
+                            (change)="validateName()" />
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3" *ngIf="isvisiblesave">
+                        <label class="control-label">Hospital Code<span
+                            class="text-danger">*</span></label>
+                        <input class="form-control" type="text" formControlName="hospitalCode" autocomplete="off"
+                            [ngClass]="{ 'is-invalid': valid==2, 'is-valid': valid==1 }"
+                            [(ngModel)]="updateHospital.hospitalCode" name="hospitalCode" id="hospitalCode" placeholder="Enter Hospital Code" maxlength="10" onkeyup="this.value=this.value.replace(/[^a-zA-Z0-9]/g,'');"
+                            (change)="validateHospital()" style="text-transform: uppercase;">
+
+                    </div>
+
+                    <div class="mb-xl-3" *ngIf="visibleupdate">
+                        <label class="control-label">Hospital Code<span
+                            class="text-danger">*</span></label>
+                        <input class="form-control" type="text" formControlName="hospitalCode" autocomplete="off"
+                            [(ngModel)]="updateHospital.hospitalCode" name="hospitalCode" id="hospitalCode" placeholder="Enter Hospital Code" disabled="disabled">
+
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Mobile No<span
+                            class="text-danger">*</span></label>
+                        <input class="form-control" type="text" formControlName="mobile" autocomplete="off" [(ngModel)]="updateHospital.mobile" name="mobile" id="mobile" placeholder="Enter Mobile No" maxlength="10" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" (change)="validatePhoneNo()">
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Email Id<span
+                            class="text-danger">*</span></label>
+                        <input class="form-control" type="text" formControlName="emailId" autocomplete="off" [(ngModel)]="updateHospital.emailId" name="emailId" id="emailId" placeholder="Enter Email ID" (change)="validateEmail()" (keyup)="keyfunction1($event.target)" maxlength="100">
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">State Name<span class="text-danger">*</span></label>
+                        <select class="form-select" name="stateId" id="stateId" formControlName="stateId"
+                            [ngClass]="{ 'is-invalid': submitted && f['stateId'].errors }"
+                            [(ngModel)]="updateHospital.stateId" (change)="OnChangeState($event.target.value)">
+                            <option value="" selected disabled>Select State</option>
+                            <ng-container *ngFor="let item of stateList">
+                                <option value={{item.stateCode}}>{{item.stateName}}</option>
+                            </ng-container>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">District Name<span class="text-danger">*</span></label>
+                        <select class="form-select" name="districtId" id="districtId" formControlName="districtId"
+                            [ngClass]="{ 'is-invalid': submitted && f['districtId'].errors }"
+                            [(ngModel)]="updateHospital.districtId">
+                            <option value="" selected>Select District</option>
+                            <ng-container *ngFor="let item of districtList">
+                                <option value={{item.districtcode}}>{{item.districtname}}</option>
+                            </ng-container>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Hospital Type<span class="text-danger">*</span></label>
+                        <select class="form-select" name="hospitalType" id="hospitalType" formControlName="hospitalType"
+                            [ngClass]="{ 'is-invalid': submitted && f['hospitalType'].errors }"
+                            [(ngModel)]="updateHospital.hospitalType">
+                            <option value="" selected disabled>Select Hospital Type</option>
+                            <ng-container *ngFor="let item of catList">
+                                <option value={{item.categoryId}}>{{item.categoryName}}</option>
+                            </ng-container>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Assigned SNA<span class="text-danger">*</span></label>
+                        <select class="form-select" name="snoUserId" id="snoUserId" formControlName="snoUserId"
+                            [ngClass]="{ 'is-invalid': submitted && f['snoUserId'].errors }"
+                            [(ngModel)]="updateHospital.snoUserId">
+                            <option value="" selected disabled>Select SNA Doctor</option>
+                            <ng-container *ngFor="let item of snoList">
+                                <option value={{item.userId}}>{{item.fullName}}</option>
+                            </ng-container>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Assigned DC
+                            <span *ngIf="stateCd=='21'" class="text-danger">*</span>
+                        </label>
+                        <select class="form-select" name="assignedDc" id="assignedDc" formControlName="assignedDc"
+                            [(ngModel)]="updateHospital.assignedDc">
+                            <option value="" selected>None</option>
+                            <ng-container *ngFor="let item of dcList">
+                                <option value={{item.userId}}>{{item.fullName}}</option>
+                            </ng-container>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-xxl-8">
+                    <label>Is CPD Approval Required?<span class="text-danger">*</span></label>&nbsp;&nbsp;
+                    <span class="mb-xl-6" *ngIf="isvisiblesave">
+                        <input type="radio" checked="checked" [checked]="true" (click)="yes($event)" name="cpdApprovalRequired" id="cpdApprovalRequired">Yes &nbsp;&nbsp;
+                        <input type="radio" (click)="no($event)" name="cpdApprovalRequired" id="cpdApprovalRequired">No
+                    </span>
+
+                    <span class="mb-xl-6" *ngIf="visibleupdate">
+                        <label *ngIf="updateHospital.cpdApprovalRequired==0">
+                            <input type="radio" checked="checked" [checked]="true" (click)="yes($event)"
+                            name="cpdApprovalRequired" id="cpdApprovalRequired">Yes &nbsp;&nbsp;
+                            <input type="radio" (click)="no($event)"
+                            name="cpdApprovalRequired" id="cpdApprovalRequired">No
+                        </label>
+
+                        <label *ngIf="updateHospital.cpdApprovalRequired==1">
+                            <input type="radio" (click)="yes($event)"
+                            name="cpdApprovalRequired" id="cpdApprovalRequired">Yes &nbsp;&nbsp;
+                            <input type="radio" checked="checked" [checked]="true" (click)="no($event)"
+                            name="cpdApprovalRequired" id="cpdApprovalRequired">No
+                        </label>
+                    </span>
+                </div>
+            </div>
+            <div style="height: 20pt;"></div>
+            <div class="row" *ngIf="visibleupdate">
+                <div class="col-lg-4 col-xxl-8">
+                    <label>TMS Active Status:<span class="text-danger">*</span></label>&nbsp;&nbsp;
+                    <span class="mb-xl-6">
+                        <label *ngIf="updateHospital.tmsActiveStat==null">
+                            <input type="radio" (click)="yes1($event)"
+                            name="tmsActiveStat" id="tmsActiveStat">Yes &nbsp;&nbsp;
+                            <input type="radio" (click)="no1($event)"
+                            name="tmsActiveStat" id="tmsActiveStat">No
+                        </label>
+
+                        <label *ngIf="updateHospital.tmsActiveStat==0">
+                            <input type="radio" checked="checked" [checked]="true" (click)="yes1($event)"
+                            name="tmsActiveStat" id="tmsActiveStat">Yes &nbsp;&nbsp;
+                            <input type="radio" (click)="no1($event)"
+                            name="tmsActiveStat" id="tmsActiveStat">No
+                        </label>
+
+                        <label *ngIf="updateHospital.tmsActiveStat==1">
+                            <input type="radio" (click)="yes1($event)"
+                            name="tmsActiveStat" id="tmsActiveStat">Yes &nbsp;&nbsp;
+                            <input type="radio" checked="checked" [checked]="true" (click)="no1($event)"
+                            name="tmsActiveStat" id="tmsActiveStat">No
+                        </label>
+                    </span>
+                </div>
+            </div>
+            <br>
+            <h4 class="border-bottom pb-2 mb-3 mt-4">Geo Location</h4>
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Latitude<span
+                            class="text-danger">*</span></label>
+                        <input class="form-control" type="text" formControlName="latitude" autocomplete="off"
+                            [(ngModel)]="latitude" name="latitude" id="latitude" placeholder="Enter Latitude"
+                            maxlength="20" onkeyup="this.value=this.value.replace(/[^0-9.]/g,'');"/>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Longitude<span
+                            class="text-danger">*</span></label>
+                        <input class="form-control" type="text" formControlName="longitude" autocomplete="off"
+                            [(ngModel)]="longitude" name="longitude" id="longitude" placeholder="Enter Longitude"
+                            maxlength="20" onkeyup="this.value=this.value.replace(/[^0-9.]/g,'');"/>
+                    </div>
+                </div>
+            </div>
+            <div style="height: 20pt;"></div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="d-grid gap-2 d-md-flex" *ngIf="isvisiblesave">
+                        <button type="submit" value="Submit" class="btn btn-success" (click)="saveHospital()">Submit</button>
+                        <button type="reset" class="btn btn-secondary" (click)="resetVal()">Reset</button>
+                    </div>
+                    <div class="d-grid gap-2 d-md-flex" *ngIf="visibleupdate">
+                        <button type="submit" value="Update" class="btn btn-success" (click)="update(updateHospital)">Update</button>
+                        <button type="reset" class="btn btn-secondary" (click)="cencel1()">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

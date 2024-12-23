@@ -1,0 +1,155 @@
+<div class="content">
+    <div class="form-cointainer">
+
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="packagewisebenificiarydetails" class="nav-link active">Package Header Beneficiary Discharge Claim
+                            Report</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+        <div class="row" style="margin-top: 10px;margin-bottom: 1px;">
+            <div class="col-lg-4 col-xxl-4" style="margin-top: 2ch;">
+                 Actual Date of Discharge From : <strong>{{fromDate}}</strong>
+            </div>
+            <div class="col-lg-3 col-xxl-2" style="margin-top: 2ch;">
+                Actual Date of Discharge To : <strong>{{toDate}}</strong> 
+            </div>
+            <div class="col-lg-2 col-xxl-2" style="margin-top: 2ch;" *ngIf="showsdh">
+                State :- <strong>{{stName}}</strong>
+            </div>
+            <div class="col-lg-3 col-xxl-3" style="margin-top: 2ch;" *ngIf="showsdh">
+               District : <strong>{{disName}} </strong>          
+            </div>
+            <div class="col-lg-4 col-xxl-4" style="margin-top: 2ch;">
+                Hospital: <strong>{{hopName}}</strong>
+            </div>
+            <div class="col-lg-2 col-xxl-2" style="margin-top: 2ch;">
+                Package Header : <strong>{{packageheder}}</strong>
+            </div>
+           
+        </div>
+
+        <div class="row" style="margin-top: 10px;margin-bottom: 1px;">
+            <div class="col-lg-6 col-xxl-6">
+                <div class="row" *ngIf="showPegi">
+                    <div class="col-sm-4">
+                        <div class="col-sm-*">
+                            show
+                            <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                                <option value="200">200</option>
+                                <option value="500">500</option>
+                                <option value={{record}}>All</option>
+                            </select> entries
+                        </div>
+                    </div>
+                    
+            
+                </div>
+            </div>
+            <div class="col-lg-2 col-xxl-2">
+                <div class="table-utilities float-end">
+                    <button class="btn btn-success btn-sm mx-1" tooltip="Excel" (click)="downloadReport(1)"><i
+                            class="bi bi-download"></i>
+                    </button>
+                    
+                    <button class="btn btn-danger btn-sm me-1" type="submit" (click)="downloadReport(2)"><i
+                            class="bi bi-file-earmark-pdf"></i></button>
+                </div>
+            </div>
+            <div class="col-lg-4 col-xxl-4">
+                <div class="input-group" style="margin-bottom: 15px;">
+                    <input type="text" id="txtsearchDate" class="form-control" placeholder="Search here"
+                        name="txtsearchDate" [(ngModel)]="txtsearchDate" autocomplete="off">
+                </div>
+            </div>
+        </div>
+
+        
+                    <div class="table-responsive">
+                        <table class="table table-striped  mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Sl#</th>
+                                    <th width="150">URN</th>
+                                    <th width="150">Patient Name</th>
+                                    <th width="150">Patient Phone</th>
+                                    <th width="150">Date of Admission</th>
+                                    <th width="150">Date of Discharge</th>
+                                    <th width="150">Actual Date of Admission</th>
+                                    <th width="150">Actual Date of Discharge</th>
+                                    <th width="150">Discharge Amount</th>
+                                    <th width="150">Claimed Amount</th>
+                                    <th width="150">Paid Amount</th>
+                                    <!-- <th width="150">Package Category Code</th> -->
+                                    <th width="150">Package  Code</th>
+                                    <th width="150">Package Name</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container>
+                                    <tr
+                                        *ngFor="let item of benificrydata | filter:txtsearchDate |
+                        paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};index as i">
+                                        <td *ngIf="currentPage==1">{{i+1}}</td>
+                                        <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+i+1}}</td>
+                                        <td>{{item.urn}}</td>
+                                        <td>{{item.patientName}}</td>
+                                        <td>{{item.patientPhone}}</td>
+                                        <td>{{item.dateOfAdm |date :'dd-MMM-yyyy'}}</td>
+                                        <td>{{item.dateOfDischrge |date :'dd-MMM-yyyy'}}</td>
+                                        <td>{{item.actlDateAdm |date :'dd-MMM-yyyy'}}</td>
+                                        <td>{{item.actlDateDischarge |date :'dd-MMM-yyyy'}}</td>
+                                        <td>{{item.dischargeAmt | currency:'':''}}</td>
+                                        <td>{{item.claimedAmt | currency:'':''}}</td>  
+                                        <td>{{item.paidAmt | currency:'':''}}</td>  
+                                        <!-- <td>{{item.packageCategCode}}</td>   -->
+                                        <td>{{item.packageCod}}</td>  
+                                        <td>{{item.packageName}}</td>  
+                                    </tr>
+                                </ng-container>
+                                <tr *ngIf="!showPegi">
+                                    <div class="row">
+                                        <span style="color: red;text-align: center;position:absolute">NO DATA
+                                            FOUND!!</span>
+                                    </div>
+                                </tr>
+                            </tbody>
+                        </table>
+                   
+        </div>
+
+        <div class="row mt-3" *ngIf="showPegi">
+            <div class="col-sm-6">
+                <div class="col-sm-*">
+                    show
+                    <select id="pageItem" name="pageItem" class="form-select-sm" [(ngModel)]="pageElement">
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                        <option value="200">200</option>
+                        <option value="500">500</option>
+                        <option value={{record}}>All</option>
+                    </select> entries
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true"
+                    (pageChange)="currentPage = $event" (pageBoundsCorrection)="onPageBoundsCorrection($event)"
+                    class="text-end"></pagination-controls>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+

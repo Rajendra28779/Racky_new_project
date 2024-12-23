@@ -1,0 +1,82 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+      <div class="row justify-content-between">
+          <div class="col-lg-4">
+              <ul class="nav nav-tabs">
+                  <li class="nav-item" *ngIf="!updatebtn">
+                      <a routerLink="/application/questionmstsurvey" routerLinkActive="active" class="nav-link active">Add</a>
+                  </li>
+                  <li class="nav-item" *ngIf="updatebtn">
+                      <a routerLink="/application/questionmstsurvey" routerLinkActive="active" class="nav-link active">Update</a>
+                  </li>
+                  <li class="nav-item">
+                    <a routerLink="/application/viewquestionmstsurvey" routerLinkActive="active" class="nav-link " style="color: #1f723f;">View</a>
+                </li>
+              </ul>
+          </div>
+      </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-10 col-xxl-10">
+        <div class="mb-xl-3">
+          <label for="EnterFunctionDescription" class="form-label">Question<span class="text-danger">*</span></label>
+            <textarea class="form-control"  placeholder="Enter  Question" autocomplete="off" [(ngModel)]="updatedata.questionName"
+            id="question" maxlength="500" #myInput (keypress)="keyPress($event)"></textarea>
+            <span class="text-danger small">Characters Remaining: {{maxChars - myInput.value.length}}</span>
+        </div>
+    </div>
+  </div>
+  <div class="row col-lg-10 col-xxl-10">
+      <div class="col-lg-4 col-xxl-4">
+        <div class="mb-xl-3">
+          <label for="EnterFunctionDescription" class="form-label">Question Type</label><span class="text-danger">*</span>
+          <select class="form-select" name="questiontype" id="questiontype" [(ngModel)]="updatedata.questionType">
+            <option value="" selected >-Select-</option>
+            <option value=1 >Radio Button <i class="bi bi-check2-circle"></i></option>
+            <option value=2 >Text Field <i class="bi bi-justify-left"></i></option>
+            <option value=3 >Date <i class="bi bi-calendar"></i></option>
+        </select>
+        </div>
+      </div>
+      <div class="col-lg-4 col-xxl-4">
+        <div class="mb-xl-3" *ngIf="mandtory==1">
+          <label style="margin-bottom:1ch;">Is Mandotory</label><span class="text-danger">*</span>&nbsp;&nbsp;<br>
+          <input type="radio" (click)="checked(0)"
+                      name="mandotory" id="mandotory">Yes &nbsp;&nbsp;
+          <input type="radio" (click)="checked(1)" checked="checked"
+                      name="mandotory" id="mandotory">No
+        </div>
+        <div class="mb-xl-3" *ngIf="mandtory==0">
+          <label style="margin-bottom:1ch;">Is Mandotory</label><span class="text-danger">*</span>&nbsp;&nbsp;<br>
+          <input type="radio" (click)="checked(0)" checked="checked"
+                      name="mandotory" id="mandotory">Yes &nbsp;&nbsp;
+          <input type="radio" (click)="checked(1)"
+                      name="mandotory" id="mandotory">No
+        </div>
+      </div>
+      <div class="col-lg-4 col-xxl-4" *ngIf="updatebtn">
+        <div class="mb-xl-3" *ngIf="statusval==1">
+          <label style="margin-bottom:1ch;">Status</label><span class="text-danger">*</span>&nbsp;&nbsp;<br>
+          <input type="radio" (click)="status(0)"
+                      name="status" id="status">Active &nbsp;&nbsp;
+          <input type="radio" (click)="status(1)" checked="checked"
+                      name="status" id="status">In-Active
+        </div>
+        <div class="mb-xl-3" *ngIf="statusval==0">
+          <label style="margin-bottom:1ch;">Status</label><span class="text-danger">*</span>&nbsp;&nbsp;<br>
+          <input type="radio" (click)="status(0)" checked="checked"
+                      name="status" id="status">Active &nbsp;&nbsp;
+          <input type="radio" (click)="status(1)"
+                      name="status" id="status">In-Active
+        </div>
+      </div>
+  </div>
+    <div *ngIf="!updatebtn">
+      <input type="submit" value="Submit" class="btn btn-success" (click)="submit()">&nbsp;&nbsp;
+      <input type="button" value="Reset" class="btn btn-secondary" (click)="Reset()">
+    </div>
+    <div *ngIf="updatebtn">
+      <input type="button" value="Update" class="btn btn-success" (click)="update()">&nbsp;&nbsp;
+      <input type="button" value="Cancel" class="btn btn-secondary" (click)="cancel()">
+    </div>
+</div>

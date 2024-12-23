@@ -1,0 +1,124 @@
+table thead, tbody, tfoot, tr, td, th{font-size: 15px;}
+.badge-success {
+	font-style: normal;
+	font-weight: 500;
+	font-size: 14px;
+	line-height: 15px;
+	color: #006128;
+	margin-top: 8px;
+	padding: 5px;
+
+}
+p{font-size: 15px;}
+
+.card-body p{margin-bottom:0.5rem;}
+.num_bg{
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 800;
+    font-size: 22px;
+    line-height: 30px;
+    color: #ff4f1a;
+}
+
+.titletxt{
+    background: #ddffdd;
+}
+
+.card_bg{
+
+    background: #dfe9e3;
+    border-radius: 0;
+}
+.accordion-button{cursor: pointer;}
+.card-header{padding: 10px;}
+.hidtbl-th {font-size: 15px;}
+
+.treatment-details h6{font-size:15px;}
+
+.card-header h5 {font-size: 1.2rem; letter-spacing: 0.2px;}
+.qry-hed {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 17px;
+    color: #FF4C4C;
+}
+.font-500{font-weight: 500;}
+.icon-pdf {
+    font-size: 1.5em;
+    margin-top: 10px;
+    color: #FF4C4C;
+}
+.icon-pdf i{
+    color: #FF4C4C;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+    --bs-table-striped-bg: #fff;
+
+}
+.text-yellow{color:#fff943;}
+.bg_hed{
+    --bs-table-striped-bg: #dfe9e3 !important;
+    background:#dfe9e3;
+}
+
+.badge-danger {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 15px;
+    color: #A73B3B;
+    margin-top: 1em;
+    padding: 5px;
+}
+.badge2 {
+    background: #FFDADA;
+    opacity: 0.8;
+    border-radius: 4px;
+}
+
+.badge {
+    background: #C2EBD3;
+    opacity: 0.8;
+    border-radius: 4px;
+}
+.th-small {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    margin-top: 6px;
+}
+
+.table th:first-child {
+    border-radius: 0;
+}
+
+.color-hed{
+    color: #515151 !important;
+    font-weight: 500;
+}
+
+.icon-pdf a{cursor: pointer;}
+
+.bg-color {
+    background-color: #151B54;
+}
+
+.treatment-history-table-class {
+  width:100%;
+  margin-top: 5px;
+  display: block;
+  max-height: 18rem;
+}
+
+.treatment-history-table-head-class {
+  thead{
+    position: sticky;
+    top: 0;
+    background: #eee9e9;
+    z-index: 1;
+  }
+}

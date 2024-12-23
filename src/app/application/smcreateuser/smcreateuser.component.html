@@ -1,0 +1,167 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+      <div class="row justify-content-between">
+          <div class="col-lg-4">
+              <ul class="nav nav-tabs ">
+                <li class="nav-item" *ngIf="isUpdateBtnInVisible">
+                  <a routerLink="/application/smusercreate" routerLinkActive="active" class="nav-link active">Add</a>
+              </li>
+              <li class="nav-item" *ngIf="!isUpdateBtnInVisible">
+                <a routerLink="/application/smusercreate" routerLinkActive="active" class="nav-link active">Update</a>
+            </li>
+              <li class="nav-item">
+                <a routerLink="/application/smuserview" routerLinkActive="active" class="nav-link" style="color: #1f723f;">View</a>
+            </li>
+              </ul>
+          </div>
+          <div class="col-lg-6 ">
+              <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+          </div>
+      </div>
+  </div>
+  <div class="content-box">
+      <form [formGroup]="addForm" autocomplete="off" enctype="multipart/form-data">
+          <div class="row">
+              <div class="col-lg-4 col-xxl-4">
+                  <div class="mb-xl-3">
+                      <label class="form-label">Group<span class="text-danger">*</span></label>
+                      <select class="form-select" name="groupId" id="groupId" formControlName="groupId" (change)="swasgroup()"
+                          [(ngModel)]="updatinglist.groupId"
+                          [ngClass]="{ 'is-invalid': submitted && f['groupId'].errors }">
+                          <option value=14  >Swasthya Mitra</option>
+                          <!-- <ng-container *ngFor="let item of groupList">
+                              <option value={{item.typeId}}>{{item.groupTypeName}}</option>
+                          </ng-container> -->
+                      </select>
+                  </div>
+              </div>
+
+              <div class="col-lg-4 col-xxl-4">
+                  <div class="mb-xl-3">
+                      <label for="EnterFullName" class="form-label">Full Name<span class="text-danger">*</span></label>
+                      <input class="form-control" type="text" placeholder="Enter Full Name" formControlName="fullName" autocomplete="off" id="fullname" maxlength="40"
+                      [(ngModel)]="updatinglist.fullname"  onkeyup="this.value=this.value.replace(/[^a-zA-Z0-9. ]/g,'');"
+                      (change)="validateName()" >
+                  </div>
+              </div>
+
+              <div class="col-lg-4 col-xxl-4">
+                  <div class="mb-xl-3">
+                      <label for="UserName" class="form-label">Username<span class="text-danger">*</span></label>
+                      <input *ngIf="isUpdateBtnInVisible" #username class="form-control" type="text" placeholder="Enter Username" formControlName="userName" autocomplete="off" id="username" maxlength="40"
+                          [(ngModel)]="updatinglist.username" onkeyup="this.value=this.value.replace(/[^a-zA-Z0-9]/g,'');"
+                          [ngClass]="{ 'is-invalid': valid==2, 'is-valid': valid==1 }"
+                          (change)=checkUserName() style="text-transform: lowercase;">
+
+                          <input *ngIf="!isUpdateBtnInVisible" #username class="form-control" type="text" placeholder="Enter Username" formControlName="userName" autocomplete="off" id="username" maxlength="40"
+                          [(ngModel)]="updatinglist.username" disabled>
+                  </div>
+
+              </div>
+              <div class="col-lg-4 col-xxl-4">
+                  <div class="mb-xl-3">
+                      <label for="EnterMobileno" class="form-label">Mobile No.<span class="text-danger">*</span></label>
+                      <input class="form-control" type="text" placeholder="Enter Mobile no." formControlName="mobileNo" autocomplete="off" maxlength="10" id="mobile"
+                      onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" minlength=10 [(ngModel)]="updatinglist.mobile"
+                      (change)=validatePhoneNo() >
+                  </div>
+
+              </div>
+              <div class="col-lg-4 col-xxl-4">
+                  <div class="mb-xl-3">
+                      <label for="EnterEmailID" class="form-label">Email ID<span class="text-danger">*</span></label>
+                      <input class="form-control" type="text" placeholder="Enter Email ID" formControlName="emailId" id="email" autocomplete="off" maxlength="100"
+                      [(ngModel)]="updatinglist.email"
+                      (change)=validateEmail() >
+                  </div>
+              </div>
+
+              <div class="col-lg-4 col-xxl-4">
+                  <div class="mb-xl-3">
+                      <label class="control-label">State Name<span class="text-danger">*</span></label>
+                      <div style="height: 6pt;"></div>
+                      <select class="form-select" name="stateId" id="stateId" formControlName="stateCode"
+                          [(ngModel)]="updatinglist.stateCode"
+                          [ngClass]="{ 'is-invalid': submitted && f['stateCode'].errors }"
+                          (change)="OnChangeState($event.target.value)">
+                          <option value="" selected disabled="disabled">Select State</option>
+                          <ng-container *ngFor="let item of stateList">
+                              <option value={{item.stateCode}}>{{item.stateName}}</option>
+                          </ng-container>
+                      </select>
+                  </div>
+              </div>
+              <div class="col-lg-4 col-xxl-4">
+                  <div class="mb-xl-3">
+                      <label class="control-label">District Name<span class="text-danger">*</span></label>
+                      <div style="height: 6pt;"></div>
+                      <select class="form-select" name="districtId" id="districtId"
+                          formControlName="districtCode" [(ngModel)]="updatinglist.districtCode"
+                          [ngClass]="{ 'is-invalid': submitted && f['districtCode'].errors }">
+                          <option value="" selected>Select District</option>
+                          <ng-container *ngFor="let item of districtList">
+                              <option value={{item.districtcode}}>{{item.districtname}}</option>
+                          </ng-container>
+                      </select>
+                  </div>
+              </div>
+              <div class="col-lg-4 col-xxl-4">
+                  <div class="mb-xl-3">
+                      <label for="User Address" class="control-label">Address<span class="text-danger">*</span></label>
+                      <div style="height: 6pt;"></div>
+                      <textarea class="form-control"  placeholder="Enter Address" formControlName="address" autocomplete="off" id="address" maxlength="500" style="height: 75pt;"
+                          [(ngModel)]="updatinglist.address" onkeyup="this.value=this.value.replace(/[^0-9.a-zA-Z@/_(), ]/g,'');" #myInput [maxlength]="maxChars" (keypress)="keyPress($event)"></textarea>
+                      <span class="text-danger small">Characters Remaining: {{maxChars - myInput.value.length}}</span>
+                  </div>
+              </div>
+<!-- <ng-container> -->
+              <div class="col-lg-4 col-xxl-4" id="doj">
+                <div class="mb-xl-3">
+                  <label for="DateofJoin" class="form-label">Date of Joining<span class="text-danger">*</span></label>
+                  <div class="input-group mb-xl-3">
+                    <input type="text" class="form-control border-end-0 datepicker"  formControlName="date" placeholder="Date of Join" id="date" name="date"  [value]="updatinglist.date | date :'dd-MMM-yyyy'">
+                    <label class="input-group-text bg-transparent border-start-0" for="date"><i class="iconbsky-calendar"></i> </label>
+                  </div>
+                </div>
+              </div>
+<!-- </ng-container> -->
+
+          </div>
+          <div class="col-lg-4 col-xxl-4" *ngIf="!isUpdateBtnInVisible">
+            <div class="mb-xl-3">
+                <label>Status:</label>&nbsp;&nbsp;<br>
+                        <label *ngIf="status==0">
+                            <input type="radio" checked="checked" [checked]="true" (click)="yes($event)"
+                            name="status" id="status">Active &nbsp;&nbsp;
+                            <input type="radio" (click)="no($event)"
+                            name="status" id="status">In-Active
+                        </label>
+
+                        <label *ngIf="status==1">
+                            <input type="radio" (click)="yes($event)"
+                            name="status" id="status">Active &nbsp;&nbsp;
+                            <input type="radio" checked="checked" [checked]="true" (click)="no($event)"
+                            name="status" id="status">In-Active
+                        </label>
+            </div>
+        </div>
+          <div class="col-lg-12" >
+              <label class="form-label d-none d-md-block">&nbsp;</label>
+              <div class="d-grid gap-2 d-md-flex" >
+                  <div *ngIf="!isUpdateBtnInVisible">
+                      <div >
+                      <button type="button" class="btn btn-success" (click)="updategroup(updatinglist)">Update</button>&nbsp;
+                      <input type="button" value="Cancel" class="btn btn-secondary" (click)="ResetForm()">
+                      </div>
+                  </div>
+                  <div *ngIf="isUpdateBtnInVisible">
+                      <div >
+                      <button type="button" class="btn btn-success" (click)="SubmitCreate()">Submit</button>&nbsp;
+                      <input type="reset" value="Reset" class="btn btn-secondary" (click)="resetVal()">
+                  </div>
+                  </div>
+              </div >
+          </div>
+      </form>
+  </div>
+</div>

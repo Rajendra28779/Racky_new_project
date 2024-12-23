@@ -1,0 +1,145 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+    <div class="row justify-content-between">
+      <div class="col-lg-10">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a routerLink="/application/hospfaceauthradiouspconfig" routerLinkActive="active"
+              class="nav-link active">Hospital FaceAuth Radius Configuration</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="row">
+      <div class="col-lg-3 col-xxl-3">
+        <div class="mb-xl-3">
+          <label class="control-label">State Name</label>
+          <select class="form-select" name="stateId" id="stateId" (change)="OnChangeState($event.target.value)">
+            <option value="" selected>Select State</option>
+            <ng-container *ngFor="let item of stateList">
+              <option value={{item.stateCode}}>{{item.stateName}}</option>
+            </ng-container>
+          </select>
+        </div>
+      </div>
+      <div class="col-lg-3 col-xxl-3">
+        <div class="mb-xl-3">
+          <label class="control-label">District Name</label>
+          <select class="form-select" name="districtId" id="districtId">
+            <option value="" selected>Select District</option>
+            <ng-container *ngFor="let item of districtList">
+              <option value={{item.districtcode}}>{{item.districtname}}</option>
+            </ng-container>
+          </select>
+        </div>
+      </div>
+      <div class="col-lg-2 col-xxl-2">
+        <div class="mb-xl-3">
+          <button type="submit" class="btn btn-success me-2" style="margin-top: 22px;" (click)="Search()">Search</button>
+          <button type="button" class="btn btn-secondary" style="margin-top: 22px;" (click)="reset()">Reset</button>
+
+        </div>
+      </div>
+      <div class="content-box">
+        <div class="row">
+          <div class="col-1">
+          </div>
+          <div class="col-4" style="margin-top:2ch;">
+            <b>Total No Of Record: {{totalcount}}</b>
+          </div>
+          <div class="col-2 mt-2ch" style="text-align:end ;">
+            <button class="btn btn-success btn-sm mx-1" style="margin-top: 10px" tooltip="Excel"
+              (click)="downloadList(1)">
+              <i class="bi bi-file-earmark-spreadsheet"></i>
+            </button>
+            <button class="btn btn-danger btn-sm mx-1" style="margin-top: 10px" tooltip="pdf" (click)="downloadList(2)">
+              <i class="bi bi-file-earmark-pdf"></i>
+            </button>
+          </div>
+          <div class="col-5">
+            <input type="text " id="txtsearchDate " name="txtsearchDate " [(ngModel)]="txtsearchDate" maxlength="20 "
+              class="form-control " placeholder="Search here...... " autocomplete="off"
+              style=" margin-right: 0px; margin-left: 0px;">
+          </div>
+        </div>
+        <div class="table-responsive example-container" style="margin-top:1ch;">
+          <table class="table table-striped mb-0">
+            <caption></caption>
+            <thead>
+              <tr>
+                <th >Sl#</th>
+                <th style="text-align: center;">Select<input type="checkbox" id="allCheck" (change)="checkAllCheckBox($event)"></th>
+                <th>Hospital Name</th>
+                <th>Hospital Code</th>
+                <th>Hospital MobileNo</th>
+                <th>Hospital emailId</th>
+                <th class="text-center" style="cursor:pointer;" (click)="changeOrderBy('RADIUS')">Current FaceAuth Radius <i id="orderByRadius" class="bi bi-arrow-down-circle-fill"></i></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let v of list | filter:txtsearchDate ,index as i">
+                <td *ngIf="currentPage==1 ">{{(i+1)}}</td>
+                <td *ngIf="currentPage!=1 ">{{(currentPage-1)*pageElement+ i+1}}</td>
+                <td style="text-align: center;"><input id="{{v.hospitalId}}" type="checkbox" (change)="tdCheck($event,v.hospitalId)"></td>
+                <td>{{v.hospitalName}}</td>
+                <td>{{v.hospitalCode}}</td>
+                <td>{{v.mobileNo}}</td>
+                <td>{{v.emailId}}</td>
+                <td class="ps-0 fw-500" style="color: #1f723f; text-align: center;">{{v.faceauthradious}}</td>
+              </tr>
+              <tr *ngIf="totalcount==0">
+                <td colspan="10" style="text-align: center;">
+                  <strong class="text-danger">NO DATA FOUND!!</strong>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div><br>
+      </div>
+      <div class="col-lg-2 col-xxl-2">
+        <div class="mb-xl-3">
+            <button type="submit" class="btn btn-success" [disabled]="!showsubmitbutton" style="margin-top: 1ch;" (click)="validatedata()">Submit</button>
+        </div>
+    </div>
+    </div>
+
+
+    <!-- Modal -->
+<div class="modal modal-custom-backdrop" id="OtpModal" tabindex="-1" aria-labelledby="exampleModalLabel" style="backdrop-filter: blur(5px);"
+aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-success" id="exampleModalLabel" >Enter FaceAuth Radius<span
+          class="required-asterisk text-danger">
+          *</span></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="close()"></button>
+      </div>
+        <div class="modal-body" style="margin-top: 3px; margin-bottom: 3px;">
+            <div class="row"  style="margin-bottom: 1ch;">
+                    <div class="iconinput">
+                        <input type="text" class="form-control usertext userinput" id="radious" name="radious" maxlength="5"
+                            placeholder="Enter FaceAuth Radius" autocomplete="off"  onkeyup="this.value=this.value.replace(/[^0-9]/g,'');">
+                    </div>
+            </div>
+
+            <div style="color: #bb2a2a; margin-left: 10px; display: flex; align-items: center;">
+              <i class="bi bi-exclamation-circle" style="margin-right: 10px;"></i>
+              <span>Enter FaceAuth Radius in meter <span class="ps-0 fw-500">(m)</span>.</span>
+            </div>
+
+            <div style="color: #bb2a2a; margin-left: 10px; display: flex; align-items: center;">
+                <i class="bi bi-exclamation-triangle" style="margin-right: 10px;"></i>
+                <span>Only Numeric values are allowed.</span>
+            </div>
+        </div>
+        <div class="modal-footer d-flex justify-content-center align-items-center">
+            <button type="button" id="sendId" class="btn btn-success" (click)="submitradious()">Submit</button>
+            <button type="button" id="reSendId" class="btn btn-secondary" (click)="close()">Cancel</button>
+        </div>
+    </div>
+</div>
+</div>
+

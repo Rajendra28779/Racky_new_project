@@ -1,0 +1,468 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+    <div class="row justify-content-between">
+      <div class="col-lg-4">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a routerLink="/application/hospitaldeactivationprocess" routerLinkActive="active"
+              class="nav-link active">Hospital De-Empanel</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/application/hospitaldeactivationprocessview" routerLinkActive="active" class="nav-link"
+              style="color: #1f723f;">View</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-box">
+    <div class="row">
+      <div class="col-lg-3 col-xxl-3">
+        <div class="mb-xl-3">
+          <label class="control-label">State Name<span class="text-danger">*</span></label>
+          <select class="form-select" name="stateId" id="stateId" [(ngModel)]="stateCode"
+           (change)="onChangeState($event.target.value)">
+            <option value="" selected disabled>Select State</option>
+            <ng-container *ngFor="let item of stateList">
+              <option value={{item.stateCode}}>{{item.stateName}}</option>
+            </ng-container>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-xxl-3">
+        <div class="mb-xl-3">
+          <label class="control-label">District Name<span class="text-danger">*</span></label>
+          <select class="form-select" name="districtId" id="districtId" [(ngModel)]="distCode"
+            (change)="onChangeDistrict($event.target.value)">
+            <option value="">Select District</option>
+            <ng-container *ngFor="let item of districtList">
+              <option value={{item.districtcode}}>{{item.districtname}}</option>
+            </ng-container>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-xxl-4">
+        <!-- <div class="mb-xl-3">
+              <label class="control-label">Hospital Name<span class="text-danger">*</span></label>
+              <ng-multiselect-dropdown #multiSelect [placeholder]="hosPlaceHolder" [settings]="settingHospital" [data]="hospitalList" id="districtCode" (onSelect)="onHosSelect($event)" (onDeSelect)="onHosDeSelect($event)" (onSelectAll)="onSelectAllHos($event)" (onDeSelectAll)="onDeSelectAllHos($event)"
+                    [(ngModel)]="selectedHospital">
+              </ng-multiselect-dropdown>
+            </div> -->
+        <div class="mb-xl-3">
+          <label class="control-label">Hospital Name<span class="text-danger">*</span></label>
+          <div class="input-group">
+            <ng-autocomplete #auto [data]="hospitalList" placeholder="Select Hospital" (selected)="selectEvent2($event)"
+              (inputCleared)="clearEvent2()" [itemTemplate]="itemTemplate2" [notFoundTemplate]="notFoundTemplate2"
+              [searchKeyword]="keyword2" spellcheck="false" [(ngModel)]="hospitalname">
+            </ng-autocomplete>
+            <ng-template #itemTemplate2 let-item>
+              <a [innerHTML]="item.hospitalName"></a>
+            </ng-template>
+            <ng-template #notFoundTemplate2 let-notFound>
+              <div [innerHTML]="notFound"></div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hospital information -->
+    <div class="col-lg-12 col-xl-12 col-xxl-12 mb-4" *ngIf="showdetails">
+      <div class="card shadow-sm basic-info">
+        <div class="card-header bg-color">
+          <h5 class="mb-0">{{hospital?.hospitalName}} ({{hospital?.hospitalCode}})</h5>
+        </div>
+        <div class="card-body">
+          <div class="row treatment-details">
+            <div class="col-xl-3 col-lg-3">
+              <div class="d-flex align-items-center  border-end">
+                <div>
+                  <p class="small text-muted mb-1">Hospital State Name</p>
+                  <h6 class="mb-0"> {{hospital?.stateName}} </h6>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-3">
+              <div class="d-flex align-items-center  border-end">
+                <div>
+                  <p class="small text-muted mb-1">Hospital District Name</p>
+                  <h6 class="mb-0"> {{hospital?.distName}} </h6>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-3">
+              <div class="d-flex align-items-center border-end">
+                <div>
+                  <p class="small text-muted mb-1">Hospital Mobile no </p>
+                  <h6 class="mb-0"> {{hospital?.monileNo}} </h6>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-3">
+              <div class="d-flex align-items-center">
+                <div>
+                  <p class="small text-muted mb-1">Hospital Email</p>
+                  <h6 class="mb-0"> {{hospital?.email}} </h6>
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <hr class="mt-xl-3">
+            </div>
+            <div class="col-xl-3 col-lg-3">
+              <div class="d-flex align-items-center  border-end">
+                <div>
+                  <p class="small text-muted mb-1">MOU Start date</p>
+                  <h6 class="mb-0"> {{hospital?.moustartDate}} </h6>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-3">
+              <div class="d-flex align-items-center border-end">
+                <div>
+                  <p class="small text-muted mb-1">Mou End Date</p>
+                  <h6 class="mb-0"> {{hospital?.mouendDate}} </h6>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-3">
+              <div class="d-flex align-items-center border-end">
+                <div>
+                  <p class="small text-muted mb-1">MOU Status</p>
+                  <h6 class="mb-0" style="color:rgb(235,9,9);  font-weight: 600;"> {{hospital?.mouStatus}} </h6>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-3">
+              <div class="d-flex align-items-center  ">
+                <div>
+                  <p class="small text-muted mb-1">Hospital Catagory</p>
+                  <h6 class="mb-0"> {{hospital?.catogory}} </h6>
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <hr class="mt-xl-3">
+            </div>
+            <div class="col-xl-3 col-lg-3">
+              <div class="d-flex align-items-center border-end">
+                <div>
+                  <p class="small text-muted mb-1">Blocking Status</p>
+                  <h6 class="mb-0" style="color:rgb(235,9,9);  font-weight: 600;"> {{hospital?.blockingStatus}} </h6>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-3">
+              <div class="d-flex align-items-center border-end">
+                <div>
+                  <p class="small text-muted mb-1">TMS Active Status</p>
+                  <h6 class="mb-0" style="color:rgb(235,9,9);  font-weight: 600;"> {{hospital?.tmsStatus}} </h6>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-6 col-lg-6">
+              <div class="d-flex align-items-center">
+                <div>
+                  <p class="small text-muted mb-1">Empanelment Status</p>
+                  <h6 class="mb-0" style="color:rgb(62, 23, 235);  font-weight: 600;"> {{hospital?.empanelStatus}} </h6>
+                  <h6 class="mb-0" style=" margin-bottom: 2px;" *ngIf="hospital.empanelDesc!=0"> Note : <span style="color:#1f723f;">{{hospital?.empanelDesc}}</span> </h6>
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <hr class="mt-xl-3">
+            </div>
+            <div class="col-xl-4 col-lg-4">
+              <div class="d-flex align-items-center border-end">
+                <div>
+                  <p class="small text-muted mb-1">Assigned SNA Name</p>
+                  <h6 class="mb-0"> {{hospital?.assignedSnaName}} </h6>
+                  <h6 class="mb-0" > Mob : {{hospital?.asignedSnaMob}} </h6>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-4 col-lg-4">
+              <div class="d-flex align-items-center border-end">
+                <div>
+                  <p class="small text-muted mb-1">Assigned DC Name</p>
+                  <h6 class="mb-0" > {{hospital?.asignedDcName}}  </h6>
+                  <h6 class="mb-0" > Mob : {{hospital?.asignedDcMob}} </h6>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-4 col-lg-4">
+              <div class="d-flex align-items-center">
+                <div>
+                  <p class="small text-muted mb-1">Total SM Tagged</p>
+                  <h6 class="mb-0" > No : {{hospital?.totalSM}} </h6>
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <hr class="mt-xl-3">
+            </div>
+            <div class="col-xl-4 col-lg-4">
+              <div class="d-flex align-items-center border-end">
+                <div>
+                  <p class="small text-muted mb-1">Total Discharge</p>
+                  <h6 class="mb-0" > Count :  {{hospital?.totalDischargeCount}}</h6>
+                  <h6 class="mb-0" > Amount :  {{hospital?.totalDischargeAmount | currency:'':''}}</h6>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-4 col-lg-4">
+              <div class="d-flex align-items-center border-end">
+                <div>
+                  <p class="small text-muted mb-1">Total Claim Submitted</p>
+                  <h6 class="mb-0" > Count :  {{hospital?.totalClaimCount}}</h6>
+                  <h6 class="mb-0" > Amount : {{hospital?.totalClaimAmount | currency:'':''}} </h6>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-3">
+              <div class="d-flex align-items-center">
+                <div>
+                  <p class="small text-muted mb-1">Total Claim Not Submitted</p>
+                  <h6 class="mb-0" > Count :  {{hospital?.totalcnsCount}}</h6>
+                  <h6 class="mb-0" > Amount : {{hospital?.totalcnsAmount | currency:'':''}} </h6>
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <hr class="mt-xl-3">
+            </div>
+            <div class="col-xl-4 col-lg-4">
+              <div class="d-flex align-items-center border-end">
+                <div>
+                  <p class="small text-muted mb-1">Current OnGoing Treatment</p>
+                  <h6 class="mb-0" > Count : {{hospital?.onGoingCount}} </h6>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-4 col-lg-4">
+              <div class="d-flex align-items-center border-end">
+                <div>
+                  <p class="small text-muted mb-1">Last Blocking Date</p>
+                  <h6 class="mb-0" > {{hospital?.lastBlockDate}} </h6>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-4 col-lg-4">
+              <div class="d-flex align-items-center">
+                <div>
+                  <p class="small text-muted mb-1">Last Discharge Date</p>
+                  <h6 class="mb-0" > {{hospital?.lastDischargeDate}} </h6>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="showdetails && !updatestatus">
+      <div class="col-lg-3 col-xxl-3">
+        <label for="dutyStaffRoom" class="form-label">Action Type<span class="text-danger">*</span></label>
+        <select class="form-select" aria-label="Default select example" id="action"
+        (change)="onaction($event.target.value)">
+          <option value="" selected disabled>Select</option>
+          <ng-container *ngFor="let item of actiondata">
+            <option value={{item.id}}>{{item.name}}</option>
+          </ng-container>
+        </select>
+      </div>
+
+      <div class="col-lg-4 col-xxl-4">
+        <div class="mb-xl-3">
+          <label class="control-label">Remark<span class="text-danger">*</span></label>
+          <textarea class="form-control" placeholder="Enter Remark" autocomplete="off" id="remark" maxlength="500"
+            onkeyup="this.value=this.value.replace(/[^0-9.a-zA-Z@/_() ]/g,'');" #myInput
+            (keypress)="keyPress($event)"></textarea>
+          <span class="text-danger small">Characters Remaining: {{maxChars - myInput.value.length}}</span>
+        </div>
+      </div>
+      <div class="col-lg-4 col-xxl-4"></div>
+
+      <div class="alert alert-danger mb-2 d-flex small " *ngIf="note!=''">
+        <div>
+          <p class="mb-0 pe-3 me-3 border-end ">
+            <i class="bi bi-info-circle-fill fs-5 me-2 "></i>NOTE
+          </p>
+        </div>
+        <div>
+          <p class="mb-0 ">{{note}}</p>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-xxl-4">
+        <div class="file-upload mb-xl-4 text-center ">
+          <p class="mb-1 text-start">Upload Document<span class="text-danger">*</span></p>
+          <div class="file-upload-content">
+            <a class="btn btn-danger  text-white btn-sm remove-img"><i class="fas fa-times"></i></a>
+            <img class="file-upload-image" src="#" alt="your image" />
+          </div>
+          <div class="image-upload-wrap rounded">
+            <input class="file-upload-input" id="document" type='file' accept=".pdf, .jpg, .jpeg" onCut="return false "
+              onDrag="return false " onDrop="return false " (change)="handleFileInput($event,1)">
+            <div class="drag-text" *ngIf="fileToUpload==''">
+              <h5><i class="iconbsky-upload-icon d-block fs-4"></i><span class="text-danger">Drag or select a file to
+                  upload </span>
+              </h5>
+            </div>
+            <div class="drag-text" *ngIf="fileToUpload!=''">
+              <h5><i class="iconbsky-upload-icon d-block fs-4"></i><span
+                  class="text-danger">{{fileToUpload?.name}}</span>
+              </h5>
+            </div>
+          </div>
+          <p class="small pt-1 " style="text-align: right;"><img src="./assets/img/pdf.png " alt="Download Document "
+              width="20 "> <a target="_blank" class="dbtn" (click)="viewdoc(1)"> Download</a></p>
+        </div>
+      </div>
+      <div class="col-lg-4 col-xxl-4">
+        <div class="file-upload mb-xl-4 text-center ">
+          <p class="mb-1 text-start">Additional Document 1</p>
+          <div class="file-upload-content">
+            <a class="btn btn-danger  text-white btn-sm remove-img"><i class="fas fa-times"></i></a>
+            <img class="file-upload-image" src="#" alt="your image" />
+          </div>
+          <div class="image-upload-wrap rounded">
+            <input class="file-upload-input" id="document1" type='file' accept=".pdf, .jpg, .jpeg" onCut="return false "
+              onDrag="return false " onDrop="return false " (change)="handleFileInput($event,2)">
+            <div class="drag-text" *ngIf="adddoc1==''">
+              <h5><i class="iconbsky-upload-icon d-block fs-4"></i><span class="text-danger">Drag or select a file to
+                  upload </span>
+              </h5>
+            </div>
+            <div class="drag-text" *ngIf="adddoc1!=''">
+              <h5><i class="iconbsky-upload-icon d-block fs-4"></i><span
+                  class="text-danger">{{adddoc1?.name}}</span>
+              </h5>
+            </div>
+          </div>
+          <p class="small pt-1 " style="text-align: right;"><img src="./assets/img/pdf.png " alt="Download Document "
+              width="20 "> <a target="_blank" class="dbtn" (click)="viewdoc(2)"> Download</a></p>
+        </div>
+      </div>
+      <div class="col-lg-4 col-xxl-4">
+        <div class="file-upload mb-xl-4 text-center ">
+          <p class="mb-1 text-start">Additional Document 2</p>
+          <div class="file-upload-content">
+            <a class="btn btn-danger  text-white btn-sm remove-img"><i class="fas fa-times"></i></a>
+            <img class="file-upload-image" src="#" alt="your image" />
+          </div>
+          <div class="image-upload-wrap rounded">
+            <input class="file-upload-input" id="document2" type='file' accept=".pdf, .jpg, .jpeg" onCut="return false "
+              onDrag="return false " onDrop="return false " (change)="handleFileInput($event,3)">
+            <div class="drag-text" *ngIf="adddoc2==''">
+              <h5><i class="iconbsky-upload-icon d-block fs-4"></i><span class="text-danger">Drag or select a file to
+                  upload </span>
+              </h5>
+            </div>
+            <div class="drag-text" *ngIf="adddoc2!=''">
+              <h5><i class="iconbsky-upload-icon d-block fs-4"></i><span
+                  class="text-danger">{{adddoc2?.name}}</span>
+              </h5>
+            </div>
+          </div>
+          <p class="small pt-1 " style="text-align: right;"><img src="./assets/img/pdf.png " alt="Download Document "
+              width="20 "> <a target="_blank" class="dbtn" (click)="viewdoc(3)"> Download</a></p>
+        </div>
+      </div>
+      <div class="alert alert-danger mb-2 d-flex small ">
+        <div>
+          <p class="mb-0 pe-3 me-3 border-end ">
+            <i class="bi bi-info-circle-fill fs-5 me-2 "></i>NOTE
+          </p>
+        </div>
+        <div>
+          <p class="mb-0 ">
+            <strong> Documents</strong> should be in<strong> .jpg,.jpeg,pdf</strong> format Upload below
+            <strong>5MB.</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="showdetails && updatestatus">
+      <div class="col-lg-6 col-xxl-6">
+        <p><span style="font-weight: 500;">Remark : </span>
+          <span id="proceduredescription{{1}}">
+            {{this.hosp?.remark.length>30?this.hosp?.remark.substring(0, 30) +
+            '...':this.hosp?.remark}}
+          </span>
+          <span style="cursor: pointer; color: #1189cf" id="showMoreId6{{1}}"
+            (click)="showPreDoc1(this.hosp?.remark,1)">
+            {{this.hosp?.remark.length>30?'Show More':''}}
+          </span>
+          <span style="cursor: pointer; color: #1089cf" id="showMoreId7{{1}}"
+            (click)="hidePreDoc1(this.hosp?.remark,1)"></span>
+        </p>
+      </div>
+      <div class="col-lg-2 col-xxl-2">
+        <p><span style="font-weight: 500;">Document : </span>
+          <span *ngIf="this.hosp?.docname!=null"><a href="javascript:void(0);" (click)="downlordeempaneldoc($event,this.hosp?.docname)" >
+          <i class="bi bi-file-earmark-image" style="font-size: 21px;"></i>
+          </a></span>
+          <span *ngIf="this.hosp?.docname==null"> N/A</span>
+        </p>
+      </div>
+      <div class="col-lg-2 col-xxl-2">
+        <p> <span style="font-weight: 500;">Additional Document 1 : </span>
+          <span *ngIf="this.hosp?.docname1!=null"><a href="javascript:void(0);" (click)="downlordeempaneldoc($event,this.hosp?.docname1)" >
+            <i class="bi bi-file-earmark-image" style="font-size: 21px;"></i>
+            </a></span>
+            <span *ngIf="this.hosp?.docname1==null"> N/A</span>
+        </p>
+      </div>
+      <div class="col-lg-2 col-xxl-2">
+        <p><span style="font-weight: 500;">Additional Document 2 : </span>
+          <span *ngIf="this.hosp?.docname2!=null"><a href="javascript:void(0);" (click)="downlordeempaneldoc($event,this.hosp?.docname2)" >
+            <i class="bi bi-file-earmark-image" style="font-size: 21px;"></i>
+            </a></span>
+            <span *ngIf="this.hosp?.docname2==null"> N/A</span>
+        </p>
+      </div>
+      <hr>
+
+      <div class="col-lg-3 col-xxl-3">
+        <label for="dutyStaffRoom" class="form-label">Action Type<span class="text-danger">*</span></label>
+        <input type="text" class="form-control" value="Empanel" disabled>
+      </div>
+      <div class="col-lg-6 col-xxl-6">
+        <div class="mb-xl-3">
+          <label class="control-label">Remark<span class="text-danger">*</span></label>
+          <textarea class="form-control" placeholder="Enter Remark" autocomplete="off" id="remark" maxlength="500"
+            onkeyup="this.value=this.value.replace(/[^0-9.a-zA-Z@/_() ]/g,'');" #myInput
+            (keypress)="keyPress($event)"></textarea>
+          <span class="text-danger small">Characters Remaining: {{maxChars - myInput.value.length}}</span>
+        </div>
+      </div>
+
+      <div class="alert alert-danger mb-2 d-flex small ">
+        <div>
+          <p class="mb-0 pe-3 me-3 border-end ">
+            <i class="bi bi-info-circle-fill fs-5 me-2 "></i>NOTE
+          </p>
+        </div>
+        <div>
+          <p class="mb-0 ">Able to log in to both TMS and CMS.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div *ngIf="showdetails && !updatestatus">
+      <input type="submit" value="Submit" class="btn btn-success" (click)="submit()">&nbsp;&nbsp;
+      <input type="button" value="Reset" class="btn btn-secondary" (click)="Reset()">
+    </div>
+
+    <div *ngIf="showdetails && updatestatus">
+      <input type="submit" value="Submit" class="btn btn-success" (click)="Update()">&nbsp;&nbsp;
+      <input type="button" value="Cancel" class="btn btn-secondary" (click)="Cancel()">
+    </div>
+  </div>
+</div>

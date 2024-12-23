@@ -1,0 +1,265 @@
+<div class="container-fluid">
+    <div class="content-box">
+        <div class="row">
+            <div class="col-xxl-9 col-xl-9 col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-4">
+                <div class="card h-40">
+                    <div class="card-header text-bg-success">
+                        <h6>Total Claims Allotted<span class="nm-tx">{{claimCount?.totalclaimRasied}}</span></h6>
+                    </div>
+                    <div class="card-group totldis h-40">
+                        <div class="card p-0 border-bottom-0">
+                            <div class="number text-center h-40" style="padding-top: 10px; height: 40pt;">{{claimCount?.pendingatCPD}}</div>
+                            <div class="bg-secondary text-left h-40 px-3 py-3 col-lg-px-3 col-lg-py-3" style="height: 53pt;">
+                                <div class="card-text">
+                                    Pending At CPD
+                                    <small class="sm-txt">(Fresh Claim)</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card p-0 border-bottom-0">
+                            <div class="number text-center h-40" style="padding-top: 10px; height: 40pt;">{{claimCount?.pendatcpdRstl}}</div>
+                            <div class="bg-secondary text-left h-40 px-3 py-3 col-lg-px-3 col-lg-py-3" style="height: 53pt;">
+                                <div class="card-text">
+                                    CPD Resettlement
+                                    <!-- <small class="sm-txt">(After 7 days of discharge)</small> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card p-0 border-bottom-0">
+                            <div class="number text-center h-40" style="padding-top: 10px; height: 40pt;">{{claimCount?.pendatcpdRvrt}}</div>
+                            <div class="bg-secondary text-left h-40 px-3 py-3 col-lg-px-3 col-lg-py-3" style="height: 53pt;">
+                                <div class="card-text">SNA Reverted</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xxl-3 col-xl-3 col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-4">
+                <div class="card h-100" style="padding: 10px; padding-bottom: 0;">
+                    <div class="row">
+                        <div class="mb-xl-3" style="padding: 25px; padding-bottom: 0; padding-top: 5px;">
+                            <label class="control-label" style="color: green; font-weight: bold;">Month</label><span class="text-danger">*</span>
+                            <div class="input-group">
+                                <select class="form-control" id="month" [(ngModel)]="month" aria-label="Disabled select example" (change)="getCountDetails()">
+                                    <option value="" disabled>Select Month</option>
+                                    <option *ngFor="let month of monthList" [value]="month.monthId">{{month.monthName}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-xl-3" style="padding: 25px; padding-top: 0; padding-bottom: 0;">
+                            <label class="control-label" style="color: green; font-weight: bold;">Year</label><span class="text-danger">*</span>
+                            <div class="input-group">
+                                <select class="form-control" id="year" [(ngModel)]="year" aria-label="Disabled select example" (change)="getCountDetails()">
+                                    <option value="" disabled>Select Year</option>
+                                    <option *ngFor="let x of yearList" [value]="x">{{x}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <h4 style="font-size: 15pt;" class="mb-3 font-w"></h4>
+      
+            <div class="col-xxl-6 col-lg-6 col-md-7 col-sm-6 col-xs-12 mb-4">
+                <div class="card">
+                    <div class="card-header text-bg-default p-0">
+                        <div class="d-flex px-xxl-4 p-xxl-2 p-xl-2 px-xl-3 p-lg-2 px-lg-2 p-md-2 px-md-3 p-xs-2 align-items-center">
+                            <div class="w-100">
+                                <h5><div class="number-lg" style="font-size: 14pt;">Pending At Hospital</div></h5>
+                                <!-- <p class="small-p mb-md-0">Take Action</p> -->
+                            </div>
+                            <div class="flex-shrink-1">
+                                <div class="number-light text-success">{{claimCount?.cpdQuerywithin7}}</div>
+                            </div>
+                        </div>
+                        <div class="progress">
+                            <div
+                                class="progress-bar bg-successnew w-100"
+                                role="progressbar"
+                                aria-valuenow="25"
+                                aria-valuemin="0"
+                                aria-valuemax="100"
+                            ></div>
+                        </div>
+                    </div>
+                    <div class="card-body st-report p-0">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item px-xxl-4 px-lg-3">
+                                <div class="d-flex align-items-center" style="height: 30pt;">
+                                    <div class="w-100">
+                                        <label class="card-title mb-0" style="font-size: 12pt;">
+                                            CPD Query
+                                            <p class="small-l">
+                                                <small>(within 7 days)</small>
+                                            </p>
+                                        </label>
+                                    </div>
+                                    <div class="flex-shrink-1"><h4 style="font-size: 15pt;">{{claimCount?.cpdQuerywithin7}}</h4></div>
+                                </div>
+                            </li>                            
+                        </ul>
+                    </div>
+                </div>
+                <br>
+                <div class="card">
+                    <div class="card-header text-bg-default p-0">
+                        <div class="d-flex px-xxl-4 p-xxl-2 p-xl-2 px-xl-3 p-lg-2 px-lg-2 p-md-2 px-md-3 p-xs-2 align-items-center">
+                            <div class="w-100">
+                                <h5><div class="number-lg" style="font-size: 14pt;">Non Compliance By Hospital</div></h5>
+                                <!-- <p class="small-p mb-md-0">Take Action</p> -->
+                            </div>
+                            <div class="flex-shrink-1">
+                                <div class="number-light text-danger">{{claimCount?.cpdQueryafter7}}</div>
+                            </div>
+                        </div>
+                        <div class="progress">
+                            <div
+                                class="progress-bar bg-danger w-100"
+                                role="progressbar"
+                                aria-valuenow="25"
+                                aria-valuemin="0"
+                                aria-valuemax="100"
+                            ></div>
+                        </div>
+                    </div>
+                    <div class="card-body st-report p-0">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item px-xxl-4 px-lg-3">
+                                <div class="d-flex align-items-center" style="height: 30pt;">
+                                    <div class="w-100">
+                                        <label class="card-title mb-0" style="font-size: 12pt;">
+                                            System Rejected
+                                            <p class="small-l">
+                                                <small>(Non compliance of CPD Query)</small>
+                                            </p>
+                                        </label>
+                                    </div>
+                                    <div class="flex-shrink-1"><h4 style="font-size: 15pt;">{{claimCount?.cpdQueryafter7}}</h4></div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+      
+            <div class="col-xxl-6 col-lg-6 col-md-7 col-sm-6 col-xs-12 mb-4">
+                <div class="card">
+                    <div class="card-header text-bg-default p-0">
+                        <div class="d-flex px-xxl-4 p-xxl-2 p-xl-2 px-xl-3 p-lg-2 px-lg-2 p-md-2 px-md-3 p-xs-2 align-items-center">
+                            <div class="w-100">
+                                <h5><div class="number-lg" style="font-size: 14pt;">CPD Action Taken</div></h5>
+                                <!-- <p class="small-p mb-md-0">Pending</p> -->
+                            </div>
+                            <div class="flex-shrink-1">
+                                <div class="number-light text-warning">{{claimCount?.tcpdAction}}</div>
+                            </div>
+                        </div>
+                        <div class="progress">
+                            <div
+                                class="progress-bar bg-warning w-100"
+                                role="progressbar"
+                                aria-valuenow="25"
+                                aria-valuemin="0"
+                                aria-valuemax="100"
+                            ></div>
+                        </div>
+                    </div>
+                    <div class="card-body st-report p-0">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item px-xxl-4 px-lg-3">
+                                <div class="d-flex align-items-center" style="height: 34pt;">
+                                    <div class="w-100">
+                                        <label class="card-title mb-0" style="font-size: 12pt;">
+                                            Total CPD Approved
+                                            <!-- <p class="small-l"><small>(Fresh)</small></p> -->
+                                        </label>
+                                    </div>
+                                    <div class="flex-shrink-1"><h4 style="font-size: 15pt;">{{claimCount?.tcpdApproved}}</h4></div>
+                                </div>
+                            </li>
+        
+                            <li class="list-group-item px-xxl-4 px-lg-3">
+                                <div class="d-flex align-items-center" style="height: 34pt;">
+                                    <div class="w-100">
+                                        <label class="card-title mb-0" style="font-size: 12pt;">
+                                            Total CPD Rejected
+                                            <!-- <p class="small-l">
+                                                <small>(Resettlement)</small>
+                                            </p> -->
+                                        </label>
+                                    </div>
+                                    <div class="flex-shrink-1"><h4 style="font-size: 15pt;">{{claimCount?.tcpdRejected}}</h4></div>
+                                </div>
+                            </li>
+        
+                            <li class="list-group-item px-xxl-4 px-lg-3">
+                                <div class="d-flex align-items-center" style="height: 34pt;">
+                                    <div class="w-100">
+                                        <label class="card-title mb-0" style="font-size: 12pt;">
+                                            Total CPD Queried
+                                            <!-- <p class="small-l">
+                                                <small>(Pending At DC)</small>
+                                            </p> -->
+                                        </label>
+                                    </div>
+                                    <div class="flex-shrink-1"><h4 style="font-size: 15pt;">{{claimCount?.tcpdQueried}}</h4></div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <h4 style="font-size: 15pt;" class="mb-3 font-w"></h4>            
+
+            <div class="col-xxl-6 col-lg-6 col-md-5 col-sm-6 col-xs-12 mb-4">
+                <div class="card h-100">
+                    <div class="card-header text-bg-default p-0">
+                        <div class="d-flex px-xxl-4 p-xxl-2 p-xl-2 px-xl-3 p-lg-2 px-lg-2 p-md-2 px-md-3 p-xs-2 align-items-center bg-primary">
+                            <div class="w-100">
+                                <h5><div class="number-lg" style="font-size: 14pt; color: white;">Notifications</div></h5>
+                                <!-- <p class="small-p mb-md-0">Pending</p> -->
+                            </div>
+                            <div class="flex-shrink-1">
+                                <div class="number-light text-primary" style="background-color: white; border-radius: 20px; font-size: 14pt; width: 20pt; text-align: center; font-weight: bold;">
+                                    {{list.length}}
+                                </div>
+                                <!-- <div *ngIf="list.length==0" style="font-size: 14pt;">&nbsp;</div> -->
+                            </div>
+                        </div>
+                        <div class="progress">
+                            <div
+                                class="progress-bar bg-primary w-100"
+                                role="progressbar"
+                                aria-valuenow="25"
+                                aria-valuemin="0"
+                                aria-valuemax="100"
+                            ></div>
+                        </div>
+                    </div>
+                    <div class="card-body st-report p-0" style="overflow-y: scroll; height: 120pt;">
+                        <ul class="list-group list-group-flush" *ngIf="list.length>0">
+                            <ng-container *ngFor="let v of list">
+                                <li class="list-group-item">
+                                    <span class="text-danger">*</span> 
+                                    {{v.noticeContent}} 
+                                    <a href="javasript:void(0)" style="color: green;" *ngIf="v.docpath!=null" (click)="downlordnotification($event,v.docpath)"> 
+                                        <i class="bi bi-download"></i>
+                                    </a>
+                                </li>
+                            </ng-container>
+                        </ul>
+                        <div *ngIf="list.length==0" style="color: red; text-align: center; font-weight: bold; padding-top: 8%; font-size: 16pt;">
+                            You have no new notification
+                        </div>            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

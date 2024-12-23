@@ -1,0 +1,437 @@
+<div class="login-wrapp h-100">
+    <div class="container h-100">
+        <div class="row justify-content-center align-items-center h-100">
+            <div class="col-xl-5 col-xxl-5">
+                <div class="login-box bg-white shadow mx-xxl-3 p-4 p-xxl-5">
+                    <form [formGroup]="loginPageForm" autocomplete="off">
+                        <div class="d-flex flex-column justify-content-center mb-3 mb-xl-3">
+                            <div class="d-flex align-items-center mb-3 mb-xl-4 pb-xl-1">
+                                <img src="./assets/img/govt-logo.png" alt="Government of Odisha" class="pe-2 me-2 pe-lg-3 me-lg-3 border-end">
+                                <img src="./assets/img/bsky-logo.png" alt="GJAY, Odisha">
+                                <h1 class="ms-2">BSKY</h1>
+                            </div>
+                            <h4>Claim Management System</h4>
+                        </div>
+                        <div class="mb-4">
+                            <!-- <label for="inputUserName" class="form-label">User Name</label> -->
+                            <div class="iconinput">
+                                <i class="bi bi-person fs-4"></i>
+                                <input type="text" class="form-control usertext userinput" id="userInput" maxlength="20" formControlName="userInput" name="userInput" placeholder="Enter Username" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && f['userInput'].errors }">
+                                <div *ngIf="submitted && f['userInput'].errors " class="invalid-feedback">
+                                    <div *ngIf="f['userInput'].errors.required">Username is required</div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="mb-4">
+                            <div class="iconinput password">
+                                <input type="{{toggletype}}" class="form-control passwordinput" id="inputPassword" maxlength="20" formControlName="inputPassword" name="inputPassword" placeholder="Enter Password" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && f['inputPassword'].errors }">
+                                <div *ngIf="submitted && f['inputPassword'].errors " class="invalid-feedback">
+                                    <div *ngIf="f['inputPassword'].errors.required">Password is required</div>
+                                </div>
+                                <i class="iconbsky-password"></i>
+                                <a href="javascript:void(0);" (click)="enableDisableBtn()" class="enablebtn"><i
+                                      class="bi" [ngClass]="showpassword ? 'bi bi-eye' : 'bi-eye-slash' "></i></a>
+                            </div>
+                        </div>
+                        <div class="row  mb-4">
+                            <div class="col-8">
+                                <input class="form-control pl-0" type="text" (keyup.enter)="onLoggedIn()" placeholder="Enter Answer" id="txtLoginCaptcha" maxlength="3" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" [ngClass]="{ 'is-invalid': inValidCaptcha}" autocomplete=off
+                                />
+                                <div *ngIf="inValidCaptcha" class="invalid-feedback">
+                                    <div *ngIf="inValidCaptcha" style="color: red;">Incorrect Answer</div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="captchabox"><br><b>
+                                <div class="captchaimg capt" id="loginCaptchaImg" disabled >
+                                </div></b>
+                                    <a href="javascript:void(0);" class="captcharefresh" id="loginRefreshCaptcha">
+                                        <i class="bi bi-arrow-clockwise"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="small text-end">
+                            <a routerLink="/changepassword">Forgot Password?</a>
+                        </p>
+                        <div class="row">
+                            <div class="col d-grid">
+                                <a class="btn btn-success px-xl-4 py-xl-2" (click)="onLoggedIn()" id="loginBtn">Login</a>
+                            </div>
+                        </div>
+                        <div>
+                            <p style="font-size:10px;line-height:1;"><br/></p>
+                        </div>
+                        <!-- <div class="row">
+                        <div class="col d-grid">
+                            <a class="btn btn-warning px-xl-4 py-xl-2"
+                                id="loginBtn">Technical Support Number - 155369</a>
+                        </div>
+                      </div> -->
+                        <div class="row">
+                            <div class="col d-grid" align="center">
+                                <div class="text-success" style="font-size: 14pt; padding-bottom: 0;">
+                                    <b style="font-size: 11pt;">For Technical Support</b>
+                                </div>
+                                <div class="text-success" style="font-size: 10pt; padding-top: 0;">
+                                    <span style="color: red;">☎</span> Phone : - 155369
+                                </div>
+                                <div class="text-success" style="font-size: 10pt; padding-top: 0;">
+                                    <span style="color: green;">✉</span> Email :- technicalqueriesBSKY@csm.tech
+                                    <p></p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<button type="hidden" data-bs-toggle="modal" data-bs-target="#OTPModal" class="btn btn-outline-warning focusedBtn btn-sm my-2 my-sm-0" #OTPbtn hidden>
+</button>
+<div class="modal fade" id="OTPModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Login OTP Authentication</h5>
+                <button type="button" #OTPclsBtn class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="OTPclsBtn"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12" style="text-align: center">
+                        <div class="mb-4">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-form-label  mb-1"> OTP <b><span style="color:red">*</span></b></div>
+                                    <input type="text" class="form-control mb-2" maxlength="6" autocomplete="off" id="textOTP" placeholder="Enter OTP" (input)="checkOTP($event)">
+                                    <label class="mb-2 text-left">Time Remaining : <span id="timer-countdown" style="font-weight: 500; color: red">{{formattedTime}}</span></label>
+
+                                    <!-- <div class="mb-1">
+                    Your Reference number for this OTP is
+                    <span id="otpRef" class="log-otptime-sec" style="font-weight: 600; color: #098c09">
+                      {{responseData?.user?.refNo ? responseData.user.refNo : 'NA'}}
+                    </span>
+                  </div> -->
+
+                                    <div class="mb-1">
+                                        OTP Send to Mobile No.
+                                        <span id="userMobileNumber" style="font-weight: 600"><br>
+                        {{maskMobileNumber(responseData?.user?.phone)}}
+                    </span>
+                                    </div>
+
+                                    <div class="mb-1">
+                                        OTP Send to Email Id
+                                        <span id="userEmailId" style="font-weight: 600">{{responseData?.user?.email ? responseData?.user?.email : 'NA'}}</span>
+                                    </div>
+
+                                    <div class="mt-3">
+                                        <input type="button" class="btn btn-outline-success" value="Verify" (click)="verifyOTP()">&nbsp;
+                                        <input type="button" class="btn btn-outline-danger" value="Cancel" data-dismiss="modal" aria-label="Close" (click)="cancelOTP()">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="modal-footer text-center log-modal-bg clrBg">
+                <div class="notes-log"> Note: If you want to add/update your mobile number then please update it through Claim Portal. </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--IRIS and Finger Master Data Show in Modal-->
+<button type="hidden" data-bs-toggle="modal" data-bs-target="#fingerIRISModal"
+        class="btn btn-outline-warning focusedBtn btn-sm my-2 my-sm-0" #irisFingerBtn hidden>
+</button>
+
+<div class="modal fade" id="fingerIRISModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header align-items-center">
+        <h5 class="modal-title" id="exampleModalLabel" style="text-align: center;">Operator Authentication</h5>
+        <button type="button" #irisFingerClsBtn class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="OTPclsBtn"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-lg-12" style="text-align: center">
+            <div class="alert alert-warning m-0 p-2 align-items-center d-flex" >
+              <input type="checkbox" id="verificationAuthCheckbox" name="verificationAuthCheckbox" style="margin-right: 13px; zoom: 145%;"
+                     (change)="checkDeclaration($event)">
+              <label for="verificationAuthCheckbox" class="ml-2 m-0">
+                <small style="font-size: smaller"><br />
+                  I hereby state that I have no objection in authenticating myself with Aadhaar based authentication system and consent to providing through IRIS/FACE/FINGER  for Aadhaar based authentication for the application use.
+                </small>
+                <strong class="text-danger ms-1" >*</strong>
+              </label>
+
+            </div>
+
+            <br>
+            <div class="table-responsive">
+              <table id="patientFamilyList" class="table table-striped border">
+                <caption></caption>
+                <thead>
+                  <tr>
+                    <th class="black" style="width: 15%" scope="">IRIS</th>
+                    <th class="black"  style="width: 15%;" scope="">FINGER</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <div class="prehed-small">
+                        <select class="form-select" name="btnIRIS" id="btnIRIS"
+                                (change)="generateIRIS($event, 'IRIS')">
+                          <option value="0">SELECT</option>
+                          <option value="1">BIOMATIQUES IRIS</option>
+                          <option value="2">MANTRA IRIS</option>
+                        </select>
+                      </div>
+                      <div class="prehed-small">
+                        <label class="badge bg-success text-white" id="irisVerified"></label>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <div class="prehed-small">
+                        <select class="form-select" name="fingerDeviceId" id="btnFINGER"
+                                    (change)="verifyThumb($event, 'FINGER')">
+                              <option value="100">SELECT</option>
+                              <option *ngFor="let fingerDevice of fingerDeviceList" [value]="fingerDevice?.deviceId">{{fingerDevice?.deviceName}}</option>
+                            </select>
+                      </div>
+                      <div class="prehed-small">
+                        <label class="badge bg-success text-white" id="fingerVerified"></label>
+                      </div>
+                    </div>
+                  </td>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- End IRIS and Finger Master Data Show in Modal -->
+
+  <!--IRIS Modal  TMS Design-->
+<button type="hidden" data-bs-toggle="modal" data-bs-target="#IrisModal"
+class="btn btn-outline-warning focusedBtn btn-sm my-2 my-sm-0" id="IRISbtn" hidden>
+</button>
+<div class="modal fade" id="IrisModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+<div class="modal-dialog modal-lg" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel1">Authenticate</h5>
+      <button type="button" #irisCloseBtn class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close"
+        id="irisCloseBtn">
+        <span aria-hidden="true">x</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="row justify-content-center  customRadio">
+        <div class="col-md-3">
+          <div class="chkbox-bg">
+            <input type="radio" name="textEditor" id="rdProduction" checked="checked" value="P">
+            <label for="rdProduction"> Production </label>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="chkbox-bg">
+            <input type="radio" name="textEditor" id="rdStaging" value="S" disabled>
+            <label for="rdStaging"> Staging Server </label>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-lg-12 row">
+          <div class="col-md-3">
+            <input type="hidden" id="getrdresponse" />
+            <div class="col-form-label">
+              RD Service Status
+              <strong><span style="color:red">*</span></strong>
+            </div>
+            <input type="text" class="form-control" id="rdStatus" readonly>
+          </div>
+          <div class="col-md-3">
+            <div class="col-form-label">
+              Device Info Path
+              <strong><span style="color:red">*</span></strong>
+            </div>
+            <input type="text" class="form-control" id="rdinfo" readonly>
+          </div>
+          <div class="col-md-3">
+            <div class="col-form-label">
+              Capture Path
+              <strong><span style="color:red">*</span></strong>
+            </div>
+            <input type="text" id="capturePath" class="form-control" readonly>
+          </div>
+          <div class="col-md-3">
+            <div class="col-form-label">
+              RD Service Info
+              <strong><span style="color:red">*</span></strong>
+            </div>
+            <input type="text" class="form-control" readonly>
+          </div>
+        </div>
+      </div>
+      <div class="row  mb-3 heading-pkg border-bottom" style="margin-top: 1rem;">
+        <h5> Capture Pid Data </h5>
+      </div>
+      <div class="form-row">
+        <div class="col-lg-12 row">
+          <div class="col-md-3">
+            <div class="col-form-label">
+              Error Code
+              <strong><span style="color:red">*</span></strong>
+            </div>
+            <input type="text" class="form-control" id="errCode" readonly>
+          </div>
+          <div class="col-md-3">
+            <div class="col-form-label">
+              Quality Service
+              <strong><span style="color:red">*</span></strong>
+            </div>
+            <input type="text" class="form-control" readonly>
+          </div>
+          <div class="col-md-3">
+            <div class="col-form-label">
+              Error Info
+              <strong><span style="color:red">*</span></strong>
+            </div>
+            <input type="text" class="form-control" id="errInfo" readonly>
+          </div>
+          <div class="col-md-3">
+            <div class="col-form-label">
+              dpid
+              <strong><span style="color:red">*</span></strong>
+            </div>
+            <input type="text" class="form-control" id="dpid" readonly>
+          </div>
+          <div class="col-md-3">
+            <div class="col-form-label">
+              Red/Id
+              <strong><span style="color:red">*</span></strong>
+            </div>
+            <input type="text" class="form-control" readonly>
+          </div>
+          <div class="col-md-3">
+            <div class="col-form-label">
+              Red/info
+              <strong><span style="color:red">*</span></strong>
+            </div>
+            <input type="text" class="form-control" readonly>
+          </div>
+          <div class="col-md-3">
+            <div class="col-form-label">
+              do
+              <strong><span style="color:red">*</span></strong>
+            </div>
+            <input type="text" class="form-control" readonly>
+          </div>
+          <div class="col-md-3">
+            <div class="col-form-label">
+              mi
+              <strong><span style="color:red">*</span></strong>
+            </div>
+            <input type="text" class="form-control" id="mi" readonly>
+          </div>
+          <div class="col-md-12">
+            <div class="col-form-label">
+              mc
+              <strong><span style="color:red">*</span></strong>
+            </div>
+            <input type="text" class="form-control" id="mc" readonly>
+          </div>
+        </div>
+
+      </div>
+      <div class="mb-3">
+        <div class="row  mb-3 heading-pkg border-bottom" style="margin-top: 1rem;">
+          <h5> Auth Request </h5>
+        </div>
+        <div class="form-row">
+          <div class="col-lg-12 row">
+            <div class="col-md-3">
+              <div class="col-form-label">
+                Aadhaar UID
+                <strong><span style="color:red">*</span></strong>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <input type="text" id="AadharUidMask" class="form-control" readonly>
+              <input type="hidden" id="AadharUid" class="form-control" readonly>
+            </div>
+            <div class="col-md-3">
+              <div class="col-form-label">
+                Response Result
+                <strong><span style="color:red">*</span></strong>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <input type="text" class="form-control" readonly>
+            </div>
+          </div>
+        </div>
+        <div class="form-row" style="margin-top: 1rem">
+          <div class="col-lg-12 row">
+            <div class="col-md-3">
+              <div class="col-form-label">
+                Error code
+                <strong><span style="color:red">*</span></strong>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <input type="number" class="form-control" readonly>
+            </div>
+            <div class="col-md-3">
+              <div class="col-form-label">
+                Error Info
+                <strong><span style="color:red">*</span></strong>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <input type="text" class="form-control" readonly>
+            </div>
+          </div>
+        </div>
+        <input type="hidden" id="rdInfo" />
+        <input type="hidden" id="rdData" />
+        <input type="hidden" id="MemberId">
+        <input type="hidden" id="MemberName">
+        <input type="hidden" id="Urn">
+        <input type="hidden" id="rdport">
+        <input hidden id="DeviceSlno" />
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 px-0" style="margin-top: 1rem; text-align: left">
+          <input type="button" class="btn btn-outline-warning mb-2" value="Capture" id="btnBiomatique"
+            (click)="Capture();">
+          <input type="button" class="btn btn-outline-warning mb-2" value="Capture" id="btnMantra"
+            (click)="CaptureAvdm();">
+          <input type="button" class="btn btn-outline-warning mb-2" value="Capture" id="btnFinger"
+            (click)="CaptureFingerAvdm();">
+            <input type="button" class="btn btn-outline-warning mb-2" value="Capture" id="btnFinger1"
+            (click)="CaptureACPLFingerAvdm();">
+          <input type="button" class="btn btn-outline-success mb-2" value="Authenticate" id="btnAuthentication"
+            (click)="IRISVerify(authType)" style="margin-left: 1rem;">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+</div>
+</div>

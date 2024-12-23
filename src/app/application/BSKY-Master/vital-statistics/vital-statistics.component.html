@@ -1,0 +1,94 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs ">
+                    <li class="nav-item" *ngIf="isUpdateBtnInVisible">
+                        <a routerLink="/application/addVitalStatistics" routerLinkActive="active"
+                            class="nav-link active">Add</a>
+                    </li>
+                    <li class="nav-item" *ngIf="!isUpdateBtnInVisible">
+                        <a routerLink="/application/addVitalStatistics" routerLinkActive="active"
+                            class="nav-link active">Update</a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/application/vitalStatisticsView" routerLinkActive="active" class="nav-link"
+                            style="color: #1f723f;">View</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-6 ">
+                <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+            </div>
+        </div>
+    </div>
+    <div class="content-box">
+        <div class="col-xxl-10">
+            <form [formGroup]="VitalStatisticsForm">
+
+                <div class="row">
+                    <div class="col-lg-4 col-xxl-4">
+                        <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                            <label class="control-label mb-2">Vital Statistics Name</label><span
+                                class="text-danger">*</span>
+                            <div class="input-group">
+                                <input class="form-control" id="vitalstatisticsname"
+                                    formControlName="vitalstatisticsname" name="vitalstatisticsname" autocomplete="off"
+                                    placeholder="Enter Vital Statistics Name" maxlength="30"
+                                    (change)="validateStcName()" onkeypress="return /[0-9a-zA-Z ]/i.test(event.key)">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-xxl-4">
+                        <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                            <label class="control-label mb-2">Vital Statistics Code</label><span
+                                class="text-danger">*</span>
+                            <div class="input-group">
+                                <input type="text" class="form-control" formControlName="vitalstatisticscode"
+                                    name="vitalstatisticscode" autocomplete="off"
+                                    placeholder="Enter Vital Statistics Code" id="vitalstatisticscode" maxlength="20"
+                                    (change)="validateStcCode()" onkeypress="return /[0-9a-zA-Z ]/i.test(event.key)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-xxl-4">
+                        <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                            <label class="control-label mb-2">Vital Statistics Description</label><span
+                                class="text-danger">*</span>
+                            <div class="input-group">
+                                <textarea class="form-control" id="vitalstatisticsdescription"
+                                    formControlName="vitalstatisticsdescription" name="vitalstatisticsdescription"
+                                    autocomplete="off" placeholder="Enter Vital Statistics Description" #myInput
+                                    [maxLength]="maxChars" onkeypress="return /[0-9a-zA-Z@_ ]/i.test(event.key)">
+                                </textarea>
+                            </div>
+                            <span class="text-danger small">Characters Remaining: {{maxChars
+                                -myInput.value.length}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <label class="form-label d-none d-md-block">&nbsp;</label>
+                    <div class="d-grid gap-2 d-md-flex">
+                        <div *ngIf="!isUpdateBtnInVisible">
+                            <div>
+                                <button type="button" class="btn btn-success"
+                                    (click)="SubmitCreate()">Update</button>&nbsp;
+                                <input type="button" value="Cancel" class="btn btn-secondary" (click)="cancel()">
+                            </div>
+                        </div>
+                        <div *ngIf="isUpdateBtnInVisible">
+                            <div>
+                                <button type="button" class="btn btn-success"
+                                    (click)="SubmitCreate()">Submit</button>&nbsp;
+                                <input type="button" value="Reset" class="btn btn-secondary" (click)="ResetForm()">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>

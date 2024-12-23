@@ -1,0 +1,79 @@
+<div class="main-tab">
+  <div class="row justify-content-between">
+    <div class="col-lg-8">
+      <ul class="nav nav-tabs ">
+        <li class="nav-item">
+          <a routerLink="/application/getReportList" routerLinkActive="active" class="nav-link active">Report List</a>
+        </li>
+      </ul>
+    </div>
+    <!-- <div class="col-lg-6 ">
+      <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+    </div> -->
+  </div>
+</div>
+<div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+  <div class="col-lg-4 col-xxl-4" style="padding-top: 10px; padding-left: 18px;">
+      <div class="form-group">
+          <b>Total Reports: <span style="color: green;">{{countfunctionmaster}}</span></b>
+      </div>
+  </div>
+  <div class="col-lg-4 col-xxl-4"></div>
+  <div class="col-lg-4 col-xxl-4">
+      <div class="input-group">
+          <input type="text" id="txtsearchDate" class="form-control" placeholder="Search here" name="txtsearchDate"
+              [(ngModel)]="txtsearchDate" autocomplete="off">
+      </div>
+  </div>
+</div>
+<div class="form-cointainer">
+  <div class="main-tab">
+    <div class="row justify-content-between">
+      <div class="table-responsive">
+        <table class="table table-striped mb-0">
+          <thead>
+            <tr>
+              <th>Sl No</th>
+              <th>Report Name</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngIf="( functionmaster |  filter:txtsearchDate) as functionmaster">
+            <tr *ngFor="let v of functionmaster | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage},index as i">
+                <td *ngIf="currentPage==1 ">{{(i+1)}}</td>
+                <td *ngIf="currentPage!=1 ">{{(currentPage-1)*pageElement+ i+1}}</td>
+              <td><a routerLink={{v.primaryLink.functionMaster.fileName}} routerLinkActive="active" class="nav-link active">{{v.primaryLink.primaryLinkName}}</a></td>
+              <td>{{v.primaryLink.description}} </td>
+            </tr>
+            <tr *ngIf="functionmaster?.length==0">
+                <td colspan="3">
+                    <p class="mb-0 text-center text-danger fw-bold">NO DATA FOUND!!</p>
+                </td>
+            </tr>
+          </ng-container>
+          </tbody>
+        </table>
+      </div>
+      <div class="row" style="margin-top: 15px" *ngIf="( functionmaster | filter:txtsearchDate)?.length!=0">
+        <div class="col-sm-4">
+          <div class="col-sm-*">
+            show
+            <select id="pageItem" name="pageItem" class="custom-select-sm" (change)="pageItemChange()">
+              <option value="10">10</option>
+              <option value="20">20</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+              <option value="{{countfunctionmaster}}">All</option>
+            </select> entries
+          </div>
+        </div>
+        <div class="col-sm-8 text-right">
+          <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true"
+            (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)">
+          </pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

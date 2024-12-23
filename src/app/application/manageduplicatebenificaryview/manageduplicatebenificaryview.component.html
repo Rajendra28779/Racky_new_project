@@ -1,0 +1,136 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+    <div class="row justify-content-between">
+      <div class="col-lg-10">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a routerLink="/application/managedduplicatebenificiary" routerLinkActive="active"
+              class="nav-link " style="color: #1f723f;">Managed Duplicate Beneficiary</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/application/managedduplicatebenificiaryview" routerLinkActive="active"
+              class="nav-link active">View</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="content-box">
+    <div class="row">
+      <div class="col-lg-3 col-xxl-3">
+        <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+          <label class="control-label mb-2">Search Type</label><span class="text-danger">*</span>
+          <select class="form-select" id="search" aria-label="Disabled select example">
+            <!-- <option value="2">UID</option> -->
+            <option value="1">URN</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-lg-4 col-xxl-4">
+        <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+          <label class="control-label mb-2">Enter Here</label><span class="text-danger">*</span>
+          <input type="text" class="form-control" placeholder="Please Enter Here" name="urn" id="urn" autocomplete="off"
+            onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" maxlength="25" />
+        </div>
+      </div>
+      <div class="col-lg-4 col-xxl-4">
+        <div class="mb-xl-4 mb-lg-4 mb-md-4 mb-4">
+          <button type="submit" class="btn btn-success" style="margin-top: 3ch" (click)="Search()">
+            Search</button>&nbsp;
+          <button type="button" class="btn btn-secondary" style="margin-top: 3ch" (click)="Reset()">
+            Reset
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row" style="margin-top: 1ch;margin-bottom: 1ch;">
+    <div class="col-lg-3 col-xxl-3" style="padding-top: 10px; ">
+      <div class="col-sm-*" *ngIf="showPegi">
+        show
+        <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+          <option value="50">50</option>
+          <option value="100">100</option>
+          <option value="200">200</option>
+          <option value="300">300</option>
+          <option value="400">400</option>
+        </select> entries
+      </div>
+    </div>
+    <div class="col-lg-3 col-xxl-3" style="padding-top: 10px; ">
+      <b>No. Of Records: <span style="color: green;">{{count}}</span></b>
+    </div>
+    <div class="col-lg-2 col-xxl-2" style="text-align: right; padding-top: 3px;">
+      <div class="form-group">
+        <button class="btn btn-success btn-sm mx-1" tooltip="Excel" (click)="downloadReport(1)">
+          <i class="bi bi-file-earmark-spreadsheet"></i>
+        </button>
+        <button class="btn btn-danger btn-sm me-1" type="submit" (click)="downloadReport(2)"><i
+            class="bi bi-file-earmark-pdf"></i></button>
+      </div>
+    </div>
+    <div class="col-lg-4 col-xxl-4">
+      <div class="input-group">
+        <input type="text" id="txtsearchDate" class="form-control" placeholder="Search" name="txtsearchDate"
+          autocomplete="off" [(ngModel)]="txtsearchDate">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <caption></caption>
+        <thead>
+          <tr>
+            <th>Sl#</th>
+            <th>URN</th>
+            <th>Member Name</th>
+            <th>UID</th>
+            <th>Age</th>
+            <th>Gender</th>
+            <th>DOB</th>
+            <th>In-Active By</th>
+            <th>In-Active On</th>
+            <th>Remark</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr  *ngFor="let v of list | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage},index as i">
+            <td>{{ i + 1 }}</td>
+            <td>{{ v.urn }}</td>
+            <td>{{ v.membername }}</td>
+            <td>{{ v.aadharno }}</td>
+            <td>{{ v.age }}</td>
+            <td>{{ v.gender }}</td>
+            <td>{{ v.dob }}</td>
+            <td>{{ v.updateon }}</td>
+            <td>{{ v.updateby }}</td>
+            <td>{{ v.remark }}</td>
+          </tr>
+          <tr *ngIf="!showPegi">
+            <td colspan="10" style="text-align: center; "><span style="text-align: center; color: red; font-weight: bold;">NO Data Found !!</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="row" *ngIf="showPegi">
+      <div class="col-sm-4">
+        <div class="col-sm-*">
+          show
+          <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+            <option value="50">50</option>
+            <option value="100">100</option>
+            <option value="200">200</option>
+            <option value="300">300</option>
+            <option value="400">400</option>
+          </select> entries
+        </div>
+      </div>
+      <div class="col-sm-8 text-right">
+        <pagination-controls id="listing_pagination" [maxSize]="100" [directionLinks]="true"
+          (pageChange)="currentPage = $event" class="text-end"
+          (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+      </div>
+    </div>
+  </div>
+</div>

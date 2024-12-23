@@ -1,0 +1,179 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+    <div class="col-lg-4">
+      <ul class="nav nav-tabs">
+        <li class="nav-item" *ngIf="!showupdate">
+          <a routerLink="/application/onlinepostconfiguration" routerLinkActive="active" class="nav-link active">Add</a>
+        </li>
+        <li class="nav-item" *ngIf="showupdate">
+          <a routerLink="/application/onlinepostconfiguration" routerLinkActive="active"
+            class="nav-link active">Update</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/application/onlinepostconfigurationview" routerLinkActive="active" class="nav-link"
+            style="color: #1f723f;">View</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="cointainer">
+    <div class="row">
+      <div class="col-lg-4 col-xxl-4" *ngIf="!showupdate">
+        <div class="mb-xl-3">
+          <label class="control-label">Post Name<span class="text-danger">*</span></label>
+          <ng-autocomplete #auto [data]="postList" placeholder="Select Post Name" (selected)="selectEvent($event)"
+            (inputCleared)="clearEvent()" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate"
+            [searchKeyword]="keyword" spellcheck="false">
+          </ng-autocomplete>
+
+          <ng-template #itemTemplate let-item>
+            <a [innerHTML]="item.postname"></a>
+          </ng-template>
+
+          <ng-template #notFoundTemplate let-notFound>
+            <div [innerHTML]="notFound"></div>
+          </ng-template>
+        </div>
+      </div>
+      <div class="col-lg-4 col-xxl-4" *ngIf="showupdate">
+        <div class="mb-xl-3">
+          <select class="form-select" id="postid"  aria-label="Disabled select example" [(ngModel)]="this.getbyid.postName">
+            <option value="" selected disabled>Select</option>
+            <ng-container *ngFor="let v of postList">
+              <option value={{v.postid}}>{{v.postname}}</option>
+            </ng-container>
+          </select>
+        </div>
+      </div>
+      <div class="col-lg-4 col-xxl-4" *ngIf="showpost">
+        <div class="mb-xl-3">
+          <label class="control-label">Post Description<span class="text-danger">*</span></label>
+          <input class="form-control" type="text" [value]="post?.postdescription" disabled="disabled" />
+        </div>
+      </div>
+    <div class="row">
+    <div class="col-lg-3 col-xxl-3">
+      <div class="mb-xl-3">
+        <label for="EnterFunctionDescription" class="form-label">Current Job Description<span
+            class="text-danger">*</span></label>
+        <textarea class="form-control" placeholder="Enter  Current Job Description"
+          autocomplete="off" id="description" maxlength="500" [(ngModel)]="this.getbyid.currentjobdescription"
+          onkeyup="this.value=this.value.replace(/[^0-9.a-zA-Z-@/_(),\\:;&$ ]/g,'');" #myInput
+          (keypress)="keyPress($event)"></textarea>
+        <span class="text-danger small">Characters Remaining: {{maxChars - myInput.value.length}}</span>
+      </div>
+    </div>
+    <div class="col-lg-3 col-xxl-3">
+      <div class="mb-xl-3">
+        <label class="control-label mb-2">Online Apply From</label><span class="text-danger">*</span>
+        <div class="input-group">
+          <input type="text" class="form-control border-end-0 datepicker" id="date1" name="fromDate">
+          <label class="input-group-text bg-transparent border-start-0" for="date1"><i class="iconbsky-calendar"></i>
+          </label>
+        </div>
+      </div>
+    </div>
+      <div class="col-lg-3 col-xxl-3">
+        <div class="mb-xl-3">
+          <label class="control-label mb-2"> Online Apply To</label><span class="text-danger">*</span>
+          <div class="input-group">
+            <input type="text" class="form-control border-end-0 datepicker" id="date2" name="toDate">
+            <label class="input-group-text bg-transparent border-start-0" for="date2"><i class="iconbsky-calendar"></i>
+            </label>
+          </div>
+        </div>
+      </div>
+        <div class="col-lg-3 col-xxl-3">
+          <div class="mb-xl-3">
+            <label class="control-label mb-2">Advertisement Number </label><span class="text-danger">*</span>
+                <input type="text" class="form-control" id="advertisementno" aria-label="Disabled select example"  [(ngModel)]="this.getbyid.advertisementnumber"
+                placeholder="Enter Advertisement Number" maxlength="20" onkeyup="this.value=this.value.replace(/[^0-9/_(),\-\\/]/g,'');">
+            </div>
+        </div>
+        <div class="col-lg-3 col-xxl-3">
+          <div class="mb-xl-3">
+            <label class="control-label mb-2">Advertisement Date</label><span class="text-danger">*</span>
+            <div class="input-group">
+              <input type="text" class="form-control border-end-0 datepicker1" id="date3" name="date3">
+              <label class="input-group-text bg-transparent border-start-0" for="date3"><i class="iconbsky-calendar"></i>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+          <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+              <label class="control-label mb-2">Online Publish</label><span class="text-danger">*</span>
+              <select class="form-select" id="searchby" aria-label="Disabled select example" [(ngModel)]="searchby">
+                  <option value="1" selected>Yes</option>
+                  <option value="0">No</option>
+              </select>
+          </div>
+      </div>
+      <div class="col-lg-3 col-xxl-3">
+          <div class="mb-xl-3">
+            <label class="control-label mb-2">No Of Vaccancy </label><span class="text-danger">*</span>
+                <input type="text" class="form-control" id="vaccancy" aria-label="Disabled select example" [(ngModel)]="this.getbyid.noofvaccancy"
+                 placeholder="Number of Vaccancy" maxlength="5" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');">
+            </div>
+        </div>
+      <div class="col-lg-4 col-xxl-4" id="Upload">
+        <div class="file-upload mb-xl-4 text-center ">
+            <p class="mb-1 text-start">Upload Document <span class="text-danger">*</span></p>
+            <div class="file-upload-content">
+                <a class="btn btn-danger  text-white btn-sm remove-img"><i
+                        class="fas fa-times"></i></a>
+                <img class="file-upload-image" src="#" alt="your image" />
+            </div>
+            <div class="image-upload-wrap rounded">
+                <input class="file-upload-input"  id="notficationdoc"type='file'  onCut="return false " onDrag="return false " onDrop="return false " (change)="handleFileInput($event)">
+                <div class="drag-text" *ngIf="!flag">
+                  <h5><i class="iconbsky-upload-icon d-block fs-4"></i><span class="text-danger">Drag or select a file to upload </span>
+                  </h5>
+              </div>
+                <div class="drag-text" *ngIf="flag" >
+                    <h5><i class="iconbsky-upload-icon d-block fs-4"></i><span class="text-danger">{{fileToUpload.name}}</span>
+                    </h5>
+                </div>
+            </div>
+             <p class="small pt-1 " style="text-align: right;" *ngIf="flag"><img src="./assets/img/pdf.png " alt="Download Document " width="20 " > <a target="_blank" class="dbtn" (click)="downloadfiletreatmentbill($event) "> Download</a></p>
+             <p class="small pt-1 " style="text-align: right;" *ngIf="showupdate"><img src="./assets/img/pdf.png " alt="Download Document " width="20 " > <a target="_blank" class="dbtn" (click)="downlordnotification($event,getbyid.uploaddoc) "> Document</a></p>
+        </div>
+     </div>
+     <div class="row">
+
+      <div class="col-lg-4 col-xxl-4" *ngIf="showupdate">
+        <div class="mb-xl-3">
+            <label>Status:</label>&nbsp;&nbsp;<br>
+                    <label *ngIf="getbyid.bitStatus==0">
+                        <input type="radio" checked="checked" [checked]="true" (click)="yes($event)"
+                        name="status" id="status">Active &nbsp;&nbsp;
+                        <input type="radio" (click)="no($event)"
+                        name="status" id="status">In-Active
+                    </label>
+
+                    <label *ngIf="getbyid.bitStatus==1">
+                        <input type="radio" (click)="yes($event)"
+                        name="status" id="status">Active &nbsp;&nbsp;
+                        <input type="radio" checked="checked" [checked]="true" (click)="no($event)"
+                        name="status" id="status">In-Active
+                    </label>
+        </div>
+    </div>
+
+
+
+    </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="d-grid gap-2 d-md-flex" *ngIf="!showupdate">
+            <button type="submit" class="btn btn-success" (click)="submit()">Submit</button>
+            <input type="button" value="Reset" class="btn btn-secondary" (click)="onReset()">
+          </div>
+          <div *ngIf="showupdate">
+            <button type="button" class="btn btn-success" (click)="updateDcDetails()">Update</button>&nbsp;
+            <input type="button" value="Cancel" class="btn btn-secondary" (click)="cancel()">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

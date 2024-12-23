@@ -1,0 +1,25 @@
+[
+    {
+      "pagetitle":"View Pending Applications",
+      "tabList":[
+        {"tabName":"Pending Applications","tabUrl":"../../pending-grievance-application"},
+        {"tabName":"Query","tabUrl":"../../grievanceQueryForDGO","tabClass":"active"},
+        {"tabName":"Application Summary","tabUrl":"../../grievance-summary"}
+      
+        
+      ],
+      "utils":[
+        {"utilName":"print"},   
+        {"utilName":"back"}
+        ],
+      "messages":
+        {
+          "successMsg":"Date saved successfully",
+          "errorMsg":"Error in database",
+          "warningtype":"You want to delete this record",
+          "deleteMsg":"Record has been deleted"
+        }
+       
+      
+    }
+  ]

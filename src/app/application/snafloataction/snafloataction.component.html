@@ -1,0 +1,129 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <div class="col-lg-6 ">
+                        <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+                    </div>
+                    <!-- <li class="nav-item">
+                        <a routerLink="/application/cpdapproval" class="nav-link active">Approval by CPD
+                        </a>
+                    </li> -->
+                    <!-- <li class="nav-item">
+                        <a routerLink="/application/pending" class="nav-link">Pending</a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/application/query" class="nav-link">Query</a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/application/paid" class="nav-link">Paid</a>
+                    </li> -->
+                </ul>
+            </div>
+            <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+                <div class="col-lg-4 col-xxl-4"></div>
+                <div class="col-lg-4 col-xxl-4"></div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="input-group">
+                        <input type="text" id="txtsearchDate" class="form-control" autocomplete="off"
+                            placeholder="Search" name="txtsearchDate" [(ngModel)]="txtsearchDate">
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-lg-6 ">
+                <app-utilite (receiveResponse)="getResponseFromChild($event)"></app-utilite>
+            </div> -->
+        </div>
+    </div>
+
+    <div class="content-box p-0 overflow-hidden">
+        <div class="table-responsive">
+            <table class="table table-striped mb-0">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" id="thCheck" (change)="selectAllCheck($event)"></th>
+                        <th width="40">Sl#</th>
+                        <th>Claim No</th>
+                        <th>URN</th>
+                        <!-- <th>Case No.</th> -->
+                        <th>Patient Name</th>
+                        <th>Invoice No</th>
+                        <th>Package Id</th>
+                        <th>Claim Raised On</th>
+                        <th>Amount (₹)</th>
+                        <!-- <th>Allotted Date</th> -->
+                        <!-- <th width="130">Take Action</th> -->
+                    </tr>
+                </thead>
+                <tbody>                   
+                    <tr *ngFor="let claim of claimlist | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};
+                    index as i">
+                        
+                        <!-- <td *ngIf="currentPage==1">{{(i+1)}}</td> -->
+                        <!-- <td><input type="checkbox" id="tdCheck{{claim.claimId}}" (change)="tdCheck($event)" (click)="toggle(claim.claimId)"></td> -->
+                        <td><input type="checkbox" id="{{claim.claimId}}" value="{{claim.approvedAmount}}"  (change)="insertData($event)"></td>
+                        <td>{{(i+1)}}</td>
+                        <!-- <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+ i+1}}</td> -->
+                        <td> {{claim.claimNo}}</td>
+                        <td>
+                            {{claim.URN}}
+                        </td>
+                        <!-- <td>{{claim.transactionID}}/{{claim.packageCode}}</td> -->
+                        <td> {{claim.patientName}}</td>
+                        <td> {{claim.invoiceNo}}</td>
+                        <!-- <td> {{claim.packageName}}</td> -->
+                        <td title={{claim.packageName}}> {{claim.packageCode}}</td>
+                        <!-- <td> {{claim.dateOfDischarge}}</td> -->
+                        <td>{{claim.dateOfDischarge | date :'dd-MMM-yyyy, h:mm:ss a'}}</td>
+                        <!-- <td>{{claim.allotedDate | date :'dd-MMM-yyyy, h:mm:ss a'}}</td> -->
+                        <!-- <td> {{claim.approvedAmount}}</td> -->
+                        <td style="width: 10%;"> <input type="number" class="form-control"  id="{{claim.claimId}}" value="{{claim.approvedAmount}}"></td>
+                        <!-- <td class="text-center">
+                            <a class="btn btn-outline-success btn-sm" (click)="onAction(claim.claimID,claim.transactionID,claim.URN,claim.transClaimId,claim.authorizedcode,claim.hospitalcode,claim.actualDate)">Action</a>
+                            <p class="small mb-0 text-danger">{{claim.remainingDate}}</p>
+                        </td> -->
+                    </tr>
+
+                    <tr *ngIf ="claimlist.length==0">
+                        <td colspan="8" align="center"><strong class="text-danger">No data found</strong></td>
+                    </tr>
+                </tbody> 
+            </table>
+        </div>
+    </div>
+
+    <!-- <div class="row" style="margin-top: 20px;" *ngIf="showPegi">
+        <div class="col-sm-6">
+            <div class="col-sm-*">
+                show
+                <select id="pageItem" name="pageItem" class="custom-select-sm" (change)="pageItemChange()">
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                </select> entries
+            </div>
+        </div>
+        <div class="col-sm-6 text-right">
+            <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true" (pageChange)="currentPage = $event"></pagination-controls>
+        </div>
+
+    </div> -->
+
+    <div class="col-lg-6 col-xxl-5" [formGroup]="myGroup">
+        <label class="col-form-label">Description <span class="required-asterisk"><span
+                    class="text-danger">*</span></span></label>
+        <textarea class="form-control required" rows="4" id="finalRemarksId" formControlName="finalRemarks" maxlength="500" placeholder="Enter Description" #myInput [maxlength]="maxChars" (keypress)="keyPress($event)"></textarea>
+        <span class="text-danger small">Characters Remaining: {{maxChars - myInput.value.length}}</span>
+    </div>
+
+
+    <div>
+    
+        <span>
+            <button type="submit" class="btn btn-primary btn-sm mx-1" (click)="updateData()">Update</button>
+        </span>
+    </div>
+
+</div>

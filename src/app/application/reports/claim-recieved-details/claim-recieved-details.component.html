@@ -1,0 +1,89 @@
+<div class="content">
+    <div class="container-fluid p-0">
+        <div class="form-cointainer">
+            <div class="main-tab">
+                <div class="row justify-content-between">
+                    <div class="col-lg-12">
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a routerLinkActive="active" class="nav-link active">Discharge and Claim Summary Details</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="row mb-12 mt-3" style="margin-bottom: 1rem">
+                <div class="col-lg-12 col-xxl-12">
+                    <div [align]="'start'" class="table-utilities" style="text-align: right">
+                        <button class="btn btn-success" tooltip="Download Excel" title="Download Excel" (click)="downloadList()">
+                        <i class="bi bi-download"></i>
+                      </button>
+                        <button class="btn btn-danger" tooltip="Download PDF" title="Download PDF" (click)="downloadPDF()" style="margin-left: 5px;">
+                        <i class="bi bi-file-pdf"></i>
+                      </button>
+                    </div>
+                </div>
+            </div> -->
+            <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+                <div class="col-lg-4 col-xxl-4" style="padding-top: 10px; padding-left: 20px;">
+                    State Name : <b style="color: green;">{{stateName}}</b>
+                    <br> District Name : <b style="color: green;">{{districtName}}</b>
+                    <br> Hospital Name : <b style="color: green;">{{hospitalName}}</b>
+                </div>
+                <div class="col-lg-4 col-xxl-4" style="text-align: right; padding-top: 3px;">
+                    <button class="btn btn-outline-success btn-sm me-1" tooltip="Excel" (click)="downloadList()">
+                        <i class="bi bi-file-earmark-spreadsheet" style="font-size: 11pt;"></i>
+                    </button> &nbsp;
+                    <button class="btn btn-outline-danger btn-sm me-1" tooltip="pdf" (click)="downloadPDF()">
+                        <i class="bi bi-file-earmark-pdf" style="font-size: 11pt;"></i>
+                    </button>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="input-group">
+                        <input type="text" id="txtsearchDate" class="form-control" placeholder="Search here..." name="txtsearchDate" [(ngModel)]="txtsearchDate" autocomplete="off">
+                        <!-- <button class="btn btn-primary" (click)="filterSearch()"><i class="bi bi-search"></i></button> -->
+                    </div>
+                </div>
+            </div>
+            <div class="content-box">
+                <div class="row">
+                    <div class="table-responsive">
+                        <table class="table table-striped mb-0">
+                            <thead>
+                                <tr>
+
+                                    <th>Date</th>
+                                    <th>Unique Family Treated</th>
+                                    <th>Unique Patient Treated</th>
+                                    <th>Total Package Discharged</th>
+                                    <th>Total Discharge Amount(₹)</th>
+                                    <th>Total Claim Submitted</th>
+                                    <th>Total Claim Amount(₹)</th>
+                                    <th>Total Pending For Claim Raise</th>
+                                    <th>Total Pending For Raise Amount(₹)</th>
+                                    <th>Claim Not Submitted (After 7 days of Discharge) </th>
+                                    <th>Claim Not Submitted Amount(After 7 days of Discharge) </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let claim of detailsinner | filter:txtsearchDate">
+                                    <td>{{claim.dates}}</td>
+                                    <td>{{claim.uniquefamilytreated}}</td>
+                                    <td>{{claim.uniquepatienttreated}}</td>
+                                    <td>{{claim.totalpackagedischarged}}</td>
+                                    <td>{{claim.totaldischargeamount| currency:'':''}}</td>
+                                    <td>{{claim.totalclaimsubmitted}}</td>
+                                    <td>{{claim.totalclaimamount| currency:'':''}}</td>
+                                    <td>{{claim.total_pendingforclaim_raise}}</td>
+                                    <td>{{claim.totalpendingraiseamount| currency:'':''}}</td>
+                                    <td>{{claim.claimnotsubmittedafter7daysofdischarge}}</td>
+                                    <td>{{claim.cnsamountafter7daysofdischarge| currency:'':''}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,91 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/fodetailsdetails/Action" routerLinkActive="active" class="nav-link active">Finacial details</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- <div class="col-lg-6 ">
+                <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+            </div> -->
+        </div>
+    </div>
+    <div class="col-lg-4 col-xxl-4">
+        <div class="table-responsive">
+            <div [align]="'start'" class="table-utilities" style="padding-bottom: 1%;">
+                <button style="height: 50px;width: 50px;" class="btn btn-danger btn-sm mx-1" tooltip="Excel" (click)="downloadfile()">
+                    <i class="fa fa-file-excel-o"></i>
+                </button>
+
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped mb-0">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" id="thCheck" (change)="selectAllCheck($event)"></th>
+                    <th width="40 ">Sl No.</th>
+                    <th>FLOAT_NO</th>
+                    <th>AMOUNT</th>
+                    <th>CREATED_BY</th>
+                    <th>CREATED_ON</th>
+                    <th>PAYMENT_STATUS</th>
+                    <!-- <th width="90 ">Action</th> -->
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let claim of details,index as i">
+                    <tr>
+                        <td><input type="checkbox" id="{{claim.claimid}}" (change)="tdCheck($event)" (click)="toggle(claim.claimid)"></td>
+                        <td> {{i+1}} </td>
+                        <td> {{claim.float_NO}}</td>
+                        <td style="width: 10%;"> <input type="number" class="form-control" id="amountClaimId{{claim.claimid}}" value="{{claim.amount}}" (blur)="insertData($event)" disabled></td>
+                        <td> {{claim.created_BY}}</td>
+                        <td>{{claim.created_ON}}</td>
+                        <td> {{claim.payment_STATUS}}</td>
+                        <!-- <td class=" text-center ">
+                            <a class="btn btn-outline-success btn-sm " (click)="onFiancial(claim.float_ID) ">Details</a>
+                        </td> -->
+                    </tr>
+                </ng-container>
+                <tr *ngIf="details.length==0">
+                    <td colspan="8 " align="center " *ngIf="isVisible "><strong class="text-danger ">No data
+                            found</strong></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-lg-6 col-xxl-5" [formGroup]="myGroup">
+        <label class="col-form-label">Description <span class="required-asterisk"><span
+                    class="text-danger">*</span></span></label>
+        <textarea class="form-control required" rows="4" id="finalRemarksId" formControlName="finalRemarks" maxlength="500" placeholder="Enter Description" #myInput [maxlength]="maxChars" (keypress)="keyPress($event)"></textarea>
+        <span class="text-danger small">Characters Remaining: {{maxChars - myInput.value.length}}</span>
+    </div>
+    <fieldset>
+        <legend>Authority:-</legend>
+        <div id="okk">
+            <input type="radio" id="contactChoice1" name="contact" value="0" (change)="onChange($event)" />
+            <label for="contactChoice1">Auditor<span class="required-asterisk"><span
+                        class="text-danger">*</span></span></label>
+            <input type="radio" id="contactChoice2" name="contact" value="1" (change)="onChange($event)" />
+            <label for="contactChoice2">SNA<span class="required-asterisk"><span
+                        class="text-danger">*</span></span></label>
+        </div>
+        <div>
+            <span *ngIf="!isUpdate">
+                <button type="submit" class="btn btn-success btn-sm mx-1" (click)="onForward()">Forward</button>
+                <button type="submit" class="btn btn-danger btn-sm mx-1" (click)="rejeted()">Rejected</button>
+                <button type="submit" class="btn btn-primary btn-sm mx-1" disabled>Update</button>
+            </span>
+            <span *ngIf="isUpdate">
+                <button type="submit" class="btn btn-success btn-sm mx-1" (click)="onForward()" disabled>Forward</button>
+                <button type="submit" class="btn btn-danger btn-sm mx-1" disabled>Rejected</button>
+                <button type="submit" class="btn btn-primary btn-sm mx-1" (click)="updateData()">Update</button>
+            </span>
+        </div>
+    </fieldset>
+</div>

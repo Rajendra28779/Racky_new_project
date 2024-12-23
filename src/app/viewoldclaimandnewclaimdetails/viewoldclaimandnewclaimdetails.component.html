@@ -1,0 +1,554 @@
+<div class="main-tab" style="padding: 15px; padding-bottom: 0px;">
+    <div class="row justify-content-between">
+        <div class="col-lg-4">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a routerLink="/viewoldclaimandnewclaimdetails" routerLinkActive="active" class="nav-link active">
+                    Old And New Claim Details</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="form-cointainer" style="padding-left: 15px;">
+    <div class="main-tab">
+        <div class="col-lg-12">
+            <div class="card shadow-sm mt-3 mt-xl-4 ">
+                <div class="card-header">
+                    <h5 class="mb-0">Claim Details</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row gx-xl-5 treatment-details">
+                        <div class="col-xl">
+                            <p class="mb-0 fw-bold">{{HospitalDetails?.hospital_namehsptl}}({{HospitalDetails?.hospital_codehsptl}})
+                                <br>
+                            </p>
+                        </div>
+                        <div class="col-xl border-start">
+                            <div class="d-flex align-items-center">
+                                <div>
+                                    <p class="text-muted mb-0">URN</p>
+                                    <p class="mb-0 fw-bold">{{HospitalDetails?.urnhsptl}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl border-start">
+                            <div class="d-flex align-items-center">
+                                <div>
+                                    <p class="text-muted mb-0"> Invoice Number</p>
+                                    <p class="mb-0 fw-bold">{{HospitalDetails?.invoicenohsptl}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl border-start">
+                            <div class="d-flex align-items-center">
+                                <div>
+                                    <p class="text-muted mb-0">Claim Number</p>
+                                    <p class="mb-0 fw-bold">{{HospitalDetails?.claim_nohsptl}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="card shadow-sm mt-3 mt-xl-4 ">
+                                <div class="card-header">
+                                    <h5 class="mb-0">Patient Details</h5>
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="row gx-xl-5 treatment-details">
+                                        <div class="col-xl">
+                                            <p class="small text-muted mb-0"></p>
+                                            <h6 class="mb-0">
+                                                {{HospitalDetails?.patientname}}
+                                            </h6>
+                                        </div>
+                                        <div class="col-xl border-start">
+                                            <div class="d-flex align-items-center">
+                                                <div>
+                                                    <p class="small text-muted mb-0">AGE</p>
+                                                    <h6 class="mb-0 ">{{HospitalDetails?.age}}
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl border-start">
+                                            <div class="d-flex align-items-center">
+                                                <div>
+                                                    <p class="small text-muted mb-0">GENDER</p>
+                                                    <h6 class="mb-0">
+                                                        <span *ngIf=" HospitalDetails?.gender=='F' ">
+                                                            Female
+                                                          </span>
+                                                        <span *ngIf=" HospitalDetails?.gender=='M' ">
+                                                            Male
+                                                          </span>
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl border-start">
+                                            <div class="d-flex align-items-center">
+                                                <div>
+                                                    <p class="small text-muted mb-0">Address</p>
+                                                    <h6 class="mb-0 ">
+                                                        {{HospitalDetails?.state}},{{HospitalDetails?.disctrict}},{{HospitalDetails?.block}},{{HospitalDetails?.panchayat}},{{HospitalDetails?.villagename}}
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl border-start">
+                                            <div class="d-flex align-items-center">
+                                                <div>
+                                                    <p class="small text-muted mb-0">Mobile No</p>
+                                                    <h6 class="mb-0 ">
+                                                        {{HospitalDetails?.patientphonenumber}}
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="card shadow-sm mt-3 mt-xl-4 ">
+                                                <div class="card-header">
+                                                    <h5 class="mb-0">Treatment Details</h5>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row gx-xl-5 treatment-details">
+                                                        <div class="col-xl">
+                                                            <p class="small text-muted mb-0">Date of Admission - Date of Discharge </p>
+                                                            <h6 class="mb-0">{{Treatmendetails?.dateofadmissiontrtmntdtls }} - {{Treatmendetails?.dateofdischargetrtmntdtls}}
+                                                            </h6>
+                                                        </div>
+                                                        <div class="col-xl border-start">
+                                                            <div class="col-xl">
+                                                                <p class="small text-muted mb-0">Actual Date of Admission and Discharge</p>
+                                                                <h6 class="mb-0">{{Treatmendetails?.actualdateofadmissiontrtmntdtls}} - {{Treatmendetails?.actualdateofdischargetrtmntdtls}}
+                                                                </h6>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl border-start">
+                                                            <div class="d-flex align-items-center">
+                                                                <div>
+                                                                    <p class="small text-muted mb-0">Package Rate(₹)</p>
+                                                                    <h6 class="mb-0">N/A</h6>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl border-start">
+                                                            <div class="d-flex align-items-center">
+                                                                <div>
+                                                                    <p class="small text-muted mb-0">Blocked Amount(₹)
+                                                                    </p>
+                                                                    <h6 class="mb-0 ">{{Treatmendetails?.totalamountblockedtrtmntdtls | currency:"":""}}</h6>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl border-start">
+                                                            <div class="d-flex align-items-center">
+                                                                <div>
+                                                                    <p class="small text-muted mb-0">Authorized Code</p>
+                                                                    <h6 class="mb-0 ">{{Treatmendetails?.authorizedcodetrtmntdtls}}</h6>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl border-start">
+                                                            <div class="d-flex align-items-center">
+                                                                <div>
+                                                                    <p class="small text-muted mb-0">Procedure</p>
+                                                                    <h6 class="mb-0 ">{{Treatmendetails?.procedurenametrtmntdtls}}</h6>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <hr class="mt-xl-4">
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <div class="d-flex align-items-center">
+                                                                <div>
+                                                                    <p class="small text-muted mb-0">Packages</p>
+                                                                    <h6 class="mb-0" title={{Treatmendetails?.packagecodetrtmntdtls}}>{{Treatmendetails?.packagenametrtmntdtls}}</h6>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl border-start">
+                                                            <div class="d-flex align-items-center">
+                                                                <!-- <i class="iconbsky-block-amount mt-2 me-3 fs-1"></i> -->
+                                                                <div>
+                                                                    <p class="small text-muted mb-0">Claim Case Number
+                                                                    </p>
+                                                                    <h6 class="mb-0 ">{{Treatmendetails?.claim_case_notrtmntdtls}}</h6>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl border-start">
+                                                            <div class="d-flex align-items-center">
+                                                                <!-- <i class="iconbsky-block-amount mt-2 me-3 fs-1"></i> -->
+                                                                <div>
+                                                                    <p class="small text-muted mb-0">Claim Bill Number
+                                                                    </p>
+                                                                    <h6 class="mb-0 ">{{Treatmendetails?.claim_bill_notrtmntdtls}}</h6>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-lg-3 border-start">
+                                                            <div class="d-flex align-items-center">
+                                                                <!-- <i class="iconbsky-block-amount mt-2 me-3 fs-1"></i> -->
+                                                                <div>
+                                                                    <p class="small text-muted mb-0">Mortality (As per Hospital)
+                                                                    </p>
+                                                                    <h6 class="mb-0">{{Treatmendetails?.hospitalmortalitytrtmntdtls}}</h6>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl border-start">
+                                                            <div class="d-flex align-items-center">
+                                                                <!-- <i class="iconbsky-package-amount mt-2 me-3 fs-1"></i> -->
+                                                                <div>
+                                                                    <p class="small text-muted mb-0">Mortality (As per CPD)
+                                                                    </p>
+                                                                    <h6 class="mb-0">{{Treatmendetails?.cpdmortalitytrtmnts}}</h6>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl border-start">
+                                                            <div class="d-flex align-items-center">
+                                                                <div>
+                                                                    <p class="small text-muted mb-0">Referral Code
+                                                                    </p>
+                                                                    <h6 class="mb-0">{{Treatmendetails?.referralcodetrtmntdtls}}</h6>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <hr class="mt-xl-4">
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <div class="d-flex align-items-center">
+                                                                <div>
+                                                                    <p class="small text-muted mb-0">IMPLANT DATA
+                                                                    </p>
+                                                                    <h6 class="mb-0">{{Treatmendetails?.implant_datatrtmntdtls}}</h6>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3 border-start">
+                                                            <div class="d-flex align-items-center">
+                                                                <div>
+                                                                    <p class="small text-muted mb-0">NABH Flag</p>
+                                                                    <h6 class="mb-0">{{Treatmendetails?.nabhtrtmntdtls}}</h6>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3 border-start">
+                                                            <div class="d-flex align-items-center">
+                                                                <div>
+                                                                    <p class="small text-muted mb-0">Authentication MODE
+                                                                    </p>
+                                                                    <h6 class="mb-0" style="color:red">{{Treatmendetails?.verificationmodetrtmntdtls}}
+                                                                    </h6>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3 border-start">
+                                                            <div class="d-flex align-items-center">
+                                                                <div>
+                                                                    <p class="small text-muted mb-0">Is Patient OTP Verified
+                                                                    </p>
+                                                                    <h6 class="mb-0">{{Treatmendetails?.ispatientotpverifiedtrtmntdtls}}</h6>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-12">
+                                                            <hr class="my-xl-4">
+                                                            <h5>Pre-Auth Log</h5>
+                                                            <div class="table-responsive">
+                                                                <table class="table mb-0 border">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th width="40" rowspan="2">Sl#</th>
+                                                                            <th rowspan="2">Pre-Auth Code</th>
+                                                                            <th rowspan="2">Claimed Amount (₹)</th>
+                                                                            <th rowspan="2">Approved Amount (₹)</th>
+                                                                            <th rowspan="2">Approved Date</th>
+                                                                            <th rowspan="2">Remark</th>
+                                                                            <th colspan="3" style="text-align:center">
+                                                                                Documents</th>
+                                                                            <th rowspan="2">Details</th>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th>Doc1</th>
+                                                                            <th>Doc2</th>
+                                                                            <th>Doc3</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <ng-container>
+                                                                            <tr *ngFor="let prteAuth of preauthlog,index as i">
+                                                                                <td>{{i+1}}</td>
+                                                                                <td>{{prteAuth.authoritycodepreauth}}</td>
+                                                                                <td>{{prteAuth.amountpreauth}}</td>
+                                                                                <td>{{prteAuth.approvedamountpreauth | currency:"":""}}</td>
+                                                                                <td>{{prteAuth.approveddatepreauth | date :'dd-MMM-yyyy'}}</td>
+                                                                                <td>{{prteAuth.moredocsdescriptionpreauth}}</td>
+                                                                                <td *ngIf="prteAuth.addtional_doc1preauth != undefined"><a href="javascript:void(0);" (click)="downloadAction($event,prteAuth.addtional_doc1preauth,prteAuth.hospitalcodepreauth,prteAuth.hospitaluploaddatepreauth,'')"><i class="bi bi-file-earmark-pdf" style="color:red;font-size:15px;"></i></a></td>
+                                                                                <td *ngIf="prteAuth.addtional_doc1preauth == undefined">--</td>
+                                                                                <td *ngIf="prteAuth.addtional_doc2preauth != undefined"><a href="javascript:void(0);" (click)="downloadAction($event,prteAuth.addtional_doc2preauth,prteAuth.hospitalcodepreauth,prteAuth.hospitaluploaddatepreauth,'')"><i class="bi bi-file-earmark-pdf" style="color:red;font-size:15px;"></i></a></td>
+                                                                                <td *ngIf="prteAuth.addtional_doc2preauth == undefined">--</td>
+                                                                                <td *ngIf="prteAuth.addtional_doc3preauth != undefined"><a href="javascript:void(0);" (click)="downloadAction($event,prteAuth.addtional_doc3preauth,prteAuth.hospitalcodepreauth,prteAuth.hospitaluploaddatepreauth,'')"><i class="bi bi-file-earmark-pdf" style="color:red;font-size:15px;"></i></a></td>
+                                                                                <td *ngIf="prteAuth.addtional_doc3preauth == undefined">--</td>
+                                                                                <td><a href="javascript:void(0)" (click)="preAuthLogDetails(prteAuth.urnnopreauth,prteAuth?.authoritycodepreauth,prteAuth.hospitalcodepreauth)">Click here</a></td>
+                                                                            </tr>
+                                                                        </ng-container>
+                                                                        <tr *ngIf="this.preauthlog?.length==0">
+                                                                            <td colspan="15" align="center"><strong class="text-danger">No Data Found</strong>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mt-4">
+                                                            <div class="col-lg-12">
+                                                                <div class="card shadow-sm treatment-history">
+                                                                    <div class="card-header">
+                                                                        <h5 class="mb-0">Treatment History</h5>
+                                                                    </div>
+                                                                    <div class="card-body">
+                                                                        <div>
+                                                                            <div class="row">
+                                                                                <div class="col-lg-11">
+                                                                                    <h6>Discharge Treatment Information</h6>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="table-responsive">
+                                                                            <table class="table mb-0 border" id="treatmentTable" style="margin-top: 5px; width: 100%;">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>Sl#</th>
+                                                                                        <th>URN</th>
+                                                                                        <th>Invoice No.</th>
+                                                                                        <th>Hospital Name</th>
+                                                                                        <th>Package Code</th>
+                                                                                        <th>Patient Name</th>
+                                                                                        <th>Actual Date of Admission</th>
+                                                                                        <th>Actual Date of Discharge</th>
+                                                                                        <th>SNA Approved Amount(₹)</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <ng-container>
+                                                                                        <tr *ngFor="let treatment of treatmenthistory; index as i">
+                                                                                            <td>{{i+1}}</td>
+                                                                                            <td>{{treatment.urntrmnthst}}</td>
+                                                                                            <td>{{treatment.invoicenotrmnthst}}</td>
+                                                                                            <td>{{treatment.hospitalnametrmnthst}}</td>
+                                                                                            <td title={{treatment.packagenametrmnthst}}>{{treatment.packagecodetrmnthst}}</td>
+                                                                                            <td>{{treatment.patientnametrmnthst}}</td>
+                                                                                            <td>{{treatment.actualdateofadmissiontrmnthst}}</td>
+                                                                                            <td>{{treatment.actualdateofdischargetrmnthst}}</td>
+                                                                                            <td>{{treatment.snaapprovedamounttrmnthst |currency:'':''}}</td>
+                                                                                        </tr>
+                                                                                    </ng-container>
+                                                                                    <tr *ngIf="this.treatmenthistory?.length==0">
+                                                                                        <td colspan="15" align="center">
+                                                                                            <strong class="text-danger">No Data Found</strong></td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                        <div style="margin-top: 2rem;">
+                                                                            <div class="row">
+                                                                                <div class="col-lg-11">
+                                                                                    <h6>Old Claim Information</h6>
+                                                                                </div>
+                                                                                <div class="col-lg-1">
+                                                                                    <!-- <button class="btn btn-success" style="float: right" (click)="downloadExcelOldTreatmentHistory()"><span
+                                                                              class="bi bi-download"></span></button> -->
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="table-responsive">
+                                                                                <table class="table mb-0 border" style="width:100%; margin-top: 5px;" id="oldTreatmentTable">
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                            <th>Sl#</th>
+                                                                                            <th>URN</th>
+                                                                                            <th>Invoice No.</th>
+                                                                                            <th>Patient Name</th>
+                                                                                            <th>Actual Date of Discharge</th>
+                                                                                            <th>SNA Approved Amount(₹)</th>
+                                                                                            <th>SNA Approved Date</th>
+                                                                                            <th>Document 1</th>
+                                                                                            <th>Document 2</th>
+                                                                                            <th>Document 3</th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                        <ng-container>
+                                                                                            <tr *ngFor="let oldTreatment of treatmenthistory; index as i">
+                                                                                                <td>{{i+1}}</td>
+                                                                                                <td>{{oldTreatment.urntrmnthst}}</td>
+                                                                                                <td>{{oldTreatment.invoicenotrmnthst}}</td>
+                                                                                                <td>{{oldTreatment.patientnametrmnthst}}</td>
+                                                                                                <td>{{oldTreatment.actualdateofdischargetrmnthst}}</td>
+                                                                                                <td>{{oldTreatment.snaapprovedamounttrmnthst |currency:'':''}}</td>
+                                                                                                <td>{{oldTreatment.snaapproveddatetrmnthst | date :'dd-MMM-yyyy'}}</td>
+                                                                                                <td *ngIf="oldTreatment.filenames1trmnthst != undefined">
+                                                                                                    <a href="javascript:void(0);" (click)="downloadAction($event,oldTreatment.filenames1trmnthst,oldTreatment.hospitalcodetrmnthst,oldTreatment.yeartrmnthst,'')"><i class="bi bi-file-earmark-pdf" style="color:red;font-size:15px;"></i></a>
+                                                                                                </td>
+                                                                                                <td *ngIf="oldTreatment.filenames1trmnthst == undefined">--</td>
+
+                                                                                                <td *ngIf="oldTreatment.filenames2trmnthst != undefined">
+                                                                                                    <a href="javascript:void(0);" (click)="downloadAction($event,oldTreatment.filenames2trmnthst,oldTreatment.hospitalcodetrmnthst,oldTreatment.yeartrmnthst,'')"><i class="bi bi-file-earmark-pdf" style="color:red;font-size:15px;"></i></a>
+                                                                                                </td>
+                                                                                                <td *ngIf="oldTreatment.filenames2trmnthst == undefined">--</td>
+
+                                                                                                <td *ngIf="oldTreatment.filenamestrmnthst != undefined">
+                                                                                                    <a href="javascript:void(0);" (click)="downloadAction($event,oldTreatment.filenamestrmnthst,oldTreatment.hospitalcodetrmnthst,oldTreatment.yeartrmnthst,'')"><i class="bi bi-file-earmark-pdf" style="color:red;font-size:15px;"></i></a>
+                                                                                                </td>
+                                                                                                <td *ngIf="oldTreatment.filenamestrmnthst == undefined">--</td>
+                                                                                            </tr>
+                                                                                        </ng-container>
+                                                                                        <tr *ngIf="this.treatmenthistory?.length==0">
+                                                                                            <td colspan="15" align="center">
+                                                                                                <strong class="text-danger">No Data Found</strong>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col-lg-12">
+                                                                                <hr class="my-xl-4">
+                                                                                <h5>Action Taken History</h5>
+                                                                                <div class="table-responsive">
+                                                                                    <table class="table mb-0 border">
+                                                                                        <thead>
+                                                                                            <tr>
+                                                                                                <th width="40">Sl#</th>
+                                                                                                <th>Action By</th>
+                                                                                                <th>Action On</th>
+                                                                                                <th>Action Type</th>
+                                                                                                <th>Amount (₹)</th>
+                                                                                                <th>Remark</th>
+                                                                                                <th>Description</th>
+                                                                                                <th>Discharge Slip</th>
+                                                                                                <th>Additional Docs</th>
+                                                                                                <th>Additional Docs1</th>
+                                                                                                <th>Additional Docs2</th>
+                                                                                                <th>Pre-Surgery</th>
+                                                                                                <th>Post-Surgery</th>
+                                                                                                <th>Intra-Surgery</th>
+                                                                                                <th>Specimen-Removal</th>
+                                                                                                <th>Patient-Photo</th>
+                                                                                            </tr>
+                                                                                        </thead>
+                                                                                        <tbody>
+                                                                                            <tr>
+                                                                                                <tr *ngFor="let action2 of actiontakenhistory; index as i">
+                                                                                                    <td>{{i+1}}</td>
+                                                                                                    <td>{{ action2.full_nameactiontakenhst }}</td>
+                                                                                                    <td> {{ action2.actiononactiontakenhst| date :'dd-MMM-yyyy, h:mm:ss a'}}</td>
+
+                                                                                                    <td>{{ action2.action_typeactiontakenhst}}</td>
+                                                                                                    <td>{{ action2.approvedamountactiontakenhst | currency:"INR" }}</td>
+
+                                                                                                    <td>{{ action2.remark_idactiontakenhst}}</td>
+                                                                                                    <td *ngIf="action2.remarksactiontakenhst != undefined">
+                                                                                                        <a href="javascript:void(0);" (click)="viewDescription(action2.remarksactiontakenhst)">view</a>
+                                                                                                    </td>
+                                                                                                    <td *ngIf="action2.remarksactiontakenhst == undefined">--</td>
+
+
+                                                                                                    <td *ngIf="action2.discharge_slipactiontakenhst != undefined">
+                                                                                                        <a href="javascript:void(0);" (click)="downloadAction($event,action2.discharge_slipactiontakenhst,action2.hospitalcodeactiontakenhst,action2.dateofadmissionactiontakenhst)"><i
+                                                                                                          class="bi bi-file-earmark-pdf" style="color:red;font-size:24px;"></i></a>
+                                                                                                    </td>
+                                                                                                    <td *ngIf="action2.discharge_slipactiontakenhst == undefined">--</td>
+
+                                                                                                    <td *ngIf="action2.additional_docactiontakenhst !=undefined">
+                                                                                                        <a href="javascript:void(0);" (click)="downloadAction($event,action2.additional_docactiontakenhst,action2.hospitalcodeactiontakenhst,action2.dateofadmissionactiontakenhst)"><i class="bi bi-file-earmark-pdf" style="color:red;font-size:24px"></i></a>
+                                                                                                    </td>
+                                                                                                    <td *ngIf="action2.additional_docactiontakenhst == undefined">--</td>
+
+
+
+                                                                                                    <td *ngIf="action2.additionaldoc1actiontakenhst != undefined">
+                                                                                                        <a href="javascript:void(0);" (click)="downloadAction($event,action2.additionaldoc1actiontakenhst,action2.hospitalcodeactiontakenhst,action2.dateofadmissionactiontakenhst)"><i class="bi bi-file-earmark-pdf" style="color:red;font-size:24px"></i></a>
+                                                                                                    </td>
+                                                                                                    <td *ngIf="action2.additionaldoc1actiontakenhst == undefined">--</td>
+
+                                                                                                    <td *ngIf="action2.additionaldoc2actiontakenhst != undefined">
+                                                                                                        <a href="javascript:void(0);" (click)="downloadAction($event,action2.additionaldoc2actiontakenhst,action2.hospitalcodeactiontakenhst,action2.dateofadmissionactiontakenhst)"><i class="bi bi-file-earmark-pdf" style="color:red;font-size:24px"></i></a>
+                                                                                                    </td>
+                                                                                                    <td *ngIf="action2.additionaldoc2actiontakenhst == undefined">--</td>
+
+                                                                                                    <td *ngIf="action2.presurgeryphotoactiontakenhst != undefined">
+                                                                                                        <a href="javascript:void(0);" (click)="downloadAction($event,action2.presurgeryphotoactiontakenhst,action2.hospitalcodeactiontakenhst,action2.dateofadmissionactiontakenhst)"><i class="bi bi-file-earmark-image" style="color:red;font-size:24px"></i></a>
+                                                                                                    </td>
+
+                                                                                                    <td *ngIf="action2.presurgeryphotoactiontakenhst == undefined">--</td>
+
+                                                                                                    <td *ngIf="action2.postsurgeryphotoactiontakenhst != undefined">
+                                                                                                        <a href="javascript:void(0);" (click)="downloadAction($event,action2.postsurgeryphotoactiontakenhst,action2.hospitalcodeactiontakenhst,action2.dateofadmissionactiontakenhst)"><i class="bi bi-file-earmark-image" style="color:red;font-size:24px"></i></a>
+                                                                                                    </td>
+                                                                                                    <td *ngIf="action2.postsurgeryphotoactiontakenhst == undefined">--</td>
+
+                                                                                                    <td *ngIf="action2.intra_surgery_photoactiontakenhst != undefined">
+                                                                                                        <a href="javascript:void(0);" (click)="downloadAction($event,action2.intra_surgery_photoactiontakenhst,action2.hospitalcodeactiontakenhst,action2.dateofadmissionactiontakenhst)"><i class="bi bi-file-earmark-image" style="color:red;font-size:24px"></i></a>
+                                                                                                    </td>
+                                                                                                    <td *ngIf="action2.intra_surgery_photoactiontakenhst == undefined">--</td>
+
+                                                                                                    <td *ngIf="action2.specimen_removal_photoactiontakenhst != undefined">
+                                                                                                        <a href="javascript:void(0);" (click)="downloadAction($event,action2.specimen_removal_photoactiontakenhst,action2.hospitalcodeactiontakenhst,action2.dateofadmissionactiontakenhst)"><i class="bi bi-file-earmark-image" style="color:red;font-size:24px"></i></a>
+                                                                                                    </td>
+
+                                                                                                    <td *ngIf="action2.specimen_removal_photoactiontakenhst == undefined">--</td>
+                                                                                                    <td *ngIf="action2.patient_photoactiontakenhst != undefined">
+                                                                                                        <a href="javascript:void(0);" (click)="downloadAction($event,action2.patient_photoactiontakenhst,action2.hospitalcodeactiontakenhst,action2.dateofadmissionactiontakenhst)"><i class="bi bi-file-earmark-image" style="color:red;font-size:24px"></i></a>
+                                                                                                    </td>
+                                                                                                    <td *ngIf="action2.patient_photoactiontakenhst == undefined">--</td>
+                                                                                                </tr>
+                                                                                                <tr *ngIf="this.actiontakenhistory?.length==0">
+                                                                                                    <td colspan="16" align="center">
+                                                                                                        <strong class="text-danger">No Data Found</strong>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal justify-content-center" id="appealDisposal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body py-5">
+                <span class="text-center text-success">
+        {{dtls}}
+      </span>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="modalClose()">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>

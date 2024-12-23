@@ -1,0 +1,18 @@
+<div>
+    <ul>
+        <ul *ngFor="let case of mainArr">
+            <h2><span style="color: red;">{{case.constituencyname}}</span> Assembly Constituency Information</h2>
+            <h6>GJAY -<span style="color: red;">{{ case?.benificiary }}</span> Beneficiaries.</h6>
+            <h6>Total No. of Claims: <span style="color: red;">{{ case?.totalnumberofclaims }}</span></h6>
+            <h6>Total Amount Claimed: Rs. <span style="color: red;">{{ case?.totalamountclaims }}</span> Crs.</h6>
+            <h6>GJAY-01 - <span style="color: red;">{{ case?.bskynabincardbenificiary }}</span> Beneficiaries.</h6>
+            <h5><u>Top 3 GJAY Benificiary</u></h5>
+            <ul *ngFor="let details of case?.details">
+                <li><strong>{{ details?.headname }}</strong> &nbsp;&nbsp;,GP: <span style="color: red;">{{ details?.gp }}
+            </span>&nbsp;&nbsp;,Block: <span style="color: red;">{{details?.block }}</span>&nbsp;&nbsp;,Amount: Rs.
+                    <span style="color: red;">{{details?.rs }}</span>&nbsp;&nbsp; Lakh</li>
+            </ul>
+            <hr style="height:2px;border-width:0;color:gray;background-color:rgb(9, 9, 9)">
+        </ul>
+    </ul>
+</div>

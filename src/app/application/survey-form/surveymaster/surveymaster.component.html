@@ -1,0 +1,82 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+    <div class="row justify-content-between">
+      <div class="col-lg-4">
+        <ul class="nav nav-tabs">
+          <li class="nav-item" *ngIf="!showbth">
+            <a routerLink="/application/surveymater" routerLinkActive="active" class="nav-link active">Add</a>
+          </li>
+          <li class="nav-item" *ngIf="showbth">
+            <a routerLink="/application/surveymater" routerLinkActive="active" class="nav-link active">Update</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/application/viewsurveymater" routerLinkActive="active" class="nav-link "
+              style="color: #1f723f;">View</a>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-3 col-xxl-3">
+      <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+        <label class="control-label mb-2">Effective From Date</label><span class="text-danger">*</span>
+        <div class="input-group">
+          <input type="text" class="form-control border-end-0 datepicker" id="fromDate"
+            name="fromDate" autocomplete="off" placeholder="From Date">
+          <label class="input-group-text bg-transparent border-start-0" for="fromDate"><i class="iconbsky-calendar"></i>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-xxl-3">
+      <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+        <label class="control-label mb-2">Effective To Date</label><span class="text-danger">*</span>
+        <div class="input-group">
+          <input type="text" class="form-control border-end-0 datepicker" id="toDate"
+            name="toDate" autocomplete="off" placeholder="To Date">
+          <label class="input-group-text bg-transparent border-start-0" for="toDate"><i class="iconbsky-calendar"></i>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6 col-xxl-6">
+      <div class="mb-xl-3">
+        <label for="EnterFunctionDescription" class="form-label">Survey Name<span class="text-danger">*</span></label>
+        <textarea class="form-control" placeholder="Enter  Survey Name" [(ngModel)]="updatedata.surveyname"
+          autocomplete="off" id="survey" maxlength="500" #myInput (keypress)="keyPress($event)"></textarea>
+        <span class="text-danger small">Characters Remaining: {{maxChars - myInput.value.length}}</span>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="col-lg-4 col-xxl-4" *ngIf="showbth">
+      <div class="mb-xl-3">
+        <label>Status:</label>&nbsp;&nbsp;<br>
+        <label *ngIf="status==0">
+          <input type="radio" checked="checked" [checked]="true" (click)="yes(0)" name="status" id="status">Active
+          &nbsp;&nbsp;
+          <input type="radio" (click)="yes(1)" name="status" id="status">In-Active
+        </label>
+
+        <label *ngIf="status==1">
+          <input type="radio" (click)="yes(0)" name="status" id="status">Active &nbsp;&nbsp;
+          <input type="radio" checked="checked" [checked]="true" (click)="yes(1)" name="status"
+            id="status">In-Active
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!showbth">
+    <input type="submit" value="Submit" class="btn btn-success" (click)="submit()">&nbsp;&nbsp;
+    <input type="button" value="Reset" class="btn btn-secondary" (click)="Reset()">
+  </div>
+  <div *ngIf="showbth">
+    <input type="submit" value="Update" class="btn btn-success" (click)="update()">&nbsp;&nbsp;
+    <input type="button" value="Cancel" class="btn btn-secondary" (click)="cancel()">
+  </div>
+</div>

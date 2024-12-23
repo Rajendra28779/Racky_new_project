@@ -1,0 +1,20 @@
+<div class="utilite float-end mb-1">
+        <ul class="mb-0 ps-0">
+                <li class="bg-transparent border-0" [class.d-none]="isIndicate">
+                        <span class="text-danger small"><b>(*)</b> Indicate mandatory </span>
+                </li>
+                <li [class.d-none]="isPrint">
+                        <a href="javascript:void(0)" #childInputVal (click)="printArea(childInputVal)" ngbTooltip="Click to Print"><i
+                                        class="bi bi-printer"></i></a>
+                </li>
+                <li [class.d-none]="isDelete">
+                        <a href="javascript:void(0)" ngbTooltip="Delete Record"><i class="bi bi-trash"></i></a>
+                </li>
+                <li [class.d-none]="isDownload">
+                        <a href="javascript:void(0)" ngbTooltip="Download"><i class="bi bi-download"></i></a>
+                </li>
+                <li [class.d-none]="isBack"><a href="javascript:void(0)" ngbTooltip="Go to Previous" class="btn btn-success"
+                  (click)="backToPrevious()"><i style="color:white;" class="bi bi-arrow-left"></i></a>
+                </li>
+        </ul>
+</div>

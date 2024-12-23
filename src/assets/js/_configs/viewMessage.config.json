@@ -1,0 +1,30 @@
+[
+    {
+      "pagetitle":"View Message Engine",
+      "tabList":[
+        {"tabName":"View Message","tabUrl":"../viewMessageEngine","tabClass":"active"},
+        {"tabName":"View Reminder","tabUrl":"../viewReminder"}],
+        
+        
+      "utils":[
+       
+        {"utilName":"search"},
+        {"utilName":"print"},
+        {"utilName":"delete"},
+        {"utilName":"publish"},
+        {"utilName":"unpublish"},
+        {"utilName":"download"}
+       
+        ],
+      "messages":
+        {
+        "successMsg":"Date saved successfully",
+        "errorMsg":"Something Went Wrong",
+        "warningtype":"You want to delete this record",
+        "deleteMsg":"Record has been deleted"
+      }
+      
+    }
+  ]
+
+

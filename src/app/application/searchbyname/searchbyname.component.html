@@ -1,0 +1,284 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="col-lg-10">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a routerLink="/application/searchbyname" routerLinkActive="active" class="nav-link" style="color: #1f723f;">Beneficiary Search By Name</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4 col-xxl-4">
+            <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                <div class="mb-xl-3">
+                    <div class="mb-xl-3">
+                        <label for="EnterFullName" class="form-label">Scheme Name<span class="text-danger">*</span></label
+              >
+              <input
+                class="form-control"
+                type="text"
+                placeholder="Scheme Name"
+                autocomplete="off"
+                maxlength="30"
+                id="schemename"
+                [(ngModel)]="schemeName"
+                disabled
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-xxl-4">
+        <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+          <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+            <label class="control-label"
+              >Scheme Category Name></label>
+                        <select class="form-select" name="schemacategory" id="schemacategory" (click)="getschemacategoryid($event.target.value)" style="margin-top: 9px">
+              <option value="" selected >All</option>
+              <ng-container *ngFor="let item of schemeList">
+                <option value="{{ item.schemeCategoryId }}">
+                  {{ item.categoryName }}
+                </option>
+              </ng-container>
+            </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-xxl-4"></div>
+            <div class="col-lg-3 col-xxl-3">
+                <div class="mb-xl-3">
+                    <label class="control-label">District Name</label>
+                    <select class="form-select" name="districtId" id="districtId">
+                  <option value="">Select District</option>
+                  <ng-container *ngFor="let item of districtList">
+                      <option value={{item.districtcode}}>{{item.districtname}}</option>
+                  </ng-container>
+              </select>
+                </div>
+            </div>
+            <div class="col-lg-3 col-xxl-3">
+                <div class="mb-xl-3">
+                    <label class="control-label">Search Type</label><span class="text-danger">*</span>
+                    <select class="form-select" name="searchtype" id="searchtype">
+                <option value="" selected>Select Search Type</option>
+                <option value=1>Name</option>
+                <option value=2>Mobile No</option>
+                <option value=3>Aadhaar Card No.</option>
+                <option value=4>URN</option>
+            </select>
+                </div>
+            </div>
+            <div class="col-lg-4 col-xxl-4">
+                <div class="mb-xl-3">
+                    <label class="control-label">Enter Here</label><span class="text-danger">*</span>
+                    <input type="text" class="form-control" placeholder="Enter Here" name="textdata" id="textdata" autocomplete="off" maxlength="25">
+                </div>
+            </div>
+            <div class="col-lg-4 col-xxl-4">
+                <div class="mb-xl-4 ">
+                    <button type="submit" class="btn btn-success" style="margin-top: 1ch;" (click)="Search()">Search</button>&nbsp;
+                    <button type="button" class="btn btn-secondary" style="margin-top: 1ch;" (click)="getReset()">Reset</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-box" *ngIf="showtable">
+            <div class="row">
+                <div class="col-4" style="margin-top:2ch;">
+                    <div class="col-sm-*" *ngIf="showPegi">
+                        show
+                        <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+              <option value="100">100</option>
+              <option value="200">200</option>
+              <option value="300">300</option>
+              <option value={{totalcount}}>All</option>
+            </select> entries
+                    </div>
+                </div>
+                <div class="col-2" style="margin-top:2ch;">
+                    <p>Total : {{totalcount}}</p>
+                </div>
+                <div class="col-2" style="text-align:end ;">
+                    <button class="btn btn-success btn-sm mx-1" style="margin-top: 10px" tooltip="Excel" (click)="downloadList(1)">
+        <i class="bi bi-file-earmark-spreadsheet"></i>
+    </button>
+                    <button class="btn btn-danger btn-sm mx-1" style="margin-top: 10px" tooltip="pdf" (click)="downloadList(2)">
+          <i class="bi bi-file-earmark-pdf"></i>
+      </button>
+                </div>
+                <div class="col-4">
+                    <input type="text " id="txtsearchDate " name="txtsearchDate " [(ngModel)]="txtsearchDate" maxlength="20 " class="form-control " placeholder="Search here...... " autocomplete="off" style=" margin-right: 0px; margin-left: 0px;">
+                </div>
+            </div>
+            <div class="table-responsive" style="margin-top:1px;">
+                <table class="table table-striped mb-0">
+                    <thead>
+                        <tr>
+                            <th width="50">Sl#</th>
+                            <th>District Name</th>
+                            <th>Block Name</th>
+                            <th>Panchayat/Word Name</th>
+                            <th>Village Name</th>
+                            <th>URN</th>
+                            <th>Full Name</th>
+                            <th>Mobile No</th>
+                            <th>Aadhar No</th>
+                            <th>Gender</th>
+                            <th>Age</th>
+                            <th>Family Head Name</th>
+                            <th>Relation with Family Head</th>
+                            <th>Ration Card Type</th>
+                            <th>FPS name</th>
+                            <th>Card Details</th>
+                            <th>Card Balance</th>
+                            <th>Treatment Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let v of list | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage},index as i">
+                            <td *ngIf="currentPage==1 ">{{(i+1)}}</td>
+                            <td *ngIf="currentPage!=1 ">{{(currentPage-1)*pageElement+ i+1}}</td>
+                            <td>{{v.dist}}</td>
+                            <td>{{v.block}}</td>
+                            <td>{{v.word}}</td>
+                            <td>{{v.village}}</td>
+                            <td [innerHTML]="v.cardno | searchTextHighlighter: dataResult"></td>
+                            <td [innerHTML]="v.fullname | searchTextHighlighter: dataResult"></td>
+                            <td [innerHTML]="v.mobileno | searchTextHighlighter: dataResult"></td>
+                            <td [innerHTML]="v.adharno | searchTextHighlighter: dataResult"></td>
+                            <td>{{v.gender}}</td>
+                            <td>{{v.age}}</td>
+                            <td>{{v.headName}}</td>
+                            <td>{{v.relation}}</td>
+                            <td>{{v.cardtype}}</td>
+                            <td>{{v.fpsname}}</td>
+                            <td style="text-align: center;"><i class="bi bi-card-text" style="color: #1f723f; font-size: 3ch;" data-bs-toggle="modal" data-bs-target="#FamilyView" title="View" (click)="carddetails(v.cardno)"></i></td>
+                            <td style="text-align: center;"><i class="bi bi-info-circle-fill" data-bs-toggle="modal" style="color: #1f723f;" data-bs-target="#card" (click)="balance(v.cardno)"></i></td>
+                            <td style="text-align: center" title="Action">
+                                <button style="text-align: center;" class="btn btn-outline-success btn-sm me-1" (click)="onaction(v.cardno)">Details</button>
+                            </td>
+                        </tr>
+                        <tr *ngIf="totalcount==0">
+                            <td colspan="20" align="center">
+                                <strong class="text-danger">NO DATA FOUND!!</strong>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div><br>
+            <div class="row" *ngIf="showPegi">
+                <div class="col-sm-4">
+                    <div class="col-sm-*">
+                        show
+                        <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+              <option value="100">100</option>
+              <option value="200">200</option>
+              <option value="300">300</option>
+              <option value={{totalcount}}>All</option>
+            </select> entries
+                    </div>
+                </div>
+                <div class="col-sm-8 text-right">
+                    <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true" (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)">
+                    </pagination-controls>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="card" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="max-width: 30%;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        <span>Card Balance Of <b style="color: #1f723f;">{{urn}}</b></span>
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- <b style="color: #1f723f;">{{remark}}</b> -->
+                    <p><b style="color: #1f723f;">Available Balance : </b>{{cardbalance?.availablebalance | currency:'':''}}</p>
+                    <p><b style="color: #1f723f;">Female Fund       : </b>{{cardbalance?.femalefond | currency:'':''}}</p>
+                    <p><b style="color: #1f723f;">Amount Blocked    : </b>{{cardbalance?.amountBlcked | currency:'':''}}</p>
+                    <p><b style="color: #1f723f;">Claimed Amount    : </b>{{cardbalance?.claimamount | currency:'':''}}</p>
+                    <p><b style="color: #1f723f;">Policy Start Date : </b>{{cardbalance?.policystdate | date:'dd-MMM-yyyy'}}</p>
+                    <p><b style="color: #1f723f;">Policy End Date   : </b>{{cardbalance?.policeenddate | date:'dd-MMM-yyyy'}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- family details Modal -->
+    <div class="modal fade" id="FamilyView" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="d-flex w-100">
+                        <h5 class="modal-title align-items-center w-100" id="staticBackdropLabel"> Family Card Details </h5>
+                        <div class="me-3"> <button type="button" class="btn btn-success btn-sm" title="Print" (click)="print()"><i class="bi bi-printer-fill"></i></button></div>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modalbody">
+                    <div class="row">
+                        <!-- first card section -->
+                        <div class="card patient-info shadow-sm border-0 shadow-none align-items-start mb-2">
+                            <div class="card-body bg-back-img">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="card-name">
+                                            <h5 class="mb-0">{{benific?.fullname}} </h5>
+                                            <h5 class="">{{benific?.cardno}}</h5>
+                                            <div class="address-new">
+                                                <div> Dist - {{benific?.dist}} </div>
+                                                <div> Block - {{benific?.block}} </div>
+                                                <div> Panchayat/Word - {{benific?.word}} </div>
+                                                <div> Village - {{benific?.village}} </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- first card section -->
+                        <!-- second card section -->
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="text-bg-success patient-info shadow-sm p-3 card-bg">
+                                <div class="firstcard-bg">
+                                    <div> <img src="../../../assets/img/bsky-name.png" width="150" class="img-responsive"> </div>
+                                    <div> <img src="../../../assets/img/govt-logo-white.png" width="40" class="img-responsive"> </div>
+                                </div>
+                                <div class="cardtabl-bg">
+                                    <div class="table-responsive">
+                                        <table class="table table-sm" id="printTable">
+                                            <thead>
+                                                <tr>
+                                                    <th class="header-cell" width="40">Sl#</th>
+                                                    <th class="header-cell" width="400"> Name </th>
+                                                    <th class="header-cell" width="70"> Gender </th>
+                                                    <th class="header-cell" width="50"> Age </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let v of family,index as i">
+                                                    <td class="data-cell">{{(i+1)}}</td>
+                                                    <td class="data-cell">{{v.fullname}}</td>
+                                                    <td class="data-cell">{{v.gender}}</td>
+                                                    <td class="data-cell">{{v.age}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- second card section -->
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+    <!-- family details Modal -->

@@ -1,0 +1,156 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-10">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/downloaddischargeadmissiondumpreport"
+                            class="nav-link active">Discharge and Admission Dump Report</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="content-box mt-3">
+        <div class="col-xxl-10">
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4" *ngIf="showdropdown">
+                    <label class="control-label mb-2">SNA Name</label>
+                    <input class="form-control" type="text" autocomplete="off" [(ngModel)]="name" name="name" disabled>
+                </div>
+                <div class="col-lg-3 col-xxl-3">
+                    <label class="control-label mb-2">Search Type</label><span class="text-danger">*</span>
+                    <select class="form-select" id="search" aria-label="Disabled select example" (change)="time()">
+                        <option value="" selected>Select</option>
+                        <option value="2">Admission</option>
+                        <option value="1">Discharge</option>
+                    </select>
+                </div>
+                <div class="col-lg-3 col-xxl-3">
+                    <label class="control-label mb-2">Search For Record<span class="text-danger">*</span></label>
+                    <br>
+                    <div>&nbsp;
+                        <span class="mb-xl-8">
+                            <input type="radio" name="searchFrom" id="searchFrom" value="2"
+                                (click)="findStatus('2')">&nbsp;&nbsp;Dump &nbsp;&nbsp;
+                        </span>
+                        <span class="mb-xl-8">
+                            <input type="radio" name="searchFrom" id="searchFrom" value="1" [checked]="true"
+                                (click)="findStatus('1')">&nbsp;&nbsp;Hospital Wise&nbsp;&nbsp;</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div>
+            <div class="row">
+                <div class="col-lg-3 col-xxl-3">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label class="control-label mb-2"> From Date</label><span class="text-danger">*</span>
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="fromDate"
+                                name="fromDate">
+                            <label class="input-group-text bg-transparent border-start-0" for="fromDate"><i
+                                    class="iconbsky-calendar"></i> </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-xxl-3">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label class="control-label mb-2">To Date</label><span class="text-danger">*</span>
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="toDate" name="toDate">
+                            <label class="input-group-text bg-transparent border-start-0" for="toDate"><i
+                                    class="iconbsky-calendar"></i> </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="showhide==1">
+                <div class="col-lg-3 col-xxl-3">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label class="control-label">State Name</label><span class="text-danger">*</span>
+                        <select class="form-select" name="stateId" id="stateId"
+                            (change)="OnChangeState($event.target.value)">
+                            <option value="" selected>Select State</option>
+                            <ng-container *ngFor="let item of stateList">
+                                <option value={{item.stateCode}}>{{item.stateName}}</option>
+                            </ng-container>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="col-lg-3 col-xxl-3">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label class="control-label">District Name</label><span class="text-danger">*</span>
+                        <select class="form-select" name="districtId" id="districtId"
+                            (change)="OnChangeDistrict($event.target.value)">
+                            <option value="" selected>Select District</option>
+                            <ng-container *ngFor="let item of districtList">
+                                <option value={{item.districtcode}}>{{item.districtname}}</option>
+                            </ng-container>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label class="control-label">Hospital Name</label>
+                        <ng-autocomplete #auto [data]="hospitalList" placeholder="Select Hospital"
+                            (selected)="selectEvent1($event)" [itemTemplate]="itemTemplate"
+                            [notFoundTemplate]="notFoundTemplate" [searchKeyword]="keyword" spellcheck="false"
+                            (inputCleared)="onReset2()">
+                        </ng-autocomplete>
+                        <ng-template #itemTemplate let-item>
+                            <a [innerHTML]="item.hospitalName"></a>
+                        </ng-template>
+                        <ng-template #notFoundTemplate let-notFound>
+                            <div [innerHTML]="notFound"></div>
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 mt-3">
+            <div class="d-grid gap-2 d-md-flex">
+                <button type="submit" class="btn btn-success" (click)="search()">Search</button>
+                <button type="reset" class="btn btn-secondary" (click)="getReset()">Reset</button>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<div class="content-box p-0 overflow-hidden" id="tableopen">
+    <div class="alert alert-danger mt-12 mb-12 d-flex small ">
+        <div>
+            <p class="mb-0 pe-3 me-3 border-end ">
+                <i class="bi bi-info-circle-fill fs-5 me-2 "></i>NOTE
+            </p>
+        </div>
+        <div>
+            <p class="mb-0 ">
+                If the records are more  than 20,000. Then the Inner page will not be open.
+            </p>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table mb-0 border" style="width:100%;">
+            <thead>
+            </thead>
+            <tbody>
+                <tr>
+                    <th style="width:40%;background-color:#f7f7f7;padding-left:2rem;">
+                        <h4><strong>{{valuedata}}</strong></h4>
+                    </th>
+                    <th style="background-color:#f7f7f7;">:</th>
+                    <td style="background-color:#f7f7f7;" >
+                      <a href="javascript:void(0);" (click)="view()" >{{hospitalWisePackage?.countData}}</a></td>
+                    <td> <button class="btn btn-success btn-sm mx-1" tooltip="Excel" (click)="getcountlist()"><i
+                                class="bi bi-download"></i>
+                        </button>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>

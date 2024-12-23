@@ -1,0 +1,8 @@
+.bold-on-hover {
+  font-weight: normal; /* Initial font weight */
+  cursor: pointer;
+}
+
+.bold-on-hover:hover {
+  font-weight: bold; /* Change to bold when hovering */
+}

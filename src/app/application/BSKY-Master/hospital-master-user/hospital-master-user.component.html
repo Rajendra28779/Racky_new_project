@@ -1,0 +1,152 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <!-- <ul class="nav nav-tabs ">
+            <li class="nav-item">
+                <a href="javascript:void(0);" class="nav-link active">CPD Configuration</a>
+            </li>
+        </ul> -->
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item" *ngIf=isUpdateBtnInVisible>
+                        <a routerLink="/application/hospitalgroupMapping" routerLinkActive="active"
+                            class="nav-link active">Add</a>
+                    </li>
+                    <li class="nav-item" *ngIf=isEditBtn>
+                        <a routerLink="/application/hospitalgroupMapping" routerLinkActive="active"
+                            class="nav-link active">Update</a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/application/hospitalgroupMappingDetails" routerLinkActive="active"
+                            class="nav-link" style="color: #1f723f;">View</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-box">
+        <!-- <form>
+            <div class="row">
+                <div class="col-xxl-8">
+                    <form autocomplete="off">
+                        <div class="row">
+                            <div class="col-lg-6" *ngIf=isUpdateBtnInVisible> -->
+        <form autocomplete="off">
+            <div class="row">
+                <div class="col-lg-4" *ngIf=isUpdateBtnInVisible>
+                    <div class="mb-xl-3">
+                        <!-- <div class="mb-xl-3">
+                                        <label class="control-label">Authority Name<span class="text-danger">*</span></label>
+                                        <select class="form-select" name="cpdId" id="cpdId" formControlName="cpdId" (change)="getUserList()" [(ngModel)]="authId">
+                                            <option value="" selected disabled>Select Authority Name</option>
+                                            <ng-container *ngFor="let item of cpdList">
+                                                <option value={{item.userId.userId}}>{{item.fullName}}</option>
+                                            </ng-container>
+                                        </select>
+                                    </div> -->
+                        <!-- <div class="mb-xl-3"> -->
+                        <label class="control-label py-1">Authority Name<span class="text-danger">*</span></label>
+                        <ng-autocomplete #auto1 [data]="cpdList" placeholder="Select Username"
+                            (selected)="selectEvent($event)" (inputCleared)="onReset()"
+                            (inputChanged)='onChangeSearch($event)' [itemTemplate]="itemTemplate"
+                            [notFoundTemplate]="notFoundTemplate" [searchKeyword]="keyword" spellcheck="false">
+                        </ng-autocomplete>
+
+                        <ng-template #itemTemplate let-item>
+                            <a [innerHTML]="item.fullName"></a>
+                        </ng-template>
+
+                        <ng-template #notFoundTemplate let-notFound>
+                            <div [innerHTML]="notFound"></div>
+                        </ng-template>
+
+                    </div>
+                </div>
+                <div class="col-lg-4" *ngIf=isEditBtn>
+                    <div class="mb-xl-3">
+                        <label class="control-label py-1">Hospital Authority Name<span
+                                class="text-danger">*</span></label>
+                        <input class="form-control" type="text" autocomplete="off" name="cpdName" [(ngModel)]="fullname"
+                            id="cpdName" disabled="disabled" />
+                        <!-- </div> -->
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <!-- <div class="col-lg-6"> -->
+                    <div class="mb-xl-3">
+                        <label class="control-label py-1">Hospital Name<span class="text-danger">*</span></label>
+                        <!-- <div style="height: 5pt; width: 500pt;"></div> -->
+                        <ng-autocomplete #auto [data]="userList" placeholder="Select Hospital"
+                            (selected)="selectEvent1($event)" (inputCleared)="onReset1()" [itemTemplate]="itemTemplate"
+                            [notFoundTemplate]="notFoundTemplate" [searchKeyword]="keyword1" spellcheck="false">
+                        </ng-autocomplete>
+
+                        <ng-template #itemTemplate let-item>
+                            <a [innerHTML]="item.hospitalName"></a>
+                        </ng-template>
+
+                        <ng-template #notFoundTemplate let-notFound>
+                            <div [innerHTML]="notFound"></div>
+                        </ng-template>
+
+                    </div>
+                </div>
+                <!-- <div class="col-lg-12" *ngIf=!isEditBtn> -->
+                <div class="col-lg-12">
+                    <div class="col-lg-4 col-xxl-4">
+                        <div class="mb-xl-3">
+                            <button type="submit" class="btn btn-primary" (click)="AddMore()">Add</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- </form> -->
+            <!-- </div> -->
+            <!-- </div> -->
+        </form>
+    </div>
+    <div class="content-box p-0 overflow-hidden" *ngIf="addList?.length!=0">
+        <div class="table-responsive">
+            <table class="table table-striped mb-0">
+                <thead>
+                    <tr>
+                        <th width="60">Sl No.</th>
+                        <th>Hospital Code</th>
+                        <th>Hospital Name</th>
+                        <th>Authority Name</th>
+                        <th class="text-center">Remove</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let claim of addList; index as i">
+                        <td>{{(i+1)}}</td>
+                        <td>{{claim.hosCode}}</td>
+                        <td>{{claim.hosName}}</td>
+                        <td>{{claim.authName}}</td>
+                        <td class="text-center">
+                            <a class="btn btn-outline-danger btn-sm me-1" (click)="remove(claim)">
+                                <i class="bi bi-trash3"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    
+    <div class="row">
+        <div class="col-lg-12" *ngIf="addList?.length!=0">
+            <div class="col-lg-4 col-xxl-4" *ngIf=isUpdateBtnInVisible>
+                <button type="submit" class="btn btn-success" (click)="SubmitDetails()">Submit</button>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="d-grid gap-2 d-md-flex" *ngIf=isEditBtn>
+                <button type="submit" class="btn btn-success" (click)="updateDetails()">Update</button>
+                <input type="button" value="Cancel" class="btn btn-secondary" (click)="cancel()">
+            </div>
+        </div>
+    </div>
+</div>

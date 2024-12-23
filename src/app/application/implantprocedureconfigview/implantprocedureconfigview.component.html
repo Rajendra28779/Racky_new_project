@@ -1,0 +1,147 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+    <div class="row justify-content-between">
+      <div class="col-lg-4">
+        <ul class="nav nav-tabs ">
+          <li class="nav-item">
+            <a routerLink="/application/implantprocedureconfig" routerLinkActive="active" class="nav-link " style="color: #1f723f;">Add</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/application/implantprocedureconfigview" routerLinkActive="active" class="nav-link active"
+              >View</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-box">
+    <div class="row">
+      <div class="col-lg-3 col-xxl-3">
+        <div class="mb-xl-3">
+          <label class="control-label">Speciality Name</label>
+          <ng-autocomplete [data]="packageHeaderItem" placeholder="Select Speciality Name" (selected)="selectEvent($event)"
+            (inputCleared)="clearEvent()" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate"
+            [searchKeyword]="keyword" spellcheck="false">
+          </ng-autocomplete>
+
+          <ng-template #itemTemplate let-item>
+            <a [innerHTML]="item.packageheadername"></a>
+          </ng-template>
+
+          <ng-template #notFoundTemplate let-notFound>
+            <div [innerHTML]="notFound"></div>
+          </ng-template>
+        </div>
+      </div>
+      <div class="col-lg-4 col-xxl-4">
+        <div class="mb-xl-3">
+          <label class="control-label">Package Code</label>
+          <ng-autocomplete #auto [data]="packageList" placeholder="Select Package Code"
+            (selected)="selectEvent1($event)" (inputCleared)="clearEvent1()" [itemTemplate]="itemTemplate1"
+            [notFoundTemplate]="notFoundTemplate1" [searchKeyword]="keyword1" spellcheck="false">
+          </ng-autocomplete>
+
+          <ng-template #itemTemplate1 let-item>
+            <a [innerHTML]="item.procedureDescription"></a>
+          </ng-template>
+
+          <ng-template #notFoundTemplate1 let-notFound>
+            <div [innerHTML]="notFound"></div>
+          </ng-template>
+        </div>
+      </div>
+      <div class="col-lg-4 col-xxl-4">
+        <div class="mb-xl-3">
+            <button type="submit" class="btn btn-success"  style="margin-top: 2ch;" (click)="Search()">Search</button>
+        </div>
+    </div>
+    </div>
+  </div>
+  <div class="content-box">
+    <div class="row">
+      <div class="col-3" style="margin-top:2ch;">
+        <div class="col-sm-*" *ngIf="showPegi" >
+          show
+          <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+            <option value="100">100</option>
+            <option value="200">200</option>
+            <option value="300">300</option>
+            <option value={{totalcount}}>All</option>
+          </select> entries
+        </div>
+      </div>
+      <div class="col-2" style="margin-top:2ch;">
+        <b>Total : {{totalcount}}</b>
+      </div>
+      <div class="col-2" style="text-align:end ;">
+        <button class="btn btn-success btn-sm mx-1" style="margin-top: 10px" tooltip="Excel" (click)="downloadList(1)">
+          <i class="bi bi-file-earmark-spreadsheet"></i>
+        </button>
+        <button class="btn btn-danger btn-sm mx-1" style="margin-top: 10px" tooltip="pdf" (click)="downloadList(2)">
+          <i class="bi bi-file-earmark-pdf"></i>
+        </button>
+      </div>
+      <div class="col-5">
+        <input type="text " id="txtsearchDate " name="txtsearchDate " [(ngModel)]="txtsearchDate" maxlength="20 "
+          class="form-control " placeholder="Search here...... " autocomplete="off"
+          style=" margin-right: 0px; margin-left: 0px;">
+      </div>
+    </div>
+    <br>
+    <div class="table-responsive">
+      <table class="table table-striped mb-0">
+        <caption></caption>
+        <thead>
+          <tr>
+            <th >Sl#</th>
+            <th>Speciality Name</th>
+            <th>Package Name</th>
+            <th>Implant</th>
+            <th>Maximum Unit</th>
+            <th>Unit Per Price (₹)</th>
+            <th>Price Editable</th>
+            <th>Unit Editable</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let v of list | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage},index as i">
+            <td *ngIf="currentPage==1 ">{{(i+1)}}</td>
+            <td *ngIf="currentPage!=1 ">{{(currentPage-1)*pageElement+ i+1}}</td>
+            <td>{{v.speciality}}</td>
+            <td>{{v.package}}</td>
+            <td>{{v.implant}}</td>
+            <td>{{v.maximumunit}}</td>
+            <td>{{v.unitprice | currency:'':''}}</td>
+            <td>{{v.priceeditble}}</td>
+            <td>{{v.uniteditble}}</td>
+          </tr>
+          <tr *ngIf="totalcount==0">
+            <td colspan="6" style="text-align :center;">
+              <strong class="text-danger">NO DATA FOUND!!</strong>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div><br>
+    <div class="row" *ngIf="showPegi">
+      <div class="col-sm-4">
+        <div class="col-sm-*">
+          show
+          <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+            <option value="100">100</option>
+            <option value="200">200</option>
+            <option value="300">300</option>
+            <option value={{totalcount}}>All</option>
+          </select> entries
+        </div>
+      </div>
+      <div class="col-sm-8 text-right">
+        <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true"
+          (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)">
+        </pagination-controls>
+      </div>
+    </div>
+  </div>
+</div>

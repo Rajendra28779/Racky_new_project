@@ -1,0 +1,81 @@
+<!--===Page Title===-->
+<div class="page-title">
+  <h4>{{ title }}</h4>
+</div>
+<!--===Page Title===-->
+<!--===controle section===-->
+<div class="page-controls-section" id="page-content">
+  <div class="card">
+    <div class="card-body">
+      <div class="controls-section">
+        <div *ngIf="formsList?.length > 0; else norecord">
+          <div class="d-flex justify-content-between mb-3">
+            <div></div>
+            <div>
+              Per Page:
+              <select (change)="onTableSizeChange($event)">
+                <option *ngFor="let size of pageSizes" [ngValue]="size">
+                  {{ size }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="table-responsive print-section">
+            <table
+              data-toggle="table"
+              class="table table-bordered valign-middle"
+            >
+              <thead>
+                <tr>
+                  <th>Sl#</th>
+                  <th *ngFor="let colName of dataCols">
+                    {{ colName.colHeader }}
+                  </th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let rows of dataResult; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td *ngFor="let colName of dataCols">
+                    {{ rows[colName.colName] }}
+                  </td>
+                  <td>
+                    <div [innerHTML]="getStatus(rows)"></div>
+                  </td>
+                  <td>
+                    <a
+                      href="javascript:void(0);"
+                      class="btn btn-primary btn-sm"
+                      (click)="
+                        goToTakeAction(rows.intId, rows.intOnlineServiceId)
+                      "
+                      >Take Action</a
+                    >
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="d-flex justify-content-end">
+            <pagination-controls
+              previousLabel="Prev"
+              nextLabel="Next"
+              (pageChange)="onTableDataChange($event)"
+            >
+            </pagination-controls>
+          </div>
+        </div>
+        <ng-template #norecord>
+          <h6 class="no-content">No Record Found</h6>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="loader" *ngIf="loading">
+  <div class="loader-item"></div>
+  <p>Loading...</p>
+</div>

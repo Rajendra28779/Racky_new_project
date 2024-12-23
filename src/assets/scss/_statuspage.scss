@@ -1,0 +1,101 @@
+.card {
+    border-color: rgba($black, .1);
+
+    &-header {
+        border-color: rgba($black, .1);
+    }
+}
+
+.basic-info {
+    i {
+        color: $icon-color;
+    }
+}
+
+.patient-info {
+    // @include linear-gradient($bsky-card-bg-light, $bsky-card-bg);
+    background-image: url(../img/card-bg.png);
+    background-repeat: no-repeat;
+    background-position: right bottom;
+
+    li {
+        padding: .4rem 2rem;
+        position: relative;
+        color: rgba($white, .8);
+
+        i {
+            position: absolute;
+            left: 0.1rem;
+            top: 0.6rem;
+            color: rgba($yellowlight, .4);
+            font-size: 105%;
+        }
+    }
+}
+
+.treatment-details {
+    line-height: 1.8rem;
+
+    i {
+        color: $icon-color;
+    }
+    @media screen and (max-width:991px) {
+        .border-start {
+            border-width: 0 !important;
+        }
+    }
+}
+
+
+.border,
+.border-bottom {
+    border-color: rgba($black, .08) !important;
+}
+
+hr {
+    color: rgba($black, .25);
+}
+
+.table {
+    th {
+        background-color: rgba($green-light, .35);
+    }
+}
+
+.alert {
+    border: 0;
+    color: $gray-900;
+
+    &-danger {
+        background-color: rgba($red, .1);
+
+    }
+
+    &-success {
+        background-color: rgba($green, .08);
+    }
+
+    &-primary {
+        background-color: rgba($blue, .08);
+    }
+
+    i {
+        color: $gray-900;
+    }
+}
+
+.document-upload {
+    a {
+        color: $gray-900;
+
+        &:hover {
+            color: $green;
+            background-color: rgba($green, .05);
+            @include border-radius(.4rem, .4rem, .4rem, .4rem);
+        }
+
+        img {
+            width: 3rem;
+        }
+    }
+}

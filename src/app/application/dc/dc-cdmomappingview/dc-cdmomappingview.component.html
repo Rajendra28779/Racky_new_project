@@ -1,0 +1,226 @@
+<div class="main-tab">
+  <div class="col-lg-4">
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a routerLink="/application/dccdmomapping" routerLinkActive="active" class="nav-link"
+          style="color: #1f723f;">Add</a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/application/dccdmomappingview" routerLinkActive="active" class="nav-link active">View</a>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-3 col-xxl-3">
+    <div class="mb-xl-3">
+        <label class="control-label">Group type<span class="text-danger"></span></label>
+        <select class="form-select" name="group" id="group" [(ngModel)]="group"
+            (change)="getuserDetailsbygroup($event.target.value)">
+            <option value="" selected >Select Group type</option>
+            <option value=6>DC</option>
+            <option value=27>ADC</option>
+        </select>
+    </div>
+  </div>
+  <div class="col-md-6 col-lg-4">
+    <div class="form-group">
+      <label class="control-label">DC/ADC Name<span class="text-danger"></span></label>
+      <ng-autocomplete #auto [data]="dcList" placeholder="Select DC/ADC Name" (selected)="selectEvent($event)"
+        (inputCleared)="clearEvent()" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate"
+        [searchKeyword]="keyword" spellcheck="false">
+      </ng-autocomplete>
+
+      <ng-template #itemTemplate let-item>
+        <a [innerHTML]="item.fullName"></a>
+      </ng-template>
+
+      <ng-template #notFoundTemplate let-notFound>
+        <div [innerHTML]="notFound"></div>
+      </ng-template>
+    </div>
+  </div>
+  <div class="col-lg-3 col-xxl-3" style="margin-top:24px;">
+    <div class="mb-xl-3">
+      <button class="btn btn-success mr-2" type="submit" (click)="getdccdmomapcount()">Search</button>
+    </div>
+  </div>
+</div>
+<div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+  <div class="col-lg-3 col-xxl-3" style="margin-top: 11px;">
+    <div class="col-sm-*" *ngIf="showPegi">
+      show
+      <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+        <option value="50">50</option>
+        <option value="100">100</option>
+        <option value="200">200</option>
+        <option value="300">300</option>
+        <option value="400">400</option>
+      </select> entries
+    </div>
+  </div>
+  <div class="col-lg-3 col-xxl-3" style="margin-top: 13px;">
+    <b>Total : <span style="color: green;">{{count}}</span></b>
+  </div>
+  <div class="col-2" style="text-align:end ;">
+    <button class="btn btn-success btn-sm mx-1" style="margin-top: 10px" tooltip="Excel" (click)="downloadList(1)">
+    <i class="bi bi-file-earmark-spreadsheet"></i>
+    </button>
+    <button class="btn btn-danger btn-sm mx-1" style="margin-top: 10px" tooltip="pdf" (click)="downloadList(2)">
+    <i class="bi bi-file-earmark-pdf"></i>
+    </button>
+  </div>
+  <div class="col-lg-4 col-xxl-4">
+    <div class="input-group">
+      <input type="text" id="txtsearchDate" class="form-control" placeholder="Search here" name="txtsearchDate"
+        [(ngModel)]="txtsearchDate">
+    </div>
+  </div>
+</div>
+<div class="form-cointainer">
+  <div class="main-tab">
+    <div class="row justify-content-between">
+      <div class="table-responsive">
+        <table class="table table-striped" mb-0>
+          <caption></caption>
+          <thead>
+            <tr>
+              <th>Sl No</th>
+              <th>DC/ADC Name</th>
+              <th>Group Name</th>
+              <th >Tagged CDMO</th>
+              <th >Working State</th>
+              <th >Working District</th>
+              <th style="text-align:center;">Log</th>
+              <th style="text-align: center;">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of listOfDcData | filter:txtsearchDate |
+                      paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};
+                      index as i">
+              <td *ngIf="currentPage==1">{{i+1}}</td>
+              <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+i+1}}</td>
+              <td>{{item.dcname}}</td>
+              <td>{{item.groupname}}</td>
+              <td style="text-align:center;"><a href="javascript:void(0);" data-bs-toggle="modal"
+                data-bs-target="#taggedcdmo" (click)="taggeddetails(item)">{{item.mapcount}}</a>
+              </td>
+              <!-- <td >{{item.cdmoname}}</td> -->
+              <td >{{item.state}}</td>
+              <td >{{item.district}}</td>
+              <td style="text-align:center;"><a href="javascript:void(0);" data-bs-toggle="modal"
+                data-bs-target="#taggedcdmolog" (click)="taggedlogdetails(item)"><i class="bi bi-eye"></i></a>
+              </td>
+              <td style="text-align: center;">
+                  <a class="btn btn-outline-primary btn-sm me-1" (click)="edit(item)">
+                    <i class="bi bi-pencil"></i>
+                  </a>
+              </td>
+            </tr>
+            <tr *ngIf="! listOfDcData?.length">
+              <td colspan="10" style="text-align:center;"><strong class="text-danger">No data found</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="row" *ngIf="showPegi">
+        <div class="col-sm-4">
+          <div class="col-sm-*">
+            show
+            <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+              <option value="50">50</option>
+              <option value="100">100</option>
+              <option value="200">200</option>
+              <option value="300">300</option>
+              <option value="400">400</option>
+            </select> entries
+          </div>
+        </div>
+        <div class="col-sm-8 text-right">
+          <pagination-controls id="listing_pagination" [maxSize]="100" [directionLinks]="true"
+            (pageChange)="currentPage = $event" class="text-end"
+            (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="taggedcdmo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="max-width: 55%;">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">
+                  <span>{{header}} - Tagged CDMO Details</span>
+              </h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <table class="table table-striped">
+                <caption></caption>
+                  <thead>
+                      <tr>
+                          <th>Sl No</th>
+                          <th>CDMO Name</th>
+                          <th>Tagged By</th>
+                          <th>Tagged On</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr *ngFor="let item of taggedcdmo, index as j">
+                          <td>{{j+1}}</td>
+                          <td>{{item.cdmoname}}</td>
+                          <td>{{item.createdby}}</td>
+                          <td>{{item.createdon}}</td>
+                      </tr>
+                      <tr *ngIf="! taggedcdmo?.length">
+                          <td colspan="5" style="text-align:center;"><strong class="text-danger">No data found</strong></td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="taggedcdmolog" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="max-width: 60%;">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">
+                  <span>{{header}} - Tagged CDMO Log Details</span>
+              </h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <table class="table table-striped">
+                <caption></caption>
+                  <thead>
+                      <tr>
+                          <th>Sl No</th>
+                          <th>CDMO Name</th>
+                          <th>Tagged From</th>
+                          <th>Tagged To</th>
+                          <th>Status</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr *ngFor="let item of tagginglog, index as j">
+                          <td>{{j+1}}</td>
+                          <td>{{item.cdmoname}}</td>
+                          <td>{{item.createdon}}</td>
+                          <td>{{item.updatedon}}</td>
+                          <td>{{item.status}}</td>
+                      </tr>
+                      <tr *ngIf="! tagginglog?.length">
+                          <td colspan="5" style="text-align:center;"><strong class="text-danger">No data found</strong></td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </div>
+</div>

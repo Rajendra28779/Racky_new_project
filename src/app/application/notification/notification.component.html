@@ -1,0 +1,134 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+      <div class="row justify-content-between">
+          <div class="col-lg-4">
+              <ul class="nav nav-tabs">
+                  <li class="nav-item" *ngIf="!showbth">
+                      <a routerLink="/application/notification" routerLinkActive="active" class="nav-link active">Add</a>
+                  </li>
+                  <li class="nav-item" *ngIf="showbth">
+                    <a routerLink="/application/notification" routerLinkActive="active" class="nav-link active">Update</a>
+                </li>
+                  <li class="nav-item">
+                    <a routerLink="/application/viewnotification" routerLinkActive="active" class="nav-link " style="color: #1f723f;">View</a>
+                </li>
+              </ul>
+          </div>
+
+      </div>
+  </div>
+  <form [formGroup]="group">
+  <div class="row">
+    <div class="col-lg-4 col-xxl-4">
+        <div class="mb-xl-3">
+            <label class="form-label">Group<span class="text-danger">*</span></label>
+            <select class="form-select" name="groupId" id="groupId" formControlName="groupid" [(ngModel)]="groupid">
+                <option value="" selected disabled="disabled">Select Group</option>
+                <ng-container *ngFor="let item of groupList">
+                    <option value={{item.typeId}}>{{item.groupTypeName}}</option>
+                </ng-container>
+            </select>
+            <!-- <ng-multiselect-dropdown #multiSelect [placeholder]="placeHolder" [data]="groupList"
+                            [settings]="dropdownSettings" formControlName="hospitalCode" id="groupid">
+                             id="hospitalCode"  (onSelect)=onItemSelect($event)
+                            (onDeSelect)="onItemDeSelect($event)" (onSelectAll)="onSelectAll($event)"
+                            (onDeSelectAll)="onDeSelectAll($event)">
+            </ng-multiselect-dropdown> -->
+        </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-4 col-xxl-4">
+      <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+          <label class="control-label mb-2">From Date</label><span class="text-danger">*</span>
+          <div class="input-group">
+            <input type="text" class="form-control border-end-0 datepicker" id="fromDate" formControlName="fromdate" name="fromDate" autocomplete="off" [(ngModel)]="fdate" placeholder="From Date">
+            <label class="input-group-text bg-transparent border-start-0" for="fromDate"><i class="iconbsky-calendar"></i> </label>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-xxl-4">
+      <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+          <label class="control-label mb-2">To Date</label><span class="text-danger">*</span>
+          <div class="input-group">
+            <input type="text" class="form-control border-end-0 datepicker" id="toDate" formControlName="todate" name="toDate" autocomplete="off" [(ngModel)]="tdate" placeholder="To Date">
+            <label class="input-group-text bg-transparent border-start-0" for="toDate"><i class="iconbsky-calendar"></i> </label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-4 col-xxl-4">
+        <div class="mb-xl-3">
+          <label for="EnterFunctionDescription" class="form-label">Message<span class="text-danger">*</span></label>
+            <textarea class="form-control"  placeholder="Enter  Message" formControlName="functiondescription" autocomplete="off" id="message" maxlength="100" [(ngModel)]="content"
+              #myInput [maxlength]="maxChars" (keypress)="keyPress($event)"></textarea>
+            <span class="text-danger small">Characters Remaining: {{maxChars - myInput.value.length}}</span>
+        </div>
+    </div>
+
+  <div class="col-lg-4 col-xxl-4" id="Upload">
+    <div class="file-upload mb-xl-4 text-center ">
+        <p class="mb-1 text-start">Upload Document</p>
+        <div class="file-upload-content">
+            <a class="btn btn-danger  text-white btn-sm remove-img"><i
+                    class="fas fa-times"></i></a>
+            <img class="file-upload-image" src="#" alt="your image" />
+        </div>
+        <div class="image-upload-wrap rounded">
+            <input class="file-upload-input"  id="notficationdoc"type='file'  onCut="return false " onDrag="return false " onDrop="return false " (change)="handleFileInput($event)">
+            <div class="drag-text" *ngIf="!flag">
+              <h5><i class="iconbsky-upload-icon d-block fs-4"></i><span class="text-danger">Drag or select a file to upload </span>
+              </h5>
+          </div>
+            <div class="drag-text" *ngIf="flag" >
+                <h5><i class="iconbsky-upload-icon d-block fs-4"></i><span class="text-danger">{{fileToUpload.name}}</span>
+                </h5>
+            </div>
+        </div>
+         <p class="small pt-1 " style="text-align: right;"><img src="./assets/img/pdf.png " alt="Download Document " width="20 " > <a target="_blank" class="dbtn" (click)="downloadfiletreatmentbill($event,docpath) "> Download</a></p>
+    </div>
+</div>
+      <div class="col-lg-2 col-xxl-2">
+        <div class="mb-xl-3">
+          <label for="EnterFunctionDescription" class="form-label">Show popup</label>
+          <select class="form-select" name="popup" id="popup" formControlName="popup" [(ngModel)]="popupFlag">
+            <option value="" selected >-Select-</option>
+            <option value=0 >Yes</option>
+            <option value=1 >No</option>
+        </select>
+        </div>
+      </div>
+
+  </div>
+  <div>
+    <div class="col-lg-4 col-xxl-4" *ngIf="showbth">
+      <div class="mb-xl-3">
+          <label>Status:</label>&nbsp;&nbsp;<br>
+                  <label *ngIf="status==0">
+                      <input type="radio" checked="checked" [checked]="true" (click)="yes($event)"
+                      name="status" id="status">Active &nbsp;&nbsp;
+                      <input type="radio" (click)="no($event)"
+                      name="status" id="status">In-Active
+                  </label>
+
+                  <label *ngIf="status==1">
+                      <input type="radio" (click)="yes($event)"
+                      name="status" id="status">Active &nbsp;&nbsp;
+                      <input type="radio" checked="checked" [checked]="true" (click)="no($event)"
+                      name="status" id="status">In-Active
+                  </label>
+      </div>
+  </div>
+  </div>
+
+<div *ngIf="!showbth">
+  <input type="submit" value="Submit" class="btn btn-success" (click)="search()">&nbsp;&nbsp;
+  <input type="button" value="Reset" class="btn btn-secondary" (click)="Reset()">
+</div>
+<div *ngIf="showbth">
+  <input type="submit" value="Update" class="btn btn-success" (click)="update()">&nbsp;&nbsp;
+  <input type="button" value="Cancel" class="btn btn-secondary" (click)="cancel()">
+</div>
+  </form>
+</div>

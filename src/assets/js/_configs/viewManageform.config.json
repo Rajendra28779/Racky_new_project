@@ -1,0 +1,29 @@
+[
+      {
+        "pagetitle":"View Manage Form",
+        "tabList":[
+          {"tabName":"View","tabUrl":"../viewManageform","tabClass":"active"},
+          {"tabName":"Add","tabUrl":"../addManageform"}
+          
+        ],
+        "utils":[
+          {"utilName":"search"},
+          {"utilName":"print"},
+          {"utilName":"delete"},
+          {"utilName":"publish"},
+          {"utilName":"unpublish"},
+          {"utilName":"download"}
+          ],
+        "messages":
+          {
+            "successMsg":"Date saved successfully",
+          "errorMsg":"Error in database",
+          "warningtype":"You want to delete this record",
+          "deleteMsg":"Record has been deleted"
+          }
+         
+        
+      }
+    ]
+
+

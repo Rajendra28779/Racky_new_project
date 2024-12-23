@@ -1,0 +1,299 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+    <div class="row justify-content-between">
+      <div class="col-lg-4">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a routerLink="/application/hospitaldeactivationprocess" routerLinkActive="active" class="nav-link "
+              style="color: #1f723f;">Hospital De-Empanel</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/application/hospitaldeactivationprocessview" routerLinkActive="active"
+              class="nav-link active">View</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-box">
+    <div class="row">
+      <div class="col-lg-3 col-xxl-3">
+        <div class="mb-xl-3">
+          <label class="control-label">State Name<span class="text-danger"></span></label>
+          <select class="form-select" name="stateId1" id="stateId1" (change)="onChangeState($event.target.value)">
+            <option value="" selected >Select State</option>
+            <ng-container *ngFor="let item of stateList">
+              <option value={{item.stateCode}}>{{item.stateName}}</option>
+            </ng-container>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-xxl-3">
+        <div class="mb-xl-3">
+          <label class="control-label">District Name<span class="text-danger"></span></label>
+          <select class="form-select" name="districtId1" id="districtId1"
+            (change)="onChangeDistrict($event.target.value)">
+            <option value="">Select District</option>
+            <ng-container *ngFor="let item of districtList">
+              <option value={{item.districtcode}}>{{item.districtname}}</option>
+            </ng-container>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-xxl-4">
+        <div class="mb-xl-3">
+          <label class="control-label">Hospital Name<span class="text-danger"></span></label>
+          <div class="input-group">
+            <ng-autocomplete #auto [data]="hospitalList" placeholder="Select Hospital" (selected)="selectEvent2($event)"
+              (inputCleared)="clearEvent2()" [itemTemplate]="itemTemplate2" [notFoundTemplate]="notFoundTemplate2"
+              [searchKeyword]="keyword2" spellcheck="false">
+            </ng-autocomplete>
+            <ng-template #itemTemplate2 let-item>
+              <a [innerHTML]="item.hospitalName"></a>
+            </ng-template>
+            <ng-template #notFoundTemplate2 let-notFound>
+              <div [innerHTML]="notFound"></div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-xxl-3">
+        <label for="dutyStaffRoom" class="form-label">Empanelment Status<span class="text-danger"></span></label>
+        <select class="form-select" aria-label="Default select example" id="action1">
+          <option value="0" selected >All</option>
+          <ng-container *ngFor="let item of actiondata">
+            <option value={{item.id}}>{{item.name}}</option>
+          </ng-container>
+        </select>
+      </div>
+      <div class="col-lg-4 col-xxl-4" style="margin-top: 30px;">
+        <div>
+          <input type="submit" value="Search" class="btn btn-success me-2" (click)="search()">
+          <input type="button" value="Reset" class="btn btn-secondary" (click)="Reset()">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-box" style="margin-top: 1ch;">
+    <div class="row">
+      <div class="col-3" style="margin-top: 2ch;">
+        <div class="col-sm-*" *ngIf="showPegi">
+          show
+          <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+            <option value="100">100</option>
+            <option value="200">200</option>
+            <option value="300">300</option>
+            <option value={{count}}>All</option>
+          </select> entries
+        </div>
+      </div>
+      <div class="col-lg-3 col-xxl-3" style="margin-top: 2ch;">
+        <b>Total No Of Record : {{count}}</b>
+      </div>
+      <div class="col-2" style="text-align:end ;">
+        <button class="btn btn-success btn-sm mx-1" style="margin-top: 10px" tooltip="Excel" (click)="downloadList(1)">
+          <i class="bi bi-file-earmark-spreadsheet"></i>
+        </button>
+        <button class="btn btn-danger btn-sm mx-1" style="margin-top: 10px" tooltip="pdf" (click)="downloadList(2)">
+          <i class="bi bi-file-earmark-pdf"></i>
+        </button>
+      </div>
+      <div class="col-4">
+        <input type="text " id="txtsearchDate " name="txtsearchDate " [(ngModel)]="txtsearchDate" maxlength="20 "
+          class="form-control " placeholder="Search here...... " autocomplete="off"
+          style=" margin-right: 0px; margin-left: 0px;">
+      </div>
+    </div>
+    <div class="table-responsive " style="margin-top: 1ch;">
+      <table class="table table-striped mb-0">
+        <caption></caption>
+        <thead>
+          <tr>
+            <th>Sl#</th>
+            <th>State Name</th>
+            <th>District Name</th>
+            <th>Hospital Name</th>
+            <th>Hospital Code</th>
+            <th>Empanelment Status</th>
+            <th>Document</th>
+            <th>Additional Document1</th>
+            <th>Additional Document2</th>
+            <th>Remark</th>
+            <th>Action By</th>
+            <th>Action On</th>
+            <th>Log</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let v of list | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage},index as i">
+            <td *ngIf="currentPage==1 ">{{(i+1)}}</td>
+            <td *ngIf="currentPage!=1 ">{{(currentPage-1)*pageElement+ i+1}}</td>
+            <td>{{v.statName}}</td>
+            <td>{{v.distName}}</td>
+            <td>{{v.hospitalName}}</td>
+            <td>{{v.hospitalCode}}</td>
+            <td>{{v.emastatus}}</td>
+            <td *ngIf="v.docname==null">N/A</td>
+            <td *ngIf="v.docname!=null">
+              <a href="javascript:void(0);" (click)="downlordeempaneldoc($event,v.docname)" >
+                <i class="bi bi-file-earmark-image" style="font-size: 21px;margin-left: 30px;"></i>
+              </a>
+            </td>
+            <td *ngIf="v.docname1==null">N/A</td>
+            <td *ngIf="v.docname1!=null">
+              <a href="javascript:void(0);" (click)="downlordeempaneldoc($event,v.docname1)" >
+                <i class="bi bi-file-earmark-image" style="font-size: 21px;margin-left: 30px;"></i>
+              </a>
+            </td>
+            <td *ngIf="v.docname2==null">N/A</td>
+            <td *ngIf="v.docname2!=null">
+              <a href="javascript:void(0);" (click)="downlordeempaneldoc($event,v.docname2)" >
+                <i class="bi bi-file-earmark-image" style="font-size: 21px;margin-left: 30px;"></i>
+              </a>
+            </td>
+            <td>
+              <span id="proceduredescription{{i}}">
+                {{v.remark.length>30?v.remark.substring(0, 30) +
+                '...':v.remark}}
+              </span>
+              <span style="cursor: pointer; color: #1189cf" id="showMoreId6{{i}}"
+                (click)="showPreDoc1(v.remark,i)">
+                {{v.remark.length>30?'Show More':''}}
+              </span>
+              <span style="cursor: pointer; color: #1089cf" id="showMoreId7{{i}}"
+                (click)="hidePreDoc1(v.remark,i)"></span>
+            </td>
+            <td>{{v.actionBy}}</td>
+            <td>{{v.actionon}}</td>
+            <td style="text-align:center;"><a class="btn btn-outline-primary btn-sm me-1" data-bs-toggle="modal" data-bs-target="#log"
+              (click)="log(v)"><i class="bi bi-eye"></i></a></td>
+            <td style="text-align:center;" *ngIf="v.statusval!=0" title="Edit">
+              <a class="btn btn-outline-danger btn-sm me-1"  (click)="edit(v)">
+                  <i class="bi bi-pencil"></i>
+              </a>
+            </td>
+            <td style="text-align:center;" *ngIf="v.statusval==0" title="Action cannot proceed in the empaneled hospital. Please go back to the previous page, select a hospital, and take the necessary action.">
+              <button class="btn btn-secondary btn-sm me-1" disabled><i class="bi bi-pencil"></i></button>
+            </td>
+          </tr>
+          <tr *ngIf="count==0">
+            <td colspan="15" style="text-align:center;">
+              <strong class="text-danger">NO DATA FOUND!!</strong>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div><br>
+    <div class="row" *ngIf="showPegi">
+      <div class="col-sm-4">
+        <div class="col-sm-*">
+          show
+          <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+            <option value="100">100</option>
+            <option value="200">200</option>
+            <option value="300">300</option>
+            <option value={{totalcount}}>All</option>
+          </select> entries
+        </div>
+      </div>
+      <div class="col-sm-8 text-right">
+        <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true"
+          (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)">
+        </pagination-controls>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal Log Details-->
+<div class="modal fade" id="log" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="max-width: 60%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="col-9">
+          <h5 class="modal-title">
+            {{hospname}} Log Details:-
+          </h5>
+        </div>
+        <div class="col-2" style="text-align:end ;">
+          <button class="btn btn-success btn-sm mx-1" style="margin-top: 10px" tooltip="Excel"
+            (click)="downloaddetails(1)">
+            <i class="bi bi-file-earmark-spreadsheet"></i>
+          </button>
+          <button class="btn btn-danger btn-sm mx-1" style="margin-top: 10px" tooltip="pdf" (click)="downloaddetails(2)">
+            <i class="bi bi-file-earmark-pdf"></i>
+          </button>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive" style="margin-top:1ch;">
+          <table class="table table-striped">
+            <caption></caption>
+            <thead>
+              <tr>
+                <th>Sl#</th>
+                <th>Empanelment Status</th>
+                <th>Document</th>
+                <th>Additional Document1</th>
+                <th>Additional Document2</th>
+                <th>Remark</th>
+                <th>Action By</th>
+                <th>Action On</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let v of logdetailslist ,index as i">
+                <td>{{i+1}}</td>
+                <td>{{v.emastatus}}</td>
+                <td *ngIf="v.docname==null">N/A</td>
+                <td *ngIf="v.docname!=null">
+                  <a href="javascript:void(0);" (click)="downlordeempaneldoc($event,v.docname)" >
+                    <i class="bi bi-file-earmark-image" style="font-size: 21px;margin-left: 30px;"></i>
+                  </a>
+                </td>
+                <td *ngIf="v.docname1==null">N/A</td>
+                <td *ngIf="v.docname1!=null">
+                  <a href="javascript:void(0);" (click)="downlordeempaneldoc($event,v.docname1)" >
+                    <i class="bi bi-file-earmark-image" style="font-size: 21px;margin-left: 30px;"></i>
+                  </a>
+                </td>
+                <td *ngIf="v.docname2==null">N/A</td>
+                <td *ngIf="v.docname2!=null">
+                  <a href="javascript:void(0);" (click)="downlordeempaneldoc($event,v.docname2)" >
+                    <i class="bi bi-file-earmark-image" style="font-size: 21px;margin-left: 30px;"></i>
+                  </a>
+                </td>
+                <td>
+                  <span id="proceduredescriptionlog{{i}}">
+                    {{v.remark.length>30?v.remark.substring(0, 30) +
+                    '...':v.remark}}
+                    </span>
+                    <span style="cursor: pointer; color: #1189cf" id="showMoreId8{{i}}"
+                      (click)="showPreDoc(v.remark,i)">
+                      {{v.remark.length>30?'Show More':''}}
+                    </span>
+                    <span style="cursor: pointer; color: #1089cf" id="showMoreId9{{i}}"
+                      (click)="hidePreDoc(v.remark,i)"></span>
+                </td>
+                <td>{{v.actionBy}}</td>
+                <td>{{v.actionon}}</td>
+              </tr>
+              <tr *ngIf="logdetailslist?.length==0">
+                <td colspan="20" style="text-align:center;"><strong class="text-danger">No data found</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

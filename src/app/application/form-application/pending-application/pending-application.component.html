@@ -1,0 +1,168 @@
+<!--===Page Title===-->
+<div class="page-title" >
+  <h4>{{ title }}</h4>
+</div>
+<!--===Page Title===-->
+<!--===controle section===-->
+<div class="page-controls-section" id="page-content">
+  
+    <div class="controls-section-header">
+      <ul class="nav nav-tabs nav-fill" role="tablist">
+        <app-tabs *ngFor="let tablist of tablist" [activateid]="pending" [tabMessage]="tablist"></app-tabs>
+      </ul>
+      <div class="indicatorslist">
+        <app-util *ngFor="let utillist of utillist" [childMessage]="utillist"></app-util>
+      </div>
+    </div>
+    <div class="card">
+    <div class="card-body">
+      <div class="d-flex justify-content-between mb-3">
+        <div></div>
+        <div>
+          Per Page:
+          <select id="pageItem" (change)="pageItemChange()">
+            <option *ngFor="let size of pageSizes" [ngValue]="size">
+              {{ size }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="controls-section">
+        <div class="form-group">
+          <div class="row">
+            <div class="col-lg-4 col-xxl-4">
+              <div class="mb-xl-3">
+                <label class="control-label">State Name</label><span class="text-danger">*</span>
+                <select class="form-select" id="statecode1" [disabled]="butDisabled" aria-label="Disabled select example" (change)="OnChangeState($event)" >
+                  <option *ngIf="userRole == 12 || userRole == 6" value="21" selected>ODISHA</option>
+                  <option value="" selected>Select State</option>
+                    <option *ngFor="let c of statelist" [value]="c.stateCode">{{c.stateName}}</option>
+                  </select>
+            </div>
+            </div>
+
+            <div class="col-lg-4 col-xxl-4">
+              <div class="mb-xl-3">
+                <label class="control-label">District Name</label><span class="text-danger">*</span>
+                <select class="form-select" id="distcode1" [disabled]="butDisabled1" aria-label="Disabled select example">
+                  <option *ngIf="userRole == 12 || userRole == 6" value="21" value={{selecteddist}} selected>{{selecteddistName}}</option>  
+                  <option  value="" selected>Select District</option>
+                    <option *ngFor="let c of distList" [value]="c.districtcode">{{c.districtname}}</option>
+                  </select>
+            </div>
+            </div>
+
+            <div class="col-lg-4 col-xxl-4">
+              <div class="mb-xl-3">
+                <label class="control-label">Last Action by</label>
+                <select class="form-select" id="lastActionBy" aria-label="Disabled select example">
+                  <option value="" selected>Select Action By</option>
+                  <option value="Hospital" select>Hospital</option>
+                  <option value="CDMO" select>CDMO</option>
+                  <option value="DC" select>DC</option>
+                  <option value="SHAS" select>SHAS</option>
+                  <option value="SNA"  *ngIf="userRole == 13 || userRole == 19" select>SNA</option>
+                  </select>
+            </div>
+            </div>
+
+            <div class="col-lg-4 col-xxl-4">
+                  <button type="submit" class="btn btn-success"  (click)="searchData()">Search</button>&nbsp;
+                  <button type="submit" class="btn btn-danger"  (click)="resetData()">Reset</button>&nbsp;
+          </div>
+
+        </div>
+        <br>
+         
+        </div>    
+        <div *ngIf="formsList?.length > 0; else norecord">
+          <div class="col-md-6" class="pull-right">
+            <input type="text" [(ngModel)]="searchText" class="form-control"
+              placeholder="Enter text to filter records" style="max-width: 300px;" />
+          </div>
+          <div class="col-md-1">
+            <button class="btn btn-outline-success btn-sm me-1" tooltip="Excel" (click)="downloadReport()">
+              <i class="bi bi-file-earmark-spreadsheet" style="font-size: 13pt;"></i>
+            </button>
+          </div>
+          <br>
+          <div class="table-responsive print-section">
+            <table data-toggle="table" class="table table-bordered valign-middle"
+              *ngIf="(dataResult | filter: searchText).length > 0; else noResults;">
+              <thead>
+                <tr>
+                  <th>Sl#</th>
+                  <th *ngFor="let colName of dataCols" style="width: 100%">
+                    {{ colName.colHeader }}
+                  </th>
+                  <th>Last Action by</th>
+                  <th>Status</th>
+                  <th>View</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let rows of dataResult | filter: searchText 
+                | paginate: {id:'listing_pagination', itemsPerPage:pageElement, currentPage:currentPage }
+                ;index as i">
+                  <td *ngIf="currentPage==1">{{i+1}}</td>
+                  <td *ngIf="currentPage!=1">{{ (currentPage - 1) * pageElement+ i+1 }}</td>
+                  <td *ngFor="let colName of dataCols">
+                    {{ rows[colName.colName] }}
+                  </td>
+                  <td>
+
+                    {{rows.INTSENTFROM}}
+                  </td>
+                  <td>
+                    <a href="javascript:void(0)" (click)="notingDetails(formID+':'+rows.INTONLINESERVICEID)">
+                      <div [innerHTML]="getAppStatus(rows)"></div>
+                    </a>
+                  </td>
+                  <td>
+
+                    <a href="javascript:void(0);" class="btn btn-primary btn-sm" (click)="editDetails(formID+':'+rows.INTONLINESERVICEID+':'+0+':'+rows.INTPROFILEID)
+                    ">Preview</a>
+                  <td>
+                    <a href="javascript:void(0);" class="btn btn-primary btn-sm" (click)="
+                        goToTakeAction(rows.INTID, rows.INTONLINESERVICEID)
+                      ">Take Action</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!--Pagination-->
+          <div class="row" *ngIf="showPegi">
+            <div class="col-sm-4" ng-model="total">
+              <strong>
+                Showing {{ (currentPage - 1) * pageElement + 1 }} to {{elementTo}} of {{recordList}}
+                (Total Records - {{dataResult.length }})
+              </strong>
+            </div>
+              <div class="col-sm-8 text-right" style="text-align: end;">
+
+              <pagination-controls id="listing_pagination" (pageChange)="pageChange($event)">
+              </pagination-controls>
+
+            </div>
+          </div>
+          <div class="col-sm-12 text-center" *ngIf="!showPegi">
+            <span style="color: red;"><Strong>No Record Found !!!</Strong></span>
+          </div>
+        </div>
+        <ng-template #norecord ng-if="total">
+          <h6 class="no-content">No Record Found</h6>
+        </ng-template>
+        <ng-template #noResults>
+          <p>No results found for "{{searchText}}".</p>
+        </ng-template>
+      </div>
+    </div>
+
+  </div>
+  </div>
+  <div class="loader" *ngIf="loading">
+    <div class="loader-item"></div>
+    <p>Loading...</p>
+  </div>

@@ -1,0 +1,156 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs ">
+                    <li class="nav-item" *ngIf="isUpdateBtnInVisible">
+                        <a routerLink="/application/implant" routerLinkActive="active" class="nav-link active">Add</a>
+                    </li>
+                    <li class="nav-item" *ngIf="!isUpdateBtnInVisible">
+                        <a routerLink="/application/implant" routerLinkActive="active"
+                            class="nav-link active">Update</a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/application/implantView" routerLinkActive="active" class="nav-link"
+                            style="color: #1f723f;">View</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-6 ">
+                <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+            </div>
+        </div>
+    </div>
+    <div class="content-box">
+        <div class="col-xxl-10">
+            <form [formGroup]="Implantfrom">
+                <div class="row">
+                    <!-- <div class="col-lg-8 col-xxl-8">
+                        <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                            <label class="control-label mb-2">Procedure Code</label><span class="text-danger">*</span>
+                            <div class="input-group mb-xl-7 mb-lg-3 mb-md-7 mb-8">
+                                <select type="text" class="form-select" formControlName="procedureCode"
+                                    id="procedureCode" name="procedureCode" autocomplete="off"
+                                    [(ngModel)]="updateData.procedureCode">
+                                    <option value="" disabled selected>Select Procedure Code</option>
+                                    <option *ngFor="let p of packageDetailList" [value]="p.procedureCode">
+                                        {{p.procedureDescription}}({{p.procedureCode}})</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-4 col-xxl-4">
+                        <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                            <label class="control-label mb-2">Implant Code</label><span class="text-danger">*</span>
+                            <div class="input-group">
+                                <input class="form-control" id="implantCode" formControlName="implantCode"
+                                    name="implantCode" autocomplete="off" placeholder="Enter Implant Code"
+                                    [(ngModel)]="updateData.implantCode" maxlength="20"
+                                    onkeypress="return /[0-9a-zA-Z ]/i.test(event.key)">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-xxl-4">
+                        <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                            <label class="control-label mb-2">Implant Name</label><span class="text-danger">*</span>
+                            <div class="input-group">
+                                <input type="text" class="form-control" formControlName="implantName" name="implantName"
+                                    id="implantName" placeholder="Enter Implant Name"
+                                    [(ngModel)]="updateData.implantName"
+                                    onkeypress="return /[0-9a-zA-Z ]/i.test(event.key)" maxlength="30">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-xxl-4">
+                        <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                            <label class="control-label mb-2">Unit</label><span class="text-danger">*</span>
+                            <div class="input-group">
+                                <input class="form-control" id="unit" formControlName="unit" name="unit"
+                                    autocomplete="off" placeholder="Enter Unit" [(ngModel)]="updateData.unit"
+                                    (keypress)="numberOnly($event)"maxlength="2" pattern="^[1-9][0-9]*$" oninput="if(!this.value.match('^[1-9][0-9]*$'))this.value='';">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-xxl-4">
+                        <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                            <label class="control-label mb-2">Maximum Unit</label><span class="text-danger">*</span>
+                            <div class="input-group">
+                                <input type="text" class="form-control" formControlName="maximumUnit" name="maximumUnit"
+                                    id="maximumUnit" autocomplete="off" placeholder="Enter Maximum Unit"
+                                    [(ngModel)]="updateData.maximumUnit" (keypress)="numberOnly($event)"maxlength="3" pattern="^[1-9][0-9]*$" oninput="if(!this.value.match('^[1-9][0-9]*$'))this.value='';">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-xxl-4">
+                        <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                            <label class="control-label mb-2">PerUnitcycle Price</label><span class="text-danger">*</span>
+                            <div class="input-group">
+                                <input class="form-control" id="perunitCyclePrice" formControlName="perunitCyclePrice"
+                                    name="perunitCyclePrice" autocomplete="off" placeholder="Enter PerUnitcycle Price"
+                                    [(ngModel)]="updateData.perunitCyclePrice" (keypress)="numberOnly($event)"
+                                    maxlength="10">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-xxl-4">
+                        <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                            <label class="control-label mb-2">Price Editable</label><span
+                                class="text-danger">*</span>
+                            <div class="input-group">
+                                <input type="radio" value="Y" formControlName="priceEditable"
+                                    [(ngModel)]="updateData.priceEditable" name="priceEditable"
+                                    id="priceEditable"> Yes&nbsp;
+                                <input type="radio" value="N" formControlName="priceEditable"
+                                    [(ngModel)]="updateData.priceEditable" name="priceEditable"
+                                    id="priceEditable"> No
+                            </div>
+                        </div>
+                    </div>
+                  
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Unit Editable<span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <select class="form-select" name="unitEditable" id="unitEditable"
+                                formControlName="unitEditable" [(ngModel)]="updateData.unitEditable">
+                                <option value="" selected>Select Unit Editable</option>
+                                <option value="Y" selected>YES</option>
+                                <option value="N" selected>NO</option>
+                                <!-- <ng-container *ngFor="let data of mandatoryPreauth">
+                                    <option [value]="data.mandatoryPreauth">{{data.mandatoryPreauth}} (
+                                        {{data.mandatoryPreauth}} )</option>
+                                </ng-container> -->
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <label class="form-label d-none d-md-block">&nbsp;</label>
+                    <div class="d-grid gap-2 d-md-flex">
+                        <div *ngIf="!isUpdateBtnInVisible">
+                            <div>
+                                <button type="button" class="btn btn-success"
+                                    (click)="SubmitCreate()">Update</button>&nbsp;
+                                <input type="button" value="Cancel" class="btn btn-secondary" (click)="cancel()">
+                            </div>
+                        </div>
+                        <div *ngIf="isUpdateBtnInVisible">
+                            <div>
+                                <button type="button" class="btn btn-success"
+                                    (click)="SubmitCreate()">Submit</button>&nbsp;
+                                <input type="button" value="Reset" class="btn btn-secondary" (click)="ResetForm()">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>

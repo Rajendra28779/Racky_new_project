@@ -1,0 +1,128 @@
+<!--===Page Title===-->
+<div class="page-title">
+  <h4>{{ title }}</h4>
+</div>
+<!--===Page Title===-->
+<!--===controle section===-->
+<div class="page-controls-section" id="page-content">
+  <div class="card">
+    <div class="controls-section-header">
+      <ul class="nav nav-tabs nav-fill" role="tablist">
+        <app-tabs
+          *ngFor="let tablist of tablist"
+          [tabMessage]="tablist"
+        ></app-tabs>
+      </ul>
+      <div class="indicatorslist">
+        <app-util
+          *ngFor="let utillist of utillist"
+          [childMessage]="utillist"
+        ></app-util>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="controls-section">
+        <!-- Search Panel -->
+        <div class="search-container active mb-3">
+          <div class="search-sec">
+            <div class="row">
+              <ng-container *ngFor="let columns of dataCols">
+                <div class="col-12 col-md-6 col-lg-6 mb-3">
+                  {{ columns.colHeader }} :
+                  <strong>{{ dataResult[0][columns.colName] }}</strong>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+        <!-- Search Panel -->
+        <div *ngIf="formsList?.length > 0; else norecord">
+          <div class="form-group row">
+            <div class="col-md-4 col-lg-2">Action</div>
+            <div class="col-md-8 col-lg-8">
+              <div class="form-group">
+                <div
+                *ngFor="let actions of userActions"
+                class="form-check form-check-inline"
+              >
+                <input
+                  type="radio"
+                  name="radAction"
+                  class="form-check-input"
+                  id="radAction{{ actions }}"
+                  value="{{ actions }}"
+                  (click)="chooseAction()"
+                />
+                <label for="radAction{{ actions }}">{{
+                  allActions[actions]
+                }}</label>
+              </div>
+              </div>
+           
+            </div>
+          </div>
+          <ng-container *ngIf="docDetailsToUpload">
+            <div
+              class="form-group row"
+              *ngFor="let allUpDocs of docDetailsToUpload"
+            >
+              <div class="col-md-4 col-lg-2">
+                <span class="mandatory" *ngIf="allUpDocs.selIsMandatory == 'Y'"
+                  >*</span
+                >
+                {{ allUpDocs.txtDocName }}
+              </div>
+              <div class="col-md-8 col-lg-4">
+                <input
+                  type="file"
+                  class="form-control"
+                  name="{{ allUpDocs.docId }}"
+                  id="{{ allUpDocs.docId }}"
+                />
+                <small class="text-danger"
+                  >Upload {{ allUpDocs.txtFileType }} file only, max size upto
+                  {{ allUpDocs.txtFileSize }} {{ allUpDocs.selSizeType }}</small
+                >
+              </div>
+            </div>
+          </ng-container>
+
+
+
+          <div class="form-group row">
+            <div class="col-md-4 col-lg-2">Remark<span class="text-danger">*</span></div>
+            <div class="col-md-8 col-lg-8">
+               
+
+              <textarea class="form-control" rows="4" id="txtRemark" name="txtRemark" 
+              maxlength="500" [(ngModel)]="txtRemark"
+              placeholder="Enter Remarks"></textarea>
+            </div>
+          </div>
+          <br>
+          <div class="form-group row">
+            <div class="col-md-4 col-lg-2"></div>
+            <div class="col-md-8 col-lg-8">
+              <a
+                href="javascript:void(0);"
+                class="btn btn-primary"
+                (click)="takeAction()" style='margin-right:16px'
+                >Submit</a
+              >
+              <a href="javascript:void(0);" class="btn btn-danger ml-1"
+              (click)="backClicked()" >Cancel</a
+              >
+            </div>
+          </div>
+        </div>
+        <ng-template #norecord>
+          <h6 class="no-content">No Record Found</h6>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+  <div class="loader" *ngIf="loading">
+    <div class="loader-item"></div>
+    <p>Loading...</p>
+  </div>
+</div>

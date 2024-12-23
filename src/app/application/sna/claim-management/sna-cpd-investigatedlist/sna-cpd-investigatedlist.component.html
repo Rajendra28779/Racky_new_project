@@ -1,0 +1,129 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+    <div class="row justify-content-between">
+      <div class="col-lg-4">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a routerLink="/application/cpdinvestigatedcaselist" class="nav-link active">CPD Investigated</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-3 col-xxl-3">
+      <div class="mb-xl-3">
+        <label class="control-label">Actual Date of Discharge From</label><span class="text-danger">*</span>
+        <div class="input-group">
+          <input type="text" onkeydown="return false;" class="form-control border-end-0 datepicker" id="datepicker1"
+            name="fromDate">
+          <label class="input-group-text bg-transparent border-start-0" for="datepicker1"><i
+              class="iconbsky-calendar"></i> </label>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-xxl-3">
+      <div class="mb-xl-3">
+        <label class="control-label">Actual Date of Discharge To</label><span class="text-danger">*</span>
+        <div class="input-group">
+          <input type="text" onkeydown="return false;" class="form-control border-end-0 datepicker" id="datepicker2"
+            name="toDate">
+          <label class="input-group-text bg-transparent border-start-0" for="datepicker2"><i
+              class="iconbsky-calendar"></i> </label>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-12 col-xxl-12">
+      <input type="button" class="btn btn-success" value="Serach" (click)="getSnoClaimDetails()">&nbsp;&nbsp;
+      <button type="reset" value="Reset" (click)="reset()" class="btn btn-secondary">Reset</button>
+    </div>
+  </div>
+
+  <div class="content-box" style="margin-top: 1ch">
+    <div class="row">
+      <div class="col-3" style="margin-top: 10px">
+        <div class="col-sm-*" *ngIf="showPegi">
+          show
+          <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+            <option value="100">100</option>
+            <option value="200">200</option>
+            <option value="300">300</option>
+            <option value={{totalcount}}>All</option>
+          </select> entries
+        </div>
+      </div>
+      <div class="col-3" style="margin-top: 10px">
+        <b>Total No. of Records : {{totalcount}}</b>
+      </div>
+      <div class="col-2" style="text-align:end ;">
+        <button class="btn btn-success btn-sm mx-1" style="margin-top: 10px" tooltip="Excel" (click)="downloadList(1)">
+          <i class="bi bi-file-earmark-spreadsheet"></i>
+        </button>
+        <button class="btn btn-danger btn-sm mx-1" style="margin-top: 10px" tooltip="pdf" (click)="downloadList(2)">
+          <i class="bi bi-file-earmark-pdf"></i>
+        </button>
+      </div>
+      <div class="col-4">
+        <input type="text " id="txtsearchDate " name="txtsearchDate " [(ngModel)]="txtsearchDate" maxlength="20 "
+          class="form-control " placeholder="Search here...... " autocomplete="off"
+          style=" margin-right: 0px; margin-left: 0px;">
+      </div>
+    </div>
+    <div class="table-responsive" style="margin-top: 1ch">
+      <table class="table table-striped mb-0">
+        <caption></caption>
+        <thead class="bgcolor-th">
+          <tr>
+            <th>Sl#</th>
+            <th>URN</th>
+            <th>Case No.</th>
+            <th>Hospital</th>
+            <th>Actual Date Admission</th>
+            <th>Actual Date Discharge</th>
+            <th>Hospital</th>
+            <th>Invoice No.</th>
+            <th>Allocate Date</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let case of allocateCaseList; let i = index">
+            <td>{{ i+1 }}</td>
+            <td>{{ case?.urn }}</td>
+            <td>{{ case?.caseNo }}</td>
+            <td>{{ case?.hospitalName }}</td>
+            <td>{{ case?.invoiceNumber }}</td>
+            <td>{{ case?.allocateDate }}</td>
+            <td>{{ case?.actualdateofadmission }}</td>
+            <td>{{ case?.actualdateofdischarge }}</td>
+            <td><a class="btn btn-outline-success btn-sm" (click)="onAction(case.caseId,case.urn,case.caseNo)">Action
+              </a></td>
+          </tr>
+          <tr>
+            <td colspan="10" style="text-align:center;">
+              <strong class="text-danger">NO DATA FOUND!!</strong>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="row" *ngIf="showPegi">
+      <div class="col-sm-4">
+        <div class="col-sm-*">
+          show
+          <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+            <option value="100">100</option>
+            <option value="200">200</option>
+            <option value="300">300</option>
+            <option value={{totalcount}}>All</option>
+          </select> entries
+        </div>
+      </div>
+      <div class="col-sm-8 text-right">
+        <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true"
+          (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)">
+        </pagination-controls>
+      </div>
+    </div>
+  </div>
+</div>

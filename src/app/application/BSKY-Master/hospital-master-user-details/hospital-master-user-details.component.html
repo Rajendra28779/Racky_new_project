@@ -1,0 +1,163 @@
+<div class="main-tab">
+    <div class="col-lg-4">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a routerLink="/application/hospitalgroupMapping" routerLinkActive="active" class="nav-link">Add</a>
+            </li>
+            <li class="nav-item">
+                <a routerLink="/application/hospitalgroupMappingDetails" routerLinkActive="active"
+                    class="nav-link active">View</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div id="filter" class="searchCriteriaBox bg-light p-3">
+    <form autocomplete="off">
+        <div class="row">
+            <div class="col-md-6 col-lg-4">
+                <label class="control-label py-1">Authority Name<span class="text-danger">*</span></label>
+                <ng-autocomplete #auto1 [data]="cpdList" placeholder="Select Username" (selected)="selectEvent($event)"
+                    (inputCleared)="onReset()" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate"
+                    [searchKeyword]="keyword" spellcheck="false">
+                </ng-autocomplete>
+
+                <ng-template #itemTemplate let-item>
+                    <a [innerHTML]="item.fullName"></a>
+                </ng-template>
+
+                <ng-template #notFoundTemplate let-notFound>
+                    <div [innerHTML]="notFound"></div>
+                </ng-template>
+
+            </div>
+            <div class="col align-self-end">
+                <div class="form-group">
+                    <button class="btn btn-success mr-2" type="submit" (click)="CpdConfigDetails()">Search</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="d-flex justify-content-between py-1">
+    <div class="form-group">
+        <button class="btn btn-outline-success btn-sm me-1" type="submit" (click)="downloadList()">
+            <i class="bi bi-download"></i>
+        </button>
+    </div>
+    <div class="col-lg-4 col-xxl-4">
+        <input type="text" id="txtsearchDate" class="form-control" placeholder="Search here" name="txtsearchDate"
+            [(ngModel)]="txtsearchDate">
+    </div>
+</div>
+
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="table-responsive" id="htmlData">
+                <table class="table table-striped" mb-0>
+                    <thead>
+                        <tr>
+                            <th>Sl No</th>
+                            <th>Hospital Authority Name</th>
+                            <th class="text-center">Tagged Hospital Count</th>
+                            <th class="text-center">Details</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of listOfData | filter:txtsearchDate |
+                        paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};
+                        index as i">
+                            <td *ngIf="currentPage==1">{{i+1}}</td>
+                            <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+i+1}}</td>
+                            <td>{{item.fullname}}</td>
+                            <td class="text-center">{{item.count}}</td>
+                            <td class="text-center">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#exampleModal1"
+                                    (click)="view(item)">
+                                    <i class="bi bi-eye" style="color: blue;"></i>
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <a class="btn btn-outline-primary btn-sm me-1" (click)="edit(item.AuthUserId)">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr *ngIf="!listOfData?.length">
+                            <td colspan="5" class="text-center"><strong class="text-danger">No data found</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row" *ngIf="showPegi">
+                <div class="col-sm-4">
+                    <div class="col-sm-*">
+                        show
+                        <select id="pageItem" name="pageItem" class="custom-select-sm" (change)="pageItemChange()">
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                        </select> entries
+                    </div>
+                </div>
+                <div class="col-sm-8 text-right">
+                    <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true"
+                        (pageChange)="currentPage = $event" class="text-end"
+                        (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="max-width: 65%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    <span *ngIf="header">{{header}} - Tagged Hospitals</span>
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex justify-content-between py-1">
+                    <div class="col-lg-4 col-xxl-4">
+                        <button class="btn btn-outline-success btn-sm" type="submit" (click)="downloadHospReport()">
+                            <i class="bi bi-download"></i>
+                        </button>
+                    </div>
+                    <div class="col-lg-4 col-xxl-4">
+                        <input type="text" id="txtsearch" class="form-control" placeholder="Search here"
+                            name="txtsearch" [(ngModel)]="txtsearch">
+                    </div>
+                </div>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Sl No</th>
+                            <th>Authority Name</th>
+                            <th>Hospital Details</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngIf="updatelist">
+                            <tr *ngFor="let item of updatelist | filter:txtsearch; index as j">
+                                <td>{{j+1}}</td>
+                                <td>{{item.fullname}}</td>
+                                <td>{{item.hospitalName}} ({{item.hospitalCode}})</td>
+                                <td *ngIf="item.status==0">Active</td>
+                                <td *ngIf="item.status==1">InActive</td>
+                            </tr>
+                        </ng-container>
+                        <tr *ngIf="!updatelist?.length">
+                            <td colspan="5" class="text-center"><strong class="text-danger">No data found</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

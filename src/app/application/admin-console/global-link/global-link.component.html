@@ -1,0 +1,81 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+      <div class="row justify-content-between">
+          <div class="col-lg-4">
+               <ul class="nav nav-tabs ">
+                <li class="nav-item" *ngIf="!showupdate">
+                <a routerLink="/application/globallink" routerLinkActive="active" class="nav-link active">Add</a>
+                </li>
+                <li class="nav-item" *ngIf="showupdate">
+                  <a routerLink="/application/globallink" routerLinkActive="active" class="nav-link active">Update</a>
+                  </li>
+                  <li class="nav-item">
+                    <a routerLink="/application/viewgllink" routerLinkActive="active" class="nav-link " style="color: green;">View</a>
+                    </li>
+              </ul>
+          </div>
+          <div class="col-lg-6 ">
+                  <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+              </div>
+      </div>
+      <div class="content-box">
+          <form [formGroup]="group">
+            <div class="row">
+              <div class="col-lg-4 col-xxl-4">
+                  <div class="mb-xl-3">
+                    <label for="EnterFunctionName" class="form-label">Global Name<span class="text-danger">*</span></label>
+                      <input class="form-control" type="text" placeholder="Enter Global Name" formControlName="globalname" autocomplete="off" id="globalname" maxlength="40"
+                      [(ngModel)]="getbyid.glName" onkeyup="this.value=this.value.replace(/[^a-zA-Z-_ ]/g,'');">
+                  </div>
+              </div>
+
+            </div>
+            <div class="row">
+              <div class="col-lg-4 col-xxl-4">
+                  <div class="mb-xl-3">
+                    <label for="EnterFunctionDescription" class="form-label">Description<span class="text-danger">*</span></label>
+                      <textarea class="form-control"  placeholder="Enter  Description" formControlName="functiondescription" autocomplete="off" id="globaldescription" maxlength="100"
+                      [(ngModel)]="getbyid.description" onkeyup="this.value=this.value.replace(/[^0-9.a-zA-Z@/_() ]/g,'');" #myInput [maxlength]="maxChars" (keypress)="keyPress($event)"></textarea>
+                      <span class="text-danger small">Characters Remaining: {{maxChars - myInput.value.length}}</span>
+                  </div>
+              </div>
+              <div class="col-lg-4 col-xxl-4" *ngIf="showupdate">
+                <div class="mb-xl-3">
+                    <label>Status:</label>&nbsp;&nbsp;<br>
+                            <label *ngIf="getbyid.isactive==0">
+                                <input type="radio" checked="checked" [checked]="true" (click)="yes($event)"
+                                name="status" id="status">Active &nbsp;&nbsp;
+                                <input type="radio" (click)="no($event)"
+                                name="status" id="status">In-Active
+                            </label>
+
+                            <label *ngIf="getbyid.isactive==1">
+                                <input type="radio" (click)="yes($event)"
+                                name="status" id="status">Active &nbsp;&nbsp;
+                                <input type="radio" checked="checked" [checked]="true" (click)="no($event)"
+                                name="status" id="status">In-Active
+                            </label>
+                </div>
+            </div>
+            </div>
+            <div>
+              <div class="col-md-3">
+                <label for="EnterFunctionName" class="form-label">Order By<span class="text-danger">*</span></label>
+                  <input class="form-control" type="text" placeholder="Enter Order No" formControlName="order" autocomplete="off" id="order" maxlength="2"
+                  [(ngModel)]="getbyid.order" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');">
+              </div>
+            </div><br>
+            <div *ngIf="!showupdate">
+              <input type="submit" value="Submit" class="btn btn-success" (click)="save()">&nbsp;&nbsp;
+              <input type="reset" value="Reset" class="btn btn-secondary" >
+            </div>
+            <div  *ngIf="showupdate">
+              <input type="submit" value="Update" class="btn btn-success" (click)="updategl()">&nbsp;&nbsp;
+              <input type="button" value="Cancel" class="btn btn-secondary" (click)="reset()">
+            </div>
+          </form>
+
+      </div>
+
+  </div>
+</div>

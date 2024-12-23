@@ -1,0 +1,117 @@
+<div class="main-tab">
+    <div class="col-lg-4">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a routerLink="/application/medicalinfracategoryadd" routerLinkActive="active" class="nav-link"
+                    style="color: #1f723f;">Add</a>
+            </li>
+            <li class="nav-item">
+                <a routerLink="/application/medicalinfracategoryview" routerLinkActive="active" class="nav-link active">View</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="row mt-3 mb-3">
+    <div class="col-lg-6 col-xxl-6">
+        <div class="row" *ngIf="showPegi">
+            <div class="col-sm-4">
+                <div class="col-sm-* mt-1 mb-1">
+                    show
+                    <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                        <option value="200">200</option>
+                        <option value="500">500</option>
+                        <option value={{record}}>All</option>
+                    </select> entries
+                </div>
+            </div>
+           
+        </div>
+    </div>
+    <div class="col-lg-2 col-xxl-2">
+        <div  class="table-utilities float-end" >
+            <button class="btn btn-success btn-sm mx-1 mb-1 mt-1" tooltip="Excel" (click)="downloadReport(1)"><i class="bi bi-download"></i></button>
+            <button class="btn btn-danger btn-sm me-1 mb-1 mt-1" type="submit" (click)="downloadReport(2)"><i class="bi bi-file-earmark-pdf"></i></button>
+        </div>
+    </div>
+    <div class="col-lg-4 col-xxl-4">
+        <div class="input-group">
+            <input type="text" id="txtsearchDate" class="form-control" placeholder="Search here" name="txtsearchDate"
+                [(ngModel)]="txtsearchDate" autocomplete="off">
+        </div>
+    </div>
+</div>
+<div class="form-cointainer mt-1">
+
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="table-responsive">
+                <table class="table table-striped" mb-0>
+                    <thead>
+                        <tr>
+                            <th class="text-center" width="10">Sl No.</th>
+                            <th class="text-center" width="10">Medical Infra Category Name</th>
+                            <th class="text-center" width="10">Created On</th>
+                            <th class="text-center" width="10">Created By</th>
+                            <th class="text-center" width="10">Status</th>
+                            <th class="text-center" width="10">Is Mandatory</th>
+                            <th class="text-center" width="10">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngIf="record>0">
+                            <tr
+                                *ngFor="let item of categoryData | filter:txtsearchDate | 
+                            paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage}; index as i">
+                                <td class="text-center" width="10" *ngIf="currentPage==1">{{i+1}}</td>
+                                <td class="text-center" width="10" *ngIf="currentPage!==1">{{(currentPage-1)*pageElement+i+1}}</td>
+                                <td class="text-center" width="10">{{item.medInfraCatName}}</td>
+                                <td class="text-center" width="10">{{item.createdOn | date :'dd-MMM-yyyy hh:mm:ss a'}}</td>
+                                <td class="text-center" width="10">{{item.userId.fullname}}</td>
+                                <td class="text-center" width="10">
+                                    <span *ngIf="item.statusFlag === 0">Active</span>
+                                    <span *ngIf="item.statusFlag === 1">InActive</span>
+                                </td>
+                                <td class="text-center" width="10">
+                                    <span *ngIf="item.isMandatory === 0">Yes</span>
+                                    <span *ngIf="item.isMandatory === 1">No</span>
+                                </td>
+                                <td class="text-center" width="10">
+                                    <a class="btn btn-outline-primary btn-sm me-1">
+                                        <i (click)="edit(item.medInfracatId)" class="bi bi-pencil"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </ng-container>
+                        <tr *ngIf="record==0">
+                            <div class="row">
+                                <span style="color: red;text-align: center;position:absolute">NO DATA FOUND!!</span>
+                            </div>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="row" *ngIf="showPegi">
+                <div class="col-sm-4">
+                    <div class="col-sm-*">
+                        show
+                        <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                            <option value="200">200</option>
+                            <option value="500">500</option>
+                            <option value={{record}}>All</option>
+                        </select> entries
+                    </div>
+                </div>
+                <div class="col-sm-8 text-right">
+                    <pagination-controls id="listing_pagination" [maxSize]="50" [directionLinks]="true"
+                        (pageChange)="currentPage = $event" class="text-end"
+                        (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

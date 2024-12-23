@@ -1,0 +1,122 @@
+
+<div class="form-cointainer">
+  <div class="main-tab">
+      <div class="row justify-content-between">
+          <div class="col-lg-4">
+              <ul class="nav nav-tabs">
+                  <li class="nav-item" >
+                      <a routerLink="/application/hospitalbackdateconfig" routerLinkActive="active" class="nav-link active">Update</a>
+                  </li>
+                  <li class="nav-item">
+                      <a routerLink="/application/hospitalbackdateconfigview" routerLinkActive="active" class="nav-link" style="color: #1f723f;">Log</a>
+                  </li>
+                  <li class="nav-item">
+                      <a routerLink="/application/hospitalbackdateconfigviewrpt" routerLinkActive="active" class="nav-link" style="color: #1f723f;">BackDate Report</a>
+                  </li>
+              </ul>
+          </div>
+      </div>
+  </div>
+    <div class="content-box">
+      <div class="row">
+      <div class="col-lg-3 col-xxl-3">
+        <div class="mb-xl-3">
+          <label class="control-label">State Name <span class="text-danger">*</span></label>
+            <!-- <select class="form-select" name="stateId" id="stateId"
+                (change)="OnChangeState($event.target.value)">
+                <option value="" selected >Select State</option>
+                <ng-container *ngFor="let item of stateList">
+                    <option value={{item.stateCode}}>{{item.stateName}}</option>
+                </ng-container>
+            </select> -->
+            <ng-autocomplete #auto [data]="stateList" placeholder="Select State Name"
+              (selected)="selectEvent2($event)" [itemTemplate]="itemTemplate2"
+              [notFoundTemplate]="notFoundTemplate2" [searchKeyword]="keyword2" spellcheck="false"
+              (inputCleared)="onReset2()">
+            </ng-autocomplete>
+            <ng-template #itemTemplate2 let-item>
+              <a [innerHTML]="item.stateName"></a>
+          </ng-template>
+            <ng-template #notFoundTemplate2 let-notFound>
+                <div [innerHTML]="notFound"></div>
+            </ng-template>
+        </div>
+      </div>
+      <div class="col-lg-3 col-xxl-3">
+        <div class="mb-xl-3">
+          <label class="control-label">District Name <span class="text-danger">*</span></label>
+          <!-- <select class="form-select" name="districtId" id="districtId"
+              (change)="OnChangeDistrict($event.target.value)">
+              <option value="">Select District</option>
+              <ng-container *ngFor="let item of districtList">
+                  <option value={{item.districtcode}}>{{item.districtname}}</option>
+              </ng-container>
+          </select> -->
+          <ng-autocomplete #auto [data]="districtList" placeholder="Select District Name"
+              (selected)="selectEvent1($event)" [itemTemplate]="itemTemplate1"
+              [notFoundTemplate]="notFoundTemplate1" [searchKeyword]="keyword1" spellcheck="false"
+              (inputCleared)="onReset1()">
+            </ng-autocomplete>
+            <ng-template #itemTemplate1 let-item>
+              <a [innerHTML]="item.districtname"></a>
+          </ng-template>
+            <ng-template #notFoundTemplate1 let-notFound>
+                <div [innerHTML]="notFound"></div>
+            </ng-template>
+        </div>
+      </div>
+      <div class="col-lg-4 col-xxl-4">
+        <div class="mb-xl-3">
+          <label class="control-label">Hospital Name <span class="text-danger">*</span></label>
+            <ng-autocomplete #auto [data]="hospitalList" placeholder="Select Hospital Name"
+              (selected)="selectEvent($event)" [itemTemplate]="itemTemplate"
+              [notFoundTemplate]="notFoundTemplate" [searchKeyword]="keyword" spellcheck="false"
+              (inputCleared)="onReset()">
+            </ng-autocomplete>
+            <ng-template #itemTemplate let-item>
+              <a [innerHTML]="item.hospitalName"></a>
+          </ng-template>
+            <ng-template #notFoundTemplate let-notFound>
+                <div [innerHTML]="notFound"></div>
+            </ng-template>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3 col-xxl-3">
+          <div class="mb-xl-3">
+            <label class="control-label">BackDate Admission Allower For <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" id="addmission" name="addmission" placeholder="Enter here" autocomplete="off" maxlength="3"
+            onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" [value]="backdateadd"/>
+          </div>
+        </div>
+        <div class="col-lg-3 col-xxl-3">
+          <div class="mb-xl-3">
+            <label class="control-label">BackDate Discharge Allower For <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" id="discharge" name="discharge" placeholder="Enter here" autocomplete="off" maxlength="3"
+            onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" [value]="backdatedis"/>
+          </div>
+        </div>
+    </div>
+    <div >
+      <input type="submit" value="Update" class="btn btn-success" (click)="update()">&nbsp;&nbsp;
+      <input type="button" value="Cancel" class="btn btn-secondary" (click)="reset()">
+    </div>
+    </div>
+
+    <div class="alert alert-danger mt-4 mb-4 d-flex small ">
+      <div>
+        <p class="mb-0 pe-3 me-3 border-end ">
+          <i class="bi bi-info-circle-fill fs-5 me-2 "></i>NOTE
+        </p>
+      </div>
+      <div>
+        <p class="mb-0 ">
+            1 - 0 day Means only current date will be Allowed, no back date is allowed<br>
+            2 - 1 day means 1 days back date will be allowed<br>
+            3 - Suppose Back date is set for 2 days , then Hospital is allowed to Block or Discharge 2 days back log excluding current date.
+
+        </p>
+      </div>
+    </div>
+</div>

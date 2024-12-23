@@ -1,0 +1,57 @@
+
+<div class="form-cointainer">
+  <div class="main-tab">
+      <div class="row justify-content-between">
+          <div class="col-lg-10">
+               <ul class="nav nav-tabs ">
+                <li class="nav-item" *ngIf="!showupdate">
+                <a routerLink="/application/outOfpocketexpenditure" routerLinkActive="active" class="nav-link active">Add</a>
+                </li>
+                <li class="nav-item" *ngIf="showupdate">
+                  <a routerLink="/application/outOfpocketexpenditure" routerLinkActive="active" class="nav-link active">Update</a>
+                  </li>
+                  <li class="nav-item">
+                    <a routerLink="/application/outOfpocketexpenditureview" routerLinkActive="active" class="nav-link" style="color: green;">View</a>
+                    </li>
+              </ul>
+          </div>
+      </div>
+      <div class="content-box">
+            <div class="row">
+              <div class="col-lg-6 col-xxl-6">
+                  <div class="mb-xl-3">
+                    <label for="EnterFunctionName" class="form-label">Out Of Pocket Expenditure<span class="text-danger">*</span></label>
+                      <input class="form-control" type="text" placeholder="Enter Out Of Pocket Expenditure" autocomplete="off" id="expname" maxlength="250"
+                      [(ngModel)]="getbyid.expname" onkeyup="this.value=this.value.replace(/[^a-zA-Z0-9\-_ \/ %]/g,'');">
+                  </div>
+              </div>
+              <div class="col-lg-4 col-xxl-4" *ngIf="showupdate">
+                <div class="mb-xl-3">
+                    <label>Status:</label>&nbsp;&nbsp;<br>
+                            <label *ngIf="getbyid.isactive==0">
+                                <input type="radio" checked="checked" [checked]="true" (click)="yes($event)"
+                                name="status" id="status">Active &nbsp;&nbsp;
+                                <input type="radio" (click)="no($event)"
+                                name="status" id="status">In-Active
+                            </label>
+
+                            <label *ngIf="getbyid.isactive==1">
+                                <input type="radio" (click)="yes($event)"
+                                name="status" id="status">Active &nbsp;&nbsp;
+                                <input type="radio" checked="checked" [checked]="true" (click)="no($event)"
+                                name="status" id="status">In-Active
+                            </label>
+                </div>
+            </div>
+            </div>
+            <div *ngIf="!showupdate">
+              <input type="submit" value="Submit" class="btn btn-success" (click)="save()">&nbsp;&nbsp;
+              <input type="reset" value="Reset" class="btn btn-secondary" (click)="resetform()">
+            </div>
+            <div  *ngIf="showupdate">
+              <input type="submit" value="Update" class="btn btn-success" (click)="update()">&nbsp;&nbsp;
+              <input type="button" value="Cancel" class="btn btn-secondary" (click)="updatereset()">
+            </div>
+      </div>
+  </div>
+</div>

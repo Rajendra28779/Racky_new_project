@@ -1,0 +1,217 @@
+<div class="content">
+<div class="form-cointainer">
+  <div class="main-tab">
+      <div class="row justify-content-between">
+          <div class="col-lg-12">
+              <ul class="nav nav-tabs">
+                  <li class="nav-item">
+                      <a routerLink="/hospitalwiseongoingtreatmentdtls" routerLinkActive="active" class="nav-link active">Hospital Wise Ongoing Treatment Details</a>
+                  </li>
+
+              </ul>
+          </div>
+          <!-- <div class="col-lg-6 ">
+              <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+          </div> -->
+      </div>
+  </div>
+        <!-- Hospital information -->
+      <div  class="col-lg-12 col-xl-12 col-xxl-12 mb-4">
+        <div  class="card shadow">
+          <div  class="card-header bg-color text-white">
+            <h5  class="mb-0"> Hospital Information</h5>
+         </div>
+           <div  class="card-body">
+              <div class="row treatment-details">
+                 <div  class="col-xl-4 col-lg-4">
+                    <div  class="d-flex align-items-center  border-end">
+                       <div >
+                          <p  class="small text-muted mb-1">Hospital Name</p>
+                          <h6  class="mb-0"> {{result?.hospitalName}}  </h6>
+                       </div>
+                    </div>
+                 </div>
+                 <div  class="col-xl-2 col-lg-2">
+                    <div  class="d-flex align-items-center  border-end">
+                       <div >
+                          <p  class="small text-muted mb-1">Hospital Code</p>
+                          <h6  class="mb-0"> {{result?.hospitalCode}}  </h6>
+                       </div>
+                    </div>
+                 </div>
+                 <div  class="col-xl-3 col-lg-3">
+                    <div  class="d-flex align-items-center border-end">
+                       <div >
+                          <p  class="small text-muted mb-1">Hospital State</p>
+                          <h6  class="mb-0"> {{result?.stateName}} </h6>
+                       </div>
+                    </div>
+                 </div>
+                 <div  class="col-xl-3 col-lg-3">
+                    <div  class="d-flex align-items-center">
+                       <div >
+                          <p  class="small text-muted mb-1">Hospital District</p>
+                          <h6  class="mb-0"> {{result?.districtName}} </h6>
+                       </div>
+                    </div>
+                 </div>
+                 <div  class="col-12">
+                  <hr  class="mt-xl-3">
+               </div>
+               <div  class="col-xl-4 col-lg-4">
+                <div  class="d-flex align-items-center  border-end">
+                   <div >
+                      <p  class="small text-muted mb-1">Hospital Catagory</p>
+                      <h6  class="mb-0"> {{result?.hospitalType}}  </h6>
+                   </div>
+                </div>
+             </div>
+             <div  class="col-xl-4 col-lg-4">
+              <div  class="d-flex align-items-center  border-end">
+                 <div >
+                    <p  class="small text-muted mb-1">Hospital Email Id</p>
+                    <h6  class="mb-0"> {{result?.emailId}}  </h6>
+                 </div>
+              </div>
+           </div>
+           <div  class="col-xl-4 col-lg-4">
+            <div  class="d-flex align-items-center ">
+               <div >
+                  <p  class="small text-muted mb-1">Hospital Contact No</p>
+                  <h6  class="mb-0"> {{result?.mobileNo}}  </h6>
+               </div>
+            </div>
+         </div>
+         <div  class="col-12">
+          <hr  class="mt-xl-3">
+       </div>
+       <div  class="col-xl-6 col-lg-6">
+        <div  class="d-flex align-items-center border-end">
+           <div >
+              <p  class="small text-muted mb-1">Assigned SNA Doctor Name</p>
+              <h6  class="mb-0"> {{result?.snaname}}  </h6>
+           </div>
+        </div>
+     </div>
+       <div  class="col-xl-6 col-lg-6">
+        <div  class="d-flex align-items-center ">
+           <div >
+              <p  class="small text-muted mb-1">Assigned DC Name</p>
+              <h6  class="mb-0"> {{result?.dcname}}  </h6>
+           </div>
+        </div>
+     </div>
+              </div>
+           </div>
+        </div>
+     </div>
+      <!-- Hospital information -->
+  <!-- List -->
+  <div class="content-box" >
+    <div class="row">
+      <div class="col-3">
+          <div class="col-sm-*" *ngIf="showPegi" style="margin-top:2ch ;">
+            show
+            <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+              <option value="100">100</option>
+              <option value="200">200</option>
+              <option value="300">300</option>
+              <option value={{totalcount}}>All</option>
+            </select> entries
+          </div>
+      </div>
+      <div class="col-2" style="margin-top:2ch ;">
+        <b>Total : {{totalcount}}</b>
+      </div>
+      <div class="col-2" style="text-align:end ;">
+        <button class="btn btn-success btn-sm mx-1" style="margin-top: 10px" tooltip="Excel" (click)="downloadList(1)">
+      <i class="bi bi-file-earmark-spreadsheet"></i>
+  </button>
+        <button class="btn btn-danger btn-sm mx-1" style="margin-top: 10px" tooltip="pdf" (click)="downloadList(2)">
+        <i class="bi bi-file-earmark-pdf"></i>
+    </button>
+    </div>
+      <div class="col-5">
+        <input type="text " id="txtsearchDate " name="txtsearchDate " [(ngModel)]="txtsearchDate" maxlength="20 "
+          class="form-control " placeholder="Search here...... " autocomplete="off"
+          style=" margin-right: 0px; margin-left: 0px;">
+      </div>
+    </div>
+    <div class="table-responsive" style="margin-top:2px;">
+      <table class="table table-striped mb-0">
+        <thead>
+          <tr>
+            <th width="50">Sl#</th>
+            <th>URN</th>
+            <th>Patient Name</th>
+            <th>Age</th>
+            <th>Gender</th>
+            <th>UID</th>
+            <th>Mobile No.</th>
+            <th>Actual Date Of Admission</th>
+            <th>Date Of Admission</th>
+            <th>Procedure Name</th>
+            <th>Package Name</th>
+            <th>Authentication Mode</th>
+            <th>Word Name</th>
+            <th>Amount Blocked</th>
+            <th>PreAuth Status</th>
+            <th>PreAuth Request Date</th>
+            <th>Implant Avail</th>
+            <th>High End Drug Avail</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let v of list | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage},index as i">
+            <td *ngIf="currentPage==1 ">{{(i+1)}}</td>
+            <td *ngIf="currentPage!=1 ">{{(currentPage-1)*pageElement+ i+1}}</td>
+            <td>{{v.urn}}</td>
+            <td>{{v.patient}}</td>
+            <td>{{v.age}}</td>
+            <td>{{v.gender}}</td>
+            <td>{{v.uid}}</td>
+            <td>{{v.pphoneno}}</td>
+            <td>{{v.actualdateofadmission}}</td>
+            <td>{{v.dateofadmission}}</td>
+            <td>{{v.procedurename}}</td>
+            <td>{{v.packagename}}</td>
+            <td>{{v.authenticatemode}}</td>
+            <td>{{v.wardname}}</td>
+            <td>{{v.amountblock | currency:'':''}}</td>
+            <td>{{v.preauthstatus}}</td>
+            <td>{{v.preauthrqstdate}}</td>
+            <td>{{v.implantavail}}</td>
+            <td>{{v.highenddrug}}</td>
+          </tr>
+          <tr *ngIf="totalcount==0">
+            <td colspan="20" align="center">
+              <strong class="text-danger">NO DATA FOUND!!</strong>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div><br>
+    <div class="row" *ngIf="showPegi">
+      <div class="col-sm-4">
+        <div class="col-sm-*">
+          show
+          <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+            <option value="100">100</option>
+            <option value="200">200</option>
+            <option value="300">300</option>
+            <option value={{totalcount}}>All</option>
+          </select> entries
+        </div>
+      </div>
+      <div class="col-sm-8 text-right">
+        <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true"
+          (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)">
+        </pagination-controls>
+      </div>
+
+
+    </div>
+  </div>
+  <!-- List -->
+</div>
+</div>

@@ -1,0 +1,66 @@
+<div class="card-header border-top card_bg">
+    <h5 class="mb-0">Diagnosis Details (ICD-11)</h5>
+</div>
+<div class="row">
+    <div class="col-xl-6 col-lg-6 mb-2 mt-2">
+        <input type="text" class="form-control ctw-input" id="primary" placeholder="Enter Primary Diagnosis" autocomplete="off" data-ctw-ino="1">
+        <div class="ctw-window" data-ctw-ino="1"></div>
+    </div>
+    <div class="col-xl-6 col-lg-6 mb-2 mt-2">
+        <input type="text" class="form-control ctw-input" id="secoundry" placeholder="Enter Secondary Diagnosis" autocomplete="off" data-ctw-ino="2">
+        <div class="ctw-window" data-ctw-ino="2"></div>
+    </div>
+</div>
+<div class="content-box">
+    <div class="row">
+        <div class="table-responsive">
+            <table id="treatmentTable" class="table mb-0 border">
+                <thead>
+                    <tr>
+                        <th width="50">Sl#</th>
+                        <th>Code</th>
+                        <th>Name</th>
+                        <th>Mode</th>
+                        <!-- <th>Details View</th> -->
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let item of icdTableData; index as i">
+                        <tr>
+                            <td>{{i+1}}</td>
+                            <td width="50">{{item.allIcdCodes}}</td>
+                            <td width="100">{{item.allIcdNames}}</td>
+                            <td width="100">{{item.icdMode == '1'?"Primary Diagnosis":"Secondary Diagnosis"}}</td>
+                            <!-- <td width="100" (click)="item.isExpand = !item.isExpand">
+                              <i class="btn btn-outline-success bi bi-plus" *ngIf="!item.isExpand"></i>
+                              <i class="btn btn-outline-danger bi bi-file-minus" *ngIf="item.isExpand"></i>
+                            </td> -->
+                            <td width="100"><i class="btn btn-outline-danger bi bi-trash" (click)="removeIcd(i)"></i></td>
+                        </tr>
+                        <tr *ngIf="item?.isExpand">
+                            <td colspan="12">
+                                <table class="table mb-0 border">
+                                    <thead>
+                                        <th>Code</th>
+                                        <th>Name</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let dt of item?.subList">
+                                            <td>{{ dt.icdSubCode }}</td>
+                                            <td>{{ dt.icdSubName }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </ng-container>
+                    <tr *ngIf="!icdTableData?.length">
+                        <td colspan="8" align="center" *ngIf="isVisible"><strong class="text-danger">No data
+                   found</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

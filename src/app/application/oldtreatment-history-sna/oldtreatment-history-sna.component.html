@@ -1,0 +1,68 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-12">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLinkActive="active" class="nav-link active">Old Claim History As Per URN</a>
+                    </li>
+                    <li class="col-lg-10">
+                        <div [align]="'start'" class="table-utilities float-end" style="padding-bottom: 1%;">
+                            <button class="btn btn-success btn-sm mx-1" style="margin-top: 10px;" tooltip="Excel"
+                                (click)="downloadReport()">
+                                <i class="bi bi-download"></i>
+                            </button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="content-box">
+        <div class="row">
+            <div class="table-responsive">
+                <table class="table table-striped mb-0">
+                    <thead>
+                        <tr>
+                            <th width="50">Sl#</th>
+                            <th>URN</th>
+                            <th>Chip Serial No.</th>
+                            <th>Claim Status</th>
+                            <th>Approved Amount(₹)</th>
+                            <th>Approved Date</th>
+                            <th>SNA Approved Amount(₹)</th>
+                            <th>SNA Approved Date</th>
+                            <th>Remarks</th>
+                            <th>SNA Remarks</th>
+                            <!-- <th>TPA Final Status</th>
+                            <th>TPA Final Decission Date</th> -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngIf="trtData?.length">
+                            <tr *ngFor="let item of trtData; index as i">
+                                <td>{{i+1}}</td>
+                                <td width="100">{{item.urn}}</td>
+                                <td width="100">{{item.chipno}}</td>
+                                <td width="100">{{item.claimstatus}}</td>
+                                <td width="100">{{item.approvedamount }}</td>
+                                <td width="100">{{item.approveddate | date :'dd-MMM-yyyy, h:mm:ss a'}} </td>
+                                <td width="100">{{item.snaapprovedamount}}</td>
+                                <td width="100">{{item.snaapproveddate | date :'dd-MMM-yyyy, h:mm:ss a'}} </td>
+                                <td width="100">{{item.remarks}}</td>
+                                <td width="100">{{item.snaremarks}}</td>
+                                <!-- <td width="100">{{item.tpafinalstatus}}</td>
+                                <td width="100">{{item.tpafinaldecisiondate | date :'dd-MMM-yyyy, h:mm:ss a'}} </td> -->
+                            </tr>
+                        </ng-container>
+                        <tr *ngIf="! trtData?.length">
+                            <td colspan="8" align="center" *ngIf="isVisible"><strong class="text-danger">No data
+                                    found</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,250 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+    <div class="col-lg-4">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a routerLink="/application/smhelpdeskregister" routerLinkActive="active" class="nav-link active"
+            style="color: #1f723f;">SwasthyaMitra Helpdesk Registration</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="content-box">
+    <div class="row">
+      <div class="col-lg-3 col-xxl-3">
+        <div class="mb-xl-3">
+          <label class="control-label">Blocking Date From</label><span class="text-danger">*</span>
+          <div class="input-group">
+            <input type="text" class="form-control border-end-0 datepicker" id="datepicker1" name="fromDate">
+            <label class="input-group-text bg-transparent border-start-0" for="datepicker1"><i
+                class="iconbsky-calendar"></i> </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-xxl-3">
+        <div class="mb-xl-3">
+          <label class="control-label">Blocking Date To</label><span class="text-danger">*</span>
+          <div class="input-group">
+            <input type="text" class="form-control border-end-0 datepicker" id="datepicker2" name="toDate">
+            <label class="input-group-text bg-transparent border-start-0" for="datepicker2"><i
+                class="iconbsky-calendar"></i>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-xxl-3">
+        <div class="mb-xl-3">
+          <label class="control-label">Status</label><span class="text-danger">*</span>
+          <select class="form-select" name="status" id="status" [(ngModel)]="status">
+            <option value=0 selected>On Going</option>
+            <option value=1>Discharged</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-3 col-xxl-3">
+        <div class="mb-xl-3">
+          <label class="control-label">State Name</label>
+          <select class="form-select" name="stateId" id="stateId" (change)="OnChangeState($event.target.value)">
+            <option value="" selected>Select State</option>
+            <ng-container *ngFor="let item of stateList">
+              <option value={{item.stateCode}}>{{item.stateName}}</option>
+            </ng-container>
+          </select>
+        </div>
+      </div>
+      <div class="col-lg-3 col-xxl-3">
+        <div class="mb-xl-3">
+          <label class="control-label">District Name</label>
+          <select class="form-select" name="districtId" id="districtId"
+            (change)="OnChangeDistrict($event.target.value)">
+            <option value="" selected>Select District</option>
+            <ng-container *ngFor="let item of districtList">
+              <option value={{item.districtcode}}>{{item.districtname}}</option>
+            </ng-container>
+          </select>
+        </div>
+      </div>
+      <div class="col-lg-4 col-xxl-4">
+        <div class="mb-xl-3">
+          <label class="control-label mb-2">Select Hospital</label>
+          <ng-autocomplete [data]="hospitalList" placeholder="Select Hospital" (selected)="selectEvent($event)"
+            [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" [searchKeyword]="keyword"
+            spellcheck="false" (inputCleared)="onReset()">
+          </ng-autocomplete>
+          <ng-template #itemTemplate let-item>
+            <a [innerHTML]="item.hospitalName"></a>
+          </ng-template>
+          <ng-template #notFoundTemplate let-notFound>
+            <div [innerHTML]="notFound"></div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-4 col-xxl-4">
+        <div class="mb-xl-3">
+          <label class="control-label mb-2">Select SwasthyaMitra</label>
+          <ng-autocomplete [data]="smList" placeholder="Select SwasthyaMitra" (selected)="selectEvent1($event)"
+            [itemTemplate]="itemTemplate1" [notFoundTemplate]="notFoundTemplate1" [searchKeyword]="keyword1"
+            spellcheck="false" (inputCleared)="onReset1()">
+          </ng-autocomplete>
+          <ng-template #itemTemplate1 let-item>
+            <a [innerHTML]="item.fullname"></a>
+          </ng-template>
+          <ng-template #notFoundTemplate1 let-notFound>
+            <div [innerHTML]="notFound"></div>
+          </ng-template>
+        </div>
+      </div>
+      <div class="col-lg-4 col-xxl-4" style="margin-top:27px;">
+        <div class="mb-xl-3">
+          <div class="d-grid gap-2 d-md-flex">
+            <button type="submit" class="btn btn-success" (click)="search()">Search</button>
+            <button type="reset" class="btn btn-secondary" (click)="reset()">Reset</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-box">
+    <div class="row">
+      <div class="col-3" style="margin-top: 10px">
+        <div class="col-sm-*" *ngIf="showPegi">
+          show
+          <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+            <option value="100">100</option>
+            <option value="200">200</option>
+            <option value="300">300</option>
+            <option value={{totalcount}}>All</option>
+          </select> entries
+        </div>
+      </div>
+      <div class="col-3" style="margin-top: 10px">
+        <b>Total No. of Records : {{totalcount}}</b>
+      </div>
+      <div class="col-2" style="text-align:end ;">
+        <button class="btn btn-success btn-sm mx-1" style="margin-top: 10px" tooltip="Excel" (click)="downloadList(1)">
+          <i class="bi bi-file-earmark-spreadsheet"></i>
+        </button>
+        <button class="btn btn-danger btn-sm mx-1" style="margin-top: 10px" tooltip="pdf" (click)="downloadList(2)">
+          <i class="bi bi-file-earmark-pdf"></i>
+        </button>
+      </div>
+      <div class="col-4">
+        <input type="text " id="txtsearchDate " name="txtsearchDate " [(ngModel)]="txtsearchDate" maxlength="20 "
+          class="form-control " placeholder="Search here...... " autocomplete="off"
+          style=" margin-right: 0px; margin-left: 0px;">
+      </div>
+    </div>
+    <div class="table-responsive" style="margin-top: 1ch;">
+      <table class="table table-striped mb-0">
+        <caption></caption>
+        <thead>
+          <tr>
+            <th rowspan="2" id="1">Sl#</th>
+            <th rowspan="2" id="1">Entry By</th>
+            <th rowspan="2" id="1">Status</th>
+            <th rowspan="2" id="1">URN</th>
+            <th rowspan="2" id="1">Patient Name</th>
+            <th rowspan="2" id="1">Date Of Action</th>
+            <th rowspan="2" id="1">Blocking Date</th>
+            <th rowspan="2" id="1">Hospital Name</th>
+            <th rowspan="2" id="1">Patient Address</th>
+            <th rowspan="2" id="1">Phone No</th>
+            <th rowspan="2" id="1">Whether referred or not </th>
+            <th colspan="2" id="1">Out of Pocket Expenditure </th>
+            <th rowspan="2" id="1">Admission Review Remark</th>
+            <th rowspan="2" id="1">Patient Photo
+              (After Blocking)
+            </th>
+            <th rowspan="2" *ngIf="status==1" id="1">Date of discharge </th>
+            <th rowspan="2" *ngIf="status==1" id="1">Receive Transaction Slip or Not</th>
+            <th rowspan="2" *ngIf="status==1" id="1">Death </th>
+            <th colspan="2" *ngIf="status==1" id="1">Out of Pocket Expenditure</th>
+            <th rowspan="2" *ngIf="status==1" id="1">Other Grievance</th>
+            <th rowspan="2" *ngIf="status==1" id="1">Discharge Review Remark</th>
+            <th rowspan="2" *ngIf="status==1" id="1">Patient Photo
+              (After Discharged)
+            </th>
+            <th rowspan="2" *ngIf="status==1" id="1">Success story uploadation</th>
+          </tr>
+          <tr>
+            <th id="1"> At Preblock</th>
+            <th id="1"> After Block</th>
+            <th *ngIf="status==1" id="1"> During Treatment</th>
+            <th *ngIf="status==1" id="1"> During Discharged</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let v of list | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage},index as i">
+            <td *ngIf="currentPage==1 ">{{(i+1)}}</td>
+            <td *ngIf="currentPage!=1 ">{{(currentPage-1)*pageElement+ i+1}}</td>
+            <td>{{v.enterBy}}</td>
+            <td>{{v.status}}</td>
+            <td>{{v.urn}}</td>
+            <td>{{v.patientName}}</td>
+            <td>{{v.actionon}}</td>
+            <td>{{v.blockingDate}}</td>
+            <td>{{v.hospitalName}}</td>
+            <td>{{v.address}}</td>
+            <td>{{v.phoneNo}}</td>
+            <td>{{v.refferornot}}</td>
+            <td>{{v.oopeatpreblock}}</td>
+            <td>{{v.oopeatblock}}</td>
+            <td>{{v.admissionremark}}</td>
+            <td *ngIf="v.admissionphoto!=null"><button class="btn btn-primary btn-sm mx-1"
+                (click)="downloaddocument(v.admissionphoto,v.hospitalcode)">
+                <i class="bi bi-file-earmark-arrow-down"></i></button></td>
+            <td *ngIf="v.admissionphoto==null">N/A</td>
+            <ng-container *ngIf="status==1">
+            <td>{{v.dischargedate}}</td>
+            <td>{{v.sliprecieved}}</td>
+            <td>{{v.death}}</td>
+            <td>{{v.oopeduringtreatment}}</td>
+            <td>{{v.oopeduringdischarge}}</td>
+            <td>{{v.othergrievance}}</td>
+            <td>{{v.dischargeremark}}</td>
+            <td *ngIf="v.dischargephoto!=null"><button class="btn btn-primary btn-sm mx-1"
+                (click)="downloaddocument(v.dischargephoto,v.hospitalcode)">
+                <i class="bi bi-file-earmark-arrow-down"></i></button></td>
+            <td *ngIf="v.dischargephoto==null">N/A</td>
+
+            <td *ngIf="v.successstory!=null"><button class="btn btn-primary btn-sm mx-1"
+                (click)="downloaddocument(v.successstory,v.hospitalcode)">
+                <i class="bi bi-file-earmark-arrow-down"></i></button></td>
+            <td *ngIf="v.successstory==null">N/A</td>
+          </ng-container>
+          </tr>
+          <tr *ngIf="totalcount==0">
+            <td colspan="26" style="text-align:center;">
+              <strong class="text-danger">NO DATA FOUND!!</strong>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="row" *ngIf="showPegi">
+      <div class="col-sm-4">
+        <div class="col-sm-*">
+          show
+          <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+            <option value="100">100</option>
+            <option value="200">200</option>
+            <option value="300">300</option>
+            <option value={{totalcount}}>All</option>
+          </select> entries
+        </div>
+      </div>
+      <div class="col-sm-8 text-right">
+        <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true"
+          (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)">
+        </pagination-controls>
+      </div>
+    </div>
+  </div>
+</div>

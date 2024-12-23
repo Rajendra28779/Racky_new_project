@@ -1,0 +1,145 @@
+<div id="contentData">
+    <div class="content-box">
+        <div class="grv-sts">
+            <!-- Grievance Section -->
+            <div class="col-xxl-12 col-xl-12 col-md-12 col-lg-12 p-0">
+                <div class="row mb-4 mt-4">
+                    <div class="col-xxl-7 col-xl-7 col-lg-5 col-md-4 col-sm-4 col-12">
+                        <div class="new-dash">
+                            <h3> Deputy Grievance Officer </h3>
+                        </div>
+                    </div>
+                    <div class="col-xxl-5 col-xl-5 col-lg-7 col-md-8 col-sm-8 col-12">
+                        <div class="d-block d-xl-flex d-lg-flex d-md-flex d-sm-flex justify-content-end">
+                            <!-- icon for download -->
+                            <!-- <div class="pr-1 pb-1 pb-xl-0 pb-lg-0 pb-md-0 pb-sm-0 pe-2 col-xl-4"
+                                style="margin-left: 100px;">
+                                <button class="btn btn-danger btn-sm" type="submit" (click)="openPDF()"
+                                    style="margin-left: 95px; margin-bottom: 6px;"><i
+                                        class="bi bi-file-earmark-pdf"></i></button>
+                            </div> -->
+                            <div class="pr-1 pb-1 pb-xl-0 pb-lg-0 pb-md-0 pb-sm-0 pe-2 col-xl-4">
+                                <div class="input-group"><input type="text" id="fromDate" name="fromDate"
+                                        placeholder="From Date" autocomplete="off"
+                                        class="form-control border-end-0 datepicker form-control-sm"><label
+                                        for="fromDate" class="input-group-text bg-transparent border-start-0"><i
+                                            class="iconbsky-calendar"></i></label></div>
+                            </div>
+
+                            <div class="pr-1 pb-1 pb-xl-0 pb-lg-0 pb-md-0 pb-sm-0 pe-2 col-xl-4">
+                                <div class="input-group"><input type="text" id="toDate" name="toDate"
+                                        laceholder="To Date" autocomplete="off"
+                                        class="form-control border-end-0 datepicker form-control-sm"><label for="toDate"
+                                        class="input-group-text bg-transparent border-start-0"><i
+                                            class="iconbsky-calendar"></i></label></div>
+                            </div>
+
+                            <div class="pr-1 pb-1 pb-xl-0 pb-lg-0 pb-md-0 pb-sm-0 col-xl-4">
+                                <select name="districtId" id="districtId" [(ngModel)]="districtId"
+                                    class="form-select form-select-sm" (change)="grievanceOfficerData()">
+                                    <option value="" selected>Select District</option>
+                                    <ng-container *ngFor="let item of districtList">
+                                        <option value={{item.districtcode}}>{{item.districtname}}</option>
+                                    </ng-container>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row h-100">
+                    <div class="col-xxl-3 col-xl-3 col-lg-12 col-md-12 col-sm-12 col-12 mb-4">
+                        <div class="t-grv">
+                            <div class="ribbon-2">
+                                <div class="d-flex">
+                                    <div class="me-3"> <img src="../../../../assets/img/review.png"></div>
+                                    <div class="grv-prc">
+                                        <div> {{GoTotalCount?.total}} </div>
+                                        <div class="small-prc"> Total Grievance</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <ul>
+                                <li [ngClass]="BenActive" (click)="ChangeStatus('BNF')" id="BNF"> Beneficiaries <span
+                                        class="float-end"> {{GoTotalCount?.beneficiary}}</span> </li>
+                                <li [ngClass]="HosActive" (click)="ChangeStatus('HOS')" id="HOS"> Hospital <span
+                                        class="float-end"> {{GoTotalCount?.hospital}}</span> </li>
+                                <li [ngClass]="MoActive" (click)="ChangeStatus('MS')" id="MS"> Mo Sarkar <span
+                                        class="float-end"> {{GoTotalCount?.mosarkar}}</span> </li>
+                                <li [ngClass]="NewActive" (click)="ChangeStatus('NP')" id="NP"> News Paper <span
+                                        class="float-end"> {{GoTotalCount?.newspaper}}</span> </li>
+                                <li [ngClass]="EmlActive" (click)="ChangeStatus('EL')" id="EL"> Email/Letter <span
+                                        class="float-end"> {{GoTotalCount?.email}}</span> </li>
+                                <li [ngClass]="SocActive" (click)="ChangeStatus('SM')" id="SM"> Social Media <span
+                                        class="float-end"> {{GoTotalCount?.socialmedia}}</span> </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xxl-9 col-xl-9 col-lg-12 col-md-12 col-sm-12 col-12 mb-4">
+                        <div class="border h-100">
+                            <div class="row h-100">
+                                <div class="col-xxl-4 col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12 border-end grv-gap">
+                                    <div class="d-flex mb-4 align-items-center">
+                                        <div class="me-3"> <img src="../../../../assets/img/expired.png"></div>
+                                        <div>
+                                            <div class="grv-price text-warning popup_num" (click)="GetCountDetails('ALL')"> {{GoInrCount?.totalPending}} </div>
+                                            <div class="grv-s"> Grievance Pending </div>
+                                        </div>
+                                    </div>
+                                    <div class="grv-sec">
+                                        <ul>
+                                            <li> DC <span class="float-end popup_num" (click)="GetCountDetails('DC')"> {{GoInrCount?.DCPending}}</span> </li>
+                                            <li> DGO <span class="float-end popup_num" (click)="GetCountDetails('DGO')"> {{GoInrCount?.DGOPending}}</span> </li>
+                                            <li> GO <span class="float-end popup_num" (click)="GetCountDetails('GO')"> {{GoInrCount?.GOPending}}</span> </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-xxl-4 col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12 border-end grv-gap">
+                                    <div class="d-flex mb-4 align-items-center">
+                                        <div class="me-3"> <img src="../../../../assets/img/complaint.png"></div>
+                                        <div>
+                                            <!-- <div class="grv-price text-danger"> {{GoInrCount?.totalOverdue}} </div> -->
+                                            <div class="grv-s"> Grievance Overdue </div>
+                                        </div>
+                                    </div>
+                                    <div class="grv-sec">
+                                        <ul>
+                                            <li> Within 7 Days - DC <span class="float-end"> {{GoInrCount?.within7days}}
+                                                </span>
+                                            </li>
+                                            <li> More than 7 Days - DC <span class="float-end">
+                                                    {{GoInrCount?.morethan7days}}
+                                                </span> </li>
+                                            <li> More than 15 Days - DC <span class="float-end">
+                                                    {{GoInrCount?.morethan15days}}
+                                                </span> </li>
+                                            <li> More than 30 Days - DC <span class="float-end">
+                                                    {{GoInrCount?.morethan30days}}</span> </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-xxl-4 col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12 grv-gap">
+                                    <div class="d-flex mb-4 align-items-center">
+                                        <div class="me-3"> <img src="../../../../assets/img/group-new.png"></div>
+                                        <div>
+                                            <div class="grv-price text-success"> {{GoInrCount?.totalResolved}}</div>
+                                            <div class="grv-s"> Grievance Resolved </div>
+                                        </div>
+                                    </div>
+                                    <div class="grv-sec">
+                                        <ul>
+                                            <li> DGO <span class="float-end"> {{GoInrCount?.DGOResolve}}</span> </li>
+                                            <li> GO <span class="float-end"> {{GoInrCount?.GOResolve}}</span> </li>
+                                            <li> DC Forward<span class="float-end"> {{GoInrCount?.DCForward}}</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

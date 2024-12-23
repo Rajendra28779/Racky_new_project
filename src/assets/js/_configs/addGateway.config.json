@@ -1,0 +1,32 @@
+[
+      {
+        "pagetitle":"Gateway Configuration",
+        "tabList":[
+                   {"tabName":"View","tabUrl":"../viewGatewayConfig"},
+                   {"tabName":"Add New","tabUrl":"../addGatewayConfig","tabClass":"active"}
+                  ],
+        "utils":[
+          {"utilName":"mandatory"}
+         
+         
+          ],
+        "messages":{
+          "successMsg":"Data saved successfully",
+          "errorMsg":"Error in database",
+          "warningtype":"You want to delete this record",
+          "msgApilabel": "Label can not be blank",
+          "msgApikey": "Key can not be blank",
+          "msgApivalue": "Value can not be blank",
+          "getwayType": "Select getway type",
+            "getwayName": "Select Getway name",  
+            "getwayURl": "Enter Geway Url",
+            "methodtype": "Select method type",  
+            "contactaddress": "Enter contact address",
+          "msggetwayName": "Enter Getway name"
+
+        }
+        
+      }
+    ]
+
+

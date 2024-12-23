@@ -1,0 +1,197 @@
+<div class="form-cointainer">
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-lg-3 col-xxl-3">
+          <div class="mb-xl-3">
+            <label class="control-label">Month</label
+            ><span class="text-danger">*</span>
+            <div class="input-group">
+              <select class="form-control" id="month" [(ngModel)]="month" aria-label="Disabled select example" (change)="getCountDetails()">
+                <option value="" disabled>Select Month</option>
+                <option *ngFor="let month of monthList" [value]="month.monthId">{{month.monthName}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-xxl-3">
+          <div class="mb-xl-3">
+            <label class="control-label">Year</label
+            ><span class="text-danger">*</span>
+            <div class="input-group">
+              <select class="form-control" id="year" [(ngModel)]="year" aria-label="Disabled select example" (change)="getCountDetails()">
+                <option value="" disabled>Select Year</option>
+                <option *ngFor="let x of yearList" [value]="x">{{x}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col align-self-end">
+          <div class="col-lg-12">
+            <button
+              type="submit"
+              class="btn btn-success"
+              (click)="onClickSearch()"
+            >
+              Search
+            </button>
+            &nbsp;
+            <button
+              type="submit"
+              class="btn btn-secondary"
+              (click)="resetField()"
+            >
+              Reset
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row" style="margin-top: 10px; margin-bottom: 10px">
+    <div class="col-lg-4 col-xxl-4">
+    </div>
+    <div class="col-lg-4 col-xxl-4">
+    </div>
+    <div class="col-lg-4 col-xxl-4">
+      <div class="input-group">
+        <input
+          type="text"
+          id="txtsearchDate"
+          class="form-control"
+          placeholder="Search here..."
+          name="txtsearchDate"
+          [(ngModel)]="txtsearchDate"
+          autocomplete="off"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="form-cointainer">
+    <div class="main-tab">
+      <div class="row justify-content-between">
+        <div class="table-responsive">
+          <table class="table mb-0">
+            <thead>
+              <tr>
+                <th><input [disabled]="checkDisable" type="checkbox" id="allCheck" (change)="checkAllCheckBox($event)"></th>
+                <th width="40">Sl No</th>
+                <th>Name of CPD</th>
+                <th>Final Amount</th>
+                <th>Bank Name</th>
+                <th>Account Number</th>
+                <th>Ifsc Code</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container
+                *ngFor="
+                  let list of cpdList
+                    | filter : txtsearchDate;
+                  index as i
+                "
+              >
+                <tr>
+                  <td><input id="{{list.cpdUserId}}" [disabled]="list.statusView == true" [checked]="list.status==0" type="checkbox" (change)="tdCheck($event,list.cpdUserId)"></td>
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ list.cpdName }}</td>
+                  <td>{{ list.finalAmount }}</td>
+                  <td>{{ list.bankName }}</td>
+                  <td>{{ list.accountNum }}</td>
+                  <td>{{ list.ifscCode }}</td>
+                </tr>
+              </ng-container>
+              <tr *ngIf="cpdList.length == 0">
+                <td colspan="19" align="center" style="background-color: white">
+                  <strong class="text-danger">NO DATA FOUND!!</strong>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-12 align-items-center">
+    <a class="btn btn-success px-xl-3 py-xl-2 me-2" *ngIf="show" id="button" data-bs-toggle="modal" data-bs-target="#postpaymentModal" (click)="initializePayment()">Pay</a>
+</div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="postpaymentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-focus="false">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">
+                  <span>Payment Details</span>
+              </h5>
+              <button type="button" #closebutton class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="cancel()"></button>
+          </div>
+          <div class="modal-body">
+              <div class="row">
+                  <div class="col-lg-6 col-xxl-6" style="padding-top: 10px; padding-left: 17px;">
+                      <b>Final Approved Amount<span class="text-danger">* </span>:</b>
+                  </div>
+                  <div class="col-lg-6 col-xxl-6" style="padding-top: 10px; color: rgb(255, 4, 4);">
+                      <b><span >{{totalPaidAmount | currency:'':''}}</span></b>
+                  </div>
+              </div>
+              <!-- <div class="row">
+                  <div class="col-lg-6 col-xxl-6" style="padding-top: 10px; padding-left: 17px;">
+                      <b>Actual Paid Amount<span class="text-danger">* </span>:</b>
+                  </div>
+                  <div class="col-lg-6 col-xxl-6" style="padding-top: 10px; color: rgb(255, 4, 4);">
+                      <input type="text" class="form-control" id="paidamount" name="paidamount" (keypress)="approved_Amount($event)" (blur)="checkAmount()" placeholder="Enter Number" maxlength="10">
+                  </div>
+              </div> -->
+              <div class="row">
+                  <div class="col-lg-6 col-xxl-6" style="padding-top: 10px; padding-left: 17px;">
+                      <b>Paid By<span class="text-danger">* </span>:</b>
+                  </div>
+                  <div class="col-lg-6 col-xxl-6" style="padding-top: 10px;">
+                      <select class="form-select" id="bankModeId" aria-label="Disabled select example" (click)="getMode()">
+                          <option value="" selected>Select</option>
+                          <option *ngFor="let bank of bankMode" [value]="bank.paymentModeId">{{bank.paymentType}}</option>
+                        </select>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-lg-6 col-xxl-6" style="padding-top: 10px; padding-left: 17px;">
+                      <b> DD/CHEQUE/ET No.<span class="text-danger">* </span>:</b>
+                  </div>
+                  <div class="col-lg-6 col-xxl-6" style="padding-top: 10px;">
+                      <input type="text" class="form-control" id="typeNumber" name="typeNumber" placeholder="Enter Number" onkeyup="this.value=this.value.replace(/[^a-zA-Z0-9]/g,'');" minlength="6" maxlength="50" (keypress)="getValidNo($event)" oninput="this.value = this.value.toUpperCase()">
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-lg-6 col-xxl-6" style="padding-top: 10px; padding-left: 17px;">
+                      <b>Bank Name<span class="text-danger" *ngIf="showStar">* </span>:</b>
+                  </div>
+                  <div class="col-lg-6 col-xxl-6" style="padding-top: 10px;">
+                      <select class="form-select" id="bankId" aria-label="Disabled select example">
+                          <option value="" selected>Select</option>
+                          <option *ngFor="let bank of bankList" [value]="bank.bankId">{{bank.bankName}}</option>
+                        </select>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-lg-6 col-xxl-6" style="padding-top: 10px; padding-left: 17px;">
+                      <b>Date<span class="text-danger">* </span>:</b>
+                  </div>
+                  <div class="col-lg-6 col-xxl-6" style="padding-top: 10px;">
+                      <div class="input-group">
+                          <input type="text" class="form-control border-end-0 datepicker" onkeydown="return false;" id="currentDate" name="currentDate">
+                          <label class="input-group-text bg-transparent border-start-0" for="currentDate"><i class="iconbsky-calendar"></i></label>
+                      </div>
+                  </div>
+              </div>
+              <button class="btn btn-success" (click)="submitPayment()">Update</button> &nbsp;
+              <button class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close" (click)="cancel()">Cancel</button>
+          </div>
+      </div>
+  </div>
+</div>

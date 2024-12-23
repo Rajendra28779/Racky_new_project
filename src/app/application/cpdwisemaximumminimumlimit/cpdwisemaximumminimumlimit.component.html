@@ -1,0 +1,76 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item" *ngIf=isUpdateBtnInVisible>
+                        <a routerLink="/application/cpdwisemaximumandminimumlimitset" class="nav-link active">Add</a>
+                    </li>
+                    <li class="nav-item" *ngIf=isEditBtn>
+                        <a routerLink="/application/cpdwisemaximumandminimumlimitset" routerLinkActive="active" class="nav-link active">Update</a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/application/viewcpdwisemaximumandminimumlimitset" routerLinkActive="" class="nav-link ">View</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="content-box">
+        <div class="row">
+            <div class="col-lg-4" *ngIf=isUpdateBtnInVisible>
+                <div class="mb-xl-3">
+                    <label class="control-label">CPD Doctor Name<span class="text-danger">*</span></label>
+                    <ng-autocomplete #auto [data]="cpdList" placeholder="Select CPD Name" (selected)="selectEvent($event)" (inputCleared)="clearEvent()" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" [searchKeyword]="keyword" spellcheck="false">
+                    </ng-autocomplete>
+                    <ng-template #itemTemplate let-item>
+                        <a [innerHTML]="item.fullName"></a>
+                    </ng-template>
+                    <ng-template #notFoundTemplate let-notFound>
+                        <div [innerHTML]="notFound"></div>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="col-lg-4" *ngIf=isEditBtn>
+                <div class="mb-xl-3">
+                    <label class="control-label">CPD Doctor Name<span class="text-danger">*</span></label>
+                    <ng-autocomplete #auto [data]="cpdList" placeholder="Select CPD Name" [(ngModel)]="cpdname" disabled>
+                    </ng-autocomplete>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="mb-xl-2">
+                    <label class="control-label">Maximum Limit<span class="text-danger">*</span></label>
+                    <input class="form-control" type="text" placeholder="Enter Here Maximum Limit" autocomplete="off" id="maximum" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '')" [(ngModel)]="maxlimitdat">
+                </div>
+            </div>
+            <!-- <div class="col-lg-4">
+                <div class="mb-xl-2">
+                    <label class="control-label">Minimum Limit<span class="text-danger">*</span></label>
+                    <input class="form-control" type="text" placeholder="Enter here Minimum Limit" autocomplete="off" id="minimum" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '')" [(ngModel)]="minimumlimitdata">
+                </div>
+            </div> -->
+            <div class="col-lg-4">
+                <div class="mb-xl-2">
+                    <label class="control-label">Assigned Upto</label><span class="text-danger">*</span>
+                    <div class="input-group mb-xl-3">
+                        <input type="text" class="form-control border-end-0 datepicker" id="todate" placeholder="Enter Assigned Upto Date" name="todate" [(ngModel)]="asigneduptodate" autocomplete="off">
+                        <label class="input-group-text bg-transparent border-start-0" for="todate"><i
+                        class="iconbsky-calendar"></i> </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="d-grid gap-2 d-md-flex" *ngIf=isUpdateBtnInVisible>
+                        <button type="submit" class="btn btn-success" (click)="cpdwiselimit()">Submit</button>
+                        <input type="button" value="Reset" class="btn btn-secondary" (click)="onReset()">
+                    </div>
+                    <div *ngIf=isEditBtn>
+                        <button type="button" class="btn btn-success" (click)="updategCPDDetails()">Update</button>&nbsp;
+                        <input type="button" value="Cancel" class="btn btn-secondary" (click)="cancel()">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

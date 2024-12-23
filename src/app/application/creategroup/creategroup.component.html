@@ -1,0 +1,124 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/creategroup" routerLinkActive="active" class="nav-link active">Create Group</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-6 ">
+                <!-- <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite> -->
+            </div>
+
+            <div class="content-box">
+                <div class="row">
+                    <form [formGroup]="form" autocomplete="off">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <!-- <input type="hidden" name="GroupId" id="inputGroupId"  value="UserGroup.GroupId"> -->
+                                <div class="col-lg-3">
+                                    <div class="mb-3">
+                                        <label for="inputGroupName" class="form-label">Group Name<span class="text-danger">*</span></label>
+                                        <input class="form-control" type="text" [(ngModel)]="UserGroup.groupName" name="groupName" id="inputGroupName" placeholder="Enter Group Name" onkeyup="this.value=this.value.replace(/[^A-z]/g,'');" formControlName="inputGroupName" [ngClass]="{ 'is-invalid': submitted && form.get('inputGroupName').errors }">
+                                        <div *ngIf="submitted && form.get('inputGroupName').errors" class="invalid-feedback">
+                                            <div *ngIf="f.inputGroupName.errors.required"> Group Name is required</div>
+                                            <div *ngIf="f.inputGroupName.errors.pattern">Invalid Module Name</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-xxl-2">
+                                    <div class="mb-3">
+                                        <label class="form-label d-block">Required Subgroup? </label>
+                                        <div class="py-2">
+                                            <div class="form-check form-check-inline">
+                                                <input type="radio" value="yes" id="yes" formControlName="check" name="check" [checked]="true" (click)="yes($event)">Yes
+                                                <!-- <input type="radio"  id="yes" formControlName="check" name="check" checked (click)="yes($event)">Yes -->
+                                                <input type="radio" value="no" id="no" formControlName="check" name="check" (click)="no($event)">No
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="mb-xl-3">
+                                        <label for="selectParentGroup" class="form-label">Parent Group Name<span
+                        class="text-danger">*</span></label>
+                                        <select class="form-select" id="selectParentGroup" name="selectParentGroup" formControlName="selectParentGroup" [(ngModel)]="UserGroup.parentGroupId" [ngClass]="{ 'is-invalid': submitted && form.get('selectParentGroup').errors }">
+                      <option value="">Select</option>
+                      <option value="cpd">CPD</option>
+                      <option value="sno">SNO</option>
+
+
+                    </select>
+                                        <!-- <div *ngIf="submitted && form.get('selectParentGroup').errors" class="invalid-feedback">
+                  <div *ngIf="f.selectParentGroup.errors.required"> Parent Group Name is required</div>
+                  <div *ngIf="f.selectParentGroup.errors.pattern">Invalid Module Name</div>
+                </div> -->
+
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <label class="form-label d-none d-md-block">&nbsp;</label>
+                                    <div class="d-grid gap-2 d-md-flex">
+                                        <div *ngIf="isUpdateBtnInVisible else elseblock">
+                                            <button type="button" class="btn btn-success" (click)="savegroup()">Save</button>
+                                        </div>
+                                        <ng-template #elseblock>
+                                            <button type="button" class="btn btn-success" (click)="updategroup(UserGroup)">Update</button>
+                                        </ng-template>
+                                        <button type="button" class="btn btn-secondary" (click)="Reset()">Reset</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="table-responsive">
+                      <table class="table table-striped mb-0">
+                        <thead>
+                          <tr>
+                            <th width="50">Sl#</th>
+                            <th>Group Name</th>
+                            <th>Parent Group Name</th>
+
+                            <th width="100">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+
+
+                        <tbody>
+                          <tr *ngFor="let v of cardReversalBeanList;index as i">
+                            <td> {{(i+1)}} </td>
+                            <td>{{v.groupName}}</td>
+                            <td> {{v.parentGroupId}} </td>
+                            <td>
+                              <a class="btn btn-outline-primary btn-sm me-1" (click)="edit(v)"><i class="bi bi-pencil"></i></a>
+
+                              <!-- <a class="btn btn-outline-danger btn-sm"><i class="bi bi-trash3"></i></a> -->
+
+                              <a class="btn btn-outline-danger btn-sm" (click)="delete(v)"><i class="bi bi-trash3"></i></a>
+
+                            </td>
+                          </tr>
+                          <!-- <tr>
+                                        <td>2</td>
+                                        <td>
+                                            -
+                                        </td>
+                                        <td> - </td>
+                                        <td>
+                                            <a  class="btn btn-outline-primary btn-sm me-1"><i class="bi bi-pencil"></i></a>
+                                            <a  class="btn btn-outline-danger btn-sm"><i class="bi bi-trash3"></i></a>
+                                         </td>
+                                    </tr> -->
+                        </tbody>
+                      </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

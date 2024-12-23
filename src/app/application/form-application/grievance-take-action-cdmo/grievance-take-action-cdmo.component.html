@@ -1,0 +1,99 @@
+<div class="page-controls-section" id="page-content">
+    <div class="card">
+        <div class="controls-section-header">
+        </div>
+        <div class="card-body">
+            <div class="controls-section">
+                <!-- Search Panel -->
+                <div class="search-container active mb-3">
+                    <div class="search-sec">
+                        <div class="row">
+                            <ng-container *ngFor="let columns of dataCols">
+                                <div class="col-12 col-md-6 col-lg-6 mb-3">
+                                    {{ columns.colHeader }} :
+                                    <strong>{{ dataResult[0][columns.colName] }}</strong>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+                <!-- Search Panel -->
+                <div *ngIf="formsList?.length > 0; else norecord">
+                    <div class="form-group row">
+                            <div class="col-md-2 col-lg-2  mb-2"> Priority </div>
+                            <div class="col-md-10 col-lg-10  mb-2">
+                                <div class="form-group">
+                                    <input type="radio" class="form-check-input" value="High" name="priority" />
+                                    <label for="" class="form-check-inline"> High </label>
+
+                                    <input type="radio" class="form-check-input" value="Medium" name="priority" />
+                                    <label for="" class="form-check-inline"> Medium </label>
+
+                                    <input type="radio" class="form-check-input" value="Low" name="priority" />
+                                    <label for="" class="form-check-inline"> Low </label>
+                                </div>
+                            </div>
+
+                        <div class="col-md-2 col-lg-2 mb-2">Action <span class="text-danger">*</span></div>
+                        <div class="col-md-10 col-lg-10 mb-2">
+                            <div class="form-group">
+                                <div *ngFor="let actions of userActions" class="form-check form-check-inline">
+                                    <input type="radio" name="radAction" class="form-check-input"
+                                        id="radAction{{ actions }}" value="{{ actions }}" (click)="chooseAction()" />
+                                    <label for="radAction{{ actions }}">{{
+                                        allActions[actions]
+                                        }}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-2 mb-2">Assign DC <span class="text-danger">*</span></div>
+                        <div class="col-md-8 col-lg-4 mb-2">
+                            <div class="form-group">
+                                <ng-autocomplete #auto [data]="dcList" placeholder="Select DC Name" (selected)="selectEvent($event)"
+                                    (inputCleared)="clearEvent()" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate"
+                                    [searchKeyword]="keyword" spellcheck="false">
+                                </ng-autocomplete>
+                                
+                                <ng-template #itemTemplate let-item>
+                                    <a [innerHTML]="item.fullName"></a>
+                                </ng-template>
+                                
+                                <ng-template #notFoundTemplate let-notFound>
+                                    <div [innerHTML]="notFound"></div>
+                                </ng-template>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+
+                    <div class="form-group row">
+                        <div class="col-md-4 col-lg-2">Remark <span class="text-danger">*</span></div>
+                        <div class="col-md-8 col-lg-8">
+                            <textarea class="form-control" rows="4" id="txtRemark" name="txtRemark" #myInput
+                                [maxLength]="maxChars" [(ngModel)]="txtRemark" placeholder="Enter Remarks"></textarea>
+                            <span class="text-danger small">Characters Remaining: {{maxChars
+                                -myInput.value.length}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-4 col-lg-2"></div>
+                        <div class="col-md-8 col-lg-8">
+                            <a href="javascript:void(0);" class="btn btn-primary" (click)="takeAction()">Submit</a>
+                            <a href="javascript:void(0);" class="btn btn-danger ml-1" style="margin-left: 10px;"
+                                (click)="backClicked()">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+                <ng-template #norecord>
+                    <h6 class="no-content">No Record Found</h6>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+
+    <div class="loader" *ngIf="loading">
+        <div class="loader-item"></div>
+        <p>Loading...</p>
+    </div>
+</div>

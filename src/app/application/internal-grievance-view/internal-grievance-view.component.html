@@ -1,0 +1,491 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/internalgrivance" routerLinkActive="active"
+                            class="nav-link ">Add</a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/application/internalgrivanceview" routerLinkActive="active" class="nav-link"
+                            style="color: #1f723f;">View</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="content-box mt-3">
+        <div class="col-xxl-10">
+            <form>
+                <div class="row">
+                    <div class="col-lg-4 col-xxl-4">
+                        <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                            <label class="control-label mb-2">Received From Date</label><span class="text-danger">*</span>
+                            <div class="input-group">
+                                <input type="text" class="form-control border-end-0 datepicker1" id="fromDate" name="fromDate">
+                                <label class="input-group-text bg-transparent border-start-0" for="fromDate"><i
+                                        class="iconbsky-calendar"></i> </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-xxl-4">
+                        <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                            <label class="control-label mb-2">Received To Date</label><span class="text-danger">*</span>
+                            <div class="input-group">
+                                <input type="text" class="form-control border-end-0 datepicker1" id="toDate" name="toDate">
+                                <label class="input-group-text bg-transparent border-start-0" for="toDate"><i
+                                        class="iconbsky-calendar"></i> </label>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+               
+                <div class="row">
+                    <div class="col-lg-4 col-xxl-4">
+
+                        <label class="control-label mb-2">Category</label><span class="text-danger"></span>
+                        <select class="form-select" id="categoryType" name="categoryType">
+                            <option value="" selected>Select Category</option>
+                            <option value=1>Complaint</option>
+                            <option value=2>Issue</option>
+                            <option value=3>Request</option>
+                            <option value=4>Suggestion</option>
+                        </select>
+
+                    </div>
+                    <div class="col-lg-4 col-xxl-4">
+
+                        <label class="control-label mb-2">Priority</label><span class="text-danger"></span>
+                        <select class="form-select" id="priority" name="priority">
+                            <option value="" selected>Select Priority</option>
+                            <option value=1>High</option>
+                            <option value=2>Medium</option>
+                            <option value=3>Low</option>
+                        </select>
+
+                    </div>
+                    <div class="col-lg-4 col-xxl-4">
+
+                        <label class="control-label mb-2">Status</label><span class="text-danger"></span>
+                        <select class="form-select" id="statusFlag" name="statusFlag">
+                            <!-- <option value="" selected>All</option> -->
+                            <option value="" selected>All</option>
+                            <option value=0>Open</option>
+                            <option value=1>Inprogress</option>
+                            <option value=2>Close</option>
+                        </select>
+
+                    </div>
+
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <label class="control-label"></label><br>
+                    <input type="button" value="Search" (click)="search()" class="btn btn-success">&nbsp;
+                    <input type="button" value="Reset" (click)="Reset()" class="btn btn-secondary">
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+        <div class="col-lg-6 col-xxl-6">
+            <div class="row" *ngIf="showPegi">
+                <div class="col-sm-4">
+                    <div class="col-sm-*">
+                        show
+                        <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                            <option value="200">200</option>
+                            <option value="500">500</option>
+                            <option value={{record}}>All</option>
+                        </select> entries
+                    </div>
+                </div>
+                <!-- <div class="col-sm-8 text-right">
+                    <pagination-controls id="listing_pagination" [maxSize]="50" [directionLinks]="true"
+                        (pageChange)="currentPage = $event" class="text-end"
+                        (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+                </div> -->
+            </div>
+        </div>
+        <div class="col-lg-2 col-xxl-2">
+            <div class="table-utilities float-end">
+                <button class="btn btn-success btn-sm mx-1" tooltip="Excel" (click)="downloadReport(1)">
+                    <i class="bi bi-download"></i>
+                </button>
+                &nbsp;
+                <button class="btn btn-danger btn-sm me-1" type="submit" (click)="downloadReport(2)"><i
+                        class="bi bi-file-earmark-pdf"></i></button>
+            </div>
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+            <div class="input-group">
+                <input type="text" id="txtsearchDate" class="form-control" placeholder="Search here...."
+                    [(ngModel)]="txtsearchDate" name="txtsearchDate" autocomplete="off">
+            </div>
+        </div>
+    </div>
+    <div class="main-tab">
+        <div class="table-responsive">
+            <table class="table table-striped mb-0">
+                <thead>
+                    <tr>
+                        <th width="50">Sl#</th>
+                        <!-- <th width="150">Grievance By</th> -->
+                        <th width="120">Ticket Number</th>
+                        <th width="150">Grievance By</th>
+                        <!-- <th width="150">Contact Number</th>
+                        <th width="150">Email Id</th> -->
+                        <!-- <th width="120"> Source</th> -->
+                        <th width="120"> Module</th>
+                        <th width="120">Type</th>
+                        <th width="120">Priority</th>
+
+                        <th width="120">Received Date</th>
+                        <th width="120">Expected Date</th>
+                        <th width="120">Closing Date</th>
+                        <th width="120">Assigned To</th>
+                        <th width="120">Description</th>
+                        <th width="120">Closing Remark</th>
+                        <th width="120">Upload Document</th>
+                        <th width="120">Status</th>
+                        <th width="120" *ngIf="showaction">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container>
+                        <tr
+                            *ngFor="let v of getGrievanceData | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};index as i">
+                            <td *ngIf="currentPage==1">{{i+1}}</td>
+                            <td *ngIf="currentPage!==1">{{(currentPage-1)*pageElement+i+1}}</td>
+                            <td>{{v.tokenNumber}}</td>
+                            <!-- <td *ngIf="v.groupId==null">Other</td> -->
+                            <!-- <td *ngIf="v.groupId!=null">{{v.groupId.groupTypeName}}</td> -->
+                            <!-- <td>{{v.fullname}} ({{v.grievanceBy}})</td> -->
+                             <td *ngIf="v.groupId==null">{{v.fullname}}({{v.grievanceBy}})</td>
+                            <td  *ngIf="v.groupId!=null">{{v.fullname}}({{v.groupId.groupTypeName}})</td>
+                            <!-- <td>{{v.phoneno}}</td> -->
+                            <!-- <td *ngIf="v.email==null">N/A</td>
+                            <td *ngIf="v.email!=null">{{v.email}}</td> -->
+                            <!-- <td>
+                                <span *ngIf="v.grievanceSource==1">Call</span>
+                                <span *ngIf="v.grievanceSource==2">Whatsapp</span>
+                                <span *ngIf="v.grievanceSource==3">Email</span>
+                            </td> -->
+                            <td>
+                                <span *ngIf="v.moduleName==1">TMS</span>
+                                <span *ngIf="v.moduleName==2">CMS</span>
+                                <span *ngIf="v.moduleName==3">Grievance</span>
+                                <span *ngIf="v.moduleName==4">Hospital Empanelment</span>
+                                <span *ngIf="v.moduleName==5">ChartBoart</span>
+                                <span *ngIf="v.moduleName==6">Mobile Application</span>
+                                <span *ngIf="v.moduleName==7">Website</span>
+                                <span *ngIf="v.moduleName==8">CCE(104)</span>
+                                <span *ngIf="v.moduleName==9">User Management</span>
+                            </td>
+                            <td>
+                                <span *ngIf="v.categoryType==1">Complaint</span>
+                                <span *ngIf="v.categoryType==2">Issue</span>
+                                <span *ngIf="v.categoryType==3">Request</span>
+                                <span *ngIf="v.categoryType==4">Suggestion</span>
+                            </td>
+                            <!-- <td>{{v.priority}}</td> -->
+                            <td>
+                                <span *ngIf="v.priority==1">High</span>
+                                <span *ngIf="v.priority==2">Medium</span>
+                                <span *ngIf="v.priority==3">Low</span>
+                                <!-- <span *ngIf="v.categoryType==4">Suggestion</span> -->
+                            </td>
+                            <!-- <td>{{v.description}}</td> -->
+                            <!-- <td style="text-align: center"><a style="text-align: center;" class="btn btn-outline-primary btn-sm me-1" data-bs-toggle="modal" data-bs-target="#descriptionId" (click)="viewData(v)" >view</a></td> -->
+
+
+
+
+                            <td>{{v.createdOn | date: 'dd-MMM-yyyy'}}</td>
+                            <!-- <td style="text-align: center;" *ngIf="v.expectedDate1!=null">{{v.expectedDate1 | date:
+                                'dd-MMM-yyyy'}}</td>
+                            <td style="text-align: center;" *ngIf="v.expectedDate1==null">N/A</td> -->
+                            <td style="text-align: center;" *ngIf="v.expectedDate1!=null">{{v.expectedDate1 | date:'dd-MMM-yyyy'}}</td>
+                            <td style="text-align: center;" *ngIf="v.expectedDate1==null">N/A</td>
+                            <td *ngIf="v.closeDate!='N/A'">{{v.closeDate| date:'dd-MMM-yyyy'}}</td>
+                             <td *ngIf="v.closeDate=='N/A'">N/A</td>
+                           <!-- <td>{{(v.closeDate | date:'dd-MMM-yyyy') || 'N/A' }}</td> -->
+                            <td *ngIf="v.assignedName!=null">{{v.assignedName}}</td>
+                            <td *ngIf="v.assignedName==null">N/A</td>
+
+
+
+                            <td style="text-align: center"><a style="text-align: center;" data-bs-toggle="modal"
+                                    data-bs-target="#descriptionId" (click)="viewData(v.description)">View</a></td>
+
+                            <td style="text-align: center"><a style="text-align: center;" data-bs-toggle="modal"
+                                    data-bs-target="#descriptionId" (click)="viewData(v.closingDescription)">View</a>
+                            </td>
+
+
+                            <td *ngIf="v.documentName==null">N/A</td>
+
+                            <td *ngIf="v.documentName!=null"> <a href="javascript:void(0);"
+                                    (click)="downlordnotification($event,v.documentName)"><i
+                                        class="bi bi-file-earmark-image" style="font-size: 21px; "></i></a></td>
+                            <td>
+                                <span *ngIf="v.statusFlag== 0">Open</span>
+                                <span *ngIf="v.statusFlag== 1">Inprogress</span>
+                                <span *ngIf="v.statusFlag== 2">Close</span>
+                                <span *ngIf="v.statusFlag== 3">All</span>
+                            </td>
+
+                            <td style="text-align: center;" *ngIf="v.statusFlag!=2 && showaction" data-bs-toggle="modal"
+                                data-bs-target="#updateAdmin">
+                                <button class="btn btn-outline-primary btn-sm me-1" (click)="modalview(v)">
+                                    <i class="bi bi-pencil"></i>
+                                </button>
+                            </td>
+
+                            <td style="text-align: center;" *ngIf="v.statusFlag==2 && showaction" disabled>
+                                <button class="btn btn-outline-secondary btn-sm me-1" [disabled]="true">
+                                    <i class="bi bi-pencil"></i>
+                                </button>
+                            </td>
+
+                        </tr>
+                    </ng-container>
+                    <tr *ngIf="record==0">
+                        <div class="row">
+                            <span style="color: red;text-align: center;position:absolute">NO DATA FOUND!!</span>
+                        </div>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row" *ngIf="showPegi">
+            <div class="col-sm-4">
+                <div class="col-sm-*">
+                    show
+                    <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                        <option value="200">200</option>
+                        <option value="500">500</option>
+                        <option value={{record}}>All</option>
+                    </select> entries
+                </div>
+            </div>
+            <div class="col-sm-8 text-right">
+                <pagination-controls id="listing_pagination" [maxSize]="50" [directionLinks]="true"
+                    (pageChange)="currentPage = $event" class="text-end"
+                    (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="descriptionId" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+    style="border: 1px solid blue;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Description</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- <h5><b>Requested For -:</b></h5>
+          <p style="margin-left: 3ch;">{{reqfor}}</p> -->
+                <!-- <h5 style="margin-top:3ch;"><b>Description -:</b></h5> -->
+                <div style="margin-left: 3ch;" [innerHTML]="description"></div>
+                <div style="margin-left: 3ch;" [innerHTML]="closingDescription "></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="updateAdmin" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+    style="border: 1px solid blue;" data-bs-backdrop="static" data-bs-focus="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Take Action on {{tokenno}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-lg-6 col-xxl-6">
+                        <div class="mb-3">
+                            <h5><b>Grievance By </b></h5>
+                            <p style="margin-left: 0ch;">{{grvby}}</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-xxl-3 border-start">
+                        <div class="mb-3">
+                            <h5><b>Recieved Date </b></h5>
+                            <p style="margin-left: 0ch;">{{rcvdate | date: 'dd-MMM-yyyy'}}</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-xxl-3 border-start">
+                        <div class="mb-3">
+                            <h5><b>Expected Date </b></h5>
+                            <p style="margin-left: 0ch;">{{expdate | date: 'dd-MMM-yyyy'}}</p>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-lg-6 col-xxl-6">
+                        <h5><b>E-Mail</b></h5>
+                        <p style="margin-left: 0ch;">{{email}}</p>
+                    </div>
+                    <div class="col-lg-6 col-xxl-6 border-start">
+                        <h5><b>Phone No. </b></h5>
+                        <p style="margin-left: 0ch;">{{phoneno}}</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-lg-3 col-xxl-3">
+                        <div class="mb-3">
+                            <h5><b>Module </b></h5>
+                            <p style="margin-left: 0ch;"> <span *ngIf="module==1">TMS</span>
+                                <span *ngIf="module==2">CMS</span>
+                                <span *ngIf="module==3">Grievance</span>
+                                <span *ngIf="module==4">Hospital Empanelment</span>
+                                <span *ngIf="module==5">ChartBoart</span>
+                                <span *ngIf="module==6">Mobile Application</span>
+                                <span *ngIf="module==7">Website</span>
+                                <span *ngIf="module==8">CCE(104)</span>
+                                <span *ngIf="module==9">User Management</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-xxl-3 border-start">
+                        <div class="mb-3">
+                            <h5><b>Type </b></h5>
+                            <p style="margin-left: 0ch;"><span *ngIf="type==1">Complaint</span>
+                                <span *ngIf="type==2">Issue</span>
+                                <span *ngIf="type==3">Request</span>
+                                <span *ngIf="type==4">Suggestion</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-xxl-3 border-start">
+                        <div class="mb-3">
+                            <h5><b>Priority</b></h5>
+                            <p style="margin-left: 0ch;"><span *ngIf="prio==1">High</span>
+                                <span *ngIf="prio==2">Medium</span>
+                                <span *ngIf="prio==3">Low</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-xxl-3 border-start">
+                        <div class="mb-3">
+                            <h5><b>Documents</b></h5>
+                            <p style="margin-left: 3ch;"><span *ngIf="doc==null">N/A</span>
+                                <span *ngIf="doc!=null"><a href="javascript:void(0);"
+                                        (click)="downlordnotification($event,doc)"><i class="bi bi-file-earmark-image"
+                                            style="font-size: 21px; "></i></a></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-lg-12 col-xxl-12 ">
+                        <div class="mb-3">
+                            <h5><b>Description </b></h5>
+                            <p style="margin-left: 3ch;">{{descrip}}</p>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-lg-5 col-xxl-5">
+                        <div class="mb-3">
+                            <label><b>Status</b><span class="text-danger">*</span></label>
+                            <br>
+                            <div>&nbsp;&nbsp;
+                                <span class="mb-xl-8" *ngIf="statu==0">
+                                    <input type="radio" name="statusFlag1"  [checked]="true"
+                                        (click)="findStatus('0')">&nbsp;&nbsp;Open &nbsp;&nbsp;
+                                    <input type="radio" name="statusFlag1"  
+                                        (click)="findStatus('1')">&nbsp;&nbsp;Inprogress&nbsp;&nbsp;
+                                    <input type="radio" name="statusFlag1"  
+                                        (click)="findStatus('2')">&nbsp;&nbsp;Close
+                                </span>
+                                <span class="mb-xl-8" *ngIf="statu==1">
+                                    <input type="radio" name="statusFlag1" 
+                                        (click)="findStatus('0')">&nbsp;&nbsp;Open &nbsp;&nbsp;
+                                    <input type="radio" name="statusFlag1" [checked]="true"
+                                        (click)="findStatus('1')">&nbsp;&nbsp;Inprogress&nbsp;&nbsp;
+                                    <input type="radio" name="statusFlag1" 
+                                        (click)="findStatus('2')">&nbsp;&nbsp;Close
+                                </span>
+                                <span class="mb-xl-8" *ngIf="statu==2">
+                    <input type="radio" name="statusFlag" id="statusFlag"
+                        value="0" (click)="findStatus('0')">&nbsp;&nbsp;Open &nbsp;&nbsp;
+                    <input type="radio" name="statusFlag" id="statusFlag"
+                        value="1" (click)="findStatus('1')">&nbsp;&nbsp;Inprogress&nbsp;&nbsp;
+                    <input type="radio" name="statusFlag" id="statusFlag"  [checked]="true"
+                        value="2" (click)="findStatus('2')">&nbsp;&nbsp;Close
+                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-xxl-6">
+                        <div class="mb-xl-3">
+                            <label class="control-label"> Assigned To<span class="text-danger">*</span></label>
+                            <input class="form-control" type="text" autocomplete="off" [(ngModel)]="assign"
+                                name="assinedTo" id="assinedTo" placeholder="Enter Assigned To" maxlength="30"
+                                maxlength="50">
+                        </div>
+                    </div>
+                </div>
+
+                <form autocomplete="off" [formGroup]="LeaveType">
+                    <div class="row">
+                        <div class="row" id="openCloseDate">
+                            <div class="col-lg-5 col-xxl-5">
+                                <div class="mb-xl-3">
+                                    <label class="control-label">Closing Date</label><span class="text-danger">*</span>
+                                    <div class="input-group mb-xl-3">
+                                        <input type="text" class="form-control border-end-0 datepicker1" id="closingDate"
+                                            name="closingDate" formControlName="closingDate" placeholder="Closing Date">
+                                        <label class="input-group-text bg-transparent border-start-0"
+                                            for="closingDate"><i class="iconbsky-calendar"></i> </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-xxl-6">
+                                <div class="mb-xl-3">
+                                    <label class="control-label">Closing Remarks<span
+                                            class="text-danger">*</span></label>
+                                    <textarea class="form-control" autocomplete="off"
+                                        formControlName="closingDescription" name="closingDescription"
+                                        id="closingDescription" (keypress)="keyPress($event)"
+                                        placeholder="Enter  Closing Remark" #myInput maxlength="500"></textarea>
+                                    <span class="text-danger small">Characters Remaining: {{maxChars -
+                                        myInput.value.length}}</span>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="row">
+
+                            <div>
+                                <button type="submit" class="btn btn-success" (click)="update()" id="myButton" data-bs-dismiss="modal">Action</button>&nbsp;&nbsp;
+                                <button type="reset" data-bs-dismiss="modal" aria-label="Close"
+                                    class="btn btn-secondary" style="padding: 7px 16px 7px 16px;">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,94 @@
+<div class="content">
+    <div class="container-fluid p-0">
+        <div class="form-cointainer">
+            <div class="main-tab">
+                <div class="row justify-content-between">
+                    <div class="col-lg-12">
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a routerLinkActive="active" class="nav-link active">Hospital wise Claim and Discharge Details</a>
+                            </li>
+                            <li class="col-lg-10">
+                                <div [align]="'start'" class="table-utilities float-end" style="padding-bottom: 1%;">
+                                    <button class="btn btn-success btn-sm mx-1" style="margin-top: 10px" tooltip="Excel" (click)="downloadReport()">
+                                        <i class="bi bi-download"></i>
+                                    </button>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<div class="content-box">
+<div class="row">
+<div class="table-responsive">
+    <table class="table table-striped mb-0 ">
+        <thead>
+            <tr>
+                <th width="60">Sl No.</th>
+                <!-- <th>Claim Id</th> -->
+                <th>URN</th>
+                <th>Claim No.</th>
+                <th>Invoice No.</th>
+                <th>Package Code</th>
+                <th>Hospital Name</th>
+                <th>AutorizedCode</th>
+                <th>Actual Date Of Admission</th>
+                <th>Actual Date Of Discharge</th>
+                <th>Claim Submitted</th>
+                <th>Claim Status</th>
+                
+                <!-- <th>Hospital Code</th> -->
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of list; index as i ">
+                <td>{{i+1}}</td>
+                <td>{{item.urn}}</td>
+                <td *ngIf="item.claimId!=undefined && item.claimNo!=null">{{item.claimNo}}</td>
+                <td *ngIf="item.claimId==undefined || item.claimNo==null">N/A</td>
+                <td *ngIf="item.invoiceno!=undefined && item.invoiceno!=null">{{item.invoiceno}}</td>
+                <td *ngIf="item.invoiceno==undefined || item.invoiceno==null">N/A</td>
+                <!-- <td>{{item.invoiceno}}</td> -->
+                <td title="{{item.packageName}}">{{item.packagecode}}</td>
+                <td>{{item.hospitalName}}({{item.hospitalCode}})</td>
+                <td>{{item.authorizedCode}}</td>
+                <td>{{item.actualDateOfadmission}}</td>
+                <td>{{item.actualDateOfDischarge}}</td>                
+                <td *ngIf="item.claimsubmitted!=undefined && item.claimstatus!=null">{{item.claimsubmitted}}</td>
+                <td *ngIf="item.claimsubmitted==undefined || item.claimstatus==null">NO</td>
+                <td *ngIf="item.claimsubmitted!=undefined && item.claimstatus!=null">{{item.claimstatus}}</td>
+                <td *ngIf="item.claimsubmitted==undefined || item.claimstatus==null">N/A</td>
+                <!-- <td>{{item.hospitalCode}}</td> -->
+            </tr>
+            <tr *ngIf="list.length==0">
+                <td colspan="12" align="center">
+                    <strong class="text-danger">NO DATA FOUND!!</strong>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="row" *ngIf="showPegi">
+    <div class="col-sm-4">
+        <div class="col-sm-*">
+            show
+            <select id="pageItem" name="pageItem" class="custom-select-sm" (change)="pageItemChange()">
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+            </select> entries
+        </div>
+    </div>
+    <div class="col-sm-8 text-right">
+        <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true" (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+    </div>
+</div>
+</div>
+</div>
+
+
+
+

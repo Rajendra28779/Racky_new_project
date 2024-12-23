@@ -1,0 +1,91 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+    <div class="row justify-content-between">
+      <div class="col-lg-4">
+        <ul class="nav nav-tabs ">
+          <li class="nav-item">
+            <a routerLink="/application/whatsappuserconfiguration" routerLinkActive="active"
+              class="nav-link active">Add</a>
+          </li>
+          <!-- <li class="nav-item" *ngIf="showupdate">
+                  <a routerLink="/application/whatsappuserconfiguration" routerLinkActive="active" class="nav-link active">Update</a>
+                  </li> -->
+          <li class="nav-item">
+            <a routerLink="/application/whatsappuserconfigurationview" routerLinkActive="active" class="nav-link "
+              style="color: green;">View</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-lg-6 ">
+        <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+      </div>
+    </div>
+    <div class="content-box">
+      <form [formGroup]="group">
+        <div class="row">
+          <div class="col-lg-3 col-xxl-3">
+            <div class="mb-xl-3">
+              <label for="EnterFunctionUrl" class="form-label">Whatsapp Template Name<span
+                  class="text-danger">*</span></label>
+                <ng-autocomplete #auto [data]="list" placeholder="Select Whatsapp Template" (selected)="selectEvent($event)"
+                  (inputCleared)="clearEvent()" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate"
+                  [searchKeyword]="keyword" spellcheck="false">
+                </ng-autocomplete>
+                <ng-template #itemTemplate let-item>
+                  <a [innerHTML]="item.templateName"></a>
+                </ng-template>
+
+                <ng-template #notFoundTemplate let-notFound>
+                  <div [innerHTML]="notFound"></div>
+                </ng-template>
+            </div>
+          </div>
+
+          <div class="col-lg-5 col-xxl-5" *ngIf="showdc" style="margin-top: 18px;">
+            <div class="card shadow-sm basic-info bg-light">
+              <div class="card-body ">
+                <div class="row">
+                  <div class="col-lg-9">
+                    <div class="d-flex">
+                      <span class="text-success me-3">
+                      </span>
+                      <div>
+                        <p class="mb-0 fw-500"><b>{{templetdesc}}</b></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-3 col-xxl-3">
+            <div class="mb-xl-3">
+              <label  class="form-label">Group Name<span class="text-danger">*</span></label>
+              <ng-multiselect-dropdown #multiSelect [placeholder]="placeHolder" [data]="groupList"
+                [settings]="settingcdmo" id="groupId" (onSelect)=onItemSelect($event)
+                (onDeSelect)="onItemDeSelect($event)" (onSelectAll)="onSelectAll($event)"
+                (onDeSelectAll)="onDeSelectAll($event)">
+              </ng-multiselect-dropdown>
+            </div>
+          </div>
+          <div class="col-lg-3 col-xxl-3">
+            <div class="mb-xl-3">
+              <label class="control-label">User Name</label>
+              <ng-multiselect-dropdown [placeholder]="distPlaceHolder" [settings]="settingDist" [data]="userList"
+                id="districtCode" (onSelect)="onDistSelect($event)" (onDeSelect)="onDistDeSelect($event)"
+                (onSelectAll)="onSelectAllDist($event)" (onDeSelectAll)="onDeSelectAllDist($event)">
+              </ng-multiselect-dropdown>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <input type="submit" value="Submit" class="btn btn-success me-2" (click)="save()">
+          <input type="button" value="Reset" class="btn btn-secondary" (click)="ResetField()">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

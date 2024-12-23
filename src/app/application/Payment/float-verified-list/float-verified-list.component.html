@@ -1,0 +1,302 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-6">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/floatverifiedlist" class="nav-link active">Float List</a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/application/viewverifiedlist" class="nav-link" style="color: #1f723f;">View List</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="filter" class="searchCriteriaBox bg-light p-3">
+        <!-- <div class="col-xxl-10"> -->
+        <div class="row">
+            <div class="col-lg-3 col-xxl-3">
+                <div class="mb-xl-3">
+                    <label class="control-label">Float Generation Date From</label><span class="text-danger">*</span>
+                    <div class="input-group">
+                        <input type="text" class="form-control border-end-0 datepicker" id="datepicker1" name="fromDate" />
+                        <label class="input-group-text bg-transparent border-start-0" for="datepicker1">
+                            <i class="iconbsky-calendar"></i>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-xxl-3">
+                <div class="mb-xl-3">
+                    <label class="control-label">Float Generation Date To</label><span class="text-danger">*</span>
+                    <div class="input-group">
+                        <input type="text" class="form-control border-end-0 datepicker" id="datepicker2" name="toDate" />
+                        <label class="input-group-text bg-transparent border-start-0" for="datepicker2">
+                            <i class="iconbsky-calendar"></i>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-xxl-3">
+                <div class="mb-xl-3">
+                    <label class="control-label">Float Type</label>
+                    <select class="form-select" name="authMode" id="authMode" (change)="changeFloatType($event)">
+                      <!-- <option value="1" >All</option> -->
+                      <option value="7" selected>Verified</option>
+                      <option *ngIf="user.groupId != '39'" value="3">Observation</option>
+                  </select>
+                </div>
+            </div>
+            <div class="col-lg-3 col-xxl-3">
+                <div class="mb-xl-3">
+                    <label class="control-label">SNA Doctor Name</label>
+                    <ng-autocomplete #auto [data]="snoList" placeholder="Select SNA Name" (selected)="selectEvent($event)" (inputCleared)="clearEvent()" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" [searchKeyword]="keyword" spellcheck="false">
+                    </ng-autocomplete>
+
+                    <ng-template #itemTemplate let-item>
+                        <a [innerHTML]="item.fullName"></a>
+                    </ng-template>
+
+                    <ng-template #notFoundTemplate let-notFound>
+                        <div [innerHTML]="notFound"></div>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col align-self-end">
+                <div class="col-lg-12">
+                    <button type="submit" class="btn btn-success" (click)="getFloatList()">Search</button> &nbsp;
+                    <button type="submit" class="btn btn-secondary" (click)="onresetrecord()">Reset</button>
+                </div>
+            </div>
+        </div>
+        <!-- </div> -->
+    </div>
+    <div style="height: 15pt;"></div>
+    <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+        <div class="col-lg-4 col-xxl-4" style="padding-top: 10px; padding-left: 17px;">
+            <b>Total Float Count: <span style="color: green;">{{floatList?.length}}</span></b>
+        </div>
+        <div class="col-lg-4 col-xxl-4" style="text-align: right; padding-top: 3px;">
+            <button class="btn btn-outline-success btn-sm me-1" tooltip="Excel" (click)="downloadReport('excel')">
+                <i class="bi bi-file-earmark-spreadsheet" style="font-size: 11pt;"></i>
+            </button> &nbsp;
+            <button class="btn btn-outline-danger btn-sm me-1" tooltip="pdf" (click)="downloadReport('pdf')">
+                <i class="bi bi-file-earmark-pdf" style="font-size: 11pt;"></i>
+            </button>
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+            <div class="input-group">
+                <input type="text" id="txtsearchDate" class="form-control" placeholder="Search here" name="txtsearchDate" [(ngModel)]="txtsearchDate" maxlength="50" autocomplete="off" />
+            </div>
+        </div>
+    </div>
+    <div class="content-box p-0 overflow-hidden">
+        <div class="table-responsive">
+            <table class="table table-sm table-striped mb-0">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" id="allCheck" (change)="checkAllCheckBox($event)"></th>
+                        <th>Sl No</th>
+                        <th>Float Number</th>
+                        <th>Generated On</th>
+                        <th>Generated By</th>
+                        <th>SNA Doctor Name</th>
+                        <th>Remarks</th>
+                        <th>Remark By</th>
+                        <th class="text-center">History</th>
+                        <th class="text-center">Total Claim Count</th>
+                        <th>Total Amount (&#8377;)</th>
+                        <th>Round Amount (&#8377;)</th>
+                        <th class="text-center">Verify Status</th>
+                        <th class="text-center">View</th>
+                        <th class="text-center">Abstract Report</th>
+                        <th class="text-center">Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let float of floatList | filter : txtsearchDate | paginate: {id: 'listing_pagination',
+                        itemsPerPage: pageElement, currentPage: currentPage}; index as i">
+                        <td><input id="{{float.floateId}}" type="checkbox" (change)="tdCheck($event,float.floateId)"></td>
+                        <td *ngIf="currentPage == 1">{{ i + 1 }}</td>
+                        <td *ngIf="currentPage != 1">{{ (currentPage - 1) * pageElement + i + 1 }}</td>
+                        <td> {{ float.floateno }}</td>
+                        <td>{{ float.createon| date :'dd-MMM-yyyy hh:mm:ss a' }}</td>
+                        <td>{{ float.fullname}}</td>
+                        <td>{{ float.snaFullName}}</td>
+                        <td>{{ float.remarks?float.remarks:'N/A' }}</td>
+                        <td>{{ float.remarkby }}</td>
+                        <td class="text-center">
+                            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#historyModal" (click)="viewHistory(float)"><i style="color: blue;" class="bi bi-eye"></i></a>
+                        </td>
+                        <td class="text-center">{{ float.count}}</td>
+                        <td>{{ float.amount | currencyInr }}</td>
+                        <td>{{ float.roundAmount | currencyInr }}</td>
+                        <td class="text-center">{{ float.isVerified }}</td>
+                        <td class="text-center">
+                            <a href="javascript:void(0)" (click)="view(float.floateno, float.fullname, float.snaFullName)"><i style="color: blue;" class="bi bi-eye"></i></a>
+                        </td>
+                        <td class="text-center">
+                            <button class="btn btn-outline-success btn-sm" (click)="getfloatdetailsHospitalwise(float.floateno)">
+                                Report
+                            </button>
+                        </td>
+                        <td class="text-center">
+                            <button class="btn btn-outline-success btn-sm" (click)="onAction(float.floateno)">
+                                Detail
+                            </button>
+                        </td>
+                    </tr>
+                    <tr *ngIf="floatList.length == 0">
+                        <td colspan="11" class="text-center text-uppercase">
+                            <strong class="text-danger">No data found !!</strong>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 20px" *ngIf="showPegi">
+        <div class="col-sm-6">
+            <div class="col-sm-*">
+                show
+                <select id="pageItem" name="pageItem" class="custom-select-sm" (change)="pageItemChange()">
+                    <option value="100">100</option>
+                    <option value="200">200</option>
+                    <option value="300">300</option>
+                    <option value="400">400</option>
+                    <option value="All">All</option>
+                </select> entries
+            </div>
+        </div>
+        <div class="col-sm-6 text-right">
+            <pagination-controls id="listing_pagination" [maxSize]="20" [directionLinks]="true" (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+        </div>
+    </div>
+    <div class="col-lg-12 align-items-center mt-2">
+        <a class="btn btn-success px-xl-3 py-xl-2 me-2" *ngIf="show" id="button" data-bs-toggle="modal" data-bs-target="#assignFoModal">
+            {{btnView}}
+        </a>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="assignFoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-focus="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    <span>Add Remarks</span>
+                </h5>
+                <button type="button" #closebutton class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="cancel()"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row" [formGroup]="myGroup">
+                    <div class="col-lg-12 col-xxl-12" style="padding-top: 10px; padding-left: 17px;">
+                        <b>Remarks
+                          <!-- <span class="text-danger">*</span> -->
+                        </b>
+                    </div>
+                    <div class="col-lg-12 col-xxl-12" style="padding-top: 10px;">
+                        <textarea class="form-control" rows="4" id="remarks" name="remarks" formControlName="remarks" maxlength="1000" placeholder="Enter Remarks" #myInput [maxlength]="maxChars" (keypress)="keyPress($event)"></textarea>
+                        <span class="text-danger small">Characters Remaining: {{maxChars - myInput.value.length}}</span>
+                    </div>
+                    <div class="col-lg-12 col-xxl-12" style="padding-top: 10px;" *ngIf="showFile">
+                        <input type="file" class="upload " id="floatfile" accept=".pdf,.xls" (change)="changeFloatFile($event)"><br/>
+                        <span class="text-danger small">Please upload the document(Excel/PDF/JPG) below 10 MB</span>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col align-self-end">
+                        <div class="col-lg-12">
+                            <button class="btn btn-success" (click)="submit()">Submit</button> &nbsp;
+                            <button class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close" (click)="cancel()">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="historyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-focus="false">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+            <div class="modal-title" id="exampleModalLabel">
+              <h6>Float History</h6>
+            </div>
+            <!-- <button type="button" #closebutton class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="cancel()"></button> -->
+        </div>
+        <div class="modal-body">
+            <div class="row">
+              <div class="col-lg-2 mb-2">
+                Float Number
+              </div>
+              <div class="col-lg-4 mb-2"><strong>{{floatNum}}</strong></div>
+              <div class="col-lg-2 mb-2">
+                Amount
+              </div>
+              <div class="col-lg-4 mb-2"><strong>{{floatAmount}}</strong></div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-2 mb-2">
+                Created By
+              </div>
+              <div class="col-lg-4 mb-2"><strong>{{floatCreatedBy}}</strong></div>
+              <div class="col-lg-2 mb-2">
+                Created on
+              </div>
+              <div class="col-lg-4 mb-2"><strong>{{createdOn | date :'dd-MMM-yyyy hh:mm:ss a'}}</strong></div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-sm table-striped mb-0">
+                  <thead>
+                      <tr>
+                          <th>Sl No</th>
+                          <!-- <th>Float Number</th> -->
+                          <!-- <th>Generated On</th>-->
+                          <!-- <th>Generated By</th> -->
+                          <th>Action By</th>
+                          <th>Action On</th>
+                          <th>Amount</th>
+                          <th>Remarks</th>
+                          <th>Document</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    <ng-container *ngFor="let float of floatHistoryList; index as i">
+                      <tr *ngIf="floatHistoryList.length-1 != i">
+                          <td>{{ i + 1 }}</td>
+                          <!-- <td> {{ float.floateno }}</td> -->
+                          <!-- <td>{{ float.createon| date :'dd-MMM-yyyy hh:mm:ss a' }}</td>-->
+                          <!-- <td>{{ float.createby.fullname}}</td> -->
+                          <td *ngIf="float.actionby != null">{{ float.actionby != null?float.actionby.fullname:''}} ({{float.actionby != null?float.actionby.groupId.groupTypeName:''}})</td>
+                          <td *ngIf="float.actionby == null"></td>
+                          <td>{{ float.actionon| date :'dd-MMM-yyyy hh:mm:ss a' }}</td>
+                          <td>{{ float.amount}}</td>
+                          <td>{{ float.remarks}}</td>
+                          <!-- <td>{{ float.floatDoc}}</td> -->
+                          <td *ngIf="float.floatDoc != undefined"><a href="javascript:void(0);" (click)="floatDocDownload($event,float)">
+                            <i class="bi bi-file-earmark-image" style="color:red;font-size:24px"></i></a>
+                          </td>
+                          <td *ngIf="float.floatDoc == undefined">--</td>
+                        </tr>
+                      </ng-container>
+                      <tr *ngIf="floatHistoryList.length == 0">
+                          <td colspan="10" class="text-center text-uppercase">
+                              <strong class="text-danger">No data found !!</strong>
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
+            </div>
+              </div>
+          </div>
+    </div>
+</div>

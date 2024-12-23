@@ -1,0 +1,119 @@
+<div class="container-fluid">
+    <div class="main-tab" style="padding: 15px; padding-bottom: 0px;">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/pendingmortalitystatus" routerLinkActive="active" class="nav-link active">
+                            Pending Mortality Status</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px;margin-bottom: 1px;">
+            <div class="col-lg-3 col-xxl-3 mb-3">
+                Actual Date Of Discharge From : <strong>{{fromdate}}</strong>
+            </div>
+            <div class="col-lg-4 col-xxl-4 mb-3">
+                Actual Date Of Discharge To : <strong>{{todate}}</strong>
+            </div>
+            <div class="col-lg-5 col-xxl-5 mb-3">
+                State Name : <strong>{{statename}}</strong>
+            </div>
+            <div class="col-lg-4 col-xxl-4 ">
+                District Name : <strong>{{districtname}}</strong>
+            </div>
+            <div class="col-lg-4 col-xxl-4 ">
+                Hospital Name : <strong>{{hospitalname}}</strong>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px;margin-bottom: 2px;">
+            <div class="col-lg-6 col-xxl-6">
+                <div class="row " *ngIf="showPegi">
+                    <div class="col-sm-6" style="margin-bottom: 1ch;">
+                        <div class="col-sm-*">
+                            show
+                            <select id="pageItem" name="pageItem" class="form-select-sm" [(ngModel)]="pageElement">
+                                <option value="100">100</option>
+                                <option value="200">200</option>
+                                <option value="500">500</option>
+                                <option value={{record}}>All</option>
+                            </select> entries
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-2 col-xxl-2">
+                <div class="table-utilities float-end">
+                    <button class="btn btn-success btn-sm mx-1" tooltip="Excel" (click)="downloadReport('excel')"><i
+                            class="bi bi-download"></i>
+                    </button>
+                    <button class="btn btn-danger btn-sm me-1" type="submit" (click)="downloadReport('pdf')"><i
+                            class="bi bi-file-earmark-pdf"></i></button>
+                </div>
+            </div>
+            <div class="col-lg-4 col-xxl-4">
+                <input type="text" id="txtsearchDate" class="form-control" placeholder="Search here" name="txtsearchDate" [(ngModel)]="txtsearchDate" autocomplete="off">
+
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <hr class="my-xl-4">
+        <div class="table-responsive">
+            <table class="table mb-0 border">
+                <thead>
+                    <tr>
+                        <th width="40" rowspan="2">Sl#</th>
+                        <th rowspan="2">URN</th>
+                        <th rowspan="2">Claim No.</th>
+                        <th rowspan="2">Patient Name</th>
+                        <th rowspan="2">Hospital Details</th>
+                        <th rowspan="2">Package ID</th>
+                        <th rowspan="2">Actual Date of Admission</th>
+                        <th rowspan="2">Actual Date of Discharge</th>
+                        <th rowspan="2">Pending status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container>
+                        <tr *ngFor="let claim of mortalitydata | filter:txtsearchDate |
+                             paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};index as i">
+                            <td *ngIf="currentPage==1">{{i+1}}</td>
+                            <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+i+1}}</td>
+                            <td>{{claim.urn}}</td>
+                            <td>{{claim.claimno}}</td>
+                            <td>{{claim.patientname}}</td>
+                            <td>{{claim.hospitalname}}({{claim.hospitalcode}})</td>
+                            <td title="{{claim.packagename}}">{{claim.packagecode}}</td>
+                            <td>{{claim.actualdateofadmission | date: 'dd-MMM-yyyy'}}</td>
+                            <td>{{claim.actualdateofdischarge | date: 'dd-MMM-yyyy'}}</td>
+                            <td>{{claim.claimdesc}}</td>
+                        </tr>
+                    </ng-container>
+                    <tr *ngIf="this.mortalitydata?.length==0">
+                        <td colspan="11" align="center"><strong class="text-danger">No data found</strong>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row mt-3" *ngIf="showPegi">
+        <div class="col-sm-6">
+            <div class="col-sm-*">
+                show
+                <select id="pageItem" name="pageItem" class="form-select-sm" [(ngModel)]="pageElement">
+                    <option value="100">100</option>
+                    <option value="200">200</option>
+                    <option value="500">500</option>
+                    <option value={{record}}>All</option>
+                </select> entries
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true" (pageChange)="currentPage = $event" (pageBoundsCorrection)="onPageBoundsCorrection($event)" class="text-end"></pagination-controls>
+        </div>
+    </div>
+</div>

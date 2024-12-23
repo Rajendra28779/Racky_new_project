@@ -1,0 +1,189 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="col-lg-4">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a routerLink="/application/csmDCConfigurationAdd" class="nav-link">Add</a>
+                </li>
+                <li class="nav-item">
+                    <a routerLink="/application/csmDCConfigurationView" class="nav-link" routerLinkActive="active"
+                        style="color: #1f723f;">View</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="card shadow-sm">
+        <!-- <div class="card-header bg-primary text-white">
+            <h5 class="card-title mb-0">CSM-DC Configuration-View</h5>
+        </div> -->
+        <div class="card-body">
+            <div class="row">
+              <div class="col-lg-3 col-xxl-3">
+                <div class="mb-xl-3">
+                  <label class="control-label">Group type<span class="text-danger"></span></label>
+                  <select class="form-select" name="group" id="group" [(ngModel)]="group"
+                      (change)="getuserDetailsbygroup($event.target.value)">
+                      <option value="" selected>Select Group type</option>
+                      <option value=22>CSM DC</option>
+                      <option value=10>TSU</option>
+                      <option value=20>SHAS TSU</option>
+                  </select>
+                </div>
+              </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">CSM-DC / TSU Name<span class="text-danger"></span></label>
+                        <ng-autocomplete #auto [data]="csmdcList" placeholder="Select Full Name"
+                            (selected)="selectEvent($event)" (inputCleared)="clearEvent()" [itemTemplate]="itemTemplate"
+                            [notFoundTemplate]="notFoundTemplate" [searchKeyword]="keyword" spellcheck="false">
+                        </ng-autocomplete>
+
+                        <ng-template #itemTemplate let-item>
+                            <a [innerHTML]="item.fullName"></a>
+                        </ng-template>
+
+                        <ng-template #notFoundTemplate let-notFound>
+                            <div [innerHTML]="notFound"></div>
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+            <div class="row align-items-center g-3">
+              <div class="col-lg-3 col-xxl-3">
+                <div class="mb-xl-3">
+                    <label class="control-label">State Name<span class="text-danger"></span></label>
+                    <select class="form-select" name="stateId" id="stateId"
+                        (change)="OnChangeState($event.target.value)">
+                        <option value="" selected disabled>Select State</option>
+                        <ng-container *ngFor="let item of stateList">
+                            <option value={{item.stateCode}}>{{item.stateName}}</option>
+                        </ng-container>
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-3 col-xxl-3">
+                <div class="mb-xl-3">
+                    <label class="control-label">District Name<span class="text-danger"></span></label>
+                    <select class="form-select" name="districtId" id="districtId"
+                        (change)="OnChangeDistrict($event.target.value)">
+                        <option value="" selected>Select District</option>
+                        <ng-container *ngFor="let item of districtList">
+                            <option value={{item.districtcode}}>{{item.districtname}}</option>
+                        </ng-container>
+                    </select>
+                </div>
+            </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Hospital Name<span class="text-danger"></span></label>
+                        <select class="form-select" name="codehospital" id="codehospital">
+                            <option value="" selected>Select Hospital</option>
+                            <ng-container *ngFor="let hospital of hospitalList">
+                                <option [value]="hospital.hospitalCode">{{ hospital.hospName
+                                    }}({{hospital.hospitalCode}})</option>
+                            </ng-container>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Buttons Row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="d-grid gap-2 d-md-flex">
+                        <button type="submit" class="btn btn-success"
+                            (click)="setCsmDcConfigurationview()">Search</button>
+                        <input type="button" value="Reset" class="btn btn-secondary" (click)="onReset()">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+        <div class="col-lg-8 col-xxl-8 row">
+            <div class="col-md-9">
+                <div style="padding-top: 10px; font-weight: bold; color: green">Total Record : {{viewlist?.length}}
+                </div>
+            </div>
+            <div [align]="'start'" class="col-md-3">
+                <button class="btn btn-danger" title="Download PDF" (click)="downloadReport(2)" style="float:right; margin-left: 5px;"><i class="bi bi-file-earmark-pdf"></i></button>
+                <button class="btn btn-success" title="Download Excel" (click)="downloadReport(1)" style="float: right"><i class="bi bi-download"></i></button>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-xxl-4">
+            <div class="input-group">
+                <input type="text" id="txtsearchDate" class="form-control" autocomplete="off" placeholder="Search" name="txtsearchDate" [(ngModel)]="txtsearchDate">
+            </div>
+        </div>
+    </div>
+    <div class="card shadow-sm">
+        <div class="table-responsive example-container">
+            <table class="table table-bordered table-hover table-striped mb-0"
+                style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                <thead style="background-color: #f8f9fa; border: 1px solid #343a40;">
+                    <tr>
+                        <th rowspan="2" class="text-center align-middle">Sl#</th>
+                        <th rowspan="2" class="text-center align-middle">Assigned CSM-DC Name</th>
+                        <th rowspan="2" class="text-center align-middle">Hospital Code</th>
+                        <th rowspan="2" class="text-center align-middle">Hospital Name</th>
+                        <th rowspan="2" class="text-center align-middle">State Name</th>
+                        <th rowspan="2" class="text-center align-middle">District Name</th>
+                        <th rowspan="2" class="text-center align-middle">Empanelment Status</th>
+                        <th rowspan="2" class="text-center align-middle">MOU Status</th>
+                        <th rowspan="2" class="text-center align-middle">Latitude</th>
+                        <th rowspan="2" class="text-center align-middle">Longitude</th>
+                        <th rowspan="2" class="text-center align-middle">Action</th>
+
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let v of viewlist | filter: txtsearchDate | paginate: { id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage }; index as i"
+                        style="background-color: #fdfdfe;">
+                        <td class="text-center">{{ currentPage == 1 ? (i + 1) : (currentPage - 1) * pageElement + i +
+                            1}}</td>
+                        <td class="text-center align-middle">{{ v.fullname }}</td>
+                        <td class="text-center align-middle">{{ v.hospitalcode }}</td>
+                        <td class="text-center align-middle">{{ v.hospitalname }}</td>
+                        <td class="text-center align-middle">{{ v.hospitalstate }}</td>
+                        <td class="text-center align-middle">{{ v.hospitaldistrict }}</td>
+                        <td class="text-center align-middle">{{ v.empstatus }}</td>
+                        <td class="text-center align-middle">{{ v.moustatus }}</td>
+                        <td class="text-center align-middle">{{ v.latitude }}</td>
+                        <td class="text-center align-middle">{{ v.longitude }}</td>
+                        <td style="text-align: center;">
+                            <a class="btn btn-outline-primary btn-sm me-1" (click)="edit(v.csmdcuserid)">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr *ngIf="viewlist.length === 0">
+                        <td colspan="8" class="text-center align-middle"
+                            style="padding: 20px; color: #dc3545; font-weight: 600;">
+                            <strong>NO DATA FOUND!!</strong>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row mt-3" *ngIf="showPegi">
+        <div class="col-sm-4 ">
+            <div class="col-sm-* ">
+                show
+                <select id="pageItem" name="pageItem" class="form-select-sm" (change)="pageItemChange()">
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                    <option value="150">150</option>
+                    <option value="200">200</option>
+                    <option value={{record}}>All</option>
+                </select> entries
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true" (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+        </div>
+    </div>
+</div>

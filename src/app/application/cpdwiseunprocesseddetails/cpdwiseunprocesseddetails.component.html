@@ -1,0 +1,98 @@
+<div class="content">
+    <div class="container-fluid p-0">
+        <div class="form-cointainer">
+            <div class="main-tab">
+                <div class="row justify-content-between">
+                    <div>
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a routerLink="/application/cpdwiseunprocesseddetails" routerLinkActive="active" class="nav-link active">CPD Wise Unprocessed Claim Details</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    Total Count : {{listlen}}
+                </div>
+                <div class="col-2" style="text-align:end ;">
+                    <button class="btn btn-success btn-sm mx-1" style="margin-top: 10px" tooltip="Excel" (click)="downloadReport(1)">
+            <i class="bi bi-file-earmark-spreadsheet"></i>
+        </button>
+                    <button class="btn btn-danger btn-sm mx-1" style="margin-top: 10px" tooltip="pdf" (click)="downloadReport(2)">
+              <i class="bi bi-file-earmark-pdf"></i>
+          </button>
+                </div>
+                <div class="col-4">
+                    <div class="input-group">
+                        <input type="text" id="txtsearchDate" class="form-control" placeholder="Search" name="txtsearchDate" [(ngModel)]="txtsearchDate" autocomplete="off">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="table-responsive">
+                    <table class="table table-striped mb-0">
+                        <thead>
+                            <tr>
+                                <th>Sl No.</th>
+                                <th width="120">CPD Name</th>
+                                <th width="120">Alloted Date</th>
+                                <th>Claim No.</th>
+                                <th>Invoice No.</th>
+                                <th>URN</th>
+                                <th>Patient Name</th>
+                                <th>Hospital Name</th>
+                                <th width="120">Actual Date Of Admission</th>
+                                <th width="120">Actual Date Of Discharge</th>
+                                <th>Package Code</th>
+                                <th>Package Name</th>
+                                <th>Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let claim of list | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage}, index as i">
+                                <td *ngIf="currentPage==1 ">{{(i+1)}}</td>
+                                <td *ngIf="currentPage!=1 ">{{(currentPage-1)*pageElement+ i+1}}</td>
+                                <td *ngIf="claim.cpdName==undefined || claim.cpdName==null">N/A</td>
+                                <td *ngIf="claim.cpdName!=undefined || claim.cpdName!=null">{{claim.cpdName}}</td>
+                                <td>{{claim.alloteddate | date :'dd-MMM-yyyy'}}</td>
+                                <td>{{claim.claimNo}}</td>
+                                <td>{{claim.invoiceno}}</td>
+                                <td>{{claim.urn}}</td>
+                                <td>{{claim.patentname}}</td>
+                                <td>{{claim.hospitalName}}({{claim.hospitalCode}})</td>
+                                <td>{{claim.actDateOfAdm | date :'dd-MMM-yyyy'}}</td>
+                                <td>{{claim.actDateOfDschrg | date :'dd-MMM-yyyy'}}</td>
+                                <td>{{claim.packagecode}}</td>
+                                <td>{{claim.packageName}}</td>
+                                <td><a class="btn btn-outline-primary btn-sm " (click)="details(claim.claimId,claim.urn)">Details</a></td>
+                            </tr>
+                            <tr *ngIf="!showPegi">
+                                <td colspan="16" align="center">
+                                    <strong class="text-danger">NO DATA FOUND!!</strong>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row" *ngIf="showPegi">
+                    <div class="col-sm-4">
+                        <div class="col-sm-*">
+                            show
+                            <select id="pageItem" name="pageItem" class="custom-select-sm" (change)="pageItemChange()">
+                        <option value="100">100</option>
+                        <option value="200">200</option>
+                        <option value="300">300</option>
+                      </select> entries
+                        </div>
+                    </div>
+                    <div class="col-sm-8 text-right">
+                        <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true" (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)">
+                        </pagination-controls>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

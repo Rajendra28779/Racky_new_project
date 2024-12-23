@@ -1,0 +1,145 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/urnwiseaction" class="nav-link active">URN Wise Action</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="filter" class="searchCriteriaBox bg-light p-3">
+        <div class="row">
+            <div class="col-lg-3 col-xxl-3">
+                <div class="form-group">
+                    <label class="control-label mb-2">Search By</label><span class="text-danger">*</span>
+                    <select class="form-select" id="searchBy" [(ngModel)]="searchBy" aria-label="Disabled select example" (change)="clearField()">
+                        <option value="" selected disabled>Select</option>
+                        <option value="URN">URN</option>
+                        <option value="CLAIM">CLAIM NO.</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-3 col-xxl-3">
+                <div class="form-group">
+                    <label class="control-label mb-2">Enter Here</label><span class="text-danger">*</span>
+                    <input type="text" id="urn" class="form-control" placeholder="Enter Here" name="urn" autocomplete="off" [(ngModel)]="fieldValue" oninput="this.value = this.value.toUpperCase()" onkeyup="this.value=this.value.replace(/[^0-9.a-zA-Z]/g,'');" maxlength="25">
+                </div>
+            </div>
+            <div class="col align-self-end">
+                <div class="form-group">
+                    <button class="btn btn-success" (click)="getSNAReports()">Search</button> &nbsp;
+                    <button class="btn btn-secondary" (click)="resetField()">Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 10px;margin-bottom: 10px;" *ngIf="showPegi">
+        <div class="col-lg-4 col-xxl-4" style="padding-top: 10px; padding-left: 17px;">
+            <b>Total Claims: <span style="color: green;">{{snareportList?.length}}</span></b>
+        </div>
+        <div class="col-lg-4 col-xxl-4" style="text-align: right; padding-top: 1px;">
+            <div class="form-group">
+                <button class="btn btn-outline-success btn-sm me-1" type="submit" (click)="downloadReport()">
+                <i class="bi bi-file-earmark-spreadsheet" style="font-size: 13pt;"></i>
+            </button> &nbsp;
+                <button class="btn btn-outline-danger btn-sm me-1" type="submit" (click)="downloadPdf()">
+                <i class="bi bi-file-earmark-pdf" style="font-size: 13pt;"></i>
+            </button>
+            </div>
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+            <input type="text" id="txtsearchDate" class="form-control" placeholder="Search here" name="txtsearchDate" [(ngModel)]="txtsearchDate">
+        </div>
+    </div>
+    <div class="content-box p-0 overflow-hidden" *ngIf="showPegi">
+        <div class="table-responsive">
+            <table class="table table-striped mb-0">
+                <thead>
+                    <tr>
+                        <th width="40">Sl No</th>
+                        <th>Claim No.</th>
+                        <th>URN</th>
+                        <th>Patient Name</th>
+                        <th>Hospital Details</th>
+                        <th>Procedure Code</th>
+                        <th>Admission Date</th>
+                        <th>Actual Admission Date</th>
+                        <th>Discharge Date</th>
+                        <th>Actual Discharge Date</th>
+                        <th>Hospital Claim Amount(₹)</th>
+                        <th>CPD Claim Status</th>
+                        <th>CPD Remarks</th>
+                        <th>CPD Approved Amount (&#8377;)</th>
+                        <th>SNA Claim Status</th>
+                        <th>SNA Remarks</th>
+                        <th>SNA Approved Amount (&#8377;)</th>
+                        <th>Claim Status</th>
+                        <th>Take Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of snareportList | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};
+                        index as i">
+                        <td *ngIf="currentPage==1">{{(i+1)}}</td>
+                        <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+ i+1}}</td>
+                        <td width="100">{{item.claimNo}}</td>
+                        <td width="100">{{item.urn}}</td>
+                        <td width="100">{{item.patientname}}</td>
+                        <td width="100">{{item.hospitalName}}</td>
+                        <td width="100">{{item.packagecode}}</td>
+                        <td width="100">{{item.dateofadmission}}</td>
+                        <td width="100">{{item.actualdateofadmission}}</td>
+                        <td width="100">{{item.dateofdischarge}}</td>
+                        <td width="100">{{item.actualdateofdischarge}}</td>
+                        <td width="100">{{item.totalamountclaimed | currency:'':''}}</td>
+                        <td>{{item.CPDClaimStatus != null ? item.CPDClaimStatus : '-NA-'}}</td>
+                        <td>
+                            <span *ngIf="item.CPDRemarks != null"><a href="javascript:void(0)" (click)="show(item.CPDRemarks)">view</a></span>
+                            <span *ngIf="item.CPDRemarks == null">-NA-</span>
+                        </td>
+                        <td>
+                            <span *ngIf="item.cpdapprovedamount != null">{{item.cpdapprovedamount | currency:'':''}}</span>
+                            <span *ngIf="item.cpdapprovedamount == null">-NA-</span>
+                        </td>
+                        <td>{{item.SNAClaimStatus != null ? item.SNAClaimStatus : '-NA-'}}</td>
+                        <td>
+                            <span *ngIf="item.SNARemarks != null"><a href="javascript:void(0)" (click)="show(item.SNARemarks)">view</a></span>
+                            <span *ngIf="item.SNARemarks == null">-NA-</span>
+                        </td>
+                        <td>
+                            <span *ngIf="item.snaapprovedamount != null">{{item.snaapprovedamount | currency:'':''}}</span>
+                            <span *ngIf="item.snaapprovedamount == null">-NA-</span>
+                        </td>
+                        <td>{{item.actiontype}}</td>
+                        <td width="150" *ngIf="item.pendingAt!=2">-NA-</td>
+                        <td width="150" *ngIf="item.pendingAt==2"><a class="btn btn-outline-success btn-sm" (click)="onAction(item.transactiondetailsid,item.urn,item.packagecode,item.claimStatus,item.txnpackagedetailid)">Action</a></td>
+                    </tr>
+                    <tr *ngIf="snareportList.length==0">
+                        <td colspan="17" class="text-center text-danger"><strong>NO DATA FOUND!!</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 20px;" *ngIf="showPegi">
+        <div class="col-sm-6">
+            <div class="col-sm-*">
+                show
+                <select id="pageItem" name="pageItem" class="form-select-sm" (change)="pageItemChange()">
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                    <option value="200">200</option>
+                    <option value="500">500</option>
+                    <option value="{{snareportList?.length}}">All</option>
+                </select> entries
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true" (pageChange)="currentPage = $event" (pageBoundsCorrection)="onPageBoundsCorrection($event)" class="text-end"></pagination-controls>
+        </div>
+    </div>
+</div>

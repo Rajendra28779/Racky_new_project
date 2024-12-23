@@ -1,0 +1,141 @@
+<div class="content">
+    <div class="form-cointainer">
+        <div class="main-tab">
+            <div class="row justify-content-between">
+                <div class="col-lg-12">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a routerLinkActive="active" class="nav-link active">Old Block Data Report List</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px;margin-bottom: 2px;">
+            <div class="col-lg-4 col-xxl-4 mb-3">
+                Actual Admission From : <strong>{{formDate}}</strong>
+            </div>
+            <div class="col-lg-4 col-xxl-4 mb-3">
+                To : <strong>{{toDate}}</strong>
+            </div>
+            <div class="col-lg-4 col-xxl-4 mb-3">
+                State Name : <strong>{{stateName}}</strong>
+            </div>
+
+        </div>
+        <div class="row" style="margin-top: 10px;margin-bottom: 2px;">
+            <div class="col-lg-4 col-xxl-4 mb-3" *ngIf="showdropdown">
+                SNA Name : <strong>{{name}}</strong>
+            </div>
+            <div class="col-lg-4 col-xxl-4 mb-3">
+                District Name : <strong>{{distName}}</strong>
+            </div>
+            <div class="col-lg-4 col-xxl-4 mb-3">
+                Hospital Name : <strong>{{hospitalName}}</strong>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px;margin-bottom: 1px;">
+
+            <div class="col-lg-6 col-xxl-6 ">
+                <div class="row" *ngIf="showPegi">
+                    <div class="col-sm-4">
+                        <div class="col-sm-*">
+                            show
+                            <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+                                <!-- <option value="50">50</option> -->
+                                <option value="100">100</option>
+                                <option value="200">200</option>
+                                <option value="500">500</option>
+                                <option value={{record}}>All</option>
+                            </select> entries
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-2 col-xxl-2">
+                <div class="table-utilities float-end">
+                    <button class="btn btn-success btn-sm mx-1" tooltip="Excel" (click)="downloadReport(1)"><i
+                            class="bi bi-download"></i>
+                    </button>
+                    <button class="btn btn-danger btn-sm me-1" type="submit" (click)="downloadReport(2)"><i
+                            class="bi bi-file-earmark-pdf"></i></button>
+                </div>
+            </div>
+            <div class="col-lg-4 col-xxl-4">
+                <div class="input-group">
+                    <input type="text" id="txtsearchDate" class="form-control" placeholder="Search here..."
+                        name="txtsearchDate" [(ngModel)]="txtsearchDate" autocomplete="off">
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="table-responsive">
+            <table class="table table-striped mb-0">
+                <thead>
+                    <tr>
+                        <th width="20">Sl No#</th>
+                        <th width="100">State Name</th>
+                        <th width="100">District Name</th>
+                        <th width="100">Hospital Name</th>
+                        <th width="100">Patient Name</th>
+                        <th width="100">URN</th>
+                        <th width="100">Actual Admission Date</th>
+                        <th width="100">Invoice Number</th>
+                        <th width="100">Amount</th>
+                        <th width="100">Current Status</th>
+                        <th width="20">Details</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr
+                        *ngFor="let item of gramwisedata | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};index as i">
+                        <td *ngIf="currentPage==1">{{i+1}}</td>
+                        <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+i+1}}</td>
+                        <td>{{item.stateName}}</td>
+                        <td>{{item.districtName}}</td>
+                        <td>{{item.hospitalName}}({{item.hospitalCode}})</td>
+                        <td>{{item.patientName}}</td>
+                        <td>{{item.urn}}</td>
+                        <td>{{item.actualAdmissionDate}}</td>
+                        <td>{{item.invoiceNo}}</td>
+                        <td>{{item.amountBlocked |currency:'':''}}</td>
+                        <td>{{item.latestStatus}}</td>
+                        <td title="Details"><a class="btn btn-outline-primary btn-sm me-1" (click)="details(item.transactionId
+                            ,item.txnPackageId)"><i class="bi bi-eye"></i></a></td>
+                    </tr>
+                    <tr *ngIf="!showPegi">
+                        <div class="row">
+                            <span style="color: red;text-align: center;position:absolute">NO DATA
+                                FOUND!!</span>
+                        </div>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+
+        <div class="row" *ngIf="showPegi">
+            <div class="col-sm-4">
+                <div class="col-sm-*">
+                    show
+                    <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+
+                        <option value="100">100</option>
+                        <option value="200">200</option>
+                        <option value="500">500</option>
+                        <option value={{record}}>All</option>
+                    </select> entries
+                </div>
+            </div>
+            <div class="col-sm-8 text-right">
+                <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true"
+                    (pageChange)="currentPage = $event" class="text-end"
+                    (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+            </div>
+        </div>
+
+    </div>
+</div>

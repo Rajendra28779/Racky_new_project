@@ -1,0 +1,182 @@
+<div class="container-fluid">
+    <div class="main-tab" style="padding: 15px; padding-bottom: 0px;">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/packagedetails" routerLinkActive="active" class="nav-link active">Package Details</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="form-cointainer" style="padding-left: 15px;">
+        <div class="main-tab">
+            <div class="col-lg-12">
+                <div class="card shadow-sm mt-3 mt-xl-4 ">
+                    <div class="card-body">
+                        <div class="row gx-xl-5 treatment-details">
+                            <div class="col-xl">
+                                <p class="mb-0 ">Package Header Name</p>
+                                <p class="mb-0 fw-bold">{{detailsdata[0]?.packageheader}}</p>
+                            </div>
+                            <div class="col-xl border-start">
+                                <div class="d-flex align-items-center">
+                                    <div>
+                                        <p class="text-muted mb-0">Package Subcategory Name</p>
+                                        <p class="mb-0 fw-bold">{{detailsdata[0]?.packagesubheader}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl border-start">
+                                <div class="d-flex align-items-center">
+                                    <div>
+                                        <p class="text-muted mb-0">Procedure Code</p>
+                                        <p class="mb-0 fw-bold">{{detailsdata[0]?.procedurecode}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl border-start">
+                                <div class="d-flex align-items-center">
+                                    <div>
+                                        <p class="text-muted mb-0">Procedure Description</p>
+                                        <p class="mb-0 fw-bold">{{detailsdata[0]?.proceduredescrption}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card shadow-sm mt-3 mt-xl-4 ">
+                            <div class="card-body">
+                                <div class="row gx-xl-5 treatment-details">
+                                    <div class="col-xl">
+                                        <p class=" text-muted mb-0">Package Category Type</p>
+                                        <p class="mb-0 fw-bold">{{detailsdata[0]?.packagecategorytype}}
+                                        </p>
+                                    </div>
+
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class="text-muted mb-0">Maximum Days</p>
+                                                <p class="mb-0 fw-bold">{{detailsdata[0]?.maximumdays}}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class="text-muted mb-0">Day Care</p>
+                                                <p class="mb-0 fw-bold">{{detailsdata[0]?.daycare}}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class="text-muted mb-0">Mandatory Documents For Pre-Authorization</p>
+                                                <p class="mb-0 fw-bold">{{detailsdata[0]?.preauthdocs}}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card shadow-sm mt-3 mt-xl-4 ">
+                            <div class="card-body">
+                                <div class="row gx-xl-5 treatment-details">
+                                    <div class="col-xl">
+                                        <p class=" text-muted mb-0">Mandatory Documents For Claim Processing</p>
+                                        <p class="mb-0 fw-bold">{{detailsdata[0]?.claimprocesseddocs}}
+                                        </p>
+                                    </div>
+
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class="text-muted mb-0">Package Extention</p>
+                                                <p class="mb-0 fw-bold">{{detailsdata[0]?.packageextention}}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class="text-muted mb-0">Price Editable</p>
+                                                <p class="mb-0 fw-bold">{{detailsdata[0]?.priceeditable}}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class="text-muted mb-0">Package Under Exception</p>
+                                                <p class="mb-0 fw-bold">{{detailsdata[0]?.packageunderexception}}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card shadow-sm mt-3 mt-xl-4 ">
+                            <div class="card-body">
+                                <div class="row gx-xl-5 treatment-details">
+                                    <div class="col-xl">
+                                        <p class=" text-muted mb-0">Multi Procedure</p>
+                                        <p class="mb-0 fw-bold">{{detailsdata[0]?.multyprocedure}}
+                                        </p>
+                                    </div>
+                                    <!-- 
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class="text-muted mb-0">Package category type</p>
+                                                <p class="mb-0 fw-bold">{{detailsdata[0]?.packagecategorytype}}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class="text-muted mb-0">Package Type</p>
+                                                <p class="mb-0 fw-bold">{{detailsdata[0]?.surgicaltype}}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class="text-muted mb-0">Fixed/Variable length of stay</p>
+                                                <p class="mb-0 fw-bold">{{detailsdata[0]?.staytype}}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

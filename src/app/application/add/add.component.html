@@ -1,0 +1,177 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/demopage/add" routerLinkActive="active" class="nav-link">Add</a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/application/demopage/view" routerLinkActive="active" class="nav-link">View</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-6 ">
+                <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-box" id="printArea">
+
+        <div class="row">
+            <div class="col-lg-12 col-xxl-10">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="mb-2">
+                            <label class="col-form-label">Text Input</label>
+                            <input class="form-control" type="text">
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="mb-2">
+                            <label class="col-form-label">Select Dropdown</label>
+                            <select class="form-select">
+                                <option>Select</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="mb-2">
+                            <label class="col-form-label">Mutlti Select & Searchable Dropdown</label>
+                            <!-- <select class="form-control selectpicker" multiple aria-label="Default select example" data-live-search="true">
+                                <option value="1">Select Dropdown 1</option>
+                                <option value="2">Select Dropdown 2</option>
+                                <option value="3">Select Dropdown 3</option>
+                                <option value="4">Select Dropdown 4</option>
+                                <option value="1">Select Dropdown 5</option>
+                                <option value="2">Select Dropdown 6</option>
+                                <option value="3">Select Dropdown 7</option>
+                                <option value="4">Select Dropdown 8</option>
+                                <option value="1">Select Dropdown 9</option>
+                                <option value="2">Select Dropdown 10</option>
+                                <option value="3">Select Dropdown 11</option>
+                                <option value="4">Select Dropdown 12</option>
+                              </select> -->
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="mb-2">
+                            <label class="col-form-label">Date Input</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control border-end-0 datepicker" id="datepicker">
+                                <label class="input-group-text bg-transparent border-start-0" for="datepicker"><i class="iconbsky-calendar"></i> </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="mb-2">
+                            <label class="col-form-label">Time Input</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control timepicker" id="inputTime">
+                                <label class="input-group-text" for="inputTime"><i class="bi  bi-clock"></i></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="mb-2">
+                            <label class="col-form-label">Date Time Input</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control datetimepicker" id="inputDateTime">
+                                <label class="input-group-text" for="inputDateTime"><i class="bi bi-calendar-check"></i></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="mb-2">
+                            <label class="col-form-label">Text Area</label>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            <small class="text-danger">Maximum <strong>500</strong> characters</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="row my-3">
+                    <div class="col-lg-4">
+                        <div class="mb-2">
+                            <label class="col-form-label">Checkbox</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Default checkbox
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                                <label class="form-check-label" for="flexCheckChecked">
+                                    Checked checkbox
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="mb-2">
+                            <label class="col-form-label pe-3 d-block">Checkbox Inline </label>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                                <label class="form-check-label" for="inlineCheckbox1">1</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                                <label class="form-check-label" for="inlineCheckbox2">2</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="mb-2">
+                            <label class="col-form-label pe-3">Radio Button </label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    Default radio
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                                <label class="form-check-label" for="flexRadioDefault2">
+                                    Default checked radio
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="mb-2">
+                            <label class="col-form-label pe-3 d-block">Radio Button inline </label>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked>
+                                <label class="form-check-label" for="inlineRadio1">1</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                                <label class="form-check-label" for="inlineRadio2">2</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="d-grid gap-2 d-md-flex">
+                            <button type="submit" class="btn btn-success">Submit</button>
+                            <button type="submit" class="btn btn-secondary">Submit</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

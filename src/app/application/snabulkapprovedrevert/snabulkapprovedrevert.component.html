@@ -1,0 +1,119 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/bulkapproverevertAction" class="nav-link active">Bulk Approval Revert</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="content-box mt-3">
+        <div class="col-xxl-10">
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label class="control-label mb-2">Actual Date of Discharge From</label><span class="text-danger">*</span>
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="datepicker4" name="fromDate" autocomplete="off">
+                            <label class="input-group-text bg-transparent border-start-0" for="datepicker4"><i
+                                    class="iconbsky-calendar"></i> </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label class="control-label mb-2">To</label><span class="text-danger">*</span>
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="datepicker3" name="toDate" autocomplete="off">
+                            <label class="input-group-text bg-transparent border-start-0" for="datepicker3"><i
+                                    class="iconbsky-calendar"></i> </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <button type="submit " class="btn btn-success " style="margin-left: 17px;margin-top: 38px;" (click)="getbulklist() ">Search</button>
+                        <button type="reset" class="btn btn-secondary " style="margin-left: 17px;margin-top: 38px;" (click)="getreset()">Reset</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+            <div class="col-lg-8 col-xxl-8 row">
+                <div class="col-md-9">
+                    <div style="padding-top: 10px; font-weight: bold; color: green">Total Record:-{{records}}</div>
+                </div>
+                <div [align]="'start'" class="col-md-3">
+                    <button class="btn btn-danger" title="Download PDF" (click)="downloadReport('pdf')" style="float:right; margin-left: 5px;"><i class="bi bi-file-earmark-pdf"></i></button>
+                    <button class="btn btn-success" title="Download Excel" (click)="downloadReport('excel')" style="float: right"><i class="bi bi-download" ></i></button>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-xxl-4">
+                <div class="input-group">
+                    <input type="text" id="txtsearchDate" class="form-control" autocomplete="off" placeholder="Search" name="txtsearchDate" [(ngModel)]="txtsearchDate">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content-box p-0 overflow-hidden ">
+        <div class="table-responsive ">
+            <table class="table table-striped mb-0 ">
+                <thead>
+                    <tr>
+                        <th class="text-center">Sl No.</th>
+                        <th class="text-center">URN </th>
+                        <th class="text-center">Patient Name</th>
+                        <th class="text-center">Package Name</th>
+                        <th class="text-center">Procedure Name</th>
+                        <th class="text-center">ActualDate Of Admission</th>
+                        <th class="text-center">ActualDate Of Discharge</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let claim of data | filter:txtsearchDate| paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage}; index as i ">
+                        <tr>
+                            <td class="text-center" *ngIf="currentPage==1 ">{{(i+1)}}</td>
+                            <td class="text-center" *ngIf="currentPage!=1 ">{{(currentPage-1)*pageElement+ i+1}}</td>
+                            <td class="text-center">{{claim.urn}} </td>
+                            <td class="text-center"> {{claim.patientname}}</td>
+                            <td class="text-center">{{claim.packagename}}</td>
+                            <td class="text-center">{{claim.procedurename}}</td>
+                            <td class="text-center">{{claim.actualdateofadmission | date:'dd-MMM-yyyy'}}</td>
+                            <td class="text-center">{{claim.actualdateofdischarge | date:'dd-MMM-yyyy'}}</td>
+                        </tr>
+                    </ng-container>
+                    <tr *ngIf="this.data.length==0">
+                        <td colspan="16">
+                            <p class="mb-0 text-center text-danger fw-bold">NO DATA FOUND!!</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row mt-3" *ngIf="showPegi">
+        <div class="col-sm-4 ">
+            <div class="col-sm-* ">
+                show
+                <select id="pageItem" name="pageItem" class="form-select-sm" (change)="pageItemChange()">
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                    <option value="150">150</option>
+                    <option value="200">200</option>
+                    <option value={{records}}>All</option>
+                </select> entries
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <button type="submit " class="btn btn-success " (click)="getrevertdata()">Revert</button>
+        </div>
+        <div class="col-sm-4">
+            <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true" (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+        </div>
+    </div>
+</div>

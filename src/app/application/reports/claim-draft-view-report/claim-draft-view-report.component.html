@@ -1,0 +1,253 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/claimDraftView" routerLinkActive="active"
+                            class="nav-link active">Claim Draft View</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="filter" class="searchCriteriaBox bg-light p-3">
+        <!-- <div class="row">
+            <div class="col-lg-3 col-xxl-3">
+                <div class="mb-xl-3">
+                    <label class="control-label">Actual Date of Discharge From<span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <input type="text" class="form-control border-end-0 datepicker" id="formdate" name="fromDate">
+                        <label class="input-group-text bg-transparent border-start-0" for="formdate"><i
+                                class="iconbsky-calendar"></i> </label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-xxl-3">
+                <div class="mb-xl-3">
+                    <label class="control-label">Actual Date of Discharge To<span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <input type="text" class="form-control border-end-0 datepicker" id="todate" name="toDate">
+                        <label class="input-group-text bg-transparent border-start-0" for="todate"><i
+                                class="iconbsky-calendar"></i> </label>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <div class="row">
+            <div class="col-lg-4 col-xxl-4">
+                <div class="mb-xl-3">
+                    <label class="control-label">CPD Name</label><span *ngIf="showdropdown" class="text-danger">*</span>
+                        <div>
+                            <select class="form-select" name="cpdId" id="cpdId" [(ngModel)]="name" [disabled]="showdropdown">
+                                <option value="">Select CPD</option>
+                                <ng-container *ngFor="let item of cpdList">
+                                    <option value={{item.userid}}>{{item.fullName}}</option>
+                                </ng-container>
+                            </select>
+                        </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-xxl-4">
+                <div class="mb-xl-3">
+                    <label class="control-label">Search Type</label>
+                    <select class="form-select" name="searchType" id="searchType" [(ngModel)]="searchType">
+                        <option value="" selected>Select Search Type</option>
+                        <option value="1">URN</option>
+                        <option value="2">Claim No.</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-4 col-xxl-4">
+                <div class="mb-xl-3">
+                    <label class="control-label">Search Value</label>
+                    <input type="text" class="form-control" placeholder="Enter Here" autocomplete="off" name="searchValue" id="searchValue" [(ngModel)]="searchValue" oninput="this.value = this.value.toUpperCase()" onkeyup="this.value=this.value.replace(/[^0-9.a-zA-Z]/g,'');" maxlength="25">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col align-self-end">
+                <div class="col-lg-12">
+                    <button class="btn btn-success mr-2" (click)="getDetails()">Search</button>
+                    &nbsp;
+                    <button class="btn btn-secondary" (click)="resetTable()">Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="row" style="margin-bottom: 10px;">
+        <div class="col-lg-4 col-xxl-4"></div>
+        <div class="col-lg-4 col-xxl-4"></div>
+        <div class="col-lg-4 col-xxl-4" style="text-align: right; padding-top: 3px;">
+            <div class="form-group">
+                <button class="btn btn-outline-success btn-sm me-1" (click)="downloadList('xcl')">
+                    <i class="bi bi-file-earmark-spreadsheet" style="font-size: 13pt;"></i>
+                </button>
+                &nbsp;
+                <button class="btn btn-outline-danger btn-sm me-1" type="submit" (click)="downloadList('pdf')">
+                    <i class="bi bi-file-earmark-pdf" style="font-size: 13pt;"></i>
+                </button>
+            </div>
+        </div>
+    </div> -->
+    <!-- <div class="content-box border-0 bg-transparent">
+        <div class="row">
+            <div class="col-lg-12 col-xxl-12" style="padding: 0px;">
+                <div class="card shadow-sm basic-info">
+                    <div class="card-header">
+                        <h5 class="mb-0 text-success " style="font-size: 15pt;">COUNT DETAILS</h5>
+                    </div>
+                    <div class="card-body mt-3">
+                        <div class="row gx-xl-5 treatment-details mb-3">
+                            <div class="col-xxl-4 col-xl-4">
+                                <div class="d-flex align-items-center ">
+                                    <div>
+                                        <p class="text-muted mb-0 ">Total Case Re-Open</p>
+                                        <h6 class="mb-0 fs-1-3">
+                                            <a href="javascript:void(0);" id="TRO"
+                                                (click)="GetCountDetails($event)">{{summary?.totalCaseReopen}}</a>
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-4 col-xl-4 border-start">
+                                <div class="d-flex align-items-center ">
+                                    <div>
+                                        <p class="text-muted mb-0 ">Total Re-Open of Approved Case
+                                        </p>
+                                        <h6 class="mb-0 fs-1-3">
+                                            <a href="javascript:void(0);" id="TROA"
+                                                (click)="GetCountDetails($event)">{{summary?.totalApprovedReopen}}</a>
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-4 col-xl-4 border-start">
+                                <div class="d-flex align-items-center ">
+                                    <div>
+                                        <p class="text-muted mb-0 ">Total Re-Open of SNA Rejected Case </p>
+                                        <h6 class="mb-0 fs-1-3">
+                                            <a href="javascript:void(0);" id="TROSR"
+                                                (click)="GetCountDetails($event)">{{summary?.totalSnaRejectedReopen}}</a>
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <h5 class="mb-0 text-success" style="font-size: 14pt;">Action On Re-Opened Approved Cases ({{summary?.totalApprovedReopen}})</h5>
+                        <hr class="mt-xl-3 mb-xl-3">
+                        <div class="row gx-xl-5 treatment-details mb-3">
+                            <div class="col-xxl-4 col-xl-4">
+                                <div class="d-flex align-items-center ">
+
+                                    <div>
+                                        <p class="text-muted mb-0 ">SNA Queried And Pending At Hospital</p>
+                                        <h6 class="mb-0 fs-1-3">
+                                            <a href="javascript:void(0);" id="ASQPH"
+                                                (click)="GetCountDetails($event)">{{summary?.totalAPQueryPendingAtHospital}}</a>
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-4 col-xl-4 border-start">
+                                <div class="d-flex align-items-center ">
+                                    <div>
+                                        <p class="text-muted mb-0 ">Hospital Reclaimed and Pending At SNA</p>
+                                        <h6 class="mb-0 fs-1-3">
+                                            <a href="javascript:void(0);" id="AHRPS"
+                                                (click)="GetCountDetails($event)">{{summary?.totalAPQueryReClaimed}}</a>
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-4 col-xl-4 border-start">
+                                <div class="d-flex align-items-center ">
+
+                                    <div>
+                                        <p class="text-muted mb-0 ">Total SNA Approved</p>
+                                        <h6 class="mb-0 fs-1-3">
+                                            <a href="javascript:void(0);" id="APSA"
+                                                (click)="GetCountDetails($event)">{{summary?.totalAPSNAApproved}}</a>
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 ">
+                            <hr class="mt-xl-3 mb-xl-3">
+                        </div>
+                        <div class="row gx-xl-5 treatment-details mb-3">
+                            <div class="col-xxl-4 col-xl-4">
+                                <div class="d-flex align-items-center ">
+                                    <div>
+                                        <p class="text-muted mb-0 ">Total SNA Rejected</p>
+                                        <h6 class="mb-0 fs-1-3">
+                                            <a href="javascript:void(0);" id="ASSR"
+                                                (click)="GetCountDetails($event)">{{summary?.totalAPSNARejected}}</a>
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <h5 class="mb-0 text-success" style="font-size: 14pt;">Action On Re-Opened SNA Rejected Cases ({{summary?.totalSnaRejectedReopen}})</h5>
+                        <hr class="mt-xl-3 mb-xl-3">
+                        <div class="row gx-xl-5 treatment-details mb-3">
+                            <div class="col-xxl-4 col-xl-4">
+                                <div class="d-flex align-items-center ">
+                                    <div>
+                                        <p class="text-muted mb-0 ">SNA Queried And Pending At Hospital</p>
+                                        <h6 class="mb-0 fs-1-3">
+                                            <a href="javascript:void(0);" id="SRSQPH"
+                                                (click)="GetCountDetails($event)">{{summary?.totalSNARejQueryPendingAtHospital}}</a>
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-4 col-xl-4 border-start">
+                                <div class="d-flex align-items-center ">
+                                    <div>
+                                        <p class="text-muted mb-0 ">Hospital Reclaimed and Pending At SNA</p>
+                                        <h6 class="mb-0 fs-1-3">
+                                            <a href="javascript:void(0);" id="SNHRPS"
+                                                (click)="GetCountDetails($event)">{{summary?.totalSNARejQueryReClaimed}}</a>
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-4 col-xl-4 border-start">
+                                <div class="d-flex align-items-center ">
+                                    <div>
+                                        <p class="text-muted mb-0 ">Total SNA Approved</p>
+                                        <h6 class="mb-0 fs-1-3">
+                                            <a href="javascript:void(0);" id="SRSA"
+                                                (click)="GetCountDetails($event)">{{summary?.totalSNARejSNAApproved}}</a>
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 ">
+                            <hr class="mt-xl-3 mb-xl-3">
+                        </div>
+                        <div class="row gx-xl-5 treatment-details mb-3">
+                            <div class="col-xxl-4 col-xl-4">
+                                <div class="d-flex align-items-center ">
+
+                                    <div>
+                                        <p class="text-muted mb-0 ">Total SNA Rejected</p>
+                                        <h6 class="mb-0 fs-1-3">
+                                            <a href="javascript:void(0);" id="SRSR"
+                                                (click)="GetCountDetails($event)">{{summary?.totalSNARejSNARejected}}</a>
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+</div>

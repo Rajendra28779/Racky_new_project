@@ -1,0 +1,71 @@
+<div class="content">
+    <div class="container-fluid p-0">
+        <div class="form-cointainer">
+            <div class="main-tab">
+                <div class="row justify-content-between">
+                    <div class="col-lg-12">
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a routerLinkActive="active" class="nav-link active">Hospital wise Payment Summary Report Details</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 col-lg-3 col-xl-3 col-xxl-3 ms-xxl-auto ms-xl-auto ms-lg-auto ms-md-auto">
+                    <!-- <div class="mb-3 mt-3">
+                        <input type="text " id="txtsearchDate " name="txtsearchDate " [(ngModel)]="txtsearchDate" maxlength="20 " class="form-control " placeholder="Search here...... " autocomplete="off">
+                    </div> -->
+                    <div class="mb-3 mt-3" [align]="'start'">
+                        <button class="btn btn-success btn-sm mx-1" tooltip="Excel" (click)="downloadReport('excel')"><i class="bi bi-download"></i></button>
+                        <button class="btn btn-danger btn-sm mx-1" tooltip="pdf" (click)="downloadReport('pdf')"><i class="bi bi-file-earmark-pdf"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="content-box">
+                <div class="row">
+                    <div class="table-responsive">
+                        <table class="table table-striped mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Sl no.</th>
+                                    <th style="text-align: center;">Claim Number</th>
+                                    <th style="text-align: center;">Case Number</th>
+                                    <th style="text-align: center;">URN</th>
+                                    <th style="text-align: center;">Patient Name</th>
+                                    <th style="text-align: center;">Package Code</th>
+                                    <th style="text-align: center;">Totalamount Claimed</th>
+                                    <th style="text-align: center;">PaymentFreeze Status</th>
+                                    <th style="text-align: center;">Actual Date of Discharge</th>
+                                    <th style="text-align: center;">Actual Date of admission</th>
+                                </tr>
+                            </thead>
+                            <tr *ngFor="let item of getdata,index as i ">
+                                <td>{{i+1}}</td>
+                                <td>{{item.claim_no}}</td>
+                                <td>{{item.caseno}}</td>
+                                <td>{{item.urn}}</td>
+                                <td>{{item.patientname}}</td>
+                                <td title={{item.packagename}}>{{item.packagecode}}</td>
+                                <td>{{item.totalamountclaimed | currency:'':''}}</td>
+                                <td>{{item.paymentfreezestatus}}</td>
+                                <td>{{item.actualDateOfDischarge| date:'dd-MMM-yyyy'}}</td>
+                                <td>{{item.actualDateOfAdmission| date:'dd-MMM-yyyy'}}</td>
+                            </tr>
+                            <tbody>
+                                <tr *ngIf="! getdata?.length ">
+                                    <td colspan="18 " align="center "><strong class="text-danger ">No data found</strong></td>
+                                </tr>
+                            </tbody>
+                            <tr>
+                                <td colspan="6" style="color: red; ">Total</td>
+                                <td style="color: red; ">{{totalsum | currency:'':''}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

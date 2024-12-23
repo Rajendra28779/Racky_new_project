@@ -1,0 +1,246 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/postpaymentupdatenew" routerLinkActive="active" class="nav-link active">Post-Payment Update New</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="content-box">
+        <div class="row">
+            <div class="col-xxl-10">
+                <div class="row">
+                    <div class="col-lg-3 col-xxl-3">
+                        <div class="mb-xl-3">
+                            <label class="control-label">Float Generation Date From</label><span class="text-danger">*</span>
+                            <div class="input-group">
+                                <input type="text" class="form-control border-end-0 datepicker" id="datepicker3" name="fromDate1" />
+                                <label class="input-group-text bg-transparent border-start-0" for="datepicker3">
+                          <i class="iconbsky-calendar"></i>
+                      </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-xxl-3">
+                        <div class="mb-xl-3">
+                            <label class="control-label">Float Generation Date To</label><span class="text-danger">*</span>
+                            <div class="input-group">
+                                <input type="text" class="form-control border-end-0 datepicker" id="datepicker4" name="todate1" />
+                                <label class="input-group-text bg-transparent border-start-0" for="datepicker4">
+                          <i class="iconbsky-calendar"></i>
+                      </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-xxl-4">
+                        <div class="mb-xl-3">
+                            <label class="control-label">SNA-Doctor<span class="text-danger">*</span></label>
+                            <div *ngIf="!showsna">
+                                <ng-autocomplete #auto [data]="snaDoctorList" placeholder="Select Name" (selected)="selectEvent($event)" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" [searchKeyword]="keyword" [(ngModel)]="snaname" spellcheck="false" (inputCleared)="onReset1()">
+                                </ng-autocomplete>
+                                <ng-template #itemTemplate let-item>
+                                    <a [innerHTML]="item.fullName"></a>
+                                </ng-template>
+                                <ng-template #notFoundTemplate let-notFound>
+                                    <div [innerHTML]="notFound"></div>
+                                </ng-template>
+                            </div>
+                            <div *ngIf="showsna">
+                                <input type="text" [value]="snadoctorname" disabled class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-xxl-2" style="margin-top:25px;">
+                        <div class="mb-xl-3">
+                            <button type="submit" class="btn btn-success" (click)="Search()">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="content-box " style="margin-top: 1ch">
+        <div class="row">
+            <div class="col-3" style="margin-top: 5px">
+                <div class="col-sm-*" *ngIf="showPegi">
+                    show
+                    <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+              <option value="100">100</option>
+              <option value="200">200</option>
+              <option value="300">300</option>
+              <option value={{totalcount}}>All</option>
+            </select> entries
+                </div>
+            </div>
+            <div class="col-3" style="margin-top: 10px">
+                <b>Total No. of Records : {{totalcount}}</b>
+            </div>
+            <div class="col-2" style="text-align:end ;">
+                <button class="btn btn-success btn-sm mx-1" style="margin-top: 10px" tooltip="Excel" (click)="downloadList(1)">
+          <i class="bi bi-file-earmark-spreadsheet"></i>
+          </button>
+                <button class="btn btn-danger btn-sm mx-1" style="margin-top: 10px" tooltip="pdf" (click)="downloadList(2)">
+          <i class="bi bi-file-earmark-pdf"></i>
+          </button>
+            </div>
+            <div class="col-4">
+                <input type="text " id="txtsearchDate " name="txtsearchDate " [(ngModel)]="txtsearchDate" maxlength="20 " class="form-control " placeholder="Search here...... " autocomplete="off" style=" margin-right: 0px; margin-left: 0px;">
+            </div>
+        </div>
+        <div class="table-responsive" style="margin-top: 1ch">
+            <table class="table table-sm table-striped mb-0">
+                <caption></caption>
+                <thead>
+                    <tr>
+                        <th>Sl No</th>
+                        <th>Float Number</th>
+                        <th>Generated On</th>
+                        <th>Generated By</th>
+                        <th>SNA Doctor Name</th>
+                        <th>Assigned FO Name</th>
+                        <th class="text-center">Total Claim Count</th>
+                        <th>Total Amount (&#8377;)</th>
+                        <th>Current Status</th>
+                        <th>History</th>
+                        <th class="text-center">View</th>
+                        <th class="text-center">Abstract Report</th>
+                        <th class="text-center">Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let float of list | filter : txtsearchDate | paginate: {id: 'listing_pagination',
+                      itemsPerPage: pageElement, currentPage: currentPage}; index as i">
+                        <td *ngIf="currentPage == 1">{{ i + 1 }}</td>
+                        <td *ngIf="currentPage != 1">{{ (currentPage - 1) * pageElement + i + 1 }}</td>
+                        <td>{{ float.floateno }}</td>
+                        <td>{{ float.createon}}</td>
+                        <td>{{ float.fullname}}</td>
+                        <td>{{ float.snaFullName}}</td>
+                        <td>{{ float.assignedFoName}}</td>
+                        <td class="text-center">{{ float.count}}</td>
+                        <td>{{ float.amount | currency:'':''}}</td>
+                        <td>{{ float.currentstatus}}</td>
+                        <td style="text-align: center"><a style="text-align: center;" data-bs-toggle="modal" data-bs-target="#modal1" (click)="viewData(float.floateno,float.snaid)"><i class="bi bi-eye icon"
+                          style="font-size: 21px; "></i></a>
+                        </td>
+                        <td class="text-center">
+                            <a href="javascript:void(0)" (click)="view(float.floateno, float.fullname, float.snaFullName)"><i style="color: blue; font-size: 21px;" class="bi bi-eye"></i></a>
+                        </td>
+                        <td class="text-center">
+                            <button class="btn btn-outline-success btn-sm" (click)="getfloatdetailsHospitalwise(float.floateno)">
+                              Report
+                          </button>
+                        </td>
+                        <td class="text-center">
+                            <button class="btn btn-outline-success btn-sm" (click)="onAction(float.floateno)">
+                              Detail
+                          </button>
+                        </td>
+                    </tr>
+                    <tr *ngIf="list.length == 0">
+                        <td colspan="13" class="text-center text-uppercase">
+                            <strong class="text-danger">No data found !!</strong>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="showPegi">
+        <div class="col-sm-4">
+            <div class="col-sm-*">
+                show
+                <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+      <option value="100">100</option>
+      <option value="200">200</option>
+      <option value="300">300</option>
+      <option value={{totalcount}}>All</option>
+    </select> entries
+            </div>
+        </div>
+        <div class="col-sm-8 text-right">
+            <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true" (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)">
+            </pagination-controls>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="modal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="border: 1px solid blue;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Action Taken History</h5>
+                <div class="col-6" style="text-align:end ;">
+                    <button class="btn btn-success btn-sm mx-1" style="margin-top: 10px" tooltip="Excel" (click)="downloadList1(1)">
+            <i class="bi bi-file-earmark-spreadsheet"></i>
+            </button>
+                    <button class="btn btn-danger btn-sm mx-1" style="margin-top: 10px" tooltip="pdf" (click)="downloadList1(2)">
+            <i class="bi bi-file-earmark-pdf"></i>
+            </button>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-2 mb-2">Float Number
+                    </div>
+                    <div class="col-lg-6 mb-2"><strong>{{floatNum}}</strong></div>
+                    <div class="col-lg-2 mb-2">Amount</div>
+                    <div class="col-lg-2 mb-2"><strong>{{floatAmount  | currency:'':''}}</strong></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-2 mb-2">Created By</div>
+                    <div class="col-lg-4 mb-2"><strong>{{floatCreatedBy}}</strong></div>
+                    <div class="col-lg-2 mb-2">Created on</div>
+                    <div class="col-lg-4 mb-2"><strong>{{createdOn}}</strong></div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-sm table-striped mb-0">
+                        <caption></caption>
+                        <thead>
+                            <tr>
+                                <th>Sl No</th>
+                                <th>Action By</th>
+                                <th>Action On</th>
+                                <th>Amount</th>
+                                <th>Remarks</th>
+                                <th>Document</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngFor="let float of floatHistoryList; index as i">
+                                <tr>
+                                    <td>{{ i + 1 }}</td>
+                                    <td>{{float.actionBy}}</td>
+                                    <td>{{float.actionOn}}</td>
+                                    <td>{{float.amount | currency:'':''}}</td>
+                                    <td>{{float.remark}}</td>
+                                    <td *ngIf="float.document!=null">
+                                        <a href="javascript:void(0);" (click)="floatDocDownload($event,float)">
+                                            <i class="bi bi-file-earmark-image" style="color:red;font-size:24px"></i></a>
+                                    </td>
+                                    <td *ngIf="float.document==null">--</td>
+                                </tr>
+                            </ng-container>
+                            <tr *ngIf="floatHistoryList.length == 0">
+                                <td colspan="10" class="text-center text-uppercase">
+                                    <strong class="text-danger">No data found !!</strong>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

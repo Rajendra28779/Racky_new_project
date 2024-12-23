@@ -1,0 +1,68 @@
+
+<div class="form-cointainer">
+  <div class="main-tab">
+      <div class="row justify-content-between">
+          <div class="col-lg-4">
+              <ul class="nav nav-tabs">
+                <li class="nav-item" *ngIf="isSaveData">
+                  <a routerLink="/application/grievancetype" routerLinkActive="active" class="nav-link active">Add</a>
+                  </li>
+                  <li class="nav-item" *ngIf="!isSaveData">
+                    <a routerLink="/application/grievancetype" routerLinkActive="active" class="nav-link active">Update</a>
+                  </li>
+                  <li class="nav-item">
+                    <a routerLink="/application/grievancetypeview" routerLinkActive="active" class="nav-link" style="color: #1f723f;">View</a>
+                  </li>
+              </ul>
+          </div>
+          <div class="content-box">
+            <div class="row">
+                <form [formGroup]="packageMaster" autocomplete="off" id="subUpdate">
+                    <div class="col-md-12">
+                      <div class="row">
+                          <div class="col-md-4">
+                              <div class="mb-3">
+                              <label for="grievancetypename" class="form-label">Grievance Type:<span
+                                      class="text-danger">*</span></label>
+                              <input type="text" class="form-control" id="grievancetypename" placeholder="Enter Here" maxlength="105"
+                                  name="grievancetypename" [(ngModel)]="packageUpdate.grievancetypename"
+                                  formControlName="grievancetypename"
+                                  onkeyup="this.value=this.value.replace(/[^0-9.a-zA-Z ]/g,'');"
+                                   (keyup)="keyfunction1($event.target)"/>
+                                   <!-- oninput="this.value = this.value.toUpperCase()" -->
+                              </div>
+                          </div>
+                      </div>
+                      <div class="row">
+                        <div>
+                            <div class="col-lg-4" *ngIf="!isSaveData">
+                            <div class="mb-3">
+                                <label>Status:</label>&nbsp;&nbsp;
+                                <label *ngIf="statusFlag==0">
+                                    <input type="radio" checked="checked" [checked]="true" (click)="yes($event)"
+                                        name="statusFlag"  id="statusFlag">Active &nbsp;&nbsp;
+                                    <input type="radio" (click)="no($event)" name="statusFlag" id="statusFlag">In-Active
+                                </label>
+                                <label *ngIf="statusFlag==1">
+                                    <input type="radio" (click)="yes($event)" name="statusFlag" id="statusFlag">Active
+                                    &nbsp;&nbsp;
+                                    <input type="radio" checked="checked" [checked]="true" (click)="no($event)"
+                                        name="statusFlag"  id="statusFlag">In-Active
+                                </label>
+                            </div>
+                            </div>
+                            <div *ngIf="isSaveData">
+                                <button type="button" class="btn btn-success"
+                                    (click)="saveData()">Submit</button>&nbsp;&nbsp;
+                                <button type="reset" (click)="resetData()" class="btn btn-secondary "
+                                    style="padding: 7px 16px 7px 16px;">Reset</button>
+                            </div>
+                             <div *ngIf="!isSaveData">
+                                <button class="btn btn-success"
+                                    (click)="update()">Update</button>&nbsp;&nbsp;
+                                <button (click)="resetData()" type="reset" class="btn btn-secondary"
+                                    style="padding: 7px 16px 7px 16px;">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>

@@ -1,0 +1,101 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+    <div class="row justify-content-between">
+      <div class="col-lg-4">
+        <ul class="nav nav-tabs ">
+          <li class="nav-item">
+            <a routerLink="/application/implantprocedureconfig" routerLinkActive="active"
+              class="nav-link active">Add</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/application/implantprocedureconfigview" routerLinkActive="active" class="nav-link"
+              style="color: #1f723f;">View</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-box">
+    <div class="row">
+      <div class="col-lg-3 col-xxl-3">
+        <div class="mb-xl-3">
+          <label class="control-label">Speciality Name<span class="text-danger">*</span></label>
+          <ng-autocomplete [data]="packageHeaderItem" placeholder="Select Speciality Name"
+            (selected)="selectEvent($event)" (inputCleared)="clearEvent()" [itemTemplate]="itemTemplate"
+            [notFoundTemplate]="notFoundTemplate" [searchKeyword]="keyword" spellcheck="false">
+          </ng-autocomplete>
+
+          <ng-template #itemTemplate let-item>
+            <a [innerHTML]="item.packageheadername"></a>
+          </ng-template>
+
+          <ng-template #notFoundTemplate let-notFound>
+            <div [innerHTML]="notFound"></div>
+          </ng-template>
+        </div>
+      </div>
+      <div class="col-lg-4 col-xxl-4">
+        <div class="mb-xl-3">
+          <label class="control-label">Package Code<span class="text-danger">*</span></label>
+          <ng-autocomplete #auto [data]="packageList" placeholder="Select Package Code"
+            (selected)="selectEvent1($event)" (inputCleared)="clearEvent1()" [itemTemplate]="itemTemplate1"
+            [notFoundTemplate]="notFoundTemplate1" [searchKeyword]="keyword1" spellcheck="false">
+          </ng-autocomplete>
+
+          <ng-template #itemTemplate1 let-item>
+            <a [innerHTML]="item.procedureDescription"></a>
+          </ng-template>
+
+          <ng-template #notFoundTemplate1 let-notFound>
+            <div [innerHTML]="notFound"></div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="showtable">
+      <div class="col-4">
+        <b>Select Implant<span class="text-danger">*</span></b>
+      </div>
+      <div class="col-3">
+      </div>
+      <div class="col-5">
+        <input type="text " id="txtsearchDate " name="txtsearchDate " [(ngModel)]="txtsearchDate" maxlength="20 "
+          class="form-control " placeholder="Search here...... " autocomplete="off">
+      </div>
+    </div>
+    <div class="table-responsive example-container" *ngIf="showtable" style="margin-top:1ch;">
+      <table class="table table-striped mb-0">
+        <caption></caption>
+        <thead style="position: sticky;">
+          <tr>
+            <th style="width:40px;"><input type="checkbox" id="allCheck" (change)="checkAllCheckBox($event)"></th>
+            <th style="text-align:center; width:40px;">Sl#</th>
+            <th>Implant Code</th>
+            <th>Implant Name</th>
+            <th>Maximum Unit</th>
+            <th>Unit Per Price</th>
+            <th>Price Editable</th>
+            <th>Unit Editable</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let v of icddata | filter:txtsearchDate ,index as i">
+            <td><input id="{{v.implantcode}}" type="checkbox" [checked]="v.status==0" (change)="tdCheck(v)"></td>
+            <td>{{(i+1)}}</td>
+            <td>{{v.implantcode}}</td>
+            <td>{{v.implantname}}</td>
+            <td>{{v.maximumunit}}</td>
+            <td>{{v.unitprice}}</td>
+            <td>{{v.priceeditble}}</td>
+            <td>{{v.uniteditble}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="margin: top 3ch;" *ngIf="showtable">
+      <input type="submit" value="Submit" class="btn btn-success me-2" (click)="submit()">
+      <input type="button" value="Reset" class="btn btn-secondary" (click)="resetVal()">
+    </div>
+  </div>
+</div>

@@ -1,0 +1,191 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-10">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item" >
+                        <a routerLink="/application/packageupdation" routerLinkActive="active" class="nav-link">Package Tagging</a>
+                    </li>
+                    <li class="nav-item" >
+                        <a routerLink="/application/proceduretagging" routerLinkActive="active" class="nav-link">Package Linking</a>
+                    </li>
+                    <li class="nav-item" >
+                        <a routerLink="/application/packagetaggingreport" routerLinkActive="active" class="nav-link active">Package Tagging Report</a>
+                    </li>
+                    <li class="nav-item" >
+                      <a routerLink="/application/untagginghistory" routerLinkActive="active" class="nav-link "> Untagging History</a>
+                  </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="showfilter">
+        <div class="col-lg-3 col-xxl-3">
+            <div class="mb-xl-3">
+                <label class="control-label">State Name</label>
+                <select class="form-select" name="stateId" id="stateId" (change)="OnChangeState($event.target.value)">
+                    <option value="" selected>Select State</option>
+                    <ng-container *ngFor="let item of stateList">
+                        <option value={{item.stateCode}}>{{item.stateName}}</option>
+                    </ng-container>
+                </select>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xxl-3">
+            <div class="mb-xl-3">
+                <label class="control-label">District Name</label>
+                <select class="form-select" name="districtId" id="districtId" (change)="getHospitalList()">
+                    <option value="" selected>Select District</option>
+                    <ng-container *ngFor="let item of districtList">
+                        <option value={{item.districtcode}}>{{item.districtname}}</option>
+                    </ng-container>
+                </select>
+            </div>
+        </div>
+        <div class="col-lg-5 col-xxl-5">
+            <div class="mb-xl-3">
+                <label class="control-label">Hospital Name</label>
+                <ng-autocomplete [data]="hospitalList" placeholder="Select Hospital" (selected)="selectEvent2($event)" (inputCleared)="clearEvent2()" [itemTemplate]="itemTemplate2" [notFoundTemplate]="notFoundTemplate2" [searchKeyword]="keyword2" spellcheck="false">
+                </ng-autocomplete>
+                <ng-template #itemTemplate2 let-item>
+                    <a [innerHTML]="item.hospitalName"></a>
+                </ng-template>
+                <ng-template #notFoundTemplate2 let-notFound>
+                    <div [innerHTML]="notFound"></div>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="!showfilter">
+        <div class="col-lg-6 col-xxl-6">
+            <div class="mb-xl-3">
+                <label class="control-label">Hospital Name<span class="text-danger">*</span></label>
+                <input type="text" class="form-control" [disabled]="true" placeholder="Hospital Name" [value]="hospitalname">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4 col-xxl-4">
+            <div class="mb-xl-3">
+                <label class="control-label mb-2">Type<span class="text-danger">*</span></label>
+                <select class="form-select" id="actiontype" name="actiontype" (change)="onChangeType($event.target.value)">
+            <option value="0" selected>Tagged</option>
+            <option value="1">Untagged</option>
+          </select>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="d-grid gap-2 d-md-flex">
+                <button type="submit" class="btn btn-success" (click)="getTaggedPackegeDetails()">Search</button>
+                <button type="reset" class="btn btn-secondary" (click)="resetField()">Reset</button>
+            </div>
+        </div>
+    </div>
+  </div>
+  <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+    <div class="col-lg-5 col-xxl-5" style="margin-top: 10px;">
+        <div class="col-sm-*">
+            show
+            <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+          <option value="100">100</option>
+          <option value="200">200</option>
+          <option value="300">300</option>
+          <option value="400">400</option>
+          <option value={{record}}>All</option>
+      </select> entries
+        </div>
+    </div>
+    <div class="col-lg-2 col-xxl-2">
+        <div class="table-responsive" style="float: right;">
+            <div [align]="'start'" class="table-utilities" style="padding-bottom: 5%;">
+                <button class="btn btn-success btn-sm me-1" (click)="downloadReport('xcl')">
+          <i class="bi bi-file-earmark-spreadsheet"></i>
+        </button> &nbsp;
+                <button class="btn btn-danger btn-sm me-1" (click)="downloadReport('pdf')">
+          <i class="bi bi-file-earmark-pdf"></i>
+        </button>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-5 col-xxl-5">
+        <input type="text" id="txtsearchDate" class="form-control" placeholder="Search here" name="txtsearchDate" [(ngModel)]="txtsearchDate">
+    </div>
+  </div>
+  <div class="content-box p-0 overflow-hidden">
+    <div class="table-responsive">
+        <table class="table table-sm table-striped mb-0">
+            <thead>
+                <tr>
+                    <th width="40">Sl#</th>
+                    <th> State Name </th>
+                    <th> District Name </th>
+                    <th> Hospital Name </th>
+                    <th> Hospital Code </th>
+                    <th> Speciality Type </th>
+                    <th> Header Name </th>
+                    <th> Header Code </th>
+                    <th *ngIf="taggedType==0"> Sub-Package Name </th>
+                    <th *ngIf="taggedType==0"> Sub-Package Code </th>
+                    <th *ngIf="taggedType==0"> Procedure Code </th>
+                    <th *ngIf="taggedType==0"> Description </th>
+                    <th *ngIf="taggedType==0"> Package Amount </th>
+                    <th> Type </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let tag of taggedPackegeDetails | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};
+              index as i">
+                    <td *ngIf="currentPage==1">{{(i+1)}}</td>
+                    <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+ i+1}}</td>
+                    <td>{{tag.stateName}}</td>
+                    <td>{{tag.districtName}}</td>
+                    <td>{{tag.hospitalName}}</td>
+                    <td>{{tag.hospitalCode}}</td>
+                    <td>{{tag.specialityType}}</td>
+                    <td>{{tag.headerName}}</td>
+                    <td>{{tag.headerCode}}</td>
+                    <td *ngIf="taggedType==0">{{tag.subPackageName}}</td>
+                    <td *ngIf="taggedType==0">{{tag.subPackageCode}}</td>
+                    <td *ngIf="taggedType==0">{{tag.procedureCode}}</td>
+                    <td *ngIf="taggedType==0">{{tag.procedureDescription}}
+                        <span id="proceduredescription{{i}}">
+                            {{tag.procedureDescription.length>10?tag.procedureDescription.substring(0, 10) +
+                            '...':tag.procedureDescription}}
+                          </span>
+                          <span style="cursor: pointer; color: #1189cf" id="showMoreId6{{i}}"
+                            (click)="showPreDoc1(tag.procedureDescription,i)">
+                            {{tag.procedureDescription.length>10?'Show More':''}}
+                          </span>
+                          <span style="cursor: pointer; color: #1089cf" id="showMoreId7{{i}}"
+                            (click)="hidePreDoc1(tag.procedureDescription,i)"></span>
+                    </td>
+                    <td *ngIf="taggedType==0">{{tag.packageAmount}}</td>
+                    <td>{{tag.taggedType}}</td>
+                </tr>
+                <tr *ngIf="taggedPackegeDetails.length==0">
+                    <td colspan="20" class="text-center text-uppercase"><strong class="text-danger">No data found
+                  !!</strong>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="row" style="margin-top: 20px;" *ngIf="showPegi">
+        <div class="col-sm-6">
+            <div class="col-sm-*">
+                show
+                <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+              <option value="100">100</option>
+              <option value="200">200</option>
+              <option value="300">300</option>
+              <option value="400">400</option>
+              <option value={{record}}>All</option>
+          </select> entries
+            </div>
+        </div>
+        <div class="col-sm-6 text-right">
+            <pagination-controls id="listing_pagination" [maxSize]="100" [directionLinks]="true" (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+        </div>
+    </div>
+  </div>

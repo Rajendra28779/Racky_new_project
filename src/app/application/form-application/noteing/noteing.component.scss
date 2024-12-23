@@ -1,0 +1,97 @@
+.action-history{
+    position: relative;
+     margin-bottom: 1rem;
+    }
+    
+    .action-item .action-authority{ 
+          width: 120px;
+        background: #d5fffb;
+        position: relative;
+        margin: 0 auto;
+        text-align: center;
+        padding: 1rem;
+        border-radius: 3px;
+        color: #4d918a;
+        font-size: 1rem;
+        font-weight: 600;
+        z-index: 1;
+    }
+    .action-authority i{
+      font-size:2rem;
+      margin-bottom: .4rem;
+    }
+    .action-item .action-body{    padding: 1rem;
+        border: 1px solid  #d5fffb;
+        margin-bottom: 1rem;
+        border-radius: 4px;
+    background: #f6fffe;
+    position: relative;
+      }
+    
+    .action-history .action-item .action-body:before{
+        content: '';
+        position: absolute;
+        top: 23px;
+        width: 94px;
+        background: #d5fffb;
+        left: -92px;
+        border-radius: 4px;
+        height: 4px;
+    }
+    
+    .action-history .action-item:nth-of-type(even) .action-authority{
+        background: #edf0ff;
+        color: #4d5a9d;
+       
+    }
+    .action-history .action-item:nth-of-type(even) .action-body{
+         border-color: #edf0ff;
+        background: #f6f8ff
+    }
+    .action-history .action-item:nth-of-type(even) .action-body:before{
+      background: #edf0ff;
+    }
+    
+    .action-history .action-item .action-body ul{
+                list-style: none;
+                margin-bottom: 2rem;
+            }   
+        
+           .action-history .action-item .action-body ul li{
+                margin: 0;
+                padding: .5rem 0 0 2rem;
+                position: relative;
+            }
+           .action-history .action-item .action-body ul li:after{
+        position: absolute;
+                    font-family: icons;
+                    content: "\e942";
+                    color: var(--bs-orange);
+                    font-size:1rem;
+                    left: 3px;
+                    top: 7px
+    }
+    .high_btn{
+      font-size: 11px;
+      padding: 5px;
+      justify-content: center;
+      display: flex;
+      background: #fb4343 !important;
+      display: inline;
+    }
+    .high_btn2{
+      font-size: 11px;
+      padding: 5px;
+      justify-content: center;
+      display: flex;
+      background: orange !important;
+      display: inline;
+    }
+    .high_btn3{
+      font-size: 11px;
+      padding: 5px;
+      justify-content: center;
+      display: flex;
+      background:#f4ea02 !important;
+      display: inline;
+    }

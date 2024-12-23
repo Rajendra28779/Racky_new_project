@@ -1,0 +1,80 @@
+<div class="login-wrapp " >
+  <div class="container " id="internal" >
+      <div class="row ">
+          <div class="col-xl-6 col-xxl-6" *ngIf="show">
+              <div class="login-box bg-white shadow mx-xxl-3 p-4 p-xxl-5">
+                <div class="row">
+                  <div class="col-md-11" style="font-size: 2ch;">
+                  <h5> MOU Expiring Within 10 Days</h5>
+                  </div>
+                  <div class="col-md-1">
+                    <button type="button" class="btn-close" style="color: red;"  aria-label="Close" (click)="closemodeal()"></button>
+                  </div>
+                </div>
+                <hr>
+
+                <div class="table-responsive example-container">
+                  <table class="table table-striped" mb-0>
+                      <thead>
+                          <tr>
+                            <th>Sl No.</th>
+                            <th>Hospital Name</th>
+                            <th>Phone No.</th>
+                            <th>Mou End date</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr *ngFor="let v of mouexplist,index as i">
+                            <td>{{(i+1)}}</td>
+                            <td>{{v.hospitalName}} ({{v.hospitalCode}})</td>
+                            <td>{{v.mobile}}</td>
+                            <td>{{v.mouEndDate | date : 'dd-MMM-yyyy'}}</td>
+                          </tr>
+                          <tr *ngIf="mouexplist.length==0">
+                            <th colspan="6" style="color: red; font-size: medium; text-align: center;">No Data Found !!</th>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+              </div>
+          </div>
+          <div class="col-xl-6 col-xxl-6" *ngIf="show1">
+              <div class="login-box bg-white shadow mx-xxl-3 p-4 p-xxl-5">
+                <div class="row">
+                  <div class="col-md-11" style="font-size: 2ch;">
+                    <h5>Incentive Expiring Within 10 Days</h5>
+                  </div>
+                  <div class="col-md-1">
+                    <button type="button" class="btn-close" style="color: red;"  aria-label="Close" (click)="closemodeal1()"></button>
+                  </div>
+                </div>
+                <hr>
+
+                <div class="table-responsive example-container">
+                  <table class="table table-striped" mb-0>
+                      <thead>
+                          <tr>
+                            <th>Sl No.</th>
+                            <th>Hospital Name</th>
+                            <th>Phone No.</th>
+                            <th>Incentive End Date</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr *ngFor="let v of hcexplist,index as i">
+                            <td>{{(i+1)}}</td>
+                            <td>{{v.hospitalName}} ({{v.hospitalCode}})</td>
+                            <td>{{v.mobile}}</td>
+                            <td>{{v.hcValidToDate | date : 'dd-MMM-yyyy'}}</td>
+                          </tr>
+                          <tr *ngIf="hcexplist.length==0">
+                            <th colspan="6" style="color: red; font-size: medium; text-align: center;">No Data Found !!</th>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

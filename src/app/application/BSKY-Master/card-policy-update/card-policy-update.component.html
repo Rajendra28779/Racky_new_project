@@ -1,0 +1,95 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <!-- <li class="nav-item">
+                        <a routerLink="/application/cardpolicy" routerLinkActive="active"
+                            class="nav-link active">Add</a>
+                    </li> -->
+                    <!-- <li class="nav-item" *ngIf="isUpdateBtnVisible">
+                        <a routerLink="/application/highEndDrugs" routerLinkActive="active"
+                            class="nav-link active">Update</a>
+                    </li> -->
+                    <!-- <li class="nav-item">
+                        <a routerLink="/application/cardpolicy" routerLinkActive="active" class="nav-link"
+                            style="color: #1f723f;">View</a>
+                    </li> -->
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="content-box">
+        <form>
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3" *ngIf="cardData">
+                        <label>Current and policy details:</label>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        {{cardData?.startDate | date:'dd/MMM/yy'}} to {{cardData?.endDate | date:'dd/MMM/yy'}}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label>StartDate<span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="date1" name="fromDate">
+                            <label class="input-group-text bg-transparent border-start-0" for="datepicker1"><i class="iconbsky-calendar"></i> </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label>EndDate<span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="date2" name="toDate">
+                            <label class="input-group-text bg-transparent border-start-0" for="datepicker2"><i class="iconbsky-calendar"></i> </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label>Family amount<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" maxlength="20"
+                        id="familyAmount" name="familyAmount"
+                        placeholder="Enter family amount"
+                        [(ngModel)]="amount2"
+                        (change)="validateFamilyAmount()"
+                        (keypress)="numberOnly($event)" >
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label>Female amount<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" maxlength="20"
+                        id="femaleAmount" name="femaleAmount"
+                        placeholder="Enter female amount"
+                        [(ngModel)]="amount1"
+                        (change)="validateFemaleAmount()"
+                        (keypress)="numberOnly($event)" >
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="d-grid gap-2 d-md-flex">
+                    <div>
+                        <ng-container>
+                            <button type="button" class="btn btn-success" (click)="save()">Update</button>&nbsp;
+                        </ng-container>
+                        <!-- <ng-container *ngIf="isUpdateBtnVisible">
+                            <button type="button" class="btn btn-success" (click)="save()">Update</button>&nbsp;
+                        </ng-container> -->
+                        <input type="button" value="Reset" class="btn btn-secondary" (click)="resetForm()">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

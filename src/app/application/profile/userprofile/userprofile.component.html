@@ -1,0 +1,377 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs ">
+                    <li class="nav-item" *ngIf="!isUpdateBtnInVisible">
+                        <a routerLink="/application/userprofile" routerLinkActive="active" class="nav-link active">Profile</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-6 ">
+                <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+            </div>
+        </div>
+    </div>
+    <div class="content-box">
+        <form [formGroup]="addForm" autocomplete="off" enctype="multipart/form-data">
+            <!-- {{ cpdRegistrationForm.value | json }} -->
+
+                    <div class="row">
+                        <div class="col-lg-4 col-xxl-4">
+                            <div class="mb-xl-3">
+                                <label class="form-label">Group<span class="text-danger">*</span></label>
+                                <!--select class="form-select" name="groupId" id="groupId" formControlName="groupId"
+                                    [(ngModel)]="updatinglist.groupId"
+                                    [ngClass]="{ 'is-invalid': submitted && f['groupId'].errors }">
+                                    <option value="" selected disabled="disabled">Select Group</option>
+                                    <ng-container *ngFor="let item of groupList">
+                                        <option value={{item.typeId}}>{{item.groupTypeName}}</option>
+                                    </ng-container>
+                                </select-->
+                                <input class="form-control" type="text" autocomplete="off" name="groupName" maxlength="40"
+                                formControlName="groupName" id="groupName" [(ngModel)]="updatinglist.groupName" disabled />
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-xxl-4">
+                            <div class="mb-xl-3">
+                              <label for="EnterFullName" class="form-label">Full Name<span class="text-danger">*</span></label>
+                                <input class="form-control" type="text" placeholder="Enter Full Name" formControlName="fullName" autocomplete="off" id="fullname" maxlength="40"
+                                [(ngModel)]="updatinglist.fullname"  onkeyup="this.value=this.value.replace(/[^a-zA-Z0-9. ]/g,'');"
+                                (change)="validateName()" >
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-xxl-4">
+                            <div class="mb-xl-3">
+                                <label for="UserName" class="form-label">Username<span class="text-danger">*</span></label>
+                                <input *ngIf="!isUpdateBtnInVisible" #username class="form-control" type="text" placeholder="Enter Username" formControlName="userName" autocomplete="off" id="username" maxlength="40"
+                                    [(ngModel)]="updatinglist.username" disabled>
+                            </div>
+
+                        </div>
+                        <div class="col-lg-4 col-xxl-4">
+                            <div class="mb-xl-3">
+                              <label for="EnterMobileno" class="form-label">Mobile No.<span class="text-danger">*</span></label>
+                                <input class="form-control" type="text" placeholder="Enter Mobile no." formControlName="mobileNo" autocomplete="off" maxlength="10" id="mobile"
+                                onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" minlength=10 [(ngModel)]="updatinglist.mobile"
+                                (change)=validatePhoneNo() >
+                            </div>
+
+                        </div>
+                        <div class="col-lg-4 col-xxl-4">
+                            <div class="mb-xl-3">
+                              <label for="EnterEmailID" class="form-label">Email ID<span class="text-danger">*</span></label>
+                                <input class="form-control" type="text" placeholder="Enter Email ID" formControlName="emailId" id="email" autocomplete="off" maxlength="100"
+                                [(ngModel)]="updatinglist.email"
+                                (change)=validateEmail() >
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-xxl-4">
+                          <!-- *ngIf="uidInputView" -->
+                          <div class="mb-xl-3">
+                            <label for="EnterEmailID" class="form-label">UID<span class="text-danger">*</span></label>
+                            <div class="input-group mb-3">
+                              <input class="form-control" type="text" placeholder="Enter UID" formControlName="aadhaarRef" id="uid" autocomplete="off" maxlength="100"
+                                [(ngModel)]="updatinglist.uid">
+                                <span class="input-group-text" role="button" *ngIf="iconview" id="basic-addon1" (click)="getOtp()">E-KYC</span>
+                                <span class="input-group-text" *ngIf="!iconview" id="basic-addon1"><i class="bi bi-check-circle-fill"></i></span>
+                              </div>
+                          </div>
+                        </div>
+
+                        <div class="col-lg-4 col-xxl-4">
+                            <div class="mb-xl-3">
+                                <label class="control-label">State Name<span class="text-danger">*</span></label>
+                                <div style="height: 6pt;"></div>
+                                <select class="form-select" name="stateId" id="stateId" formControlName="stateCode"
+                                    [(ngModel)]="updatinglist.stateCode"
+                                    [ngClass]="{ 'is-invalid': submitted && f['stateCode'].errors }"
+                                    (change)="OnChangeState($event.target.value)">
+                                    <option value="" selected disabled="disabled">Select State</option>
+                                    <ng-container *ngFor="let item of stateList">
+                                        <option value={{item.stateCode}}>{{item.stateName}}</option>
+                                    </ng-container>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-xxl-4">
+                            <div class="mb-xl-3">
+                                <label class="control-label">District Name<span class="text-danger">*</span></label>
+                                <div style="height: 6pt;"></div>
+                                <select class="form-select" name="districtId" id="districtId"
+                                    formControlName="districtCode" [(ngModel)]="updatinglist.districtCode"
+                                    [ngClass]="{ 'is-invalid': submitted && f['districtCode'].errors }">
+                                    <option value="" selected>Select District</option>
+                                    <ng-container *ngFor="let item of districtList">
+                                        <!-- <option value={{item.districtcode}}>{{item.districtname}}</option> -->
+                                        <option value={{item.districtcode}}>{{item.districtname}}</option>
+                                    </ng-container>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-xxl-4">
+                            <div class="mb-xl-3">
+                                <label for="User Address" class="control-label">Address<span class="text-danger">*</span></label>
+                                <div style="height: 6pt;"></div>
+                                <textarea class="form-control"  placeholder="Enter Address" formControlName="address" autocomplete="off" id="address" maxlength="500" style="height: 75pt;"
+                                    [(ngModel)]="updatinglist.address" onkeyup="this.value=this.value.replace(/[^0-9.a-zA-Z@/_(), ]/g,'');" #myInput [maxlength]="maxChars" (keypress)="keyPress($event)"></textarea>
+                                <span class="text-danger small">Characters Remaining: {{maxChars - myInput.value.length}}</span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-12" >
+                        <label class="form-label d-none d-md-block">&nbsp;</label>
+                        <div class="d-grid gap-2 d-md-flex" >
+                            <div *ngIf="!isUpdateBtnInVisible">
+                                <div >
+                                    <button type="button" class="btn btn-success" (click)="sendOtp(updatinglist)">Update</button>&nbsp;
+                                    <input type="button" value="Cancel" class="btn btn-secondary" (click)="cancel()">
+                                </div>
+                            </div>
+                        </div >
+                    </div>
+        </form>
+    </div>
+</div>
+
+
+<!--OTP Modal-->
+
+<div class="modal modal-custom-backdrop" id="ekycdetails" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="backdrop-filter: blur(5px);">
+  <div class="modal-dialog" style="max-width: 70%;">
+      <div class="modal-content">
+          <div class="modal-header">
+            <div class="col-9" >
+              <h5 class="modal-title text-success" id="exampleModalLabel">E-KYC Details</h5>
+            </div>
+            <div class="col-2" style="text-align:end ;">
+              <!-- <b>EN</b>&nbsp;<label class="switch">
+                <input type="checkbox" (click)="changeodia()">
+                <span class="slider round"></span>
+              </label>&nbsp;<b>ଓଡି</b> -->
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closeModal()"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-3">
+                  <img class="imgcls" [src]="base64Image" alt="Dynamic Base64 Image" />
+              </div>
+              <div class="col-md-9">
+                <div class="row">
+                  <div  class="col-xl-6 col-lg-6">
+                    <div  class="d-flex align-items-center  border-end">
+                       <div >
+                          <p  class="small text-muted mb-1">Full Name</p>
+                          <h6  class="mb-0" *ngIf="!changelanguage"> {{ekycdata?.fullName}}  </h6>
+                          <!-- <h6  class="mb-0" *ngIf="changelanguage">  {{ekycdata?.fullNameOdia}} </h6> -->
+                       </div>
+                    </div>
+                 </div>
+                  <div  class="col-xl-6 col-lg-6">
+                    <div  class="d-flex align-items-center">
+                       <div >
+                          <p  class="small text-muted mb-1">Father Name</p>
+                          <h6  class="mb-0" *ngIf="!changelanguage"> {{ekycdata?.fatherName}}  </h6>
+                          <!-- <h6  class="mb-0" *ngIf="changelanguage">  {{ekycdata?.fatherNameOdia}} </h6> -->
+                       </div>
+                    </div>
+                 </div>
+                 <hr style="margin-top: 2ch;">
+                 <div  class="col-xl-4 col-lg-4">
+                  <div  class="d-flex align-items-center  border-end">
+                     <div >
+                        <p  class="small text-muted mb-1">Date Of Birth</p>
+                        <h6  class="mb-0"> {{ekycdata?.dob}}  </h6>
+                     </div>
+                  </div>
+                 </div>
+                 <div  class="col-xl-4 col-lg-4">
+                  <div  class="d-flex align-items-center  border-end">
+                     <div >
+                        <p  class="small text-muted mb-1">Gender</p>
+                        <h6  class="mb-0" *ngIf="ekycdata?.gender=='M'"> Male  </h6>
+                        <h6  class="mb-0" *ngIf="ekycdata?.gender=='F'"> Female  </h6>
+                        <h6  class="mb-0" *ngIf="ekycdata?.gender=='O'"> Other  </h6>
+                     </div>
+                  </div>
+                 </div>
+                 <div  class="col-xl-4 col-lg-4">
+                  <div  class="d-flex align-items-center ">
+                     <div >
+                        <p  class="small text-muted mb-1">Mobile No</p>
+                        <h6  class="mb-0" > {{mobilenumber}}  </h6>
+                     </div>
+                  </div>
+                 </div>
+                 <hr style="margin-top: 2ch;">
+                 <div  class="col-xl-4 col-lg-4">
+                  <div  class="d-flex align-items-center border-end">
+                     <div >
+                        <p  class="small text-muted mb-1">State Name</p>
+                        <h6  class="mb-0" *ngIf="!changelanguage"> {{ekycdata?.stateName}}  </h6>
+                          <!-- <h6  class="mb-0" *ngIf="changelanguage">  {{ekycdata?.stateNameOdia}} </h6> -->
+                     </div>
+                  </div>
+                 </div>
+                 <div  class="col-xl-4 col-lg-4">
+                  <div  class="d-flex align-items-center border-end">
+                     <div >
+                        <p  class="small text-muted mb-1">District Name</p>
+                        <h6  class="mb-0" *ngIf="!changelanguage"> {{ekycdata?.districtName}}  </h6>
+                          <!-- <h6  class="mb-0" *ngIf="changelanguage">  {{ekycdata?.districtNameOdia}} </h6> -->
+                     </div>
+                  </div>
+                 </div>
+                 <div  class="col-xl-4 col-lg-4">
+                  <div  class="d-flex align-items-center ">
+                     <div >
+                        <p  class="small text-muted mb-1">Village Name</p>
+                        <h6  class="mb-0" *ngIf="!changelanguage"> {{ekycdata?.village}}  </h6>
+                          <!-- <h6  class="mb-0" *ngIf="changelanguage">  {{ekycdata?.villageOdia}} </h6> -->
+                     </div>
+                  </div>
+                 </div>
+                </div>
+              </div>
+              <hr style="margin-top: 2ch;">
+              <div  class="col-xl-3 col-lg-3">
+                <div  class="d-flex align-items-center border-end" style="margin-left: 1ch;">
+                   <div >
+                      <p  class="small text-muted mb-1">House No</p>
+                      <h6  class="mb-0" *ngIf="!changelanguage"> {{ekycdata?.house == 'null' ?'N/A':ekycdata?.house}}  </h6>
+                          <!-- <h6  class="mb-0" *ngIf="changelanguage">  {{ekycdata?.houseOdia == 'null' ?'N/A':ekycdata?.houseOdia}} </h6> -->
+                   </div>
+                </div>
+               </div>
+              <div  class="col-xl-3 col-lg-3">
+               <div  class="d-flex align-items-center border-end">
+                  <div >
+                     <p  class="small text-muted mb-1">Location</p>
+                     <h6  class="mb-0" *ngIf="!changelanguage"> {{ekycdata?.location}}  </h6>
+                          <!-- <h6  class="mb-0" *ngIf="changelanguage">  {{ekycdata?.locationOdia}} </h6> -->
+                  </div>
+               </div>
+              </div>
+              <div  class="col-xl-3 col-lg-3">
+               <div  class="d-flex align-items-center border-end">
+                  <div >
+                     <p  class="small text-muted mb-1">Land mark</p>
+                     <h6  class="mb-0" *ngIf="!changelanguage"> {{ekycdata?.landmark == 'null' ?'N/A':ekycdata?.landmark}}  </h6>
+                     <!-- <h6  class="mb-0" *ngIf="changelanguage">  {{ekycdata?.landmarkOdia == 'null' ?'N/A':ekycdata?.landmarkOdia}} </h6> -->
+                  </div>
+               </div>
+              </div>
+              <div  class="col-xl-3 col-lg-3">
+               <div  class="d-flex align-items-center ">
+                  <div >
+                     <p  class="small text-muted mb-1">Postal Code</p>
+                     <h6  class="mb-0" *ngIf="!changelanguage"> {{ekycdata?.postalCode}}  </h6>
+                          <!-- <h6  class="mb-0" *ngIf="changelanguage">  {{ekycdata?.postalCodeOdia}} </h6> -->
+                  </div>
+               </div>
+              </div>
+            </div>
+            <hr style="margin-top: 2ch;">
+            <div class="row">
+              <h6 style="font-weight: 600;">Declaration<span class="text-danger">*</span></h6>
+              <div class="col-lg-12 col-xxl-12">
+                <input type="checkbox" name="declear" id="declear" [(ngModel)]="declearValue" class="me-2" (click)="declear($event)"> I hereby consent to provide my Aadhaar Number, Biometric and/or One Time Pin (OTP) data for Aadhaar based authentication for the purpose of establishing my identity.
+
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer d-flex justify-content-center align-items-center">
+              <button type="button" class="btn btn-success" (click)="clickverifyekyc()">Verify</button>
+              <button type="button" id="cancel" class="btn btn-danger" (click)="closeModal()">Cancel</button>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!--OTP Modal-->
+
+<div class="modal modal-custom-backdrop" id="aadhaarOtp" tabindex="-1"
+aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-success" id="exampleModalLabel">Enter OTP<span class="required-asterisk text-danger">*</span></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closeModal()"></button>
+            </div>
+            <div class="modal-body py-5">
+                <div class="row">
+                    <div class="iconinput">
+                        <input type="text" class="form-control usertext userinput" id="otpId" name="otpId" maxlength="6" placeholder="Enter OTP" autocomplete="off" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');">
+                        <input type="hidden" class="form-control usertext userinput" id="userId" name="userId">
+                    </div>
+                </div>
+                <div class="d-flex pt-4 pb-3">
+                    <div class="pe-2 text-secondary">
+                        <i class="feather-iconsmartphone text-secondary fs-1-2" id="phoneId"></i>
+                    </div>
+                    <input type="text" id="mobileNoId" class="form-control text-secondary p-0 border-0" readonly>
+                </div>
+                <div class="d-flex pt-4 pb-2 position-absolute bottom--10">
+                    <div class="pe-2 text-secondary">
+                        <p id="timerdivId"><i class="feather-iconclock fs-1-2"></i> Time Left : </p>
+                    </div>
+                    <div>
+                        {{counter | formatTime}}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-center align-items-center">
+                <button type="button" id="sendId" class="btn btn-success" (click)="validateOtp()">Submit</button>
+                <button type="button" id="cancel" class="btn btn-danger" (click)="closeModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-custom-backdrop" id="OtpModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+    style="backdrop-filter: blur(5px);" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-success" id="exampleModalLabel">Enter OTP<span
+                        class="required-asterisk text-danger">
+                        *</span></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="close()"></button>
+            </div>
+            <div class="modal-body py-5">
+                <div class="row">
+                    <div class="iconinput">
+                        <input type="text" class="form-control usertext userinput" id="otpIdUpdate" name="otpIdUpdate" maxlength="6"
+                            placeholder="Enter OTP" autocomplete="off"
+                            onkeyup="this.value=this.value.replace(/[^0-9]/g,'');">
+                    </div>
+                </div>
+                <div class="d-flex pt-4 pb-3">
+                    <div class="pe-2 text-secondary">
+                        <i class="feather-iconsmartphone text-secondary fs-1-2" id="phoneId"></i>
+                    </div>
+                    <input type="text" id="mobileNoIdUpdate" class="form-control text-secondary p-0 border-0" readonly>
+                </div>
+                <div class="d-flex pt-4 pb-2 position-absolute bottom--10">
+                    <div class="pe-2 text-secondary">
+                        <p id="timerdivId"><i class="feather-iconclock fs-1-2"></i> Time Left : </p>
+                    </div>
+                    <div>
+                        <input type="text" id="timeCounter" class="form-control text-danger p-0 border-0" readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-center align-items-center">
+                <button type="button" id="sendId" class="btn btn-success" (click)="validateOtpUpdate()">Submit</button>
+                <button type="button" id="reSendId" class="btn btn-success" (click)="onResendOtp()">Resend
+                    OTP</button>
+            </div>
+        </div>
+    </div>
+</div>

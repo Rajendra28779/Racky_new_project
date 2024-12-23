@@ -1,0 +1,89 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs" routerLinkActive="active">
+                    <li class="nav-item">
+                        <a routerLink="/application/khurda" class="nav-link active">District Wise Discharge Report</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a routerLink="" class="nav-link">View</a>
+                    </li> -->
+                </ul>
+            </div>
+            <div class="col-lg-6 ">
+                <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-box bg-light py-xl-1">
+        <form>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="d-flex">
+                        <label class="col-form-label">District </label>
+                        <label class="col-form-label ms-4"><strong>Khurda</strong></label>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="d-flex">
+                        <label class="col-form-label">Discharge From </label>
+                        <label class="col-form-label ms-4"><strong>22-08-2022</strong></label>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="d-flex mb-1">
+                        <label class="col-form-label">Discharge To </label>
+                        <label class="col-form-label ms-4"><strong>22-08-2022</strong></label>
+                    </div>
+                </div>
+                
+            </div>
+        </form>
+    </div>
+
+
+    <div class="content-box mt-3 p-0 overflow-hidden">
+        <div class="table-responsive">
+            <table class="table mb-0">
+                <thead>
+                    <tr>
+                        <th width="50">Sl#</th>
+                        <th width="20%">Hospital Name</th>
+                        <th class="text-center">Total Discharge</th>
+                        <th width="250">Amount (<i class="bi bi-currency-rupee"></i>)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td> 1 </td>
+                        <td>A Jamabahal	</td>
+                        <td align="center"> 800 </td>
+                        <td align="right"> 2000325 </td>
+                    </tr>
+                    <tr>
+                      <td>2</td>
+                      <td>A. Malkangiri</td>
+                      <td align="center"> 300 </td>
+                      <td align="right"> 1000000 </td>
+                    </tr>
+                    <tr>
+                      <td>3</td>
+                      <td>Abalpur</td>
+                      <td align="center"> 200 </td>
+                      <td align="right"> 1000000 </td>
+                    </tr>
+                    <tr>
+                      <td>4</td>
+                      <td>Abarsingh SC</td>
+                      <td align="center"> 200 </td>
+                      <td align="right"> 1500000 </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>

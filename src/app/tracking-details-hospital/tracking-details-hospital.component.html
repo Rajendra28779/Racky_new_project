@@ -1,0 +1,467 @@
+<div class="main-tab">
+    <div class="row justify-content-between">
+        <div class="col-lg-4">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a routerLink="/application/trackingdetailshospital" routerLinkActive="active" class="nav-link active">Claim Tracking
+                        Details</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-lg-12">
+            <div class="card shadow-sm mt-3 mt-xl-4 ">
+                <div class="card-header">
+                    <h4 class="mb-0 fw-bold">Hospital Details</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row gx-xl-5 treatment-details">
+                        <div class="col-xl">
+                            <p class="mb-0 fw-bold">{{item.HOSPITALNAME}} ({{ item.HOSPITALCODE }})
+                                <br> {{item.HOSPITALADDRESS}}
+                            </p>
+
+                        </div>
+                        <div class="col-xl border-start">
+                            <div class="d-flex align-items-center">
+                                <!-- <i class="iconbsky-package-amount mt-2 me-3 fs-1"></i> -->
+                                <div>
+                                    <p class="text-muted mb-0">URN</p>
+                                    <p class="mb-0 fw-bold">{{item.URN}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl border-start">
+                            <div class="d-flex align-items-center">
+                                <!-- <i class="iconbsky-block-amount mt-2 me-3 fs-1"></i> -->
+                                <div>
+                                    <p class="text-muted mb-0"> Invoice Number</p>
+                                    <p class="mb-0 fw-bold">{{item.INVOICENO}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl border-start">
+                            <div class="d-flex align-items-center">
+                                <!-- <i class="iconbsky-block-amount mt-2 me-3 fs-1"></i> -->
+                                <div>
+                                    <p class="text-muted mb-0">Case Number</p>
+                                    <p class="mb-0 fw-bold">{{item.caseNo || 'N/A'}}</p>
+                                    <!-- <p class="mb-0 fw-bold" *ngIf="caseNo==undefined">N/A</p> -->
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="card shadow-sm mt-3 mt-xl-4 ">
+                                <div class="card-header">
+                                    <h4 class="mb-0 fw-bold">Patient Details</h4>
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="row gx-xl-5 treatment-details">
+                                        <div class="col-xl">
+                                            <p class="small text-muted mb-0">Name</p>
+                                            <p class="mb-0 fw-bold">
+                                                {{item.PATIENTNAME}}
+                                            </p>
+                                        </div>
+
+                                        <div class="col-xl border-start">
+                                            <div class="d-flex align-items-center">
+                                                <div>
+                                                    <p class="small text-muted mb-0">AGE</p>
+                                                    <p class="mb-0 fw-bold">
+                                                        {{item.AGE}} Years
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xl border-start">
+                                            <div class="d-flex align-items-center">
+                                                <div>
+                                                    <p class="small text-muted mb-0">GENDER</p>
+                                                    <p class="mb-0 fw-bold">
+                                                        <span *ngIf=" item.GENDER=='F' ">
+                                                            Female
+                                                        </span>
+                                                        <span *ngIf=" item.GENDER=='M' ">
+                                                            Male
+                                                        </span>
+
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl border-start">
+                                            <div class="d-flex align-items-center">
+                                                <div>
+                                                    <p class="small text-muted mb-0">Address</p>
+                                                    <p class="mb-0 fw-bold">
+                                                        {{item.Address}}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl border-start">
+                                            <div class="d-flex align-items-center">
+                                                <div>
+                                                    <p class="small text-muted mb-0">Mobile No</p>
+                                                    <p class="mb-0 fw-bold">
+                                                        {{item.PATIENTPHONENO}}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="card shadow-sm mt-3 mt-xl-4 ">
+                                                <div class="card-header">
+                                                    <h4 class="mb-0 fw-bold">Treatment Details</h4>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row gx-xl-5 treatment-details">
+                                                        <div class="col-xl">
+                                                            <p class="small text-muted mb-0">Admitted in Hospital ({{item.NOOFDAYS}}days)
+                                                            </p>
+                                                            <p class="mb-0 fw-bold">
+                                                                {{item.ACTUALDATEOFADMISSION| date: 'dd-MMM-yyyy'}} {{item.ACTUALDATEOFDISCHARGE| date: 'dd-MMM-yyyy'}}
+                                                            </p>
+                                                        </div>
+
+                                                        <div class="col-xl border-start">
+                                                            <div class="d-flex align-items-center">
+                                                                <div>
+                                                                    <p class="small text-muted mb-0">Package Rate(₹)</p>
+                                                                    <p class="mb-0 fw-bold"> {{item.PACKAGERATE |currency:'':''}}
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl border-start">
+                                                            <div class="d-flex align-items-center">
+                                                                <div>
+                                                                    <p class="small text-muted mb-0">Blocked Amount(₹)
+                                                                    </p>
+                                                                    <p class="mb-0 fw-bold"> {{item.TOTALAMOUNTBLOCKED| currency:'':''}}
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl border-start">
+                                                            <div class="d-flex align-items-center">
+                                                                <div>
+                                                                    <p class="small text-muted mb-0">Authorized Code</p>
+                                                                    <p class="mb-0 fw-bold">{{ item.AUTHORIZEDCODE }}
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3 ">
+                                                            <div class="d-flex align-items-center">
+                                                                <div>
+                                                                    <p class="small text-muted mb-0">Procedure</p>
+                                                                    <p class="mb-0 fw-bold">{{item.PROCEDURENAME}}
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <hr class="mt-xl-4">
+                                                        </div>
+                                                        <div class="col-lg-2 border-start">
+                                                            <div class="d-flex align-items-center">
+                                                                <div>
+                                                                    <p class="small text-muted mb-0">Packages</p>
+                                                                    <p class="mb-0 fw-bold">{{item.PACKAGENAME}}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl border-start">
+                                                            <div class="d-flex align-items-center">
+                                                                <div>
+                                                                    <p class="small text-muted mb-0">Hospital Claim Number
+                                                                    </p>
+                                                                    <p class="mb-0 fw-bold">{{item.CLAIM_NO}}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl border-start">
+                                                            <div class="d-flex align-items-center">
+                                                                <div>
+                                                                    <p class="small text-muted mb-0">Claim Bill Number
+                                                                    </p>
+                                                                    <p class="mb-0 fw-bold">{{ item.claimBillNo}}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-lg-2 border-start">
+                                                            <div class="d-flex align-items-center">
+                                                                <div>
+                                                                    <p class="small text-muted mb-0">Mortality</p>
+                                                                    <p class="mb-0 fw-bold">{{item.MORTALITY}}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3 border-start">
+                                                            <div class="d-flex align-items-center">
+                                                                <div>
+                                                                    <p class="small text-muted mb-0">Referral Code</p>
+                                                                    <p class="mb-0 fw-bold">{{item.REFERRALCODE}}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <hr class="mt-xl-4">
+                                                        </div>
+                                                        <div class="col-xl">
+                                                            <p class="small text-muted mb-0">Actual Admitted and Discharge in Hospital</p>
+                                                            <p class="mb-0 fw-bold">
+                                                                {{item.ACTUALDATEOFADMISSION | date: 'dd-MMM-yyyy'}} - {{item.ACTUALDATEOFDISCHARGE | date: 'dd-MMM-yyyy'}}
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-lg-3 border-start">
+                                                            <div class="d-flex align-items-center">
+                                                                <div>
+                                                                    <p class="small text-muted mb-0">Hospital Claim Number
+                                                                    </p>
+                                                                    <p class="mb-0 fw-bold">{{item.hospitalcasenumber}}
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3 border-start">
+                                                            <div class="d-flex align-items-center">
+                                                                <div>
+                                                                    <p class="small text-muted mb-0">IMPLANT DATA
+                                                                    </p>
+                                                                    <p class="mb-0 fw-bold">{{item.IMPLANT_DATA}}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3 border-start">
+                                                            <div class="d-flex align-items-center">
+                                                                <div>
+                                                                    <p class="small text-muted mb-0">NABH Flag</p>
+                                                                    <p class="mb-0 fw-bold">{{item.NABHFlag}}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-12">
+                                                            <hr class="my-xl-4">
+                                                            <h4 class="mb-0 fw-bold">Pre-Auth Log</h4>
+                                                            <div class="table-responsive">
+                                                                <table class="table mb-0">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th width="40" rowspan="2">Sl#</th>
+                                                                            <th rowspan="2">Pre-Auth Code</th>
+                                                                            <th rowspan="2">Claimed Amount (₹)</th>
+                                                                            <th rowspan="2">Approved Amount (₹)</th>
+                                                                            <th rowspan="2">Claimed Date</th>
+                                                                            <th rowspan="2">Approved Date</th>
+                                                                            <th rowspan="2">Remark</th>
+                                                                            <th colspan="3" style="text-align:center">
+                                                                                Documents</th>
+                                                                            <!-- <th rowspan="2">Details</th> -->
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th>Doc1</th>
+                                                                            <th>Doc2</th>
+                                                                            <th>Doc3</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <ng-container *ngIf="check">
+                                                                            <tr *ngFor="let auth of preAuth ,index as i">
+                                                                                <td>{{i+1}}</td>
+                                                                                <td>{{auth.preauthCode}}</td>
+                                                                                <td>{{auth.claimedAmount | currency:'':''}}
+                                                                                </td>
+                                                                                <td>{{auth.approvedAmount | currency:'':''}}
+                                                                                </td>
+                                                                                <td>{{auth.claimedDate}}</td>
+                                                                                <td>{{auth.approvedDate}}</td>
+                                                                                <td>{{auth.preAuthRemarks}}</td>
+                                                                                <td *ngIf="auth.aditionalDoc1 != undefined">
+                                                                                    <a href="javascript:void(0);" (click)="downloadAction($event,auth.aditionalDoc1,auth.hospitalCode,auth.claimedDate,'')"><i
+                                                                                            class="bi bi-file-earmark-pdf"
+                                                                                            style="color:red;font-size:15px;"></i></a>
+                                                                                </td>
+                                                                                <td *ngIf="auth.aditionalDoc1 == undefined">
+                                                                                    --</td>
+                                                                                <td *ngIf="auth.aditionalDoc2 != undefined">
+                                                                                    <a href="javascript:void(0);" (click)="downloadAction($event,auth.aditionalDoc2,auth.hospitalCode,auth.claimedDate,'')"><i
+                                                                                            class="bi bi-file-earmark-pdf"
+                                                                                            style="color:red;font-size:15px;"></i></a>
+                                                                                </td>
+                                                                                <td *ngIf="auth.aditionalDoc2 == undefined">
+                                                                                    --</td>
+                                                                                <td *ngIf="auth.aditionalDoc3 != undefined">
+                                                                                    <a href="javascript:void(0);" (click)="downloadAction($event,auth.aditionalDoc3,auth.hospitalCode,auth.claimedDate,'')"><i
+                                                                                            class="bi bi-file-earmark-pdf"
+                                                                                            style="color:red;font-size:15px;"></i></a>
+                                                                                </td>
+                                                                                <td *ngIf="auth.aditionalDoc3 == undefined">
+                                                                                    --</td>
+                                                                                <!-- <td><a href="javascript:void(0)" (click)="preauthLogDetails(auth.urnNo,item.AUTHORIZEDCODE,auth.hospitalCode)">Clickhere</a></td> -->
+                                                                            </tr>
+                                                                        </ng-container>
+                                                                        <tr *ngIf="!check">
+                                                                            <td colspan="8" align="center"><strong class="text-danger">No data
+                                                                                    found</strong>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-4">
+                                        <div class="col-lg-12">
+                                            <div class="card shadow-sm document-upload">
+                                                <div class="card-header">
+                                                    <h4 class="mb-0 fw-bold">Documents Uploaded</h4>
+                                                </div>
+                                                <div class="card-body uploaded-doc">
+                                                    <div class="row gx-5 justify-content-between">
+                                                        <div class="col-lg-6 col-xxl-6 border-end pt-xl-2">
+                                                            <div class="row">
+                                                                <div class="col-6 col-lg-3 col-xxl-3 text-center mb-4" *ngIf="item.DISCHARGESLIP != undefined">
+                                                                    <a href="javascript:void(0);" (click)="downloadAction($event,item.DISCHARGESLIP,item.HOSPITALCODE,item.ACTUALDATEOFADMISSION)">
+                                                                        <img src="./assets/img/pdf.png" alt="Admission Slip" class="mb-2" [width]="100">
+                                                                        <span class="d-block">Discharge Docs</span>
+                                                                    </a>
+                                                                </div>
+                                                                <div style="margin-top: 12%;" class="col-6 col-lg-3 col-xxl-3 text-center mb-4" *ngIf="item.DISCHARGESLIP == undefined">
+                                                                    <span class="d-block">--</span>
+                                                                    <span class="d-block">Discharge Docs</span>
+                                                                </div>
+                                                                <div class="col-6 col-lg-3 col-xxl-3 text-center mb-4" *ngIf="item.ADITIONALDOCS != undefined">
+                                                                    <a href="javascript:void(0);" (click)="downloadAction($event,item.ADITIONALDOCS,item.HOSPITALCODE,item.ACTUALDATEOFADMISSION)">
+                                                                        <img src="./assets/img/pdf.png" alt="Admission Slip" class="mb-2" [width]="100">
+                                                                        <span class="d-block">Additional Docs</span>
+                                                                    </a>
+                                                                </div>
+                                                                <div style="margin-top: 12%;" class="col-6 col-lg-3 col-xxl-3 text-center mb-4" *ngIf="item.ADITIONALDOCS == undefined">
+                                                                    <span class="d-block">--</span>
+                                                                    <span class="d-block">Additional Docs</span>
+                                                                </div>
+                                                                <div class="col-6 col-lg-3 col-xxl-3 text-center mb-4" *ngIf="item.ADITIONAL_DOC1 != undefined">
+                                                                    <a href="javascript:void(0);" (click)="downloadAction($event,item.ADITIONAL_DOC1,item.HOSPITALCODE,item.ACTUALDATEOFADMISSION)">
+                                                                        <img src="./assets/img/pdf.png" alt="Admission Slip" class="mb-2" [width]="100">
+                                                                        <span class="d-block">Additional Docs1</span>
+                                                                    </a>
+                                                                </div>
+                                                                <div style="margin-top: 12%;" class="col-6 col-lg-3 col-xxl-3 text-center mb-4" *ngIf="item.ADITIONAL_DOC1 == undefined">
+                                                                    <span class="d-block">--</span>
+                                                                    <span class="d-block">Additional Docs1</span>
+                                                                </div>
+                                                                <div class="col-6 col-lg-3 col-xxl-3 text-center mb-4" *ngIf="item.ADITIONAL_DOC2 != undefined">
+                                                                    <a href="javascript:void(0);" (click)="downloadAction($event,item.ADITIONAL_DOC2,item.HOSPITALCODE,item.ACTUALDATEOFADMISSION)">
+                                                                        <img src="./assets/img/pdf.png" alt="Admission Slip" class="mb-2" [width]="100">
+                                                                        <span class="d-block">Additional Docs2</span>
+                                                                    </a>
+                                                                </div>
+                                                                <div style="margin-top: 12%;" class="col-6 col-lg-3 col-xxl-3 text-center mb-4" *ngIf="item.ADITIONAL_DOC2 == undefined">
+                                                                    <span class="d-block">--</span>
+                                                                    <span class="d-block">Additional Docs2</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6 col-xxl-6">
+                                                            <div class="row gx-5">
+                                                                <div class="col-6 col-xxl-4 text-center" *ngIf="item.PRESURGERYPHOTO !=undefined">
+                                                                    <a href="javascript:void(0);" (click)="downloadAction($event,item.PRESURGERYPHOTO,item.HOSPITALCODE,item.ACTUALDATEOFADMISSION)">
+                                                                        <img src="./assets/img/male-profile.jpg" alt="Pre-Surgery" class=" mb-2" [width]="100">
+                                                                        <span class="d-block mb-3">Pre-Surgery</span>
+                                                                    </a>
+                                                                </div>
+                                                                <div style="margin-top: 14%;" class="col-6 col-lg-3 col-xxl-3 text-center mb-4" *ngIf="item.PRESURGERYPHOTO == undefined">
+                                                                    <span class="d-block">--</span>
+                                                                    <span class="d-block mb-3">Pre-Surgery</span>
+                                                                </div>
+                                                                <div class="col-6 col-xxl-4 text-center" *ngIf="item.POSTSURGERYPHOTO !=undefined">
+                                                                    <a href="javascript:void(0);" (click)="downloadAction($event,item.POSTSURGERYPHOTO,item.HOSPITALCODE,item.ACTUALDATEOFADMISSION)">
+                                                                        <img src="./assets/img/male-profile.jpg" alt="Post-Surgery" class="mb-2" [width]="100">
+                                                                        <span class="d-block mb-3">Post-Surgery</span>
+                                                                    </a>
+                                                                </div>
+                                                                <div style="margin-top: 14%;" class="col-6 col-lg-3 col-xxl-3 text-center mb-4" *ngIf="item.POSTSURGERYPHOTO == undefined">
+                                                                    <span class="d-block">--</span>
+                                                                    <span class="d-block mb-3">Post-Surgery</span>
+                                                                </div>
+                                                                <div class="col-6 col-xxl-4 text-center" *ngIf="item.PATIENT_PHOTO != undefined">
+                                                                    <a href="javascript:void(0);" (click)="downloadAction($event,item.PATIENT_PHOTO,item.HOSPITALCODE,item.ACTUALDATEOFADMISSION)">
+                                                                        <img src="./assets/img/male-profile.jpg" alt="Post-Surgery" class="mb-2">
+                                                                        <span class="d-block mb-3">Patient Photo</span>
+                                                                    </a>
+                                                                </div>
+                                                                <div class="col-6 col-xxl-4 text-center" *ngIf="item.PATIENT_PHOTO == undefined">
+                                                                    <a href="javascript:void(0);">
+                                                                        <p>
+                                                                            <script defer src=""></script>
+                                                                        </p>
+                                                                    </a>
+                                                                    <span class="d-block mb-3">Patient Photo</span>
+                                                                </div>
+                                                                <div class="col-6 col-xxl-4 text-center" *ngIf="item.INTRA_SURGERY_PHOTO != undefined">
+
+                                                                    <a href="javascript:void(0);" (click)="downloadAction($event,item.INTRA_SURGERY_PHOTO,item.HOSPITALCODE,item.ACTUALDATEOFADMISSION)">
+                                                                        <img src="./assets/img/male-profile.jpg" alt="Post-Surgery" class="mb-2">
+                                                                        <span class="d-block mb-3">Intra-Surgery
+                                                                            photo</span>
+                                                                    </a>
+                                                                </div>
+                                                                <div class="col-6 col-xxl-4 text-center" *ngIf="item.INTRA_SURGERY_PHOTO == undefined">
+                                                                    <a href="javascript:void(0);">
+                                                                        <p>--</p>
+                                                                    </a>
+                                                                    <span class="d-block mb-3">Intra-Surgery
+                                                                        photo</span>
+                                                                </div>
+                                                                <div class="col-6 col-xxl-4 text-center" *ngIf="item.SPECIMEN_REMOVAL_PHOTO != undefined">
+                                                                    <a href="javascript:void(0);" (click)="downloadAction($event,item.SPECIMEN_REMOVAL_PHOTO,item.HOSPITALCODE,item.ACTUALDATEOFADMISSION)">
+                                                                        <img src="./assets/img/male-profile.jpg" alt="Post-Surgery" class="mb-2">
+                                                                        <span class="d-block mb-3">Specimen Removal
+                                                                            Photo</span>
+                                                                    </a>
+                                                                </div>
+                                                                <div class="col-6 col-xxl-4 text-center" *ngIf="item.SPECIMEN_REMOVAL_PHOTO == undefined">
+                                                                    <a href="javascript:void(0);">
+                                                                        <p>--</p>
+                                                                    </a>
+                                                                    <span class="d-block mb-3">Specimen Removal
+                                                                        Photo</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-4">
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="modal justify-content-center" id="appealDisposal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-body py-5">
+                                            <span class="text-center text-success">
+                                                {{dtls}}
+                                            </span>
+
+                                        </div>
+                                        <div class="modal-footer justify-content-center">
+                                            <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="modalClose()">Ok</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>

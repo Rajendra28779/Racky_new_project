@@ -1,0 +1,98 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+    <div class="row justify-content-between">
+      <div class="col-lg-4">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a routerLink="/application/temporarycode" routerLinkActive="active" class="nav-link active" >Temporary Override Code</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/application/temporarycodeview" routerLinkActive="" class="nav-link" style="color: #1f723f;">View</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-box">
+      <div class="row">
+        <div class="col-lg-4 col-xxl-4">
+          <div class="mb-xl-3">
+            <label class="control-label">State Name<span
+              class="text-danger">*</span></label>
+            <select class="form-select" name="stateId" id="stateId" (change)="onChangeState($event.target.value)">
+              <option value="" selected disabled>Select State</option>
+              <ng-container *ngFor="let item of stateList">
+                <option value={{item.stateCode}}>{{item.stateName}}</option>
+              </ng-container>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-xxl-4">
+          <div class="mb-xl-3">
+            <label class="control-label">District Name<span class="text-danger">*</span></label>
+            <select class="form-select" name="districtId" id="districtId" (change)="onChangeDistrict($event.target.value)">
+              <option value="">Select All</option>
+              <ng-container *ngFor="let item of districtList">
+                <option value={{item.districtcode}}>{{item.districtname}}</option>
+              </ng-container>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-xxl-4">
+          <div class="mb-xl-3">
+            <label class="control-label">Hospital Name<span class="text-danger">*</span></label>
+            <ng-multiselect-dropdown #multiSelect [placeholder]="hosPlaceHolder" [settings]="settingHospital" [data]="hospitalList" id="districtCode" (onSelect)="onHosSelect($event)" (onDeSelect)="onHosDeSelect($event)" (onSelectAll)="onSelectAllHos($event)" (onDeSelectAll)="onDeSelectAllHos($event)"
+                  [(ngModel)]="selectedHospital">
+            </ng-multiselect-dropdown>
+          </div>
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+          <div class="mb-xl-3">
+              <label class="control-label">Date From</label><span class="text-danger">*</span>
+              <div class="input-group">
+                  <input type="text" class="form-control border-end-0 datetimepicker" id="datepicker1" name="fromDate" />
+                  <label class="input-group-text bg-transparent border-start-0" for="datepicker1">
+                      <i class="iconbsky-calendar"></i>
+                  </label>
+              </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+          <div class="mb-xl-3">
+              <label class="control-label">Date To</label><span class="text-danger">*</span>
+              <div class="input-group">
+                  <input type="text" class="form-control border-end-0 datetimepicker" id="datepicker2" name="toDate" />
+                  <label class="input-group-text bg-transparent border-start-0" for="datepicker2">
+                      <i class="iconbsky-calendar"></i>
+                  </label>
+              </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+          <input type="text" id="txtOverrideCode" readonly disabled maxlength="7" class="form-control mb-2"
+              placeholder="Override Code" value="{{overrideCode}}">
+        </div>
+        <div class="col-lg-2 col-xxl-2">
+            <input class="btn btn-outline-success" type="button" value="Generate Code" id="overrideCodeBtn" (click)="generateRandomNumber()">
+        </div>
+      <div class="col-lg-2 col-xxl-2">
+      </div>
+      <div class="col-lg-4 col-xxl-4">
+      </div>
+        <div class="col-lg-6 col-xxl-6">
+          <div class="mb-xl-3">
+            <label class="control-label"></label>
+            <div class="d-grid gap-2 d-md-flex input-group">
+              <button type="button" class="btn btn-success" (click)="submit()">Submit</button>
+              <button type="button" class="btn btn-primary" style="margin-left:5px;" (click)="reset()">Reset</button>&nbsp;
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>

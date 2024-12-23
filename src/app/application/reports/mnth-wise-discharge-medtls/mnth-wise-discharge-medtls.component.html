@@ -1,0 +1,315 @@
+<div class="content">
+    <div class="form-cointainer">
+        <div class="main-tab">
+            <div class="row justify-content-between">
+                <div class="col-lg-4">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a routerLink="/downloaddischargeadmiisiondumpdetails" class="nav-link active">Download
+                                Discharge and Admission Dump Report List</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="content-box mt-3">
+            <div class="col-xxl-12">
+                <div class="row">
+                    <div class="col-lg-3 col-xxl-3 mb-3">
+                        From Date : <strong>{{formDate}}</strong>
+                    </div>
+                    <div class="col-lg-3 col-xxl-3 mb-3">
+                        To Date : <strong>{{toDate}}</strong>
+                    </div>
+                    <div class="col-lg-3 col-xxl-3 mb-3">
+                        Search Type : <strong>{{searchName}}</strong>
+                    </div>
+                    <div class="col-lg-3 col-xxl-3 mb-3">
+                        Search For Record : <strong>{{showhide}}</strong>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-xxl-3 mb-3">
+                        State Name : <strong>{{stateName}}</strong>
+                    </div>
+                    <div class="col-lg-3 col-xxl-3 mb-3">
+                        District Name : <strong>{{distName}}</strong>
+                    </div>
+                    <div class="col-lg-6 col-xxl-6 mb-3">
+                        Hospital Name : <strong>{{hospitalName}}</strong>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label class="control-label mb-2">Package Category</label>
+                        <select class="form-select" id="Package" aria-label="Disabled select example" placeholder="Enter Package Category... " autocomplete="off" (change)="getPackageName($event.target.value)">
+                            <option value="" selected disabled>Select Package Category</option>
+                            <ng-container *ngFor="let item of serachdata,index i">
+                                <option value={{item.id}}>{{item.procedures}}({{item.procedurecode}})</option>
+                            </ng-container>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label class="control-label mb-2">Package Name</label>
+                        <select class="form-select" id="PackageName" name="PackageName">
+                            <option value="" selected disabled>Select Package Name</option>
+                            <ng-container *ngFor="let pack of packagenamedata">
+                                <option value={{pack.packagecode}}>{{pack.packagename}}</option>
+                            </ng-container>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 mt-3">
+                <div class="d-grid gap-2 d-md-flex">
+                    <button type="submit" class="btn btn-success" (click)="search()">Search</button>
+                    <button type="reset" class="btn btn-secondary" (click)="reset()">Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+        <div class="col-lg-6 col-xxl-6">
+            <div class="row" *ngIf="showPegi">
+                <div class="col-sm-4">
+                    <div class="col-sm-*">
+                        show
+                        <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+                            <option value="100">100</option>
+                            <option value="200">200</option>
+                            <option value="500">500</option>
+                            <option value={{record}}>All</option>
+                        </select> entries
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-xxl-2">
+            <div class="table-utilities float-end" *ngIf="!dischargeData">
+                <button class="btn btn-success btn-sm mx-1" tooltip="Excel" (click)="downloadReport(1)"><i
+                        class="bi bi-download"></i>
+                </button>
+               
+            </div>
+            <div class="table-utilities float-end" *ngIf="dischargeData">
+                <button class="btn btn-success btn-sm mx-1" tooltip="Excel" (click)="downloadList()"><i
+                        class="bi bi-download"></i>
+                </button>
+            </div>
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+            <div class="input-group">
+                <input type="text" id="txtsearchDate" class="form-control" placeholder="Search here..." name="txtsearchDate" [(ngModel)]="txtsearchDate" autocomplete="off">
+            </div>
+        </div>
+    </div>
+    <div class="form-cointainer">
+        <div class="table-responsive" *ngIf="dischargeData">
+            <table class="table table-striped mb-0">
+                <thead>
+                    <tr>
+                        <th class="text-center">Sl No#</th>
+                        <th class="text-center">URN</th>
+                        <th class="text-center">Claim No.</th>
+                        <th class="text-center">Invoice No.</th>
+                        <th class="text-center">Hospital State Name</th>
+                        <th class="text-center">Hospital District Name</th>
+                        <th class="text-center">Hospital Name</th>
+                        <th class="text-center">Hospital Code</th>
+                        <th class="text-center">Patient Name</th>
+                        <th class="text-center">Patient Phone</th>
+                        <th class="text-center">Gender</th>
+                        <th class="text-center">Age</th>
+                        <th class="text-center">FamilyHeader</th>
+                        <th class="text-center">Verifier Name</th>
+                        <th class="text-center">Patient State</th>
+                        <th class="text-center">Patient District</th>
+                        <th class="text-center">Patient Block</th>
+                        <th class="text-center">Patient Panchayat</th>
+                        <th class="text-center">Patient Village</th>
+                        <th class="text-center">Transaction Type</th>
+                        <th class="text-center">Transaction Date</th>
+                        <th class="text-center">Fund Available</th>
+                        <th class="text-center">No.of Days</th>
+                        <th class="text-center">Mortality</th>
+                        <th class="text-center">Actual Date of Admission</th>
+                        <th class="text-center">Actual Date of Discharge</th>
+                        <th class="text-center">Package Header</th>
+                        <th class="text-center">Procedure Name</th>
+                        <th class="text-center">Package Code</th>
+                        <th class="text-center">Package Name</th>
+                        <th class="text-center">CPD Remark</th>
+                        <th class="text-center">SNA Remark</th>
+                        <th class="text-center">CPD Approved Amount</th>
+                        <th class="text-center">SNA Approved Amount</th>
+                        <th class="text-center">Hospital Claim Amount</th>
+                        <th class="text-center">Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of gramwisedata | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};index as i">
+                        <td class="text-center" *ngIf="currentPage==1">{{i+1}}</td>
+                        <td class="text-center" *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+i+1}}</td>
+                        <td class="text-center">{{item.urn}}</td>
+                        <td class="text-center">{{item.claimid}}</td>
+                        <td class="text-center">{{item.invoiceNo}}</td>
+                        <td class="text-center">{{item.hosstateName}}</td>
+                        <td class="text-center">{{item.hosdistrictName}}</td>
+                        <td class="text-center">{{item.hospitalName}}</td>
+                        <td class="text-center">{{item.hospitalCode}}</td>
+                        <td class="text-center">{{item.patientName}}</td>
+                        <td class="text-center">{{item.patientNo}}</td>
+                        <td class="text-center">{{item.gender}}</td>
+                        <td class="text-center">{{item.age}}</td>
+                        <td class="text-center">{{item.familyHeader}}</td>
+                        <td class="text-center">{{item.varyfyName}}</td>
+                        <td class="text-center">{{item.pStateName}}</td>
+                        <td class="text-center">{{item.pDistName}}</td>
+                        <td class="text-center">{{item.pBlockName}}</td>
+                        <td class="text-center">{{item.pPanchytName}}</td>
+                        <td class="text-center">{{item.pVilName}}</td>
+                        <td class="text-center">{{item.transactionType}}</td>
+                        <td class="text-center">{{item.transactionDate |date :'dd-MMM-yyyy'}}</td>
+                        <td class="text-center">{{item.fundBalance |currency:'':''}}</td>
+                        <td class="text-center">{{item.noOfDays}}</td>
+                        <td class="text-center">{{item.mortality}}</td>
+                        <td class="text-center">{{item.actualDateAdmission |date :'dd-MMM-yyyy'}}</td>
+                        <td class="text-center">{{item.actualDateDischarge |date :'dd-MMM-yyyy'}}</td>
+                        <td class="text-center">{{item.packageCategCode}}</td>
+                        <td class="text-center" title={{item.packageName}}>{{item.procedureName}}</td>
+                        <td class="text-center">{{item.packageCode}}</td>
+                        <td class="text-center">{{item.packageName}}</td>
+                        <td class="text-center" style="text-align: center"><a style="text-align: center;" data-bs-toggle="modal" data-bs-target="#cpdRemarkId" (click)="viewData(item.cpdRemark)">View</a></td>
+                        <td class="text-center" style="text-align: center"><a style="text-align: center;" data-bs-toggle="modal" data-bs-target="#snaRemarkId" (click)="viewData1(item.snaRemark)">View</a></td>
+                        <td class="text-center">{{item.cpdApprovedAmt |currency:'':''}}</td>
+                        <td class="text-center">{{item.snaApprovedAmt |currency:'':''}}</td>
+                        <td class="text-center">{{item.hospitalClaimAmt |currency:'':''}}</td>
+                        <td class="text-center" title="Details"><a class="btn btn-outline-primary btn-sm me-1" (click)="details1(item.claimid,item.urn,item.authorizedCode,item.hospitalCode,item.transactionId)"><i
+                                    class="bi bi-eye"></i></a></td>
+                    </tr>
+                    <tr *ngIf="!showPegi">
+                        <div class="row">
+                            <span style="color: red;text-align: center;position:absolute">NO DATA
+                                FOUND!!</span>
+                        </div>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="table-responsive" *ngIf="!dischargeData">
+            <table class="table table-striped mb-0">
+                <thead>
+                    <tr>
+                        <th class="text-center">Sl No#</th>
+                        <th class="text-center">URN</th>
+                        <th class="text-center">Invoice No.</th>
+                        <th class="text-center">State Name</th>
+                        <th class="text-center">District Name</th>
+                        <th class="text-center">Hospital Name</th>
+                        <th class="text-center">Hospital Code</th>
+                        <th class="text-center">Hospital District Name</th>
+                        <th class="text-center">Patient Name</th>
+                        <th class="text-center">Package Header</th>
+                        <th class="text-center">Procedure Name</th>
+                        <th class="text-center">Package  Code</th>
+                        <th class="text-center">Package  Name</th>
+                        <th class="text-center">Actual Date of Admission</th>
+                        <th class="text-center">Date of Blocking</th>
+                        <th class="text-center">IS Pre Auth </th>
+                        <th class="text-center">Total Package Cost</th>
+                        <th class="text-center">Blocked Amount</th>
+                        <th class="text-center">Surgical Type</th>
+                        <th class="text-center">Verification Mode</th>
+                        <th class="text-center">Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of gramwisedata | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};index as i">
+                        <td class="text-center" *ngIf="currentPage==1">{{i+1}}</td>
+                        <td class="text-center" *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+i+1}}</td>
+                        <td class="text-center">{{item.urn}}</td>
+                        <td class="text-center">{{item.invoiceNo}}</td>
+                        <td class="text-center">{{item.stateName}}</td>
+                        <td class="text-center">{{item.districtName}}</td>
+                        <td class="text-center">{{item.hospitalName}}</td>
+                        <td class="text-center">{{item.hospitalCode}}</td>
+                        <td class="text-center">{{item.hospitaldistrictname}}</td>
+                        <td class="text-center">{{item.patientName}}</td>
+                        <td class="text-center" title={{item.packageName}}>{{item.packageSubCatg}}</td>
+                        <td class="text-center">{{item.procedureName}}</td>
+                        <td class="text-center">{{item.packageCode}}</td>
+                        <td class="text-center">{{item.packageName}}</td>
+                        <td class="text-center">{{item.actualDateAdmission |date :'dd-MMM-yyyy'}}</td>
+                        <td class="text-center">{{item.dateOfAdmission |date :'dd-MMM-yyyy'}}</td>
+                        <td class="text-center">{{item.isPreAuth}}</td>
+                        <td class="text-center">{{item.totalPackageCost |currency:'':''}}</td>
+                        <td class="text-center">{{item.blockedAmt |currency:'':''}}</td>
+                        <td class="text-center">{{item.surgicalType}}</td>
+                        <td class="text-center">{{item.varificationMode}}</td>
+                        <td class="text-center" title="Details"><a class="btn btn-outline-primary btn-sm me-1" (click)="details(item.transactionId
+                            ,item.txnpackagedetailid)"><i class="bi bi-eye"></i></a></td>
+                    </tr>
+                    <tr *ngIf="!showPegi">
+                        <div class="row">
+                            <span style="color: red;text-align: center;position:absolute">NO DATA
+                                FOUND!!</span>
+                        </div>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+        <div class="row" *ngIf="showPegi">
+            <div class="col-sm-4">
+                <div class="col-sm-*">
+                    show
+                    <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+
+                        <option value="100">100</option>
+                        <option value="200">200</option>
+                        <option value="500">500</option>
+                        <option value={{record}}>All</option>
+                    </select> entries
+                </div>
+            </div>
+            <div class="col-sm-8 text-right">
+                <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true" (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="cpdRemarkId" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="border: 1px solid blue;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">CPD Remark</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div style="margin-left: 3ch;" [innerHTML]="cpdRemark"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="snaRemarkId" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="border: 1px solid blue;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">SNA Remark</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div style="margin-left: 3ch;" [innerHTML]="snaRemark"></div>
+            </div>
+        </div>
+    </div>
+</div>

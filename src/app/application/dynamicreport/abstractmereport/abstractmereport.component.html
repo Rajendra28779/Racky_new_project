@@ -1,0 +1,141 @@
+<div>
+  <div class="form-cointainer">
+      <div class="main-tab">
+          <div class="row justify-content-between">
+              <div class="col-lg-10">
+                  <ul class="nav nav-tabs">
+                      <li class="nav-item">
+                          <a routerLink="/application/meabstractreport" routerLinkActive="active" class="nav-link active">Abstract M And E Report</a>
+                      </li>
+
+                  </ul>
+              </div>
+              <div class="col-lg-2 ">
+                  <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+              </div>
+          </div>
+      </div>
+      <div class="content-box mb-3">
+          <div class="col-xxl-10">
+              <div class="row">
+                  <div class="col-lg-3 col-xxl-3">
+                      <div class="mb-xl-3">
+                          <label class="control-label">Actual Date Of Discharge From</label><span class="text-danger">*</span>
+                          <div class="input-group">
+                              <input type="text" class="form-control border-end-0 datepicker" id="datepicker1" name="fromDate">
+                              <label class="input-group-text bg-transparent border-start-0" for="datepicker1"><i
+                                class="iconbsky-calendar"></i> </label>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-lg-3 col-xxl-3">
+                      <div class="mb-xl-3">
+                          <label class="control-label">Actual Date Of Discharge To</label><span class="text-danger">*</span>
+                          <div class="input-group">
+                              <input type="text" class="form-control border-end-0 datepicker" id="datepicker2" name="toDate">
+                              <label class="input-group-text bg-transparent border-start-0" for="datepicker2"><i class="iconbsky-calendar"></i>
+                        </label>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-lg-6 col-xxl-6">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Trigger</label><span class="text-danger">*</span>
+                        <select class="form-select" id="trigger">
+                          <option value="" selected disabled>Select Trigger</option>
+                          <option *ngFor="let hos of triggerList" [value]="hos.slno">{{hos.reportname}}</option>
+                        </select>
+                    </div>
+                </div>
+              </div>
+              <div class="mt-2">
+                  <div class="d-grid gap-2 d-md-flex">
+                      <button type="submit" class="btn btn-success" (click)="getlist()">Search</button>
+                      <button type="reset" class="btn btn-secondary" (click)="ResetField()">Reset</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="content-box">
+          <div class="row">
+              <div class="col-4 col-4 d-flex align-items-center mb-2">
+                  <div *ngIf="showPegi">
+                      show
+                      <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+          <option value="100">100</option>
+          <option value="200">200</option>
+          <option value="300">300</option>
+          <option value={{totalcount}}>All</option>
+        </select> entries
+                  </div>
+              </div>
+              <div class="col-4 d-flex align-items-center justify-content-end mb-2">
+                  <button class="btn btn-success btn-sm mx-1" tooltip="Excel" (click)="downloadList(1)">
+        <i class="bi bi-file-earmark-spreadsheet"></i>
+    </button>
+                  <button class="btn btn-danger btn-sm mx-1 ms-1" tooltip="pdf" (click)="downloadList(2)">
+          <i class="bi bi-file-earmark-pdf"></i>
+      </button>
+                  <b class="ms-2">Total : {{totalcount}}</b>
+              </div>
+              <div class="col-4 mb-2">
+                  <input type="text " id="txtsearchDate " name="txtsearchDate " [(ngModel)]="txtsearchDate" maxlength="20 " class="form-control " placeholder="Search here...... " autocomplete="off" style=" margin-right: 0px; margin-left: 0px;">
+              </div>
+          </div>
+          <div class="table-responsive">
+              <table class="table table-striped mb-0">
+                  <thead>
+                      <tr>
+                          <th class="text-center">Sl#</th>
+                          <th>Trigger Name </th>
+                          <th>Total Case </th>
+                          <th>Pending  Claim	</th>
+                          <th>Action Taken Claim </th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr *ngFor="let v of list | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage},index as i">
+                          <td class="text-center" *ngIf="currentPage==1 ">{{(i+1)}}</td>
+                          <td class="text-center" *ngIf="currentPage!=1 ">{{(currentPage-1)*pageElement+ i+1}}</td>
+                          <td>{{v.triggerName}}</td>
+                          <td>{{v.totalcase}}</td>
+                          <td>{{v.pendingClaim}}</td>
+                          <td>{{v.actionTaken}}</td>
+                      </tr>
+                      <tr *ngIf="showPegi">
+                          <td></td>
+                          <td>Total</td>
+                          <td>{{sum}}</td>
+                          <td>{{sum1}}</td>
+                          <td>{{sum2}}</td>
+                      </tr>
+                      <tr *ngIf="totalcount==0">
+                          <td colspan="20" style="text-align: center;">
+                              <strong class="text-danger">NO DATA FOUND!!</strong>
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div><br>
+          <div class="row" *ngIf="showPegi">
+              <div class="col-sm-4">
+                  <div class="col-sm-*">
+                      show
+                      <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+          <option value="100">100</option>
+          <option value="200">200</option>
+          <option value="300">300</option>
+          <option value={{totalcount}}>All</option>
+        </select> entries
+                  </div>
+              </div>
+              <div class="col-sm-8 text-right">
+                  <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true" (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)">
+                  </pagination-controls>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

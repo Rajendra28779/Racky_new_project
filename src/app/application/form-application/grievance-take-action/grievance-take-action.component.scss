@@ -1,0 +1,9 @@
+.fw-500{font-weight: 500; margin-bottom: 0.3rem;}
+@keyframes marquee {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}

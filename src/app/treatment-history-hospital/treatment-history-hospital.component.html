@@ -1,0 +1,78 @@
+<!-- <div class="wrapper">
+  <app-appsidebar></app-appsidebar>
+   <app-sidebarmenu></app-sidebarmenu>
+   <div class="main">
+     <app-appheader></app-appheader>
+      <main class="content">
+      <div class="container-fluid p-0"> -->
+
+        <div class="form-cointainer">
+          <div class="main-tab">
+            <div class="row justify-content-between">
+              <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                  <li class="nav-item">
+                    <a routerLinkActive="active" class="nav-link active">Treatment History As Per URN</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="content-box">
+            <div class="row">
+              <div class="table-responsive">
+                <table class="table table-striped mb-0">
+                  <thead>
+                    <tr>
+                      <th width="50">Sl#</th>
+                      <th>URN</th>
+                      <th>Package Code</th>
+                      <th>Patient Name</th>
+                      <th>Hospital Name</th>
+                      <th>Admission Date</th>
+                      <th>Discharge Date</th>
+                      <th>Action Amount(₹)</th>
+                      <th>CPD Approved Amount(₹)</th>
+                      <th>SNA Approved Amount(₹)</th>
+                      <th>Status</th>
+                      <!-- <th>CPD Name</th> -->
+                      <th>Details</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <ng-container *ngIf="trtData?.length">
+                      <tr *ngFor="let item of trtData; index as i">
+                        <td>{{i+1}}</td>
+                        <td width="100">{{item.urnno}}</td>
+                        <td width="100" title={{item.packagename}}>{{item.packagecode}}</td>
+                        <td width="100">{{item.patientname}}</td>
+                        <td width="100">{{item.hospitalname}}</td>
+                        <td width="100">{{item.dateofadmission}}</td>
+                        <td width="100">{{item.dateofdischarge}}</td>
+                        <td width="100">{{item.totalamount}}</td>
+                        <td width="100" *ngIf="item.cpdapproveamount==null">N/A</td>
+                        <td width="100" *ngIf="item.cpdapproveamount!=null">{{item.cpdapproveamount | currency:'':''}}</td>
+                        <td width="100" *ngIf="item.snaapproveamount==null">N/A</td>
+                        <td width="100" *ngIf="item.snaapproveamount!=null">{{item.snaapproveamount | currency:'':''}}</td>
+                        <td width="100">{{item.status}}</td>
+                        <!-- <td width="150">{{item.cpdname}}</td> -->
+                        <td width="100"><a href="javascript:void(0)"
+                            (click)="getDetails(item.transctionId,item.claimId)">Click
+                            here</a></td>
+                      </tr>
+                    </ng-container>
+                    <tr *ngIf="! trtData?.length">
+                      <td colspan="8" align="center" *ngIf="isVisible"><strong class="text-danger">No data
+                          found</strong></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <!-- </div>
+    </main>
+   </div>
+   </div> -->

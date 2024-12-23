@@ -1,0 +1,67 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+    <div class="row justify-content-between">
+      <div class="col-lg-4">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a routerLink="/application/surveyquestionmapping" routerLinkActive="active" class="nav-link active">Add</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/application/viewsurveyquestionmapping" routerLinkActive="active" class="nav-link " style="color: #1f723f;">View</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-5 col-xxl-5">
+      <div class="mb-xl-3">
+        <label class="form-label">Survey Name<span class="text-danger">*</span></label>
+        <ng-autocomplete #auto [data]="surveylist" placeholder="Select Survey Name" (selected)="selectEvent($event)"
+          [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" [searchKeyword]="keyword"
+          spellcheck="false" (inputCleared)="onReset()">
+        </ng-autocomplete>
+        <ng-template #itemTemplate let-item>
+          <a [innerHTML]="item.surveyName"></a>
+        </ng-template>
+        <ng-template #notFoundTemplate let-notFound>
+          <div [innerHTML]="notFound"></div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12 col-xxl-12" *ngIf="showquestion">
+      <div class="mb-xl-3">
+        <label class="form-label">Select Question<span class="text-danger">*</span></label>
+        <div class="table-responsive example-container">
+          <table class="table table-striped mb-0">
+            <caption></caption>
+            <thead style="position: sticky;">
+              <tr>
+                <th style="text-align:center; width:40px;">Sl#</th>
+                <th>Question</th>
+                <th style="text-align:center; width:130px;">Select All
+                  <input type="checkbox" class="me-2 text-center" [checked]="checkall" (click)="allselectitem()">
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let v of questionlist ,index as i">
+                <td>{{(i+1)}}</td>
+                <td>{{v.question}}</td>
+                <td style="text-align:center;">
+                  <input type="checkbox" name="enable" id="enable" class="me-2 text-center" [checked]="v.status==0" (click)="selectitem(v)">
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="margin: top 3ch;">
+    <input type="submit" value="Submit" class="btn btn-success" (click)="submit()">&nbsp;&nbsp;
+    <input type="button" value="Reset" class="btn btn-secondary" (click)="Reset()">
+  </div>
+</div>

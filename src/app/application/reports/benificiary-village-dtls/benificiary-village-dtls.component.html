@@ -1,0 +1,96 @@
+<div class="content">
+    <div class="form-cointainer">
+        <div class="main-tab">
+            <div class="row justify-content-between">
+                <div class="col-lg-12">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a routerLinkActive="active" class="nav-link active">Beneficiary Gender Wise Report</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+            <div class="col-lg-2 col-xxl-2">
+                District Name : <strong>{{dist}}</strong>
+            </div>
+            <div class="col-lg-2 col-xxl-2">
+                Block Name :<strong>{{block}}</strong>
+            </div>
+            <!-- <div class="col-lg-3 col-xxl-3">
+                No. Of RationCard Issued : <strong>{{rationcardno}}</strong>
+            </div> -->
+            <div class="col-lg-3 col-xxl-3">
+                Gram Panchayat Name : <strong>{{gram}}</strong>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+            <div class="col-lg-6 col-xxl-6"></div>
+            <div class="col-lg-2 col-xxl-2">
+                <div class="table-utilities float-end">
+                    <button class="btn btn-success btn-sm mx-1" tooltip="Excel" (click)="downloadReport(1)"><i
+                            class="bi bi-download"></i>
+                    </button>
+                    <button class="btn btn-danger btn-sm me-1" type="submit" (click)="downloadReport(2)"><i
+                            class="bi bi-file-earmark-pdf"></i></button>
+                </div>
+            </div>
+            <div class="col-lg-4 col-xxl-4">
+
+                <input type="text" id="txtsearchDate" class="form-control" placeholder="Search here...." name="txtsearchDate" [(ngModel)]="txtsearchDate" autocomplete="off">
+
+            </div>
+        </div>
+        <!-- <div class="content-box">
+                <div class="row"> -->
+        <div class="table-responsive">
+            <table class="table table-striped mb-0">
+                <thead>
+                    <tr>
+                        <th>Sl No#</th>
+                        <th>Village Name</th>
+                        <th>No. Of RationCard Issued</th>
+                        <th>Male</th>
+                        <th>Female</th>
+                        <th>Others</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <ng-container>
+                        <tr *ngFor="let item of getvillagedata | filter:txtsearchDate |
+                        paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};index as i">
+                            <td *ngIf="currentPage==1">{{i+1}}</td>
+                            <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+i+1}}</td>
+                            <!-- <td>{{item.districtName}}</td> -->
+                            <td><a href="javascript:void(0);" (click)="view(item.districtId,item.blockId,item.gramId,item.villageId,item.districtName,item.blockName,item.gramName,item.villageName)">{{item.villageName}}
+                                </a></td>
+                            <td>{{item.benificiary}}</td>
+                            <td>{{item.male}}</td>
+                            <td>{{item.female}}</td>
+                            <td>{{item.other}}</td>
+                        </tr>
+                    </ng-container>
+                    <tr *ngIf="showPegi">
+                        <td></td>
+                        <td><b>Total</b></td>
+                        <td><b>{{sum}}</b></td>
+                        <td><b>{{sum1}}</b></td>
+                        <td><b>{{sum2}}</b></td>
+                        <td><b>{{sum3}}</b></td>
+                    </tr>
+                    <tr *ngIf="!showPegi">
+                        <div class="row">
+                            <span style="color: red;text-align: center;position:absolute">NO DATA
+                                FOUND!!</span>
+                        </div>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- </div> -->
+        <!-- </div> -->
+
+    </div>
+</div>

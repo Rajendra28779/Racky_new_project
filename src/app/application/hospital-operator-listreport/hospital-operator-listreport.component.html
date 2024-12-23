@@ -1,0 +1,236 @@
+<div class="main-tab">
+  <div class="col-lg-4">
+      <ul class="nav nav-tabs">
+          <li class="nav-item">
+              <a routerLink="/application/hospitalopreatorapprove" routerLinkActive="active"
+                  class="nav-link " style="color: #1f723f;">Applied List</a>
+          </li>
+          <li class="nav-item">
+              <a routerLink="/application/hospitalopreatorreport" routerLinkActive="active"
+                  class="nav-link active">Report</a>
+          </li>
+      </ul>
+  </div>
+</div>
+<div class="row" *ngIf="showfilter">
+  <div class="col-lg-3 col-xxl-3">
+    <div class="mb-xl-3">
+      <label class="control-label">State Name</label>
+      <select class="form-select" name="stateId" id="stateId" (change)="OnChangeState($event.target.value)">
+        <option value="" selected>Select State</option>
+        <ng-container *ngFor="let item of stateList">
+          <option value={{item.stateCode}}>{{item.stateName}}</option>
+        </ng-container>
+      </select>
+    </div>
+  </div>
+  <div class="col-lg-3 col-xxl-3">
+    <div class="mb-xl-3">
+      <label class="control-label">District Name</label>
+      <select class="form-select" name="districtId" id="districtId" (change)="getHospitalList()">
+        <option value="" selected>Select District</option>
+        <ng-container *ngFor="let item of districtList">
+          <option value={{item.districtcode}}>{{item.districtname}}</option>
+        </ng-container>
+      </select>
+    </div>
+  </div>
+  <div class="col-lg-5 col-xxl-5">
+    <div class="mb-xl-3">
+      <label class="control-label">Hospital Name</label>
+      <div class="input-group">
+        <ng-autocomplete #auto [data]="hospitalList" placeholder="Select Hospital" (selected)="selectEvent2($event)"
+          (inputCleared)="clearEvent2()" [itemTemplate]="itemTemplate2" [notFoundTemplate]="notFoundTemplate2"
+          [searchKeyword]="keyword2" spellcheck="false">
+        </ng-autocomplete>
+        <ng-template #itemTemplate2 let-item>
+          <a [innerHTML]="item.hospitalName"></a>
+        </ng-template>
+        <ng-template #notFoundTemplate2 let-notFound>
+          <div [innerHTML]="notFound"></div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4 col-xxl-4">
+    <div class="mb-xl-3">
+      <button type="button" class="btn btn-success me-2" (click)="search()">Search</button>
+      <button type="button" class="btn btn-secondary" (click)="reset()">Reset</button>
+    </div>
+  </div>
+</div>
+<div class="row" >
+  <div class="col-lg-4 col-xxl-4" style="padding-left: 17px;">
+      <b>Total Users: <span style="color: green;">{{userData.length}}</span></b>
+  </div>
+  <div class="col-lg-4 col-xxl-4" style="text-align: right; padding-top: 3px;">
+      <div class="form-group">
+          <button class="btn btn-outline-success btn-sm me-1" type="submit" (click)="downloadReport(1)">
+              <i class="bi bi-download"></i>
+          </button>
+          <button class="btn btn-outline-danger btn-sm me-1" tooltip="pdf" (click)="downloadReport(2)">
+            <i class="bi bi-file-earmark-pdf"></i>
+        </button>
+      </div>
+  </div>
+  <div class="col-lg-4 col-xxl-4">
+      <div class="input-group">
+          <input type="text" id="txtsearchDate" class="form-control" placeholder="Search here" name="txtsearchDate"
+              [(ngModel)]="txtsearchDate">
+      </div>
+  </div>
+</div>
+<div class="form-cointainer">
+  <div class="main-tab">
+      <div class="row justify-content-between">
+          <div class="table-responsive">
+              <table class="table table-striped" mb-0 id="exportTable">
+                  <thead>
+                      <tr>
+                          <th width="40">Sl No</th>
+                          <th width="80">Hospital State Name</th>
+                          <th width="80">Hospital District Name</th>
+                          <th width="300">Hospital Name</th>
+                          <th width="80">Hospital Mobile No.</th>
+                          <th>Operator Name</th>
+                          <th width="80">Operator Mobile No.</th>
+                          <th width="80">Status</th>
+                          <th width="80">Action</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr *ngFor="let item of userData | filter:txtsearchDate |
+                          paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};index as i">
+                          <td *ngIf="currentPage==1">{{i+1}}</td>
+                          <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+i+1}}</td>
+                          <td>{{item.stateCode}}</td>
+                          <td>{{item.distCode}}</td>
+                          <td>{{item.hospitalname}}</td>
+                          <td>{{item.hospmobile}}</td>
+                          <td>{{item.fullName}}</td>
+                          <td>{{item.mobileNo}}</td>
+                          <td>{{item.status}}</td>
+                          <td style="text-align: center;" *ngIf="item.operatorStatus == 0 || item.operatorStatus == 1">
+                              <a class="btn btn-outline-primary btn-sm me-1" data-bs-toggle="modal"
+                              data-bs-target="#actionModal" (click)="action(item)" >
+                                <i class="bi bi-pencil"></i>
+                              </a>
+                          </td>
+                      </tr>
+                      <tr *ngIf="! userData?.length">
+                          <td colspan="9" align="center"><strong class="text-danger">No data found</strong></td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+          <div class="row" *ngIf="showPegi">
+              <div class="col-sm-4">
+                  <div class="col-sm-*">
+                      show
+                      <select id="pageItem" name="pageItem" class="custom-select-sm" (change)="pageItemChange()">
+                          <option value="100">100</option>
+                          <option value="200">200</option>
+                          <option value="300">300</option>
+                          <option value="400">400</option>
+                      </select> entries
+                  </div>
+              </div>
+              <div class="col-sm-8 text-right">
+                  <pagination-controls id="listing_pagination" [maxSize]="100" [directionLinks]="true"
+                      (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="oper" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="max-width: 50%;">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">
+                  <b><span>Hospital Operator Of {{hospname}}</span></b>
+              </h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-lg-12 col-xxl-12">
+                <div class="table-responsive  example-container">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>Sl No</th>
+                        <th>Operator Name</th>
+                        <th>Operator State</th>
+                        <th>Operator District</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of hospitaloperalist index as j">
+                        <td>{{j+1}}</td>
+                        <td>{{item.fullName}}</td>
+                        <td>{{item.stateCode}}</td>
+                        <td>{{item.distCode}}</td>
+                      </tr>
+                      <tr *ngIf="! hospitaloperalist?.length">
+                        <td colspan="5" align="center"><strong class="text-danger">No data found</strong></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="actionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-focus="false">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">
+                  <span>Action</span>
+              </h5>
+              <button type="button" #closebutton class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="cancel()"></button>
+          </div>
+          <div class="modal-body">
+              <div class="row">
+                  <div class="col-lg-12 col-xxl-12">
+                    <div class="mb-xl-3">
+                        <label>Status:</label>&nbsp;&nbsp;<br>
+                            <label>
+                              <input type="radio" [checked]="modalData?.operatorStatus == 0" (click)="yes($event)"
+                                name="status" id="status">Active &nbsp;&nbsp;
+                              <input type="radio" [checked]="modalData?.operatorStatus == 1" (click)="no($event)"
+                                name="status" id="status">In-Active
+                            </label>
+                    </div>
+                  </div>
+                  <div class="col-lg-12 col-xxl-12" style="padding-top: 10px; padding-left: 17px;">
+                      <b>Remarks
+                        <!-- <span class="text-danger">*</span> -->
+                      </b>
+                  </div>
+                  <div class="col-lg-12 col-xxl-12" style="padding-top: 10px;">
+                      <textarea class="form-control" rows="4" id="remarks"  formControlName="remarks" name="remarks" maxlength="500" placeholder="Enter Remarks" #myInput [maxlength]="maxChars" (keypress)="keyPress($event)"></textarea>
+                      <span class="text-danger small">Characters Remaining: {{maxChars - myInput.value.length}}</span>
+                  </div>
+              </div>
+              <br>
+              <div class="row">
+                  <div class="col align-self-end">
+                      <div class="col-lg-12">
+                          <button class="btn btn-success" (click)="submit()">Submit</button> &nbsp;
+                          <button class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close" (click)="cancel()">Cancel</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

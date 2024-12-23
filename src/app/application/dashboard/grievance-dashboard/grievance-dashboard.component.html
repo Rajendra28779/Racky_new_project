@@ -1,0 +1,1060 @@
+<!-- DC Dashboard Section -->
+<div id="contentData">
+   <div class="content-box">
+      <div class="grv-sts">
+
+         <!-- Grievance Section -->
+
+         <div class="col-xxl-12 col-xl-12 col-md-12 col-lg-12 p-0">
+            <div class="row mb-4 mt-4">
+               <div class="col-xxl-7 col-xl-7 col-lg-5 col-md-4 col-sm-4 col-12">
+                  <div class="new-dash">
+                     <h3> Grievance Officer </h3>
+                  </div>
+               </div>
+               <div class="col-xxl-5 col-xl-5 col-lg-7 col-md-8 col-sm-8 col-12">
+                  <div class="d-block d-xl-flex d-lg-flex d-md-flex d-sm-flex justify-content-end">
+                     <!-- icon for download -->
+                     <div class="pr-1 pb-1 pb-xl-0 pb-lg-0 pb-md-0 pb-sm-0 pe-2 col-xl-4" style="margin-left: 100px;">
+                        <button class="btn btn-danger btn-sm" type="submit" (click)="openPDF()"
+                           style="margin-left: 95px; margin-bottom: 6px;"><i
+                              class="bi bi-file-earmark-pdf"></i></button>
+                     </div>
+                     <div class="pr-1 pb-1 pb-xl-0 pb-lg-0 pb-md-0 pb-sm-0 pe-2 col-xl-4">
+                        <div class="input-group"><input type="text" id="fromDate" name="fromDate"
+                              placeholder="From Date" autocomplete="off"
+                              class="form-control border-end-0 datepicker form-control-sm"><label for="fromDate"
+                              class="input-group-text bg-transparent border-start-0"><i
+                                 class="iconbsky-calendar"></i></label></div>
+                     </div>
+
+                     <div class="pr-1 pb-1 pb-xl-0 pb-lg-0 pb-md-0 pb-sm-0 pe-2 col-xl-4">
+                        <div class="input-group"><input type="text" id="toDate" name="toDate" laceholder="To Date"
+                              autocomplete="off" class="form-control border-end-0 datepicker form-control-sm"><label
+                              for="toDate" class="input-group-text bg-transparent border-start-0"><i
+                                 class="iconbsky-calendar"></i></label></div>
+                     </div>
+
+                     <div class="pr-1 pb-1 pb-xl-0 pb-lg-0 pb-md-0 pb-sm-0 col-xl-4">
+                        <select name="districtId" id="districtId" [(ngModel)]="districtId"
+                           class="form-select form-select-sm" (change)="grievanceOfficerData()">
+                           <option value="" selected>Select District</option>
+                           <ng-container *ngFor="let item of districtList">
+                              <option value={{item.districtcode}}>{{item.districtname}}</option>
+                           </ng-container>
+                        </select>
+                     </div>
+                  </div>
+
+
+               </div>
+            </div>
+
+            <div class="row h-100">
+
+               <div class="col-xxl-3 col-xl-3 col-lg-12 col-md-12 col-sm-12 col-12 mb-4">
+                  <div class="t-grv">
+                     <div class="ribbon-2">
+                        <div class="d-flex">
+                           <div class="me-3"> <img src="../../../../assets/img/review.png"></div>
+                           <div class="grv-prc">
+                              <div> {{GoTotalCount?.total}} </div>
+                              <div class="small-prc"> Total Grievance</div>
+                           </div>
+                        </div>
+                     </div>
+                     <ul>
+                        <li [ngClass]="BenActive" (click)="ChangeStatus('BNF')" id="BNF"> Beneficiaries <span
+                              class="float-end"> {{GoTotalCount?.beneficiary}}</span> </li>
+                        <li [ngClass]="HosActive" (click)="ChangeStatus('HOS')" id="HOS"> Hospital <span
+                              class="float-end"> {{GoTotalCount?.hospital}}</span> </li>
+                        <li [ngClass]="MoActive" (click)="ChangeStatus('MS')" id="MS"> Mo Sarkar <span
+                              class="float-end"> {{GoTotalCount?.mosarkar}}</span> </li>
+                        <li [ngClass]="NewActive" (click)="ChangeStatus('NP')" id="NP"> News Paper <span
+                              class="float-end"> {{GoTotalCount?.newspaper}}</span> </li>
+                        <li [ngClass]="EmlActive" (click)="ChangeStatus('EL')" id="EL"> Email/Letter <span
+                              class="float-end"> {{GoTotalCount?.email}}</span> </li>
+                        <li [ngClass]="SocActive" (click)="ChangeStatus('SM')" id="SM"> Social Media <span
+                              class="float-end"> {{GoTotalCount?.socialmedia}}</span> </li>
+                     </ul>
+                  </div>
+               </div>
+
+               <div class="col-xxl-9 col-xl-9 col-lg-12 col-md-12 col-sm-12 col-12 mb-4">
+                  <div class="border h-100">
+                     <div class="row h-100">
+                        <div class="col-xxl-4 col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12 border-end grv-gap">
+                           <div class="d-flex mb-4 align-items-center">
+                              <div class="me-3"> <img src="../../../../assets/img/expired.png"></div>
+                              <div>
+                                 <div class="grv-price text-warning popup_num" (click)="GetCountDetails('ALL')"> {{GoInrCount?.totalPending}} </div>
+                                 <div class="grv-s"> Grievance Pending </div>
+                              </div>
+                           </div>
+                           <div class="grv-sec">
+                              <ul>
+                                 <li> DC <span class="float-end popup_num" (click)="GetCountDetails('DC')"> {{GoInrCount?.DCPending}}</span> </li>
+                                 <li> DGO <span class="float-end popup_num" (click)="GetCountDetails('DGO')"> {{GoInrCount?.DGOPending}}</span> </li>
+                                 <li> GO <span class="float-end popup_num" (click)="GetCountDetails('GO')"> {{GoInrCount?.GOPending}}</span> </li>
+                              </ul>
+                           </div>
+                        </div>
+                        <div class="col-xxl-4 col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12 border-end grv-gap">
+                           <div class="d-flex mb-4 align-items-center">
+                              <div class="me-3"> <img src="../../../../assets/img/complaint.png"></div>
+                              <div>
+                                 <!-- <div class="grv-price text-danger"> {{GoInrCount?.totalOverdue}} </div> -->
+                                 <div class="grv-s"> Grievance Overdue </div>
+                              </div>
+                           </div>
+                           <div class="grv-sec">
+                              <ul>
+                                 <li> Within 7 Days - DC <span class="float-end"> {{GoInrCount?.within7days}} </span>
+                                 </li>
+                                 <li> More than 7 Days - DC <span class="float-end"> {{GoInrCount?.morethan7days}}
+                                    </span> </li>
+                                 <li> More than 15 Days - DC <span class="float-end"> {{GoInrCount?.morethan15days}}
+                                    </span> </li>
+                                 <li> More than 30 Days - DC <span class="float-end">
+                                       {{GoInrCount?.morethan30days}}</span> </li>
+                              </ul>
+                           </div>
+                        </div>
+                        <div class="col-xxl-4 col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12 grv-gap">
+                           <div class="d-flex mb-4 align-items-center">
+                              <div class="me-3"> <img src="../../../../assets/img/group-new.png"></div>
+                              <div>
+                                 <div class="grv-price text-success"> {{GoInrCount?.totalResolved}}</div>
+                                 <div class="grv-s"> Grievance Resolved </div>
+                              </div>
+                           </div>
+                           <div class="grv-sec">
+                              <ul>
+                                 <li> DGO <span class="float-end"> {{GoInrCount?.DGOResolve}}</span> </li>
+                                 <li> GO <span class="float-end"> {{GoInrCount?.GOResolve}}</span> </li>
+                                 <li> DC Forward<span class="float-end"> {{GoInrCount?.DCForward}}</span> </li>
+                              </ul>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <!-- Grievance Section -->
+
+
+         <!-- District Report Status -->
+
+         <div class="col-xxl-12 col-xl-12 col-md-12 col-lg-12 p-0">
+
+            <div class="row mb-4">
+               <div class="col-xxl-4 col-xl-4 col-lg-5 col-md-5 col-sm-5 col-12">
+                  <div class="new-dash">
+                     <h3> District wise Grievance Status </h3>
+                  </div>
+               </div>
+               <div class="col-xxl-8 col-xl-8 col-lg-7 col-md-7 col-sm-7 col-12">
+                  <div class="d-block d-xl-flex d-lg-flex d-md-flex d-sm-flex d-flex justify-content-end">
+                     <div class="pr-1 pb-1 pb-xl-0 pb-lg-0 pb-md-0 pb-sm-0 pe-2">
+                        <div class="input-group">
+                           <input type="text" class="form-control border-end-0 datepicker form-control-sm"
+                              id="fromDate1" name="fromDate1" placeholder="From Date">
+                           <label class="input-group-text bg-transparent border-start-0" for="fromDate1"><i
+                                 class="iconbsky-calendar"></i> </label>
+                        </div>
+
+                     </div>
+                     <div class="pr-1 pb-1 pb-xl-0 pb-lg-0 pb-md-0 pb-sm-0 pe-2">
+                        <div class="input-group">
+                           <input type="text" class="form-control border-end-0 datepicker form-control-sm" id="toDate1"
+                              name="toDate1" placeholder="To Date">
+                           <label class="input-group-text bg-transparent border-start-0" for="toDate1"><i
+                                 class="iconbsky-calendar"></i> </label>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+            <div class="row h-100">
+
+               <div class="col-xxl-7 col-xl-6 col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-4">
+                  <div class="border h-100">
+
+                     <div id="column-chart"></div>
+
+                  </div>
+               </div>
+
+
+
+               <div class="col-xxl-5 col-xl-6 col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-4">
+                  <div class="border h-100">
+
+                     <div class="table-responsive d-md-block table-container">
+                        <div class="custom-scroll sebc-scroll">
+                           <div class="tbl-header-grievance">
+                              <table class="table table-sm mb-0">
+                                 <thead>
+                                    <tr>
+                                       <th class="fw-bold">District</th>
+                                       <th class="fw-bold">Total Grievance</th>
+                                       <th class="fw-bold">Resolved</th>
+                                       <th class="fw-bold">Pending </th>
+                                       <th class="fw-bold" width="30%">Avg. Pending <br> (In days)</th>
+
+                                    </tr>
+
+                                 </thead>
+
+
+
+                                 <tbody>
+                                    <tr *ngFor="let claim of HospitalWiseDetails">
+                                       <td class="color-tbl"> {{claim.hospitalName}} </td>
+                                       <td class="color-tbl"> {{claim.totalGrievance}}</td>
+                                       <td class="color-tbl2"> {{claim.totalResolved}} </td>
+                                       <td class="color-tbl3"> {{claim.totalPending}}</td>
+                                       <td class="color-tbl3">
+                                          <div class="d-flex align-items-center grph-progress">
+                                             <div class="progress">
+                                                <div role="progressbar" aria-valuenow="25" aria-valuemin="0"
+                                                   aria-valuemax="100" class="progress-bar bg-danger"
+                                                   [style]="getPromoStyles(claim.totalPending,claim.totalGrievance)">
+                                                </div>
+                                             </div>
+                                             <div class="ms-3"> {{claim.avgPendingDays}} </div>
+                                          </div>
+                                       </td>
+                                    </tr>
+
+
+                                    <!-- <tr>
+                                                <td class="color-tbl"> Balasore </td>
+                                                <td class="color-tbl"> 1,38,268 </td>
+                                                <td class="color-tbl2"> 38,000 </td>
+                                                <td class="color-tbl3"> 1,00,268 </td>
+                                                <td class="color-tbl3">
+                                                    <div class="d-flex align-items-center grph-progress">
+
+                                                            <div class="progress">
+                                                                <div role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-danger" style="width: 45%;"></div>
+                                                        </div>
+
+                                                        <div class="ms-3"> 45 </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td class="color-tbl"> Bargarh </td>
+                                                <td class="color-tbl"> 1,05,268 </td>
+                                                <td class="color-tbl2"> 1,05,000 </td>
+                                                <td class="color-tbl3"> 268 </td>
+                                                <td class="color-tbl3">
+                                                    <div class="d-flex align-items-center grph-progress">
+
+                                                            <div class="progress">
+                                                                <div role="progressbar" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-danger" style="width: 15%;"></div>
+                                                        </div>
+
+                                                        <div class="ms-3"> 15 </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td class="color-tbl"> Bhadrak </td>
+                                                <td class="color-tbl">1,38,099 </td>
+                                                <td class="color-tbl2"> 2,00,000 </td>
+                                                <td class="color-tbl3"> 8,268 </td>
+                                                <td class="color-tbl3">
+                                                    <div class="d-flex align-items-center grph-progress">
+
+                                                            <div class="progress">
+                                                                <div role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-danger" style="width: 30%;"></div>
+                                                        </div>
+
+                                                        <div class="ms-3"> 30 </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td class="color-tbl"> Bolangir </td>
+                                                <td class="color-tbl"> 3,00,265 </td>
+                                                <td class="color-tbl2"> 38,000 </td>
+                                                <td class="color-tbl3"> 1,00,268 </td>
+                                                <td class="color-tbl3">
+                                                    <div class="d-flex align-items-center grph-progress">
+
+                                                            <div class="progress">
+                                                                <div role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-danger" style="width: 25%;"></div>
+                                                        </div>
+
+                                                        <div class="ms-3"> 25 </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td class="color-tbl"> Boudh </td>
+                                                <td class="color-tbl"> 1,38,268 </td>
+                                                <td class="color-tbl2"> 1,05,000 </td>
+                                                <td class="color-tbl3"> 8,268</td>
+                                                <td class="color-tbl3">
+                                                    <div class="d-flex align-items-center grph-progress">
+
+                                                            <div class="progress">
+                                                                <div role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-danger" style="width: 10%;"></div>
+                                                        </div>
+
+                                                        <div class="ms-3"> 10 </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td class="color-tbl"> Cuttack </td>
+                                                <td class="color-tbl"> 2,38,208 </td>
+                                                <td class="color-tbl2"> 2,00,000 </td>
+                                                <td class="color-tbl3"> 268 </td>
+                                                <td class="color-tbl3">
+                                                    <div class="d-flex align-items-center grph-progress">
+
+                                                            <div class="progress">
+                                                                <div role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-danger" style="width: 30%;"></div>
+                                                        </div>
+
+                                                        <div class="ms-3"> 30 </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td class="color-tbl"> Deogarh </td>
+                                                <td class="color-tbl"> 1,38,268 </td>
+                                                <td class="color-tbl2"> 38,000 </td>
+                                                <td class="color-tbl3"> 1,268</td>
+                                                <td class="color-tbl3">
+                                                    <div class="d-flex align-items-center grph-progress">
+
+                                                            <div class="progress">
+                                                                <div role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-danger" style="width: 25%;"></div>
+                                                        </div>
+
+                                                        <div class="ms-3"> 25 </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td class="color-tbl"> Jajpur </td>
+                                                <td class="color-tbl"> 3,08,208 </td>
+                                                <td class="color-tbl2"> 2,00,000 </td>
+                                                <td class="color-tbl3"> 268</td>
+                                                <td class="color-tbl3">
+                                                    <div class="d-flex align-items-center grph-progress">
+
+                                                            <div class="progress">
+                                                                <div role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-danger" style="width: 45%;"></div>
+                                                        </div>
+
+                                                        <div class="ms-3"> 20 </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td class="color-tbl"> Dhenkanal </td>
+                                                <td class="color-tbl"> 3,08,208 </td>
+                                                <td class="color-tbl2"> 2,00,000 </td>
+                                                <td class="color-tbl3"> 268</td>
+                                                <td class="color-tbl3">
+                                                    <div class="d-flex align-items-center grph-progress">
+
+                                                            <div class="progress">
+                                                                <div role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-danger" style="width: 45%;"></div>
+                                                        </div>
+
+                                                        <div class="ms-3"> 20 </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td class="color-tbl"> Dhenkanal </td>
+                                                <td class="color-tbl"> 3,08,208 </td>
+                                                <td class="color-tbl2"> 2,00,000 </td>
+                                                <td class="color-tbl3"> 268</td>
+                                                <td class="color-tbl3">
+                                                    <div class="d-flex align-items-center grph-progress">
+
+                                                            <div class="progress">
+                                                                <div role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-danger" style="width: 45%;"></div>
+                                                        </div>
+
+                                                        <div class="ms-3"> 20 </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td class="color-tbl"> Dhenkanal </td>
+                                                <td class="color-tbl"> 3,08,208 </td>
+                                                <td class="color-tbl2"> 2,00,000 </td>
+                                                <td class="color-tbl3"> 268</td>
+                                                <td class="color-tbl3">
+                                                    <div class="d-flex align-items-center grph-progress">
+
+                                                            <div class="progress">
+                                                                <div role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-danger" style="width: 45%;"></div>
+                                                        </div>
+
+                                                        <div class="ms-3"> 20 </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td class="color-tbl"> Cuttack </td>
+                                                <td class="color-tbl"> 3,08,208 </td>
+                                                <td class="color-tbl2"> 2,00,000 </td>
+                                                <td class="color-tbl3"> 268</td>
+                                                <td class="color-tbl3">
+                                                    <div class="d-flex align-items-center grph-progress">
+
+                                                            <div class="progress">
+                                                                <div role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-danger" style="width: 45%;"></div>
+                                                        </div>
+
+                                                        <div class="ms-3"> 20 </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td class="color-tbl"> Dhenkanal </td>
+                                                <td class="color-tbl"> 3,08,208 </td>
+                                                <td class="color-tbl2"> 2,00,000 </td>
+                                                <td class="color-tbl3"> 268</td>
+                                                <td class="color-tbl3">
+                                                    <div class="d-flex align-items-center grph-progress">
+
+                                                            <div class="progress">
+                                                                <div role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-danger" style="width: 45%;"></div>
+                                                        </div>
+
+                                                        <div class="ms-3"> 20 </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td class="color-tbl"> Malkangiri </td>
+                                                <td class="color-tbl"> 3,08,208 </td>
+                                                <td class="color-tbl2"> 2,00,000 </td>
+                                                <td class="color-tbl3"> 268</td>
+                                                <td class="color-tbl3">
+                                                    <div class="d-flex align-items-center grph-progress">
+
+                                                            <div class="progress">
+                                                                <div role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-danger" style="width: 45%;"></div>
+                                                        </div>
+
+                                                        <div class="ms-3"> 20 </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td class="color-tbl"> Balasore </td>
+                                                <td class="color-tbl"> 3,08,208 </td>
+                                                <td class="color-tbl2"> 2,00,000 </td>
+                                                <td class="color-tbl3"> 268</td>
+                                                <td class="color-tbl3">
+                                                    <div class="d-flex align-items-center grph-progress">
+
+                                                            <div class="progress">
+                                                                <div role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-danger" style="width: 45%;"></div>
+                                                        </div>
+
+                                                        <div class="ms-3"> 20 </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td class="color-tbl"> Dhenkanal </td>
+                                                <td class="color-tbl"> 3,08,208 </td>
+                                                <td class="color-tbl2"> 2,00,000 </td>
+                                                <td class="color-tbl3"> 268</td>
+                                                <td class="color-tbl3">
+                                                    <div class="d-flex align-items-center grph-progress">
+
+                                                            <div class="progress">
+                                                                <div role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-danger" style="width: 45%;"></div>
+                                                        </div>
+
+                                                        <div class="ms-3"> 20 </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td class="color-tbl"> Konark </td>
+                                                <td class="color-tbl"> 3,08,208 </td>
+                                                <td class="color-tbl2"> 2,00,000 </td>
+                                                <td class="color-tbl3"> 268</td>
+                                                <td class="color-tbl3">
+                                                    <div class="d-flex align-items-center grph-progress">
+
+                                                            <div class="progress">
+                                                                <div role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-danger" style="width: 45%;"></div>
+                                                        </div>
+
+                                                        <div class="ms-3"> 20 </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td class="color-tbl"> Sambalpur </td>
+                                                <td class="color-tbl"> 3,08,208 </td>
+                                                <td class="color-tbl2"> 2,00,000 </td>
+                                                <td class="color-tbl3"> 268</td>
+                                                <td class="color-tbl3">
+                                                    <div class="d-flex align-items-center grph-progress">
+
+                                                            <div class="progress">
+                                                                <div role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-danger" style="width: 45%;"></div>
+                                                        </div>
+
+                                                        <div class="ms-3"> 20 </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td class="color-tbl"> Khordha </td>
+                                                <td class="color-tbl"> 3,08,208 </td>
+                                                <td class="color-tbl2"> 2,00,000 </td>
+                                                <td class="color-tbl3"> 268</td>
+                                                <td class="color-tbl3">
+                                                    <div class="d-flex align-items-center grph-progress">
+
+                                                            <div class="progress">
+                                                                <div role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-danger" style="width: 45%;"></div>
+                                                        </div>
+
+                                                        <div class="ms-3"> 20 </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td class="color-tbl"> Cuttack </td>
+                                                <td class="color-tbl"> 3,08,208 </td>
+                                                <td class="color-tbl2"> 2,00,000 </td>
+                                                <td class="color-tbl3"> 268</td>
+                                                <td class="color-tbl3">
+                                                    <div class="d-flex align-items-center grph-progress">
+
+                                                            <div class="progress">
+                                                                <div role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-danger" style="width: 45%;"></div>
+                                                        </div>
+
+                                                        <div class="ms-3"> 20 </div>
+                                                    </div>
+                                                </td>
+                                            </tr> -->
+
+                                 </tbody>
+                              </table>
+                           </div>
+                        </div>
+
+                     </div>
+                  </div>
+
+               </div>
+
+            </div>
+
+         </div>
+
+
+         <!-- District Report Status -->
+
+         <!-- <div class="border mb-4 h-100 fixed-h"> -->
+         <div class="d-flex justify-content-end">
+            <div class="me-3 tab-n"><img src="../../../../assets/img/statistics.png" (click)="empaneltoggle(1)"
+                  title="Graph view" /></div>
+            <div class="tab-n"><img src="../../../../assets/img/table.png" (click)="empaneltoggle(2)"
+                  title="Table view" /></div>
+         </div>
+
+         <div class="row">
+            <div class="col-xxl-6 col-xl-6 col-lg-5 col-md-6 col-sm-12 col-xs-12  pe-3">
+               <div class="border mb-4 h-100 fixed-h bg-white">
+                  <div class="row mb-4">
+                     <div class="col-xl-12 col-lg-12">
+                        <div class="new-dash">
+                           <h3> Call Center Executive - CCE</h3>
+                        </div>
+                     </div>
+                  </div>
+
+                  <div class="card-body social-progressbar">
+                     <div class="row">
+                        <div class="col-lg-12">
+                           <div class="d-flex dc-gap">
+                              <div class="w-100">
+                                 <div class="dc-progress">
+                                    <div class="row h-100">
+                                       <div class=" col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                          <div class="">
+                                             <div
+                                                class="d-block d-xl-flex d-lg-flex d-md-flex d-sm-flex justify-content-end border-bottom pb-3">
+                                                <div class="pr-1 pb-1 pb-xl-0 pb-lg-0 pb-md-0 pb-sm-0 pe-2 col-xl-4">
+                                                   <div class="input-group"><input type="text" id="fromDate2"
+                                                         name="fromDate2" placeholder="From Date" autocomplete="off"
+                                                         class="form-control border-end-0 datepicker form-control-sm"><label
+                                                         for="fromDate2"
+                                                         class="input-group-text bg-transparent border-start-0"><i
+                                                            class="iconbsky-calendar"></i></label></div>
+                                                </div>
+
+                                                <div class="pr-1 pb-1 pb-xl-0 pb-lg-0 pb-md-0 pb-sm-0 pe-2 col-xl-4">
+                                                   <div class="input-group"><input type="text" id="toDate2"
+                                                         name="toDate2" placeholder="To Date" autocomplete="off"
+                                                         class="form-control border-end-0 datepicker form-control-sm"><label
+                                                         for="toDate2"
+                                                         class="input-group-text bg-transparent border-start-0"><i
+                                                            class="iconbsky-calendar"></i></label></div>
+                                                </div>
+
+                                                <div class="pr-1 pb-1 pb-xl-0 pb-lg-0 pb-md-0 pb-sm-0 col-xl-4">
+                                                   <select name="districtId1" id="districtId1" [(ngModel)]="districtId1"
+                                                      class="form-select form-select-sm" (change)="CCEData()">
+                                                      <option value="" selected>Select District</option>
+                                                      <ng-container *ngFor="let item of districtList">
+                                                         <option value={{item.districtcode}}>{{item.districtname}}
+                                                         </option>
+                                                      </ng-container>
+                                                   </select>
+                                                </div>
+                                             </div>
+
+
+                                             <div class="">
+                                                <div class="row h-100">
+                                                   <div
+                                                      class="col-xxl-6 col-xl-6 col-lg-12 col-md-12 col-sm-12 col-xs-12 border-end">
+                                                      <div class="h-100">
+                                                         <div class="row mb-4 mt-3">
+                                                            <div class="col-xl-6 col-lg-6 col-md-6">
+                                                               <div class="grv-price text-primary">
+                                                                  {{CCETotalCount?.totalAssign}} </div>
+                                                               <div class="grv-s"> Total Assign to CCE </div>
+                                                            </div>
+
+                                                            <div class="col-xl-6 col-lg-6 col-md-6">
+                                                               <div class="grv-price text-primary text-end">
+                                                                  {{CCETotalCount?.totalActionTaken}} </div>
+                                                               <div class="grv-s text-end"> Action Taken by CCE </div>
+                                                            </div>
+
+                                                            <div class="d-flex bd-highlight grv-call">
+                                                               <div class="icon-wdth"> <img
+                                                                     src="../../../../assets/img/phone-call.png"> </div>
+                                                               <div class="p-2 flex-fill bd-highlight">
+                                                                  <div class="call-sec"> Yes </div>
+                                                               </div>
+                                                               <div class="p-2 flex-fill bd-highlight"> <span
+                                                                     class="float-end"> {{CCETotalCount?.totalYes}}
+                                                                  </span> </div>
+                                                            </div>
+                                                            <div class="d-flex bd-highlight grv-call">
+                                                               <div class="icon-wdth"> <img
+                                                                     src="../../../../assets/img/call-new.png"> </div>
+                                                               <div class="p-2 flex-fill bd-highlight">
+                                                                  <div class="call-sec"> No </div>
+                                                               </div>
+                                                               <div class="p-2 flex-fill bd-highlight"> <span
+                                                                     class="float-end"> {{CCETotalCount?.totalNo}}
+                                                                  </span> </div>
+                                                            </div>
+                                                            <div class="d-flex bd-highlight grv-call">
+                                                               <div class="icon-wdth"> <img
+                                                                     src="../../../../assets/img/no-phone.png"> </div>
+                                                               <div class="p-2 flex-fill bd-highlight">
+                                                                  <div class="call-sec"> Not Connected </div>
+                                                               </div>
+                                                               <div class="p-2 flex-fill bd-highlight"> <span
+                                                                     class="float-end">
+                                                                     {{CCETotalCount?.totalNotConnected}} </span> </div>
+                                                            </div>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                   <div
+                                                      class="col-xxl-6 col-xl-6 col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                                                      <div class="h-100">
+                                                         <div class="row">
+                                                            <div class="d-flex mb-4 mt-3">
+                                                               <div>
+                                                                  <div class="grv-price text-primary">
+                                                                     {{CCETotalCount?.totalYes}} </div>
+                                                                  <div class="grv-s"> CCE Total Response </div>
+                                                               </div>
+                                                            </div>
+                                                            <div class="d-flex cce-gap">
+                                                               <div class="cce-wl"><b> Q1.</b></div>
+                                                               <div class="cce-wr">
+                                                                  <div class="dc-progress">
+                                                                     {{CCETotalCount?.Question1Yes}}<span
+                                                                        class="float-end">
+                                                                        {{CCETotalCount?.Question1No}} </span>
+                                                                  </div>
+                                                                  <div class="progress">
+                                                                     <div role="progressbar" aria-valuenow="15"
+                                                                        aria-valuemin="0" aria-valuemax="40"
+                                                                        class="progress-bar rounded-0 bg-success"
+                                                                        [style]="getPromoStyles(CCETotalCount?.Question1Yes,CCETotalCount?.totalYes)">
+                                                                     </div>
+                                                                     <div role="progressbar" aria-valuenow="30"
+                                                                        aria-valuemin="0" aria-valuemax="60"
+                                                                        class="progress-bar rounded-0 bg-danger"
+                                                                        [style]="getPromoStyles(CCETotalCount?.Question1No,CCETotalCount?.totalYes)">
+                                                                     </div>
+                                                                  </div>
+                                                               </div>
+                                                            </div>
+                                                            <div class="d-flex cce-gap">
+                                                               <div class="cce-wl"><b> Q2.</b></div>
+                                                               <div class="cce-wr">
+                                                                  <div class="dc-progress">
+                                                                     {{CCETotalCount?.Question2Yes}} <span
+                                                                        class="float-end">
+                                                                        {{CCETotalCount?.Question2No}} </span>
+                                                                  </div>
+                                                                  <div class="progress">
+                                                                     <div role="progressbar" aria-valuenow="15"
+                                                                        aria-valuemin="0" aria-valuemax="40"
+                                                                        class="progress-bar rounded-0 bg-success"
+                                                                        [style]="getPromoStyles(CCETotalCount?.Question2Yes,CCETotalCount?.totalYes)">
+                                                                     </div>
+                                                                     <div role="progressbar" aria-valuenow="30"
+                                                                        aria-valuemin="0" aria-valuemax="60"
+                                                                        class="progress-bar rounded-0 bg-danger"
+                                                                        [style]="getPromoStyles(CCETotalCount?.Question2No,CCETotalCount?.totalYes)">
+                                                                     </div>
+                                                                  </div>
+                                                               </div>
+                                                            </div>
+                                                            <div class="d-flex cce-gap">
+                                                               <div class="cce-wl"><b> Q3.</b></div>
+                                                               <div class="cce-wr">
+                                                                  <div class="dc-progress">
+                                                                     {{CCETotalCount?.Question3Yes}} <span
+                                                                        class="float-end">
+                                                                        {{CCETotalCount?.Question3No}} </span>
+                                                                  </div>
+                                                                  <div class="progress">
+                                                                     <div role="progressbar" aria-valuenow="15"
+                                                                        aria-valuemin="0" aria-valuemax="40"
+                                                                        class="progress-bar rounded-0 bg-success"
+                                                                        [style]="getPromoStyles(CCETotalCount?.Question3Yes,CCETotalCount?.totalYes)">
+                                                                     </div>
+                                                                     <div role="progressbar" aria-valuenow="30"
+                                                                        aria-valuemin="0" aria-valuemax="60"
+                                                                        class="progress-bar rounded-0 bg-danger"
+                                                                        [style]="getPromoStyles(CCETotalCount?.Question3No,CCETotalCount?.totalYes)">
+                                                                     </div>
+                                                                  </div>
+                                                               </div>
+                                                            </div>
+                                                            <div class="d-flex cce-gap">
+                                                               <div class="cce-wl"><b> Q4.</b></div>
+                                                               <div class="cce-wr">
+                                                                  <div class="dc-progress">
+                                                                     {{CCETotalCount?.Question4Yes}} <span
+                                                                        class="float-end">
+                                                                        {{CCETotalCount?.Question4No}} </span>
+                                                                  </div>
+                                                                  <div class="progress">
+                                                                     <div role="progressbar" aria-valuenow="15"
+                                                                        aria-valuemin="0" aria-valuemax="40"
+                                                                        class="progress-bar rounded-0 bg-success"
+                                                                        [style]="getPromoStyles(CCETotalCount?.Question4Yes,CCETotalCount?.totalYes)">
+                                                                     </div>
+                                                                     <div role="progressbar" aria-valuenow="30"
+                                                                        aria-valuemin="0" aria-valuemax="60"
+                                                                        class="progress-bar rounded-0 bg-danger"
+                                                                        [style]="getPromoStyles(CCETotalCount?.Question4No,CCETotalCount?.totalYes)">
+                                                                     </div>
+                                                                  </div>
+                                                               </div>
+                                                            </div>
+
+                                                            <div class="d-flex justify-content-end align-items-center">
+                                                               <div class="color-t bg-success me-2"></div> <span
+                                                                  class="me-3"> Yes </span>
+                                                               <div class="color-t bg-danger me-2 "></div> <span
+                                                                  class="ms-2"> No</span>
+                                                            </div>
+                                                         </div>
+
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                             </div>
+
+                                          </div>
+                                       </div>
+
+
+                                    </div>
+                                 </div>
+
+                              </div>
+                           </div>
+                        </div>
+
+
+                     </div>
+                  </div>
+
+               </div>
+            </div>
+
+            <div class="col-xxl-6 col-xl-6 col-lg-7 col-md-6 col-sm-12 col-xs-12">
+
+               <div class="border mb-4 h-100 fixed-h bg-white">
+                  <div class="row mb-4">
+                     <div class="col-xl-12 col-lg-12">
+                        <div class="new-dash">
+                           <h3> Call Center Executive - CCE</h3>
+                        </div>
+                     </div>
+                  </div>
+
+                  <div class="d-block d-xl-flex d-lg-flex d-md-flex d-sm-flex justify-content-end  border-bottom pb-3">
+                     <div class="pr-1 pb-1 pb-xl-0 pb-lg-0 pb-md-0 pb-sm-0 pe-2 col-xl-6">
+                        <div class="input-group"><input type="text" id="fromDate3" name="fromDate3"
+                              placeholder="From Date" autocomplete="off"
+                              class="form-control border-end-0 datepicker form-control-sm"><label for="fromDate3"
+                              class="input-group-text bg-transparent border-start-0"><i
+                                 class="iconbsky-calendar"></i></label></div>
+                     </div>
+
+                     <div class="pr-1 pb-1 pb-xl-0 pb-lg-0 pb-md-0 pb-sm-0 pe-2 col-xl-6">
+                        <div class="input-group"><input type="text" id="toDate3" name="toDate3" placeholder="To Date"
+                              autocomplete="off" class="form-control border-end-0 datepicker form-control-sm"><label
+                              for="toDate3" class="input-group-text bg-transparent border-start-0"><i
+                                 class="iconbsky-calendar"></i></label></div>
+                     </div>
+
+                     <!-- <div  class="pr-1 pb-1 pb-xl-0 pb-lg-0 pb-md-0 pb-sm-0 col-xl-4">
+                  <select  name="districtId1" id="districtId1" [(ngModel)]="districtId1" class="form-select form-select-sm" (change)="CCEData()">
+                   <option value="" selected>Select District</option>
+                   <ng-container *ngFor="let item of districtList">
+                     <option value={{item.districtcode}}>{{item.districtname}}</option>
+                  </ng-container>
+                  </select>
+               </div> -->
+
+
+                  </div>
+
+
+                  <!-- <div class="d-flex justify-content-end">
+
+           </div> -->
+
+
+
+
+                  <div [class]="(empaneltoggleVal == 2) ? 'row display_none' : 'row'">
+                     <div class="h-100">
+
+                        <div class="row">
+                           <div
+                              class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 grv-gap right-gap border-end">
+                              <div class="d-flex mb-4">
+                                 <div>
+                                    <div class="grv-price text-warning"> {{CCETotalCount1?.totalPending}}</div>
+                                    <div class="grv-s"> Pending </div>
+                                 </div>
+                              </div>
+                              <div class="grv-sec">
+                                 <ul>
+                                    <li> DC <span class="float-end"> {{CCETotalCount1?.DCPending}}</span> </li>
+                                    <li> DGO <span class="float-end"> {{CCETotalCount1?.DGOPending}}</span> </li>
+                                    <li> GO <span class="float-end"> {{CCETotalCount1?.GOPending}}</span> </li>
+                                 </ul>
+                              </div>
+                           </div>
+                           <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 grv-gap left-gap">
+                              <div class="d-flex mb-4">
+                                 <div>
+                                    <div class="grv-price text-success"> {{CCETotalCount1?.TotalResolve}} </div>
+                                    <div class="grv-s"> Resolved </div>
+                                 </div>
+                              </div>
+                              <div class="grv-sec">
+                                 <ul>
+                                    <li> DC <span class="float-end"> {{CCETotalCount1?.DCResolve}}</span> </li>
+                                    <li> DGO <span class="float-end"> {{CCETotalCount1?.DGOResolve}}</span> </li>
+                                    <li> GO <span class="float-end"> {{CCETotalCount1?.GOResolve}}</span> </li>
+                                 </ul>
+                              </div>
+                           </div>
+                        </div>
+
+                        <div class="row d-flex justify-content-center align-items-center border-top chart-gap">
+                           <div class="col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                              <div class="highcharts-figure d-flex  align-items-center h-center">
+                                 <div id="pie-chart2"></div>
+                              </div>
+                           </div>
+
+                           <div class="col-xxl-7 col-xl-7 col-lg-7 col-md-7 col-sm-6 col-xs-12 cce-sec text-center">
+
+                              <div class="row">
+
+                                 <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-6">
+                                    <div class="mb-3"> <img src="../../../../assets/img/expired.png"> </div>
+                                    <div class="graph-prc text-warning text-center"> {{PendingPercent}}% </div>
+                                    <div class="d-flex justify-content-center align-items-center">
+                                       <div class="color-t bg-warning me-3"></div> Pending
+                                    </div>
+
+                                 </div>
+
+
+                                 <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-6">
+                                    <div class="mb-3"> <img src="../../../../assets/img/group-new.png"> </div>
+                                    <div class="graph-prc text-success text-center"> {{ResolvePercent}}% </div>
+                                    <div class="d-flex justify-content-center align-items-center">
+                                       <div class="color-t bg-success me-3"></div> Resolved
+                                    </div>
+
+                                 </div>
+
+                              </div>
+
+                           </div>
+                        </div>
+
+                     </div>
+
+                  </div>
+                  <div [class]="(empaneltoggleVal == 1) ? 'row display_none' : 'row'">
+                     <div class="h-100">
+
+                        <div class="table-responsive d-md-block table-container mt-3">
+                           <div class="custom-scroll sebc-scroll">
+                              <div class="tbl-header-grievance">
+                                 <table class="table table-sm mb-0">
+                                    <thead>
+                                       <tr>
+                                          <th class="fw-bold">District</th>
+                                          <th class="fw-bold">Total Grievance</th>
+                                          <th class="fw-bold">Resolved</th>
+                                          <th class="fw-bold">Pending </th>
+                                          <th class="fw-bold" width="30%">Avg. Pending <br> (In days)</th>
+
+                                       </tr>
+
+                                    </thead>
+
+
+
+                                    <tbody>
+                                       <tr *ngFor="let claim of HospitalWiseCCEDetails">
+                                          <td class="color-tbl"> {{claim.HospitalName}} </td>
+                                          <td class="color-tbl"> {{claim.TotalGrievance}}</td>
+                                          <td class="color-tbl2"> {{claim.TotalResolved}} </td>
+                                          <td class="color-tbl3"> {{claim.TotalPending}}</td>
+                                          <td class="color-tbl3">
+                                             <div class="d-flex align-items-center grph-progress">
+                                                <div class="progress">
+                                                   <div role="progressbar" aria-valuenow="25" aria-valuemin="0"
+                                                      aria-valuemax="100" class="progress-bar bg-danger"
+                                                      [style]="getPromoStyles(claim.TotalPending,claim.TotalGrievance)">
+                                                   </div>
+                                                </div>
+                                                <div class="ms-3"> {{claim.avgPendingDays}} </div>
+                                             </div>
+                                          </td>
+                                       </tr>
+
+                                    </tbody>
+                                 </table>
+                              </div>
+                           </div>
+
+                        </div>
+                     </div>
+
+                  </div>
+
+
+               </div>
+            </div>
+         </div>
+         <!-- </div> -->
+
+
+         <!-- Notes Section -->
+
+         <div class="col-xxl-12 col-xl-12 col-md-12 col-lg-12 p-0">
+            <div class="row">
+               <div class="col-xl-12 col-lg-12 mb-4">
+                  <div class="new-dash">
+                     <h3>Notes </h3>
+                  </div>
+               </div>
+            </div>
+            <div class="border mb-4 h-100 note-bg">
+               <div class="row">
+                  <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                     <h5 class="text-warning"> English </h5>
+                     <ul class="notes-list">
+                        <li> <b class="me-2"> Q1. </b> Are you receiving cashless treatment under GJAY </li>
+                        <li><b class="me-2"> Q2. </b> Are you satisfied with service? </li>
+                        <li> <b class="me-2"> Q3. </b> Whether you have paid any extra money for treatment under GJAY
+                        </li>
+                        <li> <b class="me-2"> Q4. </b> Did Swasthya Mitra facilitate your care </li>
+                     </ul>
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                     <h5 class="text-warning"> Odia </h5>
+                     <ul class="notes-list">
+                        <li> <b class="me-2"> Q1. </b> ଆପଣ GJAY ଅଧୀନରେ ନଗଦବିହୀନ ଚିକିତ୍ସା ଗ୍ରହଣ କରୁଛନ୍ତି କି? </li>
+                        <li> <b class="me-2"> Q2. </b> ଆପଣ ସେବାରେ ସନ୍ତୁଷ୍ଟ କି? </li>
+                        <li> <b class="me-2"> Q3. </b> GJAY ଅଧୀନରେ ଚିକିତ୍ସା ପାଇଁ ଆପଣ ଅତିରିକ୍ତ ଅର୍ଥ ଦେଇଛନ୍ତି କି ନାହିଁ |
+                        </li>
+                        <li> <b class="me-2"> Q4. </b> ସ୍ୱସ୍ତ୍ୟ ମିତ୍ର ତୁମର ଯତ୍ନ ନେବାକୁ ସୁବିଧା କରିଥିଲେ କି? </li>
+                     </ul>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <!-- Notes Section -->
+
+
+
+
+      </div>
+   </div>
+</div>
+<!-- DC Dashboard Section -->

@@ -1,0 +1,80 @@
+@import 'src/assets/scss/mixins';
+@import 'src/assets/scss/variables';
+@import 'src/assets/scss/statuspage';
+
+.treatment-history {
+    li {
+        padding: .4rem;
+
+        i {
+            color: $link-color;
+        }
+    }
+}
+
+small,
+.small {
+    font-weight: normal;
+    color: $gray-600;
+    padding-bottom: .3rem;
+}
+
+.alert {
+    h5 {
+        small {
+            font-size: 70%;
+        }
+    }
+
+    i {
+        opacity: .6;
+    }
+
+    &-danger {
+        i {
+            color: $red;
+        }
+    }
+
+    &-success {
+        i {
+            color: $green;
+        }
+    }
+
+    &-primary {
+        i {
+            color: $blue;
+        }
+    }
+}
+
+.document-upload {
+    .uploaded-doc {
+        a {
+            display: block;
+            padding: 1rem;
+        }
+    }
+}
+
+//CSS For Treatment Table and Old Treatment Table
+//Start
+.treatment-history-table-class {
+  width:100%;
+  margin-top: 5px;
+  display: block;
+  overflow-y: scroll;
+  height: 18rem;
+}
+
+.treatment-history-table-head-class {
+  thead{
+    position: sticky;
+    top: 0;
+    background: #eee9e9;
+    z-index: 1;
+  }
+}
+//End
+

@@ -1,0 +1,100 @@
+<div class="wrapper">
+    <!--<app-appsidebar></app-appsidebar>-->
+    <app-sidebarmenu></app-sidebarmenu>
+    <div class="main">
+        <app-appheader></app-appheader>
+        <main class="content">
+            <div class="container-fluid p-0">
+                <div class="form-cointainer">
+                    <div class="main-tab">
+                        <div class="row justify-content-between">
+                            <div class="col-lg-4">
+                                <ul class="nav nav-tabs">
+                                    <li class="nav-item">
+                                        <a routerLinkActive="active" class="nav-link active">Pre-Auth Log</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-box">
+                        <div class="row">
+                            <div class="table-responsive">
+                                <table class="table mb-0" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th width="40" rowspan="2">Sl#</th>
+
+                                            <th rowspan="2">Pre-Auth Code</th>
+                                            <th rowspan="2">Amount (₹)</th>
+                                            <th rowspan="2">Approved Amount (₹)</th>
+                                            <th rowspan="2">Pre-Auth<br> Date</th>
+                                            <th rowspan="2">Approved Date</th>
+                                            <th rowspan="2">Remark</th>
+                                            <th rowspan="2">More Desc</th>
+                                            <th rowspan="2">More Desc Date</th>
+                                            <th colspan="3" style="text-align:center">Documents</th>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Doc1</th>
+                                            <th>Doc2</th>
+                                            <th>Doc3</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <ng-container *ngIf="value.length>0">
+                                            <tr *ngFor="let prteAuth of value,index as i">
+                                                <td>{{i+1}}</td>
+
+                                                <td>{{prteAuth.preauthCode}}</td>
+                                                <td>{{prteAuth.claimedAmount | currency:"":""}}</td>
+                                                <td>{{prteAuth.approvedAmount | currency:"":""}}</td>
+                                                <td>{{prteAuth.claimedDate2}}</td>
+                                                <td>{{prteAuth.approvedDate2}}</td>
+                                                <td>{{prteAuth.preAuthRemarks}}</td>
+                                                <!-- <td>{{prteAuth.moreDesc}}</td> -->
+                                                <td *ngIf="prteAuth.moreDesc != undefined"><a href="javascript:void(0)" (click)="viewDescription(prteAuth.moreDesc)">view</a></td>
+                                                <td *ngIf="prteAuth.moreDesc == undefined">--</td>
+                                                <td>{{prteAuth.moreDescDate1}}</td>
+                                                <td *ngIf="prteAuth.aditionalDoc1 != undefined"><a href="javascript:void(0);" (click)="downloadAction($event,prteAuth.aditionalDoc1,prteAuth.hospitalCode,prteAuth.claimedDate,'')"><i class="bi bi-file-earmark-pdf" style="color:red;font-size:15px;"></i></a></td>
+                                                <td *ngIf="prteAuth.aditionalDoc1 == undefined">--</td>
+                                                <td *ngIf="prteAuth.aditionalDoc2 != undefined"><a href="javascript:void(0);" (click)="downloadAction($event,prteAuth.aditionalDoc2,prteAuth.hospitalCode,prteAuth.claimedDate,'')"><i class="bi bi-file-earmark-pdf" style="color:red;font-size:15px;"></i></a></td>
+                                                <td *ngIf="prteAuth.aditionalDoc2 == undefined">--</td>
+                                                <td *ngIf="prteAuth.aditionalDoc3 != undefined"><a href="javascript:void(0);" (click)="downloadAction($event,prteAuth.aditionalDoc3,prteAuth.hospitalCode,prteAuth.claimedDate,'')"><i class="bi bi-file-earmark-pdf" style="color:red;font-size:15px;"></i></a></td>
+                                                <td *ngIf="prteAuth.aditionalDoc3 == undefined">--</td>
+                                            </tr>
+                                        </ng-container>
+                                        <!-- <tr *ngIf="!authData.preAuthLogList.length>0">
+                                        <td colspan="8" align="center"><strong class="text-danger">No data found</strong></td>
+                                    </tr> -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="modal justify-content-center" id="appealDisposal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-body py-5">
+                                <span class="text-center text-success">
+                            <!-- <i class="bi bi-check-circle d-block fs-1 mb-3"></i> -->
+                            {{dtls}}
+                            <!-- Your password has been sent to your mail ID. -->
+                           </span>
+
+                            </div>
+                            <div class="modal-footer justify-content-center">
+                                <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="modalClose()">Ok</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+</div>

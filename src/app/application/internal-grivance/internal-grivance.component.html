@@ -1,0 +1,361 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item" *ngIf="isvisiblesave">
+                        <a routerLink="/application/internalgrivance" routerLinkActive="active"
+                            class="nav-link active">Add</a>
+                    </li>
+                    <li class="nav-item" *ngIf="visibleupdate">
+                        <a routerLink="/application/internalgrivance" routerLinkActive="active"
+                            class="nav-link active">Assigned</a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/application/internalgrivanceview" routerLinkActive="active" class="nav-link"
+                            style="color: #1f723f;">View</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="content-box">
+                <div class="row">
+                    <form autocomplete="off">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-lg-3 col-xxl-3">
+                                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                                        <label class="control-label mb-2">Select Grievance By</label><span
+                                            class="text-danger">*</span>
+                                        <select class="form-select" name="groupId" id="groupId"
+                                            [(ngModel)]="grievanceUpdate.groupId" (change)="getGrievanceByData($event)">
+                                            <option value="" selected disabled="disabled">Select Grievance By</option>
+                                            <ng-container *ngFor="let item of groupList">
+                                                <option value={{item.typeId}}>{{item.groupTypeName}}</option>
+                                            </ng-container>
+                                            <option value="9">Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-8" id="details">
+                                <div class="card shadow-sm mt-3 mt-xl-4 ">
+                                    <div class="card-body">
+                                        <div class="row gx-xl-5 treatment-details">
+                                            <div class="col-lg-6 col-xxl-6" *ngIf="isvisiblesave">
+                                                <div class="mb-xl-3">
+                                                    <label class="control-label mb-2">{{type}} Name</label><span
+                                                        class="text-danger">*</span>
+                                                    <ng-autocomplete #auto [data]="getGrievanceList"
+                                                        placeholder="Select" (selected)="selectEvent($event)"
+                                                        [itemTemplate]="itemTemplate"
+                                                        [notFoundTemplate]="notFoundTemplate" [searchKeyword]="keyword"
+                                                        spellcheck="false" (inputCleared)="onReset1()">
+                                                    </ng-autocomplete>
+                                                    <ng-template #itemTemplate let-item>
+                                                        <a [innerHTML]="item.fullname"></a>
+                                                    </ng-template>
+                                                    <ng-template #notFoundTemplate let-notFound>
+                                                        <div [innerHTML]="notFound"></div>
+                                                    </ng-template>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-xxl-4" *ngIf="visibleupdate">
+                                                <div class="mb-xl-3">
+                                                    <label class="control-label">{{type}} Name<span
+                                                            class="text-danger">*</span></label>
+                                                    <select class="form-select" name="fullname" id="fullname"
+                                                        [(ngModel)]="fullname">
+                                                        <option selected disabled>Select Name</option>
+                                                        <ng-container *ngFor="let item of getGrievanceList">
+                                                            <option value="{{item.fullname}}">{{item.fullname}}</option>
+                                                        </ng-container>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row gx-xl-5 treatment-details">
+                                            <div class="col-lg-4 col-xxl-4">
+                                                <div class="mb-xl-3">
+                                                    <label class="control-label">Contact No</label><span
+                                                        class="text-danger">*</span>
+                                                    <input class="form-control" type="text" autocomplete="off"
+                                                        name="phoneno" [(ngModel)]="phoneno" id="phoneno"
+                                                        placeholder="Enter Mobile No" maxlength="10"
+                                                        (change)="validatePhoneNo()"
+                                                        onkeyup="this.value=this.value.replace(/[^0-9]/g,'');">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-xxl-6">
+                                                <div class="mb-xl-3">
+                                                    <label class="control-label">Email Id</label>
+                                                    <input class="form-control" type="text" autocomplete="off"
+                                                        name="email" [(ngModel)]="email" id="email"
+                                                        placeholder="Enter Email ID" maxlength="50"
+                                                        (change)="validateEmail()"
+                                                        (keyup)="keyfunction1($event.target)">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-8" id="details1">
+                                <div class="card shadow-sm mt-3 mt-xl-4 ">
+                                    <div class="card-body">
+                                        <div class="row gx-xl-5 treatment-details">
+                                            <div class="col-lg-4 col-xxl-4">
+                                                <div class="mb-xl-3">
+                                                    <label class="control-label"> Name<span
+                                                            class="text-danger">*</span></label>
+                                                    <input class="form-control" type="text" autocomplete="off"
+                                                        name="fullname" [(ngModel)]="fullname" id="fullname"
+                                                        placeholder="Enter Name" maxlength="50">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row gx-xl-5 treatment-details">
+                                            <div class="col-lg-4 col-xxl-4">
+                                                <div class="mb-xl-3">
+                                                    <label class="control-label">Contact No</label><span
+                                                        class="text-danger">*</span>
+                                                    <input class="form-control" type="text" autocomplete="off"
+                                                        name="phoneno" [(ngModel)]="phoneno" id="phoneno"
+                                                        placeholder="Enter Mobile No" maxlength="10"
+                                                        (change)="validatePhoneNo()"
+                                                        onkeyup="this.value=this.value.replace(/[^0-9]/g,'');">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-xxl-6">
+                                                <div class="mb-xl-3">
+                                                    <label class="control-label">Email Id</label>
+                                                    <input class="form-control" type="text" autocomplete="off"
+                                                        name="email" [(ngModel)]="email" id="email"
+                                                        placeholder="Enter Email ID" maxlength="50"
+                                                        (change)="validateEmail()"
+                                                        (keyup)="keyfunction1($event.target)">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-3 col-xxl-3">
+                                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                                        <label class="control-label mb-2">Source</label><span
+                                            class="text-danger">*</span>
+                                        <select class="form-select" id="grievanceSource" name="grievanceSource"
+                                            [(ngModel)]="grievanceUpdate.grievanceSource">
+                                            <!-- <option value="" selected disabled>Select Grievance Source</option> -->
+                                            <option value="1" selected>Call</option>
+                                            <option value="2">Whatsapp</option>
+                                            <option value="3">Email</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-xxl-3">
+                                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                                        <label class="control-label mb-2">Module</label><span
+                                            class="text-danger">*</span>
+                                        <select class="form-select" id="moduleName" name="moduleName"
+                                            [(ngModel)]="grievanceUpdate.moduleName">
+                                            <option value="" selected disabled>Select Module</option>
+                                            <option value="1">TMS</option>
+                                            <option value="2">CMS</option>
+                                            <option value="3">Grievance</option>
+                                            <option value="4">Hospital Empanelment</option>
+                                            <option value="5">ChartBoart</option>
+                                            <option value="6">Mobile Application</option>
+                                            <option value="7">Website</option>
+                                            <option value="8">CCE(104)</option>
+                                            <option value="9">User Management</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-3 col-xxl-3">
+                                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                                        <label class="control-label mb-2"><b>Category</b></label><span
+                                            class="text-danger">*</span>
+                                        <select class="form-select" id="categoryType" name="categoryType"
+                                            [(ngModel)]="grievanceUpdate.categoryType">
+                                            <option value="" selected disabled>Select Category</option>
+                                            <option value="1">Complaint</option>
+                                            <option value="2">Issue</option>
+                                            <option value="3">Request</option>
+                                            <option value="4">Suggestion</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-xxl-6">
+                                    <label><b>Priority</b><span class="text-danger">*</span></label>
+                                    <br>
+                                    <br>
+                                    <div>&nbsp;&nbsp;
+                                        <span class="mb-xl-8">
+                                            <input type="radio" name="priority" id="priority" [(ngModel)]="priority"
+                                                value="1" (click)="no2('1')">&nbsp;&nbsp;High &nbsp;&nbsp;
+                                            <input type="radio" name="priority" id="priority" [(ngModel)]="priority"
+                                                value="2" (click)="no2('2')">&nbsp;&nbsp;Medium&nbsp;&nbsp;
+                                            <input type="radio" name="priority" id="priority" [(ngModel)]="priority"
+                                                value="3" (click)="no2('3')">&nbsp;&nbsp;Low
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-xxl-4" id="saveExpectedDate">
+                                    <label>Expected Date Of Close<span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control border-end-0 datepicker"
+                                            id="expectedDate" name="expectedDate">
+                                        <label class="input-group-text bg-transparent border-start-0"
+                                            for="expectedDate"><i class="iconbsky-calendar"></i> </label>
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-3 col-xxl-3" id="UpdateExpectedDate">
+                                    <label>Expected Date Of Close<span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control border-end-0 datepicker"
+                                            id="expectedDate" name="expectedDate"  disabled="disabled">
+                                        <label class="input-group-text bg-transparent border-start-0"
+                                            for="expectedDate"><i class="iconbsky-calendar"></i> </label>
+                                    </div>
+
+                                </div>
+                                <!-- <div class="col-lg-4 col-xxl-4" >
+                                    <label>Actual Date<span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control border-end-0 datepicker"
+                                            id="actualDate" name="actualDate" >
+                                        <label class="input-group-text bg-transparent border-start-0"
+                                            for="actualDate"><i class="iconbsky-calendar"></i> </label>
+                                    </div>
+
+                                </div> -->
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-4 col-xxl-4">
+                                    <label class="col-form-label">Description</label><span class="text-danger">*</span>
+                                    <textarea class="form-control" rows="4" id="description" name="description"
+                                        maxlength="500" placeholder="Enter description" #myInput
+                                        (keypress)="keyPress($event)"
+                                        [(ngModel)]="grievanceUpdate.description"></textarea>
+                                    <span class="text-danger small">Characters Remaining: {{maxChars -
+                                        myInput.value.length}}</span>
+                                </div>
+                                <div class="col-lg-4 col-xxl-4" id="Upload" style="margin-top: 1ch;">
+                                    <div class="file-upload mb-xl-4 text-center ">
+                                        <p class="mb-1 text-start">Upload Document</p>
+                                        <div class="file-upload-content">
+                                            <a class="btn btn-danger  text-white btn-sm remove-img"><i
+                                                    class="fas fa-times"></i></a>
+                                            <img class="file-upload-image" src="#" alt="your image" />
+                                        </div>
+                                        <div class="image-upload-wrap rounded">
+                                            <input class="file-upload-input" id="notficationdoc" type='file'
+                                                onCut="return false " onDrag="return false " onDrop="return false "
+                                                (change)="handleFileInput($event)">
+                                            <div class="drag-text" *ngIf="!flag">
+                                                <h5><i class="iconbsky-upload-icon d-block fs-4"></i><span
+                                                        class="text-danger">Drag or select a file to upload </span>
+                                                </h5>
+                                            </div>
+                                            <div class="drag-text" *ngIf="flag">
+                                                <h5><i class="iconbsky-upload-icon d-block fs-4"></i><span
+                                                        class="text-danger">{{documentName.name}}</span>
+                                                </h5>
+                                            </div>
+                                        </div>
+                                        <p class="small pt-1 " style="text-align: right;"><img
+                                                src="./assets/img/pdf.png " alt="Download Document " width="20 "> <a
+                                                target="_blank" class="dbtn"
+                                                (click)="downloadfiletreatmentbill($event,grievanceUpdate.documentName) ">
+                                                Download</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div>
+                                    <div class="col-lg-4">
+                                        <div class="mb-3" *ngIf="visibleupdate">
+                                            <label>Status:</label>&nbsp;&nbsp;
+                                            <label *ngIf="grievanceUpdate.statusFlag==0">
+                                                <input type="radio" checked="checked" [checked]="true"
+                                                    (click)="yes($event)" name="statusFlag">&nbsp;&nbsp;Open &nbsp;&nbsp;
+                                                <input type="radio" (click)="no($event)" name="statusFlag"
+                                                    id="statusFlag">&nbsp;&nbsp;Close
+                                            </label>
+                                            <label *ngIf="grievanceUpdate.statusFlag==1">
+                                                <input type="radio" (click)="yes($event)" name="statusFlag"
+                                                    id="statusFlag">&nbsp;&nbsp;Open
+                                                &nbsp;&nbsp;
+                                                <input type="radio" checked="checked" [checked]="true"
+                                                    (click)="no($event)" name="statusFlag" id="statusFlag">&nbsp;&nbsp;Close
+                                            </label>
+                                        </div>
+
+                                    </div>
+                                    <div class="row" id="assinged">
+                                        <div class="col-lg-4 col-xxl-4">
+                                            <div class="mb-xl-3">
+                                                <label class="control-label"> Assigned To<span
+                                                        class="text-danger">*</span></label>
+                                                <input class="form-control" type="text" autocomplete="off"
+                                                    name="assinedTo" id="assinedTo" placeholder="Enter Assined To"
+                                                    maxlength="50">
+                                            </div>
+                                        </div>
+                                        <!-- <div class="col-lg-4 col-xxl-4">
+                                            <div class="mb-xl-3"   id="closeingdate">
+                                                <label class="control-label mb-2">Closing Date</label><span
+                                                    class="text-danger">*</span>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control border-end-0 datepicker"
+                                                        id="closingDate" name="closingDate">
+                                                    <label class="input-group-text bg-transparent border-start-0"
+                                                        for="closingDate"><i class="iconbsky-calendar"></i> </label>
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                        <div class="col-lg-4 col-xxl-4">
+                                            <div class="mb-xl-3">
+                                                <label class="control-label">Closing Date</label><span class="text-danger">*</span>
+                                                <div class="input-group mb-xl-3">
+                                                    <input type="text" class="form-control border-end-0 datepicker" id="closingDate"
+                                                        name="closingDate"   placeholder="Closing Date">
+                                                    <label class="input-group-text bg-transparent border-start-0"
+                                                        for="closingDate"><i class="iconbsky-calendar"></i> </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div *ngIf="isvisiblesave">
+                                            <button type="button" class="btn btn-success"
+                                                (click)="saveGrievance()">Submit</button>&nbsp;&nbsp;
+                                            <button type="reset" class="btn btn-secondary" (click)="Reset()"
+                                                style="padding: 7px 16px 7px 16px;">Reset</button>
+                                        </div>
+                                        <div *ngIf="visibleupdate">
+                                            <button class="btn btn-success"
+                                                (click)="update()">Action</button>&nbsp;&nbsp;
+                                            <button (click)="cancelData()" type="reset" class="btn btn-secondary"
+                                                style="padding: 7px 16px 7px 16px;">Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

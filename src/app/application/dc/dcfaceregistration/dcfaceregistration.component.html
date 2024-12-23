@@ -1,0 +1,285 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+    <div class="col-lg-4">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a routerLink="/application/dcfacereregistration" routerLinkActive="active" class="nav-link active">DC/ADC Face Re-Registration</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/application/dcfacereregistrationview" routerLinkActive="active" class="nav-link"
+            style="color: #1f723f;">View</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="cointainer">
+    <div class="row">
+      <div class="col-lg-3 col-xxl-3">
+        <div class="mb-xl-3">
+          <label class="control-label">Group type<span class="text-danger">*</span></label>
+          <select class="form-select" name="group" id="group" (change)="onchangegroup($event.target.value)">
+            <option value=6>DC</option>
+            <option value=27>ADC</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-lg-4 col-xxl-4">
+        <div class="mb-xl-3">
+          <label class="control-label">User Name<span class="text-danger"></span></label>
+          <ng-autocomplete #auto [data]="dcList" placeholder="Select User Name" (selected)="selectEvent($event)"
+            (inputCleared)="clearEvent()" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate"
+            [searchKeyword]="keyword" spellcheck="false">
+          </ng-autocomplete>
+
+          <ng-template #itemTemplate let-item>
+            <a [innerHTML]="item.fullName"></a>
+          </ng-template>
+
+          <ng-template #notFoundTemplate let-notFound>
+            <div [innerHTML]="notFound"></div>
+          </ng-template>
+        </div>
+      </div>
+  </div>
+
+  <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+    <div class="col-lg-3 col-xxl-3" style="margin-top: 11px;">
+      <div class="col-sm-*" *ngIf="showPegi">
+        show
+        <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+          <option value="100">100</option>
+          <option value="200">200</option>
+          <option value="300">300</option>
+          <option value="400">400</option>
+        </select> entries
+      </div>
+    </div>
+    <div class="col-lg-3 col-xxl-3" style="margin-top: 13px;">
+      <b>Total : <span style="color: green;">{{count}}</span></b>
+    </div>
+    <div class="col-2" style="text-align:end ;">
+      <button class="btn btn-success btn-sm mx-1" style="margin-top: 10px" tooltip="Excel" (click)="downloadList(1)">
+      <i class="bi bi-file-earmark-spreadsheet"></i>
+      </button>
+      <button class="btn btn-danger btn-sm mx-1" style="margin-top: 10px" tooltip="pdf" (click)="downloadList(2)">
+      <i class="bi bi-file-earmark-pdf"></i>
+      </button>
+    </div>
+    <div class="col-lg-4 col-xxl-4">
+      <div class="input-group">
+        <input type="text" id="txtsearchDate" class="form-control" placeholder="Search here" name="txtsearchDate"
+          [(ngModel)]="txtsearchDate">
+      </div>
+    </div>
+  </div>
+  <div class="form-cointainer">
+    <div class="main-tab">
+      <div class="row justify-content-between">
+        <div class="table-responsive">
+          <table class="table table-striped" mb-0>
+            <caption></caption>
+            <thead>
+              <tr>
+                <th>Sl No</th>
+                <th>DC Name</th>
+                <th>Mobile No</th>
+                <th>Face Registration Date</th>
+                <th style="text-align: center">Tagged Details</th>
+                <th style="text-align: center">Log</th>
+                <th style="text-align: center">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of listOfDcData | filter:txtsearchDate |
+                        paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};
+                        index as i">
+                <td *ngIf="currentPage==1">{{i+1}}</td>
+                <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+i+1}}</td>
+                <td>{{item.fullname}}</td>
+                <td>{{item.mobileno}}</td>
+                <td>{{item.rgistration}}</td>
+                <td style="text-align:center;"><a class="btn btn-outline-primary btn-sm me-1" data-bs-toggle="modal" data-bs-target="#taggedcdmo1"
+                  (click)="details(item)"> Tagged Details </a></td>
+                <td style="text-align:center;"><a class="btn btn-outline-primary btn-sm me-1" data-bs-toggle="modal" data-bs-target="#log"
+                  (click)="log(item)"><i class="bi bi-eye"></i></a></td>
+                <td style="text-align: center" title="Allow" >
+                  <button style="text-align: center;" class="btn btn-outline-success btn-sm me-1" (click)="onaction(item)">Allow</button>
+                </td>
+              </tr>
+              <tr *ngIf="! listOfDcData?.length">
+                <td colspan="10" style="text-align:center;"><strong class="text-danger">No data found</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="row" *ngIf="showPegi">
+          <div class="col-sm-4">
+            <div class="col-sm-*">
+              show
+              <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+                <option value="100">100</option>
+                <option value="200">200</option>
+                <option value="300">300</option>
+                <option value="400">400</option>
+              </select> entries
+            </div>
+          </div>
+          <div class="col-sm-8 text-right">
+            <pagination-controls id="listing_pagination" [maxSize]="100" [directionLinks]="true"
+              (pageChange)="currentPage = $event" class="text-end"
+              (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Modal Attendance Details-->
+ <div class="modal fade" id="taggedcdmo1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="max-width: 60%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          {{dcname}} Tagged Details :-
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h5 *ngIf="group==6">Tagged Hospital Details :-</h5>
+        <div class="table-responsive example-container1" style="margin-top:1ch;" *ngIf="group==6">
+          <table class="table table-striped">
+            <caption></caption>
+            <thead>
+              <tr>
+                <th>Sl No</th>
+                <th>State Name</th>
+                <th>District Name</th>
+                <th>Hospital Name</th>
+                <th>Lattitude</th>
+                <th>Longitude</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of hosplist, index as i">
+                <td>{{i+1}}</td>
+                <td>{{item.state}}</td>
+                <td>{{item.district}}</td>
+                <td>{{item.hospitalName}}</td>
+                <td>{{item.lattitude}}</td>
+                <td>{{item.longitude}}</td>
+              </tr>
+              <tr *ngIf="hosplist?.length==0">
+                <td colspan="10" style="text-align:center;"><strong class="text-danger">No data found</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <hr style="height:10px; background-color: darkgrey;" *ngIf="group==6">
+        <h5>Tagged CDMO Details :-</h5>
+        <div class="table-responsive ">
+          <table class="table table-striped" style="margin-top:1ch;">
+            <caption></caption>
+            <thead>
+              <tr>
+                <th>Sl No</th>
+                <th>CDMO Name</th>
+                <th>Mobile No</th>
+                <th>Lattitude</th>
+                <th>Longitude</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of cdmolist, index as i">
+                <td>{{i+1}}</td>
+                <td>{{item.fullname}}</td>
+                <td>{{item.mobileno}}</td>
+                <td>{{item.lattitude}}</td>
+                <td>{{item.longitude}}</td>
+              </tr>
+              <tr *ngIf="cdmolist?.length==0">
+                <td colspan="10" style="text-align:center;"><strong class="text-danger">No data found</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <hr style="height:10px; background-color: darkgrey;">
+        <h5>Tagged Referral Hospital Details :-</h5>
+        <div class="table-responsive ">
+          <table class="table table-striped" style="margin-top:1ch;">
+            <caption></caption>
+            <thead>
+              <tr>
+                <th>Sl No</th>
+                <th>State Name</th>
+                <th>District Name</th>
+                <th>Hospital Name</th>
+                <th>Lattitude</th>
+                <th>Longitude</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of refhosplist ,index as i">
+                <td>{{i+1}}</td>
+                <td>{{item.state}}</td>
+                <td>{{item.district}}</td>
+                <td>{{item.hospitalName}}</td>
+                <td>{{item.lattitude}}</td>
+                <td>{{item.longitude}}</td>
+              </tr>
+              <tr *ngIf="refhosplist?.length==0">
+                <td colspan="10" style="text-align:center;"><strong class="text-danger">No data found</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal Attendance Details-->
+<div class="modal fade" id="log" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="max-width: 60%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          {{dcname}} Face Registration Log:-
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive" style="margin-top:1ch;">
+          <table class="table table-striped">
+            <caption></caption>
+            <thead>
+              <tr>
+                <th>Sl No</th>
+                <th>DC Name</th>
+                <th>Face Registration Date</th>
+                <th>Allow For Re-Registration</th>
+                <th>Allowed By</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of loglist ,index as i">
+                <td>{{i+1}}</td>
+                <td>{{item.fullname}}</td>
+                <td>{{item.createdon}}</td>
+                <td>{{item.updatedon}}</td>
+                <td>{{item.updatedby}}</td>
+              </tr>
+              <tr *ngIf="loglist?.length==0">
+                <td colspan="10" style="text-align:center;"><strong class="text-danger">No data found</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

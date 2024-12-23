@@ -1,0 +1,204 @@
+<!-- <div class="form-cointainer"> -->
+<div class="main-tab">
+      <div class="row justify-content-between">
+        <div class="col-lg-10">
+          <ul class="nav nav-tabs">
+            <li class="nav-item" >
+                <a routerLink="/application/packageupdation" routerLinkActive="active" class="nav-link">Package Tagging</a>
+            </li>
+            <li class="nav-item" >
+              <a routerLink="/application/proceduretagging" routerLinkActive="active" class="nav-link active">Package Linking</a>
+            </li>
+            <li class="nav-item" >
+              <a routerLink="/application/packagetaggingreport" routerLinkActive="active" class="nav-link">Package Tagging Report</a>
+            </li>
+            <li class="nav-item" >
+              <a routerLink="/application/untagginghistory" routerLinkActive="active" class="nav-link "> Untagging History</a>
+          </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+<div class="row">
+  <!-- *ngIf="showfilter" -->
+  <div class="col-lg-3 col-xxl-3">
+    <div class="mb-xl-3">
+      <label class="control-label">Header Code<span class="text-danger"></span></label>
+      <select class="form-select" name="headerCode" id="headerCode"
+        (change)="onChangePackageHeader($event.target.value)">
+        <option value="" selected disabled>Select Header Code</option>
+        <option value="All">All</option>
+        <ng-container *ngFor="let item of headerCodeList">
+          <option value={{item.headerCode}}>{{item.headerCode}} - {{item.headerName}}</option>
+        </ng-container>
+      </select>
+    </div>
+  </div>
+</div>
+
+<div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+  <div class="col-lg-5 col-xxl-5" style="margin-top: 10px;">
+  </div>
+  <div class="col-lg-2 col-xxl-2">
+  </div>
+  <div class="col-lg-5 col-xxl-5">
+    <input type="text" id="txtsearchDate" class="form-control" placeholder="Search here" name="txtsearchDate"
+      [(ngModel)]="txtsearchDate">
+  </div>
+</div>
+<div class="content-box p-0 overflow-hidden">
+  <div class="table-responsive">
+    <table class="table table-sm table-striped mb-0">
+      <thead>
+        <tr>
+          <th width="40">Sl#</th>
+          <!-- <th> Hospital Code</th>
+            <th>Hospital Name</th> -->
+          <th>Header Code</th>
+          <th>Header Name</th>
+          <th>Sub-Package Code</th>
+          <th>Sub-Package Name</th>
+          <!-- <th>Package Amount</th> -->
+          <th>Is-surgical</th>
+          <th>Procedure Code</th>
+          <th>Description</th>
+          <th>Tag Header</th>
+          <th>Tagged Headers</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let claim of procedureList | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement1, currentPage: currentPage1};
+                index as i">
+          <td *ngIf="currentPage1==1">{{(i+1)}}</td>
+          <td *ngIf="currentPage1!=1">{{(currentPage1-1)*pageElement1+ i+1}}</td>
+          <td>{{claim.packageHeaderCode}}</td>
+          <td>{{claim.packageHeaderName}}</td>
+          <td>{{claim.subPackageCode}}</td>
+          <td>{{claim.subPackageName}}</td>
+          <!-- <td>{{claim.packageAmount}}</td> -->
+          <td>{{claim.isSurgical}}</td>
+          <td>{{claim.procedureCode}}</td>
+          <td>{{claim.procedureDescription}}
+            <span id="proceduredescription{{i}}">
+              {{claim.procedureDescription.length>30?claim.procedureDescription.substring(0, 30) +
+              '...':claim.procedureDescription}}
+            </span>
+            <span style="cursor: pointer; color: #1189cf" id="showMoreId6{{i}}"
+              (click)="showPreDoc1(claim.procedureDescription,i)">
+              {{claim.procedureDescription.length>30?'Show More':''}}
+            </span>
+            <span style="cursor: pointer; color: #1089cf" id="showMoreId7{{i}}"
+              (click)="hidePreDoc1(claim.procedureDescription,i)"></span>
+          </td>
+          <td>
+            <a class="btn btn-outline-primary btn-sm me-1" ref="javascript:void(0)"
+              (click)="getPackage(claim, 'edit')"><i style="color: blue;"
+                class="bi bi-pencil"></i></a>
+          </td>
+          <td>
+            <a class="btn btn-outline-primary btn-sm me-1" href="javascript:void(0)"
+              (click)="getPackage(claim, 'view')"><i style="color: blue;"
+                class="bi bi-eye"></i></a>
+          </td>
+        </tr>
+        <tr *ngIf="procedureList.length==0">
+          <td colspan="20" class="text-center text-uppercase"><strong class="text-danger">No data found
+              !!</strong>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="row" style="margin-top: 20px;">
+  <!-- *ngIf="showPackages" -->
+  <div class="col-lg-6 col-xxl-6">
+    <div class="col-sm-*">
+      show
+      <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement1">
+        <option value="50">50</option>
+        <option value="100">100</option>
+        <option value="200">200</option>
+        <option value="300">300</option>
+        <option value="400">400</option>
+        <option value={{record1}}>All</option>
+      </select> entries
+    </div>
+  </div>
+  <!-- <div class="col-sm-6 text-right">
+        <pagination-controls id="listing_pagination" [maxSize]="100" [directionLinks]="true" (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+    </div> -->
+</div>
+
+
+
+
+<ng-template #packageModalId id="packageModalId" let-modal class="modal-lg">
+  <div class="modal-header">
+    <h5 class="modal-header">
+      <strong>Procedure Code &nbsp;:&nbsp;</strong> {{procedureCode}}
+    </h5>
+    <br>
+    <!-- <h5 class="modal-header">
+      <strong>Procedure Description:</strong> {{procedureDescription}}
+    </h5> -->
+    <input type="text" id="txtsearchPkgData" class="form-control" placeholder="Search here" name="txtsearchPkgData"
+      [(ngModel)]="txtsearchPkgData">
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closeModal()"></button>
+  </div>
+  <div class="modal-body">
+    <div class="border p-3 text-center">
+      <div class="row">
+        <div class="col-md-12">
+          <table class="table table-light">
+            <thead>
+              <tr>
+                <th>Sl#</th>
+                <th>Action</th>
+                <th>Package Header Code</th>
+                <th>Package Header Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let claim of packageList | filter:txtsearchPkgData; index as i">
+                <!-- paginate: {id: 'listing_pagination', itemsPerPage: pageElement2, currentPage: currentPage2}; -->
+                <td style="text-align:center ;">
+                  <input type="checkbox" name="enable" id="enable" class="me-2 text-center"
+                    [checked]="claim.masterStatus==1 || claim.insertStatus==1" [disabled]="claim.viewStatus || claim.masterStatus==1" (click)="selectitem(claim, $event.target.checked)">
+                </td>
+                <!-- <td *ngIf="currentPage2==1">{{(i+1)}}</td>
+                <td *ngIf="currentPage2!=1">{{(currentPage2-1)*pageElement2+ i+1}}</td> -->
+                <td>{{(i+1)}}</td>
+                <td>{{claim.packageHeaderCode}}</td>
+                <td>{{claim.packageHeaderName}}</td>
+              </tr>
+              <tr *ngIf="packageList?.length==0">
+                <td colspan="20" class="text-center text-uppercase"><strong class="text-danger">No data found
+                    !!</strong>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="row" style="margin-top: 20px;">
+      <!-- <div class="col-lg-6 col-xxl-6">
+        <div class="col-sm-*">
+          show
+          <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement2">
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value={{record2}}>All</option>
+          </select> entries
+        </div>
+      </div> -->
+      <div class="col-lg-6 col-xxl-12" *ngIf="hideSubmitButton">
+        <br>
+        <button type="submit" class="btn btn-success" (click)="submit()">Submit</button>
+      </div>
+      <br>
+    </div>
+  </div>
+</ng-template>

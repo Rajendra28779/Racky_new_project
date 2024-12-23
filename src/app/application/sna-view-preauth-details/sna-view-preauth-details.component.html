@@ -1,0 +1,1055 @@
+<div class="form-cointainer claim-detail">
+   <div class="main-tab">
+      <div class="row justify-content-between">
+         <div class="col-lg-4">
+            <ul class="nav nav-tabs">
+               <li class="nav-item"><a routerlink="/application/snoapproval" routerlinkactive="active"
+                     class="nav-link active" ng-reflect-router-link="/application/snoapproval"
+                     ng-reflect-router-link-active="active" href="#/application/snoapproval"> SNA Action Taken Details
+                  </a></li>
+            </ul>
+         </div>
+         <div class="col-lg-6">
+            <app-utilite>
+               <div class="utilite float-end mb-1">
+                  <ul class="mb-0">
+                     <li class="bg-transparent border-0 d-none"><span class="text-danger small"><b>(*)</b> Indicate
+                           mandatory </span></li>
+                     <li class="d-none"><a href="javascript:void(0)" ngbtooltip="Click to Print"><i
+                              class="bi bi-printer"></i></a></li>
+                     <li class="d-none"><a href="javascript:void(0)" ngbtooltip="Delete Record"><i
+                              class="bi bi-trash"></i></a></li>
+                     <li class="d-none"><a href="javascript:void(0)" ngbtooltip="Download"><i
+                              class="bi bi-download"></i></a></li>
+                     <li><a href="javascript:void(0)" ngbtooltip="Go to Previous"><i class="bi bi-arrow-left"></i></a>
+                     </li>
+                  </ul>
+               </div>
+            </app-utilite>
+         </div>
+      </div>
+   </div>
+
+   <div class="content-box p-0 border-0 bg-transparent">
+      <div class="row">
+         <div class="col-xl-12 col-lg-12 mb-2 mt-2">
+            <h4> Case No - <span class="num_bg"> {{blockInfo?.caseNo}} </span> </h4>
+         </div>
+
+         <!-- Hospital information -->
+         <div class="col-lg-12 col-xl-12 col-xxl-12 mb-4">
+            <div class="card shadow-sm basic-info">
+               <div class="card-header bg-color text-white">
+                  <h5 class="mb-0"> Hospital Information</h5>
+               </div>
+               <div class="card-body">
+                  <div class="row treatment-details">
+                     <div class="col-xl-4 col-lg-4">
+                        <div class="d-flex align-items-center  border-end">
+                           <div>
+                              <p class="small text-muted mb-1">Hospital Name</p>
+                              <h6 class="mb-0"> {{blockInfo?.hospitalName}} </h6>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-xl-4 col-lg-4">
+                        <div class="d-flex align-items-center  border-end">
+                           <div>
+                              <p class="small text-muted mb-1">Hospital Code</p>
+                              <h6 class="mb-0"> {{blockInfo?.hospitalCode}} </h6>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-xl-4 col-lg-4">
+                        <div class="d-flex align-items-center">
+                           <div>
+                              <p class="small text-muted mb-1">Hospital Category</p>
+                              <h6 class="mb-0"> {{blockInfo?.hospitalCatName}} </h6>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!-- Hospital information -->
+
+         <!-- patient information -->
+         <div class="col-lg-12 col-xl-12 col-xxl-12 mb-4">
+            <div class="card shadow-sm basic-info">
+               <div class="card-header bg-color text-white">
+                  <h5 class="mb-0"> Patient Information</h5>
+               </div>
+               <div class="card-body">
+                  <div class="row treatment-details">
+                     <div class="col-xl-4 col-lg-4">
+                        <div class="d-flex align-items-center  border-end">
+                           <div>
+                              <p class="small text-muted mb-1">URN</p>
+                              <h6 class="mb-0"> {{blockInfo?.urn}} </h6>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-xl-4 col-lg-4">
+                        <div class="d-flex align-items-center  border-end">
+                           <div>
+                              <p class="small text-muted mb-1">Patient Name</p>
+                              <h6 class="mb-0"> {{blockInfo?.patientName}} </h6>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-xl-4 col-lg-4">
+                        <div class="d-flex align-items-center">
+                           <div>
+                              <p class="small text-muted mb-1">Patient Mobile No </p>
+                              <h6 class="mb-0"> {{blockInfo?.patientContactNumber}} </h6>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-12">
+                        <hr class="mt-xl-3">
+                     </div>
+                     <div class="col-xl-4 col-lg-4">
+                        <div class="d-flex align-items-center  border-end">
+                           <div>
+                              <p class="small text-muted mb-1">Verified Member Name </p>
+                              <h6 class="mb-0">{{blockInfo?.verifierName}} </h6>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-xl-4 col-lg-4">
+                        <div class="d-flex align-items-center border-end">
+                           <div>
+                              <p class="small text-muted mb-1">Verified Through </p>
+                              <h6 class="mb-0" *ngIf="blockInfo?.verifyMode!=null">
+                                <a href="javascript:void(0);" class="mb-0 fw-500 link"  data-bs-toggle="modal" data-bs-target="#AuthnticationDetailsModal" (click)="getAuthenticationdetails(1)" title="Click here to get authentication mode details">
+                                  {{blockInfo?.verifyMode}} <i class="bi bi-box-arrow-up-right" style="height: 8pt;"></i>
+                              </a></h6>
+                              <h6 class="mb-0" *ngIf="blockInfo?.verifyMode==null"> N/A</h6>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-xl-4 col-lg-4">
+                        <div class="d-flex align-items-center">
+                           <div>
+                              <p class="small text-muted mb-1"> Mobile No Verfied Through OTP </p>
+                              <h6 class="mb-0"> {{blockInfo?.isOtpVerify}} </h6>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!-- patient information -->
+
+         <!-- Treatment information -->
+         <div class="col-lg-12 col-xl-12 col-xxl-12">
+            <div class="card shadow-sm basic-info">
+               <div class="card-header bg-color text-white">
+                  <h5 class="mb-0"> Treatment Information</h5>
+               </div>
+               <div class="card-body p-0">
+                  <div class="col-xl-12 col-lg-12 p-3">
+                     <div class="row treatment-details">
+                        <div class="col-xl-4 col-lg-4">
+                           <div class="d-flex align-items-center  border-end">
+                              <div>
+                                 <p class="small text-muted mb-1"> Pre-auth Requested On</p>
+                                 <h6 class="mb-0"> {{blockInfo?.requestedDate}} </h6>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-4">
+                           <div class="d-flex align-items-center  border-end">
+                              <div>
+                                 <p class="small text-muted mb-1">Procedure Code</p>
+                                 <h6 class="mb-0"> {{blockInfo?.procedureCode}} </h6>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-4">
+                           <div class="d-flex align-items-center">
+                              <div>
+                                 <p class="small text-muted mb-1">Procedure Name </p>
+                                 <h6 class="mb-0"> {{blockInfo?.procedureName}} </h6>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="col-12">
+                           <hr class="mt-xl-3">
+                        </div>
+                        <div class="col-xl-4 col-lg-4">
+                           <div class="d-flex align-items-center  border-end">
+                              <div>
+                                 <p class="small text-muted mb-1">Package Code</p>
+                                 <h6 class="mb-0"> {{blockInfo?.packageCode}} </h6>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-4">
+                           <div class="d-flex align-items-center border-end">
+                              <div>
+                                 <p class="small text-muted mb-1">Package Name </p>
+                                 <h6 class="mb-0"> {{blockInfo?.packageName}}
+                                 </h6>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-4">
+                           <div class="d-flex align-items-center">
+                              <div>
+                                 <p class="small text-muted mb-1"> Package Cost </p>
+                                 <h6 class="mb-0"> <span><i class="bi bi-currency-rupee"></i>{{blockInfo?.packageCost |
+                                       currency:"":""}}</span> </h6>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="col-12">
+                           <hr class="mt-xl-3">
+                        </div>
+                        <div class="col-xl-4 col-lg-4">
+                           <div class="d-flex align-items-center border-end">
+                              <div>
+                                 <p class="small text-muted mb-1"> Ward Name </p>
+                                 <h6 class="mb-0"> {{blockInfo?.wardName}}</h6>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-4">
+                           <div class="d-flex align-items-center">
+                              <div>
+                                 <p class="small text-muted mb-1"> Hospitalization Days</p>
+                                 <h6 class="mb-0"> {{blockInfo?.noOfDays}} Days </h6>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-xxl-12 col-xl-12 col-lg-12">
+                     <div class="card-header border-top card_bg">
+                        <h5 class="mb-0"> Pre-auth Details </h5>
+                     </div>
+                     <div class="card-body">
+                        <table width="100%" class="table table-striped border mb-0 pt-0">
+                           <thead>
+                              <tr>
+                                 <th align="left" class="text-start titletxt"> Package Details </th>
+                                 <th align="right" class="text-end titletxt"> Unit </th>
+                                 <th align="right" class="text-end titletxt"> Price/Unit </th>
+                                 <th align="right" class="text-end titletxt"> Total Price </th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr>
+                                 <td colspan="4" class="text-center bg_hed"> <b> Implant </b> </td>
+                              </tr>
+                              <tr *ngFor="let item of implantInfoArray; index as i">
+                                 <td class="hidtbl-th pl-0 py-2">
+                                    <div class="mb-2"> {{item.implantName}}</div>
+                                 </td>
+                                 <td align="right" class="hidtbl-th pl-0"> {{item.unit}} </td>
+                                 <td align="right" class="hidtbl-th pl-0">
+                                    <span><i class="bi bi-currency-rupee"></i>{{item.unitPerPrice |
+                                       currency:"":""}}</span>
+                                 </td>
+                                 <td align="right" class="hidtbl-th pl-0">
+                                    <span><i class="bi bi-currency-rupee"></i>{{item.amount | currency:"":""}}</span>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td colspan="4" class="text-center bg_hed"> <b> HighendDrugs </b> </td>
+                              </tr>
+                              <tr *ngFor="let item of headInfoArray; index as i">
+                                 <td class=" pl-0 py-2">
+                                    <div class="mb-2"> {{item.hedName}}</div>
+                                 </td>
+                                 <td align="right" class=" pl-0">
+                                    {{item.hedUnit}}
+                                 </td>
+                                 <td align="right" class=" pl-0">
+                                    <span><i class="bi bi-currency-rupee"></i>{{item.hedpricePerUnit|
+                                       currency:"":""}}</span>
+                                 </td>
+                                 <td align="right" class=" pl-0">
+                                    <span><i class="bi bi-currency-rupee"></i>{{item.hedPrice | currency:"":""}}</span>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td colspan="3" class="border-bottom-0 pl-0 pb-0">
+                                    <div class="color-hed mb-2"> Total Package Cost </div>
+                                 </td>
+                                 <td align="right" class="border-bottom-0 pl-0 pb-0">
+                                    <span><i class="bi bi-currency-rupee"></i><b>{{balanceInfo?.totalPackageCost |
+                                          currency:"":""}}</b></span><!--bindings={
+                                       "ng-reflect-ng-if": "67500"
+                                       }-->
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td colspan="3" class="border-bottom-0 pl-0 pb-0">
+                                    <div class="color-hed mb-2"> Family Available Fund </div>
+                                 </td>
+                                 <td align="right" class="border-bottom-0 pl-0 pb-0"><span><i
+                                          class="bi bi-currency-rupee"></i><b>{{balanceInfo?.familyFund |
+                                          currency:"":""}}</b></span></td>
+                              </tr>
+                              <tr>
+                                 <td colspan="3" class="border-bottom-0 pl-0 pb-0">
+                                    <div class="color-hed mb-2"> Female Available Fund </div>
+                                 </td>
+                                 <td align="right" class="border-bottom-0 pl-0 pb-0"><span><i
+                                          class="bi bi-currency-rupee"></i><b>{{balanceInfo?.femaleFund |
+                                          currency:"":""}}</b></span></td>
+                              </tr>
+                              <tr>
+                                 <td colspan="3" class="border-bottom-0 pl-0 pb-0">
+                                    <div class="color-hed mb-2"> Insufficient Amount </div>
+                                 </td>
+                                 <td align="right" class="border-bottom-0 pl-0 pb-0"><span><i
+                                          class="bi bi-currency-rupee"></i><b>{{balanceInfo?.insuffientFund |
+                                          currency:"":""}}</b></span></td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                  </div>
+                  <div class="card-body pt-0">
+                     <div class="col-lg-12 col-xl-12 col-xxl-12 mb-3">
+                        <!-- <div class="mb-2">
+                           <h5 class="text-success"> Hospital Description  </h5>
+                        </div>
+                        <div  class=" pb-0">
+                           <table  width="100%" class="table table-striped border mb-0 pt-0 mb-3">
+                              <thead >
+                                 <tr >
+                                    <th  align="left" class="text-start titletxt"> Hospital Remark </th>
+                                    <th  align="right" class="text-strat titletxt"> Document </th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 <tr *ngFor="let item of hospitalRemarkArray; index as i">
+                                    <td width="80%">
+                                       <p>{{item.hospitalRemark}} </p>
+                                    </td>
+                                    <td width="20%"  align="left"> <span  class="icon-pdf">
+                                       <a  title="PDF File" (click)="download(item.document,item.sDate)"><i class="bi bi-file-earmark-pdf me-2"></i></a>
+                                       </span>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                           <div  class="mb-2">
+                              <h5 class="text-success"> SNA Description  </h5>
+                           </div>
+                           <table  width="100%" class="table table-striped border mb-0 pt-0 mb-3">
+                              <thead >
+                                 <tr >
+                                    <th  align="left" class="text-start titletxt"> SNA Remark </th>
+                                    <th  align="left" class="text-start titletxt"> SNA Description  </th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 <tr *ngFor="let item of snaRemarkArray; index as i">
+                                    <td align="left">
+                                       <div> {{item.snaRemark}} </div>
+                                    </td>
+                                    <td>
+                                       <p> {{item.description}} </p>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table> -->
+
+                        <div class="mb-2">
+                           <h5 class="text-success"> Latest Document Uploaded </h5>
+                        </div>
+                        <table width="100%" class="table table-striped border mb-0 pt-0 mb-3">
+                           <thead>
+                              <tr>
+                                 <th align="left" class="text-start titletxt"> Hospital Upload Date </th>
+                                 <th align="left" class="text-start titletxt"> Hospital Description </th>
+                                 <th align="left" class="text-start titletxt"> Document </th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr *ngFor="let item of latestdocArray; index as i">
+                                 <td align="left">
+                                    <div> {{item.uploadDate}} </div>
+                                 </td>
+                                 <td align="left">
+                                    <p> {{item.description}} </p>
+                                 </td>
+                                 <td width="20%" align="left"> <span class="icon-pdf">
+                                       <a title="PDF File" (click)="download(item.document,item.sDate)"><i
+                                             class="bi bi-file-earmark-pdf me-2"></i></a>
+                                    </span>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                        <table width="100%" class="table table-striped border mb-0 pt-0 mb-3">
+                           <thead>
+                              <tr>
+                                 <th align="left" class="text-start titletxt"> SNA Remark Date </th>
+                                 <th align="left" class="text-start titletxt"> SNA Remark </th>
+                                 <th align="left" class="text-start titletxt"> SNA Description </th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr *ngFor="let item of latestdocArray; index as i">
+                                 <td align="left">
+                                    <div> {{item.snaRemarkDate}} </div>
+                                 </td>
+                                 <td align="left">
+                                    <p> {{item.snaRemark}} </p>
+                                 </td>
+                                 <td width="20%" align="left">
+                                    <p> {{item.snaDescription}} </p>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- Treatment information -->
+
+      <!-- Treatment History -->
+      <div class="col-lg-12 col-xl-12 col-xxl-12">
+         <div class="row mt-4">
+            <div class="col-lg-12 accordion">
+               <div class="card shadow-sm treatment-history">
+                  <div class="accordion-item" id="headingTwo">
+                     <div class="accordion-button collapsed card-header bg-color text-white" data-bs-toggle="collapse"
+                        data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        <h5 class="mb-0">Treatment History</h5>
+                     </div>
+                     <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                        data-bs-parent="#accordionExample">
+                        <div class="card-body">
+                           <ul class="list-unstyled">
+                              <li><i class="iconbsky-list-icon me-2"></i> Check all discharged treatment information.
+                              </li>
+                              <div class="content-box">
+                                 <div class="row">
+                                    <div class="table-responsive">
+                                       <table id="treatmentTable" class="table mb-0 border">
+                                          <thead>
+                                             <tr>
+                                                <th width="50">Sl#</th>
+                                                <th>Claim No.</th>
+                                                <th>URN</th>
+                                                <th>Package Code</th>
+                                                <th>Patient Name</th>
+                                                <th>Hospital Name</th>
+                                                <th>Admission Date</th>
+                                                <th>Actual Admission Date</th>
+                                                <th>Discharge Date</th>
+                                                <th>Actual Discharge Date</th>
+                                                <th>Hospital Claim Amount(₹)</th>
+                                                <th>CPD Approved Amount(₹)</th>
+                                                <th>SNA Approved Amount(₹)</th>
+                                                <th>Status</th>
+                                                <th>CPD Name</th>
+                                                <!-- <th >Action</th> -->
+                                                <th>Details</th>
+                                             </tr>
+                                          </thead>
+                                          <tbody>
+                                             <ng-container *ngIf="trtData?.length">
+                                                <tr *ngFor="let item of trtData; index as i">
+                                                   <td>{{i+1}}</td>
+                                                   <td width="100" *ngIf="item.claimNo!=null">{{item.claimNo}}</td>
+                                                   <td width="100" *ngIf="item.claimNo==null"></td>
+                                                   <td width="100">{{item.urn}}</td>
+                                                   <td width="100" title={{item.packagename}}>{{item.packagecode}}</td>
+                                                   <td width="100">{{item.patientname}}</td>
+                                                   <td width="100">{{item.hospitalName}} ({{item.hospitalCode}})</td>
+                                                   <td width="100">{{item.dateofadmission}}</td>
+                                                   <td width="100">{{item.actualdateofadmission}}</td>
+                                                   <td width="100">{{item.dateofdischarge}}</td>
+                                                   <td width="100">{{item.actualdateofdischarge}}</td>
+                                                   <td width="100">{{item.totalamountclaimed}}</td>
+                                                   <td width="100" *ngIf="item.cpdapprovedamount==null"></td>
+                                                   <td width="100" *ngIf="item.cpdapprovedamount!=null">
+                                                      {{item.cpdapprovedamount}}</td>
+                                                   <td width="100" *ngIf="item.snoapprovedamount==null"></td>
+                                                   <td width="100" *ngIf="item.snoapprovedamount!=null">
+                                                      {{item.snoapprovedamount}}</td>
+                                                   <td width="100">{{item.actiontype}}</td>
+                                                   <td width="150" *ngIf="item.cpdName!=null">{{item.cpdName}}</td>
+                                                   <td width="150" *ngIf="item.cpdName==null"></td>
+                                                   <!-- <td width="150" *ngIf="item.transactiondetailsid==txnId  || item.pendingAt!=2"></td> -->
+                                                   <!-- <td width="150" *ngIf="item.transactiondetailsid!=txnId && item.pendingAt==2"><a class="btn btn-outline-success btn-sm"
+                                                           (click)="onAction(item.transactiondetailsid,item.urn,item.packagecode,item.claimStatus)">Action</a></td> -->
+                                                   <td width="100"><a href="javascript:void(0)"
+                                                         (click)="getDetails(item.transactiondetailsid,item.claimid,item.claimRaiseStatus,item.urn,item.packagecode)">Click
+                                                         here</a></td>
+                                                </tr>
+                                             </ng-container>
+                                             <tr *ngIf="! trtData?.length">
+                                                <td colspan="8" align="center" *ngIf="isVisible"><strong
+                                                      class="text-danger">No data
+                                                      found</strong></td>
+                                             </tr>
+                                          </tbody>
+                                       </table>
+                                    </div>
+                                 </div>
+                              </div>
+                           </ul>
+                           <ul class="list-unstyled">
+                              <li><i class="iconbsky-list-icon me-2"></i> Check Old Claim information. </li>
+                              <div class="content-box">
+                                 <div class="row">
+                                    <div class="table-responsive">
+                                       <table id="oldTreatmentTable" class="table mb-0 border">
+                                          <thead>
+                                             <tr>
+                                                <th width="50">Sl#</th>
+                                                <th>URN</th>
+                                                <th>Patient Name</th>
+                                                <th>Hospital Name</th>
+                                                <th>Date of Admission</th>
+                                                <th>Actual Date of Admission</th>
+                                                <th>Date of Discharge</th>
+                                                <th>Actual Date of Discharge</th>
+                                                <th>Claim Status</th>
+                                                <th>Approved Amount(₹)</th>
+                                                <th>Approved Date</th>
+                                                <th>SNA Approved Amount(₹)</th>
+                                                <th>SNA Approved Date</th>
+                                                <th>Remarks</th>
+                                                <th>SNA Remarks</th>
+                                             </tr>
+                                          </thead>
+                                          <tbody>
+                                             <ng-container *ngIf="trtData?.length">
+                                                <tr *ngFor="let item of oldTrtData; index as i">
+                                                   <td>{{i+1}}</td>
+                                                   <td width="100">{{item.urn}}</td>
+                                                   <!-- <td width="100">{{item.chipno}}</td> -->
+                                                   <td width="100">{{item.patientName}}</td>
+                                                   <td width="100">{{item.hospitalName}} ({{item.hospitalCode}})</td>
+                                                   <td width="100">{{item.dateOfAdmission | date :'dd-MMM-yyyy'}}</td>
+                                                   <td width="100">{{item.actualDateOfAdmission | date :'dd-MMM-yyyy'}}
+                                                   </td>
+                                                   <td width="100">{{item.dateOfDischarge | date :'dd-MMM-yyyy'}}</td>
+                                                   <td width="100">{{item.actualDateOfDischarge | date :'dd-MMM-yyyy'}}
+                                                   </td>
+                                                   <td width="100">{{item.claimstatus}}</td>
+                                                   <td width="100">{{item.approvedamount }}</td>
+                                                   <td width="100">{{item.approveddate | date :'dd-MMM-yyyy'}} </td>
+                                                   <td width="100">{{item.snaapprovedamount}}</td>
+                                                   <td width="100">{{item.snaapproveddate | date :'dd-MMM-yyyy'}} </td>
+                                                   <td width="100">{{item.remarks}}</td>
+                                                   <td width="100">{{item.snaremarks}}</td>
+                                                   <!-- <td width="100">{{item.tpafinalstatus}}</td>
+                                                       <td width="100">{{item.tpafinaldecisiondate | date :'dd-MMM-yyyy, h:mm:ss a'}} </td> -->
+                                                </tr>
+                                             </ng-container>
+                                             <tr *ngIf="! trtData?.length">
+                                                <td colspan="8" align="center" *ngIf="isVisible"><strong
+                                                      class="text-danger">No data
+                                                      found</strong></td>
+                                             </tr>
+                                          </tbody>
+                                       </table>
+                                    </div>
+                                 </div>
+                              </div>
+                           </ul>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- Treatment History -->
+
+
+      <!-- Action taken History -->
+      <div class="col-lg-12 col-xl-12 col-xxl-12">
+         <div class="row mt-4">
+            <div class="col-lg-12 accordion">
+               <div class="card shadow-sm treatment-history">
+                  <div class="accordion-item" id="headingTwo">
+                     <div class="accordion-button collapsed card-header bg-color text-white" data-bs-toggle="collapse"
+                        data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseTwo">
+                        <h5 class="mb-0">Action Taken History </h5>
+                     </div>
+                     <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                        data-bs-parent="#accordionExample">
+                        <div class="card-body">
+                           <div class="table-responsive">
+                              <table class="table mb-0 border">
+                                 <thead>
+                                    <tr>
+                                       <th>Sl#</th>
+                                       <th>Action By</th>
+                                       <th>Action On</th>
+                                       <th>Action Type</th>
+                                       <th>Action Amount (₹)</th>
+                                       <th>Remark</th>
+                                       <th>Description</th>
+                                       <th>Pre-auth Doc</th>
+                                    </tr>
+                                 </thead>
+                                 <tbody>
+                                    <tr *ngFor="let item of actionHistoryArray; index as i">
+                                       <td>{{i+1}}</td>
+                                       <td>{{item.actionBy}}</td>
+                                       <td>{{item.actionTakenOn}}</td>
+                                       <td>{{item.actionType}}</td>
+                                       <td>{{item.actionAmount}}</td>
+                                       <td>{{item.remark}}</td>
+                                       <td>{{item.description}}</td>
+                                       <td>
+                                          <a href="javascript:void(0);" (click)="download(item.document,item.sDate)">
+                                             <i class="bi bi-file-earmark-pdf" style="color: red; font-size: 24px;">
+                                             </i>
+                                          </a>
+                                       </td>
+                                    </tr>
+                                 </tbody>
+                              </table>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- Action taken History -->
+
+
+      <!-- Ongoing treatment section -->
+
+      <div class="col-lg-12 col-xl-12 col-xxl-12">
+         <div class="row mt-4">
+            <div class="col-lg-12 accordion">
+               <div class="card shadow-sm treatment-history">
+                  <div class="accordion-item" id="headingTwo">
+                     <div class="accordion-button collapsed card-header bg-color text-white" data-bs-toggle="collapse"
+                        data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseTwo">
+                        <h5 class="mb-0"> Ongoing Treatment for <span class="text-yellow">URN - {{urnNumber}}</span>
+                        </h5>
+                     </div>
+                     <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
+                        data-bs-parent="#accordionExample">
+                        <div class="card-body">
+                           <div class="table-responsive">
+                              <table class="table mb-0 border">
+                                 <thead>
+                                    <tr>
+                                       <!-- <th > URN </th> -->
+                                       <th>Case No </th>
+                                       <th width="150">Patient Name </th>
+                                       <th>Procedure Code</th>
+                                       <th>Procedure Name</th>
+                                       <th>Package Code </th>
+                                       <th>Date of Admission </th>
+                                       <th>Authentication Mode</th>
+                                       <th>Current Status</th>
+                                       <th>Action Date</th>
+                                       <th>Amount Blocked</th>
+                                    </tr>
+                                 </thead>
+                                 <tbody>
+                                    <tr *ngFor="let item of ongoingArray; index as i">
+                                       <!-- <td >02120610257</td> -->
+                                       <td> {{item.caseNo}} </td>
+                                       <td> {{item.patientName}} </td>
+                                       <td> {{item.packageHeaderCode}} </td>
+                                       <td> {{item.packageHeaderName}} </td>
+                                       <td title={{item.procedureName}}> {{item.procedureCode}} </td>
+                                       <td> {{item.admissionDate}} </td>
+                                       <td> {{item.verifyMode}} </td>
+                                       <td> {{item.currentStatus}}</td>
+                                       <td> {{item.currentStatusDate}} </td>
+                                       <td> {{item.blockedAmount}} </td>
+                                    </tr>
+                                 </tbody>
+                              </table>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- Ongoing treatment section -->
+
+      <!-- All pre-auth req section -->
+
+      <div class="col-lg-12 col-xl-12 col-xxl-12">
+         <div class="row mt-4">
+            <div class="col-lg-12 accordion">
+               <div class="card shadow-sm treatment-history">
+                  <div class="accordion-item" id="headingTwo">
+                     <div class="accordion-button collapsed card-header bg-color text-white" data-bs-toggle="collapse"
+                        data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseTwo">
+                        <h5 class="mb-0"> All information of Case No : <span
+                              class="text-yellow">{{blockInfo?.caseNo}}</span></h5>
+                     </div>
+                     <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFour"
+                        data-bs-parent="#accordionExample">
+                        <div class="card-body">
+                           <div class="table-responsive">
+                              <table class="table mb-0 border">
+                                 <thead>
+                                    <tr>
+                                       <!-- <th >Case No </th> -->
+                                       <th width="150">Patient Name </th>
+                                       <th>Procedure Code</th>
+                                       <th>Package Code</th>
+                                       <th>Request Amount </th>
+                                       <th>Approved Amount </th>
+                                       <th>Blocked Amount</th>
+                                       <th>Preauth</th>
+                                       <th>Status</th>
+                                       <th>Preauth Requested Date</th>
+                                       <th>SNA Remark</th>
+                                       <th>Details</th>
+                                    </tr>
+                                 </thead>
+                                 <tbody>
+                                    <ng-container *ngFor="let item of allPreauthReqArray; index as i">
+                                    <tr>
+                                       <!-- <td > {{item.caseNo}} </td> -->
+                                       <td> {{item.patientName}} </td>
+                                       <td> {{item.procedureCode}} </td>
+                                       <td title={{item.packageName}}> {{item.packageId}} </td>
+                                       <td> {{item.requestAmount}} </td>
+                                       <td> {{item.approvedAmount}} </td>
+                                       <td> {{item.amountBlocked}} </td>
+                                       <td> {{item.prerequired}} </td>
+                                       <td> {{item.status}} </td>
+                                       <td> {{item.requestDate}} </td>
+                                       <td> {{item.snaRemark}} </td>
+                                       <td>
+                                          <button class="btn btn-sm btn-primary" type="button"
+                                          (click)="getCaseDetails(item.packageDetailsId)">
+                                             <i class="bi bi-eye"></i>
+                                          </button>
+                                       </td>
+                                    </tr>
+                                    <tr *ngIf="details[i]">
+                                       <td colspan="10">
+                                          <table class="table table-sm">
+                                             <thead>
+                                                <tr>
+                                                   <th>Status</th>
+                                                   <th>Block Date</th>
+                                                   <th>Unblock Date</th>
+                                                   <th>Admissino Type</th>
+                                                   <th>Verification Mode</th>
+                                                   <th>Remark By Hospital</th>
+                                                   <th>Dr. Name</th>
+                                                   <th>Document</th>
+                                                   <th>SNA Description</th>
+                                                </tr>
+                                             </thead>
+                                             <tbody>
+                                                <tr>
+                                                   <td> {{item.status}} </td>
+                                                   <td> {{item.blockDate}} </td>
+                                                   <td> {{item.unblockDate}} </td>
+                                                   <td> {{item.admissionType}} </td>
+                                                   <td> {{item.verificationMode}} </td>
+                                                   <td> {{item.remarkByHos}} </td>
+                                                   <td> {{item.doctorName}} </td>
+                                                   <td>
+                                                      <ng-container *ngIf="item.doc1">
+                                                         <span class="icon-pdf">
+                                                            <a title="PDF File" (click)="download(item.doc1,item.sDate)"><i
+                                                                  class="bi bi-file-earmark-pdf me-2"></i></a>
+                                                         </span>
+                                                      </ng-container>
+                                                      <ng-container *ngIf="item.doc2">
+                                                         <span class="icon-pdf">
+                                                            <a title="PDF File" (click)="download(item.doc2,item.sDate)"><i
+                                                                  class="bi bi-file-earmark-pdf me-2"></i></a>
+                                                         </span>
+                                                      </ng-container>
+                                                      <ng-container *ngIf="item.doc3">
+                                                         <span class="icon-pdf">
+                                                            <a title="PDF File" (click)="download(item.doc3,item.sDate)"><i
+                                                                  class="bi bi-file-earmark-pdf me-2"></i></a>
+                                                         </span>
+                                                      </ng-container>
+                                                   </td>
+                                                   <td> {{item.snaDescription}} </td>
+                                                </tr>
+                                             </tbody>
+                                          </table>
+                                       </td>
+                                    </tr>
+                                    </ng-container>
+                                 </tbody>
+                              </table>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <!-- All pre-auth req section -->
+         </div>
+      </div>
+
+   </div>
+</div>
+
+        <!-- AUTHENTICATION MODE POPUP -->
+        <div class="modal fade" id="AuthnticationDetailsModal" aria-labelledby="exampleModalLabel" data-bs-backdrop="static" tabindex="-1" aria-hidden="true" data-bs-focus="false">
+          <div class="modal-dialog modal-xl modal-lg modal-dialog-centered">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Authentication Attempt Details Through Case Number:- <span style="color: #1f723f;">{{blockInfo?.claimCaseNo}}</span></h5>
+                      <button type="button" #closebutton class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                      <!-- <div class="main-tab border-0">
+              <div class="row justify-content-between">
+                 <div class="col-lg">
+                    <ul class="nav nav-tabs">
+                       <li class="nav-item">
+                          <a class="btn btn-outline-success '' btn-sm me-3" [ngClass]="isActiveBlocking" (click)="toggleActive('Blocking')" (click)="getAuthenticationdetails(1)">Blocking</a>
+                       </li>
+                       <li class="nav-item" *ngIf="!isDisch">
+                          <a class="btn btn-success btn-sm " (click)="getAuthenticationdetails(1)"
+                              class=" text-success">Blocking</a>
+                          </li>
+                       <li class="nav-item">
+                          <a class="btn btn-outline-success btn-sm" (click)="getAuthenticationdetails(2)" [ngClass]="isActiveDischarge" (click)="toggleActive('Discharge')">Discharge</a>
+                       </li>
+                       <li class="nav-item" *ngIf="!isDisch">
+                          <a class="btn btn-success btn-sm " (click)="getAuthenticationdetails(2)"
+                          >Discharge</a>
+                          </li>
+                    </ul>
+                 </div>
+              </div>
+           </div> -->
+                      <!-- section otp -->
+                      <div class="accordion custom-accrodion" id="otpExample">
+                          <div class="accordion-item mb-3 border-0">
+                              <h5 class="accordion-header" id="headingOne">
+                                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    OTP Details
+                    </button>
+                              </h5>
+                              <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#otpExample">
+                                  <div class="accordion-body p-0">
+                                      <div class="table-responsive mb-2 custom-tbl">
+                                          <table class="table table-striped border">
+                                              <thead class="tbl-topfix bgcolor-th">
+                                                  <tr>
+                                                      <th width="7%">Sl#</th>
+                                                      <th>Hospital Details</th>
+                                                      <th>Created On</th>
+                                                      <th>Verify Details</th>
+                                                      <th>Verified Member Name</th>
+                                                  </tr>
+                                              </thead>
+                                              <tbody>
+                                                  <tr *ngFor="let item of otpdetaiils index as i" class="mob-box">
+                                                      <td data-th="Sl#">
+                                                          <div class="mob-sec">
+                                                              {{i+1}}
+                                                          </div>
+                                                      </td>
+                                                      <td data-th="Hospital Details">
+                                                          <div class="mob-sec">
+                                                              <div class="fw-500"> {{item.hospitalcode}} </div>
+                                                              <div class="fw-normal"> {{item.hospitalname}} </div>
+                                                          </div>
+                                                      </td>
+                                                      <td data-th="Created On">
+                                                          <div class="mob-sec">
+                                                              <div class="fw-500"> {{item.createdon.toString().substring(0,11)}} </div>
+                                                              <div class="fw-normal"> {{item.createdon.toString().substring(12,23)}} </div>
+                                                          </div>
+                                                      </td>
+                                                      <td data-th="Verify Details">
+                                                          <div class="mob-sec">
+                                                              <div class="fw-500"> {{item.verifiedthrough}} </div>
+                                                              <div class="fw-normal"> <span class="badge bg-outline-success"> {{item.verifystatus}} </span> </div>
+                                                          </div>
+                                                      </td>
+                                                      <td data-th="Verified Member Name" class="fw-500">
+                                                          <div class="mob-sec">
+                                                              {{item.verifiedmembername}}
+                                                          </div>
+                                                      </td>
+                                                  </tr>
+                                                  <tr *ngIf="otpdetaiils?.length==0" align="center">
+                                                      <td class="text-center" data-th="No Data Found" colspan="14" align="center"><strong class="text-danger">No Data found</strong></td>
+                                                  </tr>
+                                              </tbody>
+                                          </table>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <!-- section otp -->
+                      <!-- IRIS Details -->
+                      <div class="accordion custom-accrodion" id="irsexample">
+                          <div class="accordion-item mb-3 border-0">
+                              <h5 class="accordion-header" id="headingOne">
+                                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#irisNew" aria-expanded="true" aria-controls="irisNew">
+                    IRIS Details
+                    </button>
+                              </h5>
+                              <div id="irisNew" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#irsexample">
+                                  <div class="accordion-body p-0">
+                                      <div class="table-responsive mb-2 custom-tbl">
+                                          <table class="table table-striped border">
+                                              <thead class="tbl-topfix bgcolor-th">
+                                                  <tr>
+                                                      <th width="7%">Sl#</th>
+                                                      <th>Hospital Details</th>
+                                                      <th>Created On</th>
+                                                      <th>Verified Details</th>
+                                                      <th>Verified Member Name</th>
+                                                  </tr>
+                                              </thead>
+                                              <tbody>
+                                                  <tr class="mob-box" *ngFor="let item of irisdetails index as i">
+                                                      <td data-th="Sl#">
+                                                          <div class="mob-sec"> {{i+1}} </div>
+                                                      </td>
+                                                      <td data-th="Hospital Details">
+                                                          <div class="mob-sec">
+                                                              <div class="fw-500"> ({{item.hospitalcode}})</div>
+                                                              <div class="fw-normal"> {{item.hospitalname}} </div>
+                                                          </div>
+                                                      </td>
+                                                      <td data-th="Created On">
+                                                          <div class="mob-sec">
+                                                              <div class="fw-500"> {{item.createdon.toString().substring(0,11)}} </div>
+                                                              <div class="fw-normal"> {{item.createdon.toString().substring(12,23)}} </div>
+                                                          </div>
+                                                      </td>
+                                                      <td data-th="Verified Details">
+                                                          <div class="mob-sec">
+                                                              <div class="fw-500"> {{item.verifiedthrough}} </div>
+                                                              <div class="fw-normal"> <span class="badge bg-outline-success"> {{item.verifystatus}} </span> </div>
+                                                          </div>
+                                                      </td>
+                                                      <td data-th="Verified Member Name">
+                                                          <div class="mob-sec">
+                                                              <div class="fw-500"> {{item.verifiedmembername}} </div>
+                                                          </div>
+                                                      </td>
+                                                  </tr>
+                                                  <tr *ngIf="irisdetails?.length==0">
+                                                      <td colspan="14" class="text-center"><strong class="text-danger">No Data Found</strong></td>
+                                                  </tr>
+                                              </tbody>
+                                          </table>
+                                      </div>
+                                      <!-- IRS Details -->
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <!-- IRIS Details -->
+                      <!-- POS Details -->
+                      <div class="accordion custom-accrodion" id="posExample">
+                          <div class="accordion-item mb-3 border-0">
+                              <h5 class="accordion-header" id="headingOne">
+                                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#posNew" aria-expanded="true" aria-controls="posNew">
+                    POS Details
+                    </button>
+                              </h5>
+                              <div id="posNew" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#posExample">
+                                  <div class="accordion-body p-0">
+                                      <div class="table-responsive mb-2 custom-tbl">
+                                          <table class="table table-striped border">
+                                              <thead class="tbl-topfix bgcolor-th">
+                                                  <tr>
+                                                      <th width="7%">Sl#</th>
+                                                      <th>Hospital Details</th>
+                                                      <th>Created On</th>
+                                                      <th>Verified Details</th>
+                                                      <th>
+                                                          POS Details
+                                                          <div class="fw-normal"> Code | Name </div>
+                                                      </th>
+                                                      <th>
+                                                          Verified Details
+                                                          <div class="fw-normal"> Date | Member Name </div>
+                                                      </th>
+                                                      <th>Authentication Status</th>
+                                                  </tr>
+                                              </thead>
+                                              <tbody>
+                                                  <tr class="mob-box" *ngFor="let item of posdetails index as i">
+                                                      <td data-th="Sl#">
+                                                          <div class="mob-sec"> {{i+1}} </div>
+                                                      </td>
+                                                      <td data-th="Hospital Details">
+                                                          <div class="mob-sec">
+                                                              <div class="fw-500"> {{item.hospitalcode}} </div>
+                                                              <div class="fw-normal"> {{item.hospitalname}} </div>
+                                                          </div>
+                                                      </td>
+                                                      <td data-th="Created On">
+                                                          <div class="mob-sec">
+                                                              <div class="fw-500"> {{item.createdon.toString().substring(0,11)}} </div>
+                                                              <div class="fw-normal"> {{item.createdon.toString().substring(12,23)}} </div>
+                                                          </div>
+                                                      </td>
+                                                      <td data-th="Verified Details">
+                                                          <div class="mob-sec">
+                                                              <div class="fw-500"> {{item.verifiedthrough}} </div>
+                                                              <div class="fw-normal"> <span class="badge bg-outline-success"> {{item.verifystatus}} </span> </div>
+                                                          </div>
+                                                      </td>
+                                                      <td data-th="POS Details Code | name">
+                                                          <div class="mob-sec">
+                                                              <div class="fw-500"> {{item.POSCODE}} </div>
+                                                              <div class="fw-normal"> {{item.POSFLAG}} </div>
+                                                          </div>
+                                                      </td>
+                                                      <td data-th="Verified Details Date | Member Name">
+                                                          <div class="mob-sec">
+                                                              <div class="fw-500"> {{item.VERIFYDATE1}} </div>
+                                                              <div class="fw-normal"> {{item.verifiedmembername}} </div>
+                                                          </div>
+                                                      </td>
+                                                      <td data-th="Authentication Status">
+                                                          <div class="mob-sec">
+                                                              <div class="fw-500"> {{item.AUTHENTICATIONSTATUS}} </div>
+                                                          </div>
+                                                      </td>
+                                                  </tr>
+                                                  <tr *ngIf="posdetails?.length==0">
+                                                      <td colspan="14" class="text-center"><strong class="text-danger">No Data Found</strong></td>
+                                                  </tr>
+                                              </tbody>
+                                          </table>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <!-- POS Details -->
+                  </div>
+              </div>
+          </div>
+          <!-- POS Details -->
+      </div>
+
+<!-- AUTHENTICATION MODE POPUP -->

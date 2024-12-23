@@ -1,0 +1,191 @@
+
+  <div class="page-controls-section" id="page-content">
+    <div class="card">
+      <div class="controls-section-header">
+        <ul class="nav nav-tabs nav-fill" role="tablist">
+          <app-tabs [color]="'green'" *ngFor="let tablist of tablist" [tabMessage]="tablist" ></app-tabs>
+        </ul>
+        <div class="indicatorslist">
+          <app-util *ngFor="let utillist of utillist" [childMessage]="utillist"></app-util>
+        </div>
+      </div>
+      <div class="card-body">
+        <div  class="controls-section " >
+            <div  class="controls-section " >
+          <div  class="row">
+            
+            <div class="col-lg-3 col-xxl-3">
+              <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                <label class="control-label mb-2"> From Date </label><span class="text-danger">*</span>
+                <div class="input-group">
+                  <input type="text" class="form-control border-end-0 datepicker" id="formdate" name="fromDate">
+                  <label class="input-group-text bg-transparent border-start-0" for="formdate"><i
+                      class="iconbsky-calendar"></i> </label>
+                </div>
+              </div>
+            </div>
+  
+            <div class="col-lg-3 col-xxl-3">
+              <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                <label class="control-label mb-2">To Date To</label><span class="text-danger">*</span>
+                <div class="input-group">
+                  <input type="text" class="form-control border-end-0 datepicker" id="todate" name="toDate">
+                  <label class="input-group-text bg-transparent border-start-0" for="todate"><i
+                      class="iconbsky-calendar"></i> </label>
+                </div>
+              </div>
+            </div>
+  
+            <div class="col-lg-3 col-xxl-3">
+              <div class="mb-xl-3">
+                <label class="control-label mb-2">State Name </label>
+                <select class="form-select" id="statecode1" aria-label="Disabled select example"
+                  (change)="OnChangeState($event)">
+                  <option value="" selected>Select State</option>
+                  <option *ngFor="let c of statelist" [value]="c.stateCode">{{c.stateName}}</option>
+                </select>
+              </div>
+            </div>
+  
+            <div class="col-lg-3 col-xxl-3">
+              <div class="mb-xl-3">
+                <label class="control-label mb-2">District Name </label>
+  
+                <select class="form-select" id="distcode1" aria-label="Disabled select example">
+                  <option value="" selected>Select District</option>
+                  <option *ngFor="let c of distList" [value]="c.districtcode">{{c.districtname}}</option>
+                </select>
+              </div>
+            </div>
+  
+          </div>
+          <div class="col-lg-12">
+            <div class="d-grid gap-2 d-md-flex">
+                <button type="button" class="btn btn-success me-2" (click)="searchData()">Search</button>
+                <input type="button" value="Reset" (click)="resetData()" class="btn btn-secondary">
+            </div>
+          </div>
+        </div>
+
+          <div *ngIf="formsList?.length > 0; else norecord">
+            <div class="d-flex justify-content-between mb-3">
+              <div></div>
+              <div>
+                Per Page:
+                <select id="pageItem" (change)="pageItemChange()">
+                  <option *ngFor="let size of pageSizes" [ngValue]="size">
+                    {{ size }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group d-none">
+              <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                  <div class="mb-xl-3">
+                    <label class="control-label">State Name</label>
+                    <select class="form-select" id="statecode1" aria-label="Disabled select example" (change)="OnChangeState($event)" >
+                        <option value="" selected>Select State</option>
+                        <option *ngFor="let c of statelist" [value]="c.stateCode">{{c.stateName}}</option>
+                      </select>
+                </div>
+                </div>
+  
+                <div class="col-lg-4 col-xxl-4">
+                  <div class="mb-xl-3">
+                    <label class="control-label">District Name</label>
+                    <select class="form-select" id="distcode1" aria-label="Disabled select example">
+                        <option value="" selected>Select District</option>
+                        <option *ngFor="let c of distList" [value]="c.districtcode">{{c.districtname}}</option>
+                      </select>
+                </div>
+                </div>
+  
+                <div class="col-lg-4 col-xxl-4">
+                  <div class="mb-xl-3">
+                    <label class="control-label">Last Action by</label>
+                    <select class="form-select" id="lastActionBy" aria-label="Disabled select example">
+                        <option value="" selected>Select Action By</option>
+                        <option value="Hospital" select>Hospital</option>
+                        <option value="CDMO" select>CDMO</option>
+                        <option value="DC" select>DC</option>
+                        <option value="SHAS" select>SHAS</option>
+                      </select>
+                </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                      <button type="submit" class="btn btn-success"  (click)="searchData()">Search</button>&nbsp;
+                      <button type="submit" class="btn btn-danger"  (click)="resetData()">Reset</button>&nbsp;
+              </div>
+            </div>
+            <br>
+          </div>
+              <div class="col-md-6" class="pull-right">
+                <input type="text" [(ngModel)]="searchText" class="form-control"
+                  placeholder="Enter text to filter records" style="max-width: 300px;" />
+              </div>
+            
+              <div class="col-md-1">
+                <button class="btn btn-success" (click)="downloadReport()">
+                    <i class="bi bi-download"></i>
+                  </button>
+              </div>
+            <br>
+            <div class="table-responsive print-section">
+              <table aria-describedby="mydesc" data-toggle="table" class="table table-bordered valign-middle" 
+              *ngIf="(dataResult | filter: searchText).length > 0; else noResults">
+                <thead>
+                  <tr>
+                    <th>Sl#</th>
+                    <th *ngFor="let colName of dataCols">
+                      {{ colName.colHeader }}
+                    </th>
+                    <th>Last Action by</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let rows of dataResult | filter: searchText
+  | paginate: {id:'listing_pagination', itemsPerPage:pageElement, currentPage:currentPage }
+  ;index as i">
+                    <td *ngIf="currentPage==1">{{i+1}}</td>
+                    <td *ngIf="currentPage!=1">{{ (currentPage - 1) * pageElement+ i+1 }}</td>
+                    <td *ngFor="let colName of dataCols">
+                      {{ rows[colName.colName] }}
+                    </td>
+                     <td>
+                      {{rows.INTSENTFROM}}
+                    </td>
+                    <td>
+                      <div [innerHTML]="getAppStatus(rows)"></div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="row" *ngIf="showPegi">
+              <div class="col-sm-4">
+                <strong>
+                  Showing {{ (currentPage - 1) * pageElement + 1 }} to {{elementTo}} of {{recordList}}
+                  (Total Records - {{dataResult.length }})
+                </strong>
+              </div>
+            </div>
+            <div class="col-sm-12 text-center" *ngIf="!showPegi">
+              <span style="color: red;"><Strong>No Record Found !!!</Strong></span>
+            </div>
+          </div>
+          <ng-template #norecord>
+            <h6 class="no-content">No Record Found</h6>
+          </ng-template>
+          <ng-template #noResults>
+            <p>No results found for "{{searchText}}".</p>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="loader" *ngIf="loading">
+    <div class="loader-item"></div>
+    <p>Loading...</p>
+  </div>

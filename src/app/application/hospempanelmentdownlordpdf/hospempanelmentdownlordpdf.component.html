@@ -1,0 +1,736 @@
+
+<div class="container" id="content" #content *ngIf="show==1">
+
+  <h4 style="text-align:center">Application Form</h4>
+    <div class="card-header">
+      <h5 class="mb-0">Hospital Basic Information :</h5>
+    </div>
+    <div class="card-body">
+      <div class="row gx-xl-5 ">
+        <div class="col-xl">
+          <p class="small text-muted mb-0" >Hospital Parent Type : </p>
+              
+          <h6 class="mb-0">{{selecteddist['VCH_HOSP_PARENT']}}</h6>
+
+        </div>
+        <div class="col-xl border-start">
+          <div class="d-flex align-items-center">
+            <div>
+              <p class="small text-muted mb-0">Hospital Type : </p>                   
+              <h6 class="mb-0">{{selecteddist['VCH_HOSP_TYPE']}}</h6>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12">
+      <hr class="mt-xl-4">
+    </div>
+    <div class="card-header">
+      <h5 class="mb-0">Hospital Address :</h5>
+    </div>
+    <div class="card-body">
+      <div class="row gx-xl-5 ">
+        <div class="col-xl ">
+          <div class="d-flex align-items-center">
+            <div>
+              <p class="small text-muted mb-0">Hospital Address :</p>
+              <h6 class="mb-0">{{sec1.VCH_HOSP_ADDRESS}}</h6>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl border-start">
+          <div class="d-flex align-items-center">
+            <div>
+              <p class="small text-muted mb-0">State :</p>
+      
+              <h6 class="mb-0">{{selecteddist['VCH_STATE']}}</h6>
+                
+            </div>
+          </div>
+        </div>
+        <div class="col-xl border-start">
+          <div class="d-flex align-items-center">
+            <div>
+              <p class="small text-muted mb-0">District :</p>
+              <h6 class="mb-0">{{selecteddist['VCH_DISTRICT']}}</h6>
+                    
+                    
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <hr class="mt-xl-4">
+        </div>
+        <div class="col-xl ">
+          <div class="d-flex align-items-center">
+            <div>
+              <p class="small text-muted mb-0">Block/ULB :</p>
+              <h6 class="mb-0">{{selecteddist['VCH_BLOCK']}}</h6>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl border-start">
+          <div class="d-flex align-items-center">
+              <div>
+                  <p class="small text-muted mb-0">Village/Ward :</p>
+                  <h6 class="mb-0">{{selecteddist['VCH_VILLAGE']}}</h6>
+              </div>
+          </div>
+        </div>
+        <div class="col-xl border-start">
+          <div class="d-flex align-items-center">
+              <div>
+                  <p class="small text-muted mb-0">City/Town : </p>
+                  <h6 class="mb-0">{{sec1.VCH_CITY_TOWN}}</h6>
+              </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <hr class="mt-xl-4">
+        </div>
+        <div class="col-xl ">
+          <div class="d-flex align-items-center">
+              <div>
+                  <p class="small text-muted mb-0">Hospital Pincode :</p>
+                  <h6 class="mb-0">{{sec1.VCH_HOSP_PIN}}</h6>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+<!-- ------- -->
+<div class="col-12">
+  <hr class="mt-xl-4">
+</div>
+    <div class="card-header">
+      <h5 class="mb-0">Hospital Profile :</h5>
+    </div>
+    <div class="card-body">
+      <div class="row gx-xl-5 ">
+        <div class="col-xl ">
+          <div class="d-flex align-items-center">
+              <div>
+                  <p class="small text-muted mb-0"  >Hospital Specialty Type :  </p>
+                  <h6 class="mb-0">{{selecteddist['VCH_HOSP_SPL_TYPE']}}</h6>
+              </div>
+          </div>
+      </div>
+      <div class="col-xl border-start">
+        <div class="d-flex align-items-center">
+            <div>
+                <p class="small text-muted mb-0">Establishment Year :</p>
+                <h6 class="mb-0">{{selecteddist['VCH_EST_YEAR']}}</h6>
+            </div>
+        </div>
+      </div>
+      <div class="col-xl border-start">
+        <div class="d-flex align-items-center">
+            <div>
+                <p class="small text-muted mb-0">Pan Card Holder Name : </p>
+                <h6 class="mb-0">{{sec1.VCH_PAN_NAME}}</h6>
+            </div>
+        </div>
+      </div>
+      <div class="col-12">
+        <hr class="mt-xl-4">
+    </div>
+      <div class="col-xl ">
+        <div class="d-flex align-items-center">
+            <div>
+                <p class="small text-muted mb-0"  >Private Hospital Sub Type : </p>
+                <h6 class="mb-0">{{selecteddist['VCH_PVT_SUBTYPE']}}</h6>
+            </div>
+        </div>
+      </div>
+
+      <div class="col-xl ">
+        <div class="d-flex align-items-center">
+            <div>
+                <p class="small text-muted mb-0">Legal Entity Name : </p>
+                <h6 class="mb-0">{{sec1.VCH_LGL_ENT_NAME}}</h6>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl border-start">
+      <div class="d-flex align-items-center">
+          <div>
+              <p class="small text-muted mb-0" >Hospital Ownership Type : </p>
+
+              <h6 class="mb-0">{{selecteddist['VCH_HOSP_OW_TYPE']}}</h6>
+          </div>
+      </div>
+    </div>
+    <div class="col-12">
+      <hr class="mt-xl-4">
+  </div>
+
+    </div>
+    </div>
+    <div class="col-12">
+      <hr class="mt-xl-4">
+  </div>
+    <div class="card-header">
+      <h5 class="mb-0">Contact Information :</h5>
+    </div>
+    <div class="card-body">
+      <div class="row gx-xl-5 ">
+          <div class="col-xl">
+            <p class="small text-muted mb-0">Organisation Head Name : 
+            </p>
+            <h6 class="mb-0">{{sec1.VCH_ORG_HD_NAME}}</h6>
+        </div>
+          <div class="col-xl border-start">
+            <div class="d-flex align-items-center">
+                <div>
+                    <p class="small text-muted mb-0">Organization Head Contact Number : </p>
+                    <h6 class="mb-0">{{sec1.VCH_ORG_HEAD_NO}}</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+          <hr class="mt-xl-4">
+      </div>
+    <div class="col-xl border-start">
+      <div class="d-flex align-items-center">
+
+          <div>
+              <p class="small text-muted mb-0">Organization Head Email ID : </p>
+              <h6 class="mb-0 ">{{sec1.VCH_ORG_EMAIL_ID}}</h6>
+          </div>
+      </div>
+  </div>
+  <div class="col-xl border-start">
+    <div class="d-flex align-items-center">
+
+        <div>
+            <p class="small text-muted mb-0">Hospital Admission Desk Land Line No : </p>
+            <h6 class="mb-0 ">{{sec1.VCH_HOSP_ADM_LAND}}</h6>
+        </div>
+    </div>
+</div>
+    </div>
+  </div>
+
+
+  
+<div class="col-12">
+    <hr class="mt-xl-4">
+</div>
+  <div class="card-header">
+    <h5 class="mb-0">Other Empanelment and Accreditation Details :</h5>
+  </div>
+  <div class="card-body">
+    <div class="row gx-xl-5 ">
+        <div class="col-xl">
+          <p class="small text-muted mb-0">Name Of Accreditation Board :
+          </p>
+
+          <h6 class="mb-0">{{selecteddist['VCH_NM_OF_AC_BOARD']}}</h6>
+      </div>
+        <div class="col-xl border-start">
+          <div class="d-flex align-items-center">
+              <div>
+                  <p class="small text-muted mb-0">Valid upto  :</p>
+                  <h6 class="mb-0">{{sec1.VCH_VALID_UPTO}}</h6>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-xl border-start">
+          <div class="d-flex align-items-center">
+
+              <div>
+                  <p class="small text-muted mb-0">Accreditation Level : </p>
+                  <h6 class="mb-0 ">{{sec1.VCH_ACC_LEVEL}}</h6>
+              </div>
+          </div>
+      </div>
+      <div class="col-12">
+        <hr class="mt-xl-4">
+    </div>
+    <div class="col-xl ">
+      <div class="d-flex align-items-center">
+
+          <div>
+              <p class="small text-muted mb-0">Accreditation Identification Number : </p>
+              <h6 class="mb-0 ">{{sec1.VCH_ACC_ID_NO}}</h6>
+          </div>
+      </div>
+  </div>
+  <div class="col-xl border-start">
+    <div class="d-flex align-items-center">
+
+        <div>
+            <p class="small text-muted mb-0">Delisted From Gov Health Schemes :</p>
+            <h6 class="mb-0" *ngIf="sec1.VCH_DELISTED_GOV==1">Yes</h6>
+            <h6 class="mb-0" *ngIf="sec1.VCH_DELISTED_GOV==2">No</h6>
+        </div>
+    </div>
+</div>
+<div class="col-xl border-start">
+  <div class="d-flex align-items-center">
+
+      <div>
+          <p class="small text-muted mb-0">CGHS Registration Number :</p>
+          <h6 class="mb-0" *ngIf="sec1.VCH_DELISTED_GOV==null">{{sec1.VCH_CGHS_REGD_NO}}</h6>
+      </div>
+  </div>
+</div>
+  </div>
+</div>
+<div class="col-12">
+  <hr class="mt-xl-4">
+</div>
+<div class="card-header">
+  <h5 class="mb-0">Financial Details :</h5>
+</div>
+<div class="card-body">
+  <div class="row gx-xl-5 ">
+      <div class="col-xl">
+        <p class="small text-muted mb-0">Name of the Authorized Signatory to the Hospital Bank Account  :
+        </p>
+        <h6 class="mb-0">{{sec2.VCH_FIN_AUTH_NAME}}</h6>
+    </div>
+      <div class="col-xl border-start">
+        <div class="d-flex align-items-center">
+            <div>
+                <p class="small text-muted mb-0">Name of Bank Account holder as per Cheque Book/ Passbook  :</p>
+                <h6 class="mb-0">{{sec2.VCH_FIN_ACC_HOLDER}}</h6>
+            </div>
+        </div>
+      </div>
+      </div>
+    </div>
+   
+
+
+    <div class="col-12">
+      <hr class="mt-xl-4">
+  </div>
+  <div class="card-header">
+    <h5 class="mb-0">Specialities Offered:</h5>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive"> 
+      <table class="table table-bordered"> 
+        <thead> 
+          <tr>
+            <th>Specialities</th>
+            <th>Admissions Done Previous Financial Year</th> 
+            <th>Admissions Done Before Last Year</th> 
+          </tr>
+        </thead>
+        <tbody> 
+          <ng-container *ngFor="let claim of sec3; let i = index"> 
+            <tr> 
+              <td>{{ VCH_SPECIALITIES[i] }}</td> 
+              <td>{{ claim.INT_PREV_ADMISSION }}</td> 
+              <td>{{ claim.INT_BEFORE_PREV }}</td> 
+            </tr>
+          </ng-container>
+          
+          <ng-container *ngIf="sec3.length == 0">
+            <tr>
+              <td colspan="3" class="text-center">N/A</td> 
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+  </div>
+       <div class="col-12">
+          <hr class="mt-xl-4">
+      </div>
+        <div class="card-header">
+          <h5 class="mb-0">Civil Infrastructure :</h5>
+        </div>
+<div class="card">
+  <div class="card-header">
+    <h5 class="mb-0">General Ward</h5>
+  </div>
+  <div class="card-body">
+    <div class="row gx-xl-5"> 
+      <div class="col-xl-2"> 
+        <p class="small text-muted mb-0">Standardised Architectural Design:</p>
+        <h6 class="mb-0">{{sec4.VCH_DESIGN}}</h6> 
+      </div>
+      <div class="col-xl-2">
+        <p class="small text-muted mb-0">Fire Fighting System :</p>
+         <h6 class="mb-0">{{sec4.VCH_FIRE_FIGHT}}</h6>
+    </div>
+    <div class="col-xl-2">
+      <p class="small text-muted mb-0">Bio-Medical Waste Management :</p>
+      <h6 class="mb-0">{{sec4.VCH_WASTEMGMT}}</h6>
+  </div>
+  <div class="col-xl-2">
+    <p class="small text-muted mb-0">Area/Bed :</p>
+    <h6 class="mb-0">{{sec4.VCH_AREA}}</h6>
+</div>
+  <div class="col-xl-2">
+  <p class="small text-muted mb-0">Bio-Medical Waste Management :</p>
+  <h6 class="mb-0">{{sec4.VCH_WASTEMGMT}}</h6>
+  </div>
+<div class="col-xl-2">
+  <p class="small text-muted mb-0">Number of Floors :</p>
+  <h6 class="mb-0">{{sec4.VCH_FLOORS}}</h6>
+</div>
+<div class="col-xl-2">
+  <p class="small text-muted mb-0">Ramp Provision :</p>
+  <h6 class="mb-0">{{sec4.VCH_RAMP}}</h6>
+</div>
+<div class="col-xl-2">
+  <p class="small text-muted mb-0">Total Bed Strength:</p>
+  <h6 class="mb-0">{{sec4.VCH_BED_STRENGTH}}</h6>
+</div>
+    </div>
+  </div>
+</div>
+
+<div class="card mt-4"> 
+  <div class="card-header">
+    <h5 class="mb-0">OPD (Outpatient Department)</h5>
+  </div>
+  <div class="card-body">
+    <div class="row gx-xl-5">
+      <div class="col-xl-2">
+        <p class="small text-muted mb-0">OPD:</p>
+        <h6 class="mb-0">{{sec4.VCH_OPD_C}}</h6>
+      </div>
+      <div class="col-xl-2">
+        <p class="small text-muted mb-0">Casualty:</p>
+        <h6 class="mb-0">{{sec4.VCH_CASUALTY}}</h6>
+      </div>
+      <div class="col-xl-2">
+        <p class="small text-muted mb-0">Labour Room:</p>
+        <h6 class="mb-0">{{sec4.VCH_LABOUR}}</h6>
+      </div>
+      <div class="col-xl-2">
+        <p class="small text-muted mb-0">Blood Bank:</p>
+        <h6 class="mb-0">{{sec4.VCH_BLOOD_BANK}}</h6>
+      </div>
+      <div class="col-xl-2">
+        <p class="small text-muted mb-0">Medical Records Department:</p>
+        <h6 class="mb-0">{{sec4.VCH_MED_RECORDS}}</h6>
+      </div>
+      <div class="col-xl-2">
+        <p class="small text-muted mb-0">Ambulance service:</p>
+        <h6 class="mb-0">{{sec4.VCH_AMBU_SERVICE}}</h6>
+      </div>
+     <div class="col-xl-2">
+        <p class="small text-muted mb-0">Diagnostic Centre- Radiology (Basic):</p>
+        <h6 class="mb-0">{{sec4.VCH_DIAG_CENTER}}</h6>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="card mt-4"> 
+  <div class="card-header">
+    <h5 class="mb-0">HDU (High Dependency Unit)</h5>
+  </div>
+  <div class="card-body">
+    <div class="row gx-xl-5">
+      <div class="col-xl-2">
+        <p class="small text-muted mb-0">Oxygen supply:</p>
+        <h6 class="mb-0">{{sec4.VCH_OXG_SUPPLY}}</h6>
+      </div>
+      <div class="col-xl-2">
+        <p class="small text-muted mb-0">Piped suction & medical gases:</p>
+        <h6 class="mb-0">{{sec4.VCH_PIPE_SUC_MED_GAS}}</h6>
+      </div>
+      <div class="col-xl-2">
+        <p class="small text-muted mb-0">Equipment for maintenance of body temperature:</p>
+        <h6 class="mb-0">{{sec4.VCH_EQP_MNT_BD_TEMP}}</h6>
+      </div>
+      <div class="col-xl-2">
+        <p class="small text-muted mb-0">Manpower for 24x7 monitoring (nursing staff to patient ratio of 1:2):</p>
+        <h6 class="mb-0">{{sec4.MANPOW_MONITOR}}</h6>
+      </div>
+      <div class="col-xl-2">
+        <p class="small text-muted mb-0">Uninterrupted electric supply:</p>
+        <h6 class="mb-0">{{sec4.VCH_ELECTRIC_SUPPLY}}</h6>
+      </div>
+      <div class="col-xl-2">
+        <p class="small text-muted mb-0">Number of BED HDU'S:</p>
+        <h6 class="mb-0">{{sec4.VCH_NUM_HDU}}</h6>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card mt-4"> 
+  <div class="card-header">
+    <h5 class="mb-0">ICU (Intensive Care Unit)</h5>
+  </div>
+  <div class="card-body">
+    <div class="row gx-xl-5">
+      <div class="col-xl-2">
+        <p class="small text-muted mb-0">Oxygen supply:</p>
+        <h6 class="mb-0">{{sec4.VCH_ICU_OX_SUPPLY}}</h6>
+      </div>
+      <div class="col-xl-2">
+        <p class="small text-muted mb-0">Piped suction & medical gases:</p>
+        <h6 class="mb-0">{{sec4.VCH_ICU_PIPE}}</h6>
+      </div>
+      <div class="col-xl-2">
+        <p class="small text-muted mb-0">Equipment for maintenance of body temperature:</p>
+        <h6 class="mb-0">{{sec4.VCH_ICU_BODYTEMP}}</h6>
+      </div>
+      <div class="col-xl-2">
+        <p class="small text-muted mb-0">Manpower for 24x7 monitoring (nursing staff to patient ratio of 1:2):</p>
+        <h6 class="mb-0">{{sec4.VCH_ICU_MANPOW}}</h6>
+      </div>
+      <div class="col-xl-2">
+        <p class="small text-muted mb-0">Uninterrupted electric supply:</p>
+        <h6 class="mb-0">{{sec4.VCH_ICU_ELECTRIC_SUPPLY}}</h6>
+      </div>
+      <div class="col-xl-2">
+        <p class="small text-muted mb-0">Number of BED ICU:</p>
+        <h6 class="mb-0">{{sec4.VCH_TOTAL_ICU}}</h6>
+      </div>
+    </div>
+  </div>
+</div>
+
+        <div class="col-12">
+          <hr class="mt-xl-4">
+      </div>
+      <div class="card-header">
+        <h5 class="mb-0">Licences and Certifications:</h5>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive"> 
+          <table class="table table-bordered"> 
+            <thead> 
+              <tr> 
+                <th>Approval Name</th> 
+                <th>Certificate No</th> 
+              </tr>
+            </thead>
+            <tbody> 
+              <ng-container *ngFor="let claim of sec51; let i = index"> 
+                <tr> 
+                  <td>{{ VCH_APPROVAL_NAME[i] }}</td>
+                  <td>{{ claim.VCH_CERTIFICATE_NO }}</td> 
+                </tr>
+              </ng-container>
+            
+              <ng-container *ngIf="sec51.length == 0">
+                <tr> 
+                  <td colspan="2" class="text-center">N/A</td> 
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-12">
+        <hr class="mt-xl-4">
+      </div>
+      
+      <div class="card-header">
+        <h5 class="mb-0">Registrations & Certification:</h5>
+      </div>
+      
+      <div class="card-body">
+        <div class="table-responsive"> 
+          <table class="table table-bordered"> 
+            <thead> 
+              <tr> 
+                <th>Approval Name</th>
+                <th>Certificate No</th> 
+              </tr>
+            </thead>
+            <tbody> 
+              <ng-container *ngFor="let claim of sec52; let i = index"> 
+                <tr> 
+                  <td>{{ VCH_APPROVAL_NAME1[i] }}</td> 
+                  <td>{{ claim.VCH_CERTIFICATE_NO1 }}</td> 
+                </tr>
+              </ng-container>
+              
+              <ng-container *ngIf="sec52.length == 0">
+                <tr> 
+                  <td colspan="2" class="text-center">N/A</td> 
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+      <div class="col-12">
+        <hr class="mt-xl-4">
+      </div>
+      
+      <div class="card-header">
+        <h5 class="mb-0">Services:</h5>
+      </div>
+      
+      <div class="card-body">
+        <div class="table-responsive"> 
+          <table class="table table-bordered"> 
+            <thead> 
+              <tr> 
+                <th>Approval Name</th>
+                <th>Certificate No</th> 
+              </tr>
+            </thead>
+            <tbody> 
+              <ng-container *ngFor="let claim of sec53; let i = index"> 
+                <tr> 
+                  <td>{{ VCH_APPROVAL_NAME2[i] }}</td> 
+                  <td>{{ claim.VCH_CERTIFICATE_NO2 }}</td> 
+                </tr>
+              </ng-container>
+              
+              <ng-container *ngIf="sec53.length == 0">
+                <tr> 
+                  <td colspan="2" class="text-center">N/A</td> 
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </div>
+  <div class="card-header">
+    <h5 class="mb-0">General Services:</h5>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive"> 
+      <table class="table table-bordered"> 
+        <thead> 
+          <tr> 
+            <th>Facility Details</th>
+            <th>In-House/Tie-Up</th> 
+          </tr>
+        </thead>
+        <tbody> 
+          <ng-container *ngFor="let claim of sec7; let i = index"> 
+            <tr> 
+              <td>{{ VCH_FCLT_DTLS[i] }}</td> 
+              <td>{{ claim.VCH_LNHOUS_TIEUP_NAME }}</td> 
+            </tr>
+          </ng-container>
+         
+          <ng-container *ngIf="sec7.length == 0">
+            <tr>
+              <td colspan="2" class="text-center">N/A</td> 
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+            <div class="col-12">
+              <hr class="mt-xl-4">
+          </div>
+          <div class="card-header">
+            <h5 class="mb-0">Man Power Details :</h5>
+          </div>
+          <div class="card-body">
+            <div class="row gx-xl-5 ">
+              <div class="col-xl">
+                <p class="small text-muted mb-0">Type of Medical Expertise :
+                </p>
+                <h6 class="mb-0" *ngIf="sec8.VCH_MDCL_EXPER==1">Medical</h6>
+                <h6 class="mb-0" *ngIf="sec8.VCH_MDCL_EXPER==3">Non Technical Staff</h6>
+                <h6 class="mb-0" *ngIf="sec8.VCH_MDCL_EXPER==2">ParaMedical</h6>
+            </div>
+              <div class="col-xl border-start">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <p class="small text-muted mb-0">Type of Expertise :</p>
+                        <h6 class="mb-0" *ngIf="sec8.VCH_TYPE_EXPERT==1">Anaesthetist</h6>
+                         <h6 class="mb-0" *ngIf="sec8.VCH_TYPE_EXPERT==2">Duty Doctor</h6>
+                         <h6 class="mb-0" *ngIf="sec8.VCH_TYPE_EXPERT==3">Medco</h6>
+                         <h6 class="mb-0" *ngIf="sec8.VCH_TYPE_EXPERT==6">Specialist</h6>
+                         <h6 class="mb-0" *ngIf="sec8.VCH_TYPE_EXPERT==4">Paramedic</h6>
+                         <h6 class="mb-0" *ngIf="sec8.VCH_TYPE_EXPERT==5">Proposed Ayushman Mitra</h6>
+                    </div>
+                </div>
+              </div>
+              <div class="col-xl border-start">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <p class="small text-muted mb-0">Name  :</p>
+                        <h6 class="mb-0">{{sec8.VCH_NAME}}</h6>
+                    </div>
+                </div>
+              </div>
+              <div class="col-12">
+                <hr class="mt-xl-4">
+            </div>
+              <div class="col-xl">
+                <p class="small text-muted mb-0">Registration Number :
+                </p>
+                <h6 class="mb-0">{{sec8.VCH_REGD_NUM}}</h6>
+            </div>
+              <div class="col-xl border-start">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <p class="small text-muted mb-0">Email Id :</p>
+                        <h6 class="mb-0">{{sec8.VCH_EMAIL_ID}}</h6>
+                    </div>
+                </div>
+              </div>
+              <div class="col-xl border-start">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <p class="small text-muted mb-0">Mobile Number  :</p>
+                        <h6 class="mb-0">{{sec8.VCH_MOBILE_NUMBER}}</h6>
+                    </div>
+                </div>
+              </div>
+              <div class="col-12">
+                <hr class="mt-xl-4">
+            </div>
+              <div class="col-xl">
+                <p class="small text-muted mb-0">Experience(Years) :
+                </p>
+                <h6 class="mb-0">{{sec8.VCH_EXP_YEAR}}</h6>
+            </div>
+              <div class="col-xl border-start">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <p class="small text-muted mb-0">Specialization :</p>
+                        <h6 class="mb-0">{{sec8.VCH_SPEC}}</h6>
+                    </div>
+                </div>
+              </div>
+              <div class="col-12">
+                <hr class="mt-xl-4">
+            </div>
+              <div class="row">
+                <div class="col-md-4">
+                    <p class="small text-muted mb-0">Total Num of Medical Staff:</p>
+                    <h6 class="mb-0">{{sec8.VCH_MSTAFF}}</h6>
+                </div>
+                <div class="col-md-4">
+                    <p class="small text-muted mb-0">Total Num of Paramedical Staff:</p>
+                    <h6 class="mb-0">{{sec8.VCH_PMSTAFF}}</h6>
+                </div>
+                <div class="col-md-4">
+                    <p class="small text-muted mb-0">Total Num of Non technical Staff:</p>
+                    <h6 class="mb-0">{{sec8.VCH_NONTSTAFF}}</h6>
+                </div>
+            </div>
+              <br>
+            
+            </div>
+          </div>
+          <div class="col-12">
+            <hr class="mt-xl-4">
+        </div>
+
+</div>
+<br>
+<div class="container">
+  <div style="text-align:end ;">
+    <button class="btn btn-success btn-block" style="margin-top: 10px"  (click)="openPDF()">
+      Download
+    </button>
+  </div>
+</div>

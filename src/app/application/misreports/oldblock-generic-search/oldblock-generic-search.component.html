@@ -1,0 +1,139 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+      <div class="row justify-content-between">
+          <div class="col-lg-4">
+              <ul class="nav nav-tabs">
+                  <li class="nav-item">
+                      <a routerLink="/application/oldblockgenericsearch" class="nav-link active">Old Block Data Generic Search</a>
+                  </li>
+              </ul>
+          </div>
+      </div>
+  </div>
+  <div class="content-box">
+      <div class="row">
+          <div class="col-lg-6 col-xxl-6">
+              <div class="form-group">
+                  <label class="control-label mb-2">Enter Here</label><span class="text-danger">*</span>
+                  <input type="text" id="fieldValue" class="form-control" [placeholder]="checkPlaceHolder" name="fieldValue" autocomplete="off"  maxlength="50">
+              </div>
+          </div>
+          <div class="col align-self-end">
+              <div class="form-group">
+                  <button class="btn btn-success" (click)="search()">Search</button>
+                  &nbsp;
+                  <button class="btn btn-secondary" (click)="resetField()">Reset</button>
+              </div>
+          </div>
+      </div>
+  </div>
+  <ng-container *ngIf="showtable">
+      <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+          <div class="col-lg-4 col-xxl-4" style="padding-top: 10px; padding-left: 20px;" >
+            <div class="col-sm-*" *ngIf="showPegi">
+              show
+                  <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+                      <option value="50">50</option>
+                      <option value="100">100</option>
+                      <option value="150">150</option>
+                      <option value="200">200</option>
+                      <option value={{record}}>All</option>
+                  </select> entries &nbsp;&nbsp;
+            </div>
+          </div>
+          <div class="col-lg-4 col-xxl-4" style="text-align: right; padding-top: 3px;">
+              <button class="btn btn-outline-success btn-sm me-1" tooltip="Excel" (click)="downloadReport()">
+                  <i class="bi bi-file-earmark-spreadsheet" style="font-size: 11pt;"></i>
+              </button> &nbsp;
+              <!-- <button class="btn btn-outline-danger btn-sm me-1" tooltip="pdf" (click)="downloadReport()">
+                  <i class="bi bi-file-earmark-pdf" style="font-size: 11pt;"></i>
+              </button> -->
+          </div>
+          <div class="col-lg-4 col-xxl-4">
+              <div class="input-group">
+                  <input type="text" id="txtsearchDate" class="form-control" placeholder="Search here..." name="txtsearchDate"
+                      [(ngModel)]="txtsearchDate" autocomplete="off">
+              </div>
+          </div>
+      </div>
+      <div class="content-box p-0 overflow-hidden" >
+          <div class="table-responsive">
+              <table class="table table-striped mb-0">
+                  <thead>
+                      <tr>
+                          <th width="40">Sl No</th>
+                          <th>urn</th>
+                          <th>Hospital Name</th>
+                          <th>Patient Name</th>
+                          <th>Patient Phone No</th>
+                          <th>Actual Date Of Admission</th>
+                          <th>Date Of Admission</th>
+                          <th>Actual Date Of Discharge</th>
+                          <th>Date Of Discharge</th>
+                          <th>Claim Status</th>
+                          <th>Remarks</th>
+                          <th>Sna Remarks</th>
+                          <th>Approved User</th>
+                          <th>Rejected User</th>
+                          <th>Investigation User</th>
+                          <th>Sna Approved User</th>
+                          <th>Sna Rejected User</th>
+                          <th>Sna Investigation User</th>
+                          <th>Sna Final Decision User</th>
+                          <th>Paid User</th>
+                          <th>TPA Final Decision User</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr *ngFor="let item of list  | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};
+                          index as i">
+                          <td *ngIf="currentPage==1">{{(i+1)}}</td>
+                          <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+ i+1}}</td>
+                          <!-- <td width="100" [innerHTML]="item.grievance_number | searchTextHighlighter: dataResult"></td> -->
+                          <td width="100" [innerHTML]="item.urn | searchTextHighlighter: fieldvalue"></td>
+                          <td width="100" [innerHTML]="item.hospitalname | searchTextHighlighter: fieldvalue"></td>
+                          <td width="100" [innerHTML]="item.patientName | searchTextHighlighter: fieldvalue"></td>
+                          <td>{{item.phone}}</td>
+                          <td>{{item.actualDateOfAdmission}}</td>
+                          <td>{{item.dateofadmission}}</td>
+                          <td>{{item.actualDateOfDischarge}}</td>
+                          <td>{{item.dateofdischarge}}</td>
+                          <td>{{item.claimstatus}}</td>
+                          <td>{{item.remarks}}</td>
+                          <td>{{item.snaremarks}}</td>
+                          <td>{{item.approveduser}}</td>
+                          <td>{{item.rejecteduser}}</td>
+                          <td>{{item.investigationuser}}</td>
+                          <td>{{item.snaapproveduser}}</td>
+                          <td>{{item.snarejecteduser}}</td>
+                          <td>{{item.snainvestigationuser}}</td>
+                          <td>{{item.snafinaldecisionuser}}</td>
+                          <td>{{item.paiduser}}</td>
+                          <td>{{item.tpafinaldecisionuser}}</td>
+                      </tr>
+                      <tr *ngIf="record==0">
+                          <td colspan="12"  style="text-align: center;color:red">The Searched Data '{{fieldvalue}}' does not match with any of the search Field</td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+      </div>
+      <div class="row" style="margin-top: 20px;" *ngIf="showPegi">
+          <div class="col-sm-6">
+              <div class="col-sm-*">
+                  show
+                  <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+                      <option value="50">50</option>
+                      <option value="100">100</option>
+                      <option value="150">150</option>
+                      <option value="200">200</option>
+                      <option value={{record}}>All</option>
+                  </select> entries &nbsp;&nbsp;
+              </div>
+          </div>
+          <div class="col-sm-6">
+              <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true" (pageChange)="currentPage = $event" (pageBoundsCorrection)="onPageBoundsCorrection($event)" class="text-end"></pagination-controls>
+          </div>
+      </div>
+  </ng-container>
+</div>

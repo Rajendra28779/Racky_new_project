@@ -1,0 +1,35 @@
+[
+    {
+      "pagetitle":"View Reminder",
+      "tabList":[
+        {"tabName":"View Message","tabUrl":"../viewMessageEngine"},
+        {"tabName":"View Reminder","tabUrl":"../viewReminder","tabClass":"active"}],
+        
+        
+      "utils":[
+       
+        {"utilName":"search"},
+        {"utilName":"print"},
+        {"utilName":"delete"},
+        {"utilName":"publish"},
+        {"utilName":"unpublish"},
+        {"utilName":"download"}
+       
+        ],
+      "messages":
+        {
+        "successMsg":"Date saved successfully",
+        "errorMsg":"Something Went Wrong",
+        "warningtype":"You want to delete this record",
+        "deleteMsg":"Record has been deleted",
+        "schedularUrl":"Please Enter a URL",
+        "schedularUrlValid":"Please Enter a Valid URL",
+        "startDate":"Please select a StartDate",
+        "freqType":"Please select a frequency Type",
+        "freqDuration":"Please select frequency Duration"
+      }
+      
+    }
+  ]
+
+

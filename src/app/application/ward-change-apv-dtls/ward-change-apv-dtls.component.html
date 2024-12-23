@@ -1,0 +1,1588 @@
+<div class="form-cointainer claim-detail">
+  <div class="main-tab">
+    <div class="row justify-content-between">
+      <div class="col-lg-4">
+        <ul class="nav nav-tabs">
+          <li class="nav-item"><a routerlinkactive="active" class="nav-link active"
+              ng-reflect-router-link-active="active"> Ward Change Details </a></li>
+        </ul>
+      </div>
+      <div class="col-lg-6">
+        <app-utilite>
+          <div class="utilite float-end mb-1">
+            <ul class="mb-0">
+              <li class="bg-transparent border-0 d-none"><span class="text-danger small"><b>(*)</b> Indicate mandatory
+                </span></li>
+              <li class="d-none"><a href="javascript:void(0)" ngbtooltip="Click to Print"><i
+                    class="bi bi-printer"></i></a></li>
+              <li class="d-none"><a href="javascript:void(0)" ngbtooltip="Delete Record"><i class="bi bi-trash"></i></a>
+              </li>
+              <li class="d-none"><a href="javascript:void(0)" ngbtooltip="Download"><i class="bi bi-download"></i></a>
+              </li>
+              <li><a href="javascript:void(0)" ngbtooltip="Go to Previous"><i class="bi bi-arrow-left"></i></a></li>
+            </ul>
+          </div>
+        </app-utilite>
+      </div>
+    </div>
+  </div>
+  <div class="content-box p-0 border-0 bg-transparent">
+    <div class="row">
+      <div class="col-xl-12 col-lg-12 mb-2 mt-2">
+        <h4> Case No - <span class="num_bg"> {{blockInfo?.caseNo}} </span> </h4>
+      </div>
+      <div class="col-lg-12 col-xl-12 col-xxl-12 mb-4">
+        <div class="card shadow-sm basic-info">
+          <div class="card-header bg-color text-white">
+            <h5 class="mb-0"> Hospital Information</h5>
+          </div>
+          <div class="card-body">
+            <div class="row treatment-details">
+              <div class="col-xl-4 col-lg-4">
+                <div class="d-flex align-items-center  border-end">
+                  <div>
+                    <p class="small text-muted mb-1">Hospital Name</p>
+                    <h6 class="mb-0"> {{blockInfo?.hospitalName}} </h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-4 col-lg-4">
+                <div class="d-flex align-items-center  border-end">
+                  <div>
+                    <p class="small text-muted mb-1">Hospital Code</p>
+                    <h6 class="mb-0"> {{blockInfo?.hospitalCode}} </h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-4 col-lg-4">
+                <div class="d-flex align-items-center">
+                  <div>
+                    <p class="small text-muted mb-1">Hospital Category</p>
+                    <h6 class="mb-0"> {{blockInfo?.hospitalCatName}} </h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Hospital information -->
+      <div class="col-lg-12 col-xl-12 col-xxl-12 mb-4">
+        <div class="card shadow-sm basic-info">
+          <div class="card-header bg-color text-white">
+            <h5 class="mb-0"> Patient Information</h5>
+          </div>
+          <div class="card-body">
+            <div class="row treatment-details">
+              <div class="col-xl-3 col-lg-3">
+                <div class="d-flex align-items-center  border-end">
+                  <div>
+                    <p class="small text-muted mb-1">URN</p>
+                    <h6 class="mb-0"> {{blockInfo?.urn}} </h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-3 col-lg-3">
+                <div class="d-flex align-items-center  border-end">
+                  <div>
+                    <p class="small text-muted mb-1">Patient Name</p>
+                    <h6 class="mb-0"> {{blockInfo?.patientName}} </h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-3 col-lg-3">
+                <div class="d-flex align-items-center  border-end">
+                  <div>
+                    <p class="small text-muted mb-1">Gender</p>
+                    <h6 class="mb-0"> {{blockInfo?.gender}} </h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-3 col-lg-3">
+                <div class="d-flex align-items-center">
+                  <div>
+                    <p class="small text-muted mb-1">Patient Mobile No </p>
+                    <h6 class="mb-0"> {{blockInfo?.patientContactNumber}} </h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12">
+                <hr class="mt-xl-3">
+              </div>
+              <div class="col-xl-4 col-lg-4">
+                <div class="d-flex align-items-center  border-end">
+                  <div>
+                    <p class="small text-muted mb-1">Verified Member Name </p>
+                    <h6 class="mb-0">{{blockInfo?.verifierName}} </h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-4 col-lg-4">
+                <div class="d-flex align-items-center border-end">
+                  <div>
+                    <p class="small text-muted mb-1">Verified Through </p>
+                    <h6 class="mb-0" *ngIf="blockInfo?.verifyMode!=null">
+                      <a href="javascript:void(0);" class="mb-0 fw-500 link" data-bs-toggle="modal"
+                        data-bs-target="#AuthnticationDetailsModal" (click)="getAuthenticationdetails(1)"
+                        title="Click here to get authentication mode details">
+                        {{blockInfo?.verifyMode}} <i class="bi bi-box-arrow-up-right" style="height: 8pt;"></i>
+                      </a>
+                    </h6>
+                    <h6 class="mb-0" *ngIf="blockInfo?.verifyMode==null"> N/A</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-4 col-lg-4">
+                <div class="d-flex align-items-center">
+                  <div>
+                    <p class="small text-muted mb-1"> Mobile No Verfied Through OTP </p>
+                    <h6 class="mb-0"> {{blockInfo?.isOtpVerify}} </h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- patient information -->
+      <div class="col-lg-12 col-xl-12 col-xxl-12">
+        <div class="card shadow-sm basic-info">
+          <div class="card-header bg-color text-white">
+            <h5 class="mb-0"> Treatment Information</h5>
+          </div>
+          <div class="card-body p-0">
+            <div class="col-xl-12 col-lg-12 p-3">
+              <div class="row treatment-details">
+                <div class="col-xl-4 col-lg-4">
+                  <div class="d-flex align-items-center  border-end">
+                    <div>
+                      <p class="small text-muted mb-1">Speciality Code</p>
+                      <h6 class="mb-0"> {{blockInfo?.packageCode}} </h6>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-4 col-lg-4">
+                  <div class="d-flex align-items-center  border-end">
+                    <div>
+                      <p class="small text-muted mb-1">Procedure Code</p>
+                      <h6 class="mb-0"> {{blockInfo?.procedureCode}}</h6>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-4 col-lg-4">
+                  <div class="d-flex align-items-center">
+                    <div>
+                      <p class="small text-muted mb-1">Sub Package Code</p>
+                      <h6 class="mb-0"> {{blockInfo?.subPackageCode}}</h6>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <hr class="mt-xl-3">
+                </div>
+
+                <div class="col-xl-4 col-lg-4">
+                  <div class="d-flex align-items-center border-end">
+                    <div>
+                      <p class="small text-muted mb-1">Speciality Name </p>
+                      <a href="javascript:void(0);" *ngIf="blockInfo?.packageName!='NA'" class="mb-0"
+                        style="cursor: pointer;" data-bs-target="#packageDetailsModal" data-bs-toggle="modal"
+                        title="Click here to get package details"
+                        (click)="getPackageDetails(blockInfo?.packageCode,blockInfo?.packagesubcategorycode,blockInfo?.procedureCode)">
+                        {{blockInfo?.packageName}} <i class="bi bi-box-arrow-up-right"></i></a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xl-4 col-lg-4">
+                  <div class="d-flex align-items-center border-end">
+                    <div>
+                      <p class="small text-muted mb-1">Procedure Name </p>
+                      <h6 class="mb-0"> {{blockInfo?.procedureName}} </h6>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-4 col-lg-4">
+                  <div class="d-flex align-items-center">
+                    <div>
+                      <p class="small text-muted mb-1">Sub Package Name </p>
+                      <h6 class="mb-0"> {{blockInfo?.subPackageName}} </h6>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <hr class="mt-xl-3">
+                </div>
+                <div class="col-xl-4 col-lg-4">
+                  <div class="d-flex align-items-center border-end">
+                    <div>
+                      <p class="small text-muted mb-1"> From Ward Name </p>
+                      <h6 class="mb-0"> {{blockInfo?.wardName}}</h6>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-4 col-lg-4">
+                  <div class="d-flex align-items-center  border-end">
+                    <div>
+                      <p class="small text-muted mb-1">Ward Change From</p>
+                      <h6 class="mb-0"> {{blockInfo?.wardchngfrom}} </h6>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-4 col-lg-4">
+                  <div class="d-flex align-items-center">
+                    <div>
+                      <p class="small text-muted mb-1">Ward Change To</p>
+                      <h6 class="mb-0"> {{blockInfo?.wardchngtoDate}} </h6>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <hr class="mt-xl-3">
+                </div>
+                  <div class="col-xl-3 col-lg-3">
+                    <div class="d-flex align-items-center border-end">
+                      <div>
+                        <p class="small text-muted mb-1">To Ward Name </p>
+                        <h6 class="mb-0"> {{blockInfo?.towardName}}</h6>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xl-3 col-lg-3">
+                    <div class="d-flex align-items-center border-end">
+                      <div>
+                        <p class="small text-muted mb-1">Ward Amount </p>
+                        <h6 class="mb-0"> {{blockInfo?.amount | currency:"":""}}</h6>
+                      </div>
+                    </div>
+                  </div>
+                <div class="col-xl-3 col-lg-3">
+                  <div class="d-flex align-items-center border-end">
+                    <div>
+                      <p class="small text-muted mb-1"> No Of Days</p>
+                      <h6 class="mb-0"> {{blockInfo?.noOfDays}} Days </h6>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-3 col-lg-3">
+                  <div class="d-flex align-items-center">
+                    <div>
+                      <p class="small text-muted mb-1"> Total Amount </p>
+                      <h6 class="mb-0"><span><i class="bi bi-currency-rupee"></i></span>{{blockInfo?.totalAmount |
+                        currency:"":""}} </h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xxl-12 col-xl-12 col-lg-12">
+              <div class="card-header border-top card_bg">
+                <h5 class="mb-0"> Pre-auth Details </h5>
+              </div>
+              <div class="card-body">
+                <table style="width: 100%;" class="table table-striped border mb-0 pt-0">
+                  <tbody>
+                    <tr>
+                      <td colspan="3" class="border-bottom-0 pl-0 pb-0">
+                        <div class="color-hed mb-2"> Total Package Cost </div>
+                      </td>
+                      <td style="text-align:right;" class="border-bottom-0 pl-0 pb-0">
+                        <span><i class="bi bi-currency-rupee"></i><b>{{blockInfo?.packageCost |
+                            currency:"":""}}</b></span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colspan="3" class="border-bottom-0 pl-0 pb-0">
+                        <div class="color-hed mb-2"> Family Available Fund </div>
+                      </td>
+                      <td style="text-align:right;" class="border-bottom-0 pl-0 pb-0"><span><i
+                            class="bi bi-currency-rupee"></i><b>{{blockInfo?.familyFund | currency:"":""}}</b></span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colspan="3" class="border-bottom-0 pl-0 pb-0">
+                        <div class="color-hed mb-2"> Female Available Fund </div>
+                      </td>
+                      <td style="text-align:right;" class="border-bottom-0 pl-0 pb-0"><span><i
+                            class="bi bi-currency-rupee"></i><b>{{blockInfo?.femailFund | currency:"":""}}</b></span>
+                      </td>
+                    </tr>
+                    <!-- <tr *ngIf="malefund">
+                                          <td colspan="3" class="border-bottom-0 pl-0 pb-0">
+                                              <div class="color-hed mb-2"> Available Fund </div>
+                                          </td>
+                                          <td style="text-align:right;" class="border-bottom-0 pl-0 pb-0"><span><i  class="bi bi-currency-rupee"></i><b>{{balanceInfo?.familyFund | currency:"":""}}</b></span></td>
+                                      </tr>
+                                      <tr *ngIf="femalefund">
+                                          <td colspan="3" class="border-bottom-0 pl-0 pb-0">
+                                              <div class="color-hed mb-2"> Available Fund </div>
+                                          </td>
+                                          <td style="text-align:right;" class="border-bottom-0 pl-0 pb-0"><span><i  class="bi bi-currency-rupee"></i><b>{{totalbance | currency:"":""}}</b></span></td>
+                                      </tr> -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="card-body pt-0">
+              <div class="col-lg-12 col-xl-12 col-xxl-12 mb-3">
+                <div class="mb-2">
+                  <h5 class="text-success"> Latest Document Uploaded </h5>
+                </div>
+                <table style=" width: 100%;" class="table table-striped border mb-0 pt-0 mb-3">
+                  <thead>
+                    <tr>
+                      <th style="text-align:left;" class="text-start titletxt"> Hospital Apply Date </th>
+                      <th style="text-align:left;" class="text-start titletxt"> Hospital Description </th>
+                      <th style="text-align:left;" class="text-start titletxt"> Document </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style="text-align:left;">
+                        <div> {{blockInfo?.requestDate}} </div>
+                      </td>
+                      <td style="text-align:left;">
+                        <p> {{blockInfo?.wardDesc}} </p>
+                      </td>
+                      <td style="text-align:left; width: 20%;" *ngIf="blockInfo?.wardDoc != '--'">
+                        <span class="icon-pdf">
+                          <a title="PDF File" (click)="download(blockInfo?.wardDoc,blockInfo?.actualDateOfAdmission)"><i
+                              class="bi bi-file-earmark-pdf me-2"></i></a>
+                        </span>
+                      </td>
+                      <td style="text-align:left;  width: 20%;" *ngIf="blockInfo?.wardDoc == '--'">
+                        {{blockInfo?.wardDoc}}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-12 col-xl-12 col-xxl-12">
+      <div class="row mt-4">
+        <div class="col-lg-12 accordion">
+          <div class="card shadow-sm treatment-history">
+            <div class="accordion-item" id="headingTwo">
+              <div class="accordion-button collapsed card-header bg-color " data-bs-toggle="collapse"
+                data-bs-target="#collapseImplant" aria-expanded="false" aria-controls="collapseTwo">
+                <h5 class="mb-0">Implant </h5>
+              </div>
+              <div id="collapseImplant" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                data-bs-parent="#accordionExample">
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table mb-0 border">
+                      <thead>
+                        <tr>
+                          <th style="text-align:left;" class="text-start titletxt"> Package Details </th>
+                          <th style="text-align:right;" class="text-end titletxt"> Unit </th>
+                          <th style="text-align:right;" class="text-end titletxt"> Price/Unit </th>
+                          <th style="text-align:right;" class="text-end titletxt"> Total Price </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of implantInfoArray; index as i">
+                          <td class="hidtbl-th pl-0 py-2">
+                            <div class="mb-2"> {{item.implantName}}</div>
+                          </td>
+                          <td style="text-align:right;" class="hidtbl-th pl-0"> {{item.unit}} </td>
+                          <td style="text-align:right;" class="hidtbl-th pl-0">
+                            <span><i class="bi bi-currency-rupee"></i>{{item.unitPerPrice | currency:"":""}}</span>
+                          </td>
+                          <td style="text-align:right;" class="hidtbl-th pl-0">
+                            <span><i class="bi bi-currency-rupee"></i>{{item.amount | currency:"":""}}</span>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-12 col-xl-12 col-xxl-12">
+      <div class="row mt-4">
+        <div class="col-lg-12 accordion">
+          <div class="card shadow-sm treatment-history">
+            <div class="accordion-item" id="headingTwo">
+              <div class="accordion-button collapsed card-header bg-color " data-bs-toggle="collapse"
+                data-bs-target="#collapseHighendDrugs" aria-expanded="false" aria-controls="collapseTwo">
+                <h5 class="mb-0">HighendDrugs</h5>
+              </div>
+              <div id="collapseHighendDrugs" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                data-bs-parent="#accordionExample">
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table mb-0 border">
+                      <thead>
+                        <tr>
+                          <th style="text-align:left;" class="text-start titletxt"> Package Details </th>
+                          <th style="text-align:right;" class="text-end titletxt"> Unit </th>
+                          <th style="text-align:right;" class="text-end titletxt"> Price/Unit </th>
+                          <th style="text-align:right;" class="text-end titletxt"> Total Price </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of headInfoArray; index as i">
+                          <td class=" pl-0 py-2">
+                            <div class="mb-2"> {{item.hedName}}</div>
+                          </td>
+                          <td style="text-align:right;" class=" pl-0">
+                            {{item.hedUnit}}
+                          </td>
+                          <td style="text-align:right;" class=" pl-0">
+                            <span><i class="bi bi-currency-rupee"></i>{{item.hedpricePerUnit| currency:"":""}}</span>
+                          </td>
+                          <td style="text-align:right;" class=" pl-0">
+                            <span><i class="bi bi-currency-rupee"></i>{{item.hedPrice | currency:"":""}}</span>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Treatment information -->
+    <div class="col-lg-12 col-xl-12 col-xxl-12">
+      <div class="row mt-4">
+        <div class="col-lg-12 accordion">
+          <div class="card shadow-sm treatment-history">
+            <div class="accordion-item" id="headingTwo">
+              <div class="accordion-button collapsed card-header bg-color" data-bs-toggle="collapse"
+                data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                <h5 class="mb-0">Treatment History</h5>
+              </div>
+              <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                data-bs-parent="#accordionExample">
+                <div class="card-body">
+                  <ul class="list-unstyled">
+                    <li><i class="iconbsky-list-icon me-2"></i> Check all discharged treatment information. </li>
+                    <div class="content-box">
+                      <div class="row">
+                        <div class="table-responsive">
+                          <table id="treatmentTable" class="table mb-0 border">
+                            <thead>
+                              <tr>
+                                <th>Sl#</th>
+                                <th>Claim No.</th>
+                                <th>URN</th>
+                                <th>Package Code</th>
+                                <th>Patient Name</th>
+                                <th>Hospital Name</th>
+                                <th>Admission Date</th>
+                                <th>Actual Admission Date</th>
+                                <th>Discharge Date</th>
+                                <th>Actual Discharge Date</th>
+                                <th>Hospital Claim Amount(₹)</th>
+                                <th>CPD Approved Amount(₹)</th>
+                                <th>SNA Approved Amount(₹)</th>
+                                <th>Status</th>
+                                <th>CPD Name</th>
+                                <th>Details</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <ng-container *ngIf="trtData?.length">
+                                <tr *ngFor="let item of trtData; index as i">
+                                  <td>{{i+1}}</td>
+                                  <td *ngIf="item.claimNo!=null">{{item.claimNo}}</td>
+                                  <td *ngIf="item.claimNo==null"></td>
+                                  <td>{{item.urn}}</td>
+                                  <td title={{item.packagename}}>{{item.packagecode}}</td>
+                                  <td>{{item.patientname}}</td>
+                                  <td>{{item.hospitalName}} ({{item.hospitalCode}})</td>
+                                  <td>{{item.dateofadmission}}</td>
+                                  <td>{{item.actualdateofadmission}}</td>
+                                  <td>{{item.dateofdischarge}}</td>
+                                  <td>{{item.actualdateofdischarge}}</td>
+                                  <td>{{item.totalamountclaimed}}</td>
+                                  <td *ngIf="item.cpdapprovedamount==null"></td>
+                                  <td *ngIf="item.cpdapprovedamount!=null">{{item.cpdapprovedamount}}</td>
+                                  <td *ngIf="item.snoapprovedamount==null"></td>
+                                  <td *ngIf="item.snoapprovedamount!=null">{{item.snoapprovedamount}}</td>
+                                  <td>{{item.actiontype}}</td>
+                                  <td style="width: 150px;" *ngIf="item.cpdName!=null">{{item.cpdName}}</td>
+                                  <td style="width: 150px;" *ngIf="item.cpdName==null"></td>
+                                  <td><a href="javascript:void(0)"
+                                      (click)="getDetails(item.transactiondetailsid,item.claimid,item.claimRaiseStatus,item.urn,item.packagecode)">Click
+                                      here</a></td>
+                                </tr>
+                              </ng-container>
+                              <tr *ngIf="! trtData?.length">
+                                <td colspan="8" style="text-align: center;" *ngIf="isVisible"><strong
+                                    class="text-danger">No data
+                                    found</strong></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </ul>
+                  <ul class="list-unstyled">
+                    <li><i class="iconbsky-list-icon me-2"></i> Check Old Claim information. </li>
+                    <div class="content-box">
+                      <div class="row">
+                        <div class="table-responsive">
+                          <table id="oldTreatmentTable" class="table mb-0 border">
+                            <thead>
+                              <tr>
+                                <th>Sl#</th>
+                                <th>URN</th>
+                                <th>Patient Name</th>
+                                <th>Hospital Name</th>
+                                <th>Date of Admission</th>
+                                <th>Actual Date of Admission</th>
+                                <th>Date of Discharge</th>
+                                <th>Actual Date of Discharge</th>
+                                <th>Claim Status</th>
+                                <th>Approved Amount(₹)</th>
+                                <th>Approved Date</th>
+                                <th>SNA Approved Amount(₹)</th>
+                                <th>SNA Approved Date</th>
+                                <th>Remarks</th>
+                                <th>SNA Remarks</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <ng-container *ngIf="trtData?.length">
+                                <tr *ngFor="let item of oldTrtData; index as i">
+                                  <td>{{i+1}}</td>
+                                  <td>{{item.urn}}</td>
+                                  <td>{{item.patientName}}</td>
+                                  <td>{{item.hospitalName}} ({{item.hospitalCode}})</td>
+                                  <td>{{item.dateOfAdmission | date :'dd-MMM-yyyy'}}</td>
+                                  <td>{{item.actualDateOfAdmission | date :'dd-MMM-yyyy'}}</td>
+                                  <td>{{item.dateOfDischarge | date :'dd-MMM-yyyy'}}</td>
+                                  <td>{{item.actualDateOfDischarge | date :'dd-MMM-yyyy'}}</td>
+                                  <td>{{item.claimstatus}}</td>
+                                  <td>{{item.approvedamount }}</td>
+                                  <td>{{item.approveddate | date :'dd-MMM-yyyy'}} </td>
+                                  <td>{{item.snaapprovedamount}}</td>
+                                  <td>{{item.snaapproveddate | date :'dd-MMM-yyyy'}} </td>
+                                  <td>{{item.remarks}}</td>
+                                  <td>{{item.snaremarks}}</td>
+                                </tr>
+                              </ng-container>
+                              <tr *ngIf="! trtData?.length">
+                                <td colspan="8" style="text-align: center;" *ngIf="isVisible"><strong
+                                    class="text-danger">No data
+                                    found</strong></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Treatment History -->
+    <div class="col-lg-12 col-xl-12 col-xxl-12">
+      <div class="row mt-4">
+        <div class="col-lg-12 accordion">
+          <div class="card shadow-sm treatment-history">
+            <div class="accordion-item" id="headingTwo">
+              <div class="accordion-button collapsed card-header bg-color " data-bs-toggle="collapse"
+                data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseTwo">
+                <h5 class="mb-0">Action Taken History </h5>
+              </div>
+              <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                data-bs-parent="#accordionExample">
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table mb-0 border">
+                      <thead>
+                        <tr>
+                          <th>Sl#</th>
+                          <th>Ward</th>
+                          <th>Block Date</th>
+                          <th>No Of Days</th>
+                          <th>Amount (₹)</th>
+                          <th>Description</th>
+                          <th>Doc</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of requestHistoryArray; index as i">
+                          <td>{{i+1}}</td>
+                          <td>{{item.wardName}}</td>
+                          <td>{{item.blockDate}}</td>
+                          <td>{{item.noOfDays}}</td>
+                          <td>{{item.totalAmount}}</td>
+                          <td>{{item.etxsnDesc}}</td>
+                          <td>
+                            <a href="javascript:void(0);" (click)="download(item.wardDoc,item.sDate)">
+                              <i class="bi bi-file-earmark-pdf" style="color: red; font-size: 24px;">
+                              </i>
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-12 col-xl-12 col-xxl-12">
+      <div class="row mt-4">
+        <div class="col-lg-12 accordion">
+          <div class="card shadow-sm treatment-history">
+            <div class="accordion-item" id="headingTwo">
+              <div class="accordion-button collapsed card-header bg-color" data-bs-toggle="collapse"
+                data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseTwo">
+                <h5 class="mb-0"> All information of Case No : <span class="text-primary">{{blockInfo?.caseNo}}</span>
+                </h5>
+              </div>
+              <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFour"
+                data-bs-parent="#accordionExample">
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table mb-0 border">
+                      <thead>
+                        <tr>
+                          <th>Patient Name </th>
+                          <th>Procedure Code</th>
+                          <th>Package Code</th>
+                          <th>Request Amount </th>
+                          <th>Approved Amount </th>
+                          <th>Blocked Amount</th>
+                          <th>Preauth</th>
+                          <th>Status</th>
+                          <th>Preauth Requested Date</th>
+                          <th>Blocking Date</th>
+                          <th>SNA Remark</th>
+                          <th>Details</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <ng-container *ngFor="let item of caseHistoryArray; index as i">
+                          <tr>
+                            <td> {{item.patientName}} </td>
+                            <td> {{item.procedureCode}} </td>
+                            <td title={{item.packageName}}> {{item.packageId}} </td>
+                            <td> {{item.requestAmount}} </td>
+                            <td> {{item.approvedAmount}} </td>
+                            <td> {{item.amountBlocked}} </td>
+                            <td> {{item.prerequired}} </td>
+                            <td> {{item.status}} </td>
+                            <td> {{item.requestDate}} </td>
+                            <td>{{item.blockinguserdate}}</td>
+                            <td> {{item.snaRemark}} </td>
+                            <td>
+                              <button class="btn btn-sm btn-primary" type="button"
+                                (click)="getCaseDetails(item.packageDetailsId)">
+                                <i class="bi bi-eye"></i>
+                              </button>
+                            </td>
+                          </tr>
+                          <tr *ngIf="details[i]">
+                            <td colspan="10">
+                              <table class="table table-sm">
+                                <thead>
+                                  <tr>
+                                    <th>Status</th>
+                                    <th>Block Date</th>
+                                    <th>Unblock Date</th>
+                                    <th>Admissino Type</th>
+                                    <th>Verification Mode</th>
+                                    <th>Remark By Hospital</th>
+                                    <th>Dr. Name</th>
+                                    <th>Document</th>
+                                    <th>SNA Description</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <td> {{item.status}} </td>
+                                    <td> {{item.blockDate}} </td>
+                                    <td> {{item.unblockDate}} </td>
+                                    <td> {{item.admissionType}} </td>
+                                    <td> {{item.verificationMode}} </td>
+                                    <td> {{item.remarkByHos}} </td>
+                                    <td> {{item.doctorName}} </td>
+                                    <td>
+                                      <ng-container *ngIf="item.doc1">
+                                        <span class="icon-pdf">
+                                          <a title="PDF File" (click)="download(item.doc1,item.sDate)"><i
+                                              class="bi bi-file-earmark-pdf me-2"></i></a>
+                                        </span>
+                                      </ng-container>
+                                      <ng-container *ngIf="item.doc2">
+                                        <span class="icon-pdf">
+                                          <a title="PDF File" (click)="download(item.doc2,item.sDate)"><i
+                                              class="bi bi-file-earmark-pdf me-2"></i></a>
+                                        </span>
+                                      </ng-container>
+                                      <ng-container *ngIf="item.doc3">
+                                        <span class="icon-pdf">
+                                          <a title="PDF File" (click)="download(item.doc3,item.sDate)"><i
+                                              class="bi bi-file-earmark-pdf me-2"></i></a>
+                                        </span>
+                                      </ng-container>
+                                    </td>
+                                    <td> {{item.snaDescription}} </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </td>
+                          </tr>
+                        </ng-container>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-12 col-xl-12 col-xxl-12">
+      <div class="row mt-4">
+        <div class="col-lg-12 accordion">
+          <div class="card shadow-sm treatment-history">
+            <div class="accordion-item" id="headingTwo">
+              <div class="accordion-button collapsed card-header bg-color" data-bs-toggle="collapse"
+                data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseTwo">
+                <h5 class="mb-0"> Ward History</h5>
+              </div>
+              <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingFour"
+                data-bs-parent="#accordionExample">
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table mb-0 border">
+                      <thead>
+                        <tr>
+                          <th>Ward Name </th>
+                          <th>From Date</th>
+                          <th>To Date</th>
+                          <th>No Of Days</th>
+                          <th>Ward amount </th>
+                          <th>Total Amount</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                          <tr *ngFor="let item of wardHistoryArray; index as i">
+                            <td> {{item.wardName}} </td>
+                            <td> {{item.wardfrom}} </td>
+                            <td> {{item.wardto}} </td>
+                            <td> {{item.noofdays}} </td>
+                            <td> {{item.wardcost | currency:"":""}} </td>
+                            <td> {{item.totalwardamount | currency:"":""}} </td>
+                          </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+    <div class="col-lg-12 col-xl-12 col-xxl-12">
+      <div class="row mt-4">
+
+        <div class="col-lg-12">
+
+          <div class="card shadow-sm">
+
+
+
+
+            <div class="card-body">
+
+              <div class="row">
+
+                <div class="col-xl-6 col-lg-6">
+
+                  <div class="bg__applied">
+                  <table class="table table-striped border mb-0 pt-0 w-100">
+                    <tbody>
+                      <tr>
+                        <td colspan="3" class="border-bottom-0 pl-0 pb-0">
+                          <div class="color-hed mb-2"> Applied From </div>
+                        </td>
+
+                        <td style="text-align:right;" class="border-bottom-0 pl-0 pb-0">
+                          <span><b>{{blockInfo?.wardchngfrom}}</b></span>
+                        </td>
+
+                      </tr>
+                      <tr>
+                        <td colspan="3" class="border-bottom-0 pl-0 pb-0">
+                          <div class="color-hed mb-2"> Ward From </div>
+                        </td>
+                        <td style="text-align:right;" class="border-bottom-0 pl-0 pb-0"><span><b>{{blockInfo?.wardName}}</b></span></td>
+
+
+                      </tr>
+                      <tr>
+                        <td colspan="3" class="border-bottom-0 pl-0 pb-0">
+                          <div class="color-hed mb-2"> Ward amount </div>
+                        </td>
+                        <td style="text-align:right;" class="border-bottom-0 pl-0 pb-0"><span><i
+                              class="bi bi-currency-rupee"></i><b>{{blockInfo?.fromwardcost | currency:"":""}}</b></span></td>
+
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                </div>
+
+                <div class="col-xl-6 col-lg-6">
+                  <div class="bg__appliednew">
+                  <table class="table table-striped border mb-0 pt-0 w-100">
+                    <tbody>
+                      <tr>
+
+                        <td colspan="3" class="border-bottom-0 pl-0 pb-0">
+                          <div class="color-hed mb-2"> Extension Of Stay Up To </div>
+                        </td>
+                        <td  class="border-bottom-0 pl-0 pb-0 text-end">
+                          <span><b>{{blockInfo?.wardchngtoDate}}</b></span>
+                        </td>
+                      </tr>
+
+                      <tr>
+
+                        <td colspan="3" class="border-bottom-0 pl-0 pb-0">
+                          <div class="color-hed mb-2"> Ward To </div>
+                        </td>
+                        <td  class="border-bottom-0 pl-0 pb-0 text-end"><span><b>{{blockInfo?.towardName}}</b></span></td>
+                      </tr>
+                      <tr>
+
+                        <td colspan="3" class="border-bottom-0 pl-0 pb-0">
+                          <div class="color-hed mb-2"> Ward amount </div>
+                        </td>
+                        <td style="text-align:right;" class="border-bottom-0 pl-0 pb-0"><span><i
+                              class="bi bi-currency-rupee"></i><b>{{blockInfo?.amount | currency:"":""}}</b></span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  </div>
+
+                </div>
+
+              </div>
+
+
+
+
+
+              <div class="row" *ngIf="action==1">
+                <div class="col-lg-4 col-xxl-4">
+                  <label class="col-form-label">Remarks <span class="text-danger">*</span></label>
+                  <ng-autocomplete #auto [data]="allremarks" name="id" id="id" placeholder="Select Remark"
+                    (selected)="getId($event)" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate"
+                    [searchKeyword]="keyword" (inputCleared)="clearEvent()" spellcheck="false">
+                  </ng-autocomplete>
+                  <ng-template #itemTemplate let-item>
+                    <a [innerHTML]="item.remarks"></a>
+                  </ng-template>
+                  <ng-template #notFoundTemplate let-notFound>
+                    <div [innerHTML]="notFound"></div>
+                  </ng-template>
+                </div>
+                <div class="col-lg-6 col-xxl-5">
+                  <label class="col-form-label">Description <span class="text-danger">*</span></label>
+                  <textarea class="form-control" rows="3" id="description" name="description" maxlength="500"
+                    placeholder="Enter description" #myInput (keypress)="keyPress($event)"></textarea>
+                  <span class="text-danger small">Characters Remaining: {{maxChars - myInput.value.length}}</span>
+                </div>
+              </div>
+
+
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+    <div class="d-grid gap-2 d-sm-block mt-3 mt-xl-3"  *ngIf="action==1">
+      <button id="Approve" class="btn btn-success me-2" (click)="submit($event)"
+        [disabled]="isApproved">Approve</button>
+      <button id="Reject" class="btn btn-danger me-2" (click)="submit($event)" [disabled]="isReject">Reject</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- PACKAGE DETAILS POPUP -->
+<div class="modal fade" id="packageDetailsModal" aria-labelledby="exampleModalLabel" data-bs-backdrop="static"
+  tabindex="-1" aria-hidden="true" data-bs-focus="false">
+  <div class="modal-dialog modal-xl modal-lg modal-dialog-centered" style="max-width: 75%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Package Details</h5>
+        <button type="button" #closebutton class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Current Package Details -->
+        <div class="accordion custom-accrodion" id="otpExample">
+          <div class="accordion-item mb-3 border-0">
+            <h5 class="accordion-header" id="headingOne">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#packageOne"
+                aria-expanded="true" aria-controls="packageOne">
+                Current Package Details
+              </button>
+            </h5>
+            <div id="packageOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+              data-bs-parent="#otpExample">
+              <div class="accordion-body p-0">
+                <div class="table-responsive mb-2 custom-tbl">
+                  <table class="table table-striped border">
+                    <thead class="tbl-topfix bgcolor-th">
+                      <tr>
+                        <th>Sl#</th>
+                        <th>
+                          Hospital Category
+                        </th>
+                        <th>
+                          Package Details
+                          <div class="fw-normal"> Code | Name </div>
+                        </th>
+                        <th>
+                          Sub Package Code
+                          <div class="fw-normal"> Procedure Code </div>
+                        </th>
+                        <th>
+                          Amount
+                          <div class="fw-normal"> Maximum Days </div>
+                        </th>
+                        <th>
+                          Pre-Auth Docs
+                        </th>
+                        <th>
+                          Claim Docs
+                        </th>
+                        <th>
+                          Ward Type
+                        </th>
+                        <th>
+                          Day Care
+                        </th>
+                        <th>
+                          Package Type
+                          <div class="fw-normal"> Exception | Category </div>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of pkgDetailsData index as i">
+                        <td data-th=" Sl#">{{i+1}}</td>
+                        <td data-th=" Hospital Category">
+                          <div class="mob-sec">
+                            <div class="fw-500"> {{item.hospitalCatName}} </div>
+                          </div>
+                        </td>
+                        <td data-th="Package & Sub-Package">
+                          <div class="mob-sec">
+                            <div class="fw-500"> {{item.packageCode}} </div>
+                            <div class="fw-normal"> {{item.packageName}} </div>
+                          </div>
+                        </td>
+                        <td data-th="Procedure Code">
+                          <div class="mob-sec">
+                            <div class="fw-500">{{item.subPackageCode}} </div>
+                            <div class="fw-normal">
+                              <div class="badge bg-outline-grey" role="alert"> {{item.procedureCode}} </div>
+                            </div>
+                          </div>
+                        </td>
+                        <td data-th="Amount | Days ">
+                          <div class="mob-sec">
+                            <div class="fw-500"> {{item.amount | currency:'':''}} </div>
+                            <div class="fw-normal"> <span class="badge bg-outline-success"> {{item.MaximumDays}} Days
+                              </span> </div>
+                          </div>
+                        </td>
+                        <td data-th="Pre-Auth Docs">
+                          <div class="mob-sec">
+                            <div class="fw-500">
+                              <span id="preAuthDocId">
+                                {{item.preAuthDocs.length>30?item.preAuthDocs.substring(0, 30) +
+                                '...':item.preAuthDocs}}
+                              </span>
+                              <span style="cursor: pointer; color: #1d89c9" id="showMoreId6"
+                                (click)="showPreDoc1(item.preAuthDocs)">
+                                {{item.preAuthDocs.length>30?'Show More':''}}
+                              </span>
+                              <span style="cursor: pointer; color: #1d89c9" id="showMoreId7"
+                                (click)="hidePreDoc1(item.preAuthDocs)"></span>
+                              <!-- {{item.preAuthDocs}}  -->
+                            </div>
+                          </div>
+                        </td>
+                        <td data-th="Claim Docs">
+                          <div class="mob-sec">
+                            <div class="fw-500">
+                              <span id="claimProcessDocId">
+                                {{item.claimProcessDocs.length>30?item.claimProcessDocs.substring(0, 30) +
+                                '...':item.claimProcessDocs}}
+                              </span>
+                              <span style="cursor: pointer; color: #1d89c9" id="showMoreId8"
+                                (click)="showClaimDoc1(item.claimProcessDocs)">
+                                {{item.claimProcessDocs.length>30?'Show More':''}}
+                              </span>
+                              <span style="cursor: pointer; color: #1d89c9" id="showMoreId9"
+                                (click)="hideClaimDoc1(item.claimProcessDocs)"></span>
+                              <!-- {{item.claimProcessDocs}}  -->
+                            </div>
+                          </div>
+                        </td>
+                        <td data-th="Type Details">
+                          <div class="mob-sec">
+                            <div class="fw-500"> {{blockInfo?.wardName}} </div>
+                          </div>
+                        </td>
+                        <td data-th="Type Details">
+                          <div class="mob-sec">
+                            <div class="fw-500"> {{item.DayCare}} </div>
+                          </div>
+                        </td>
+                        <td data-th="Package Type">
+                          <div class="mob-sec">
+                            <div class="fw-500"> {{item.exceptionType}} </div>
+                            <div class="fw-normal"> <span class="badge bg-outline-success"> {{item.packageCatType}}
+                              </span> </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr *ngIf="pkgDetailsData?.length==0">
+                        <td colspan="14" style="text-align: center;"><strong class="text-danger">No data found</strong>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Current Package Details -->
+        <!-- Overall Package Details -->
+        <div class="accordion custom-accrodion" id="otpExample">
+          <div class="accordion-item mb-3 border-0">
+            <h5 class="accordion-header" id="headingOne">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#packageTwo"
+                aria-expanded="true" aria-controls="packageTwo">
+                Overall Package Details
+              </button>
+            </h5>
+            <div id="packageTwo" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+              data-bs-parent="#otpExample">
+              <div class="accordion-body p-0">
+                <div class="table-responsive mb-2 custom-tbl" style="max-height: 400px;">
+                  <table class="table table-striped border">
+                    <thead class="tbl-topfix bgcolor-th">
+                      <tr>
+                        <th>Sl#</th>
+                        <th>
+                          Hospital Category
+                        </th>
+                        <th>
+                          Package Details
+                          <div class="fw-normal"> Code | Name </div>
+                        </th>
+                        <th>
+                          Sub Package Details
+                          <div class="fw-normal"> Code | Name </div>
+                        </th>
+                        <th>
+                          Procedure Code
+                        </th>
+                        <th>
+                          Amount
+                          <div class="fw-normal"> Maximum Days </div>
+                        </th>
+                        <th>
+                          Pre-Auth Docs
+                        </th>
+                        <th>
+                          Claim Docs
+                        </th>
+                        <th>
+                          Ward Type
+                        </th>
+                        <th>
+                          Day Care
+                        </th>
+                        <th>
+                          Package Type
+                          <div class="fw-normal"> Exception | Category </div>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of overAllDetailsData index as i">
+                        <td data-th=" Sl#">{{i+1}}</td>
+                        <td data-th=" Hospital Category">
+                          <div class="mob-sec">
+                            <div class="fw-500"> {{item.hospitalCatName}} </div>
+                          </div>
+                        </td>
+                        <td data-th="Package & Sub-Package">
+                          <div class="mob-sec">
+                            <div class="fw-500"> {{item.packageCode}} </div>
+                            <div class="fw-normal"> {{item.packageName}} </div>
+                          </div>
+                        </td>
+                        <td data-th="Procedure Code">
+                          <div class="mob-sec">
+                            <div class="fw-500">{{item.subPackageCode}} </div>
+                            <div class="fw-normal">{{item.subCategoryName}} </div>
+                          </div>
+                        </td>
+                        <td data-th="Procedure Code">
+                          <div class="mob-sec">
+                            <div class="fw-500">{{item.procedureCode}} </div>
+                          </div>
+                        </td>
+                        <td data-th="Amount | Days ">
+                          <div class="mob-sec">
+                            <div class="fw-500"> {{item.amount | currency:'':''}} </div>
+                            <div class="fw-normal"> <span class="badge bg-outline-success"> {{item.MaximumDays}} Days
+                              </span> </div>
+                          </div>
+                        </td>
+                        <td data-th="Pre-Auth Docs">
+                          <div class="mob-sec">
+                            <div class="fw-500">
+                              <span id="preAuthDocId{{i+1}}">
+                                {{item.preAuthDocs.length>30?item.preAuthDocs.substring(0, 30) +
+                                '...':item.preAuthDocs}}
+                              </span>
+                              <span style="cursor: pointer; color: #1d89c9" id="showMoreId2{{i+1}}"
+                                (click)="showPreDoc((i+1),item.preAuthDocs)">
+                                {{item.preAuthDocs.length>30?'Show More':''}}
+                              </span>
+                              <span style="cursor: pointer; color: #1d89c9" id="showMoreId3{{i+1}}"
+                                (click)="hidePreDoc((i+1),item.preAuthDocs)"></span>
+                              <!-- {{item.preAuthDocs}}  -->
+                            </div>
+                          </div>
+                        </td>
+                        <td data-th="Claim Docs">
+                          <div class="mob-sec">
+                            <div class="fw-500">
+                              <span id="claimProcessDocId{{i+1}}">
+                                {{item.claimProcessDocs.length>30?item.claimProcessDocs.substring(0, 30) +
+                                '...':item.claimProcessDocs}}
+                              </span>
+                              <span style="cursor: pointer; color: #1d89c9" id="showMoreId4{{i+1}}"
+                                (click)="showClaimDoc((i+1),item.claimProcessDocs)">
+                                {{item.claimProcessDocs.length>30?'Show More':''}}
+                              </span>
+                              <span style="cursor: pointer; color: #1d89c9" id="showMoreId5{{i+1}}"
+                                (click)="hideClaimDoc((i+1),item.claimProcessDocs)"></span>
+                              <!-- {{item.claimProcessDocs}}  -->
+                            </div>
+                          </div>
+                        </td>
+                        <td data-th="Type Details">
+                          <div class="mob-sec">
+                            <div class="fw-500"> {{item.WardType}} </div>
+                          </div>
+                        </td>
+                        <td data-th="Type Details">
+                          <div class="mob-sec">
+                            <div class="fw-500"> {{item.DayCare}} </div>
+                          </div>
+                        </td>
+                        <td data-th="Package Type">
+                          <div class="mob-sec">
+                            <div class="fw-500"> {{item.exceptionType}} </div>
+                            <div class="fw-normal"> <span class="badge bg-outline-success"> {{item.packageCatType}}
+                              </span> </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr *ngIf="overAllDetailsData?.length==0">
+                        <td colspan="14" class="text-center"><strong class="text-danger">No data found</strong></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Overall Package Details -->
+        <br>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="AuthnticationDetailsModal" aria-labelledby="exampleModalLabel" data-bs-backdrop="static"
+  tabindex="-1" aria-hidden="true" data-bs-focus="false">
+  <div class="modal-dialog modal-xl modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Authentication Attempt Details Through Case Number:-
+          <span style="color: #1f723f;">{{blockInfo?.claimCaseNo}}</span>
+        </h5>
+        <button type="button" #closebutton class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- section otp -->
+        <div class="accordion custom-accrodion" id="otpExample">
+          <div class="accordion-item mb-3 border-0">
+            <h5 class="accordion-header" id="headingOne">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                aria-expanded="true" aria-controls="collapseOne">
+                OTP Details
+              </button>
+            </h5>
+            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+              data-bs-parent="#otpExample">
+              <div class="accordion-body p-0">
+                <div class="table-responsive mb-2 custom-tbl">
+                  <table class="table table-striped border">
+                    <thead class="tbl-topfix bgcolor-th">
+                      <tr>
+                        <th>Sl#</th>
+                        <th>Hospital Details</th>
+                        <th>Created On</th>
+                        <th>Verify Details</th>
+                        <th>Verified Member Name</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of otpdetaiils index as i" class="mob-box">
+                        <td data-th="Sl#">
+                          <div class="mob-sec">
+                            {{i+1}}
+                          </div>
+                        </td>
+                        <td data-th="Hospital Details">
+                          <div class="mob-sec">
+                            <div class="fw-500"> {{item.hospitalcode}} </div>
+                            <div class="fw-normal"> {{item.hospitalname}} </div>
+                          </div>
+                        </td>
+                        <td data-th="Created On">
+                          <div class="mob-sec">
+                            <div class="fw-500">
+                              {{item.createdon.toString().substring(0,11)}} </div>
+                            <div class="fw-normal">
+                              {{item.createdon.toString().substring(12,23)}} </div>
+                          </div>
+                        </td>
+                        <td data-th="Verify Details">
+                          <div class="mob-sec">
+                            <div class="fw-500"> {{item.verifiedthrough}} </div>
+                            <div class="fw-normal"> <span class="badge bg-outline-success">
+                                {{item.verifystatus}} </span> </div>
+                          </div>
+                        </td>
+                        <td data-th="Verified Member Name" class="fw-500">
+                          <div class="mob-sec">
+                            {{item.verifiedmembername}}
+                          </div>
+                        </td>
+                      </tr>
+                      <tr *ngIf="otpdetaiils?.length==0" style="text-align: center;">
+                        <td class="text-center" data-th="No Data Found" colspan="14" style="text-align: center;"><strong
+                            class="text-danger">No Data
+                            found</strong>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- section otp -->
+        <!-- IRIS Details -->
+        <div class="accordion custom-accrodion" id="irsexample">
+          <div class="accordion-item mb-3 border-0">
+            <h5 class="accordion-header" id="headingOne">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#irisNew"
+                aria-expanded="true" aria-controls="irisNew">
+                IRIS Details
+              </button>
+            </h5>
+            <div id="irisNew" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+              data-bs-parent="#irsexample">
+              <div class="accordion-body p-0">
+                <div class="table-responsive mb-2 custom-tbl">
+                  <table class="table table-striped border">
+                    <thead class="tbl-topfix bgcolor-th">
+                      <tr>
+                        <th>Sl#</th>
+                        <th>Hospital Details</th>
+                        <th>Created On</th>
+                        <th>Verified Details</th>
+                        <th>Verified Member Name</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="mob-box" *ngFor="let item of irisdetails index as i">
+                        <td data-th="Sl#">
+                          <div class="mob-sec"> {{i+1}} </div>
+                        </td>
+                        <td data-th="Hospital Details">
+                          <div class="mob-sec">
+                            <div class="fw-500"> ({{item.hospitalcode}})</div>
+                            <div class="fw-normal"> {{item.hospitalname}} </div>
+                          </div>
+                        </td>
+                        <td data-th="Created On">
+                          <div class="mob-sec">
+                            <div class="fw-500">
+                              {{item.createdon.toString().substring(0,11)}} </div>
+                            <div class="fw-normal">
+                              {{item.createdon.toString().substring(12,23)}} </div>
+                          </div>
+                        </td>
+                        <td data-th="Verified Details">
+                          <div class="mob-sec">
+                            <div class="fw-500"> {{item.verifiedthrough}} </div>
+                            <div class="fw-normal"> <span class="badge bg-outline-success">
+                                {{item.verifystatus}} </span> </div>
+                          </div>
+                        </td>
+                        <td data-th="Verified Member Name">
+                          <div class="mob-sec">
+                            <div class="fw-500"> {{item.verifiedmembername}} </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr *ngIf="irisdetails?.length==0">
+                        <td colspan="14" class="text-center"><strong class="text-danger">No
+                            Data
+                            Found</strong></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <!-- IRS Details -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- IRIS Details -->
+        <!-- POS Details -->
+        <div class="accordion custom-accrodion" id="posExample">
+          <div class="accordion-item mb-3 border-0">
+            <h5 class="accordion-header" id="headingOne">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#posNew"
+                aria-expanded="true" aria-controls="posNew">
+                POS Details
+              </button>
+            </h5>
+            <div id="posNew" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+              data-bs-parent="#posExample">
+              <div class="accordion-body p-0">
+                <div class="table-responsive mb-2 custom-tbl">
+                  <table class="table table-striped border">
+                    <thead class="tbl-topfix bgcolor-th">
+                      <tr>
+                        <th>Sl#</th>
+                        <th>Hospital Details</th>
+                        <th>Created On</th>
+                        <th>Verified Details</th>
+                        <th>
+                          POS Details
+                          <div class="fw-normal"> Code | Name </div>
+                        </th>
+                        <th>
+                          Verified Details
+                          <div class="fw-normal"> Date | Member Name </div>
+                        </th>
+                        <th>Authentication Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="mob-box" *ngFor="let item of posdetails index as i">
+                        <td data-th="Sl#">
+                          <div class="mob-sec"> {{i+1}} </div>
+                        </td>
+                        <td data-th="Hospital Details">
+                          <div class="mob-sec">
+                            <div class="fw-500"> {{item.hospitalcode}} </div>
+                            <div class="fw-normal"> {{item.hospitalname}} </div>
+                          </div>
+                        </td>
+                        <td data-th="Created On">
+                          <div class="mob-sec">
+                            <div class="fw-500">
+                              {{item.createdon.toString().substring(0,11)}} </div>
+                            <div class="fw-normal">
+                              {{item.createdon.toString().substring(12,23)}} </div>
+                          </div>
+                        </td>
+                        <td data-th="Verified Details">
+                          <div class="mob-sec">
+                            <div class="fw-500"> {{item.verifiedthrough}} </div>
+                            <div class="fw-normal"> <span class="badge bg-outline-success">
+                                {{item.verifystatus}} </span> </div>
+                          </div>
+                        </td>
+                        <td data-th="POS Details Code | name">
+                          <div class="mob-sec">
+                            <div class="fw-500"> {{item.POSCODE}} </div>
+                            <div class="fw-normal"> {{item.POSFLAG}} </div>
+                          </div>
+                        </td>
+                        <td data-th="Verified Details Date | Member Name">
+                          <div class="mob-sec">
+                            <div class="fw-500"> {{item.VERIFYDATE1}} </div>
+                            <div class="fw-normal"> {{item.verifiedmembername}} </div>
+                          </div>
+                        </td>
+                        <td data-th="Authentication Status">
+                          <div class="mob-sec">
+                            <div class="fw-500"> {{item.AUTHENTICATIONSTATUS}} </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr *ngIf="posdetails?.length==0">
+                        <td colspan="14" class="text-center"><strong class="text-danger">No
+                            Data
+                            Found</strong></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- POS Details -->
+        <!-- Face Auth Details -->
+        <div class="accordion custom-accrodion" id="faceecexample">
+          <div class="accordion-item mb-3 border-0">
+            <h5 class="accordion-header" id="headingOne">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#face"
+                aria-expanded="true" aria-controls="face">
+                Face Auth Details
+              </button>
+            </h5>
+            <div id="face" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+              data-bs-parent="#posExample">
+              <div class="accordion-body p-0">
+                <div class="table-responsive mb-2 custom-tbl">
+                  <table class="table table-striped border">
+                    <thead class="tbl-topfix bgcolor-th">
+                      <tr>
+                        <th>Sl#</th>
+                        <th>Hospital Details</th>
+                        <th>Created On</th>
+                        <th>Verified Details</th>
+                        <th>
+                          Face Auth
+                          <div class="fw-normal"> Code | Name </div>
+                        </th>
+                        <th>
+                          Verified Details
+                          <div class="fw-normal"> Date | Member Name </div>
+                        </th>
+                        <th>Authentication Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="mob-box" *ngFor="let item of facedetails index as i">
+                        <td data-th="Sl#">
+                          <div class="mob-sec"> {{i+1}} </div>
+                        </td>
+                        <td data-th="Hospital Details">
+                          <div class="mob-sec">
+                            <div class="fw-500"> {{item.hospitalCode}} </div>
+                            <div class="fw-normal"> {{item.hospitalName}} </div>
+                          </div>
+                        </td>
+                        <td data-th="Created On">
+                          <div class="mob-sec">
+                            <div class="fw-500">
+                              {{item.createdOn.toString().substring(0,11)}} </div>
+                            <div class="fw-normal">
+                              {{item.createdOn.toString().substring(12,23)}} </div>
+                          </div>
+                        </td>
+                        <td data-th="Verified Details">
+                          <div class="mob-sec">
+                            <div class="fw-500"> {{item.verifyThrough}} </div>
+                            <div class="fw-normal"> <span class="badge bg-outline-success">
+                                {{item.verifyStatus}} </span> </div>
+                          </div>
+                        </td>
+                        <td data-th="Face Details Code | name">
+                          <div class="mob-sec">
+                            <div class="fw-500"> {{item.faceAuthId}} </div>
+                            <div class="fw-normal"> {{item.faceAuthFlag}} </div>
+                          </div>
+                        </td>
+                        <td data-th="Verified Details Date | Member Name">
+                          <div class="mob-sec">
+                            <div class="fw-500"> {{item.verifyDate}} </div>
+                            <div class="fw-normal"> {{item.verifiedMemberName}} </div>
+                          </div>
+                        </td>
+                        <td data-th="Authentication Status">
+                          <div class="mob-sec">
+                            <div class="fw-500"> {{item.authenticationStatus}} </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr *ngIf="facedetails?.length==0">
+                        <td colspan="14" class="text-center"><strong class="text-danger">No
+                            Data
+                            Found</strong></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- POS Details -->
+</div>

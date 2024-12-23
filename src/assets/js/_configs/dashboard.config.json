@@ -1,0 +1,15 @@
+[
+      {
+       "pagetitle":"Dashboard",
+        "tabList":[],
+        "utils":[ ],
+        "messages":[
+          {"successMsg":"Date saved successfully"},
+          {"errorMsg":"Error in database"},
+          {"warningtype":"print"}
+         
+        ]
+      }
+    ]
+
+

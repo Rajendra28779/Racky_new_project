@@ -1,0 +1,342 @@
+<div class="content">
+  <div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/hospdetailsreport" routerLinkActive="active" class="nav-link active">Hospital Details Report</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- <div class="col-lg-6 ">
+                <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+            </div> -->
+        </div>
+    </div>
+
+    <!-- Hospital information -->
+    <div  class="col-lg-12 col-xl-12 col-xxl-12 mb-4">
+      <div  class="card shadow-sm basic-info">
+         <div  class="card-header bg-color">
+            <h5  class="mb-0" style="color:white;">{{result?.hospitalName}} ({{result?.hospitalCode}})</h5>
+         </div>
+         <div  class="card-body">
+            <div class="row treatment-details">
+               <div  class="col-xl-3 col-lg-3">
+                  <div  class="d-flex align-items-center  border-end">
+                     <div >
+                        <p  class="small text-muted mb-1">Hospital State Name</p>
+                        <h6  class="mb-0"> {{result?.districtcode?.statecode?.stateName}}  </h6>
+                     </div>
+                  </div>
+               </div>
+               <div  class="col-xl-3 col-lg-3">
+                  <div  class="d-flex align-items-center  border-end">
+                     <div >
+                        <p  class="small text-muted mb-1">Hospital District Name</p>
+                        <h6  class="mb-0"> {{result?.districtcode?.districtname}}  </h6>
+                     </div>
+                  </div>
+               </div>
+               <div  class="col-xl-3 col-lg-3">
+                  <div  class="d-flex align-items-center border-end">
+                     <div >
+                        <p  class="small text-muted mb-1">Hospital Mobile no </p>
+                        <h6  class="mb-0"> {{result?.mobile}} </h6>
+                     </div>
+                  </div>
+               </div>
+               <div  class="col-xl-3 col-lg-3">
+                  <div  class="d-flex align-items-center">
+                     <div >
+                        <p  class="small text-muted mb-1">Hospital Email</p>
+                        <h6  class="mb-0"> {{result?.emailId}} </h6>
+                     </div>
+                  </div>
+               </div>
+               <div  class="col-12">
+                <hr  class="mt-xl-3">
+             </div>
+             <div  class="col-xl-3 col-lg-3">
+              <div  class="d-flex align-items-center  border-end">
+                 <div >
+                    <p  class="small text-muted mb-1">Assigned SNA</p>
+                    <h6  class="mb-0" *ngIf="data?.snoName==null"> -N/A- </h6>
+                      <h6  class="mb-0" *ngIf="data?.snoName!=null">{{data?.snoName}} </h6>
+                 </div>
+              </div>
+           </div>
+             <div  class="col-xl-3 col-lg-3">
+              <div  class="d-flex align-items-center  border-end">
+                 <div >
+                    <p  class="small text-muted mb-1">Assigned DC</p>
+                    <h6  class="mb-0" *ngIf="data?.dcName==null"> -N/A- </h6>
+                    <h6  class="mb-0" *ngIf="data?.dcName!=null">{{data?.dcName}} </h6>
+                 </div>
+              </div>
+           </div>
+             <div  class="col-xl-3 col-lg-3">
+              <div  class="d-flex align-items-center  border-end">
+                 <div >
+                    <p  class="small text-muted mb-1">MOU Start date</p>
+                    <h6  class="mb-0"> {{result?.mouStartDate | date :'dd-MMM-yyyy'}}  </h6>
+                 </div>
+              </div>
+           </div>
+             <div  class="col-xl-3 col-lg-3">
+              <div  class="d-flex align-items-center ">
+                 <div >
+                    <p  class="small text-muted mb-1">Mou End Date</p>
+                    <h6  class="mb-0"> {{result?.mouEndDate | date :'dd-MMM-yyyy'}}  </h6>
+                 </div>
+              </div>
+           </div>
+               <div  class="col-12">
+                <hr  class="mt-xl-3">
+             </div>
+             <div  class="col-xl-3 col-lg-3">
+              <div  class="d-flex align-items-center  border-end">
+                 <div >
+                    <p  class="small text-muted mb-1">Hospital Catagory</p>
+                    <h6  class="mb-0"> {{data?.categoryName}}  </h6>
+                 </div>
+              </div>
+           </div>
+           <div  class="col-xl-3 col-lg-3">
+            <div  class="d-flex align-items-center  border-end">
+               <div >
+                  <p  class="small text-muted mb-1">Incentive Start Date</p>
+                  <h6  class="mb-0"> {{result?.hcValidFromDate | date :'dd-MMM-yyyy'}}  </h6>
+               </div>
+            </div>
+         </div>
+         <div  class="col-xl-3 col-lg-3">
+          <div  class="d-flex align-items-center border-end">
+             <div >
+                <p  class="small text-muted mb-1">Incentive End Date</p>
+                <h6  class="mb-0"> {{result?.hcValidToDate | date :'dd-MMM-yyyy'}}  </h6>
+             </div>
+          </div>
+       </div>
+         <div  class="col-xl-3 col-lg-3">
+          <div  class="d-flex align-items-center ">
+             <div >
+              <p  class="small text-muted mb-1">CPD Approval Required
+                <h6  class="mb-0" *ngIf="result?.cpdApprovalRequired==0"> Yes </h6>
+                <h6  class="mb-0" *ngIf="result?.cpdApprovalRequired!=0">No </h6>
+             </div>
+          </div>
+       </div>
+       <div  class="col-12">
+        <hr  class="mt-xl-3">
+     </div>
+                <div  class="col-xl-3 col-lg-3">
+                  <div  class="d-flex align-items-center border-end">
+                    <div >
+                      <p  class="small text-muted mb-1">Empanelment Status</p>
+                      <h6  class="mb-0" *ngIf="result?.empanelmentstatus==0"> Active </h6>
+                      <h6  class="mb-0" *ngIf="result?.empanelmentstatus!=0">In-Active </h6>
+                    </div>
+                  </div>
+              </div>
+                <div  class="col-xl-3 col-lg-3">
+                  <div  class="d-flex align-items-center border-end">
+                    <div >
+                      <p  class="small text-muted mb-1">MOU Status</p>
+                      <h6  class="mb-0" *ngIf="result?.mouStatus==0"> Active </h6>
+                      <h6  class="mb-0" *ngIf="result?.mouStatus!=0">In-Active </h6>
+                    </div>
+                  </div>
+              </div>
+              <div  class="col-xl-3 col-lg-3">
+                <div  class="d-flex align-items-center border-end">
+                  <div >
+                      <p  class="small text-muted mb-1">TMS Active Status</p>
+                      <h6  class="mb-0" *ngIf="tmsstatus==0"> Active </h6>
+                      <h6  class="mb-0" *ngIf="tmsstatus!=0">In-Active </h6>
+                  </div>
+                </div>
+            </div>
+            <div  class="col-xl-3 col-lg-3">
+              <div  class="d-flex align-items-center">
+                <div >
+                    <p  class="small text-muted mb-1">Status</p>
+                    <h6  class="mb-0" *ngIf="result?.status==0"> Active </h6>
+                      <h6  class="mb-0" *ngIf="result?.status!=0">In-Active </h6>
+                </div>
+              </div>
+            </div>
+
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <!-- Incentive Log
+   <div class="col-lg-12 col-xl-12 col-xxl-12 mb-4">
+    <div class="row mt-4">
+        <div class="col-lg-12 accordion">
+            <div class="card shadow-sm treatment-history">
+                <div class="accordion-item" id="data">
+                    <div class="accordion-button collapsed card-header bg-color" data-bs-toggle="collapse" data-bs-target="#collapse" aria-expanded="false" aria-controls="collapse">
+                      <h5  class="mb-0" style="color:white;">Incentive Log Details</h5>
+                    </div>
+                    <div id="collapse" class="accordion-collapse collapse hide" aria-labelledby="data" data-bs-parent="#accordionExample">
+                        <div class="card-body">
+                            <div class="table-responsive treatment-history-table-class">
+                                <table class="table mb-0 border treatment-history-table-head-class ">
+                                    <thead class="bgcolor-th">
+                                        <tr>
+                                          <th>Sl No</th>
+                                          <th>Incentive Start Date</th>
+                                          <th>Incentive End Date</th>
+                                          <th>Updated On</th>
+                                          <th>Hospital Type</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr *ngFor="let item of incentivelogdetails , index as i">
+                                        <td>{{i+1}}</td>
+                                        <td>{{item.hcvalidform}}</td>
+                                        <td>{{item.hcvalidto}}</td>
+                                        <td>{{item.createon}}</td>
+                                        <td>{{item.hospitalType}}</td>
+                                      </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+   <!-- Log Details -->
+   <div  class="col-lg-12 col-xl-12 col-xxl-12 mb-4">
+    <div  class="card shadow-sm basic-info">
+       <div  class="card-header bg-color">
+          <h5  class="mb-0" style="color:white;">Log Details</h5>
+       </div>
+       <div  class="card-body">
+          <div class="row treatment-details">
+            <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+              <div class="col-lg-3 col-xxl-3" style="padding-top: 10px; padding-left: 17px;">
+                  <div class="form-group" *ngIf="showPegi">
+                      show
+                      <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+                        <option value="20">20</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                        <option value={{logdetailstotal}}>All</option>
+                    </select> entries
+                  </div>
+              </div>
+              <div class="col-lg-3 col-xxl-3 text-center" style="padding-top: 10px;">
+                  <div class="form-group">
+                      <b>Total Record: <span style="color: green;">{{logdetailstotal}}</span></b>
+                  </div>
+              </div>
+              <div class="col-lg-2 col-xxl-2" style="text-align: right; padding-top: 3px;">
+                  <div class="form-group">
+                      <button class="btn btn-outline-success btn-sm me-1" type="submit" (click)="downloadReport(1)">
+                          <i class="bi bi-file-earmark-spreadsheet"></i>
+                      </button>
+                      &nbsp;
+                      <button class="btn btn-outline-danger btn-sm me-1" tooltip="pdf" (click)="downloadReport(2)">
+                          <i class="bi bi-file-earmark-pdf" ></i>
+                        </button>
+                  </div>
+              </div>
+              <div class="col-lg-4 col-xxl-4">
+                  <div class="input-group">
+                      <input type="text" id="txtsearchDate" class="form-control" placeholder="Search here" name="txtsearchDate"
+                          [(ngModel)]="txtsearchDate">
+                  </div>
+              </div>
+          </div>
+
+            <div class="table-responsive">
+              <table class="table table-striped" mb-0>
+                  <thead>
+                      <tr>
+                          <th width="60">Sl No</th>
+                          <th>Hospital Name</th>
+                          <th>Mobile No.</th>
+                          <th>Email id</th>
+                          <th>Assigned DC</th>
+                          <th>Hospital Type</th>
+                          <th width="150">Incentive Start Date</th>
+                          <th width="150">Incentive End Date</th>
+                          <th width="150">MOU Start Date</th>
+                          <th width="150">MOU End Date</th>
+                          <th style="text-align: center;">CPD Approval Required</th>
+                          <th>Empanelment Status</th>
+                          <th>MOU Status</th>
+                          <th>Status</th>
+                          <th>Updated By</th>
+                          <th>Updated On</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of logdetails | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage}; index as i">
+                      <td>{{i+1}}</td>
+                      <td>{{item.hospitalName}} ({{item.hospitalCode}})</td>
+                      <td>{{item.mobile}}</td>
+                      <td>{{item.emailId}}</td>
+                      <td>{{item.dcname}}</td>
+                      <td>{{item.typename}}</td>
+                      <td *ngIf="item.hcValidFromDate!=null">{{item.hcValidFromDate | date :'dd-MMM-yyyy'}}</td>
+                      <td *ngIf="item.hcValidFromDate==null">N/A</td>
+                      <td *ngIf="item.hcValidToDate!=null">{{item.hcValidToDate | date :'dd-MMM-yyyy'}}</td>
+                      <td *ngIf="item.hcValidToDate==null">N/A</td>
+                      <td *ngIf="item.mouStartDate!=null">{{item.mouStartDate | date :'dd-MMM-yyyy'}}</td>
+                      <td *ngIf="item.mouStartDate==null">N/A</td>
+                      <td *ngIf="item.mouEndDate!=null">{{item.mouEndDate | date :'dd-MMM-yyyy'}}</td>
+                      <td *ngIf="item.mouEndDate==null">N/A</td>
+                      <td *ngIf="item.cpdApprovalRequired==1">No</td>
+                      <td *ngIf="item.cpdApprovalRequired!=1">Yes</td>
+                      <td *ngIf="item.empanelmentstatus==0">Active</td>
+                      <td *ngIf="item.empanelmentstatus!=0">In-Active</td>
+                      <td *ngIf="item.mouStatus==0">Active</td>
+                      <td *ngIf="item.mouStatus!=0">In-Active</td>
+                      <td *ngIf="item.status==0">Active</td>
+                      <td *ngIf="item.status!=0">In-Active</td>
+                      <td>{{item.createname}}</td>
+                      <td>{{item.createdOn | date :'dd-MMM-yyyy'}}</td>
+                    </tr>
+                    <tr *ngIf="!showPegi">
+                      <div class="row ">
+                        <span style="color: red;text-align: center;position:absolute ">NO DATA FOUND!!</span>
+                      </div>
+                    </tr>
+                   </tbody>
+              </table>
+          </div>
+          <div class="row" *ngIf="showPegi">
+            <div class="col-sm-4">
+                <div class="col-sm-*">
+                    show
+                    <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+                        <option value="20">20</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                        <option value={{logdetailstotal}}>All</option>
+                    </select> entries
+                </div>
+            </div>
+            <div class="col-sm-8 text-right">
+                <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true"
+                    (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+            </div>
+        </div>
+
+          </div>
+      </div>
+    </div>
+   </div>
+
+  </div>
+</div>

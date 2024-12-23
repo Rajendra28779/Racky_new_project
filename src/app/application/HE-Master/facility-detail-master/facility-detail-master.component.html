@@ -1,0 +1,73 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs ">
+                    <li class="nav-item" *ngIf="isSaveData">
+                        <a routerLink="/application/facilitydetailadd" routerLinkActive="active"
+                            class="nav-link active">Add</a>
+                    </li>
+                    <li class="nav-item" *ngIf="isUpdateData">
+                        <a routerLink="/application/facilitydetailadd" routerLinkActive="active"
+                            class="nav-link active">Update</a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/application/facilitydetailview" routerLinkActive="active" class="nav-link"
+                            style="color: #1f723f;">View</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <div class="content-box">
+        <div class="col-xxl-10">
+            <form [formGroup]="Remarksfrom">
+                <div class="row">
+                    <div class="col-lg-4 col-xxl-4">
+                        <div class="mb-xl-3">
+                            <label class="control-label mb-2">Enter Facility Details</label><span class="text-danger">*</span>
+                            <div class="input-group">
+                                <input class="form-control" type="text" placeholder="Enter Facility Details"
+                                    name="facilityName" [value]="updateFacilitate.facilityName" autocomplete="off" id="facilityName" maxlength="100"
+                                    (keyup)="keyFunc1($event.target)"
+                                    >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                 <div class="col-lg-4 col-xxl-4" *ngIf="isUpdateData">
+                    <div class="mb-3">
+                        <label>Status:</label>&nbsp;&nbsp;
+                        <label *ngIf="statusFlag==0">
+                            <input type="radio" checked="checked" [checked]="true" (click)="yes($event)"
+                                name="statusFlag" id="statusFlag">Active &nbsp;&nbsp;
+                            <input type="radio" (click)="no($event)" name="statusFlag" id="statusFlag">In-Active
+                        </label>
+
+                        <label *ngIf="statusFlag==1">
+                            <input type="radio" (click)="yes($event)" name="statusFlag" id="statusFlag">Active
+                            &nbsp;&nbsp;
+                            <input type="radio" checked="checked" [checked]="true" (click)="no($event)"
+                                name="statusFlag" id="statusFlag">In-Active
+                        </label>
+                    </div>
+                </div>
+
+                <div>
+                        <div  *ngIf="isSaveData">
+                            <button type="button" class="btn btn-success" (click)="SubmitCreate()">Submit</button>&nbsp;
+                            <input type="button" value="Reset" class="btn btn-secondary"(click)="Reset()">
+                        </div>
+                        <div *ngIf="isUpdateData">
+                            <input type="submit" value="Update" class="btn btn-success"
+                                (click)="update(bankUpdate)">&nbsp;
+                            <input type="submit" value="Cancel" class="btn btn-secondary" (click)="cencel1()">
+                        </div>
+                    
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

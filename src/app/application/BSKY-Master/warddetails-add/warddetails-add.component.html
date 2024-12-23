@@ -1,0 +1,105 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs ">
+                    <li class="nav-item" *ngIf="isUpdateBtnInVisible">
+                        <a routerLink="/application/wardAdd" routerLinkActive="active" class="nav-link active">Add</a>
+                    </li>
+                    <li class="nav-item" *ngIf="!isUpdateBtnInVisible">
+                        <a routerLink="/application/warddetailsAdd" routerLinkActive="active"
+                            class="nav-link active">Update</a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/application/warddetailsView" routerLinkActive="active" class="nav-link"
+                            style="color: #1f723f;">View</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-6 ">
+                <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+            </div>
+        </div>
+    </div>
+    <div class="content-box">
+        <div class="col-xxl-10">
+            <form [formGroup]="Warddetailsfrom">
+                <div class="row">
+                    <div class="col-lg-4 col-xxl-4">
+                        <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                            <label class="control-label mb-2">Ward Master</label><span class="text-danger">*</span>
+                            <div class="input-group">
+                                <select class="form-select" id="wardMasterId" formControlName="wardMasterId"
+                                    name="wardMasterId" autocomplete="off" placeholder="Enter Ward Master Id"
+                                    [(ngModel)]="updateData.wardMasterId" maxlength="20"
+                                    (change)="selectWardMasterId($event.target.value);Ward.actStat=$event.target.value">
+                                    <option value="" disabled selected>Select Ward Master Id</option>
+                                    <option *ngFor="let p of wardlist" [value]="p.wardMasterId">
+                                   {{p.wardName}}({{p.procedureCode}})</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-xxl-4">
+                        <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                            <label class="control-label mb-2">Ward Code</label><span class="text-danger">*</span>
+                            <div class="input-group">
+                                <select class="form-select" id="wardCode" formControlName="wardCode"
+                                    name="wardCode" autocomplete="off" placeholder="Enter Ward Code"
+                                    [(ngModel)]="updateData.wardCode" maxlength="20">
+                                    <option value="" disabled selected>Select Ward Code</option>
+                                    <option *ngFor="let p of wardlist" [value]="p.wardCode">
+                                    {{p.wardCode}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-xxl-4">
+                        <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                            <label class="control-label mb-2">Hospital Category Id</label><span class="text-danger">*</span>
+                            <div class="input-group">
+                                <select type="text" class="form-select" formControlName="hospitalCategoryId" name="hospitalCategoryId"
+                                    id="hospitalCategoryId" [(ngModel)]="updateData.hospitalCategoryId">
+                                    <option value="" selected>Select Hospital Category</option>
+                                    <ng-container *ngFor="let data of hospitalCategory">
+                                        <option value={{data.hospitalCategoryId}}>{{data.hospitalCategoryName}}</option>
+                                    </ng-container>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-xxl-4">
+                        <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                            <label class="control-label mb-2">Ward Amount</label><span class="text-danger">*</span>
+                            <div class="input-group">
+                                <input class="form-control" id="packWardAmount" formControlName="packWardAmount" name="packWardAmount"
+                                    autocomplete="off" placeholder="Enter Pack Ward Amount" [(ngModel)]="updateData.packWardAmount"
+                                    (keypress)="numberOnly($event)" maxlength="10">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <label class="form-label d-none d-md-block">&nbsp;</label>
+                    <div class="d-grid gap-2 d-md-flex">
+                        <div *ngIf="!isUpdateBtnInVisible">
+                            <div>
+                                <button type="button" class="btn btn-success"
+                                    (click)="SubmitCreate()">Update</button>&nbsp;
+                                <input type="button" value="Cancel" class="btn btn-secondary" (click)="cancel()">
+                            </div>
+                        </div>
+                        <div *ngIf="isUpdateBtnInVisible">
+                            <div>
+                                <button type="button" class="btn btn-success"
+                                    (click)="SubmitCreate()">Submit</button>&nbsp;
+                                <input type="button" value="Reset" class="btn btn-secondary" (click)="ResetForm()">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>

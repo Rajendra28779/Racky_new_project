@@ -1,0 +1,185 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-10">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/hospitalciviinfraadd" routerLinkActive="active"
+                            class="nav-link" style="color: #1f723f;">Hospital Civil Infrastructure Updation</a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/application/hospitalciviinfraview" routerLinkActive="active"
+                            class="nav-link active">View</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3 col-xxl-3">
+            <div class="mb-xl-3">
+                <label class="control-label">State Name<span class="text-danger">*</span></label>
+                <select class="form-select" name="stateId" id="stateId" [(ngModel)]="stateId" (change)="OnChangeState($event.target.value)" [disabled]="groupType==5">
+                    <option value="" selected>Select State</option>
+                    <ng-container *ngFor="let item of stateList">
+                        <option value={{item.stateCode}}>{{item.stateName}}</option>
+                    </ng-container>
+                </select>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xxl-3">
+            <div class="mb-xl-3">
+                <label class="control-label">District Name
+                  <!-- <span class="text-danger">*</span> -->
+                </label>
+                <select class="form-select" name="districtId" id="districtId" [(ngModel)]="districtId" (change)="getHospitalList()" [disabled]="groupType==5">
+                    <option value="" selected>Select District</option>
+                    <ng-container *ngFor="let item of districtList">
+                        <option value={{item.districtcode}}>{{item.districtname}}</option>
+                    </ng-container>
+                </select>
+            </div>
+        </div>
+        <div class="col-lg-5 col-xxl-5">
+            <div class="mb-xl-3" *ngIf="groupType!=5">
+                <label class="control-label">Hospital Name</label>
+                <div class="input-group">
+                    <ng-autocomplete #auto [data]="hospitalList" placeholder="Select Hospital"
+                        (selected)="selectEvent2($event)" (inputCleared)="clearEvent2()" [itemTemplate]="itemTemplate2"
+                        [notFoundTemplate]="notFoundTemplate2" [searchKeyword]="keyword2" spellcheck="false">
+                    </ng-autocomplete>
+                    <ng-template #itemTemplate2 let-item>
+                        <a [innerHTML]="item.hospitalName"></a>
+                    </ng-template>
+                    <ng-template #notFoundTemplate2 let-notFound>
+                        <div [innerHTML]="notFound"></div>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="mb-xl-3" *ngIf="groupType==5">
+                <label class="control-label">Hospital Name</label>
+                <input class="form-control" type="text" autocomplete="off"
+                name="hospitalname" maxlength="30" [(ngModel)]="hospitalname" id="hospitalname"
+                disabled="disabled"/>
+            </div>
+        </div>
+        <div class="col-lg-12 mt-3">
+            <div class="d-grid gap-2 d-md-flex">
+                <button type="submit" class="btn btn-success" (click)="getHospitalCivilInfraList()">Search</button>
+                <button type="reset" class="btn btn-secondary" (click)="resetField()">Reset</button>
+            </div>
+        </div>
+    </div>
+    <ng-container *ngIf="civilInfraList?.length>0">
+        <div class="row" style="margin-top: 10px;margin-bottom: 10px;" *ngIf="showPegi">
+            <div class="col-lg-4 col-xxl-4" style="padding-top: 10px; padding-left: 17px;">
+                <b>Total Record: <span style="color: green;">{{civilInfraList?.length}}</span></b>
+            </div>
+            <div class="col-lg-4 col-xxl-4" style="text-align: right; padding-top: 1px;">
+                <div class="form-group">
+                    <button class="btn btn-outline-success btn-sm me-1" type="submit" (click)="downloadReport()">
+                    <i class="bi bi-file-earmark-spreadsheet" style="font-size: 13pt;"></i>
+                </button> &nbsp;
+                    <button class="btn btn-outline-danger btn-sm me-1" type="submit" (click)="downloadPdf()">
+                    <i class="bi bi-file-earmark-pdf" style="font-size: 13pt;"></i>
+                </button>
+                </div>
+            </div>
+            <div class="col-lg-4 col-xxl-4">
+                <input type="text" id="txtsearchDate" class="form-control" placeholder="Search here" name="txtsearchDate" [(ngModel)]="txtsearchDate" autocomplete="off">
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="table-responsive print-section">
+                <table class="table table-bordered valign-middle">
+                    <thead>
+                        <tr>
+                            <th width="40">Sl No</th>
+                            <th>Hospital Name</th>
+                            <th>State Name</th>
+                            <th>District Name</th>
+                            <th>Total Bed Strength</th>
+                            <th>No. Of InPatient  Bed</th>
+                            <th>Fully Equiped Operation Theatre</th>
+                            <th>Total No Of Beds Fully Equiped Operation Theatre</th>
+                            <th>OPD</th>
+                            <th>HDU</th>
+                            <th>No Of Bed HDU</th>
+                            <th>Details</th>
+                            <!-- <th>General Ward</th>
+                            <th>No Of Bed in General Ward</th>
+                            <th>ICU With Ventilitor</th>
+                            <th>No Of Bed in ICU With Ventilitor</th>
+                            <th>ICU With Out Ventilitor</th>
+                            <th>No Of Bed in ICU With Ventilitor</th>
+                            <th>Casualty</th>
+                            <th>No Of Bed Casualty</th>
+                            <th>Labour Room</th>
+                            <th>No Of Bed in Labour Room</th>
+                            <th>Blood Bank</th>
+                            <th>Ambulance service</th>
+                            <th>Patient Attendant Facility</th>
+                            <th>Diagnostic Centre Radiology</th>
+                            <th>Doctor Consultant Room</th> -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor=" let item of civilInfraList  | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};
+                            index as i">
+                            <td *ngIf="currentPage==1">{{(i+1)}}</td>
+                            <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+ i+1}}</td>
+                            <td>{{item.hospitalName}}</td>
+                            <td>{{item.stateName}}</td>
+                            <td>{{item.districtName}}</td>
+                            <td>{{item.totalBedStrength}}</td>
+                            <td>{{item.noOfInpatientBed}}</td>
+                            <td>{{item.fully_equ_oprn_thtr}}</td>
+                            <td>{{item.total_no_beds_fully_equ_oprn_thtr}}</td>
+                            <td>{{item.opd}}</td>
+                            <td>{{item.hdu}}</td>
+                            <td>{{item.total_bed_hdu}}</td>
+                            <!-- <td>{{item.general_ward}}</td>
+                            <td>{{item.total_bed_in_general_ward}}</td>
+                            <td>{{item.icu_with_ventilator}}</td>
+                            <td>{{item.total_bed_in_icu_with_ventilator}}</td>
+                            <td>{{item.icu_without_ventilator}}</td>
+                            <td>{{item.total_bed_in_icu_without_ventilator}}</td>
+                            <td>{{item.casualty}}</td>
+                            <td>{{item.total_no_of_bed_casualty}}</td>
+                            <td>{{item.labour_room}}</td>
+                            <td>{{item.total_no_of_bed_in_lbr_rm}}</td>
+                            <td>{{item.blood_bank}}</td>
+                            <td>{{item.ambulance_serv}}</td>
+                            <td>{{item.patient_attendant_facility}}</td>
+                            <td>{{item.diag_cent_radiology_basic}}</td>
+                            <td>{{item.doctor_consultant_rooms}}</td> -->
+                            <td>
+                                <a href="javascript:void(0);" class="btn btn-outline-success btn-sm" (click)="Details(item.civilInfraId)" >Details</a>
+                            </td>
+                        </tr>
+                        <tr *ngIf="civilInfraList?.length==0">
+                            <td colspan="12"  style="text-align: center;color:red">No Data Found</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row" style="margin-top: 20px;" *ngIf="showPegi">
+                <div class="col-sm-2">
+                    <div class="col-sm-*">
+                        show
+                        <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="{{civilInfraList.length}}">All</option>
+                        </select> entries &nbsp;&nbsp;
+                    </div>
+                </div>
+                <div class="col-sm-10 text-end">
+                    <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true" (pageChange)="currentPage = $event" (pageBoundsCorrection)="onPageBoundsCorrection($event)" class="text-end"></pagination-controls>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</div>

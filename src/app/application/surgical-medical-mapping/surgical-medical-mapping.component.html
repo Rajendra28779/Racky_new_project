@@ -1,0 +1,170 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="content-box">
+        <form [formGroup]="speciality" autocomplete="off">
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-4">
+                        <label class="control-label">Package Header<span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <select class="form-select" name="packageHeaderCode" id="packageHeaderCode" formControlName="packageHeaderCode" (change)="onChangeHeaderName($event.target.value)">
+                            <option value="" selected>Select Package Header</option>
+                            <ng-container *ngFor="let data of packageheadercodedetails">
+                                <option value={{data.packageheadercode}}>{{data.packageheadercode}}({{data.packageheader}})</option>
+                            </ng-container>
+                        </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-4">
+                        <label class="control-label">Package Subcategory<span class="text-danger"></span></label>
+                        <div class="input-group">
+                            <select class="form-select" name="packageSubcategor" id="packageSubcategor" formControlName="packageSubcategor" (change)="onChangeSubcategory($event.target.value)">
+                                <option value="" selected>Select Package Subcategory</option>
+                                <ng-container *ngFor="let data of packagesubcategorycodedetails">
+                                    <option value={{data.packagesubcode}}>
+                                        {{data.packagesubcode}}({{data.packagesubheader}})</option>
+                                </ng-container>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-4">
+                        <label class="control-label">Procedure Code<span class="text-danger"></span></label>
+                        <div class="input-group">
+                            <select class="form-select" name="procedureCode" id="procedureCode" formControlName="procedureCode" (change)="onChangeprocedurecode($event.target.value)">
+                                <option value="" selected>Select Procedure Code</option>
+                                <ng-container *ngFor="let data of procedurecodedata">
+                                    <option value={{data.procedurecode}}>
+                                        {{data.procedurecode}}({{data.subpackagename}})</option>
+                                </ng-container>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-4">
+                        <label class="control-label">Search Type<span class="text-danger"></span></label>
+                        <div class="input-group">
+                            <select class="form-select" name="search" id="serachtype" formControlName="serachtype" (change)="getserachtype($event.target.value)">
+                                <option value=0 selected>All</option>
+                                <option value=1>Surgical</option>
+                                <option value=2>Medical</option>
+                                <option value=3>Not Tagged</option>
+                        </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-4">
+                        <button type="submit " class="btn btn-success " style="margin-top: 24px;" (click)="getviewlist() ">Search</button>&nbsp;&nbsp;
+                        <button type="submit " class="btn btn-primary " style="margin-top: 24px;" (click)="getrest() ">Reset</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+            <div class="col-lg-8 col-xxl-8 row">
+                <div class="col-md-9">
+                    <div style="padding-top: 10px; font-weight: bold; color: green">Total Records: {{record!=null?record:"0"}}</div>
+                </div>
+                <div [align]="'start'" class="col-md-3">
+                    <button class="btn btn-danger" title="Download PDF" (click)="downloadReport('pdf')" style="float:right; margin-left: 5px;"><i class="bi bi-file-earmark-pdf"></i></button>
+                    <button class="btn btn-success" title="Download Excel" (click)="downloadReport('excel')" style="float: right"><i class="bi bi-download" ></i></button>
+                </div>
+            </div>
+            <div class="col-lg-4 col-xxl-4">
+                <div class="input-group">
+                    <input type="text" id="txtsearchDate" class="form-control" autocomplete="off" placeholder="Search" name="txtsearchDate" [(ngModel)]="txtsearchDate">
+                </div>
+            </div>
+        </div>
+        <div class="form-cointainer">
+            <div class="main-tab">
+                <div class="row justify-content-between">
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr class="small">
+                                    <th class="text-center"><input type="checkbox" id="allCheck" (change)="checkAllCheckBox($event)"></th>
+                                    <th class="text-center" width="50">Sl#</th>
+                                    <th class="text-center">Package Header Name</th>
+                                    <th class="text-center">Package Subcategory Name</th>
+                                    <th class="text-center">Procedure Code</th>
+                                    <th class="text-center">Preauth Required</th>
+                                    <th class="text-center">Maximum Days</th>
+                                    <th class="text-center">Mandatory Documents For Pre-Authorization</th>
+                                    <th class="text-center">Mandatory Documents For Claim Processing</th>
+                                    <th class="text-center">Package Extention</th>
+                                    <th class="text-center">Price Editable</th>
+                                    <th class="text-center">Package Under Exception</th>
+                                    <th class="text-center">Surgical Type</th>
+                                    <th class="text-center">Details</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngFor="let item of viewdata | filter:txtsearchDate; index as i">
+                                    <tr class="small" [ngClass]="item.surgicaltype =='MEDICAL'? {'medical':true}:item.surgicaltype =='SURGICAL'? {'surgical':true}:{'default':true}">
+                                        <td class="text-center"><input id="{{item.id}}" type="checkbox" (change)="tdCheck($event,item.id,item.procedurecode)"></td>
+                                        <td class="text-center">{{i+1}}</td>
+                                        <td class="text-center">{{item.packageheader}}</td>
+                                        <td class="text-center">{{item.subpackagename}}</td>
+                                        <td class="text-center">{{item.procedurecode}}</td>
+                                        <td class="text-center">{{item.mandatorypreauth}}</td>
+                                        <td class="text-center">{{item.maximumdays}}</td>
+                                        <td class="text-center">{{item.preauthdocs}}</td>
+                                        <td class="text-center">{{item.claimprocesseddocs}}</td>
+                                        <td class="text-center">{{item.packageextention}}</td>
+                                        <td class="text-center">{{item.priceeditable}}</td>
+                                        <td class="text-center">{{item.packageexceptionflag}}</td>
+                                        <td class="text-center">{{item.surgicaltype}}</td>
+                                        <td class="text-center ">
+                                            <a class="btn btn-outline-success btn-sm" (click)="getdetails(item.procedurecode)">Details</a>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                                <tr *ngIf=" this.viewdata.length==0">
+                                    <td colspan="14" class="text-center"><strong class="text-danger">No record
+                                                found</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="typehidestatus">
+            <div class="col-lg-4 col-xxl-4">
+                <div class="mb-xl-4">
+                    <label class="control-label">Surgical Type<span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <select class="form-select" name="typee" id="typee">
+                                <option value="" selected>Select Surgical Type</option>
+                                <option value="S">Surgical</option>
+                                <option value="M">Medical</option>
+                            </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="d-grid gap-2 d-md-flex">
+                    <button type="submit" value="Submit" class="btn btn-success" *ngIf="show" (click)="savespeciality()">Submit</button>
+                    <button type="reset" class="btn btn-secondary" *ngIf="show" (click)="reset()">Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

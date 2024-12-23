@@ -1,0 +1,741 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-8">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/cceoutbound" routerLinkActive="active" class="nav-link ">CCE
+                            Outbound Call</a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/application/cceoutboundview" routerLinkActive="active" class="nav-link active"
+                            style="color: #1f723f;">View Approval</a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/application/dcInitialTakeAction" routerLinkActive="active" class="nav-link">Initial Take Action</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="content-box mt-3">
+        <div class="col-xxl-10">
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label class="control-label mb-2">From Date</label><span class="text-danger">*</span>
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="date1" name="fromDate">
+                            <label class="input-group-text bg-transparent border-start-0" for="datepicker1"><i
+                                    class="iconbsky-calendar"></i> </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label class="control-label mb-2">To Date</label><span class="text-danger">*</span>
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="date2" name="toDate">
+                            <label class="input-group-text bg-transparent border-start-0" for="datepicker2"><i
+                                    class="iconbsky-calendar"></i> </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label class="control-label mb-2">Status</label>
+                        <select class="form-select" id="queryStatus" aria-label="Disabled select example">
+                            <option value="" selected>Select Status</option>
+                            <option value="0">Fresh</option>
+                            <option value="1">Query</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="control-label">State Name</label>
+                    <select class="form-select" name="stateId" id="stateId"
+                        (change)="OnChangeState($event)">
+                        <option value="" selected>Select State</option>
+                        <ng-container *ngFor="let item of stateList">
+                            <option value={{item.stateCode}}>{{item.stateName}}</option>
+                        </ng-container>
+                    </select>
+
+                </div>
+                <!--
+                Date         :-  05-09-2023
+                Modified By  :-  Rajendra prasad sahoo
+                purpose      :-  Adding MultiSelect Dropdown
+              -->
+                <div class="col-md-4">
+                    <label class="control-label">District Name</label>
+                    <!-- <select class="form-select" name="districtId" id="districtId"
+                        (change)="OnChangeDistrict($event)">
+                        <option value="" selected>Select District</option>
+                        <ng-container *ngFor="let item of districtList">
+                            <option value={{item.districtCode}}>{{item.districtName}}</option>
+                        </ng-container>
+                    </select> -->
+                    <div>
+                      <ng-multiselect-dropdown #multiSelect [placeholder]="placeholderdistrict" [data]="districtlistdataformultidropdown" [settings]="dropdownSettingsfrdistrict" id="DistrictCode" (onSelect)=onItemSelectfrdistrict($event) (onDeSelect)="onItemDeSelectfrdistrict($event)"
+                      [(ngModel)]="selectedItems"  (onSelectAll)="onSelectAllfrdistrict($event)" (onDeSelectAll)="onDeSelectAllfordistrict($event)">
+                      </ng-multiselect-dropdown>
+                    </div>
+
+                </div>
+                <div class="col-md-4">
+                    <label class="control-label">Hospital Name</label>
+                    <!-- <select class="form-select" name="hospital" id="hospital">
+                        <option value="" selected>Select Hospital</option>
+                        <ng-container *ngFor="let item of hospitalList">
+                            <option value={{item.hospitalCode}}>{{item.hospitalName}}</option>
+                        </ng-container>
+                    </select> -->
+                    <div>
+                      <ng-multiselect-dropdown #multiSelect [placeholder]="placeholderdistricthospital" [data]="hospitaldatadataformultidropdown" [settings]="dropdownSettingsfrhospitalist" id="HospitalCode" (onSelect)=onItemSelectfrhospital($event) (onDeSelect)="onItemDeSelectfrhospital($event)"
+                      [(ngModel)]="selectedItems1"  (onSelectAll)="onSelectAllfrhospital($event)" (onDeSelectAll)="onDeSelectAllforhospital($event)">
+                      </ng-multiselect-dropdown>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 mt-3">
+                <div class="d-grid gap-2 d-md-flex">
+                    <button type="submit" class="btn btn-success" (click)="onSearch()">Search</button>
+                    <button type="reset" class="btn btn-secondary" (click)="resetField()">Reset</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!--104 outbound call report-->
+    <!-- <div class="row mt-3">
+        <div class="col-xxl-5 col-xl-5 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+            <div class="border">
+                <div class="px-xxl-4 px-xl-3 py-xxl-3 py-xl-2 py-lg-2 px-lg-3 px-md-4 py-md-2 small-gap">
+
+                    <div class="row">
+                        <div class="d-flex">
+                            <div> <label class="card-complhead"> No. of grievance : </label> </div>
+                            <div> <label class="card-complhead"> {{cceCountData?.totalData}} </label> </div>
+                        </div>
+
+                        <div class="col-xxl-6 col-xl-6 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="warning-v">
+                            </div>
+                            <ng-template #default>
+                                <div class="warning-v">0%</div>
+                            </ng-template>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border-top"></div>
+                <div class="row p-new">
+                    <div
+                        class="col-lg-4 col-md-4 col-sm-4 col-xs-12 border-right py-xxl-3 py-xl-2 py-lg-2 px-xxl-4 px-xl-0 px-lg-2">
+                        <div class="d-flex bd-highlight circle-center">
+                            <div class="px-xxl-2 py-xxl-2 px-xl-0 py-xl-1 px-lg-0 py-lg-2">
+                                <div class="circle-completed">
+                                    <img src="../../../assets/img/approved.png" class="img-responsive text-center"
+                                        width="32">
+                                </div>
+                            </div>
+                            <div class="px-xxl-2 py-xxl-2 px-xl-2 py-xl-1 px-lg-0 py-lg-2">
+                                <label class="card-head color-g">{{cceCountData?.completed}}</label>
+                                <ng-template #fresh><span class="card-head b-green color-p">0</span></ng-template>
+                                <div class="card-small"> Action Taken </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="col-lg-4 col-md-4 col-sm-4 col-xs-12 border-right py-xxl-3 py-xl-2 py-lg-2 px-xxl-4 px-xl-0 px-lg-2">
+                        <div class="d-flex bd-highlight circle-center">
+                            <div class="px-xxl-2 py-xxl-2 px-xl-0 py-xl-1 px-lg-0 py-lg-2">
+                                <div class="circle-pending">
+                                    <img src="../../../assets/img/pending-new.png" class="img-responsive text-center"
+                                        width="32">
+                                </div>
+                            </div>
+                            <div class="px-xxl-2 py-xxl-2 px-xl-2 py-xl-1 px-lg-0 py-lg-2">
+                                <label class="card-head b-green color-p">{{cceCountData?.pending}}</label>
+                                <ng-template #query><span class="card-head b-green color-p">0</span></ng-template>
+                                <div class="card-small"> Pending </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                    class="col-lg-4 col-md-4 col-sm-4 col-xs-12  py-xxl-3 py-xl-2 py-lg-2 px-xxl-4 px-xl-0 px-lg-2">
+                    <div class="d-flex bd-highlight circle-center">
+                        <div class="px-xxl-2 py-xxl-2 px-xl-0 py-xl-1 px-lg-0 py-lg-2">
+                            <div class="circle-pending">
+                                <img src="../../../assets/img/revert.png" class="img-responsive text-center"
+                                    width="32">
+                            </div>
+                        </div>
+                        <div class="px-xxl-2 py-xxl-2 px-xl-2 py-xl-1 px-lg-0 py-lg-2">
+                            <label class="card-head b-green color-p">{{cceCountData?.querySentDGO}}</label>
+                            <ng-template #query><span class="card-head b-green color-p">0</span></ng-template>
+                            <div class="card-small"> Query Received </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <!--104 outbound call report-->
+
+
+
+    <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+        <div class="col-lg-4 col-xxl-4" style="padding-top: 10px; padding-left: 17px;">
+            <b>No. Of Records: <span style="color: green;">{{size}}</span></b>
+        </div>
+        <div class="col-lg-4 col-xxl-4" style="text-align: right; padding-top: 3px;">
+            <div class="form-group">
+                <button class="btn btn-outline-success btn-sm me-1" type="submit" (click)="downloadReport()">
+                    <i class="bi bi-download"></i>
+                </button>
+            </div>
+        </div>
+        <!-- <div class="col-md-3 col-lg-3 col-xl-3 col-xxl-3 ms-xxl-auto ms-xl-auto ms-lg-auto ms-md-auto"> -->
+        <div class="col-lg-4 col-xxl-4">
+            <div class="input-group">
+                <input type="text" id="txtsearchDate" class="form-control" placeholder="Search" name="txtsearchDate"
+                    autocomplete="off" [(ngModel)]="txtsearchDate">
+            </div>
+        </div>
+        <!-- </div> -->
+    </div>
+    <div class="row mt-3">
+        <div class="table-responsive pkg_tbl">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th width="60">Sl No. </th>
+                        <th width="150">
+                            <div> URN </div>
+                            <div class="th-small"> Patient Name </div>
+                        </th>
+                        <th width="150">
+                            <div> Patient Details </div>
+                        </th>
+
+                        <th width="150">
+                            <div> Call Response </div>
+                            <div class="th-small"> Active Status </div>
+                        </th>
+                        <th width="120">
+                            <div> Hospital Details </div>
+                        </th>
+
+                        <th width="150">
+                            <div> Allotted Date </div>
+                            <div class="th-small"> Date of Admission </div>
+                        </th>
+                        <th width="150">
+                            <div> Total Amount Blocked (₹) </div>
+                        </th>
+                        <th width="120">Take Action </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="!cceOutboundData?.length">
+                        <td colspan="17" class="text-center"><strong class="text-danger">No data found</strong></td>
+                    </tr>
+                    <ng-container
+                        *ngFor="let item of cceOutboundData | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};index as i">
+                        <tr [ngClass]="{'active_trbg' : item.status, 'query' : item.dgoQueryRemarks !=null}">
+                            <!-- <td class="th-small">1</td> -->
+                            <!-- <td class="th-small" *ngIf="currentPage==1">{{i+1}}</td>
+                            <td class="th-small" *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+i+1}}</td> -->
+                            <td class="th-small">{{i+pageIn}}</td>
+                            <td>
+                                <div class="color-hed">{{item.urn}} </div>
+                                <div class="th-small"> {{item.patientName}} </div>
+                            </td>
+                            <td>
+                                <div class="th-small mt-0">
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <div class="p-1 ic-loc"> <i class="bi bi-phone"></i> </div>
+                                        <div class="p-1 flex-fill"> {{item.mobileNo}}</div>
+                                    </div>
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <div class="p-1 ic-loc"> <i class="bi-geo-alt"></i> </div>
+                                        <div class="p-1 flex-fill"> {{item.districtName}},{{item.blockName}},
+                                            {{item.panchayatName}},{{item.villageName}} </div>
+                                    </div>
+                                </div>`
+                            </td>
+
+                            <td>
+                                <div class="color-hed"> {{item.callResponse}}</div>
+                                <ng-container *ngIf="item.mobileActiveStatus=='Yes'">
+                                    <div class="th-small badge badge-success mt-2"> {{item.mobileActiveStatus}} </div>
+                                </ng-container>
+                                <ng-container *ngIf="item.mobileActiveStatus=='No'">
+                                    <div class="th-small badge2 badge-danger mt-2"> {{item.mobileActiveStatus}} </div>
+                                </ng-container>
+                                <ng-container *ngIf="item.mobileActiveStatus=='Not Connected'">
+                                    <div class="th-small badge2 badge-danger mt-2"> {{item.mobileActiveStatus}} </div>
+                                </ng-container>
+                            </td>
+
+                            <td class="text-center">
+
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <div class="mt-0 me-3" align="center" data-bs-toggle="modal"
+                                        data-bs-target="#iconhosp" title="Hospital Details">
+                                        <div class="color-hed bg-fa"> <i class="bi bi-eye"
+                                                (click)="openHospDetails(item.cceId)"></i> </div>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="mt-0">
+                                    <div class="color-hed">{{item.alottedDate}} </div>
+                                    <div class="th-small"> {{item.dateOfAdm | date:'dd-MMM-yyyy'}} </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="color-hed">
+                                    {{item.totalAmountBlocked | currency:'':''}} </div>
+                            </td>
+                            <td>
+                                <!-- <ng-container *ngIf="item.mobileActiveStatus =='Yes'"> -->
+                                <button type="button" class="btn btn-outline-success btn-sm" title="View Details"
+                                    (click)="rowDetails(item.cceId,item.status = !item.status)">
+                                    <i class="bi bi-eye"></i> Details
+                                </button>
+                                <!-- </ng-container> -->
+                            </td>
+
+                        </tr>
+                        <tr *ngIf="item.status == true">
+                            <!-- hidden section start -->
+                            <td colspan="9" class="m-0 pt-0 pb-0 border-cols">
+                                <div>
+                                    <div class="row">
+                                        <div class="col-xxl-12 col-xl-12 col-lg-12">
+                                            <div class="row p-2">
+                                                <div class="col-xxl-12 col-xl-12 col-lg-12">
+                                                    <div class="row">
+                                                        <ng-container *ngIf="item.mobileActiveStatus == 'No'">
+                                                            <div class="col-xxl-3 col-xl-3 col-lg-3">
+
+                                                                <h4 class="border-bottom mb-2 top-head"> CCE Remarks
+                                                                </h4>
+
+                                                                <div class="hidtbl-th gap-bt p-0">
+
+                                                                    <p class="text-danger"
+                                                                        *ngIf="item.executiveRemarks==null">Remarks
+                                                                        Not Available</p>
+                                                                    <p>{{item.executiveRemarks}}</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xxl-3 col-xl-3 col-lg-3">
+                                                                <h4 class="border-bottom mb-2 top-head">DC Remarks </h4>
+
+                                                                <div class="hidtbl-th gap-bt p-0">
+
+                                                                    <p class="text-danger" *ngIf="item.dcRemarks==null">
+                                                                        Remarks
+                                                                        Not Available</p>
+                                                                    <p>{{item.dcRemarks}}</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xxl-3 col-xl-3 col-lg-3">
+                                                                <h4 class="border-bottom mb-2 top-head">DC Upload Document </h4>
+                                                                <div class="row hidtbl-th gap-bt p-0">
+                                                                    <div class="col-lg-12 col-xxl-12">
+                                                                        <ng-container *ngIf="item.doc1">
+                                                                            <button title="PDF File"
+                                                                                class="btn btn-danger btn-sm me-3"
+                                                                                (click)="downloadAction($event,item.doc1,item.hospitalCode,item.dateOfAdm,'')">
+                                                                                <i class="bi bi-file-earmark-pdf"></i>
+                                                                            </button>
+                                                                        </ng-container>
+                                                                        <ng-container *ngIf="item.doc2">
+                                                                            <button class="btn btn-danger btn-sm" title="Audio File"
+                                                                                (click)="downloadAction($event,item.doc2,item.hospitalCode,item.dateOfAdm,'')">
+                                                                                <i class="bi bi-music-note-beamed"></i>
+                                                                            </button>
+                                                                        </ng-container>
+                                                                        <ng-container *ngIf="item.doc3">
+                                                                            <button title="Video File"
+                                                                                class="btn btn-danger btn-sm"
+                                                                                (click)="downloadAction($event,item.doc3,item.hospitalCode,item.dateOfAdm,'')">
+                                                                                <i class="bi bi-camera-video"></i>
+                                                                            </button>
+                                                                        </ng-container>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xxl-3 col-xl-3 col-lg-3">
+                                                                <h4 class="border-bottom mb-2 top-head">DGO Query Remarks </h4>
+
+                                                                <div class="hidtbl-th gap-bt p-0">
+
+                                                                    <p class="text-danger" *ngIf="item.dgoQueryRemarks==null">
+                                                                        NA</p>
+                                                                    <p>{{item.dgoQueryRemarks}}</p>
+                                                                </div>
+                                                            </div>
+
+                                                        </ng-container>
+                                                        <ng-container *ngIf="item.mobileActiveStatus=='Yes'">
+                                                            <div class="col-xxl-8 col-xl-8 col-lg-6  border-right">
+
+                                                                <div class="row">
+                                                                    <div class="col-xxl-12 col-xl-12 col-lg-12">
+                                                                        <div class="row">
+                                                                            <div class="col-xxl-9 col-xl-9 col-lg-9">
+                                                                                <h4 class="border-bottom mb-2 top-head">
+                                                                                    Question </h4>
+                                                                            </div>
+                                                                            <div class="col-xxl-3 col-xl-3 col-lg-3">
+                                                                                <h4 class="border-bottom mb-2 top-head">
+                                                                                    Answer </h4>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div
+                                                                                class="col-xxl-9  col-xl-9 col-lg-9 mb-2">
+                                                                                Are you receiving cashless treatment
+                                                                                under
+                                                                                GJAY <div class="ques-odia">(ଆପଣ
+                                                                                    ଜି.ଜେ.ଏ.ୱାଇ ଅଧୀନରେ ନଗଦବିହୀନ
+                                                                                    ଚିକିତ୍ସା
+                                                                                    ଗ୍ରହଣ କରୁଛନ୍ତି କି)</div>
+
+                                                                            </div>
+
+                                                                            <div
+                                                                                class="col-xxl-3 col-xl-3 col-lg-3  mb-2  d-flex align-items-center">
+                                                                                <ng-container
+                                                                                    *ngIf="item.question1Response=='NO'">
+                                                                                    <div
+                                                                                        class="col-xxl-4 col-xl-3 col-lg-3 mb-2  d-flex align-items-center">
+                                                                                        <span class="text-danger">No
+                                                                                        </span>
+                                                                                    </div>
+                                                                                </ng-container>
+                                                                                <ng-container
+                                                                                    *ngIf="item.question1Response=='YES'">
+                                                                                    <div
+                                                                                        class="col-xxl-4 col-xl-3 col-lg-3 mb-2  d-flex align-items-center">
+                                                                                        <span class="text-success"> Yes
+                                                                                        </span>
+                                                                                    </div>
+                                                                                </ng-container>
+                                                                            </div>
+
+                                                                            <div
+                                                                                class="col-xxl-9  col-xl-9 col-lg-9 mb-2">
+                                                                                Are you satisfied with service? <div
+                                                                                    class="ques-odia">(ଆପଣ ସେବାରେ
+                                                                                    ସନ୍ତୁଷ୍ଟ
+                                                                                    କି?)</div>
+                                                                            </div>
+
+                                                                            <div
+                                                                                class="col-xxl-3 col-xl-3 col-lg-3  mb-2  d-flex align-items-center">
+                                                                                <ng-container
+                                                                                    *ngIf="item.question2Response=='YES'">
+                                                                                    <div
+                                                                                        class="col-xxl-4 col-xl-3 col-lg-3 mb-2  d-flex align-items-center">
+                                                                                        <span class="text-success">Yes
+                                                                                        </span>
+                                                                                    </div>
+                                                                                </ng-container>
+                                                                                <ng-container
+                                                                                    *ngIf="item.question2Response=='NO'">
+                                                                                    <div
+                                                                                        class="col-xxl-4 col-xl-3 col-lg-3 mb-2  d-flex align-items-center">
+                                                                                        <span class="text-danger">No
+                                                                                        </span>
+                                                                                    </div>
+                                                                                </ng-container>
+                                                                            </div>
+
+
+                                                                            <div
+                                                                                class="col-xxl-9  col-xl-9 col-lg-9 mb-2">
+                                                                                Whether you have paid any extra money
+                                                                                for
+                                                                                treatment under GJAY <div
+                                                                                    class="ques-odia">
+                                                                                    (ଆପଣ ଜି.ଜେ.ଏ.ୱାଇ ଅଧୀନରେ ଚିକିତ୍ସା
+                                                                                    ପାଇଁ
+                                                                                    କୌଣସି ଅତିରିକ୍ତ ଟଙ୍କା ଦେଇଛନ୍ତି କି)
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div
+                                                                                class="col-xxl-3 col-xl-3 col-lg-3  mb-2  d-flex align-items-center">
+                                                                                <ng-container
+                                                                                    *ngIf="item.question3Response=='NO'">
+                                                                                    <div
+                                                                                        class="col-xxl-4 col-xl-3 col-lg-3 mb-2  d-flex align-items-center">
+                                                                                        <span class="text-success">No
+                                                                                        </span>
+                                                                                    </div>
+                                                                                </ng-container>
+                                                                                <ng-container
+                                                                                    *ngIf="item.question3Response=='YES'">
+                                                                                    <div
+                                                                                        class="col-xxl-4 col-xl-3 col-lg-3 mb-2  d-flex align-items-center">
+                                                                                        <span class="text-danger">Yes
+                                                                                        </span>
+                                                                                    </div>
+                                                                                </ng-container>
+                                                                            </div>
+
+                                                                            <div
+                                                                                class="col-xxl-9  col-xl-9 col-lg-9 mb-2">
+                                                                                Did Swasthya Mitra facilitate your care
+                                                                                <div class="ques-odia">(ସ୍ୱାସ୍ଥ୍ୟ ମିତ୍ର
+                                                                                    ଆପଣଙ୍କ ଯତ୍ନକୁ ସୁଗମ କରିଥିଲେ କି?)
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div
+                                                                                class="col-xxl-3 col-xl-3 col-lg-3  mb-2  d-flex align-items-center">
+
+                                                                                <ng-container
+                                                                                    *ngIf="item.question4Response=='YES'">
+                                                                                    <div
+                                                                                        class="col-xxl-4 col-xl-3 col-lg-3 mb-2  d-flex align-items-center">
+                                                                                        <span class="text-success">Yes
+                                                                                        </span>
+                                                                                    </div>
+                                                                                </ng-container>
+                                                                                <ng-container
+                                                                                    *ngIf="item.question4Response=='NO'">
+                                                                                    <div
+                                                                                        class="col-xxl-4 col-xl-3 col-lg-3 mb-2  d-flex align-items-center">
+                                                                                        <span class="text-danger">No
+                                                                                        </span>
+                                                                                    </div>
+                                                                                </ng-container>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xxl-4 col-xl-4 col-lg-6">
+
+                                                                <h4 class="border-bottom mb-2 top-head"> CCE Remarks
+                                                                </h4>
+
+                                                                <div class="hidtbl-th gap-bt p-0">
+
+                                                                    <p class="text-danger"
+                                                                        *ngIf="item.executiveRemarks==null">Remarks
+                                                                        Not Available</p>
+                                                                    <p>{{item.executiveRemarks}}</p>
+                                                                </div>
+                                                                <h4 class="border-bottom mb-2 top-head">DC Remarks </h4>
+
+                                                                <div class="hidtbl-th gap-bt p-0">
+
+                                                                    <p class="text-danger" *ngIf="item.dcRemarks==null">
+                                                                        Remarks
+                                                                        Not Available</p>
+                                                                    <p>{{item.dcRemarks}}</p>
+                                                                    <div class="row">
+                                                                        <div class="col-lg-12 col-xxl-12">
+                                                                            <ng-container *ngIf="item.doc1">
+                                                                                <button title="PDF File"
+                                                                                    class="btn btn-danger btn-sm me-3"
+                                                                                    (click)="downloadAction($event,item.doc1,item.hospitalCode,item.dateOfAdm,'')">
+                                                                                    <i
+                                                                                        class="bi bi-file-earmark-pdf"></i>
+                                                                                </button>
+                                                                            </ng-container>
+                                                                            <ng-container *ngIf="item.doc2">
+                                                                                <button class="btn btn-danger btn-sm me-3" title="Audio File"
+                                                                                    (click)="downloadAction($event,item.doc2,item.hospitalCode,item.dateOfAdm,'')">
+                                                                                    <i
+                                                                                        class="bi bi-music-note-beamed"></i>
+                                                                                </button>
+                                                                            </ng-container>
+                                                                            <ng-container *ngIf="item.doc3">
+                                                                                <button title="Video File"
+                                                                                    class="btn btn-danger btn-sm me-3"
+                                                                                    (click)="downloadAction($event,item.doc3,item.hospitalCode,item.dateOfAdm,'')">
+                                                                                    <i class="bi bi-camera-video"></i>
+                                                                                </button>
+                                                                            </ng-container>
+
+                                                                        </div>
+
+
+
+                                                                    </div>
+                                                                </div>
+                                                                <!-- <div> -->
+                                                                    <h4 class="border-bottom mb-2 top-head">DGO Query Remarks </h4>
+
+                                                                    <div class="hidtbl-th gap-bt p-0">
+
+                                                                        <p class="text-danger" *ngIf="item.dgoQueryRemarks==null">
+                                                                         NA</p>
+                                                                        <p>{{item.dgoQueryRemarks}}</p>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-lg-12 col-xxl-12" *ngIf="item.dgoQueryDoc">
+                                                                            <div class="mb-xl-12">
+                                                                                <button title="PDF File" class="btn btn-outline-success btn-sm"
+                                                                                    (click)="downloadAction($event,item.dgoQueryDoc,item.hospitalCode,item.dateOfAdm,'')">
+                                                                                    <i class="bi bi-file-earmark-pdf"></i>
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                <!-- </div> -->
+
+                                                            </div>
+                                                        </ng-container>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <!-- hidden section end -->
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+        <div class="row" style="margin-top: 20px;" *ngIf="showPegi">
+            <div class="col-sm-4">
+                <div class="col-sm-*">
+                    show
+                    <select id="pageItem" name="pageItem" class="custom-select-sm" (change)="pageItemChange()">
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="{{size}}">All</option>
+                    </select> entries
+                </div>
+            </div>
+            <div class="col-sm-8 text-end">
+                <ul style="display: inline;" class="text-end">
+                    <li (click)="selectedIndex!=1 && prev()" style="display: inline;"
+                        [ngClass]="{'lst':selectedIndex!=1}">
+                        <span>&lt;&lt;&nbsp;Previous&nbsp;</span>
+                    </li>
+                    <ng-container *ngFor="let element of pgList">
+                        <li (click)="selectedIndex!=element.id && paginate(element)"
+                            style="display: inline; padding: 3px; text-align: center; cursor: pointer;"
+                            [ngClass]="{'pgl':selectedIndex==element.id}">
+                            &nbsp;{{element.id}}&nbsp;
+                        </li>
+                    </ng-container>
+                    <li (click)="selectedIndex!=pgList?.length && next()" style="display: inline;"
+                        [ngClass]="{'lst':selectedIndex!=pgList?.length}">
+                        <span>&nbsp;Next&nbsp;&gt;&gt;</span>
+                    </li>
+                </ul>
+                <!-- <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true"
+                    (pageChange)="currentPage = $event"></pagination-controls> -->
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="iconhosp" tabindex="-1" aria-labelledby="iconhospLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="p-0 m-0 top-head"> Hospital Details </h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" *ngIf="cceOutboundDataById">
+                    <div class="col-xxl-12 col-xl-12 col-lg-12">
+                        <div class="row">
+                          <div class="col-xxl-4  col-xl-4  col-lg-4  col-md-4 col-sm-4 col-xs-12">
+                            <div class="text-start p-0 gap-bt"> Hospital State </div>
+                        </div>
+                        <div class="col-xxl-8  col-xl-8 col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                            <div class="color-hed p-0 gap-bt"> <span class="me-2">:</span>
+                                {{cceOutboundDataById.state}} </div>
+                        </div>
+                            <div class="col-xxl-4  col-xl-4  col-lg-4  col-md-4 col-sm-4 col-xs-12">
+                                <div class="text-start p-0 gap-bt"> Hospital District </div>
+                            </div>
+                            <div class="col-xxl-8  col-xl-8 col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                <div class="color-hed p-0 gap-bt"> <span class="me-2">:</span>
+                                    {{cceOutboundDataById.hospitalDist}} </div>
+                            </div>
+                            <div class="col-xxl-4  col-xl-4  col-lg-4  col-md-4 col-sm-4 col-xs-12">
+                                <div class="text-start p-0 gap-bt"> Hospital Name </div>
+                            </div>
+                            <div class="col-xxl-8  col-xl-8 col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                <div class="color-hed p-0 gap-bt"> <span class="me-2">:</span>
+                                    {{cceOutboundDataById.hospitalName}} </div>
+                            </div>
+                            <div class="col-xxl-4  col-xl-4  col-lg-4  col-md-4 col-sm-4 col-xs-12">
+                              <div class="text-start p-0  gap-bt"> Hospital Code </div>
+                          </div>
+                          <div class="col-xxl-8  col-xl-8 col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                              <div class="color-hed p-0 gap-bt"> <span class="me-2">:</span>
+                                  {{cceOutboundDataById.hospitalCode}} </div>
+                          </div>
+                          <div class="col-xxl-4  col-xl-4  col-lg-4  col-md-4 col-sm-4 col-xs-12">
+                            <div class="text-start p-0  gap-bt"> Alternative No </div>
+                        </div>
+                        <div class="col-xxl-8  col-xl-8 col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                            <div class="color-hed p-0 gap-bt"> <span class="me-2">:</span>
+                                {{cceOutboundDataById.alternativeNo}} </div>
+                        </div>
+                            <div class="col-xxl-4  col-xl-4  col-lg-4  col-md-4 col-sm-4 col-xs-12">
+                                <div class="text-start p-0  gap-bt"> Procedure Name </div>
+                            </div>
+                            <div class="col-xxl-8  col-xl-8 col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                <div class="color-hed p-0 gap-bt"> <span class="me-2">:</span>
+                                    {{cceOutboundDataById.procedureName}} </div>
+                            </div>
+                            <div class="col-xxl-4  col-xl-4  col-lg-4  col-md-4 col-sm-4 col-xs-12">
+                                <div class="text-start p-0  gap-bt"> Package Name </div>
+                            </div>
+                            <div class="col-xxl-8  col-xl-8 col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                <div class="color-hed p-0 gap-bt"> <span class="me-2">:</span>
+                                    {{cceOutboundDataById.packageName}} </div>
+                            </div>
+                            <div class="col-xxl-4  col-xl-4  col-lg-4  col-md-4 col-sm-4 col-xs-12">
+                                <div class="text-start p-0  gap-bt"> Invoice No </div>
+                            </div>
+                            <div class="col-xxl-8  col-xl-8 col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                <div class="color-hed p-0 gap-bt"> <span class="me-2">:</span>
+                                    {{cceOutboundDataById.invoiceNo}} </div>
+                            </div>
+                            <div class="col-xxl-4  col-xl-4  col-lg-4  col-md-4 col-sm-4 col-xs-12">
+                                <div class="text-start p-0  gap-bt"> Alotted Date </div>
+                            </div>
+                            <div class="col-xxl-8  col-xl-8 col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                <div class="color-hed p-0 gap-bt"> <span class="me-2">:</span>
+                                    {{cceOutboundDataById.alottedDate}} </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- package status section -->
+    <!-- CCE Outbound call new designed -->

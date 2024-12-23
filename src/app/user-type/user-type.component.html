@@ -1,0 +1,48 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a href="javascript:void(0);" class="nav-link active">Create User</a >
+    </li>
+  </ul>
+</div>
+
+<!-- <div class="col-lg-4 col-xxl-4">
+  <div class="mb-xl-3">
+    <select (blur)class="form-select" name="selectDistrict">
+      <option value="default">Select District</option>
+      <option>CPD</option>
+    </select>
+    <small class="text-danger">Please select district</small>
+  </div>
+</div> -->
+
+<div class="col-lg-4 col-xxl-4">
+  <div class="mb-xl-3" onblur="type">
+    <label for="usertype">Please select User type</label>
+      <select class="form-select" id="user" (click)="onclickEvent()">
+        <option value="default">Select </option>
+          <option value="CPD">CPD</option>
+          <option value="SNO">SNO</option>
+
+      </select>
+  </div>
+
+  <!-- <div class="col-lg-12">
+    <div class="d-grid gap-2 d-md-flex">
+        <button type="submit" class="btn btn-success" (click)="onclickEvent()">Submit</button>
+        <button type="reset" class="btn btn-secondary">Reset</button>
+    </div>
+  </div> -->
+</div>
+<!-- <div class="mt-3">
+  <div *ngIf="show==1">
+    <hr>
+    <div class="app-createcpd"></div>
+     <app-createcpd></app-createcpd>
+  </div>
+  <div *ngIf="show==2">
+    <hr>
+    <app-createsno></app-createsno>
+  </div>
+</div> -->

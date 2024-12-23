@@ -1,0 +1,110 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs" routerLinkActive="active">
+                    <li class="nav-item">
+                        <a routerLink="/application/multiplepackage" class="nav-link active">Multiple Package Blocking
+                            In Same URN Report</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a routerLink="" class="nav-link">View</a>
+                    </li> -->
+                </ul>
+            </div>
+            <div class="col-lg-6 ">
+                <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-box">
+        <form>
+            <div class="row form-box-bg pt-2 pb-2">
+                <div class="col-lg-12 col-xxl-12">
+                    <div class="row mb-3">
+                        <!-- <div class="col-lg-3">
+                            <div class="mb-2">
+                                <label class="col-form-label">Scheme Name</label><span class="text-danger small"><b> *</b></span>
+                                <input class="form-control" type="text">
+                            </div>
+                        </div> -->
+                        <div class="col-lg-3">
+                            <div class="mb-2">
+                                <label class="col-form-label">Package Category</label>
+                                <select class="form-select">
+                                    <option selected value="undefined">Select</option>
+                                    <option value="1">Cardiology</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="mb-2">
+                                <label class="col-form-label">Package</label>
+                                <select class="form-select">
+                                    <option selected value="undefined">Select</option>
+                                    <option value="1">Diagnostic hysteroscopy</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="mb-2">
+                                <label class="col-form-label">URN</label>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <label class="col-form-label d-md-block d-none">&nbsp;</label>
+                            <button type="submit" class="btn btn-success">Search</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="content-box mt-3 p-0 overflow-hidden">
+                <div class="table-responsive">
+                    <table class="table mb-0">
+                        <thead>
+                            <tr>
+                                <th width="50">Sl#</th>
+                                <th>URN</th>
+                                <th class="text-center">Total No. Of Discharge</th>
+                                <th width="250">Amount (<i class="bi bi-currency-rupee"></i>)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td> 1 </td>
+                                <td>21080600001000000</td>
+                                <td align="center"> 150 </td>
+                                <td align="right"> 5500325 </td>
+                            </tr>
+                            <tr>
+                              <td>2</td>
+                              <td>21080600001000001</td>
+                              <td align="center"> 220 </td>
+                              <td align="right"> 8253000 </td>
+                            </tr>
+                            <tr>
+                              <td>3</td>
+                              <td>21080600001000002</td>
+                              <td align="center"> 130 </td>
+                              <td align="right"> 5004500 </td>
+                            </tr>
+                            <tr>
+                              <td>4</td>
+                              <td>21080600001000003</td>
+                              <td align="center"> 100 </td>
+                              <td align="right"> 4500500 </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

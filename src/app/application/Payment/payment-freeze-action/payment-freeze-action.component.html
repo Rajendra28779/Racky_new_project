@@ -1,0 +1,538 @@
+<div class="main-tab">
+    <div class="row justify-content-between">
+        <div class="col-lg-4">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a routerLink="/application/paymentFreezeAction" routerLinkActive="active" class="nav-link active">Payment Freeze</a>
+                </li>
+                <li class="nav-item">
+                    <a routerLink="/application/paymentFreezeView" routerLinkActive="active" class="nav-link text-success">View Reports</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-lg-6 ">
+            <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+        </div>
+    </div>
+</div>
+<div id="filter" class="searchCriteriaBox bg-light p-3">
+    <div class="row">
+        <div class="col-lg-3 col-xxl-3">
+            <div class="mb-xl-3">
+                <label class="control-label">Actual Date of Discharge From<span class="text-danger">*</span></label>
+                <div class="input-group">
+                    <input type="text" class="form-control border-end-0 datepicker" id="formdate" name="fromDate">
+                    <label class="input-group-text bg-transparent border-start-0" for="formdate">
+                        <i class="iconbsky-calendar"></i>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xxl-3">
+            <div class="mb-xl-3">
+                <label class="control-label">Actual Date of Discharge To<span class="text-danger">*</span></label>
+                <div class="input-group">
+                    <input type="text" class="form-control border-end-0 datepicker" id="todate" name="toDate">
+                    <label class="input-group-text bg-transparent border-start-0" for="todate">
+                        <i class="iconbsky-calendar"></i>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xxl-3">
+            <div class="mb-xl-3">
+                <label class="control-label">Mortality (CPD)</label>
+                <select class="form-select" name="mortality" id="mortality">
+                    <option value="" selected>All</option>
+                    <option value="Y">Yes</option>
+                    <option value="N">No</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xxl-3">
+            <div class="mb-xl-3">
+                <label class="control-label">Scheme Category Name<span class="text-danger">*</span></label>
+                <select class="form-select" name="schemacategory" id="schemacategory" (change)="getschemacategoryid($event.target.value)" style="margin-top: 9px;">
+                <option value="" selected >All</option>
+                <ng-container *ngFor="let item of schemeList">
+                    <option value={{item.schemeCategoryId}}>{{item.categoryName}}</option>
+                </ng-container>
+            </select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3 col-xxl-3">
+            <div class="mb-xl-3">
+                <label class="control-label">State Name</label>
+                <ng-autocomplete #auto2 [data]="stateList" placeholder="Select State" (selected)="selectEvent2($event)" (inputCleared)="clearEvent2()" [itemTemplate]="itemTemplate2" [notFoundTemplate]="notFoundTemplate2" [searchKeyword]="keyword2" spellcheck="false">
+                </ng-autocomplete>
+
+                <ng-template #itemTemplate2 let-item>
+                    <a [innerHTML]="item.stateName"></a>
+                </ng-template>
+
+                <ng-template #notFoundTemplate2 let-notFound>
+                    <div [innerHTML]="notFound"></div>
+                </ng-template>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xxl-3">
+            <div class="mb-xl-3">
+                <label class="control-label">District Name</label>
+                <ng-autocomplete #auto1 [data]="districtList" placeholder="Select District" (selected)="selectEvent1($event)" (inputCleared)="clearEvent1()" [itemTemplate]="itemTemplate1" [notFoundTemplate]="notFoundTemplate1" [searchKeyword]="keyword1" spellcheck="false">
+                </ng-autocomplete>
+
+                <ng-template #itemTemplate1 let-item>
+                    <a [innerHTML]="item.districtname"></a>
+                </ng-template>
+
+                <ng-template #notFoundTemplate1 let-notFound>
+                    <div [innerHTML]="notFound"></div>
+                </ng-template>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xxl-3">
+            <div class="mb-xl-3">
+                <label class="control-label">Hospital Name</label>
+                <ng-autocomplete #auto [data]="hospitalList" placeholder="Select Hospital" (selected)="selectEvent($event)" (inputCleared)="clearEvent()" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" [searchKeyword]="keyword" spellcheck="false">
+                </ng-autocomplete>
+
+                <ng-template #itemTemplate let-item>
+                    <a [innerHTML]="item.hospitalName"></a>
+                </ng-template>
+
+                <ng-template #notFoundTemplate let-notFound>
+                    <div [innerHTML]="notFound"></div>
+                </ng-template>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xxl-3">
+            <div class="mb-xl-3">
+                <label class="control-label">Search Type</label>
+                <select class="form-select" name="search" id="search">
+                    <option value=1 selected>2.0 Block Data</option>
+                    <option value=2>1.0 Block Data</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col align-self-end">
+            <div class="col-lg-12">
+                <button class="btn btn-success mr-2" (click)="getCountDetails()">Search</button> &nbsp;
+                <button class="btn btn-secondary" (click)="resetTable()">Reset</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="height: 15pt;"></div>
+<div class="form-cointainer">
+    <div class="content-box border-0 bg-transparent">
+        <div class="row">
+            <div class="col-lg-12 col-xxl-12" style="padding: 0px;">
+                <div class="card shadow-sm basic-info">
+                    <div class="card-header">
+                        <h5 class="mb-0 text-success" style="font-size: 15pt;">Count Details</h5>
+                    </div>
+                    <div class="card-body mt-3">
+                        <div class="row gx-xl-5 treatment-details mb-3">
+                            <div class="col-xxl-3 col-xl-3">
+                                <div>
+                                    <p class="text-muted mb-0 ">Total Discharged</p>
+                                    <h6 class="mb-0 fs-1-3">
+                                        <a style="color: green">{{claimCount?.totalDischarge}}</a></h6>
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-xl-3 border-start">
+                                <div class="d-flex align-items-center ">
+                                    <div>
+                                        <p class="text-muted mb-0 ">Document Upload Pending (Within 7 days of discharge)</p>
+                                        <h6 class="mb-0 fs-1-3">
+                                            <a style="color: green">{{claimCount?.nonUploading}}</a></h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-xl-3 border-start">
+                                <div class="d-flex align-items-center ">
+                                    <div>
+                                        <p class="text-muted mb-0 ">Non Uploading Initial Document (After 7 days of discharge)</p>
+                                        <h6 class="mb-0 fs-1-3">
+                                            <a style="color: green">{{claimCount?.nonUploadingInit}}</a></h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-xl-3 border-start">
+                                <div class="d-flex align-items-center ">
+                                    <div>
+                                        <p class="text-muted mb-0 ">Total Claim Raised</p>
+                                        <h6 class="mb-0 fs-1-3">
+                                            <a style="color: green">{{claimCount?.totalclaimRasied}}</a></h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 ">
+                            <hr class="mt-xl-3 mb-xl-3">
+                        </div>
+                        <div class="row gx-xl-5 treatment-details mb-3">
+                            <div class="col-xxl-3 col-xl-3">
+                                <div class="d-flex align-items-center ">
+                                    <div>
+                                        <p class="text-muted mb-0 ">Payment Freezed Claims</p>
+                                        <h6 class="mb-0 fs-1-3">
+                                            <a style="color: green">{{claimCount?.paymentFreezed}}</a></h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-xl-3 border-start">
+                                <div class="d-flex align-items-center ">
+                                    <div>
+                                        <p class="text-muted mb-0 ">Paid Claims</p>
+                                        <h6 class="mb-0 fs-1-3">
+                                            <a style="color: green">{{claimCount?.paidClaims}}</a></h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-xl-3 border-start">
+                                <div class="d-flex align-items-center ">
+                                    <div>
+                                        <p class="text-muted mb-0 ">Claims Not Freezed</p>
+                                        <h6 class="mb-0 fs-1-3">
+                                            <a style="color: green">{{claimCount?.paymentUnFreezed}}</a></h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-xl-3 border-start">
+                                <div class="d-flex align-items-center ">
+                                    <div>
+                                        <p class="text-muted mb-0 ">Pending At CPD (Fresh Claim)</p>
+                                        <h6 class="mb-0 fs-1-3">
+                                            <a style="color: green">{{claimCount?.pendingatCPD}}</a></h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 ">
+                            <hr class="mt-xl-3 mb-xl-3">
+                        </div>
+                        <div class="row gx-xl-5 treatment-details mb-3">
+                            <div class="col-xxl-3 col-xl-3">
+                                <div class="d-flex align-items-center ">
+                                    <div>
+                                        <p class="text-muted mb-0 ">Pending At CPD (Resettlement)</p>
+                                        <h6 class="mb-0 fs-1-3">
+                                            <a style="color: green">{{claimCount?.pendatcpdRstl}}</a></h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-xl-3 border-start">
+                                <div class="d-flex align-items-center ">
+                                    <div>
+                                        <p class="text-muted mb-0 ">Pending At CPD (SNA Reverted)</p>
+                                        <h6 class="mb-0 fs-1-3">
+                                            <a style="color: green">{{claimCount?.pendatcpdRvrt}}</a></h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-xl-3 border-start">
+                                <div class="d-flex align-items-center ">
+                                    <div>
+                                        <p class="text-muted mb-0 ">Pending At Hospital (CPD Query within 7 days)</p>
+                                        <h6 class="mb-0 fs-1-3">
+                                            <a style="color: green">{{claimCount?.cpdQuerywithin7}}</a></h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-xl-3 border-start">
+                                <div class="d-flex align-items-center ">
+                                    <div>
+                                        <p class="text-muted mb-0 ">System Rejected - Non compliance of CPD Query</p>
+                                        <h6 class="mb-0 fs-1-3">
+                                            <a style="color: green">{{claimCount?.cpdQueryafter7}}</a></h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 ">
+                            <hr class="mt-xl-3 mb-xl-3">
+                        </div>
+                        <div class="row gx-xl-5 treatment-details mb-3">
+                            <div class="col-xxl-3 col-xl-3">
+                                <div class="d-flex align-items-center ">
+                                    <div>
+                                        <p class="text-muted mb-0 ">Pending At Hospital (SNA Query within 7 days)</p>
+                                        <h6 class="mb-0 fs-1-3">
+                                            <a style="color: green">{{claimCount?.snaQuerywithin7}}</a></h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-xl-3 border-start">
+                                <div class="d-flex align-items-center ">
+                                    <div>
+                                        <p class="text-muted mb-0 ">System Rejected - Non compliance of SNA Query</p>
+                                        <h6 class="mb-0 fs-1-3">
+                                            <a style="color: green">{{claimCount?.snaQueryafter7}}</a></h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-xl-3 border-start">
+                                <div class="d-flex align-items-center ">
+                                    <div>
+                                        <p class="text-muted mb-0 ">Pending At DC</p>
+                                        <h6 class="mb-0 fs-1-3">
+                                            <a style="color: green">{{claimCount?.pendingatDC}}</a></h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-xl-3 border-start">
+                                <div class="d-flex align-items-center ">
+                                    <div>
+                                        <p class="text-muted mb-0 ">Pending At SNA (CPD Rejected)</p>
+                                        <h6 class="mb-0 fs-1-3">
+                                            <a style="color: green" id="CPR">{{claimCount?.cpdrejected}}</a>
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 ">
+                            <hr class="mt-xl-3 mb-xl-3">
+                        </div>
+                        <div class="row gx-xl-5 treatment-details mb-3">
+                            <div class="col-xxl-3 col-xl-3">
+                                <div class="d-flex align-items-center ">
+                                    <div>
+                                        <p class="text-muted mb-0 ">Pending At SNA (Unprocessed Claim)</p>
+                                        <h6 class="mb-0 fs-1-3">
+                                            <a style="color: green" id="UNC">{{claimCount?.unprocessed}}</a>
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-xl-3 border-start">
+                                <div class="d-flex align-items-center ">
+
+                                    <div>
+                                        <p class="text-muted mb-0 ">Pending At SNA (SNA Resettlement)</p>
+                                        <h6 class="mb-0 fs-1-3">
+                                            <a style="color: green" id="SN">{{claimCount?.resettlement}}</a>
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-xl-3 border-start">
+                                <div class="d-flex align-items-center ">
+                                    <div>
+                                        <p class="text-muted mb-0 ">Pending At SNA (DC Compliance)</p>
+                                        <h6 class="mb-0 fs-1-3">
+                                            <a style="color: green" id="DCC">{{claimCount?.dcCompliance}}</a>
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-xl-3 border-start">
+                                <div class="d-flex align-items-center ">
+                                    <div>
+                                        <p class="text-muted mb-0 ">Pending At SNA (On Hold)</p>
+                                        <h6 class="mb-0 fs-1-3">
+                                            <a style="color: green" id="OHC">{{claimCount?.onHold}}</a>
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 ">
+                            <hr class="mt-xl-3 mb-xl-3">
+                        </div>
+                        <div class="row gx-xl-5 treatment-details mb-3">
+                            <div class="col-xxl-3 col-xl-3">
+                                <div class="d-flex align-items-center ">
+                                    <div>
+                                        <p class="text-muted mb-0 ">Rest Of CPD Approved (Pending At SNA)</p>
+                                        <h6 class="mb-0 fs-1-3">
+                                            <a style="color: green">{{claimCount?.cpdapproved}}</a></h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-xl-3 border-start">
+                                <div class="d-flex align-items-center ">
+                                    <div>
+                                        <p class="text-muted mb-0 ">Total SNA Approved</p>
+                                        <h6 class="mb-0 fs-1-3">
+                                            <a style="color: green" id="SNA">{{claimCount?.snaapproved}}</a></h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-xl-3 border-start border-end">
+                                <div class="d-flex align-items-center ">
+                                    <div>
+                                        <p class="text-muted mb-0 ">Total SNA Rejected</p>
+                                        <h6 class="mb-0 fs-1-3">
+                                            <a style="color: green" id="SNR">{{claimCount?.snarejected}}</a></h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-xl-3 border-start">
+                                <div class="d-flex align-items-center ">
+                                    <div>
+                                        <p class="text-muted mb-0 ">System Admin SNA Rejected</p>
+                                        <h6 class="mb-0 fs-1-3">
+                                            <a style="color: green" id="SNA">{{claimCount?.sysadminrej}}</a>
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 ">
+                            <hr class="mt-xl-3 mb-xl-3">
+                        </div>
+                        <div class="row gx-xl-5 treatment-details mb-3">
+                            <div class="col-xxl-3 col-xl-3">
+                                <div class="d-flex align-items-center ">
+                                    <div>
+                                        <p class="text-muted mb-0 ">Total CPD Approved</p>
+                                        <h6 class="mb-0 fs-1-3">
+                                            <a style="color: green">{{claimCount?.tcpdApproved}}</a></h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-xl-3 border-start">
+                                <div class="d-flex align-items-center ">
+                                    <div>
+                                        <p class="text-muted mb-0 ">SNA Action Of CPD Approved (Approved & Rejected)</p>
+                                        <h6 class="mb-0 fs-1-3">
+                                            <a style="color: green">{{claimCount?.snaActionOfCpdAprvd}}</a></h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-xl-3 border-start">
+                                <div class="d-flex align-items-center ">
+                                    <div>
+                                        <p class="text-muted mb-0 ">Action Percentage (Approved & Rejected)</p>
+                                        <h6 class="mb-0 fs-1-3">
+                                            <a *ngIf="claimCount?.percent1!='.00'" style="color: red">{{claimCount?.percent1!=null?claimCount?.percent1:0}}%</a>
+                                            <a *ngIf="claimCount?.percent1=='.00'" style="color: red">0%</a>
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-xl-3 border-start">
+                                <div class="d-flex align-items-center ">
+                                    <div>
+                                        <p class="text-muted mb-0 ">Total SNA Action Of CPD Approved</p>
+                                        <h6 class="mb-0 fs-1-3">
+                                            <a style="color: green">{{claimCount?.snaTotalOfCpdAprvd}}</a></h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 ">
+                            <hr class="mt-xl-3 mb-xl-3">
+                        </div>
+                    </div>
+                    <div class="card-header">
+                        <br>
+                        <h5 class="mb-0 text-success" style="font-size: 15pt;">Payment Details</h5>
+                    </div>
+                    <div class="card-body mt-3" align="center">
+                        <div class="row gx-xl-5 treatment-details mb-3" style="width: 90%;">
+                            <div class="col-xxl-6 col-xl-6 border-start" style="text-align: left;">
+                                <div class="border-bottom" style="font-weight: bold;">
+                                    <p class="text-muted mb-0 " style="padding: 10px; font-size: 12pt;">Cases To Be Paid</p>
+                                </div>
+                                <div>
+                                    <h6 class="text-muted mb-0 " style="padding: 10px; font-size: 12pt;">Total SNA Approved</h6>
+                                </div>
+                                <div class="border-bottom">
+                                    <h6 class="text-muted mb-0 " style="padding: 10px; font-size: 12pt;">Rest Of CPD Approved (Pending At SNA)</h6>
+                                </div>
+                                <div>
+                                    <h6 class="text-muted mb-0 " style="padding: 10px; font-size: 12pt;">Total</h6>
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-xl-3 border-start" style="text-align: center;">
+                                <div class="border-bottom" style="font-weight: bold;">
+                                    <p class="text-muted mb-0 " style="padding: 10px; font-size: 12pt;">Total Cases</p>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0 fs-1-3" style="padding: 10px; font-size: 12pt; color: green;">{{claimCount?.snaapproved}}</h6>
+                                </div>
+                                <div class="border-bottom">
+                                    <h6 class="mb-0 fs-1-3" style="padding: 10px; font-size: 12pt; color: green;">{{claimCount?.cpdapproved}}</h6>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0 fs-1-3" style="padding: 10px; font-size: 12pt; color: goldenrod;">{{totalCount}}</h6>
+                                </div>
+                            </div>
+                            <div class="col-xxl-3 col-xl-3 border-start border-end" style="text-align: center;">
+                                <div class="border-bottom" style="font-weight: bold;">
+                                    <p class="text-muted mb-0 " style="padding: 10px; font-size: 12pt;">Amount (&#8377;)</p>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0 fs-1-3" style="padding: 10px; font-size: 12pt; color: blue;">{{claimCount?.snoamount | number}}</h6>
+                                </div>
+                                <div class="border-bottom">
+                                    <h6 class="mb-0 fs-1-3" style="padding: 10px; font-size: 12pt; color: blue;">{{claimCount?.cpdamount | number}}</h6>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0 fs-1-3" style="padding: 10px; font-size: 12pt; color: red;">{{totalAmount | number}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 ">
+                            <hr class="mt-xl-3 mb-xl-3">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="col-lg-3 col-xxl-3" id="Upload" style="padding-left: 20px; padding-right: 20px;">
+                        <div class="file-upload mb-xl-4 text-center ">
+                            <p class="mb-1 text-start">Upload Float Report</p>
+                            <div class="file-upload-content">
+                                <a class="btn btn-danger  text-white btn-sm remove-img"><i
+                                        class="fas fa-times"></i></a>
+                                <img class="file-upload-image" src="#" alt="your image" />
+                            </div>
+                            <div class="image-upload-wrap rounded">
+                                <input class="file-upload-input" id="bannkpass" type='file' onCut="return false " onDrag="return false " onDrop="return false " (change)="handleFileInput($event)">
+                                <div class="drag-text">
+                                    <h5>
+                                        <i class="iconbsky-upload-icon d-block fs-4"></i>
+                                        <span *ngIf="!fileName" class="text-danger">
+                                            Select a file to upload<br>(Maximum size: 10MB)
+                                        </span>
+                                        <span *ngIf="fileName" class="text-danger">{{fileName}}</span>
+                                    </h5>
+                                </div>
+                            </div>
+                            <p class="small pt-1 " style="text-align: left;">
+                                <a target="_blank" class="dbtn" (click)="downloadfiletreatmentbill()">
+                                    <i class="bi bi-download" style="font-size: 12pt;"></i>&nbsp;Download
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                    <div *ngIf="claimCount?.paymentUnFreezed!=0" style="padding-left: 20px; padding-right: 20px;">
+                        <button class="btn btn-success mr-2" (click)="paymentFreeze()">Payment Freeze</button><br>
+                        <div class="alert alert-danger mt-4 mb-4 d-flex small ">
+                            <div>
+                                <p class="mb-0 pe-3 me-3 border-end ">
+                                    <i class="bi bi-info-circle-fill fs-5 me-2 "></i> NOTE
+                                </p>
+                            </div>
+                            <div>
+                                <p class="mb-0 ">
+                                    Upon clicking Payment Freeze, payment of all claims not freezed between <strong>{{fromDate}}</strong> to <strong>{{toDate}}</strong> will be freezed!
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="claimCount?.paymentUnFreezed==0" style="cursor: not-allowed; width: 120pt; padding-left: 20px;" title="No Claims to Freeze">
+                        <button class="btn btn-success mr-2" disabled>Payment Freeze</button>
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

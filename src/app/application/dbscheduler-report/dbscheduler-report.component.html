@@ -1,0 +1,174 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+      <div class="row justify-content-between">
+          <div class="col-lg-4">
+              <ul class="nav nav-tabs">
+                  <li class="nav-item">
+                      <a routerLink="/application/dbschedulerreport" routerLinkActive="active" class="nav-link active">DB Schedular Report</a>
+                  </li>
+              </ul>
+          </div>
+      </div>
+  </div>
+  <div class="content-box">
+
+    <div class="row">
+      <div class="col-lg-4 col-xxl-4">
+        <div class="mb-xl-3">
+          <label class="control-label">Scheduler Name<span class="text-danger">*</span></label>
+          <div class="input-group">
+            <select class="form-select" name="schedular" id="schedular">
+              <option value="" disabled selected>Select Schedular Name</option>
+              <ng-container *ngFor="let v of schedularlist">
+                <option value={{v.procedurename}}>{{v.schedularname}}</option>
+              </ng-container>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- <div class="col-lg-3 col-xxl-3">
+        <div class="mb-xl-3">
+          <label class="control-label">Date From<span class="text-danger">*</span></label>
+          <div class="input-group">
+            <input type="text" class="form-control border-end-0 datepicker" id="formdate" name="fromDate">
+            <label class="input-group-text bg-transparent border-start-0" for="formdate">
+              <i class="iconbsky-calendar"></i>
+            </label>
+          </div>
+        </div>
+      </div> -->
+      <!-- <div class="col-lg-3 col-xxl-3">
+        <div class="mb-xl-3">
+          <label class="control-label">Date To<span class="text-danger">*</span></label>
+          <div class="input-group">
+            <input type="text" class="form-control border-end-0 datepicker" id="todate" name="toDate">
+            <label class="input-group-text bg-transparent border-start-0" for="todate">
+              <i class="iconbsky-calendar"></i>
+            </label>
+          </div>
+        </div>
+      </div> -->
+        <div class="col-lg-3 col-xxl-3">
+          <div class="mb-xl-3">
+              <label class="control-label">Year</label><span class="text-danger">*</span>
+              <select class="form-select" id="formdate" name="formdate" [(ngModel)]="selectedYear">
+                  <!-- <option value="" selected disabled>Select Year</option> -->
+                  <ng-container *ngFor="let year of years">
+                    <option value={{year}}>{{ year }}</option>
+                  </ng-container>
+              </select>
+          </div>
+        </div>
+        <div class="col-lg-3 col-xxl-3">
+          <div class="mb-xl-3">
+            <label class="control-label">Month</label><span class="text-danger">*</span>
+              <select class="form-select" name="todate" id="todate" aria-label="Disabled select example" [(ngModel)]="Months">
+                <option value="Jan">January</option>
+                <option value="Feb">February</option>
+                <option value="Mar">March</option>
+                <option value="Apr">April</option>
+                <option value="May">May</option>
+                <option value="Jun">June</option>
+                <option value="Jul">July</option>
+                <option value="Aug">August</option>
+                <option value="Sep">September</option>
+                <option value="Oct">October</option>
+                <option value="Nov">November</option>
+                <option value="Dec">December</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="d-grid gap-2 d-md-flex">
+            <button type="submit" class="btn btn-success" (click)="search()">Search</button>
+            <button type="reset" class="btn btn-secondary" (click)="ResetField()">Reset</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+  <div class="col-lg-4 col-xxl-4">
+      Total Record :- {{record}}
+  </div>
+  <div class="col-lg-4 col-xxl-4">
+      <div  class="table-utilities float-end" >
+          <button class="btn btn-success btn-sm mx-1" tooltip="Excel"
+              (click)="downloadReport(1)">
+              <i class="bi bi-file-earmark-spreadsheet"></i>
+          </button>
+          &nbsp;
+      <button class="btn btn-danger btn-sm me-1" type="submit" (click)="downloadReport(2)"><i class="bi bi-file-earmark-pdf"></i></button>
+      </div>
+  </div>
+  <div class="col-lg-4 col-xxl-4">
+      <div class="input-group">
+          <input type="text" id="txtsearchDate" class="form-control" placeholder="Search here..."
+              name="txtsearchDate"  [(ngModel)]="txtsearchDate" autocomplete="off">
+      </div>
+  </div>
+</div>
+
+<div class="content-box">
+  <div class="main-tab">
+    <div class="row justify-content-between">
+        <div class="table-responsive">
+            <table class="table table-striped" mb-0>
+                <thead>
+                    <tr>
+                      <th>Sl No.</th>
+                      <th>Date</th>
+                      <!-- <th width="300">Procedure Name</th> -->
+                      <th>Start Time</th>
+                      <th>End Time</th>
+                      <th>Total Record Processed</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let v of list | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage},index as i">
+                      <td *ngIf="currentPage==1 ">{{(i+1)}}</td>
+            <td *ngIf="currentPage!=1 ">{{(currentPage-1)*pageElement+ i+1}}</td>
+                      <td>{{v.starttime | date :'dd-MMM-yyyy'}}</td>
+                      <!-- <td>{{v.procedurename}}</td> -->
+                      <td>{{v.starttime | date :' h:mm:ss a'}}</td>
+                      <td>{{v.endtime | date :' h:mm:ss a'}}</td>
+                      <td style="text-align: center;"><a href="javascript:void(0);" (click)="details(v.starttime)">{{v.recordprocessed}}</a></td>
+                    </tr>
+                    <tr *ngIf="showPegi">
+                      <td></td>
+                      <td colspan="3">Total</td>
+                      <td>{{sum}}</td>
+                    </tr>
+                    <tr *ngIf="!showPegi">
+                      <th colspan="6" style="color: red; font-size: medium; text-align: center;">No Data Found !!</th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row" *ngIf="showPegi">
+          <div class="col-sm-4">
+              <div class="col-sm-*">
+                  show
+                  <select id="pageItem" name="pageItem" class="form-select-sm" (change)="pageItemChange()">
+                      <option value="100">100</option>
+                      <option value="200">200</option>
+                      <option value={{record}}>All</option>
+                  </select> entries
+              </div>
+          </div>
+          <div class="col-sm-8 text-right">
+              <pagination-controls id="listing_pagination" [maxSize]="100" [directionLinks]="true"
+                  (pageChange)="currentPage = $event" class="text-end"
+                  (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+          </div>
+      </div>
+
+</div>

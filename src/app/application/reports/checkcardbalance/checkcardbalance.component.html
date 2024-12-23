@@ -1,0 +1,255 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+    <div class="row justify-content-between">
+      <div class="col-lg-4">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a
+              routerLink="/application/checkcardbalance"
+              routerLinkActive="active"
+              class="nav-link active"
+              >Check Card Balance</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              routerLink="/application/checkcardbalancelog"
+              routerLinkActive="active"
+              class="nav-link" style="color: #1f723f;"
+              >Log View</a
+            >
+          </li>
+        </ul>
+      </div>
+      <!-- <div class="col-lg-6 ">
+              <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+          </div> -->
+    </div>
+  </div>
+  <div class="content-box">
+    <div class="row">
+      <!-- <div class="col-lg-4 col-xxl-4">
+        <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+          <div class="mb-xl-3">
+            <div class="mb-xl-3">
+              <label for="EnterFullName" class="form-label"
+                >Scheme Name<span class="text-danger">*</span></label
+              >
+              <input
+                class="form-control"
+                type="text"
+                placeholder="Scheme Name"
+                autocomplete="off"
+                maxlength="30"
+                id="schemename"
+                [(ngModel)]="schemeName"
+                disabled
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-xxl-4">
+        <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+          <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+            <label class="control-label"
+              >Scheme Category Name
+            </label>
+            <select
+              class="form-select"
+              name="schemacategory"
+              id="schemacategory"
+              (click)="getschemacategoryid($event.target.value)"
+              style="margin-top: 9px">
+              <ng-container *ngFor="let item of schemeList">
+                <option value="{{ item.schemeCategoryId }}">
+                  {{ item.categoryName }}
+                </option>
+              </ng-container>
+            </select>
+          </div>
+        </div>
+      </div> -->
+      <!-- <div class="col-lg-4 col-xxl-4"></div> -->
+      <div class="col-lg-4 col-xxl-4">
+        <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+          <label class="control-label mb-2">Search Type</label
+          ><span class="text-danger">*</span>
+          <select
+            class="form-select"
+            id="search"
+            aria-label="Disabled select example">
+            <!-- <option value="" selected>Select</option> -->
+            <option value="A">Ration Card No./URN</option>
+            <option value="B">Aadhar Card No.</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-lg-4 col-xxl-4">
+        <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+          <label class="control-label mb-2">Enter Here</label
+          ><span class="text-danger">*</span>
+          <input type="text" class="form-control" placeholder="Enter Here" name="urn" id="urn"
+           autocomplete="off" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" maxlength="25"/>
+        </div>
+      </div>
+      <div class="col-lg-4 col-xxl-4">
+        <div class="mb-xl-4 mb-lg-4 mb-md-4 mb-4">
+          <button
+            type="submit"
+            class="btn btn-success"
+            style="margin-top: 3ch"
+            (click)="Search()"
+          >
+            Search</button
+          >&nbsp;
+          <button
+            type="button"
+            class="btn btn-secondary"
+            style="margin-top: 3ch"
+            (click)="getReset()"
+          >
+            Reset
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br />
+  <div class="content-box" *ngIf="show">
+    <!-- </div>
+  <div class="content-box"> -->
+    <div class="ps-0 fw-500">Scheme Category Name: <span style="color: #1f723f;">{{schemename}}</span></div>
+    <div class="card shadow-sm basic-info">
+      <div class="card-header">
+        <h5 class="mb-0">Beneficiary Details</h5>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-striped mb-0">
+            <thead>
+              <tr>
+                <th width="50">Sl#</th>
+                <th>Beneficiary Name</th>
+                <th>Gender</th>
+                <th>District</th>
+                <th>Block</th>
+                <th>Ward</th>
+                <th>Village</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let v of benific; index as i">
+              <tr>
+                <td>{{ i + 1 }}</td>
+                <td>{{ v.fullname }}</td>
+                <td>{{ v.gender }}</td>
+                <td>{{ v.dist }}</td>
+                <td>{{ v.block }}</td>
+                <td>{{ v.word }}</td>
+                <td>{{ v.village }}</td>
+              </tr>
+            </tbody>
+            <tbody *ngIf="benific?.length == 0">
+              <tr>
+                <div class="row">
+                  <span
+                    style="color: red; text-align: center; position: absolute"
+                    >NO DATA FOUND!!</span
+                  >
+                </div>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <br />
+    <!-- </div>
+  <div class="content-box"> -->
+    <div class="card shadow-sm basic-info">
+      <div class="card-header">
+        <h5 class="mb-0">Family Details</h5>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-striped mb-0">
+            <thead>
+              <tr>
+                <th width="50">Sl#</th>
+                <th>Member Name</th>
+                <th>Gender</th>
+                <th>Age</th>
+                <th>Relation With Family Head</th>
+                <th>Mortality</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let v of family; index as i">
+              <tr>
+                <td>{{ i + 1 }}</td>
+                <td>{{ v.fullname }}</td>
+                <td>{{ v.gender }}</td>
+                <td>{{ v.age }}</td>
+                <td>{{ v.relation }}</td>
+                <td>{{ v.mortality }}</td>
+              </tr>
+            </tbody>
+            <tbody *ngIf="family?.length == 0">
+              <tr>
+                <div class="row">
+                  <span
+                    style="color: red; text-align: center; position: absolute"
+                    >NO DATA FOUND!!</span
+                  >
+                </div>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="card shadow-sm basic-info">
+      <div class="card-header">
+        <h5 class="mb-0">Card Balance</h5>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-striped mb-0">
+            <thead>
+              <tr>
+                <th width="50">Sl#</th>
+                <th>Available Balance</th>
+                <th>Amount Blocked</th>
+                <th>Claimed Amount</th>
+                <th>Female Fund</th>
+                <th>Policy Start Date</th>
+                <th>Policy End Date</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let v of cardbalance; index as i">
+              <tr>
+                <td>{{ i + 1 }}</td>
+                <td>{{ v.availablebalance }}</td>
+                <td>{{ v.amountBlcked }}</td>
+                <td>{{ v.claimamount }}</td>
+                <td>{{ v.femalefond }}</td>
+                <td>{{ v.policystdate | date : "dd-MMM-yyyy" }}</td>
+                <td>{{ v.policeenddate | date : "dd-MMM-yyyy" }}</td>
+              </tr>
+            </tbody>
+            <tbody *ngIf="cardbalance?.length == 0">
+              <tr>
+                <div class="row">
+                  <span
+                    style="color: red; text-align: center; position: absolute"
+                    >NO DATA FOUND!!</span
+                  >
+                </div>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

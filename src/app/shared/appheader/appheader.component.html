@@ -1,0 +1,153 @@
+<nav class="navbar navbar-expand navbar-light navbar-bg">
+    <a class="sidebar-toggle js-sidebar-toggle" [ngClass]="{'active': toggleLayoutBtn }">
+        <i class="bi bi-list" [class.bi-x-lg]="toggleLayoutBtn"></i> <span class="d-md-none ps-2">Menu</span>
+    </a>
+
+    <div class="title-bar d-lg-flex align-items-center ps-xl-3" (click)="$event.stopPropagation();" style="width: 80%;">
+        <a routerLink="/application/dashboard" title="Home"><i class="bi bi-house-door"></i></a>
+        <span class="px-2">/</span>
+        <h5 class="mb-0 d-md-block d-none"> {{ pagetitle }} </h5>
+    </div>
+
+    <!--div style="text-align: right;" *ngIf="isAdmin" (click)="$event.stopPropagation();">
+        <a routerLink="/application/userMenuMapping" title="Admin Console"><i class="bi bi-gear"></i></a>
+    </div-->
+
+    <div class="navbar-collapse collapse" (click)="$event.stopPropagation();">
+        <ul class="navbar-nav navbar-align d-flex align-items-center">
+            <!-- <li class="nav-item dropdown">
+                <a class="nav-icon dropdown-toggle" href="javascript:void(0);" id="alertsDropdown" data-bs-toggle="dropdown" ngbTooltip="Notifications">
+                    <div class="position-relative">
+                        <i class="bi bi-bell"></i>
+                        <span class="indicator">4</span>
+                    </div>
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg shadow border-0 dropdown-menu-end py-0" aria-labelledby="alertsDropdown">
+                    <div class="dropdown-menu-header">
+                        2 New Notifications
+                    </div>
+                    <div class="list-group">
+                        <a href="#" class="list-group-item">
+                            <div class="row g-0 align-items-center">
+                                <div class="col-2">
+                                    <i class="bi bi-chat-left-text"></i>
+                                </div>
+                                <div class="col-10">
+                                    <div class="text-dark">Update completed</div>
+                                    <div class="text-muted small mt-1">In publishing and graphic design, Lorem ipsum is a placeholder.</div>
+                                    <div class="text-muted small mt-1">30m ago</div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <div class="row g-0 align-items-center">
+                                <div class="col-2">
+                                    <i class="bi bi-chat-left-text"></i>
+                                </div>
+                                <div class="col-10">
+                                    <div class="text-dark">Lorem ipsum</div>
+                                    <div class="text-muted small mt-1">In publishing and graphic design, Lorem ipsum is a placeholder.</div>
+                                    <div class="text-muted small mt-1">2h ago</div>
+                                </div>
+                            </div>
+                        </a>
+
+                    </div>
+                    <div class="dropdown-menu-footer">
+                        <a href="#" class="text-muted">Show all notifications</a>
+                    </div>
+                </div>
+            </li> -->
+            <li class="nav-item dropdown d-flex align-items-center border-start ms-3">
+                <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
+                    <i class="bi bi-gear"></i>
+                </a>
+                <a class="nav-icon" style="text-align: center; padding-right: 0; cursor: pointer;">
+                    <img *ngIf="isImage" [src]="imageToShow" class="avatar img-fluid rounded-circle me-2" />
+                    <img *ngIf="!isImage" src="./assets/img/male-profile.jpg"
+                        class="avatar img-fluid rounded-circle me-2" alt="Fallbackimage">
+                </a>
+                <a class="nav-link d-none d-sm-inline-flex py-0 px-4" href="#" data-bs-toggle="dropdown"
+                    style="padding-left: 0;">
+                    <!-- <p class="text-dark mb-0 lh-sm"><small class="d-block text-muted">Welcome</small> <span>{{userName}}</span></p> -->
+                    <p class="text-dark mb-0 lh-sm"><small class="d-block text-muted">Welcome</small>
+                        <span>{{fullName}}</span></p>
+                </a>
+                <div class="dropdown-menu dropdown-menu-end shadow border-0 dropdown-success">
+                    <a class="dropdown-item" (click)="profile()"> <i class="bi bi-person me-2"></i> Profile</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" routerLink="/changepassword"><i class="iconbsky-password me-2"></i>Change
+                        password</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" (click)="logout()"><i class="bi bi-box-arrow-right me-2"></i> Logout</a>
+                </div>
+            </li>
+            <!-- <li class="nav-item logout-btn d-flex align-items-center text-center">
+                <a routerLink="/login" class="btn"><i class="bi bi-box-arrow-right"></i> <span class="d-block">Logout</span></a>
+            </li> -->
+        </ul>
+    </div>
+
+</nav>
+<div class="container-fluid">
+    <!-- <nav aria-label="breadcrumb" class="py-3 px-2" >
+        <ol class="breadcrumb mb-0" (click)="$event.stopPropagation();">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item active" aria-current="page">{{ pagetitle }}</li>
+        </ol>
+      </nav> -->
+    <!-- <app-breadcrumb></app-breadcrumb> -->
+
+</div>
+<div class="modal fade" id="profilePicModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+    style="border: 1px solid blue;">
+    <div class="modal-dialog modal-lg" style="max-width: 35%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Profile Photo</h5>
+
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row gx-5 ">
+                    <div class="col-1 col-xxl-1 text-center "></div>
+                    <div class="col-10 col-xxl-10 ">
+                        <img *ngIf="isImage" [src]="imageToShow" alt="Admission Slip " class="w-100 mb-2 rounded "
+                            width="400" height="500">
+                        <img *ngIf="!isImage" src="./assets/img/male-profile.jpg" alt="Profile Photo "
+                            class="w-100 mb-2 rounded " width="400" height="500">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-xxl-4">
+                        <div class="mb-xl-3">
+                            <div class="photoUpload btn btn-primary btn-sm " *ngIf="isUploadData" >
+                                <input type="file" class="upload " id="profile" accept=".jpeg,.jpg"
+                                    (change)="profilepic($event.target.files,'profile')" />
+                                <span><i class="iconbsky-image-upload text-white "></i> Uploaded
+                                    Photo</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-xxl-4">
+                        <div class="mb-xl-3">
+                            <div class="photoUpload btn btn-success btn-sm" (click)="saveImage()" *ngIf="isSaveData" data-bs-dismiss="modal" aria-label="Close">
+                                <!-- <input type="button" value="submit" (click)="saveImage()"  >&nbsp; -->
+                                <span><i class="iconbsky-search text-white "></i> Save</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-xxl-4">
+                        <div class="mb-xl-3">
+                            <div class="photoUpload btn btn-danger btn-sm " (click)="removePhoto(userId)"
+                            *ngIf="isRemoveData">
+                            <!-- <input type="button" value="remove" (click)="removePhoto()"  >&nbsp; -->
+                            <span><i class="bi bi-trash"></i> Remove</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

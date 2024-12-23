@@ -1,0 +1,219 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/overridecode" class="nav-link active">FP Override Code
+                        </a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a routerLink="/application/viewoverride" routerLinkActive="active"
+                            class="nav-link">View Approval</a>
+                    </li> -->
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="content-box mt-3">
+        <div class="col-xxl-10">
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label class="control-label mb-2">Requested Date From</label><span class="text-danger">*</span>
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="date1" name="fromDate">
+                            <label class="input-group-text bg-transparent border-start-0" for="datepicker1"><i class="iconbsky-calendar"></i> </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label class="control-label mb-2">Requested Date To</label><span class="text-danger">*</span>
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="date2" name="toDate">
+                            <label class="input-group-text bg-transparent border-start-0" for="datepicker2"><i class="iconbsky-calendar"></i> </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label class="control-label mb-2">Hospital Name</label>
+                        <div class="input-group">
+                            <select class="form-select" name="hospitalCode" id="hospitalCode">
+                                    <option value="" selected>Select Hospital Name</option>
+                                    <ng-container *ngFor="let item of hospitalList" >
+                                        <option value="{{item.hospitalcode}}">{{item.hospitaname}}({{item.hospitalcode}})</option>
+                                    </ng-container>
+                                </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="d-grid gap-2 d-md-flex">
+                    <button type="submit" class="btn btn-success" (click)="overrideRequestData()">Search</button>
+                    <button type="reset" class="btn btn-secondary" (click)="resetField()">Reset</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+        <div class="col-lg-4 col-xxl-4" style="padding-top: 10px; padding-left: 17px;">
+            <b>No. Of Records: <span style="color: green;">{{fpOverrideList?.length}}</span></b>
+        </div>
+        <div class="col-lg-4 col-xxl-4"></div>
+        <!-- <div class="col-md-3 col-lg-3 col-xl-3 col-xxl-3 ms-xxl-auto ms-xl-auto ms-lg-auto ms-md-auto"> -->
+        <div class="col-lg-4 col-xxl-4">
+            <div class="input-group">
+                <input type="text" id="txtsearchDate" class="form-control" placeholder="Search" name="txtsearchDate" [(ngModel)]="txtsearchDate" autocomplete="off">
+            </div>
+        </div>
+        <!-- </div> -->
+    </div>
+    <form [formGroup]="approveForm">
+        <!-- <table class="table table-striped"> -->
+        <div class="content-box p-0 overflow-hidden">
+            <div class="table-responsive ">
+                <div class="table-scroll ">
+
+                    <table class="table table-striped mb-0">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th class="mw-60">Sl No.</th>
+                                <th class="mw-130">Patient Name</th>
+                                <th class="mw-130">URN </th>
+                                <th class="mw-130">Description</th>
+                                <th class="mw-130">Hospital Code</th>
+                                <th class="mw-130">Hospital Name</th>
+                                <th class="mw-130">Use For</th>
+                                <th class="mw-130">NO. Of Days</th>
+                                <th class="mw-130">Requested Date</th>
+                                <th class="mw-130">Details</th>
+                                <th class="mw-130">Download</th>
+                                <th width="300">Remarks</th>
+                            </tr>
+
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of fpOverrideList | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};index as i">
+
+                                <td>
+                                    <input type="checkbox" [checked]="item.status" (change)="item.status=!item.status">
+                                </td>
+                                <td *ngIf="currentPage==1">{{i+1}}</td>
+                                <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+i+1}}</td>
+                                <td>{{item.patientName}}</td>
+                                <td>{{item.urn}}</td>
+                                <td>{{item.description}}</td>
+                                <td>{{item.hospitalCode}}</td>
+                                <td>{{item.hospitalName}}</td>
+                                <td>{{item.generatedThrough}}</td>
+                                <td>{{item.noOfDays}}</td>
+                                <td>{{item.requestedDate | date: 'dd-MMM-yyyy'}}</td>
+                                <td>
+                                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#exampleModal1" (click)="view(item.urn,item.memberId,item.requestedDate,item.generatedThrough,item.hospitalCode)">
+                                        <i class="bi bi-eye" style="color:blue;"></i>
+                                    </a>
+                                </td>
+                                <td>
+                                    <ng-container *ngIf="item.pdfName!=null">
+                                        <a target="_blank" class="btn btn-outline-primary btn-sm me-1" (click)="download(item.pdfName,item.hospitalCode,item.createdOn)">
+                                            <i class="bi bi-download"></i>
+                                        </a>
+                                    </ng-container>
+                                </td>
+                                <td>
+                                    <textarea class="form-control mw-textarea" id="remarks" formControlName="remarks" [(ngModel)]="item.remarks" #myInput [maxLength]="maxChars" rows="3"></textarea>
+                                    <span class="text-danger small">Characters Remaining: {{maxChars -myInput.value.length}}</span>
+                                </td>
+                            </tr>
+                            <tr *ngIf="fpOverrideList==0">
+                                <td colspan="12">
+                                    <p class="mb-0 text-center text-danger fw-bold">NO DATA FOUND!!</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- </table> -->
+    </form>
+    <div class="col-lg-12 mt-3">
+        <div class="d-grid gap-2 d-md-flex">
+            <button type="submit" class="btn btn-success" value="approve" (click)="Submit(1)">Approve</button>
+            <button type="reset" class="btn  btn-danger" value="reject" (click)="Submit(2)">Reject</button>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 20px;" *ngIf="showPegi">
+        <div class="col-sm-4">
+            <div class="col-sm-*">
+                show
+                <select id="pageItem" name="pageItem" class="custom-select-sm" (change)="pageItemChange()">
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                </select> entries
+            </div>
+        </div>
+        <div class="col-sm-8 text-end">
+            <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true" (pageChange)="currentPage = $event"></pagination-controls>
+        </div>
+
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Patient Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table  table-striped mb-0">
+                        <thead>
+                            <tr>
+                                <!-- <th width="50">Date</th> -->
+                                <th>URN</th>
+                                <th>Patient Name</th>
+                                <!-- <th>Hospital Code</th> -->
+                                <!-- <th>Member Id</th> -->
+                                <th>Aadhaar No</th>
+                                <th>Verified By</th>
+                                <th>Verify For</th>
+                                <th>Mode of Verify</th>
+                                <th>Attempted On</th>
+                                <th>Status</th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let p of patientList">
+                                <!-- <td>{{p.date}}</td> -->
+                                <td>{{p.urn}}</td>
+                                <td>{{p.patientName}}</td>
+                                <!-- <td>{{p.memberId}}</td> -->
+                                <td>{{p.adharNo}}</td>
+                                <td>{{p.verifiedBy}}</td>
+                                <td>{{p.verifiedThrough}}</td>
+                                <td>{{p.modeOfVerify}}</td>
+                                <td>{{p.date}}</td>
+                                <td>{{p.status}}</td>
+                                <!-- <td>{{p.modeOfVerify}}</td> -->
+                            </tr>
+                            <tr *ngIf="patientList==0">
+                                <td colspan="12">
+                                    <p class="mb-0 text-center text-danger fw-bold">NO DATA FOUND!!</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>

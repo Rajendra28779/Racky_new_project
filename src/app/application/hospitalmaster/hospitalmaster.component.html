@@ -1,0 +1,156 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/hospitaldetails" class="nav-link active">SNA Tagged To Hospital List</a>
+                    </li> 
+                </ul>
+            </div> 
+        </div>
+    </div>
+    <div class="content-box">
+        <div class="col-xxl-10">
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">State Name</label>
+                        <select class="form-select" id="statecode1" aria-label="Disabled select example" (change)="OnChangeState($event)" >
+                            <option value="" selected>Select State</option>
+                            <option *ngFor="let c of statelist" [value]="c.stateCode">{{c.stateName}}</option>
+                          </select>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">District Name</label>
+                        <select class="form-select" id="distcode1" aria-label="Disabled select example" >
+                            <option value="" selected>Select District</option>
+                            <option *ngFor="let c of distList" [value]="c.districtcode">{{c.districtname}}</option>
+                          </select>
+                    </div>
+                </div>
+                
+                <div class="col-lg-12">
+                    <div class="d-grid gap-2 d-md-flex">
+                        <button type="submit" class="btn btn-success" (click)="getHospitalDetails()">Search</button>
+                        <button type="reset" class="btn btn-secondary" (click)="getReset()">Reset</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+        <div class="col-lg-4 col-xxl-4"></div>
+        <div class="col-lg-4 col-xxl-4"></div>
+        <div class="col-lg-4 col-xxl-4">
+            <div class="input-group">
+                <input type="text" id="txtsearchDate" class="form-control"
+                    placeholder="Search" name="txtsearchDate" [(ngModel)]="txtsearchDate" autocomplete="off">
+            </div>
+        </div>
+    </div>
+    <div class="content-box p-0 overflow-hidden">
+        <div class="table-responsive">
+            <table class="table table-striped mb-0">
+                <thead>
+                    <tr>
+                        <th>Sl#</th>
+                        <th>State Name</th>
+                        <th>District Name</th>
+                        <th>Hospital Code</th>
+                        <th>Hospital Name</th>
+                        <th>Assigned SNA</th>
+                        <th>SNA Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let claim of Hospitallist | filter:txtsearchDate  | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};
+                    index as i">
+                        <td *ngIf="currentPage==1">{{(i+1)}}</td>
+                        <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+ i+1}}</td>
+                        <td> {{claim.STATENAME}}</td>
+                        <td> {{claim.DISTRICTNAME}}</td>
+                        <td> {{claim.HOSPITALCODE}}</td>
+                        <td> {{claim.HOSPITALNAME}}</td>
+                        <td> {{claim.ASSIGNEDSNA}}</td>
+                        <td class="text-center">
+                            <a class="btn btn-outline-primary btn-sm me-1" data-bs-toggle="modal" data-bs-target="#exampleModal1" (click)="viewData(claim)" ><i class="bi-eye-fill"></i></a>
+                        </td>
+                    </tr>
+                    <tr *ngIf="Hospitallist?.length==0">
+                        <div class="row">
+                            <span style="color: red;text-align: center;position:absolute">NO DATA FOUND!!</span>
+                        </div>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 20px;" *ngIf="showPegi">
+        <!-- <div class="col-sm-4">
+            Showing {{ (currentPage - 1) * pageElement + 1 }}  to {{elementTo}} of {{record1}}
+            (Total Record -  {{districtDetails.length }})
+        </div> -->
+        <div class="col-sm-6">
+            <!-- Showing {{elementFrom}} to {{elementTo}} of {{totalRecord}} entries -->
+            <div class="col-sm-*">
+                Show
+                <select id="pageItem" name="pageItem" class="custom-select-sm" (change)="pageItemChange()">
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                </select> Entries
+            </div>
+        </div>
+        <div class="col-sm-6 text-right">
+            <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true"
+                (pageChange)="currentPage = $event"></pagination-controls>
+        </div>
+
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+    style="border: 1px solid blue;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">SNA Details </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>SNA Doctor Name</th>
+                            <th>Email Id</th>
+                            <th>Mobile No.</th>
+                            <th>Address</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngIf="detailData?.length">
+                            <tr *ngFor="let item of detailData">
+                                <td>{{item.ASSIGNEDSNA}}</td>
+                                <td>{{item.EMAILID}}</td>
+                                <td>{{item.MOBILENO}}</td>
+                                <td *ngIf="item.ADDRESS_INFO != undefined">{{item.ADDRESS_INFO}}</td>
+                                <td *ngIf="item.ADDRESS_INFO == undefined">--</td>
+                            </tr>
+                        </ng-container>
+                        <tr *ngIf="! detailData?.length">
+                            <td colspan="8" align="center" *ngIf="isVisible"><strong class="text-danger">No data
+                                    found</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

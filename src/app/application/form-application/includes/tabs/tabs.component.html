@@ -1,0 +1,23 @@
+<li>
+  <a
+    class="nav-item nav-link tab-link"
+    [ngClass]="
+      activeid == undefined || activeid == '' || activeid == '0'
+        ? {
+            active:
+              tabMessage.tabClass === 'active add d-none' ||
+              tabMessage.tabClass === 'active',
+            'd-none': tabMessage.tabClass === 'active edit d-none'
+          }
+        : {
+            active: tabMessage.tabClass === 'active edit d-none',
+            'd-none': tabMessage.tabClass === 'active add d-none'
+          }
+    "
+    [routerLink]="activeid ? (tabMessage.tabUrl == '' ? '../'+tabMessage.tabUrl+'/'+activeid : '../'+ tabMessage.tabUrl ) : tabURL"
+    [attr.tabspecialclass]="tabMessage.pageType"
+  >
+    {{ tabMessage.tabName }}
+  </a>
+</li>
+<!--activeid   ?  (tabMessage.tabUrl == '' ? '../'+tabMessage.tabUrl+'/'+activeid : '../'+tabMessage.tabUrl)  : tabMessage.tabUrl   -->

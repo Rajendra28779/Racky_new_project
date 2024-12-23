@@ -1,0 +1,486 @@
+a {
+    color: $link-color;
+    text-decoration: none;
+}
+
+.wrapper {
+    align-items: stretch;
+    display: flex;
+    width: 100%;
+    background: $sidebar-bg;
+}
+
+.main {
+    min-width: 100%;
+    margin-top: $navbar-hight-mobile;
+    //min-height: calc(100vh - $navbar-hight);
+    transition: $sidebar-transition;
+    background-color: $light-bg;
+    //box-shadow: $navbar-box-shadow;
+    flex-direction: column;
+    overflow: hidden;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    @include transtionDefault(all, 0.6s, ease);
+}
+
+$modal-backdrop-bg: red;
+
+@include media-breakpoint-up(lg) {
+    .main {
+        min-width: 0;
+        margin-top: $navbar-hight;
+        display: flex;
+        right: 0;
+        width: calc(100% - $sidebar-width);
+        min-height: calc(100vh - $navbar-hight);
+        margin-left: $sidebar-width;
+    }
+    .toggle-layout {
+        .main {
+            width: 100%;
+            margin-left: 0;
+        }
+    }
+}
+
+.content {
+    padding: $content-padding-mobile;
+    flex: 1;
+    width: 100vw;
+    max-width: 100vw;
+    direction: ltr;
+    @include media-breakpoint-up(md) {
+        width: auto;
+        max-width: auto;
+        padding: $content-padding-desktop;
+    }
+    @include media-breakpoint-up(lg) {
+        padding: $content-padding-desktop;
+    }
+}
+
+.form-cointainer {
+    min-height: 10rem;
+    .content-box {
+        background-color: $white;
+        padding: 1rem;
+        border: solid 1px $gray-200;
+        border-radius: $custom-radius;
+        @include box-shadow(0 0.125rem 0.25rem rgba($black, .2));
+    }
+}
+
+#tcost:readonly {
+    background-color: #e9ecef !important;
+    opacity: 1 !important;
+}
+
+.form-box-bg {
+    background: $form-box-bg;
+    margin: 0 0;
+    border-radius: 5px;
+    border: 1px solid #e5e5e5;
+}
+
+
+.custom-select-sm {
+  border-radius: .2rem;
+  border: 1px solid #ced4da;
+  padding: 2px 3px;
+}
+
+.mt-button-39 {
+    margin-top: 39px;
+}
+
+.fs-icon-alert {
+    font-size: 4rem !important;
+}
+
+.fs-1-2 {
+    font-size: 1.2rem !important;
+}
+
+.fs-5 {
+    font-size: 1rem !important;
+}
+
+hr {
+    margin: .3rem 0 1.2rem 0;
+    border-color: #a7a7a7;
+}
+
+.panel-bg {
+    background-color: #dfe9e3;
+    padding: 10px;
+    border-left: 3px solid green;
+}
+
+.main-tab {
+    margin-bottom: .8rem;
+    border-bottom: solid 1px $gray-200;
+    .nav-tabs {
+        border-bottom: transparent;
+        margin-bottom: .5rem;
+        @include media-breakpoint-up(lg) {
+            margin-bottom: 0;
+        }
+    }
+    .nav-link {
+        color: $black;
+        padding-left: 0rem;
+        padding-right: 0rem;
+        margin-right: 1.5rem;
+        border-width: 0 0 3px;
+        font-weight: 500;
+        &:hover,
+        &:focus {
+            border-color: transparent;
+            border-bottom-color: $gray-400;
+        }
+        &.active {
+            background-color: transparent;
+            color: $green;
+            border-color: transparent transparent $green;
+        }
+    }
+}
+
+// utilites
+.utilite {
+    ul {
+        li {
+            border: 1px solid $link-color;
+            background-color: $white;
+            display: inline-block;
+            border-radius: .4rem;
+            @include transtionDefault(all, 0.6s, ease);
+            a {
+                display: block;
+                position: relative;
+                color: $link-color;
+                text-decoration: none;
+                padding: 0.4rem;
+                // @include media-breakpoint-up(md) {
+                //   padding: 0.4rem;
+                // }
+                &:hover {
+                    color: $white;
+                }
+                i {
+                    display: flex;
+                }
+            }
+            &:hover {
+                background-color: $green;
+                i {
+                    color: $white;
+                }
+            }
+            &:nth-child(n+2) {
+                margin-left: 8px;
+            }
+        }
+    }
+}
+
+.table {
+    th {
+        background-color: $green-light;
+        &:first-child {
+            @include border-radius(.4rem 0 0 0)
+        }
+        &:last-child {
+            @include border-radius(0 .4rem 0 0)
+        }
+    }
+    a:not(.btn) {
+        color: $blue;
+        &:hover {
+            color: $gray-900;
+        }
+    }
+}
+
+.card {
+    @include border-radius(.4rem);
+    &-title {
+        margin-bottom: 1rem;
+    }
+    &-header {
+        padding-top: $card-padding-y;
+        padding-bottom: $card-padding-y;
+    }
+}
+
+.no-record {
+    color: $gray-500;
+    font-size: 1.4rem;
+}
+
+.photoUpload {
+    position: relative;
+    overflow: hidden;
+    input {
+        &.upload {
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin: 0;
+            padding: 0;
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0;
+            filter: alpha(opacity=0);
+        }
+    }
+}
+
+.file-upload {
+    background-color: #ffffff;
+    width: 100%;
+    position: relative;
+    .file-upload-content {
+        text-align: center;
+        height: 6rem;
+        overflow: hidden;
+        display: none;
+        border: 2px dashed #d1d3e2;
+    }
+    .image-upload-wrap {
+        border: 2px dashed #d1e2d1;
+        position: relative;
+        height: 6rem;
+    }
+    .file-upload-input {
+        position: absolute;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        outline: none;
+        opacity: 0;
+        cursor: pointer;
+    }
+    .drag-text {
+        h5 {
+            font-weight: 100;
+            font-size: 0.8rem;
+            margin-bottom: 0;
+            color: $gray-600;
+            padding: 1.2rem 1rem;
+            i {
+                color: $gray-400 !important;
+                margin-bottom: .4rem;
+            }
+        }
+    }
+}
+
+.dataTables_wrapper {
+    .dataTables_length,
+    .dataTables_filter {
+        margin: .6rem .75rem;
+    }
+    .dataTables_paginate {
+        margin: .6rem .75rem;
+        border-collapse: collapse;
+        .paginate_button {
+            border: solid 1px $gray-200;
+            padding: 0.1em 0.6em;
+            margin: 0;
+            border-collapse: collapse;
+            &:hover {
+                background: $green-light;
+                border-color: $green-light;
+                color: $black !important;
+            }
+            &.current {
+                background: $green;
+                color: $white !important;
+                &:hover {
+                    background: $green;
+                    color: $white !important;
+                }
+            }
+        }
+    }
+}
+
+table {
+    &.dataTable {
+        &.no-footer {
+            border-bottom-color: $green-light;
+        }
+        thead {
+            th {
+                padding: 0.5rem 0.5rem;
+                border-bottom-color: $green-light;
+            }
+        }
+    }
+}
+
+.form-control {
+    &:invalid,
+    &.is-invalid {
+        +.input-group-text {
+            border-color: $red;
+            border-top-right-radius: 0.375rem !important;
+            border-bottom-right-radius: 0.375rem !important;
+        }
+    }
+}
+
+.fs-icon-alert {
+    font-size: 4rem !important;
+}
+
+// datepicker css
+.ngb-dp-weekday {
+    color: $gray-900 !important;
+}
+
+// select dropdown override
+.bootstrap-select>button:not(:disabled),
+.bootstrap-select>[type=button]:not(:disabled),
+.bootstrap-select>[type=reset]:not(:disabled),
+.bootstrap-select>[type=submit]:not(:disabled),
+.bootstrap-select>.dropdown-toggle.bs-placeholder,
+.bootstrap-select>.dropdown-toggle.bs-placeholder:active,
+.bootstrap-select>.dropdown-toggle.bs-placeholder:focus,
+.bootstrap-select>.dropdown-toggle.bs-placeholder:hover {
+    color: $gray-900;
+    border-color: $gray-300;
+    padding-right: 2rem;
+}
+
+.bootstrap-select>.dropdown-toggle::after {
+    display: none;
+}
+
+// alert message icon animation
+.circle-cross,
+.circle-check {
+    width: 5rem;
+    height: 5rem;
+    margin-bottom: 1.5rem;
+}
+
+.circle-cross {
+    .circle,
+    .line {
+        stroke: $red;
+    }
+}
+
+.circle-check {
+    .circle,
+    .check {
+        stroke: $link-color;
+    }
+}
+
+.path {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 0;
+    &.circle {
+        -webkit-animation: dash .9s ease-in-out;
+        animation: dash .9s ease-in-out;
+    }
+    &.line {
+        stroke-dashoffset: 1000;
+        -webkit-animation: dash .9s .35s ease-in-out forwards;
+        animation: dash .9s .35s ease-in-out forwards;
+    }
+    &.check {
+        stroke-dashoffset: -100;
+        -webkit-animation: dash-check .9s .35s ease-in-out forwards;
+        animation: dash-check .9s .35s ease-in-out forwards;
+    }
+}
+
+@-webkit-keyframes dash {
+    0% {
+        stroke-dashoffset: 1000;
+    }
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes dash {
+    0% {
+        stroke-dashoffset: 1000;
+    }
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+@-webkit-keyframes dash-check {
+    0% {
+        stroke-dashoffset: -100;
+    }
+    100% {
+        stroke-dashoffset: 900;
+    }
+}
+
+@keyframes dash-check {
+    0% {
+        stroke-dashoffset: -100;
+    }
+    100% {
+        stroke-dashoffset: 900;
+    }
+}
+
+.border-radius-0 {
+    border-radius: 0 !important;
+}
+
+.border-bottom-white {
+    border-bottom: 1px solid #fff !important;
+}
+
+// .bi::before, [class^="bi-"]::before, [class*=" bi-"]::before {
+//   line-height: 1;
+//   vertical-align: 0;
+// }
+.vertical-align-0::before {
+    vertical-align: 0;
+}
+
+// TABLES DATA CENTER
+.table-data-vertical-top .table> :not(caption)>*>* {
+    vertical-align: top !important;
+}
+
+.table> :not(caption)>*>* {
+    vertical-align: middle;
+}
+
+.ngx-pagination .current {
+    background: #1a6336 !important;
+    border-radius: 5px;
+}
+
+.ngx-pagination a {
+    border-radius: 5px !important;
+}
+
+.bootstrap-datetimepicker-widget table td.active,
+.bootstrap-datetimepicker-widget table td.active:hover {
+    color: #20944c !important;
+}
+
+
+@media (max-width:500px){
+.utilite ul li a {padding: 0.2rem;}
+.utilite ul li a i{ font-size: .8rem;}
+
+
+}

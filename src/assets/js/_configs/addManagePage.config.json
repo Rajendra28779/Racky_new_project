@@ -1,0 +1,31 @@
+[
+    {
+      "pagetitle":"Add Letter Config",
+      "tabList":[
+        {"tabName":"View","tabUrl":"../viewLetterConfig"},
+        {"tabName":"Add New","tabUrl":"../addLetterConfig","tabClass":"active add d-none"},
+                  {"tabName":"Edit","tabUrl":"","tabClass":"active edit d-none"}
+                
+                ],
+      "utils":[
+        {"utilName":"mandatory"}
+       
+       
+        ],
+      "messages":{
+        "successMsg":"New Letter Generated Successfully",
+        "updatesuccessMsg":"Updated Successfully",
+        "errorMsg":"Error in letter creation",
+        "PageName":"Please Enter A Page Name",
+        "PageSnippet":"Please Enter A Page Snippet",
+        "MetaTitle":"Please Enter A MetaTitle",
+        "MetaKeyword":"Please Enter A MetaKeyword",    
+        "MetaDescription":"Please Enter  MetaDescription",  
+        "linkType":"Please Select a linkType",  
+        "externalUrl":"Please Enter a externalUrl",
+        "windowStatus":"Please Enter a windowStatus",
+        "txtPageType":"Please Enter a txtPageType",
+        "txtContent":"Please Enter Your page Content"
+       }
+    }
+  ]

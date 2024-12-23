@@ -1,0 +1,134 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+      <div class="row justify-content-between">
+          <div class="col-lg-4">
+              <ul class="nav nav-tabs">
+                  <li class="nav-item">
+                      <a routerLink="/application/snafloaterevert" class="nav-link active">Floate Revert</a>
+                  </li>
+              </ul>
+          </div>
+      </div>
+  <div class="content-box">
+      <div class="col-xxl-10">
+        <form [formGroup]="group">
+          <div class="row">
+              <div class="col-lg-4 col-xxl-4">
+                  <div class="mb-xl-3">
+                      <label class="control-label">Floate Generation Date From</label><span class="text-danger">*</span>
+                      <div class="input-group">
+                          <input type="text" class="form-control border-end-0 datepicker" id="datepicker1" name="fromDate">
+                          <label class="input-group-text bg-transparent border-start-0" for="datepicker1"><i class="iconbsky-calendar"></i> </label>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-lg-4 col-xxl-4">
+                  <div class="mb-xl-3">
+                      <label class="control-label">Floate Generation Date To</label><span class="text-danger">*</span>
+                      <div class="input-group">
+                          <input type="text" class="form-control border-end-0 datepicker" id="datepicker2" name="toDate" >
+                          <label class="input-group-text bg-transparent border-start-0" for="datepicker2"><i class="iconbsky-calendar"></i> </label>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <!-- <div class="row">
+            <div class="col-lg-4 col-xxl-4">
+            <div class="mb-xl-3">
+              <label class="control-label">Floate No</label>
+              <input class="form-control" type="text" placeholder="Enter Floate No" autocomplete="off" id="Flaote" maxlength="40"
+              onkeyup="this.value=this.value.replace(/[^a-zA-Z0-9/ ]/,'');">
+            </div>
+            </div>
+          </div> -->
+          <input type="submit" value="Search " class="btn btn-success" (click)="floatedetails()">&nbsp;&nbsp;
+          <input type="button" value="Reset " class="btn btn-secondary" (click)="reset()">
+        </form>
+        </div>
+        <!-- </div>
+        <div class="content-box"> -->
+          <br>
+        <div class="row">
+          <div class="col-3" *ngIf="showPegi" style="margin-top:2ch;">
+            <div class="col-sm-*">
+              show
+              <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                  <option value="200">200</option>
+                  <option value="300">300</option>
+                  <option value="300">All</option>
+              </select> entries
+          </div>
+          </div>
+          <div class="col-3" style="margin-top: 2ch;">
+            <b>Total Floate Generate : {{countfloate}}</b>
+          </div>
+          <div class="col-2" style="text-align:end;">
+              <button class="btn btn-success btn-sm mx-1" style="margin-top: 5px" tooltip="Excel" (click)="downloadList(1)">
+            <i class="bi bi-file-earmark-spreadsheet"></i>
+            </button>
+              <button class="btn btn-danger btn-sm mx-1" style="margin-top: 5px" tooltip="pdf" (click)="downloadList(2)">
+              <i class="bi bi-file-earmark-pdf"></i>
+            </button>
+          </div>
+          <div class="col-4">
+              <input type="text " id="txtsearchDate " name="txtsearchDate " [(ngModel)]="txtsearchDate" maxlength="20 " class="form-control " placeholder="Search here...... " autocomplete="off" style=" margin-right: 0px; margin-left: 0px;">
+          </div>
+      </div>
+      <div class="table-responsive" style="margin-top: 1ch;">
+        <table class="table table-striped mb-0">
+          <thead>
+            <tr>
+              <th width="50">Sl#</th>
+              <th>Floate No</th>
+              <th>Amount(₹)</th>
+              <th>Generated On</th>
+              <th>Total Claims</th>
+              <th width="100">Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngFor="let claim of floate | filter:txtsearchDate| paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage}; index as i ">
+                <tr>
+                    <td *ngIf="currentPage==1 ">{{(i+1)}}</td>
+                    <td *ngIf="currentPage!=1 ">{{(currentPage-1)*pageElement+ i+1}}</td>
+                    <td>{{claim.floateno}}</td>
+                    <td>{{claim.amount | currency:'':''}}</td>
+                    <td>{{claim.screateon }}</td>
+                    <td>{{claim.claimcount }}</td>
+                    <td class="text-center ">
+                        <a class="btn btn-outline-primary btn-sm " (click)="Details(claim)">
+                            Details</a>
+                    </td>
+                </tr>
+            </ng-container>
+            <tr *ngIf="!showPegi">
+                <div class="row ">
+                    <span style="color: red;text-align: center;position:absolute ">NO DATA FOUND!!</span>
+                </div>
+            </tr>
+        </tbody>
+        </table>
+      </div>
+      <div class="row" *ngIf="showPegi">
+        <div class="col-sm-4">
+            <div class="col-sm-*">show
+                <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                    <option value="200">200</option>
+                    <option value="300">300</option>
+                    <option value="300">All</option>
+                </select> entries
+            </div>
+        </div>
+        <div class="col-sm-8 text-right">
+          <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true"
+            (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)">
+          </pagination-controls>
+        </div>
+  </div>
+  </div>
+</div>
+</div>

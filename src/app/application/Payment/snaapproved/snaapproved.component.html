@@ -1,0 +1,491 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-6">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/snaapproved" class="nav-link active">Generate Float</a>
+                    </li>
+                    <li class="nav-item">
+                      <a routerLink="/application/draftfloatlist" class="nav-link" style="color: #1f723f;">Draft Float</a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/application/floatSummary" class="nav-link" style="color: #1f723f;">Float Summary</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="filter" class="searchCriteriaBox bg-light p-3">
+        <div class="row">
+            <div class="col-lg-3 col-xxl-3">
+                <div class="mb-xl-3">
+                    <label class="control-label">Actual Date Of Discharge From <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <input type="text" class="form-control border-end-0 datepicker" id="formdate" name="fromDate">
+                        <label class="input-group-text bg-transparent border-start-0" for="formdate">
+                          <i class="iconbsky-calendar"></i> </label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-xxl-3">
+                <div class="mb-xl-3">
+                    <label class="control-label">Actual Date Of Discharge To <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <input type="text" class="form-control border-end-0 datepicker" id="todate" name="toDate">
+                        <label class="input-group-text bg-transparent border-start-0" for="todate">
+                          <i class="iconbsky-calendar"></i> </label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-xxl-3">
+                <div class="mb-xl-3">
+                    <label class="control-label">Search Type <span class="text-danger">*</span></label>
+                    <select class="form-select" name="search" id="search">
+                        <option value=0 selected>2.0 Block Data</option>
+                        <option value=1>1.0 Block Data</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-3 col-xxl-3">
+                <div class="mb-xl-3">
+                    <label class="control-label">Scheme Category Name<span class="text-danger">*</span></label>
+                    <select class="form-select" name="schemacategory" id="schemacategory" (change)="getschemacategoryid($event.target.value)" style="margin-top: 9px;">
+                    <option value="" selected >All</option>
+                    <ng-container *ngFor="let item of schemeList">
+                        <option value={{item.schemeCategoryId}}>{{item.categoryName}}</option>
+                    </ng-container>
+                </select>
+                </div>
+            </div>
+            <div class="col-lg-4 col-xxl-4" *ngIf="snadoctornamehidestatus">
+                <div class="mb-xl-3">
+                    <label class="control-label">SNA Doctor Name<span class="text-danger">*</span></label>
+                    <ng-autocomplete #auto [data]="snoList" placeholder="Select SNA Name" (selected)="selectSnaEvent($event)" (inputCleared)="clearSnaEvent()" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" [searchKeyword]="keywords" spellcheck="false">
+                    </ng-autocomplete>
+
+                    <ng-template #itemTemplate let-item>
+                        <a [innerHTML]="item.fullName"></a>
+                    </ng-template>
+
+                    <ng-template #notFoundTemplate let-notFound>
+                        <div [innerHTML]="notFound"></div>
+                    </ng-template>
+                </div>
+            </div>
+            <!-- <div class="col-lg-3 col-xxl-3">
+              <div class="mb-xl-3">
+              <label class="control-label">Status</label>
+              <select class="form-select" name="status" id="status" (change)="selectedFlag($event)">
+                  <option value="" selected>Select Status</option>
+                  <option value="1">APPROVE</option>
+                  <option value="2">REJECT</option>
+              </select>
+              </div>
+          </div> -->
+        </div>
+
+        <div class="row">
+            <div class="col-lg-3 col-xxl-3">
+                <div class="mb-xl-3">
+                    <label class="control-label">State Name</label>
+                    <!-- <select class="form-select" id="state" aria-label="Disabled select example" (change)="OnChangeState($event)">
+                      <option value="" selected>Select State</option>
+                      <option *ngFor="let c of statelist" [value]="c.stateCode">{{c.stateName}}</option>
+                  </select> -->
+                    <ng-multiselect-dropdown #multiSelect *ngIf="statelist && statelist.length > 0" [placeholder]="statePlaceHolder" [settings]="settingState" [data]="statelist" id="stateCode" (onSelect)=onItemSelect($event) (onDeSelect)="onItemDeSelect($event)" (onSelectAll)="onSelectAll($event)"
+                        (onDeSelectAll)="onDeSelectAll($event)" [(ngModel)]="selectedItems">
+                    </ng-multiselect-dropdown>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-xxl-3">
+                <div class="mb-xl-3">
+                    <label class="control-label">District Name</label>
+                    <!-- <select class="form-select" id="dist" aria-label="Disabled select example" (change)="OnChangeDist($event)">
+                      <option value="" selected>Select District</option>
+                      <option *ngFor="let c of distList" [value]="c.DISTRICTCODE">{{c.DISTRICTNAME}}</option>
+                  </select> -->
+                    <ng-multiselect-dropdown #multiSelect [placeholder]="distPlaceHolder" [settings]="settingDist" [data]="distList" id="districtCode" (onSelect)="onDistSelect($event)" (onDeSelect)="onDistDeSelect($event)" (onSelectAll)="onSelectAllDist($event)" (onDeSelectAll)="onDeSelectAllDist($event)"
+                        [(ngModel)]="selectedDists">
+                    </ng-multiselect-dropdown>
+                </div>
+            </div>
+
+            <!-- <div class="col-lg-3 col-xxl-3">
+              <div class="mb-xl-3">
+              <label class="control-label">Hospital Name</label>
+              <select class="form-select" name="hospitalcode" id="hospital">
+                  <option value="" selected>Select Hospital Name</option>
+                  <option *ngFor="let c of hospitalList" [value]="c.HOSPITALCODE">{{c.HOSPITALNAME}}</option>
+              </select>
+              </div>
+          </div> -->
+            <div class="col-lg-3 col-xxl-3">
+                <div class="mb-xl-3">
+                    <label class="control-label">Hospital Name
+                      <!-- <span class="text-danger">*</span> -->
+                  </label>
+                    <!-- <ng-autocomplete #auto [data]="hospitalList" placeholder="Select Hospital Name" (selected)="selectEvent($event)" (inputCleared)="clearEvent()" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" [searchKeyword]="keyword" spellcheck="false">
+                  </ng-autocomplete>
+                  <ng-template #itemTemplate let-item>
+                      <a [innerHTML]="item.HOSPITALNAME"></a>
+                  </ng-template>
+                  <ng-template #notFoundTemplate let-notFound>
+                      <div [innerHTML]="notFound"></div>
+                  </ng-template> -->
+                    <ng-multiselect-dropdown #multiSelect [placeholder]="hosPlaceHolder" [settings]="settingHospital" [data]="hospitalList" id="districtCode" (onSelect)="onHosSelect($event)" (onDeSelect)="onHosDeSelect($event)" (onSelectAll)="onSelectAllHos($event)" (onDeSelectAll)="onDeSelectAllHos($event)"
+                        [(ngModel)]="selectedHospital">
+                    </ng-multiselect-dropdown>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col align-self-end">
+                <div class="col-lg-12">
+                    <button type="submit" class="btn btn-success" (click)="getSummary()">Search</button> &nbsp;
+                    <button type="reset" class="btn btn-secondary" (click)="resetField()">Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div style="height: 15pt;"></div>
+  <div class="content-box">
+      <div class="row">
+          <div>
+              <div class="card-header pt-0 border-bottom">
+                  <h5 class="mb-0 " style="font-size: 12pt; color: #1f723f;">Count Details</h5>
+              </div>
+          </div>
+          <div class="col-lg-12">
+              <div class="">
+
+              </div>
+          </div>
+      </div>
+  </div> -->
+    <div style="height: 15pt;"></div>
+    <div class="form-cointainer">
+        <div class="content-box border-0 bg-transparent">
+            <div class="row">
+                <div class="col-lg-12 col-xxl-12" style="padding: 0px;">
+                    <div class="card shadow-sm basic-info">
+                        <div class="card-header">
+                            <h5 class="mb-0 "><strong style="font-size: 14pt; color: #1f723f;">SUMMARY</strong></h5>
+                        </div>
+                        <div class="card-body mt-3">
+                            <div class="row gx-xl-5 treatment-details mb-3">
+                                <div class="col-xxl-5 col-xl-5">
+                                    <div class="d-flex align-items-center ">
+                                        <div>
+                                            <p class="text-muted mb-0 " style="font-size: 11pt;">Total Discharged</p>
+                                            <p class="text-muted mb-0 " style="font-size: 11pt;">Document Upload Pending (Within 7 days of discharge)</p>
+                                            <p class="text-muted mb-0 " style="font-size: 11pt;">Non Uploading Initial Document (After 7 days of discharge)</p>
+                                            <p class="text-muted mb-0 " style="font-size: 11pt;">Total Claims Raised</p>
+                                            <p class="text-muted mb-0 " style="font-size: 11pt;">Float Generated Claims</p>
+                                            <p class="text-muted mb-0 " style="font-size: 11pt;">Claims Float Not Generated</p>
+                                            <p class="text-muted mb-0 " style="font-size: 11pt;">System Rejected - Non compliance of SNA Query</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xxl-1 col-xl-2 border-start border-end">
+                                    <div class="d-flex align-items-center ">
+                                        <div>
+                                            <p class="mb-0 " style="font-size: 11pt; color: blue;">{{summary?.TotalDischarged}}</p>
+                                            <p class="mb-0 " style="font-size: 11pt; color: blue;">{{summary?.nonUploading}}</p>
+                                            <p class="mb-0 " style="font-size: 11pt; color: blue;">{{summary?.nonUploadingInit}}</p>
+                                            <p class="mb-0 " style="font-size: 11pt; color: blue;">{{summary?.totalclaimrasied}}</p>
+                                            <p class="mb-0 " style="font-size: 11pt; color: blue;">{{summary?.floatGenerated}}</p>
+                                            <p class="mb-0 " style="font-size: 11pt; color: blue;">{{summary?.floatNotGenerated}}</p>
+                                            <p class="mb-0 " style="font-size: 11pt; color: blue;">{{summary?.snaQueryafter7}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <h5 class="mb-0 text-success" style="font-size: 12pt;">Approved Claims</h5>
+                            <hr class="mt-xl-3 mb-xl-3">
+                            <div class="row gx-xl-5 treatment-details mb-3">
+                                <div class="col-xxl-5 col-xl-5">
+                                    <div class="d-flex align-items-center ">
+                                        <div>
+                                            <p class="text-muted mb-0 " style="font-size: 11pt;">Total Claims Approved</p>
+                                            <p class="text-muted mb-0 " style="font-size: 11pt;">Auto Approved</p>
+                                            <p class="text-muted mb-0 " style="font-size: 11pt;">SNA Approved</p>
+                                            <p class="text-muted mb-0 " style="font-size: 11pt;">Unaudited CPD claims</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xxl-1 col-xl-2 border-start border-end">
+                                    <div class="d-flex align-items-center ">
+                                        <div>
+                                            <p class="mb-0 " style="font-size: 11pt; color: blue;">{{summary?.totalapproved}}</p>
+                                            <p class="mb-0 " style="font-size: 11pt; color: blue;">{{summary?.autoApproved}}</p>
+                                            <p class="mb-0 " style="font-size: 11pt; color: blue;">{{summary?.snaapproved}}</p>
+                                            <p class="mb-0 " style="font-size: 11pt; color: blue;">{{summary?.bulkapproved}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <h5 class="mb-0 text-success" style="font-size: 12pt;">Audit Of CPD Approved</h5>
+                            <hr class="mt-xl-3 mb-xl-3">
+                            <div class="row gx-xl-5 treatment-details mb-3">
+                                <div class="col-xxl-5 col-xl-5">
+                                    <div class="d-flex align-items-center ">
+                                        <div>
+                                            <p class="text-muted mb-0 " style="font-size: 11pt;">Total CPD Approved</p>
+                                            <p class="text-muted mb-0 " style="font-size: 11pt;">Audit Of CPD Approved (Approved & Rejected)</p>
+                                            <p class="text-muted mb-0 " style="font-size: 11pt;">Audit Percentage (Approved & Rejected)</p>
+                                            <!-- <p class="text-muted mb-0 " style="font-size: 11pt;">Total SNA Rejected</p> -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xxl-1 col-xl-2 border-start border-end">
+                                    <div class="d-flex align-items-center ">
+                                        <div>
+                                            <p class="mb-0 " style="font-size: 11pt; color: blue;">{{summary?.tcpdApproved}}</p>
+                                            <p class="mb-0 " style="font-size: 11pt; color: blue;">{{summary?.snaActionOfCpdAprvd}}</p>
+                                            <p class="mb-0 " style="font-size: 11pt; color: goldenrod;">{{summary?.cpdAprvOfSNAActionPercent}}%&nbsp;&nbsp;
+                                                <strong *ngIf="summary?.cpdAprvOfSNAActionPercent>=10"><i style="color: green; font-weight: bold;" class="bi bi-check-lg"></i></strong>
+                                                <strong *ngIf="summary?.cpdAprvOfSNAActionPercent<10"><i style="color: red; font-weight: bold;" class="bi bi-x-lg"></i></strong>
+                                            </p>
+                                            <!-- <p class="mb-0 " style="font-size: 11pt; color: blue;">{{summary?.snarejected}}</p> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <h5 class="mb-0 text-success" style="font-size: 12pt;">Mortality Review</h5>
+                            <hr class="mt-xl-3 mb-xl-3">
+                            <div class="row gx-xl-5 treatment-details mb-3">
+                                <div class="col-xxl-5 col-xl-5">
+                                    <div class="d-flex align-items-center ">
+                                        <div>
+                                            <p class="text-muted mb-0 " style="font-size: 11pt;">Total Mortality During This Period</p>
+                                            <p class="text-muted mb-0 " style="font-size: 11pt;">SNA Query Pending At Hospital</p>
+                                            <p class="text-muted mb-0 " style="font-size: 11pt;">NON-Compliance SNA Query</p>
+                                            <p class="text-muted mb-0 " style="font-size: 11pt;">Pending Mortality Case For Review At SNA</p>
+                                            <p class="text-muted mb-0 " style="font-size: 11pt;">Mortality Reviewed By SNA Doctor</p>
+                                            <!-- <p class="text-muted mb-0 " style="font-size: 11pt;">Percentage Of Mortality Review By SNA Doctor</p> -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xxl-1 col-xl-2 border-start border-end">
+                                    <div class="d-flex align-items-center ">
+                                        <div>
+                                            <p class="mb-0 " style="font-size: 11pt; color: blue;">{{summary?.mortality}}</p>
+                                            <p class="mb-0 " style="font-size: 11pt; color: blue;">{{summary?.sna_q_p_hos}}</p>
+                                            <p class="mb-0 " style="font-size: 11pt; color: blue;">{{summary?.non_complnc_sna_q_p_hos}}</p>
+                                            <a href="javascript:void(0);" class="mb-0 " style="font-size: 11pt; color: blue;" (click)="moratlityPendingStatus(this.summary?.pendingMoratlity)">{{this.summary?.pendingMoratlity}}
+                                            <strong *ngIf="this.summary?.pendingMoratlity==0"><i style="color: green; font-weight: bold;" class="bi bi-check-lg"></i></strong>
+                                            <strong *ngIf="this.summary?.pendingMoratlity>0"><i style="color: red; font-weight: bold;" class="bi bi-x-lg"></i></strong>
+                                            </a>
+                                            <p class="mb-0 " style="font-size: 11pt; color: blue;">{{summary?.smortality}}</p>
+                                            <!-- <p class="mb-0 " style="font-size: 11pt; color: goldenrod;">{{summary?.percent2!=null?summary?.percent2:0}}%&nbsp;&nbsp;
+                                                <strong *ngIf="summary?.percent2==100"><i style="color: green; font-weight: bold;" class="bi bi-check-lg"></i></strong>
+                                                <strong *ngIf="summary?.percent2<100"><i style="color: red; font-weight: bold;" class="bi bi-x-lg"></i></strong>
+                                            </p> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <h5 class="mb-0 text-success" style="font-size: 12pt;">Hospital Pending Activities</h5>
+                            <hr class="mt-xl-3 mb-xl-3">
+                            <div class="row gx-xl-5 treatment-details mb-3">
+                                <div class="col-xxl-5 col-xl-5">
+                                    <div class="d-flex align-items-center ">
+                                        <div>
+                                            <p class="text-muted mb-0 " style="font-size: 11pt;">Pending At Hospital (CPD Query within 7 days)</p>
+                                            <p class="text-muted mb-0 " style="font-size: 11pt;">Pending At Hospital (SNA Query within 7 days)</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xxl-1 col-xl-2 border-start border-end">
+                                    <div class="d-flex align-items-center ">
+                                        <div>
+                                            <p class="mb-0 " style="font-size: 11pt; color: blue;">{{summary?.cpdQuerywithin7}}&nbsp;&nbsp;
+                                                <!-- <strong *ngIf="summary?.cpdRejected==0"><i style="color: green; font-weight: bold;" class="bi bi-check-lg"></i></strong>
+                                              <strong *ngIf="summary?.cpdRejected>0"><i style="color: red; font-weight: bold;" class="bi bi-x-lg"></i></strong> -->
+                                            </p>
+                                            <p class="mb-0 " style="font-size: 11pt; color: blue;">{{summary?.snaQuerywithin7}}&nbsp;&nbsp;
+                                                <!-- <strong *ngIf="summary?.pendatsna==0"><i style="color: green; font-weight: bold;" class="bi bi-check-lg"></i></strong>
+                                              <strong *ngIf="summary?.pendatsna>0"><i style="color: red; font-weight: bold;" class="bi bi-x-lg"></i></strong> -->
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <h5 class="mb-0 text-success" style="font-size: 12pt;">SNA Pending Activities</h5>
+                            <hr class="mt-xl-3 mb-xl-3">
+                            <div class="row gx-xl-5 treatment-details mb-3">
+                                <div class="col-xxl-5 col-xl-5">
+                                    <div class="d-flex align-items-center ">
+                                        <div>
+                                            <p class="text-muted mb-0 " style="font-size: 11pt;">CPD Approved</p>
+                                            <p class="text-muted mb-0 " style="font-size: 11pt;">CPD Rejected</p>
+                                            <p class="text-muted mb-0 " style="font-size: 11pt;">SNA Resettlement</p>
+                                            <p class="text-muted mb-0 " style="font-size: 11pt;">Non compliance of CPD Query</p>
+                                            <p class="text-muted mb-0 " style="font-size: 11pt;">DC Compliance</p>
+                                            <p class="text-muted mb-0 " style="font-size: 11pt;">Unprocessed Claim</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xxl-1 col-xl-2 border-start border-end">
+                                    <div class="d-flex align-items-center ">
+                                        <div>
+                                            <p class="mb-1 " style="font-size: 11pt; color: blue;">{{summary?.cpdApproved}}&nbsp;&nbsp;
+                                                <strong *ngIf="summary?.cpdAprvOfSNAActionPercent>=10"><i style="color: green; font-weight: bold;" class="bi bi-check-lg"></i></strong>
+                                                <strong *ngIf="summary?.cpdAprvOfSNAActionPercent<10"><i style="color: red; font-weight: bold;" class="bi bi-x-lg"></i></strong>
+                                            </p>
+                                            <p class="mb-0 " style="font-size: 11pt; color: blue;">{{summary?.cpdRejected}}&nbsp;&nbsp;
+                                                <strong *ngIf="summary?.cpdRejected==0"><i style="color: green; font-weight: bold;" class="bi bi-check-lg"></i></strong>
+                                                <strong *ngIf="summary?.cpdRejected>0"><i style="color: red; font-weight: bold;" class="bi bi-x-lg"></i></strong>
+                                            </p>
+                                            <p class="mb-0 " style="font-size: 11pt; color: blue;">{{summary?.pendatsna}}&nbsp;&nbsp;
+                                                <strong *ngIf="summary?.pendatsna==0"><i style="color: green; font-weight: bold;" class="bi bi-check-lg"></i></strong>
+                                                <strong *ngIf="summary?.pendatsna>0"><i style="color: red; font-weight: bold;" class="bi bi-x-lg"></i></strong>
+                                            </p>
+                                            <p class="mb-0 " style="font-size: 11pt; color: blue;">{{summary?.cpdQueryafter7}}&nbsp;&nbsp;
+                                                <strong *ngIf="summary?.cpdQueryafter7==0"><i style="color: green; font-weight: bold;" class="bi bi-check-lg"></i></strong>
+                                                <strong *ngIf="summary?.cpdQueryafter7>0"><i style="color: red; font-weight: bold;" class="bi bi-x-lg"></i></strong>
+                                            </p>
+                                            <p class="mb-0 " style="font-size: 11pt; color: blue;">{{summary?.dcCompliance}}&nbsp;&nbsp;
+                                                <strong *ngIf="summary?.dcCompliance==0"><i style="color: green; font-weight: bold;" class="bi bi-check-lg"></i></strong>
+                                                <strong *ngIf="summary?.dcCompliance>0"><i style="color: red; font-weight: bold;" class="bi bi-x-lg"></i></strong>
+                                            </p>
+                                            <p class="mb-0 " style="font-size: 11pt; color: blue;">{{summary?.unprocessed}}&nbsp;&nbsp;
+                                                <strong *ngIf="summary?.unprocessed==0"><i style="color: green; font-weight: bold;" class="bi bi-check-lg"></i></strong>
+                                                <strong *ngIf="summary?.unprocessed>0"><i style="color: red; font-weight: bold;" class="bi bi-x-lg"></i></strong>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <h5 class="mb-0 text-success" style="font-size: 12pt;">Audit Claims Float Not Generated</h5>
+                            <hr class="mt-xl-3 mb-xl-3">
+                            <div class="row gx-xl-5 treatment-details mb-3">
+                                <div class="col-xxl-5 col-xl-5">
+                                    <div class="d-flex align-items-center ">
+                                        <div>
+                                            <p class="text-muted mb-0 " style="font-size: 11pt;">Claims hold by SNA</p>
+                                            <p class="text-muted mb-0 " style="font-size: 11pt;">Claims Investigate by SNA (Within 7 days)</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xxl-1 col-xl-2 border-start border-end">
+                                    <div class="d-flex align-items-center ">
+                                        <div>
+                                            <p class="mb-1 " style="font-size: 11pt; color: blue;">{{summary?.floatNotGenerated_sna_hold}}&nbsp;&nbsp;
+                                                <strong *ngIf="summary?.floatNotGenerated_sna_hold==0"><i style="color: green; font-weight: bold;" class="bi bi-check-lg"></i></strong>
+                                                <strong *ngIf="summary?.floatNotGenerated_sna_hold>0"><i style="color: red; font-weight: bold;" class="bi bi-x-lg"></i></strong>
+                                            </p>
+                                            <p class="mb-0 " style="font-size: 11pt; color: blue;">{{summary?.floatNotGenerated_sna_invest}}&nbsp;&nbsp;
+                                                <strong *ngIf="summary?.floatNotGenerated_sna_invest==0"><i style="color: green; font-weight: bold;" class="bi bi-check-lg"></i></strong>
+                                                <strong *ngIf="summary?.floatNotGenerated_sna_invest>0"><i style="color: red; font-weight: bold;" class="bi bi-x-lg"></i></strong>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-header pt-0 border-bottom">
+                            <br>
+                            <h5 class="mb-0 text-success"><strong style="font-size: 14pt;">PAYMENT DETAILS</strong></h5>
+                        </div>
+                        <div class="card-body mt-3" align="center">
+                            <div class="row gx-xl-5 treatment-details mb-3" style="width: 90%;">
+                                <div class="col-xxl-6 col-xl-6 border-start border-end" style="text-align: left;">
+                                    <div class="border-bottom" style="font-weight: bold;">
+                                        <p class="text-muted mb-0 " style="padding: 10px; font-size: 12pt;">Cases To Be Paid</p>
+                                    </div>
+                                    <div>
+                                        <h6 class="text-muted mb-0 " style="padding: 10px; font-size: 12pt;">SNA Approved</h6>
+                                    </div>
+                                    <div class="border-bottom">
+                                        <h6 class="text-muted mb-0 " style="padding: 10px; font-size: 12pt;">Unaudited CPD claims</h6>
+                                    </div>
+                                    <div>
+                                        <h6 class="text-muted mb-0 " style="padding: 10px; font-size: 12pt;">Total</h6>
+                                    </div>
+                                </div>
+                                <div class="col-xxl-3 col-xl-3" style="text-align: center;">
+                                    <div class="border-bottom" style="font-weight: bold;">
+                                        <p class="text-muted mb-0 " style="padding: 10px; font-size: 12pt;">Total Cases</p>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-0 fs-1-3" style="padding: 10px; font-size: 12pt; color: green;">{{summary?.snaapproved}}</h6>
+                                    </div>
+                                    <div class="border-bottom">
+                                        <h6 class="mb-0 fs-1-3" style="padding: 10px; font-size: 12pt; color: green;">{{summary?.bulkapproved}}</h6>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-0 fs-1-3" style="padding: 10px; font-size: 12pt; color: goldenrod;">{{summary?.totalapproved}}</h6>
+                                    </div>
+                                </div>
+                                <div class="col-xxl-3 col-xl-3 border-start border-end" style="text-align: center;">
+                                    <div class="border-bottom" style="font-weight: bold;">
+                                        <p class="text-muted mb-0 " style="padding: 10px; font-size: 12pt;">Amount (&#8377;)</p>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-0 fs-1-3" style="padding: 10px; font-size: 12pt; color: blue;">{{summary?.snoamount | currencyInr}}</h6>
+                                    </div>
+                                    <div class="border-bottom">
+                                        <h6 class="mb-0 fs-1-3" style="padding: 10px; font-size: 12pt; color: blue;">{{summary?.cpdamount | currencyInr}}</h6>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-0 fs-1-3" style="padding: 10px; font-size: 12pt; color: red;">{{summary?.totalAmount | currencyInr}}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 ">
+                                <hr class="mt-xl-3 mb-xl-3">
+                            </div>
+                        </div>
+                        <div class="d-grid gap-2 d-sm-block mt-3 mt-xl-4" *ngIf="showBtn" style="padding-left: 20px; padding-right: 20px;">
+                            <button (click)="generateFloat()" class="btn btn-success me-2">Generate Float</button>
+                        </div>
+                        <div class="d-grid gap-2 d-sm-block mt-3 mt-xl-4" *ngIf="!showBtn" style="cursor: not-allowed; width: 119pt; padding-left: 20px;">
+                            <button class="btn btn-success me-2" disabled>Generate Float</button>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal" id="assignFoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-focus="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    <span>Special Float Document</span>
+                </h5>
+                <button type="button" #closebutton class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="cancel()"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12 col-xxl-12" style="padding-top: 10px;">
+                        <input type="file" class="upload " id="floatfile" accept=".pdf,.xls" (change)="changeFloatFile($event)"><br/>
+                        <span class="text-danger small">Please upload the document(Excel/PDF/JPG) below 10 MB</span>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col align-self-end">
+                        <div class="col-lg-12">
+                            <button class="btn btn-success" (click)="submitFloat()">Submit</button> &nbsp;
+                            <button class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close" (click)="cancel()">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

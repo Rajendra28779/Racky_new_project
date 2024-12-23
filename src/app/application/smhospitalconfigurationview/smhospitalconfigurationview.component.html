@@ -1,0 +1,238 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+    <div class="col-lg-4">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a routerLink="/application/smconfiguration" routerLinkActive="active" class="nav-link"
+            style="color: #1f723f;">Add</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/application/viewsmconfiguration" routerLinkActive="active" class="nav-link active">View</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- <div class="content-box">
+    <div class="row">
+      <div class="col-md-6 col-lg-4">
+        <div class="mb-xl-3">
+          <label class="control-label mb-2">Select Swasthya Mitra</label><span class="text-danger">*</span>
+          <ng-autocomplete #auto [data]="userList" placeholder="Select SwasthyaMitra" (selected)="selectEvent($event)"
+            [itemTemplate]="itemTemplate1" [notFoundTemplate]="notFoundTemplate1" [searchKeyword]="keyword1"
+            spellcheck="false">
+          </ng-autocomplete>
+          <ng-template #itemTemplate1 let-item>
+            <a [innerHTML]="item.fullname"></a>
+          </ng-template>
+          <ng-template #notFoundTemplate1 let-notFound>
+            <div [innerHTML]="notFound"></div>
+          </ng-template>
+          <div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col align-self-end">
+        <div class="form-group">
+          <button class="btn btn-success mr-2" type="submit">Search</button>
+          &nbsp;
+          <button class="btn btn-secondary" type="reset">Reset</button>
+        </div>
+      </div>
+
+
+    </div>
+  </div> -->
+  <div id="filter" class="searchCriteriaBox bg-light p-3">
+    <form autocomplete="off" (ngSubmit)="onChange()">
+      <div class="row">
+        <div class="col-md-6 col-lg-4">
+          <div class="form-group">
+            <label class="control-label mb-2">Select Swasthya Mitra</label><span class="text-danger">*</span>
+            <ng-autocomplete #auto [data]="userList" placeholder="Select SwasthyaMitra" (selected)="selectEvent($event)"
+              [itemTemplate]="itemTemplate1" [notFoundTemplate]="notFoundTemplate1" [searchKeyword]="keyword1"
+              (inputCleared)="clearEvent()" spellcheck="false">
+            </ng-autocomplete>
+
+            <ng-template #itemTemplate1 let-item>
+              <a [innerHTML]="item.fullname"></a>
+            </ng-template>
+
+            <ng-template #notFoundTemplate1 let-notFound>
+              <div [innerHTML]="notFound"></div>
+            </ng-template>
+          </div>
+        </div>
+        <div class="col align-self-end">
+          <div class="form-group">
+            <button class="btn btn-success mr-2" type="submit">Search</button>&nbsp;
+            <button class="btn btn-secondary" type="reset" (click)="resetTable()">Reset</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-lg-4 col-xxl-4 mt-3">
+      <div class="col-sm-*" *ngIf="showPegi">
+        show
+        <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+          <option value="100">100</option>
+          <option value="200">200</option>
+          <option value="300">300</option>
+          <option value={{record}}>All</option>
+        </select> entries
+      </div>
+    </div>
+    <div class="col-lg-2 col-xxl-2 mt-3" >
+      Total Record : {{listl}}
+    </div>
+    <div class="col-lg-2 col-xxl-2" style="text-align:end ;">
+      <button class="btn btn-success btn-sm mx-1" style="margin-top: 10px" tooltip="Excel" (click)="downloadList(1)">
+        <i class="bi bi-file-earmark-spreadsheet"></i>
+      </button>
+      <button class="btn btn-danger btn-sm mx-1" style="margin-top: 10px" tooltip="pdf" (click)="downloadList(2)">
+        <i class="bi bi-file-earmark-pdf"></i>
+      </button>
+    </div>
+    <div class="col-lg-4 col-xxl-4">
+      <input type="text" class="form-control" placeholder="Search here" style="margin-top: 10px"
+        [(ngModel)]="txtsearchD">
+    </div>
+  </div>
+  <div class="content-box" style="margin-top: 10px">
+    <div class="table-responsive">
+      <table class="table table-striped mb-0">
+        <thead>
+          <tr>
+            <th width="50">Sl#</th>
+            <th style="text-align: center;">SwasthyaMitra Name</th>
+            <th style="text-align: center;">User Name</th>
+            <th style="text-align: center;">Tagged Hospital</th>
+            <th style="text-align: center;">Details</th>
+            <th style="text-align: center;">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- <tr *ngFor="let v of list | filter:txtsearchD | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage},index as i">
+                <td>{{i+1}}</td>
+                <td style="text-align: center;">{{v.fullname}}</td>
+                <td style="text-align: center;">{{v.count}}</td>
+                <td style="text-align: center;"><a href="javascript:void(0)" data-bs-toggle="modal"
+                  data-bs-target="#exampleModal1" (click)="view(v)">
+                  <i class="bi bi-eye" style="color: blue;"></i>
+              </a></td>
+              <td style="text-align: center;"><a class="btn btn-outline-primary btn-sm me-1" (click)="edit(v)">
+                <i class="bi bi-pencil"></i>
+            </a></td>
+              </tr> -->
+          <tr
+            *ngFor="let item of list | filter:txtsearchD | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage},index as i">
+            <td>{{i+1}}</td>
+            <td style="text-align: center;">{{item.fullname}}</td>
+            <td style="text-align: center;">{{item.username}}</td>
+            <!-- <td style="text-align: center;">{{item.userId}}</td> -->
+            <td style="text-align: center;">{{item.count}}</td>
+            <!-- <td style="text-align: center;"><a href="javascript:void(0)" data-bs-toggle="modal"
+                data-bs-target="#exampleModal1" (click)="view(v)">
+                <i class="bi bi-eye" style="color: blue;"></i>
+              </a></td> -->
+              <td style="text-align: center;"><a href="javascript:void(0)" data-bs-toggle="modal"
+                data-bs-target="#exampleModal1" (click)="view(item)">
+                <i class="bi bi-eye" style="color: blue;"></i>
+              </a></td>
+            <!-- <td style="text-align: center;"><a class="btn btn-outline-primary btn-sm me-1" (click)="edit(v)">
+                <i class="bi bi-pencil"></i>
+              </a></td> -->
+              <td style="text-align: center;"><a class="btn btn-outline-primary btn-sm me-1" (click)="edit(item)">
+                <i class="bi bi-pencil"></i>
+              </a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row" *ngIf="showPegi" style="margin-top: 1ch;">
+    <div class="col-sm-4">
+      <div class="col-sm-*">
+        show
+        <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+          <option value="100">100</option>
+            <option value="200">200</option>
+            <option value="300">300</option>
+            <option value={{record}}>All</option>
+        </select> entries
+      </div>
+    </div>
+    <div class="col-sm-8 text-right">
+      <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true"
+        (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)">
+      </pagination-controls>
+    </div>
+
+
+  </div>
+
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="max-width: 65%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          <span>{{header}} - Tagged Hospitals</span>
+
+          <!-- <span>{{fullname}} - Tagged Hospitals</span> -->
+
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <div class="row">
+          <div class="col-lg-7 col-xxl-7" style="margin-top: 10px">
+            Total Record : {{count}}
+          </div>
+          <div class="col-lg-2 col-xxl-2" style="text-align:end ;">
+            <button class="btn btn-success btn-sm mx-1" style="margin-top: 10px" tooltip="Excel"
+              (click)="downloadReport(1)">
+              <i class="bi bi-file-earmark-spreadsheet"></i>
+            </button>
+            <button class="btn btn-danger btn-sm mx-1" style="margin-top: 10px" tooltip="pdf"
+              (click)="downloadReport(2)">
+              <i class="bi bi-file-earmark-pdf"></i>
+            </button>
+          </div>
+          <div class="col-lg-3 col-xxl-3">
+            <input type="text" class="form-control" placeholder="Search here" style="margin-top: 10px"
+              [(ngModel)]="txtsearch">
+          </div>
+        </div>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Sl No</th>
+              <th>Hospital Details</th>
+              <th>State</th>
+              <th>District</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of detailData | filter:txtsearch; index as j">
+              <td>{{j+1}}</td>
+              <td>{{item.hospitalName}} ({{item.hospitalCode}})</td>
+              <td>{{item.state}}</td>
+              <td>{{item.dist}}</td>
+            </tr>
+            <tr *ngIf="! detailData?.length">
+              <td colspan="5" align="center"><strong class="text-danger">No data found</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+

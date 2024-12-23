@@ -1,0 +1,142 @@
+<div class="login-wrapp h-100">
+    <div class="container h-100">
+        <div class="row justify-content-center align-items-center h-100">
+            <div class="col-xl-5 col-xxl-5">
+                <div class="login-box bg-white shadow mx-xxl-3 p-4 p-xxl-5" style="border-radius: 15px;">
+                    <form autocomplete="off">
+                        <div class="d-flex flex-column justify-content-center mb-3 mb-xl-4">
+                            <div class="d-flex align-items-center mb-3 mb-xl-4 pb-xl-1">
+                                <img src="./assets/img/govt-logo.png" alt="Government of Odisha"
+                                    class="pe-2 me-2 pe-lg-3 me-lg-3 border-end">
+                                <img src="./assets/img/bsky-logo.png" alt="GJAY, Odisha">
+                                <h1 class="ms-2">GJAY</h1>
+                            </div>
+                            <h4>Forgot Password</h4>
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputUserName" class="form-label">User Name<span class="text-danger">*</span></label>
+                            <div class="iconinput">
+                                <input type="text" class="form-control usertext userinput" id="userName" name="userName"
+                                    maxlength=20 placeholder="Enter User Name" autocomplete="off" (keyup.enter)="OnforgotPassword()">
+
+                            </div>
+                        </div>
+                        <p class="small text-end">
+                            <a class="link" (click)="backToLogin()">&lt;&lt; Back to Login</a>
+                        </p>
+                        <div class="row">
+                            <div class="col d-grid">
+                                <a data-bs-toggle="modal" class="btn btn-success px-xl-4 py-xl-2"
+                                    (click)="OnforgotPassword()">Send OTP</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal modal-custom-backdrop" id="exampleOtpModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title text-success" id="exampleModalLabel" >Enter OTP<span
+                  class="required-asterisk text-danger">
+                  *</span></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closemodeal()"></button>
+              </div>
+                <div class="modal-body py-5">
+
+
+                    <div class="row">
+
+                            <!-- <i class="bi bi-check-circle d-block fs-1 mb-3"></i> -->
+                            <!-- <div class="row">
+                              <div class="col md-7">
+                                <label for="inputUserName" class="form-label text-success">Enter OTP<span
+                                  class="required-asterisk">
+                                  *</span></label>
+                              </div>
+                              <div class="col md-4"></div>
+                              <div class="col md-1">
+                               <button type="button" class=" btn-close"  aria-label="Close" (click)="closemodeal()"></button>
+                              </div>
+                            </div> -->
+                            <!-- <label for="otpcount" class="form-label" id="countdown">Enter OTP<span class="required-asterisk">
+                            *</span></label> -->
+
+                            <div class="iconinput">
+                                <input type="text" class="form-control usertext userinput" id="otpId" name="otpId" maxlength="6"
+                                    placeholder="Enter OTP" autocomplete="off"  onkeyup="this.value=this.value.replace(/[^0-9]/g,'');">
+
+                                <input type="hidden" class="form-control usertext userinput" id="userId" name="userId">
+                            </div>
+                            <!-- Your password has been sent to your mail ID. -->
+
+                    </div>
+                    <div class="d-flex pt-4 pb-3">
+                        <div class="pe-2 text-secondary">
+                            <i class="feather-iconsmartphone text-secondary fs-1-2" id="phoneId"></i>
+                        </div>
+                        <!-- <div> -->
+                            <input type="text" id="mobileNoId" class="form-control text-secondary p-0 border-0" readonly>
+                        <!-- </div> -->
+                    </div>
+                    <div class="d-flex pt-4 pb-2 position-absolute bottom--10">
+
+                        <div class="pe-2 text-secondary">
+                            <p id="timerdivId"><i class="feather-iconclock fs-1-2"></i> Time Left : </p>
+                        </div>
+                        <div>
+                            <input type="text" id="timeCounter" class="form-control text-danger p-0 border-0" readonly>
+                        </div>
+                    </div>
+                </div>
+                <p class="small text-end text-secondary" >
+                  <a (click)="backToLogin()">Back to Login &nbsp;  </a>
+              </p>
+                <div class="modal-footer d-flex justify-content-center align-items-center">
+                    <button type="button" id="sendId" class="btn btn-success" (click)="validateOtp()">Submit</button>
+                    <button type="button" id="reSendId" class="btn btn-success" (click)="onResendOtp()">Resend OTP</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+
+
+<!-- <div class="modal justify-content-center" id="exampleOtpModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body py-5">
+                <input type="text" id="timeCounter" readonly style="color:red;">
+                <p></p>
+                <span class="text-center text-success">
+                    <label for="inputUserName" class="form-label">Enter OTP<span class="required-asterisk">
+                            *</span></label>
+
+                    <div class="iconinput">
+                        <input type="text" class="form-control usertext userinput" id="otpId" name="otpId"
+                            placeholder="Enter OTP" autocomplete="off">
+
+                        <input type="hidden" class="form-control usertext userinput" id="userId" name="userId">
+                    </div>
+                </span>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" id="sendId" class="btn btn-success" (click)="validateOtp()">Submit</button>
+                <button type="button" id="reSendId" class="btn btn-success" (click)="onResendOtp()">Resend OTP</button>
+            </div>
+
+            <div>
+            </div>
+
+        </div>
+    </div>
+</div> -->

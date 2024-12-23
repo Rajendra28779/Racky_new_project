@@ -1,0 +1,132 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/hospitalenrollmentlist" class="nav-link active">Hospital Enrollment List</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a routerLink="/application/enrollmentView" class="nav-link">Action View</a>
+                    </li> -->
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="content-box mt-3">
+        <div class="col-xxl-10">
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label class="control-label mb-2">Register From</label><span class="text-danger">*</span>
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="datepicker4" name="fromDate" autocomplete="off">
+                            <label class="input-group-text bg-transparent border-start-0" for="datepicker4"><i
+                                    class="iconbsky-calendar"></i> </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label class="control-label mb-2">Register To</label><span class="text-danger">*</span>
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="datepicker3" name="toDate" autocomplete="off">
+                            <label class="input-group-text bg-transparent border-start-0" for="datepicker3"><i
+                                    class="iconbsky-calendar"></i> </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label for="UserName" class="form-label">URN<span class="text-danger"></span></label>
+                        <input class="form-control" type="text" placeholder="Enter Your URN Here.." autocomplete="off" id="urn" maxlength="20">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 ">
+            <div class="d-grid gap-2 d-md-flex ">
+                <button type="submit " class="btn btn-success " (click)="getenrollment() ">Search</button>
+                <button type="reset" class="btn btn-secondary " (click)="getRestdata()">Reset</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+    <div class="col-lg-8 col-xxl-8 row">
+        <div class="col-md-9">
+            <!-- <div style="padding-top: 10px; font-weight: bold; color: green">Pending Claims : {{freshClaimCount}}</div> -->
+        </div>
+        <div [align]="'start'" class="col-md-3">
+            <button class="btn btn-danger" title="Download PDF" (click)="downloadReport('pdf')" style="float:right; margin-left: 5px;"><i class="bi bi-file-earmark-pdf"></i></button>
+            <button class="btn btn-success" title="Download Excel" (click)="downloadReport('excel')" style="float: right"><i class="bi bi-download" ></i></button>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-xxl-4">
+        <div class="input-group">
+            <input type="text" id="txtsearchDate" class="form-control" autocomplete="off" placeholder="Search" name="txtsearchDate" [(ngModel)]="txtsearchDate">
+        </div>
+    </div>
+</div>
+<div class="content-box p-0 overflow-hidden ">
+    <div class="table-responsive ">
+        <table class="table table-striped mb-0 " id="claimraise">
+            <thead>
+                <tr>
+                    <th width="60">Sl No.</th>
+                    <th class="text-center">URN </th>
+                    <th>HospitalCode </th>
+                    <th>HospitalName </th>
+                    <th class="text-center">Name</th>
+                    <th class="text-center">Gender</th>
+                    <th class="text-center">Age</th>
+                    <th class="text-center">Date Of Birth</th>
+                    <th class="text-center">Register On</th>
+                    <th class="text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let claim of details | filter:txtsearchDate| paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage}; index as i ">
+                    <tr>
+                        <td *ngIf="currentPage==1 ">{{(i+1)}}</td>
+                        <td *ngIf="currentPage!=1 ">{{(currentPage-1)*pageElement+ i+1}}</td>
+                        <td class="text-center">{{claim.urn}}</td>
+                        <td class="text-center">{{claim.hospitalcode}}</td>
+                        <td class="text-center">{{claim.hospname}}</td>
+                        <td class="text-center">{{claim.membername}}</td>
+                        <td class="text-center">{{claim.gender}}</td>
+                        <td class="text-center">{{claim.age}}</td>
+                        <td class="text-center">{{claim.dob | date:'dd-MMM-yyyy'}}</td>
+                        <td class="text-center">{{claim.registrationdate | date:'dd-MMM-yyyy hh:mm:ss a'}}</td>
+                        <td class="text-center ">
+                            <a class="btn btn-outline-success btn-sm " (click)="onclaim(claim)">Action</a>
+                        </td>
+                    </tr>
+                </ng-container>
+                <tr *ngIf="recoedCount==0">
+                    <td colspan="16">
+                        <p class="mb-0 text-center text-danger fw-bold">NO DATA FOUND!!</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row mt-3" *ngIf="showPegi">
+    <div class="col-sm-4 ">
+        <div class="col-sm-* ">
+            show
+            <select id="pageItem" name="pageItem" class="form-select-sm" (change)="pageItemChange()">
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="150">150</option>
+                <option value="200">200</option>
+                <option value={{recoedCount}}>All</option>
+            </select> entries
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true" (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+    </div>
+</div>

@@ -1,0 +1,201 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+      <div class="row justify-content-between">
+          <div class="col-lg-12">
+               <ul class="nav nav-tabs ">
+                <li class="nav-item">
+                <a routerLink="/application/intcommadd" routerLinkActive="active" style="color: rgb(2, 95, 2);" class="nav-link ">Request</a>
+                </li>
+                  <li class="nav-item">
+                    <a routerLink="/application/intcommview" routerLinkActive="active" style="color: rgb(2, 95, 2);" class="nav-link ">Status</a>
+                    </li>
+                  <li class="nav-item">
+                    <a routerLink="/application/intcommtask" routerLinkActive="active"  class="nav-link active">My Activity</a>
+                    </li>
+              </ul>
+          </div>
+      </div>
+  </div>
+  <div class="content-box">
+    <div class="row">
+      <div class="col-5">
+        <p>Total : {{totalcount}}</p>
+      </div>
+      <div class="col-2" style="text-align:end ;">
+        <button class="btn btn-success btn-sm mx-1" style="margin-top: 10px" tooltip="Excel" (click)="downloadList(1)">
+      <i class="bi bi-file-earmark-spreadsheet"></i>
+  </button>
+        <button class="btn btn-danger btn-sm mx-1" style="margin-top: 10px" tooltip="pdf" (click)="downloadList(2)">
+        <i class="bi bi-file-earmark-pdf"></i>
+    </button>
+    </div>
+      <div class="col-5">
+        <input type="text " id="txtsearchDate " name="txtsearchDate " [(ngModel)]="txtsearchDate" maxlength="20 "
+          class="form-control " placeholder="Search here...... " autocomplete="off"
+          style=" margin-right: 0px; margin-left: 0px;">
+      </div>
+    </div>
+    <br>
+    <div class="table-responsive">
+      <table class="table table-striped mb-0">
+        <thead>
+          <tr>
+            <th width="50">Sl#</th>
+            <th>Requested Token</th>
+            <th>Requested By</th>
+            <th>Requested For</th>
+            <th>Pending At</th>
+            <th>Required By</th>
+            <th>Priority</th>
+            <th>Request Attachment</th>
+            <th>Resolve Attachment</th>
+            <th>Create On</th>
+            <th>Progress Status</th>
+            <th>Remarks</th>
+            <th>Description</th>
+            <th width="100">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let v of list | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage},index as i">
+            <td>{{i+1}}</td>
+            <td>{{v.taken}}</td>
+            <td>{{v.reqbyname}}</td>
+            <td>{{v.reqfor}}</td>
+            <td>{{v.towhomename}}</td>
+            <td>{{v.reqbydate}}</td>
+            <td style="text-align: center">{{v.priority}}</td>
+            <td *ngIf="v.reqatch==null" title="Document Is Not Available" style="text-align: center">-N/A-</td>
+            <td *ngIf="v.reqatch!=null" title="Download" style="text-align: center" ><a href="javascript:void(0);" (click)="downlordintcommn(v.reqatch)"><i class="bi bi-files" style="font-size: 21px; " ></i></a></td>
+            <td *ngIf="v.resolveatch==null" title="Document Is Not Available" style="text-align: center">-N/A-</td>
+            <td *ngIf="v.resolveatch!=null" title="Download"  style="text-align: center"><a href="javascript:void(0);" (click)="downlordintcommn(v.resolveatch)"><i class="bi bi-files" style="font-size: 21px; " ></i></a></td>
+            <td>{{v.createon}}</td>
+            <td>{{v.progstatus}}</td>
+            <td style="text-align: center">{{v.remarks}}</td>
+            <td style="text-align: center"><a style="text-align: center;"  data-bs-toggle="modal" data-bs-target="#modal1" (click)="viewData(v)" ><i class="bi bi-info-circle-fill"></i></a></td>
+            <td style="text-align: center" title="Take Action" *ngIf="v.progstatus=='REQUESTED'"><button style="text-align: center;" class="btn btn-outline-success btn-sm me-1" data-bs-toggle="modal" data-bs-target="#modal2" (click)="viewData1(v)">Action</button></td>
+            <td style="text-align: center" title="Not allowed" *ngIf="v.progstatus!='REQUESTED'" disabled><button style="text-align: center;" class="btn btn-outline-secondary btn-sm me-2"  [disabled]="true"  >Action</button></td>
+          </tr>
+          <tr *ngIf="totalcount==0">
+            <td colspan="13" align="center">
+              <strong class="text-danger">NO DATA FOUND!!</strong>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div><br>
+    <div class="row" *ngIf="totalcount!=0">
+      <div class="col-sm-4">
+        <div class="col-sm-*">
+          show
+          <select id="pageItem" name="pageItem" class="custom-select-sm" (change)="pageItemChange()">
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+          </select> entries
+        </div>
+      </div>
+      <div class="col-sm-8 text-right">
+        <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true"
+          (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)">
+        </pagination-controls>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="border: 1px solid blue;">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Requested Token -: {{token}}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h5><b>Requested For -:</b></h5>
+        <p style="margin-left: 3ch;">{{reqfor}}</p>
+        <h5 style="margin-top:3ch;"><b>Description -:</b></h5>
+        <div style="margin-left: 3ch;" [innerHTML]="description"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="modal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="border: 1px solid blue;">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Requested Token -: <b>{{token}}</b></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-lg-1 col-xxl-1"></div>
+          <div class="col-lg-5 col-xxl-5">
+            <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+              <h5><b>Requested By</b></h5>
+              <p style="margin-left: 3ch;"><b>{{reqby}}</b></p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-xxl-3">
+            <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+              <h5><b>Requested On </b></h5>
+              <p style="margin-left: 3ch;"><b>{{reqrdby}}</b></p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-xxl-3">
+            <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+              <h5><b>Required By </b></h5>
+              <p style="margin-left: 3ch;"><b>{{reqon}}</b></p>
+            </div>
+          </div>
+        </div>
+        <h5><b>Requested For -:</b></h5>
+        <p style="margin-left: 3ch;">{{reqfor}}</p>
+        <h5 style="margin-top:3ch;"><b>Description -:</b></h5>
+        <div style="margin-left: 3ch;" [innerHTML]="description"></div>
+<hr>
+        <div class="row">
+          <div class="col-lg-6 col-xxl-6">
+            <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+              <label class="control-label mb-2">Remarks</label><span class="text-danger">*</span>
+              <textarea class="form-control"  placeholder="Enter Reason" autocomplete="off" id="reqfor" maxlength="950" #myInput (keypress)="keyPress($event)"></textarea>
+              <span class="text-danger small">Characters Remaining: {{maxChars - myInput.value.length}}</span>
+            </div>
+          </div>
+          <div class="col-lg-6 col-xxl-6" id="Upload">
+            <div class="file-upload mb-xl-4 text-center ">
+                <p class="mb-1 text-start">Upload Attachment</p>
+                <div class="file-upload-content">
+                    <a class="btn btn-danger  text-white btn-sm remove-img"><i
+                            class="fas fa-times"></i></a>
+                    <img class="file-upload-image" src="#" alt="your image" />
+                </div>
+                <div class="image-upload-wrap rounded">
+                    <input class="file-upload-input"  id="notficationdoc"type='file'  onCut="return false " onDrag="return false " onDrop="return false " (change)="handleFileInput($event)">
+                    <div class="drag-text" *ngIf="!flag">
+                      <h5><i class="iconbsky-upload-icon d-block fs-4"></i><span class="text-danger">Drag or select a file to upload </span>
+                      </h5>
+                  </div>
+                    <div class="drag-text" *ngIf="flag" >
+                        <h5><i class="iconbsky-upload-icon d-block fs-4"></i><span class="text-danger">{{fileToUpload.name}}</span>
+                        </h5>
+                    </div>
+                </div>
+                 <p class="small pt-1 " style="text-align: right;" *ngIf="flag"><img src="./assets/img/pdf.png " alt="Download Document " width="20 " > <a target="_blank" class="dbtn" (click)="downloadfiletreatmentbill($event) "> Download</a></p>
+            </div>
+         </div>
+              <div class="content-box">
+                  <input type="button" value="Sabmit" class="btn btn-success" data-bs-dismiss="modal" aria-label="Close" (click)="onsubmit()">&nbsp;&nbsp;
+                  <input type="button" value="Cancel" class="btn btn-secondary"  data-bs-dismiss="modal" aria-label="Close">
+              </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

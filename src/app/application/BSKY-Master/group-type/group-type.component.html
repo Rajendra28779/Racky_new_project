@@ -1,0 +1,87 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item" *ngIf="isvisiblesave">
+                        <a routerLink="/application/grouptype" routerLinkActive="active" class="nav-link active">Add</a>
+                    </li>
+                    <li class="nav-item" *ngIf="visibleupdate">
+                        <a routerLink="/application/grouptype" routerLinkActive="active" class="nav-link active">Update</a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/application/groupList" routerLinkActive="active" class="nav-link" style="color: #1f723f;">View</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-6 ">
+                <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+            </div>
+        </div>
+    </div>
+    <div class="content-box">
+        <form [formGroup]="Grouptype" autocomplete="off">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="mb-xl-3">
+                        <label for="TypeId" class="form-label">Type Id<span class="text-danger">*</span></label>
+                        <input *ngIf="isvisiblesave" class="form-control" type="text" name="typeId"
+                            placeholder="Enter Type Id" formControlName="typeId" id="typeId" maxlength="40"
+                            [(ngModel)]="grouptype.typeId" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"
+                            [ngClass]="{ 'is-invalid': valid==2, 'is-valid': valid==1 }" (change)=checkTypeId()>
+
+                        <input *ngIf="visibleupdate" class="form-control" type="text" formControlName="typeId"
+                            name="typeId" id="typeId" maxlength="40" [(ngModel)]="grouptype.typeId" disabled>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="mb-xl-3">
+                        <label for="inputGroupName" class="form-label">Group Type<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" type="text" maxlength="100"
+                            name="groupTypeName" id="groupTypeName" formControlName="groupTypeName"
+                            [(ngModel)]="grouptype.grouptypename" placeholder="Enter Group Type"
+                            onkeyup="this.value=this.value.replace(/[^a-zA-Z0-9 ]/g,'');"
+                            (keyup)="keyfunction1($event.target)" (change)=validateGroupName() />
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <!------------------------------->
+                <div class="col-lg-4 col-xxl-4" *ngIf="visibleupdate">
+                    <div class="mb-3">
+                        <label>Status:</label>&nbsp;&nbsp;
+                        <label *ngIf="grouptype.status==0">
+                            <input type="radio" checked="checked" [checked]="true"
+                                (click)="yes($event)" name="status" id="status">Active &nbsp;&nbsp;
+                            <input type="radio" (click)="no($event)" name="status"
+                                id="status">In-Active
+                        </label>
+
+                        <label *ngIf="grouptype.status==1">
+                            <input type="radio" (click)="yes($event)" name="status"
+                                id="status">Active &nbsp;&nbsp;
+                            <input type="radio" checked="checked" [checked]="true"
+                                (click)="no($event)" name="status" id="status">In-Active
+                        </label>
+                    </div>
+                </div>
+                <!------------------------------->
+            </div>
+            <div class="col-lg-12" >
+                <div *ngIf="isvisiblesave">
+                    <input type="submit" value="Submit" class="btn btn-success"
+                        (click)="save()">&nbsp;
+                    <input type="Reset" value="Reset"
+                        (click)="resetData()" class="btn btn-secondary">
+                </div>
+                <div *ngIf="visibleupdate">
+                    <input type="submit" value="Update" class="btn btn-success"
+                        (click)="update(grouptype)">&nbsp;
+                    <input type="submit" value="Cancel"
+                        class="btn btn-secondary" (click)="cencel1()">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

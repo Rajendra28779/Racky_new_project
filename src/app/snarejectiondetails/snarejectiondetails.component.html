@@ -1,0 +1,165 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/SNARemarkwisedetails" class="nav-link active">SNA Remark Wise Details</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="detailshidesnarejection">
+        <div class="row" style="margin-top: 10px;margin-bottom: 1px;">
+            <div class="col-lg-3 col-xxl-3 mb-3" style="color:#000000">
+                Actual Date Of Discharge From : <strong>{{fromdate}}</strong>
+            </div>
+            <div class="col-lg-4 col-xxl-4 mb-3" style="color:#000000">
+                Actual Date Of Discharge To : <strong> {{todate}}</strong>
+            </div>
+            <div class="col-lg-5 col-xxl-5 mb-3" style="color:#000000">
+                State Name : <strong> {{statename}}</strong>
+            </div>
+            <div class="col-lg-3 col-xxl-3 mb-3" style="color:#000000">
+                District Name : <strong> {{districtname}}</strong>
+            </div>
+            <div class="col-lg-4 col-xxl-4 mb-3" style="color:#000000">
+                Hospital Name : <strong>{{hospitalname}} </strong>
+            </div>
+            <div class="col-lg-5 col-xxl-5 mb-3" style="color:#000000">
+                Hospital Details: <strong> {{hospitalnamedata}}({{hospitalcodedata}})</strong>
+            </div>
+            <div class="col-lg-3 col-xxl-3 mb-3" style="color:#000000">
+                Total Discharge: <strong> {{totaldischarge}}</strong>
+            </div>
+            <div class="col-lg-4 col-xxl-4 mb-3" style="color:#000000">
+                Claim Submitted: <strong> {{claimsubmitted}}</strong>
+            </div>
+            <div class="col-lg-5 col-xxl-5 mb-3" style="color:#000000">
+                Claim Not Submitted: <strong> {{claimnotsubmitted}}</strong>
+            </div>
+            <div class="col-lg-3 col-xxl-3 mb-3" style="color:#000000">
+                Rejected By SNA : <strong>{{rejectedbysna}} </strong>
+            </div>
+            <div class="col-lg-4 col-xxl-4 mb-3" style="color:#000000">
+                Percentage of Rejection: <strong>{{percentageofrejection}}%</strong>
+            </div>
+            <div class="col-lg-5 col-xxl-5 mb-3" style="color:#000000">
+                Remark Wise Details: <strong>{{remarkwsedetails}}</strong>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="detailshidesnaaction">
+        <div class="row" style="margin-top: 10px;margin-bottom: 1px;">
+            <div class="col-lg-3 col-xxl-3 mb-3" style="color:#000000">
+                Actual Date Of Discharge From : <strong>{{fromdatesnaction}}</strong>
+            </div>
+            <div class="col-lg-4 col-xxl-4 mb-3" style="color:#000000">
+                Actual Date Of Discharge To : <strong> {{todatesnaction}}</strong>
+            </div>
+            <div class="col-lg-5 col-xxl-5 mb-3" style="color:#000000">
+                State Name : <strong> {{statenamesnaction}}</strong>
+            </div>
+            <div class="col-lg-3 col-xxl-3 mb-3" style="color:#000000">
+                District Name : <strong> {{districtnamesnaaction}}</strong>
+            </div>
+            <div class="col-lg-4 col-xxl-4 mb-3" style="color:#000000">
+                Hospital Name : <strong>{{hospitalnamedatasnaction}} </strong>
+            </div>
+            <div class="col-lg-5 col-xxl-5 mb-3" style="color:#000000">
+                Hospital Details: <strong> {{hospitalnamedatasnaction}}({{hospitalcodedatasnaaction}})</strong>
+            </div>
+            <div class="col-lg-3 col-xxl-3 mb-3" style="color:#000000">
+                Total Discharge: <strong> {{totaldischargesnaction}}</strong>
+            </div>
+            <div class="col-lg-4 col-xxl-4 mb-3" style="color:#000000">
+                Claim Submitted: <strong> {{claimsubmittedsnaction}}</strong>
+            </div>
+            <div class="col-lg-5 col-xxl-5 mb-3" style="color:#000000">
+                Claim Not Submitted: <strong> {{claimnotsubmittedsnaction}}</strong>
+            </div>
+            <div class="col-lg-3 col-xxl-3 mb-3" style="color:#000000">
+                Action By SNA : <strong>{{snaactionsnaction}} </strong>
+            </div>
+            <div class="col-lg-4 col-xxl-4 mb-3" style="color:#000000">
+                Percentage of Action: <strong>{{snaactionpercentagesnaction}}%</strong>
+            </div>
+            <div class="col-lg-5 col-xxl-5 mb-3" style="color:#000000">
+                Remark Wise Details: <strong>{{remarkwsedetailssnaction}}</strong>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 10px;margin-bottom: 2px;">
+        <div class="col-lg-6 col-xxl-6">
+            <div class="row " *ngIf="showPegi">
+                <div class="col-sm-6" style="margin-bottom: 1ch;">
+                    <div class="col-sm-*">
+                        show
+                        <select id="pageItem" name="pageItem" class="form-select-sm" [(ngModel)]="pageElement">
+                            <option value="100">100</option>
+                            <option value="200">200</option>
+                            <option value="500">500</option>
+                            <option value={{length}}>All</option>
+                        </select> entries
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-lg-2 col-xxl-2">
+            <div class="table-utilities float-end">
+                <button class="btn btn-success btn-sm mx-1" tooltip="Excel" (click)="downloadReport('excel')"><i
+                        class="bi bi-download"></i>
+                </button>
+                <button class="btn btn-danger btn-sm me-1" type="submit" (click)="downloadReportpdf('pdf')"><i
+                        class="bi bi-file-earmark-pdf"></i></button>
+            </div>
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+            <input type="text" id="txtsearchDate" class="form-control" placeholder="Search here" name="txtsearchDate" [(ngModel)]="txtsearchDate" autocomplete="off">
+
+        </div>
+    </div>
+</div>
+<div class="content-box p-0 overflow-hidden">
+    <div class="table-responsive">
+        <table class="table table-striped mb-0">
+            <thead>
+                <tr>
+                    <th class="text-center">Sl No</th>
+                    <th class="text-center">Remark</th>
+                    <th class="text-center">Remark Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let claim of remarkdeetails | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};
+                index as i">
+                    <td class="text-center" *ngIf="currentPage==1">{{(i+1)}}</td>
+                    <td class="text-center" *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+ i+1}}</td>
+                    <td class="text-center">{{claim.remarkname}}</td>
+                    <td class="text-center"><a href="javascript:void(0);" (click)="getremarkdetails(claim.remarkid,claim.remarkname)">{{claim.remarkcount}}</a></td>
+                </tr>
+                <tr *ngIf="remarkdeetails.length==0">
+                    <td colspan="14" class="text-center text-danger"><strong>NO DATA FOUND!!</strong></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row mt-3" *ngIf="showPegi">
+    <div class="col-sm-6">
+        <div class="col-sm-*">
+            show
+            <select id="pageItem" name="pageItem" class="form-select-sm" [(ngModel)]="pageElement">
+                    <option value="100">100</option>
+                    <option value="200">200</option>
+                    <option value="500">500</option>
+                    <option value={{length}}>All</option>
+                </select> entries
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true" (pageChange)="currentPage = $event" (pageBoundsCorrection)="onPageBoundsCorrection($event)" class="text-end"></pagination-controls>
+    </div>
+</div>

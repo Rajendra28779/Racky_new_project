@@ -1,0 +1,949 @@
+.highcharts-data-table table {
+    border-collapse: collapse;
+    border: 1px solid #ebebeb;
+    margin: 10px auto;
+    text-align: center;
+    width: 100%;
+    max-width: 500px;
+  }
+  
+  #chart-pie{
+      position: relative;
+      left: -5px;
+  }
+  
+  .highcharts-data-table caption {
+    padding: 1em 0;
+    font-size: 1.2em;
+    color: #555;
+  }
+  
+  .highcharts-data-table th {
+    font-weight: 600;
+    padding: 0.5em;
+  }
+  
+  .highcharts-data-table td,
+  .highcharts-data-table th,
+  .highcharts-data-table caption {
+    padding: 0.5em;
+  }
+  
+  .highcharts-data-table thead tr,
+  .highcharts-data-table tr:nth-child(even) {
+    background: #f8f8f8;
+  }
+  
+  .highcharts-data-table tr:hover {
+    background: #f1f7ff;
+  }
+  
+  input[type="number"] {
+    min-width: 50px;
+  }
+  
+  .w-7 {
+      width: 7%;
+  }
+  
+  .w-13 {
+      width: 13%;
+  }
+  
+  .text-bg-default {
+      background: #ECF0FB;
+  }
+  
+  .number-lg {
+      font-style: normal;
+      font-weight: 500;
+      font-size: 26px;
+  
+      color: #404040;
+  }
+  
+  .flex-direction-column{flex-direction: column;}
+  .t-right{text-align: right;}
+  
+  .float-left{float: left;}
+  .chrt-p{
+      font-style: normal;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 15px;
+      color: #404040;
+  
+  }
+  
+  .number-circle{
+      font-style: normal;
+      font-weight: 400;
+      font-size: 32px;
+      line-height: 39px;
+      color: #404040;
+  
+      }
+  .number-light {
+      font-style: normal;
+      font-weight: 400;
+      font-size: 24px;
+      line-height: 28px;
+      color: #404040;
+  }
+  
+  .small-l {
+      margin: 0;
+  }
+  
+  .card-header h6 {
+      font-style: normal;
+      font-weight: 400;
+      font-size: 20px;
+      line-height: 23px;
+      color: #fff;
+      margin: 0;
+  }
+  
+  .progress {
+      height: 4px;
+      background: transparent;
+      border-radius: 0;
+  }
+  
+  .card {
+      background: #FFFFFF;
+      border: 1px solid #E0E0E0;
+      box-shadow: 2px 0px 24px rgba(163, 163, 163, 0.25);
+      border-radius: 6px;
+  }
+  
+  .st-report h4 {
+      font-style: normal;
+      font-weight: 500;
+      font-size: 25px;
+      line-height: 28px;
+      margin: 0;
+      color: #404040;
+  }
+  
+  .bg-successnew {
+      background-color: #68a990;
+  }
+  
+  .small-p {
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 15px;
+      margin-bottom: 8px;
+  }
+  
+  small,
+  .small {
+      font-size: 14px;
+  }
+  
+  .border-right-0 {
+      border-right: none;
+  }
+  
+  .st-report .card-title {
+      font-style: normal;
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 20px;
+      color: #404040;
+  }
+  
+  .card-body {
+      padding: 10px 20px;
+  }
+  
+  .card-group .bg-secondary {
+      background-color: #ecf0fb !important;
+      float: left;
+      width: 100%;
+  }
+  
+  .border-right {
+      position: relative;
+  }
+  
+  .font-w {
+      font-weight: 500;
+      color: #0B744C;
+  }
+  
+  .border-right::after {
+      content: '';
+      border-right: 1px solid #DEE3F3;
+      position: absolute;
+      top: 0;
+      width: 1px;
+      height: 100%;
+      right: -12%;
+  }
+  
+  .card-header .nm-tx {
+  
+      font-style: normal;
+      font-weight: 500;
+      font-size: 24px;
+      line-height: 28px;
+      padding-left: 15px;
+  }
+  
+  .font-big {
+      font-weight: 400;
+      font-size: 20px;
+  }
+  
+  .card-text .small-l{
+      opacity: 0.7;
+  }
+  
+  .p-gap{
+      padding: 0.5rem 2rem;
+  }
+  
+  .card-group .r-number {
+  
+      font-style: normal;
+      font-weight: 500;
+      font-size: 32px;
+      padding: 0.5rem 2rem;
+      color: #0B744C;
+  
+  }
+  
+  .card-group .number {
+  
+      font-style: normal;
+      font-weight: 500;
+      font-size: 26px;
+      padding: 1rem;
+      color: #0B744C;
+  }
+  
+  .card-body h4 .number {
+      font-weight: 500;
+      font-size: 24px;
+      line-height: 28px;
+  }
+  
+  .card-group .card-text {
+  
+      font-style: normal;
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 22px;
+      color: #404040;
+  }
+  
+  
+  .card-group .card-text .sm-txt {
+      float: left;
+      width: 100%;
+  }
+  
+  .card-group {
+      border-top-right-radius: 6px;
+      border-bottom-right-radius: 6px;
+  }
+  
+  .card-group .card {
+  
+      border-radius: 0;
+      box-shadow: none;
+      padding: 1em;
+      border-top: none;
+      border-left: none;
+      margin: 0;
+  
+  }
+  
+  .text-warning {
+      color: #ECA00D !important;
+  }
+  
+  .card-header {
+      border-bottom: none;
+      color: #404040;
+      padding: 15px 10px 15px 30px;
+  }
+  
+  .card-header h5 {
+      text-transform: capitalize;
+      font-size: 18px;
+      font-weight: 400;
+      margin: 0;
+  }
+  
+  .card-header h4 {
+      font-size: 1.3rem;
+      font-weight: 400;
+      margin: 0;
+  }
+  
+  
+  .progress-circle {
+      width: 100px;
+      height: 100px;
+      line-height: 110px;
+      background: none;
+      margin: 0 auto;
+      box-shadow: none;
+      position: relative;
+   
+  }
+  
+  .progress-circle:after {
+      content: "";
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 7px solid #b4bdd6;
+      position: absolute;
+      top: 0;
+      left: 0;
+  }
+  
+  .progress-circle>span {
+      width: 50%;
+      height: 100%;
+      overflow: hidden;
+      position: absolute;
+      top: 0;
+      z-index: 1;
+  }
+  
+  .progress-circle .progress-left {
+      left: 0;
+  }
+  
+  .progress-circle .progress-bar {
+      width: 100%;
+      height: 100%;
+      background: none;
+      border-width: 7px;
+      border-style: solid;
+      position: absolute;
+      top: 0;
+      border-color: #0b744c;
+  }
+  
+  .progress-circle .yellow {
+      width: 100%;
+      height: 100%;
+      background: none;
+      border-width: 7px;
+      border-style: solid;
+      position: absolute;
+      top: 0;
+      border-color: #ECA00D;
+  }
+  
+  
+  .progress-circle .progress-left .progress-bar {
+      left: 100%;
+      border-top-right-radius: 75px;
+      border-bottom-right-radius: 75px;
+      border-left: 0;
+      -webkit-transform-origin: center left;
+      transform-origin: center left;
+  }
+  
+  .progress-circle .progress-right {
+      right: 0;
+  }
+  
+  .progress-circle .progress-right .progress-bar {
+      left: -100%;
+      border-top-left-radius: 75px;
+      border-bottom-left-radius: 75px;
+      border-right: 0;
+      -webkit-transform-origin: center right;
+      transform-origin: center right;
+  }
+  
+  .progress-circle .progress-value {
+      display: flex;
+      border-radius: 50%;
+      font-size: 25px;
+      text-align: center;
+      line-height: 22px;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      font-weight: 500;
+      color: #0b744c;
+  }
+  
+  .progress-circle .progress-value div {
+      margin-top: 10px;
+  }
+  
+  .progress-circle .progress-value span {
+      font-size: 12px;
+      text-transform: uppercase;
+  }
+  
+  /* progress bar css*/
+  .progress-circle[data-percentage="10"] .progress-right .progress-bar {
+      animation: loading-1 1.5s linear forwards;
+  }
+  
+  .progress-circle[data-percentage="10"] .progress-left .progress-bar {
+      animation: 0;
+  }
+  
+  .progress-circle[data-percentage="20"] .progress-right .progress-bar {
+      animation: loading-2 1.5s linear forwards;
+  }
+  
+  .progress-circle[data-percentage="20"] .progress-left .progress-bar {
+      animation: 0;
+  }
+  
+  .progress-circle[data-percentage="30"] .progress-right .progress-bar {
+      animation: loading-3 1.5s linear forwards;
+  }
+  
+  .progress-circle[data-percentage="30"] .progress-left .progress-bar {
+      animation: 0;
+  }
+  
+  .progress-circle[data-percentage="40"] .progress-right .progress-bar {
+      animation: loading-4 1.5s linear forwards;
+  }
+  
+  .progress-circle[data-percentage="40"] .progress-left .progress-bar {
+      animation: 0;
+  }
+  
+  .progress-circle[data-percentage="50"] .progress-right .progress-bar {
+      animation: loading-5 1.5s linear forwards;
+  }
+  
+  .progress-circle[data-percentage="50"] .progress-left .progress-bar {
+      animation: 0;
+  }
+  
+  .progress-circle[data-percentage="60"] .progress-right .progress-bar {
+      animation: loading-5 1.5s linear forwards;
+  }
+  
+  .progress-circle[data-percentage="60"] .progress-left .progress-bar {
+      animation: loading-1 1.5s linear forwards 1.5s;
+  }
+  
+  .progress-circle[data-percentage="70"] .progress-right .progress-bar {
+      animation: loading-5 1.5s linear forwards;
+  }
+  
+  .progress-circle[data-percentage="70"] .progress-left .progress-bar {
+      animation: loading-2 1.5s linear forwards 1.5s;
+  }
+  
+  .progress-circle[data-percentage="80"] .progress-right .progress-bar {
+      animation: loading-5 1.5s linear forwards;
+  }
+  
+  .progress-circle[data-percentage="80"] .progress-left .progress-bar {
+      animation: loading-3 1.5s linear forwards 1.5s;
+  }
+  
+  .progress-circle[data-percentage="90"] .progress-right .progress-bar {
+      animation: loading-5 1.5s linear forwards;
+  }
+  
+  .progress-circle[data-percentage="90"] .progress-left .progress-bar {
+      animation: loading-4 1.5s linear forwards 1.5s;
+  }
+  
+  .progress-circle[data-percentage="100"] .progress-right .progress-bar {
+      animation: loading-5 1.5s linear forwards;
+  }
+  
+  .progress-circle[data-percentage="100"] .progress-left .progress-bar {
+      animation: loading-5 1.5s linear forwards 1.5s;
+  }
+  
+  @keyframes loading-1 {
+      0% {
+          -webkit-transform: rotate(0deg);
+          transform: rotate(0deg);
+      }
+  
+      100% {
+          -webkit-transform: rotate(36);
+          transform: rotate(36deg);
+      }
+  }
+  
+  @keyframes loading-2 {
+      0% {
+          -webkit-transform: rotate(0deg);
+          transform: rotate(0deg);
+      }
+  
+      100% {
+          -webkit-transform: rotate(72);
+          transform: rotate(72deg);
+      }
+  }
+  
+  @keyframes loading-3 {
+      0% {
+          -webkit-transform: rotate(0deg);
+          transform: rotate(0deg);
+      }
+  
+      100% {
+          -webkit-transform: rotate(108);
+          transform: rotate(108deg);
+      }
+  }
+  
+  @keyframes loading-4 {
+      0% {
+          -webkit-transform: rotate(0deg);
+          transform: rotate(0deg);
+      }
+  
+      100% {
+          -webkit-transform: rotate(144);
+          transform: rotate(144deg);
+      }
+  }
+  
+  @keyframes loading-5 {
+      0% {
+          -webkit-transform: rotate(0deg);
+          transform: rotate(0deg);
+      }
+  
+      100% {
+          -webkit-transform: rotate(180);
+          transform: rotate(180deg);
+      }
+  }
+  
+  .progress-circle {
+      line-height: 150px;
+      background: #fff;
+      overflow: hidden;
+      display: block;
+      border-radius: 50%;
+  }
+  
+  
+  //   Responsive works
+  
+  @media screen and (min-width: 1920px) {
+  
+  .w-80 {
+      width: 79% !important;
+  }
+  
+  .w-20 {
+      width: 21% !important;
+  }
+  
+  .w-40 {
+      width: 40% !important;
+  }
+  
+  .w-60 {
+      width: 60% !important;
+  }
+  
+  
+  }
+  
+  @media screen and (min-width: 1440px) {
+  
+      .w-80 {
+          width: 80%;
+      }
+      
+      .w-20 {
+          width: 20%;
+      }
+  
+      .w-75 {
+          width: 75%;
+      }
+      
+      .w-25 {
+          width: 25%;
+      }
+  
+      .w-30 {
+          width: 34%;
+      }
+  
+      .w-70 {
+          width: 66%;
+      }
+      
+      .w-40 {
+          width: 50%;
+      }
+      
+      .w-60 {
+          width: 50%;
+      }
+      
+      
+      }
+  
+      @media screen and (min-width: 1440px) {
+          .w-30 {
+              width: 32%;
+          }
+      
+          .w-70 {
+              width: 68%;
+          }
+  
+  }
+  @media screen and (max-width: 1440px) {
+  
+      .font-w{
+      font-style: normal;
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 23px;
+      color: #0B744C;
+      }
+  
+      .card-header h4{
+          
+          font-style: normal;
+          font-weight: 400;
+          font-size: 20px;
+          line-height: 23px;
+          color: #404040;
+      }
+      .card-group .bg-secondary {
+          height: 100%;
+      }
+  
+      .number-circle{
+      font-style: normal;
+      font-weight: 400;
+      font-size: 32px;
+      line-height: 38px;
+      color: #404040;
+  
+      }
+  
+      .number-lg {
+          
+          font-style: normal;
+          font-weight: 500;
+          font-size: 24px;
+          line-height: 28px;
+          color: #404040;
+  
+      }
+      .small-p{
+          
+          font-style: normal;
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 19px;
+          color: #404040;
+      }
+  
+      .card-group .number {
+          
+          font-style: normal;
+          font-weight: 400;
+          font-size: 32px;
+          line-height: 38px;
+          color: #0B744C;
+      }
+  
+      .st-report .card-title {
+          
+          font-style: normal;
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 19px;
+          color: #404040;
+      }
+   
+      .card-group .card-text {
+      font-style: normal;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 18px;
+      color: #404040;
+  
+  
+      }
+  
+      .card-header h5 {
+          font-size: 16px;
+      }
+  
+      .st-report h4 {
+          
+          font-style: normal;
+          font-weight: 400;
+          font-size: 24px;
+          line-height: 28px;
+          color: #404040;
+      }
+      small,
+      .small {
+          font-size: 12px;
+      }
+  
+  }
+  
+  @media screen and (min-width: 1280px) {
+  
+       .w-80 {
+          width: 80%;
+      }
+      
+      .w-20 {
+          width: 20%;
+      }
+   
+  
+  }
+  
+  
+  
+  
+  
+  @media screen and (max-width: 1024px) {
+  
+  
+      .t-right{text-align: center;}
+      .card-header {
+          border-bottom: none;
+          padding: 15px 10px 15px 15px;
+      }
+      .card-group .bg-secondary {
+          height: 100%;
+      }
+      .progress-circle .progress-value{font-size: 20px;}
+      .progress-circle {
+          width: 80px;
+          height: 80px;
+          line-height: 110px;
+          background: none;
+          margin: 0 auto;
+          box-shadow: none;
+          position: relative;
+  
+     
+      }
+  
+      .card-header .nm-tx {
+          font-size: 20px;
+      }
+  
+      .card-header h4 {
+          font-size: 20px;
+      }
+  
+      .number-lg {
+          font-size: 20px;
+      }
+  
+      .number-circle {
+          font-size: 20px;
+      }
+  
+  
+      .number-light {
+          font-size: 20px;
+      }
+  
+      .card-group .number {
+          font-size: 20px;
+      }
+      .card-group .r-number {font-size: 20px;}
+  
+      .card-group .bg-secondary {
+          padding: 0.5rem 1rem;
+      }
+  
+      .card-group .card {
+          padding: 10px 10px;
+      }
+  
+      .st-report h4 {
+          font-size: 20px;
+      }
+  
+      .small-p {
+          font-weight: 400;
+          font-size: 12px;
+          line-height: 15px;
+      }
+  
+  
+  }
+  
+  @media screen and (max-width: 768px) {
+      .t-right{text-align: center;}
+  
+      .card-header .nm-tx {
+          font-size: 26px;
+          padding-left: 0;
+      }
+  
+      .card-header h4 {
+          font-size: 20px;
+      }
+  
+      .number-lg {
+          font-size: 26px;
+      }
+      .number-circle {
+          font-size: 26px;
+      }
+  
+      .number-light {
+          font-size: 26px;
+      }
+  
+      .card-group .number {
+          font-size: 26px;
+      }
+  
+      .small-p {
+          margin: 0;
+      }
+  
+      .card-group .bg-secondary {
+          padding: 0.5rem 2rem;
+      }
+  
+      .card-group .r-number {
+          font-style: normal;
+          font-weight: 400;
+          font-size: 26px;
+          padding: 0.5rem 2rem;
+          color: #0B744C;
+      }
+  
+      .card-group .card {
+          padding: 10px 10px;
+      }
+  
+      .border-right::after {
+          display: none;
+      }
+  
+      .progress-circle {
+          width: 75px;
+          height: 75px;
+      }
+  
+      .progress-circle .progress-value {
+          font-size: 20px;
+      }
+  
+      .card-group .bg-secondary {
+          height: 100%;
+      }
+  }
+  
+  
+  @media screen and (max-width: 640px) {
+  
+      .card-group .number {
+          padding-bottom: 0;
+      }
+  
+      .card-group .bg-secondary {
+          padding: 10px 15px;
+      }
+  
+      .card-group .r-number {
+          padding: 10px 15px;
+          padding-bottom: 0;
+      }
+  
+      .card-group .card {
+          padding: 10px 10px;
+      }
+  
+  
+      .r-number{
+          font-style: normal;
+          font-weight: 500;
+          font-size: 24px;
+          padding: 1rem 1rem;
+          color: #0B744C;
+      }
+  
+      .totldis .bg-secondary {
+          background: none !important;
+          border-bottom: 1px solid #ccc;
+          text-align: center;
+          padding-top: 0 !important;
+      }
+  
+      .pt-5 {
+          padding-top: 0 !important;
+      }
+  
+  
+      .card-header .nm-tx {
+          font-size: 20px;
+          padding-left: 6px;
+      }
+  
+      .card-header h4 {
+          font-size: 20px;
+      }
+  
+      .number-lg {
+          font-size: 24px;
+      }
+      .number-circle {
+          font-size: 24px;
+          line-height: initial;
+      }
+  
+      .number-light {
+          font-size: 24px;
+      }
+  
+      .card-group .number {
+          font-size: 24px;
+      }
+      .p-xs-2 {
+          padding: 10px 15px;
+      }
+  }
+  
+  
+  
+  @media screen and (max-width: 480px) {
+      .progress-circle{
+          margin-top: 10px;
+      margin-bottom: 5px;
+      }
+      .t-right{text-align: center;}
+  
+      .h-100 {
+          height: auto !important;
+      }
+  
+      .card-group .card{border-bottom: 0;}
+  
+      .c-count {
+          column-count: 2;
+      }
+  
+      
+  }

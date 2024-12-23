@@ -1,0 +1,163 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/hospitalprofile" routerLinkActive="active" class="nav-link active">Profile</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-6 ">
+                <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+            </div>
+        </div>
+    </div>
+    <div class="content-box">
+        <form [formGroup]="HospitalType" autocomplete="off">                        
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Hospital Name<span
+                            class="text-danger">*</span></label>
+                        <input class="form-control" type="text" formControlName="hospitalName" autocomplete="off" 
+                            [(ngModel)]="updateHospital.hospitalName" name="hospitalName" id="hospitalName" placeholder="Enter Hospital Name" 
+                            maxlength="250" onkeyup="this.value=this.value.replace(/[^a-zA-Z0-9 ,]/g,'');"
+                            (keyup)="keyfunction1($event.target)" disabled/>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Hospital Code<span
+                            class="text-danger">*</span></label>
+                        <input class="form-control" type="text" formControlName="hospitalCode" autocomplete="off" 
+                            [(ngModel)]="updateHospital.hospitalCode" name="hospitalCode" id="hospitalCode" placeholder="Enter Hospital Code" 
+                            maxlength="10" disabled="disabled">
+
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Mobile No<span
+                            class="text-danger">*</span></label>
+                        <input class="form-control" type="text" disabled formControlName="mobile" autocomplete="off" [(ngModel)]="updateHospital.mobile" name="mobile" id="mobile" placeholder="Enter Mobile No" maxlength="10" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" (change)="validatePhoneNo()">
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Email Id<span
+                            class="text-danger">*</span></label>
+                        <input class="form-control" disabled type="text" formControlName="emailId" autocomplete="off" [(ngModel)]="updateHospital.emailId" name="emailId" id="emailId" placeholder="Enter Email ID" maxlength="100" (change)="validateEmail()" (keyup)="keyfunction1($event.target)">
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">State Name<span class="text-danger">*</span></label>
+                        <input class="form-control" type="text" formControlName="stateName" autocomplete="off" 
+                            [(ngModel)]="updateHospital.stateName" name="stateName" id="stateName" disabled/>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">District Name<span class="text-danger">*</span></label>
+                        <input class="form-control" type="text" formControlName="districtName" autocomplete="off" 
+                            [(ngModel)]="updateHospital.districtName" name="districtName" id="districtName" disabled/>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Hospital Type<span class="text-danger">*</span></label>
+                        <input class="form-control" type="text" formControlName="hospitalType" autocomplete="off" 
+                            [(ngModel)]="updateHospital.hospitalType" name="hospitalType" id="hospitalType" disabled/>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Assigned SNA<span class="text-danger">*</span></label>
+                        <input class="form-control" type="text" formControlName="snaname" autocomplete="off" 
+                            [(ngModel)]="updateHospital.snaname" name="snaname" id="snaname" disabled/>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Assigned DC<span class="text-danger">*</span></label>
+                        <input class="form-control" type="text" formControlName="dcname" autocomplete="off" 
+                            [(ngModel)]="updateHospital.dcname" name="dcname" id="dcname" disabled/>
+                    </div>
+                </div>
+            </div>
+            <div class="row">                            
+                <div class="col-lg-4 col-xxl-8">
+                    <div class="mb-xl-6">
+                        <label>Is CPD Approval Required?</label>&nbsp;&nbsp;
+                        <label>
+                            <span *ngIf="cpdReqrd=='0'"><strong>Yes</strong></span>
+                            <span *ngIf="cpdReqrd=='1'"><strong>No</strong></span>
+                        </label>
+                    </div>                                    
+                </div>
+            </div>
+            <div style="height: 20pt;"></div>
+            <div class="row">                            
+                <div class="col-lg-4 col-xxl-8">
+                    <div class="mb-xl-6">
+                        <label>TMS Active Status:</label>&nbsp;&nbsp;
+                        <label>
+                            <span *ngIf="tmsActiveStat===null"><strong>-NA-</strong></span>
+                            <span *ngIf="tmsActiveStat===0"><strong>Yes</strong></span>
+                            <span *ngIf="tmsActiveStat===1"><strong>No</strong></span>
+                        </label>
+                    </div>                                    
+                </div>
+            </div>
+            <br>
+            <h4 class="border-bottom pb-2 mb-3 mt-4">Geo Location</h4>
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Latitude<span
+                            class="text-danger">*</span></label>
+                        <input class="form-control" type="text" formControlName="latitude" autocomplete="off" 
+                            [(ngModel)]="latitude" name="latitude" id="latitude" placeholder="Enter Latitude" 
+                            maxlength="6" onkeyup="this.value=this.value.replace(/[^0-9.]/g,'');" disabled/>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Longitude<span
+                            class="text-danger">*</span></label>
+                        <input class="form-control" type="text" formControlName="longitude" autocomplete="off" 
+                            [(ngModel)]="longitude" name="longitude" id="longitude" placeholder="Enter Longitude" 
+                            maxlength="6" onkeyup="this.value=this.value.replace(/[^0-9.]/g,'');" disabled/>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Click Here To Geo Tag</label>
+                        <div style="text-align: center; height: 30pt; width: 115pt;">
+                            <a href="javascript:void(0)" style="font-size: 21pt;" id="tag" (click)="getGeoLocation()" title="Geo Tag Location"><i class="bi bi-geo-alt-fill"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="height: 20pt;"></div>
+            <div class="row">                            
+                <div class="col-lg-12">
+                    <div class="d-grid gap-2 d-md-flex">
+                        <!-- <button type="submit" value="Update" class="btn btn-success" (click)="update(updateHospital)">Update</button> -->
+                        <button type="submit" value="Update" class="btn btn-success" (click)="openHospital()">Update</button>
+                        <button type="reset" class="btn btn-secondary" (click)="cancel()">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

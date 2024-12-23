@@ -1,0 +1,131 @@
+<div class="main-tab">
+    <div class="col-lg-4">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a routerLink="/application/snaConfiguration" routerLinkActive="active" 
+                    class="nav-link" style="color: #1f723f;">Add</a>
+            </li>
+            <li class="nav-item">
+                <a routerLink="/application/snaConfigurationdetails" routerLinkActive="active" 
+                    class="nav-link" style="color: #1f723f;">View</a>
+            </li>
+            <li class="nav-item">
+                <a routerLink="/application/untaggedHospitals" routerLinkActive="active"
+                    class="nav-link active">Untagged</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div id="filter" class="searchCriteriaBox bg-light p-3">
+    <form autocomplete="off" [formGroup]="SearchForm">
+        <div class="row">
+            <div class="col-md-6 col-lg-4">
+                <div class="form-group">
+                    <label class="control-label">State Name</label>
+                    <select name="stateId" id="stateId" class="form-control"
+                        (change)="OnChangeState($event.target.value)" formControlName="stateId">
+                        <option value="" selected disabled>Select State</option>
+                        <ng-container *ngFor="let item of stateList;index as i">
+                            <option [value]="item.stateCode">{{item.stateName}}</option>
+                        </ng-container>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="form-group">
+                    <label class="control-label">District Name</label>
+                    <select name="districtId" id="districtId" class="form-control" formControlName="districtId">
+                        <option value="">Select District</option>
+                        <ng-container *ngFor="let item of districtList;index as i">
+                            <option [value]="item.districtcode">{{item.districtname}}</option>
+                        </ng-container>
+                    </select>
+                </div>
+            </div>
+            <div class="col align-self-end">
+                <div class="form-group">
+                    <button class="btn btn-success mr-2" (click)="onChange()">Search</button>
+                    &nbsp;
+                    <button class="btn btn-secondary" (click)="resetTable()">Reset</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<br>
+<div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+    <div class="col-lg-4 col-xxl-4" style="padding-top: 10px; padding-left: 17px;">
+        <b>Total Untagged Hospitals: <span style="color: green;">{{hospitalData.length}}</span></b>
+    </div>
+    <div class="col-lg-4 col-xxl-4" style="text-align: right; padding-top: 3px;">
+        <div class="form-group">
+            <button class="btn btn-outline-success btn-sm me-1" type="submit" (click)="downloadReport()">
+                <i class="bi bi-download"></i>
+            </button>
+        </div>
+    </div>
+    <div class="col-lg-4 col-xxl-4">
+        <div class="input-group">
+            <input type="text" id="txtsearchDate" class="form-control" placeholder="Search here" name="txtsearchDate"
+                [(ngModel)]="txtsearchDate">
+        </div>
+    </div>
+</div>
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="table-responsive">
+                <table class="table table-striped" mb-0>
+                    <thead>
+                        <tr>
+                            <th width="60">Sl No</th>
+                            <th>Hospital Details</th>
+                            <th>State Name</th>
+                            <th>District Name</th>
+                            <th style="text-align: center;">CPD Approval Required</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr
+                            *ngFor="let item of hospitalData | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage}; index as i">
+                            <td *ngIf="currentPage==1">{{i+1}}</td>
+                            <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+i+1}}</td>
+                            <td>{{item.hospitalName}} ({{item.hospitalCode}})</td>
+                            <td>{{item.stateName}}</td>
+                            <td>{{item.districtName}}</td>
+                            <td style="text-align: center;">
+                                    <span *ngIf="item.cpdApprovalRequired===0">Yes</span>
+                                    <span *ngIf="item.cpdApprovalRequired===1">No</span>
+                            </td>
+                            <td>
+                                <span *ngIf="item.status===0">Active</span>
+                                <span *ngIf="item.status===1">InActive</span>
+                            </td>
+                        </tr>
+                        <tr *ngIf="! hospitalData?.length">
+                            <td colspan="8" align="center"><strong class="text-danger">No data found</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row" *ngIf="showPegi">
+                <div class="col-sm-4">
+                    <div class="col-sm-*">
+                        show
+                        <select id="pageItem" name="pageItem" class="custom-select-sm" (change)="pageItemChange()">
+                            <option value="100">100</option>
+                            <option value="200">200</option>
+                            <option value="300">300</option>
+                            <option value="400">400</option>
+                        </select> entries
+                    </div>
+                </div>
+                <div class="col-sm-8 text-right">
+                    <pagination-controls id="listing_pagination" [maxSize]="100" [directionLinks]="true"
+                        (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

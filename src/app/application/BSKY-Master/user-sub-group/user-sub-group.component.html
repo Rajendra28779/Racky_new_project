@@ -1,0 +1,92 @@
+
+<div class="form-cointainer">
+  <div class="main-tab">
+      <div class="row justify-content-between">
+          <div class="col-lg-4">
+              <ul class="nav nav-tabs">
+                  <li class="nav-item" *ngIf=isUpdateBtnInVisible>
+                      <a routerLink="/application/userSubGroup" routerLinkActive="active" class="nav-link active">Add</a>
+                  </li>
+                  <li class="nav-item" *ngIf=isEditBtn>
+                    <a routerLink="/application/userSubGroup" routerLinkActive="active" class="nav-link active">Edit</a>
+                  </li>
+                  <li class="nav-item">
+                    <a routerLink="/application/viewsubgroup" routerLinkActive="active" class="nav-link active">View</a>
+                </li>
+              </ul>
+          </div>
+          <div class="col-lg-6 ">
+            <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+        </div>
+          <div class="col-lg-6 ">
+          </div>
+          <div class="content-box">
+              <div class="row">
+                  <form [formGroup]="Subgroup" autocomplete="off">
+                      <div class="col-md-12">
+                          <div class="row">
+                            <div class="col-lg-3">
+                              <div class="mb-xl-3">
+                                  <label for="selectParentGroup" class="form-label">Group Name<span class="text-danger">*</span></label>
+                                  <select class="form-select"  id="groupid" name="groupid" [(ngModel)]="update.groupid" formControlName="groupid" >
+
+                                  <option  selected disabled="disabled">Select</option>
+                                  <ng-container *ngFor="let v of grouplist">
+                                    <option value={{v.groupId}} >{{v.groupName}}</option>
+                                  </ng-container>
+                                </select>
+                              </div>
+                          </div>
+                              <div class="col-lg-3">
+                                  <div class="mb-3">
+                                      <label for="inputGroupName" class="form-label">SubGroup Name<span class="text-danger">*</span></label>
+                                      <input class="form-control" type="text"  id="subgroupname"  maxlength="38" [(ngModel)]="update.subgroupname" name="subgroupname" formControlName="subgroupname"
+                                       placeholder="Enter Sub-Group-name" 
+                                       onkeyup="this.value=this.value.replace(/[^a-zA-Z ]/g,'');" (keyup)="keyfunction1($event.target)" >
+
+                                  </div>
+                              </div>
+                            </div>
+                              <div>                                
+                                <div class="col-lg-4" *ngIf="isEditBtn">
+                              <div class="mb-3">
+                                <label>Status:</label>&nbsp;&nbsp;
+                                <label *ngIf="update.status==0">
+                                    <input type="radio" checked="checked" [checked]="true" (click)="yes($event)"
+                                        name="status" id="status">Active &nbsp;&nbsp;
+                                    <input type="radio" (click)="no($event)" name="status" id="status">In-Active
+                                </label>
+
+                                <label *ngIf="update.status==1">
+                                    <input type="radio" (click)="yes($event)" name="status" id="status">Active
+                                    &nbsp;&nbsp;
+                                    <input type="radio" checked="checked" [checked]="true" (click)="no($event)"
+                                        name="status" id="status">In-Active
+                                </label>
+                            </div>
+                            </div>
+
+                              <div class="col-lg-3">
+                                  <label class="form-label d-none d-md-block">&nbsp;</label>
+                                  <div class="d-grid gap-2 d-md-flex">
+                                      <div *ngIf=isUpdateBtnInVisible>
+                                          <button type="button" class="btn btn-success" (click)="savegroup()">Save</button>&nbsp;
+                                          <input type="reset" value="Reset" class="btn btn-secondary">
+                                      </div>
+                                      <div *ngIf=isEditBtn>
+                                          <button type="button" class="btn btn-success" (click)="updategroup(update)">Update</button>&nbsp;
+                                          <input type="button" value="Cancel" class="btn btn-secondary"  (click)="cancel()">
+                                      </div>
+
+
+                                  </div>
+
+                              </div>
+                          </div>
+                      </div>
+                  </form>
+                </div>
+          </div>
+      </div>
+  </div>
+

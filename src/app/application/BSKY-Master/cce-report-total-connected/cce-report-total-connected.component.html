@@ -1,0 +1,72 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/cceReport" class="nav-link active">Cce Out Bound Call Report </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="content-box">
+        <div class="row">
+            <div class="col-6">Total Count : {{countfloate}}</div>
+            <div class="col-2" style="text-align:end ;">
+                <button class="btn btn-success btn-sm mx-1" style="margin-top: 10px" tooltip="Excel" (click)="downloadReport('excel')">
+                  <i class="bi bi-file-earmark-spreadsheet"></i>
+              </button>
+                <button class="btn btn-danger btn-sm mx-1" style="margin-top: 10px" tooltip="pdf" (click)="downloadReport('pdf')">
+                    <i class="bi bi-file-earmark-pdf"></i>
+                </button>
+              </div>
+            <div class="col-4" >
+                <input type="text " id="txtsearchDate " name="txtsearchDate " [(ngModel)]="txtsearchDate" maxlength="20 " class="form-control " placeholder="Search here...... " autocomplete="off" style=" margin-right: 0px; margin-left: 0px;">
+            </div>
+        </div>
+        <br>
+        <div class="table-responsive">
+            <table class="table table-striped mb-0">
+              <thead>
+                  
+                <tr>
+                  <th width="50">Sl#</th>
+                  <th colspan="2" class="text-center">Question1</th>
+                  <th colspan="2" class="text-center">Question2</th>
+                  <th colspan="2" class="text-center">Question3</th>
+                  <th colspan="2" class="text-center">Question4</th>
+                </tr>
+                <tr class="text-center small">
+                    <th></th>
+                    <th>Yes</th>
+                    <th>No</th>
+                    <th>Yes</th>
+                    <th>No</th>
+                    <th>Yes</th>
+                    <th>No</th>
+                    <th>Yes</th>
+                    <th>No</th>
+                </tr>
+              </thead>
+              <tbody>
+                  <tr class="text-center" *ngFor="let claim of totalConnected | filter:txtsearchDate| paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage}; index as i">
+                    <td *ngIf="currentPage==1 ">{{(i+1)}}</td>
+                    <td *ngIf="currentPage!=1 ">{{(currentPage-1)*pageElement+ i+1}}</td>
+                    <td> {{claim.question1}}</td>
+                    <td> {{claim.question1n}}</td>
+                    <td> {{claim.question2}}</td>
+                    <td> {{claim.question2n}}</td>
+                    <td> {{claim.question3}}</td>
+                    <td> {{claim.question3n}}</td>
+                    <td> {{claim.question4}}</td>
+                    <td> {{claim.question4n}}</td>
+                    <!-- <td *ngIf="show==4 ||show==3 ||show==2"> {{claim.date}}</td> -->
+                  </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>

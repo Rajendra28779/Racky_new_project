@@ -1,0 +1,273 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+      <div class="row justify-content-between">
+          <div class="col-lg-10">
+              <ul class="nav nav-tabs">
+                  <li class="nav-item">
+                      <a routerLink="/application/smfaceregistration" routerLinkActive="active" class="nav-link " style="color: #1f723f;">Swasthya Mitra Face Re-registration</a>
+                  </li>
+                  <li class="nav-item">
+                      <a routerLink="/application/smfaceregistrationview" routerLinkActive="active" class="nav-link active">View</a>
+                  </li>
+              </ul>
+          </div>
+          <!-- <div class="col-lg-6 ">
+              <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+          </div> -->
+      </div>
+  </div>
+  <div class="content-box">
+    <div class="row">
+      <div class="col-lg-3 col-xxl-3">
+        <div class="mb-xl-3">
+          <label class="control-label">State Name</label>
+            <select class="form-select" name="stateId1" id="stateId1"
+                (change)="OnChangeState($event.target.value)">
+                <option value=21 selected >Odisha</option>
+            </select>
+        </div>
+      </div>
+      <div class="col-lg-3 col-xxl-3">
+        <div class="mb-xl-3">
+          <label class="control-label">District Name</label>
+          <select class="form-select" name="districtId1" id="districtId1"
+              (change)="OnChangeDistrict($event.target.value)">
+              <option value="">Select District</option>
+              <ng-container *ngFor="let item of districtList">
+                  <option value={{item.districtcode}}>{{item.districtname}}</option>
+              </ng-container>
+          </select>
+        </div>
+      </div>
+      <div class="col-lg-4 col-xxl-4">
+        <div class="mb-xl-3">
+          <label class="control-label">Hospital Name</label>
+            <ng-autocomplete #auto [data]="hospitalList" placeholder="Select Name"
+              (selected)="selectEvent1($event)" [itemTemplate]="itemTemplate1"
+              [notFoundTemplate]="notFoundTemplate1" [searchKeyword]="keyword1" spellcheck="false"
+              (inputCleared)="onReset2()">
+            </ng-autocomplete>
+            <ng-template #itemTemplate1 let-item>
+              <a [innerHTML]="item.hospitalName"></a>
+          </ng-template>
+            <ng-template #notFoundTemplate1 let-notFound>
+                <div [innerHTML]="notFound"></div>
+            </ng-template>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-4 col-xxl-4">
+        <div class="mb-xl-3">
+          <label class="control-label">Swasthya Mitra Name</label>
+            <ng-autocomplete #auto [data]="smList" placeholder="Select Name"
+              (selected)="selectEvent($event)" [itemTemplate]="itemTemplate"
+              [notFoundTemplate]="notFoundTemplate" [searchKeyword]="keyword" spellcheck="false"
+              (inputCleared)="onReset()">
+            </ng-autocomplete>
+            <ng-template #itemTemplate let-item>
+              <a [innerHTML]="item.fullname"></a>
+          </ng-template>
+            <ng-template #notFoundTemplate let-notFound>
+                <div [innerHTML]="notFound"></div>
+            </ng-template>
+        </div>
+      </div>
+      <div class="col-lg-4 col-xxl-4" style="margin-top:0ch;">
+        <div class="mb-xl-3">
+            <button type="submit" class="btn btn-success"  style="margin-top: 2ch;" (click)="Search()">Search</button>&nbsp;
+            <button type="button" class="btn btn-secondary" style="margin-top: 2ch;" (click)="reset()">Reset</button>
+        </div>
+     </div>
+    </div>
+  </div>
+
+  <div class="row mb-3 mt-3"  >
+    <div class="col-lg-4 col-xxl-4" style="margin-top: 2ch;">
+      <div class="col-sm-*" *ngIf="showPegi">
+        show
+        <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+          <option value="100">100</option>
+          <option value="200">200</option>
+          <option value="300">300</option>
+          <option value={{totalcount}}>All</option>
+        </select> entries
+      </div>
+    </div>
+    <div class="col-lg-2 col-xxl-2" style="margin-top: 2ch;">
+     <b> Total Record : </b>{{totalcount}}
+    </div>
+    <div class="col-lg-2 col-xxl-2" style="text-align:end ;">
+      <button class="btn btn-success btn-sm mx-1" style="margin-top: 10px" tooltip="Excel" (click)="downloadList(1)">
+        <i class="bi bi-file-earmark-spreadsheet"></i>
+    </button>
+      <button class="btn btn-danger btn-sm mx-1" style="margin-top: 10px" tooltip="pdf" (click)="downloadList(2)">
+          <i class="bi bi-file-earmark-pdf"></i>
+      </button>
+    </div>
+
+    <div class="col-lg-4 col-xxl-4">
+
+        <div class="input-group">
+            <input type="text" id="txtsearchDate" class="form-control"
+                placeholder="Search" name="txtsearchDate" [(ngModel)]="txtsearchDate" autocomplete="off">
+        </div>
+    </div>
+</div>
+
+  <div class="table-responsive">
+    <table class="table table-striped mb-0">
+        <thead>
+            <tr>
+                <th width="50">Sl#</th>
+                <th>SM Id</th>
+                <th>SwasthyMitra Name</th>
+                <th>Contact No</th>
+                <th>Email Id</th>
+                <th>Allow for Re-Registration</th>
+                <th style="text-align: center">Details</th>
+            </tr>
+        </thead>
+        <tbody>
+              <tr *ngFor="let v of list | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage},index as i">
+                <td *ngIf="currentPage==1 ">{{(i+1)}}</td>
+                <td *ngIf="currentPage!=1 ">{{(currentPage-1)*pageElement+ i+1}}</td>
+                <td>{{v.username}}</td>
+                <td>{{v.fullname}}</td>
+                <td>{{v.mobile}}</td>
+                <td> {{v.emailid}} </td>
+                <td>{{v.regdate}}</td>
+                <td style="text-align: center" title="Action" >
+                  <button style="text-align: center;" class="btn btn-outline-success btn-sm me-1" (click)="onaction(v.userid)">Details</button>
+                </td>
+              </tr>
+              <tr *ngIf="!showPegi">
+                <td colspan="10" align="center">
+                  <strong class="text-danger">NO DATA FOUND!!</strong>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+    </div>
+    <div class="row" *ngIf="showPegi">
+      <div class="col-sm-4">
+        <div class="col-sm-*">
+          show
+          <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+            <option value="100">100</option>
+            <option value="200">200</option>
+            <option value="300">300</option>
+            <option value={{totalcount}}>All</option>
+          </select> entries
+        </div>
+      </div>
+      <div class="col-sm-8 text-right">
+        <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true"
+          (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)">
+        </pagination-controls>
+      </div>
+    </div>
+
+</div>
+
+<!-- Modal -->
+<div class="modal modal-custom-backdrop" id="swasmodal" tabindex="-1" aria-labelledby="exampleModalLabel" style="backdrop-filter: blur(5px);"
+        aria-hidden="true">
+        <div class="modal-dialog " style="max-width: 70%;">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title text-success" id="exampleModalLabel" >Swasthya Mitra Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closemodal()"></button>
+              </div>
+              <div class="modal-body">
+                  <div class="row">
+                      <div class="col-lg-4 col-xxl-4 border-end">
+                        <div class="mb-xl-3">
+                          <h5><b style="color: rgb(80, 80, 233);">SwasthyaMitra FullName</b></h5>
+                            <p style="margin-left: 3ch;"><b>{{smdetails?.fullname}}</b></p>
+                        </div>
+                      </div>
+                      <div class="col-lg-4 col-xxl-4 border-end">
+                        <div class="mb-xl-3">
+                          <h5><b style="color: rgb(80, 80, 233);">SwasthyaMitra UserName</b></h5>
+                            <p style="margin-left: 3ch;"><b>{{smdetails?.username}}</b></p>
+                        </div>
+                      </div>
+                      <div class="col-lg-4 col-xxl-4 ">
+                        <div class="mb-xl-3">
+                          <h5><b style="color: rgb(80, 80, 233);">SwasthyaMitra MobileNo</b></h5>
+                            <p style="margin-left: 3ch;"><b>{{smdetails?.phoneno}}</b></p>
+                        </div>
+                      </div>
+                  </div>
+                  <hr>
+                  <h5><b style="color: rgb(80, 80, 233);">SwasthyaMitra tagged Hospital</b></h5>
+                  <div class="row">
+                    <div class="col-lg-12 col-xxl-12">
+                      <div class="table-responsive  example-container">
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th>Sl No</th>
+                              <th>Hospital Details</th>
+                              <th>State</th>
+                              <th>District</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let item of smhosplist index as j">
+                              <td>{{j+1}}</td>
+                              <td>{{item.hospitalName}} ({{item.hospitalCode}})</td>
+                              <td>{{item.state}}</td>
+                              <td>{{item.dist}}</td>
+                            </tr>
+                            <tr *ngIf="! smhosplist?.length">
+                              <td colspan="5" align="center"><strong class="text-danger">No data found</strong></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                  <h5><b style="color: rgb(80, 80, 233);">Log Details</b></h5>
+                  <div class="row">
+                    <div class="col-lg-12 col-xxl-12">
+                      <div class="table-responsive  example-container1">
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th>Sl No</th>
+                              <th>SM Name</th>
+                              <th>Registration Date</th>
+                              <th>Allow For Re-Registration</th>
+                              <th>Allowed By</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let item of smloglist index as j">
+                              <td>{{j+1}}</td>
+                              <td>{{item.smname}}</td>
+                              <td>{{item.registration}}</td>
+                              <td>{{item.allow}}</td>
+                              <td>{{item.allowby}}</td>
+                            </tr>
+                            <tr *ngIf="! smloglist?.length">
+                              <td colspan="5" align="center"><strong class="text-danger">No data found</strong></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- <div class="row">
+                    <div class="col-lg-12 col-xxl-12 ">
+                      <div class="mb-xl-3">
+                        <h5><b style="color: rgb(80, 80, 233);">Registration Date :- </b>{{smdetails?.regdate}}<b></b></h5>
+                      </div>
+                    </div>
+                  </div> -->
+              </div>
+          </div>
+      </div>
+  </div>

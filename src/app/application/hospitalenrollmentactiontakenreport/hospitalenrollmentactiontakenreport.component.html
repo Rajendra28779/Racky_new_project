@@ -1,0 +1,201 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/hospitalenrollmentactiontakenreport" class="nav-link active">Action Taken List</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="content-box mt-3">
+        <div class="col-xxl-10">
+            <div class="row">
+                <div class="col-lg-3 col-xxl-3">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-2">
+                        <label class="control-label mb-2">Register From</label><span class="text-danger">*</span>
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="datepicker4" name="fromDate" autocomplete="off">
+                            <label class="input-group-text bg-transparent border-start-0" for="datepicker4"><i
+                                    class="iconbsky-calendar"></i> </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-xxl-3">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-2">
+                        <label class="control-label mb-2">Register To</label><span class="text-danger">*</span>
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="datepicker3" name="toDate" autocomplete="off">
+                            <label class="input-group-text bg-transparent border-start-0" for="datepicker3"><i
+                                    class="iconbsky-calendar"></i> </label>
+                        </div>
+                    </div>
+                </div>
+              </div>
+                <div class="row">
+                  <div class="col-md-3 mb-2">
+                      <label class="control-label">State Name</label>
+                      <select class="form-select" name="stateId" id="stateId"
+                          (change)="OnChangeState($event.target.value)">
+                          <option value="" selected>Select State</option>
+                          <ng-container *ngFor="let item of stateList">
+                              <option value={{item.stateCode}}>{{item.stateName}}</option>
+                          </ng-container>
+                      </select>
+
+                  </div>
+                  <div class="col-md-3 mb-2">
+                      <label class="control-label">District Name</label>
+                      <select class="form-select" name="districtId" id="districtId"
+                          (change)="OnChangeDistrict($event.target.value)">
+                          <option value="" selected>Select District</option>
+                          <ng-container *ngFor="let item of districtList">
+                              <option value={{item.districtcode}}>{{item.districtname}}</option>
+                          </ng-container>
+                      </select>
+
+                  </div>
+                  <div class="col-md-4 mb-2">
+                      <label class="control-label">Hospital Name</label>
+                      <select class="form-select" name="hospital" id="hospital">
+                          <option value="" selected>Select Hospital</option>
+                          <ng-container *ngFor="let item of hospitalList">
+                              <option value={{item.hospitalCode}}>{{item.hospitalName}}</option>
+                          </ng-container>
+                      </select>
+
+                  </div>
+               </div>
+              <div class="row">
+                <div class="col-lg-3 col-xxl-3">
+                    <div class="mb-xl-3" id="gender">
+                        <label class="form-label">Search By<span class="text-danger"></span></label>&nbsp;&nbsp;
+                        <select class="form-select" name="search" id="search">
+                            <option value=1 selected>Approved</option>
+                            <option value=2>Reject</option>
+                            <option value=3>Query</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-xxl-3">
+                  <div class="mb-xl-3">
+                      <label for="UserName" class="form-label">URN<span class="text-danger"></span></label>
+                      <input class="form-control" type="text" placeholder="Enter Your URN Here.." autocomplete="off" id="urn" maxlength="20">
+                  </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4" style="margin-top: 30px;">
+                  <div class="d-grid gap-2 d-md-flex ">
+                    <button type="submit " class="btn btn-success " (click)="getActionstatus() ">Search</button>
+                    <button type="reset" class="btn btn-secondary " (click)="getRestdata()">Reset</button>
+                  </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="col-lg-12 ">
+            <div class="d-grid gap-2 d-md-flex ">
+                <button type="submit " class="btn btn-success " (click)="getActionstatus() ">Search</button>
+                <button type="reset" class="btn btn-secondary " (click)="getRestdata()">Reset</button>
+            </div>
+        </div> -->
+    </div>
+    <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+      <div class="col-lg-3 col-xxl-3" style="margin-top: 1ch;">
+        <div class="col-sm-* " *ngIf="showPegi">
+          show
+          <select id="pageItem" name="pageItem" class="form-select-sm" [(ngModel)]="pageElement">
+            <option value="50">50</option>
+            <option value="100">100</option>
+            <option value="150">150</option>
+            <option value="200">200</option>
+            <option value={{record}}>All</option>
+          </select> entries
+      </div>
+      </div>
+      <div class="col-lg-3 col-xxl-3" style="margin-top: 2ch;">
+        <b>Total No Of Record : {{this.actiontakenstatus.length}}</b>
+      </div>
+      <div class="col-2" style="text-align:end ;">
+        <button class="btn btn-success btn-sm mx-1" style="margin-top: 10px" tooltip="Excel" (click)="downloadReportExcel()">
+          <i class="bi bi-file-earmark-spreadsheet"></i>
+        </button>
+        <button class="btn btn-danger btn-sm mx-1" style="margin-top: 10px" tooltip="pdf" (click)="downloadReportpdf()">
+          <i class="bi bi-file-earmark-pdf"></i>
+        </button>
+      </div>
+        <div class="col-lg-4 col-xxl-4">
+            <div class="input-group">
+                <input type="text" id="txtsearchDate" class="form-control" autocomplete="off" placeholder="Search" name="txtsearchDate" [(ngModel)]="txtsearchDate">
+            </div>
+        </div>
+    </div>
+    <div class="content-box p-0 overflow-hidden ">
+        <div class="table-responsive ">
+            <table class="table table-striped " id="claimraise">
+              <caption></caption>
+                <thead>
+                    <tr>
+                        <th width="60">Sl No.</th>
+                        <th>URN </th>
+                        <th>Hospital Code </th>
+                        <th>Hospital Name </th>
+                        <th>Name</th>
+                        <th>Gender</th>
+                        <th>Age</th>
+                        <th>Date Of Birth</th>
+                        <th>Register On</th>
+                        <th>Current Status</th>
+                        <th>Remark</th>
+                        <!-- <th>Description</th> -->
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let claim of actiontakenstatus |filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage}; index as i ">
+                        <tr>
+                            <td *ngIf="currentPage==1 ">{{(i+1)}}</td>
+                            <td *ngIf="currentPage!=1 ">{{(currentPage-1)*pageElement+ i+1}}</td>
+                            <td>{{claim.urn}}</td>
+                            <td>{{claim.hospitalcode}}</td>
+                            <td>{{claim.hospitalname}}</td>
+                            <td>{{claim.membername}}</td>
+                            <td>{{claim.gender}}</td>
+                            <td>{{claim.age}}</td>
+                            <td>{{claim.dob | date:'dd-MMM-yyyy'}}</td>
+                            <td>{{claim.registrationdate | date:'dd-MMM-yyyy hh:mm:ss a'}}</td>
+                            <td>{{claim.currentstatus}}</td>
+                            <td>{{claim.remark}}</td>
+                            <!-- <td>{{claim.description}}</td> -->
+                            <td class="text-center ">
+                              <a class="btn btn-outline-primary btn-sm " (click)="onclaim(claim)">Details</a>
+                          </td>
+                        </tr>
+                    </ng-container>
+                    <tr *ngIf="this.actiontakenstatus.length==0">
+                        <td colspan="16">
+                            <p class="mb-0 text-center text-danger fw-bold">NO DATA FOUND!!</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row mt-3" *ngIf="showPegi">
+        <div class="col-sm-4 ">
+            <div class="col-sm-* ">
+                show
+                <select id="pageItem" name="pageItem" class="form-select-sm" [(ngModel)]="pageElement">
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="150">150</option>
+                <option value="200">200</option>
+                <option value={{record}}>All</option>
+            </select> entries
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true" (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+        </div>
+    </div>
+</div>

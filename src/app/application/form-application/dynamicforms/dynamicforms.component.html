@@ -1,0 +1,37 @@
+<!--===Page Title===-->
+<div class="page-title">
+    <h4>{{formName}}</h4>
+ </div>
+ <!--===Page Title===-->
+ <!--===controle section===-->
+ <div class="page-controls-section" id="page-content">
+    
+               
+                   <div class="card">
+                        <div class="controls-section-header d-flex justify-content-between">
+                                <ul class="nav nav-tabs nav-fill" role="tablist" >
+                                        <li>
+   
+                                       <a class="nav-item nav-link tab-link active" *ngIf="processId != '583'" (click)="gotoPreview()"  href="javascript:void(0)"> View </a>
+                                           
+                                        </li> 
+                                  
+                                </ul>
+                                <div class="indicatorslist">
+                                 <a title="" href="javascript:void(0)" class="btn btn-sm btn-success" id="backicon" data-toggle="tooltip"
+                                 data-placement="top" (click)="backClicked()" data-original-title="Back"><i
+                                     class="bi bi-arrow-left-short"></i></a>
+                                </div>
+                             </div>
+                        <div class="card-body">
+                              
+                                 <app-form-apply [fromadmin]="foradmin" ></app-form-apply> 
+                               
+                                       
+                        </div>
+
+                      
+                   </div>
+               
+  </div>
+                       

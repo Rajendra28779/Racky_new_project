@@ -1,0 +1,127 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="col-lg-4">
+            <ul class="nav nav-tabs">
+                <li class="nav-item" *ngIf="!csmdcId">
+                    <a routerLink="/application/csmDCConfigurationAdd" routerLinkActive="active"
+                        class="nav-link active">Add</a>
+                </li>
+                <li class="nav-item" *ngIf="csmdcId">
+                    <a routerLink="/application/csmDCConfigurationAdd" routerLinkActive="active"
+                        class="nav-link active">Update</a>
+                </li>
+                <li class="nav-item">
+                    <a routerLink="/application/csmDCConfigurationView" class="nav-link"
+                        style="color: #1f723f;">View</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="card shadow-sm">
+        <form [formGroup]="csmDcForm">
+            <!-- <div class="card-header bg-primary text-white">
+                <h5 class="card-title mb-0" *ngIf="!csmdcId">CSM-DC Configuration-Add</h5>
+                <h5 class="card-title mb-0" *ngIf="csmdcId">CSM-DC Configuration-Update</h5>
+            </div> -->
+            <div class="card-body">
+                  <div class="col-lg-3 col-xxl-3">
+                    <div class="mb-xl-3">
+                      <label class="control-label">Group type<span class="text-danger">*</span></label>
+                      <select class="form-select" name="group" id="group" [(ngModel)]="group" formControlName="group"
+                          (change)="getuserDetailsbygroup($event.target.value)">
+                          <!-- <option value="" selected disabled>Select Group type</option> -->
+                          <option value=22>CSM DC</option>
+                          <option value=10>TSU</option>
+                          <option value=20>SHAS TSU</option>
+                      </select>
+                    </div>
+                  </div>
+                <div class="row">
+                    <div class="col-lg-4 col-xxl-4">
+                        <div class="mb-xl-3">
+                            <label class="control-label">CSM-DC / TSU Name<span class="text-danger">*</span></label>
+                            <select class="form-select" formControlName="fullname" id="fullname">
+                                <option value="" selected disabled>Select Full Name</option>
+                                <ng-container *ngFor="let item of csmdcList">
+                                    <option [value]="item.userId">{{ item.fullName }}</option>
+                                </ng-container>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-xxl-3">
+                        <div class="mb-xl-3">
+                            <label class="control-label">State Name<span class="text-danger">*</span></label>
+                            <select class="form-select" formControlName="hospitalStateCode" id="hospitalStateCode"
+                                (change)="OnChangeState($event.target.value)">
+                                <option value="" selected disabled>Select State</option>
+                                <ng-container *ngFor="let item of stateList">
+                                    <option [value]="item.stateCode">{{ item.stateName }}</option>
+                                </ng-container>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-xxl-3">
+                        <div class="mb-xl-3">
+                            <label class="control-label">District Name<span class="text-danger">*</span></label>
+                            <select class="form-select" formControlName="hospitalDistrictCode" id="hospitalDistrictCode"
+                                (change)="OnChangeDistrict($event.target.value)">
+                                <option value="" selected>Select District</option>
+                                <ng-container *ngFor="let item of districtList">
+                                    <option [value]="item.districtcode">{{ item.districtname }}</option>
+                                </ng-container>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row align-items-center g-3">
+                    <div class="col-lg-4 col-xxl-4">
+                        <div class="mb-xl-3">
+                            <label class="control-label">Hospital Name<span class="text-danger">*</span></label>
+                            <select class="form-select" formControlName="hospitalCode" id="hospitalCode"
+                                (change)="OnChangeHospital($event.target.value)">
+                                <option value="" selected>Select Hospital</option>
+                                <ng-container *ngFor="let hospital of hospitalList">
+                                    <option [value]="hospital.hospitalCode">{{ hospital.hospName }}({{
+                                        hospital.hospitalCode }})</option>
+                                </ng-container>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3">
+                        <div class="mb-xl-3">
+                            <label for="latitude" class="form-label">Latitude <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" formControlName="latitude" placeholder="Enter Latitude.."
+                                id="Latitude" [(ngModel)]="latitude" maxlength="100">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3">
+                        <div class="mb-xl-3">
+                            <label for="longitude" class="form-label">Longitude <span
+                                    class="text-danger">*</span></label>
+                            <input type="text" class="form-control" formControlName="longitude" placeholder="Enter Longitude.."
+                                id="Longitude" [(ngModel)]="longitude"  maxlength="200">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Buttons Row -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="d-grid gap-2 d-md-flex">
+                            <button type="submit" class="btn btn-success" *ngIf="!csmdcId"
+                                (click)="setCsmDcConfiguration('add')">Submit</button>
+                            <button type="update" class="btn btn-success" *ngIf="csmdcId"
+                                (click)="setCsmDcConfiguration('upd')">Update</button>
+                            <input type="button" value="Reset" class="btn btn-secondary" (click)="onReset()">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

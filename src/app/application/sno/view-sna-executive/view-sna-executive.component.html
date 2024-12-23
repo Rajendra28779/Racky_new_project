@@ -1,0 +1,149 @@
+<div class="main-tab">
+    <div class="col-lg-4">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a routerLink="/application/snaExecutiveMapping" routerLinkActive="active" 
+                    class="nav-link" style="color: #1f723f;">Add</a>
+            </li>
+            <li class="nav-item">
+                <a routerLink="/application/ViewsnaExecutiveMapping" routerLinkActive="active" 
+                    class="nav-link active">View</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div id="filter" class="searchCriteriaBox bg-light p-3">
+    <form autocomplete="off" (ngSubmit)="onChange()">
+        <div class="row">
+            <div class="col-md-6 col-lg-4">
+                <div class="form-group">
+                    <label class="control-label">SNA Doctor Name<span class="text-danger">*</span></label>
+                    <ng-autocomplete #auto [data]="snoList" placeholder="Select SNA Name" (selected)="selectEvent($event)"
+                        (inputCleared)="clearEvent()" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" 
+                        [searchKeyword]="keyword" spellcheck="false">
+                    </ng-autocomplete>
+
+                    <ng-template #itemTemplate let-item>
+                        <a [innerHTML]="item.fullName"></a>
+                    </ng-template>
+                    
+                    <ng-template #notFoundTemplate let-notFound>
+                        <div [innerHTML]="notFound"></div>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="col align-self-end">
+                <div class="form-group">
+                    <button class="btn btn-success mr-2" type="submit">Search</button> &nbsp;
+                    <button class="btn btn-secondary" type="reset" (click)=resetTable()>Reset</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<br>
+<div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+    <div class="col-lg-4 col-xxl-4"></div>
+    <div class="col-lg-4 col-xxl-4" style="text-align: right; padding-top: 3px;">
+        <div class="form-group">
+            <button class="btn btn-outline-success btn-sm me-1" type="submit" (click)="downloadList()">
+                <i class="bi bi-download"></i>
+            </button>
+        </div>
+    </div>
+    <div class="col-lg-4 col-xxl-4">
+        <div class="input-group">
+            <input type="text" id="txtsearchDate" class="form-control" placeholder="Search here" name="txtsearchDate" [(ngModel)]="txtsearchDate" autocomplete="off">
+        </div>
+    </div>
+</div>
+<div class="form-cointainer">
+        <div class="row justify-content-between">
+            <div class="table-responsive">
+                <table class="table table-striped" mb-0>
+                    <thead>
+                        <tr>
+                            <th>Sl No</th>
+                            <th>SNA Doctor Name</th>
+                            <th style="text-align: center;">Tagged Executive</th>
+                            <th style="text-align: center;">Details</th>
+                            <th style="text-align: center;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of listOfSnoData | filter:txtsearchDate; index as i">
+                            <td>{{i+1}}</td>
+                            <td>{{item.fullname}}</td>
+                            <td style="text-align: center;">{{item.count}}</td>
+                            <td style="text-align: center;">
+                                <a href="javascript:void(0)" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal1" (click)="view(item)">
+                                    <i class="bi bi-eye" style="color: blue;"></i>
+                                </a>
+                            </td>
+                            <td style="text-align: center;">
+                                <a class="btn btn-outline-primary btn-sm me-1" (click)="edit(item.snaUserId)">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr *ngIf="! listOfSnoData?.length">
+                            <td colspan="5" align="center"><strong class="text-danger">No data found</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+        </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="max-width: 65%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    <span *ngIf="header">{{header}} - Tagged SNA Executive</span>
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>            
+            </div>
+            <div class="modal-body">
+                <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+                    <div class="col-lg-4 col-xxl-4">
+                        <button class="btn btn-outline-success btn-sm me-1" type="submit" (click)="downloadReport()">
+                            <i class="bi bi-download"></i>
+                        </button>
+                    </div>
+                    <div class="col-lg-4 col-xxl-4"></div>
+                    <div class="col-lg-4 col-xxl-4">
+                        <div class="input-group">
+                            <input type="text" id="txtsearch" class="form-control" placeholder="Search here" name="txtsearch"
+                                [(ngModel)]="txtsearch">
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Sl No</th>
+                        <th>SNA Executive Name</th>
+                        <th>Status</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngIf="detailData">
+                        <tr *ngFor="let item of detailData | filter:txtsearch; index as j">
+                            <td>{{j+1}}</td>
+                            <td>{{item.executive_name}}</td>
+                            <td *ngIf="item.status==0">Active</td>
+                            <td *ngIf="item.status==1">InActive</td>
+                        </tr>
+                        </ng-container>
+                        <tr *ngIf="! detailData?.length">
+                            <td colspan="5" align="center"><strong class="text-danger">No data found</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

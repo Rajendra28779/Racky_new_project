@@ -1,0 +1,117 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+    <div class="row justify-content-between">
+      <div class="col-lg-4">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a routerLink="/application/cpdspecialitymapping" routerLinkActive="active" class="nav-link active">CPD
+              Speciality Mapping</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/application/cpdspecialitymappingview" routerLinkActive="active" class="nav-link">View</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="content-box">
+    <div class="row">
+      <div class="col-lg-4  col-xxl-2">
+        <div class="mb-xl-3" *ngIf="!iscpd">
+          <label class="control-label">CPD Doctor Name</label><span class="text-danger">*</span>
+          <ng-autocomplete #auto [data]="cpdList" placeholder="Select CPD Name" (selected)="selectEvent($event)"
+            (inputCleared)="clearEvent()" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate"
+            [searchKeyword]="keyword" spellcheck="false">
+          </ng-autocomplete>
+
+          <ng-template #itemTemplate let-item>
+            <a [innerHTML]="item.fullName"></a>
+          </ng-template>
+
+          <ng-template #notFoundTemplate let-notFound>
+            <div [innerHTML]="notFound"></div>
+          </ng-template>
+        </div>
+        <div class="mb-xl-3" *ngIf="iscpd">
+          <label class="control-label">CPD Doctor Name</label><span class="text-danger">*</span>
+            <input type="text" class="form-control" [value]="cpdname" disabled>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert alert-danger mt-2 mb-3 d-flex small " *ngIf="showpackage">
+      <div>
+        <p class="mb-0 pe-3 me-3 border-end ">
+          <i class="bi bi-info-circle-fill fs-5 me-2 "></i>NOTE
+        </p>
+      </div>
+      <div>
+        <p class="mb-0 ">
+          Documents should be in<strong> .jpg, .jpeg, .pdf</strong> format Upload below
+          <strong>5MB.</strong><br>
+        </p>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="showpackage">
+      <div class="col-lg-12  col-xxl-12">
+        <div class="table-responsive  example-container">
+          <table class="table table-striped mb-0">
+            <caption></caption>
+            <thead>
+              <tr>
+                <th>Action</th>
+                <th>Speciality Code</th>
+                <th>Speciality Name</th>
+                <th>Document</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let v of packageHeaderItem ,index as i">
+                <td><input id="{{v.packageid}}" type="checkbox" (change)="tdCheck($event,v.packageid,v.status)"
+                    [checked]="v.status==0"></td>
+                <td>{{v.packagecode}} </td>
+                <td>{{v.packagename}} </td>
+                <td *ngIf="v.document==null">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <input type="file" id="{{'d'+v.packageid}}" class="form-control" [disabled]="v.docstatus==1"
+                        (change)="handleFileInput($event,v.packageid,v.status)">
+                    </div>
+                    <p class="small pt-1 " style="text-align: right;" *ngIf="v.docstatus==0"><img src="./assets/img/pdf.png "
+                      alt="Download Document " width="20 " > <a target="_blank" class="dbtn"
+                      (click)="downloaddoc(v.packageid)"> Download</a></p>
+                    <!-- <div class="col-md-2" >
+                      <button class="btn btn-primary btn-sm mx-1" (click)="downloaddoc(v.packageid)">
+                        <i class="bi bi-file-earmark-arrow-down"></i></button>
+                    </div> -->
+                  </div>
+                </td>
+                <td *ngIf="v.document!=null">
+                  <div class="row">
+                    <div class="col-md-10">
+                      <input type="file" id="{{'d'+v.packageid}}" class="form-control"
+                        (change)="handleFileInput($event,v.packageid,v.status)">
+                        <p class="small pt-1 " style="text-align: right;"><img src="./assets/img/pdf.png "
+                          alt="Download Document " width="20 " > <a target="_blank" class="dbtn"
+                          (click)="downloaddoc(v.packageid)"> Download</a></p>
+                    </div>
+                    <div class="col-md-2" *ngIf="v.document!=null">
+                      <button class="btn btn-primary btn-sm mx-1" (click)="downloaddocument(v.document)">
+                        <i class="bi bi-file-earmark-arrow-down"></i></button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-xxl-3" *ngIf="showpackage">
+      <div class="mb-xl-3">
+        <button type="button" class="btn btn-success" style="margin-top:10px;" (click)="submit()">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>

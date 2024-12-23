@@ -1,0 +1,160 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+      <div class="row justify-content-between">
+          <div class="col-lg-4">
+              <ul class="nav nav-tabs">
+                  <li class="nav-item" >
+                      <a routerLink="/application/cpdwieperformance" routerLinkActive="active" class="nav-link active" style="color: #1f723f;">CPD Action Wise Performance Report</a>
+                  </li>
+              </ul>
+          </div>
+      </div>
+  </div>
+  <div class="content-box">
+    <div class="row">
+      <div class="col-lg-3 col-xxl-3">
+        <div class="mb-xl-3">
+            <label class="control-label">Search By</label>
+            <select class="form-select" id="searchby" aria-label="Disabled select example">
+                <option value="1" selected>Actual Date Of Discharge</option>
+                <option value="2" > Alloted Date</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-lg-3 col-xxl-3">
+      <div class="mb-xl-3">
+        <label class="control-label">Actual Date of Discharge From</label><span class="text-danger">*</span>
+        <div class="input-group">
+          <input type="text" class="form-control border-end-0 datepicker" id="formdate" name="fromDate" ch>
+          <label class="input-group-text bg-transparent border-start-0" for="formdate">
+            <i class="iconbsky-calendar"></i>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-xxl-3">
+      <div class="mb-xl-3">
+        <label class="control-label">Actual Date of Discharge To</label><span class="text-danger">*</span>
+        <div class="input-group">
+          <input type="text" class="form-control border-end-0 datepicker" id="todate" name="toDate">
+          <label class="input-group-text bg-transparent border-start-0" for="todate">
+            <i class="iconbsky-calendar"></i>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-4" >
+        <div class="mb-xl-3" *ngIf="!showname">
+            <label class="control-label">CPD Doctor Name<span class="text-danger">*</span></label>
+            <ng-autocomplete #auto [data]="cpdList" placeholder="Select CPD Name" (selected)="selectEvent($event)"
+                (inputCleared)="clearEvent()" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate"
+                [searchKeyword]="keyword" spellcheck="false">
+            </ng-autocomplete>
+
+            <ng-template #itemTemplate let-item>
+                <a [innerHTML]="item.fullName"></a>
+            </ng-template>
+
+            <ng-template #notFoundTemplate let-notFound>
+                <div [innerHTML]="notFound"></div>
+            </ng-template>
+        </div>
+        <div class="mb-xl-3" *ngIf="showname">
+          <input type="text" value={{name}} class="form-control" disabled>
+        </div>
+    </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-4" >
+          <div class="d-grid gap-2 d-md-flex" >
+            <button type="submit" class="btn btn-success"
+                (click)="search()">Submit</button>
+            <input type="button" value="Reset" class="btn btn-secondary"
+                (click)="reset()">
+          </div>
+      </div>
+    </div>
+
+    </div>
+  </div><br>
+<div *ngIf="show">
+  <!-- CPD Activity -->
+  <div  class="col-lg-12 col-xl-12 col-xxl-12 mb-4">
+    <div  class="card shadow-sm basic-info">
+       <div  class="card-body">
+            <div class=" table-responsive">
+              <table class="table table-striped mb-0">
+                  <thead>
+                    <tr>
+                      <th rowspan="2" width="450">CPD Activity</th>
+                      <th colspan="6">SNA Doctor Activity</th>
+                    </tr>
+                    <tr>
+                      <th>Approve</th>
+                      <th>Reject</th>
+                      <th>Query</th>
+                      <th>Hold</th>
+                      <th>Investigate</th>
+                      <th>Revert</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th rowspan="2">Total CPD Approved<br>{{result.cpdapprv}}</th>
+                      <td><a href="javascript:void(0);" (click)="details(1,1)">{{result.cpdapprvsnaappr}}</a></td>
+                      <td><a href="javascript:void(0);" (click)="details(2,1)">{{result.cpdapprvsnarej}}</a></td>
+                      <td><a href="javascript:void(0);" (click)="details(3,1)">{{result.cpdapprvsnaquery}}</a></td>
+                      <td><a href="javascript:void(0);" (click)="details(4,1)">{{result.cpdapprvsnahold}}</a></td>
+                      <td><a href="javascript:void(0);" (click)="details(5,1)">{{result.cpdapprvsnainvestigate}}</a></td>
+                      <td><a href="javascript:void(0);" (click)="details(6,1)">{{result.cpdapprvsnarevert}}</a></td>
+                    </tr>
+                    <tr style="color: red;">
+                      <td>{{result.pcpdapprvsnaappr}} %</td>
+                      <td>{{result.pcpdapprvsnarej}} %</td>
+                      <td>{{result.pcpdapprvsnaquery}} %</td>
+                      <td>{{result.pcpdapprvsnahold}} %</td>
+                      <td>{{result.pcpdapprvsnainvestigate}} %</td>
+                      <td>{{result.pcpdapprvsnarevert}} %</td>
+                    </tr>
+                    <tr>
+                      <th rowspan="2">Total CPD Reject<br>{{result.cpdreject}}</th>
+                      <td><a href="javascript:void(0);" (click)="details(7,2)">{{result.cpdrejsnaappr}}</a></td>
+                      <td><a href="javascript:void(0);" (click)="details(8,2)">{{result.cpdrejsnarej}}</a></td>
+                      <td><a href="javascript:void(0);" (click)="details(9,2)">{{result.cpdrejsnaquery}}</a></td>
+                      <td><a href="javascript:void(0);" (click)="details(10,2)">{{result.cpdrejsnahold}}</a></td>
+                      <td><a href="javascript:void(0);" (click)="details(11,2)">{{result.cpdrejsnainvestigate}}</a></td>
+                      <td><a href="javascript:void(0);" (click)="details(12,2)">{{result.cpdrejsnarevert}}</a></td>
+                    </tr>
+                    <tr style="color: red;">
+                      <td>{{result.pcpdrejsnaappr}} %</td>
+                      <td>{{result.pcpdrejsnarej}} %</td>
+                      <td>{{result.pcpdrejsnaquery}} %</td>
+                      <td>{{result.pcpdrejsnahold}} %</td>
+                      <td>{{result.pcpdrejsnainvestigate}} %</td>
+                      <td>{{result.pcpdrejsnarevert}} %</td>
+                    </tr>
+                    <!-- <tr>
+                      <th rowspan="8">Total No Of CPD Reject With Out Query :- {{result.cpdrejwthoutqury}}</th>
+                    </tr> -->
+                  </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+  </div>
+  <!-- cpd activity -->
+  <!--------------->
+    <!-- CPD Activity -->
+    <div  class="col-lg-12 col-xl-12 col-xxl-12 mb-4">
+      <div  class="card shadow-sm basic-info">
+         <div  class="card-body">
+            <div style="text-align: center; font-size: 2ch ;">
+             <b>Total No Of CPD Reject With Out Query :-&nbsp; <a href="javascript:void(0);" (click)="details(13,3)"> {{result.cpdrejwthoutqury}}</a> </b>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+  <!--------------->
+</div>

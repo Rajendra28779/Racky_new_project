@@ -1,0 +1,747 @@
+<div class="container-fluid">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLinkActive="active" class="nav-link active">
+                            Hospital Civil Infrastructure Details</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-6 ">
+                <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+            </div>
+        </div>
+    </div>
+    <div class="form-cointainer">
+        <div class="main-tab">
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card shadow-sm mt-3 mt-xl-4 ">
+                            <div class="card-header">
+                                <h5 class="mb-0">General</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row gx-xl-5 treatment-details">
+                                    <div class="col-xl">
+                                        <p class="text-muted mb-1">Standardised Architectural Design</p>
+                                        <p class="mb-0 fw-bold">{{civilInfraDetails?.standardised_arch_design}}
+                                        </p>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="col-xl">
+                                            <p class="text-muted mb-1">Fire Fighting System</p>
+                                            <p class="mb-0 fw-bold">{{civilInfraDetails?.fire_fighting_sys}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Bio-Medical Waste Management</p>
+                                                <p class="mb-0 fw-bold">{{civilInfraDetails?.bio_medi_waste_mgmt}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Duty Staff Room</p>
+                                                <p class="mb-0 fw-bold"> {{civilInfraDetails?.duty_staff_rm}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <hr class="mt-xl-4">
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Cattle Trap at Entrance and Exit</p>
+                                                <p class="mb-0 fw-bold"> {{civilInfraDetails?.cattle_entr_and_exit}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Area/Bed (Sq. Ft)</p>
+                                                <p class="mb-0 fw-bold"> {{civilInfraDetails?.area}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Back-Up Electrcity Supply</p>
+                                                <p class="mb-0 fw-bold"> {{civilInfraDetails?.back_up_elec_supply}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Number of Floors</p>
+                                                <p class="mb-0 fw-bold"> {{civilInfraDetails?.no_of_flrs}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <hr class="mt-xl-4">
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Lift Provision</p>
+                                                <p class="mb-0 fw-bold"> {{civilInfraDetails?.lift_prov}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Ramp Provision</p>
+                                                <p class="mb-0 fw-bold"> {{civilInfraDetails?.ramp_prov}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card shadow-sm mt-3 mt-xl-4 ">
+                            <div class="card-header">
+                                <h5 class="mb-0">Wards</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row gx-xl-5 treatment-details">
+                                    <div class="col-xl">
+                                        <p class="text-muted mb-1">Total Bed Strength</p>
+                                        <p class="mb-0 fw-bold">{{civilInfraDetails?.total_bed_strength}}
+                                        </p>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="col-xl">
+                                            <p class="text-muted mb-1">Number of InPatient Beds</p>
+                                            <p class="mb-0 fw-bold">{{civilInfraDetails?.no_of_inpatient_beds}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Fully Equiped Operation Theatre</p>
+                                                <p class="mb-0 fw-bold">{{civilInfraDetails?.fully_equ_oprn_thtr}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Total No Of Beds Fully Equiped Operation Theatre</p>
+                                                <p class="mb-0 fw-bold"> {{civilInfraDetails?.total_no_beds_fully_equ_oprn_thtr}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <hr class="mt-xl-4">
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">OPD</p>
+                                                <p class="mb-0 fw-bold"> {{civilInfraDetails?.opd}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">HDU</p>
+                                                <p class="mb-0 fw-bold"> {{civilInfraDetails?.hdu}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Total No Of Bed HDU</p>
+                                                <p class="mb-0 fw-bold"> {{civilInfraDetails?.total_bed_hdu}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">General Ward</p>
+                                                <p class="mb-0 fw-bold"> {{civilInfraDetails?.general_ward}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Total No Of Bed in General Ward</p>
+                                                <p class="mb-0 fw-bold"> {{civilInfraDetails?.total_bed_in_general_ward}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <hr class="mt-xl-4">
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">ICU With Ventilitor</p>
+                                                <p class="mb-0 fw-bold"> {{civilInfraDetails?.icu_with_ventilator}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Total No Of Bed in ICU With Ventilitor</p>
+                                                <p class="mb-0 fw-bold"> {{civilInfraDetails?.total_bed_in_icu_with_ventilator}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">ICU With Out Ventilitor</p>
+                                                <p class="mb-0 fw-bold"> {{civilInfraDetails?.icu_without_ventilator}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Total No Of Bed in ICU With Ventilitor</p>
+                                                <p class="mb-0 fw-bold"> {{civilInfraDetails?.total_bed_in_icu_without_ventilator}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <hr class="mt-xl-4">
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Casualty</p>
+                                                <p class="mb-0 fw-bold"> {{civilInfraDetails?.casualty}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Total No Of Bed Casualty</p>
+                                                <p class="mb-0 fw-bold"> {{civilInfraDetails?.total_no_of_bed_casualty}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Labour Room</p>
+                                                <p class="mb-0 fw-bold"> {{civilInfraDetails?.labour_room}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Total No Of Bed in Labour Room</p>
+                                                <p class="mb-0 fw-bold"> {{civilInfraDetails?.total_no_of_bed_in_lbr_rm}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card shadow-sm mt-3 mt-xl-4 ">
+                            <div class="card-header">
+                                <h5 class="mb-0">Facilities</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row gx-xl-5 treatment-details">
+                                    <div class="col-xl">
+                                        <p class="text-muted mb-1">Blood Bank</p>
+                                        <p class="mb-0 fw-bold">{{civilInfraDetails?.blood_bank}}
+                                        </p>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="col-xl">
+                                            <p class="text-muted mb-1">CSSD</p>
+                                            <p class="mb-0 fw-bold">{{civilInfraDetails?.cssd}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Diet and Kitchen Facility</p>
+                                                <p class="mb-0 fw-bold">{{civilInfraDetails?.diet_and_kitchen_facility}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Linen and Laundry</p>
+                                                <p class="mb-0 fw-bold"> {{civilInfraDetails?.lien_and_laundary}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <hr class="mt-xl-4">
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Stores</p>
+                                                <p class="mb-0 fw-bold"> {{civilInfraDetails?.stores}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Medical Records Department</p>
+                                                <p class="mb-0 fw-bold"> {{civilInfraDetails?.medical_records_dept}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Ambulance service</p>
+                                                <p class="mb-0 fw-bold"> {{civilInfraDetails?.ambulance_serv}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Patient Attendant Facility</p>
+                                                <p class="mb-0 fw-bold"> {{civilInfraDetails?.patient_attendant_facility}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card shadow-sm mt-3 mt-xl-4 ">
+                            <div class="card-header">
+                                <h5 class="mb-0">Diagnostic Services</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row gx-xl-5 treatment-details">
+                                    <div class="col-xl">
+                                        <p class="text-muted mb-1">Diagnostic Centre- Radiology (Basic)</p>
+                                        <p class="mb-0 fw-bold">{{civilInfraDetails?.diag_cent_radiology_basic}}
+                                        </p>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="col-xl">
+                                            <p class="text-muted mb-1">Diagnostic Centre- Radiology (Advanced)</p>
+                                            <p class="mb-0 fw-bold">{{civilInfraDetails?.diag_cent_radiology_adv}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Diagnostic Centre- Clinical Lab and Diagnostics</p>
+                                                <p class="mb-0 fw-bold">{{civilInfraDetails?.diag_cent_clinical_lab_and_diag}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card shadow-sm mt-3 mt-xl-4 ">
+                            <div class="card-header">
+                                <h5 class="mb-0">Fully Equiped Operation Theatre</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row gx-xl-5 treatment-details">
+                                    <div class="col-xl">
+                                        <p class="text-muted mb-1">Walls should be covered with tiles/ anti-bacterial/ microbial paint</p>
+                                        <p class="mb-0 fw-bold">{{civilInfraDetails?.walls_shld_be_covr_wt_tiles_anti_ba}}
+                                        </p>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="col-xl">
+                                            <p class="text-muted mb-1">Availability of separate OTs for septic and aseptic cases</p>
+                                            <p class="mb-0 fw-bold">{{civilInfraDetails?.availability_of_sprt_ots}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Availability of Pre-operative waiting room with toilet facilities</p>
+                                                <p class="mb-0 fw-bold">{{civilInfraDetails?.availability_of_pre_operative_waitingrm}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Availability of well equipied post-operative ward (Recovery room) with ventilator, beds and resuscitation measures</p>
+                                                <p class="mb-0 fw-bold">{{civilInfraDetails?.availability_of_equ_post_operative_ward}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <hr class="mt-xl-4">
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Separate changing rooms for medical & para-medical staff</p>
+                                                <p class="mb-0 fw-bold"> {{civilInfraDetails?.seprt_changing_rooms}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Dedicated scrub area</p>
+                                                <p class="mb-0 fw-bold"> {{civilInfraDetails?.dedicated_scrub_area}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card shadow-sm mt-3 mt-xl-4 ">
+                            <div class="card-header">
+                                <h5 class="mb-0">Dedicated scrub area</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row gx-xl-5 treatment-details">
+                                    <div class="col-xl">
+                                        <p class="text-muted mb-1">Waiting room for patients and relatives</p>
+                                        <p class="mb-0 fw-bold">{{civilInfraDetails?.wting_rm_fr_patients}}
+                                        </p>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="col-xl">
+                                            <p class="text-muted mb-1">Registration counter</p>
+                                            <p class="mb-0 fw-bold">{{civilInfraDetails?.registration_counter}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Doctor/ Consultant rooms</p>
+                                                <p class="mb-0 fw-bold">{{civilInfraDetails?.doctor_consultant_rooms}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Dressing room</p>
+                                                <p class="mb-0 fw-bold">{{civilInfraDetails?.dressing_room}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <hr class="mt-xl-4">
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Injection room</p>
+                                                <p class="mb-0 fw-bold"> {{civilInfraDetails?.injection_room}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Pharmacy window</p>
+                                                <p class="mb-0 fw-bold"> {{civilInfraDetails?.pharmacy_window}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Plaster room</p>
+                                                <p class="mb-0 fw-bold"> {{civilInfraDetails?.plaster_room}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Separate stand for staff/public vehicles</p>
+                                                <p class="mb-0 fw-bold"> {{civilInfraDetails?.sprt_stand_for_staff_pub_vehicles}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Sanitary fitments</p>
+                                                <p class="mb-0 fw-bold"> {{civilInfraDetails?.sanitary_fitments}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card shadow-sm mt-3 mt-xl-4 ">
+                            <div class="card-header">
+                                <h5 class="mb-0">HDU</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row gx-xl-5 treatment-details">
+                                    <div class="col-xl">
+                                        <p class="text-muted mb-1">Multi-sign monitoring system</p>
+                                        <p class="mb-0 fw-bold">{{civilInfraDetails?.multi_sign_mont_sys_hdu}}
+                                        </p>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="col-xl">
+                                            <p class="text-muted mb-1">Oxygen supply</p>
+                                            <p class="mb-0 fw-bold">{{civilInfraDetails?.oxygen_sply_hdu}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Piped suction & medical gases</p>
+                                                <p class="mb-0 fw-bold">{{civilInfraDetails?.piped_suction_medical_gases_hdu}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Infusion of ionotropic support</p>
+                                                <p class="mb-0 fw-bold">{{civilInfraDetails?.inf_of_ionotropic_sprt_hdu}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <hr class="mt-xl-4">
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Equipment for maintenance of body temperature</p>
+                                                <p class="mb-0 fw-bold"> {{civilInfraDetails?.equ_fr_mtnc_of_body_temp_hdu}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Weighing scale</p>
+                                                <p class="mb-0 fw-bold"> {{civilInfraDetails?.weighing_scale_hdu}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Manpower for 24x7 monitoring (nursing staff to patient ratio of 1:2)</p>
+                                                <p class="mb-0 fw-bold"> {{civilInfraDetails?.manpwr_fr_montr_hdu}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Emergency cash cart</p>
+                                                <p class="mb-0 fw-bold"> {{civilInfraDetails?.emerg_cash_cart_hdu}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <hr class="mt-xl-4">
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Uninterrupted electric supply</p>
+                                                <p class="mb-0 fw-bold"> {{civilInfraDetails?.uninterrupted_elec_sply_hdu}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Heating</p>
+                                                <p class="mb-0 fw-bold"> {{civilInfraDetails?.heating_hdu}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Air conditioning</p>
+                                                <p class="mb-0 fw-bold"> {{civilInfraDetails?.air_cond_hdu}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Total No Of Bed HDU</p>
+                                                <p class="mb-0 fw-bold"> {{civilInfraDetails?.no_of_bed_hdu}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card shadow-sm mt-3 mt-xl-4 ">
+                            <div class="card-header">
+                                <h5 class="mb-0">ICU</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row gx-xl-5 treatment-details">
+                                    <div class="col-xl">
+                                        <p class="text-muted mb-1">Multi-sign monitoring system</p>
+                                        <p class="mb-0 fw-bold">{{civilInfraDetails?.multi_sign_mont_sys_icu}}
+                                        </p>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="col-xl">
+                                            <p class="text-muted mb-1">Oxygen supply</p>
+                                            <p class="mb-0 fw-bold">{{civilInfraDetails?.oxygen_sply_icu}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Piped suction & medical gases</p>
+                                                <p class="mb-0 fw-bold">{{civilInfraDetails?.piped_suct_medi_gases_icu}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Infusion of ionotropic support</p>
+                                                <p class="mb-0 fw-bold">{{civilInfraDetails?.infusion_of_ionotropic_sup_icu}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <hr class="mt-xl-4">
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Equipment for maintenance of body temperature</p>
+                                                <p class="mb-0 fw-bold"> {{civilInfraDetails?.equ_fr_mtnc_of_body_temp_icu}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Weighing scale</p>
+                                                <p class="mb-0 fw-bold"> {{civilInfraDetails?.weighing_scale_icu}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Manpower for 24x7 monitoring (nursing staff to patient ratio of 1:2)</p>
+                                                <p class="mb-0 fw-bold"> {{civilInfraDetails?.manpwr_fr_mont_icu}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Emergency cash cart</p>
+                                                <p class="mb-0 fw-bold"> {{civilInfraDetails?.emerg_cash_cart_icu}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <hr class="mt-xl-4">
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Uninterrupted electric supply</p>
+                                                <p class="mb-0 fw-bold"> {{civilInfraDetails?.uninterrupted_elec_sply_icu}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Heating</p>
+                                                <p class="mb-0 fw-bold"> {{civilInfraDetails?.heating_icu}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Air conditioning</p>
+                                                <p class="mb-0 fw-bold"> {{civilInfraDetails?.air_cond_icu}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl border-start">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <p class=" text-muted mb-1">Total No Of Bed ICU</p>
+                                                <p class="mb-0 fw-bold"> {{civilInfraDetails?.number_of_bed_icu}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

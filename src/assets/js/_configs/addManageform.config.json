@@ -1,0 +1,52 @@
+[
+      {
+        "pagetitle":"Add Manage Form",
+        "tabList":[
+          {"tabName":"View","tabUrl":"../viewManageform"},
+          {"tabName":"Add","tabUrl":"../addManageform","tabClass":"active add d-none"},
+          {"tabName":"Edit","tabUrl":"","tabClass":"active edit d-none"}
+         
+          ],
+        "utils":[
+          {"utilName":"mandatory"}
+         
+         
+          ],
+        "messages":{
+          "successMsg":"New Form generated successfully",
+          "errorMsg":"Error in database",
+          "warningtype":"print",
+          "selctModule":"Select Module name",
+          "txtModule":"Enter Module name",
+          "msgFormName": "Enter Form name",
+          "msgSectionName": "Section Name can not be blank",
+          "msgApilabel": "API Label can not be blank",
+          "msgApikey": "API Key can not be blank",
+          "msgApitype": "API Type  can not be blank",
+          "msgApivalue": "API Value can not be blank",
+          "msgReflabel": "Reference Label can not be blank",
+          "msgRefKey": "Reference Key can not be blank",
+          "msgReftype": "Reference Type  can not be blank",
+          "msgRefvalue": "Reference Value can not be blank",  
+          "msgStalabel": "Status Label can not be blank",
+          "msgStakey": "Status Key can not be blank",
+          "msgStatype": "Status Type  can not be blank",
+          "msgStavalue": "Status Value can not be blank",
+          "msgredirecturl": "Enter redirect URL",
+          "msgDesc": "Enter Form Description",
+          "msgImgtype":"Only allowed .jpg,jpeg,png files",
+          "msgImgsize":"Select file size should be < 1 MB",
+          "msgDocfile": "Only allowed .pdf files",
+          "msgDocfilesize": "Select file size should be < 5 MB",
+          "updateMsg":"Form updated successfully",
+          "msgFormtype":"Select form type",
+          "msgTableName":"Enter Table Name",
+          "msgredirectwindowtype":"Select window type",
+          "msgAuthname":"Authontication name can not be blank",
+          "msgAuthpass":"Authontication password can not be blank",
+          "msgBlankspace":"Space not allowed in table name"
+        }
+      }
+    ]
+
+

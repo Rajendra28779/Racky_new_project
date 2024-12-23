@@ -1,0 +1,76 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs" routerLinkActive="active">
+                    <li class="nav-item">
+                        <a routerLink="/application/cardiology" class="nav-link active">Category Wise Treatment
+                            Report</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a routerLink="" class="nav-link">View</a>
+                    </li> -->
+                </ul>
+            </div>
+            <div class="col-lg-6 ">
+                <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-box">
+        <form>
+            <div class="row form-box-bg pt-1 pb-2">
+                <div class="col-lg-12 col-xxl-12">
+
+                    <div class="row mt-2">
+                        <div class="col-lg-4">
+                            <div class="d-flex">
+                                <label class="col-form-label">Discharge From </label>
+                                <label class="col-form-label ms-4"><strong>17-08-2022</strong></label>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="d-flex mb-1">
+                                <label class="col-form-label">Discharge To </label>
+                                <label class="col-form-label ms-4"><strong>16-08-2023</strong></label>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="d-flex">
+                                <label class="col-form-label">Category </label>
+                                <label class="col-form-label ms-4"><strong>Cardiology</strong></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="content-box mt-3 p-0 overflow-hidden">
+                <div class="table-responsive">
+                    <table class="table mb-0">
+                        <thead>
+                            <tr>
+                                <th width="50">Sl#</th>
+                                <th>Package Name</th>
+                                <th>Total Discharge</th>
+                                <th>Amount (<i class="bi bi-currency-rupee"></i>)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td> 1 </td>
+                                <td> Diagnostic Hysteroscopy </td>
+                                <td> 50 </td>
+                                <td> 5000 </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

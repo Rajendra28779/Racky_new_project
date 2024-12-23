@@ -1,0 +1,23 @@
+[
+      {
+        "pagetitle":"Upload Logo",
+        "tabList":[{"tabName":"Add","tabUrl":"../UploadLogo","tabClass":"active"}],
+        "utils":[
+         {"utilName":"mandatory"}
+         
+          ],
+        "messages":
+          {
+          "successMsg":"Logos Updated Successfully",
+          "errorMsg":"Something went wrong unable to update",
+          "warningtype":"print",
+          "msgImgtype":"Only allowed .jpg,jpeg,png files",
+          "msgImgsize":"Select file size should be < 1 MB"
+          }
+          
+        
+       
+      }
+    ]
+
+

@@ -1,0 +1,148 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+    <div class="col-lg-4">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a routerLink="/application/smscoringadd" routerLinkActive="active" class="nav-link "
+            style="color: #1f723f;">Action</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/application/smscoringview" routerLinkActive="active" class="nav-link active"
+            style="color: #1f723f;">View</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="content-box">
+    <div class="row">
+      <div class="col-lg-3 col-xxl-3">
+        <div class="mb-xl-3">
+          <label class="control-label">Year<span class="text-danger">*</span></label>
+          <select class="form-select" id="yearId" name="yearId" [(ngModel)]="selectedYear">
+              <option value="" selected disabled>Select Year</option>
+              <ng-container *ngFor="let year of years">
+                <option value={{year}}>{{ year }}</option>
+              </ng-container>
+          </select>
+      </div>
+      </div>
+      <div class="col-lg-3 col-xxl-3">
+        <div class="mb-xl-3">
+          <label class="control-label">Month<span class="text-danger">*</span></label>
+          <select class="form-select" name="monthId" id="monthId"
+                  aria-label="Disabled select example" [(ngModel)]="month">
+              <option value=1>January</option>
+              <option value=2>February</option>
+              <option value=3>March</option>
+              <option value=4>April</option>
+              <option value=5>May</option>
+              <option value=6>June</option>
+              <option value=7>July</option>
+              <option value=8>August</option>
+              <option value=9>September</option>
+              <option value=10>October</option>
+              <option value=11>November</option>
+              <option value=12>December</option>
+            </select>
+      </div>
+      </div>
+      <div class="col-lg-4 col-xxl-4" style="margin-top:23px;">
+        <div class="mb-xl-3">
+          <div class="d-grid gap-2 d-md-flex">
+            <button type="submit" class="btn btn-success" (click)="search()">Search</button>
+            <button type="reset" class="btn btn-secondary" (click)="reset()">Reset</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-box">
+    <div class="row">
+      <div class="col-3" style="margin-top: 10px">
+        <div class="col-sm-*" *ngIf="showPegi">
+          show
+          <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+            <option value="100">100</option>
+            <option value="200">200</option>
+            <option value="300">300</option>
+            <option value={{totalcount}}>All</option>
+          </select> entries
+        </div>
+      </div>
+      <div class="col-3" style="margin-top: 10px">
+        <b>Total No. of Records : {{totalcount}}</b>
+      </div>
+      <div class="col-2" style="text-align:end ;">
+        <button class="btn btn-success btn-sm mx-1" style="margin-top: 10px" tooltip="Excel" (click)="downloadList(1)">
+          <i class="bi bi-file-earmark-spreadsheet"></i>
+        </button>
+        <button class="btn btn-danger btn-sm mx-1" style="margin-top: 10px" tooltip="pdf" (click)="downloadList(2)">
+          <i class="bi bi-file-earmark-pdf"></i>
+        </button>
+      </div>
+      <div class="col-4">
+        <input type="text " id="txtsearchDate " name="txtsearchDate " [(ngModel)]="txtsearchDate" maxlength="20 "
+          class="form-control " placeholder="Search here...... " autocomplete="off"
+          style=" margin-right: 0px; margin-left: 0px;">
+      </div>
+    </div>
+    <div class="table-responsive" style="margin-top: 1ch;">
+      <table class="table table-striped mb-0">
+        <caption></caption>
+        <thead>
+          <tr>
+            <th>Sl#</th>
+            <th>SM Name</th>
+            <th>Contact No</th>
+            <th>No Of Duty Days</th>
+            <th>No Of Present Days</th>
+            <th>SNA Remark</th>
+            <th>Score Of SNA</th>
+            <th>DC Remark </th>
+            <th>Score Of DC </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let v of list | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage},index as i">
+            <td *ngIf="currentPage==1 ">{{(i+1)}}</td>
+            <td *ngIf="currentPage!=1 ">{{(currentPage-1)*pageElement+ i+1}}</td>
+            <td>{{v.fullname}}</td>
+            <td>{{v.phoneNO}}</td>
+            <td>{{v.dutydays}}</td>
+            <td>{{v.presentdays}}</td>
+            <td>{{v.snaremark}}</td>
+            <td>{{v.snascore}}</td>
+            <td>{{v.dcremark}}</td>
+            <td>{{v.dcscore}}</td>
+          </tr>
+          <tr *ngIf="totalcount==0">
+            <td colspan="26" style="text-align:center;">
+              <strong class="text-danger">NO DATA FOUND!!</strong>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="row" *ngIf="showPegi">
+      <div class="col-sm-4">
+        <div class="col-sm-*">
+          show
+          <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+            <option value="100">100</option>
+            <option value="200">200</option>
+            <option value="300">300</option>
+            <option value={{totalcount}}>All</option>
+          </select> entries
+        </div>
+      </div>
+      <div class="col-sm-8 text-right">
+        <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true"
+          (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)">
+        </pagination-controls>
+      </div>
+    </div>
+  </div>
+</div>

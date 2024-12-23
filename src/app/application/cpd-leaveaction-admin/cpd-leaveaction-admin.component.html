@@ -1,0 +1,106 @@
+<div class="form-container">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/cpdleaveapplyadmin" routerLinkActive="active"
+                            class="nav-link active">Leave Apply</a>
+                            <!-- <a  routerLinkActive="active"
+                            class="nav-link active">Leave Apply</a> -->
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/application/cpdleavehistoryadmin" routerLinkActive="active"
+                        class="nav-link" style="color: #1f723f;">Leave History</a>
+                            <!-- <a routerLinkActive="active"
+                            class="nav-link active">View Status</a> -->
+                    </li>
+                 </ul>
+            </div>
+        </div>
+
+        <br>
+        <div>
+            <form  [formGroup]="LeaveType" id="leaveform" autocomplete="off">
+                  <div class="row">
+                    <div class="col-xxl-12">
+                        <!-- <div class="row">
+                            <div class="col-lg-4 col-xxl-4">
+                                <div class="mb-xl-3">
+                                    <input type="text"  class="form-control" disabled >
+                                 </div>
+                            </div>
+                        </div> -->
+                        <div class="col-lg-4 col-xxl-4">
+                            <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                                <label class="control-label mb-2">Select CPD Name</label><span
+                                class="text-danger">*</span>
+                                <ng-autocomplete #auto [data]="cpdList" placeholder="Select CPD Name"
+                                    (selected)="selectEvent($event)" [itemTemplate]="itemTemplate"
+                                    [notFoundTemplate]="notFoundTemplate" [searchKeyword]="keyword" spellcheck="false"
+                                    (inputCleared)="onReset1()">
+                                </ng-autocomplete>
+                                <ng-template #itemTemplate let-item>
+                                    <a [innerHTML]="item.fullName"></a>
+                                </ng-template>
+                                <ng-template #notFoundTemplate let-notFound>
+                                    <div [innerHTML]="notFound"></div>
+                                </ng-template>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-lg-4 col-xxl-4">
+                                <div class="mb-xl-3">
+                                    <label class="control-label">FromDate</label><span class="text-danger">*</span>
+                                    <div class="input-group mb-xl-3">
+                                        <input type="text" class="form-control border-end-0 datepicker" id="formdate"
+                                            name="formdate" (blur)="OnChangedate()">
+                                        <label class="input-group-text bg-transparent border-start-0"
+                                            for="formdate"><i class="iconbsky-calendar"></i> </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-xxl-4">
+                                <div class="mb-xl-3">
+                                    <label class="control-label">ToDate</label><span class="text-danger">*</span>
+                                    <div class="input-group mb-xl-3">
+                                        <input type="text" class="form-control border-end-0 datepicker" id="todate" formControlName="todate"
+                                            name="todate" (blur)="OnChangeDate()" placeholder="To Date">
+                                        <label class="input-group-text bg-transparent border-start-0"
+                                            for="todate"><i class="iconbsky-calendar"></i> </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4 col-xxl-4">
+                                <span>Duration In Days:</span>&nbsp;&nbsp;<p><b>{{totaldays}}
+                                </b></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4 col-xxl-4">
+                                <label class="col-form-label">Description</label><span class="text-danger">*</span>
+                                <textarea class="form-control" rows="4" id="remarks" name="remarks" maxlength="200"
+                                    placeholder="Enter description" #myInput (keypress)="keyPress($event)"></textarea>
+                                <span class="text-danger small">Characters Remaining:{{maxChars -
+                                    myInput.value.length}} </span>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-lg-4 col-xxl-4">
+                                <input type="button" class="btn btn-success" value="Apply"
+                                (click)="applyLeave()"   >&nbsp;&nbsp;
+                                <button type="reset" value="Reset" (click)="Reset()"
+                                    class="btn btn-secondary">Reset</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

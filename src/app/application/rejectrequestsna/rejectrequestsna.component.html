@@ -1,0 +1,193 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/SystemRejectedClaimRequest" class="nav-link active">System Rejected Request List</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="content-box mt-3">
+        <div class="row">
+            <div class="col-lg-4 col-xxl-4">
+                <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                    <div class="mb-xl-3">
+                        <div class="mb-xl-3">
+                            <label for="EnterFullName" class="form-label">Scheme Name<span class="text-danger">*</span></label>
+                            <input class="form-control" type="text" placeholder="Scheme Name" autocomplete="off" maxlength="30" id="schemename" [(ngModel)]="schemeName" disabled>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-xxl-4 ">
+                <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3 ">
+                    <label class="control-label">Scheme Category Name<span class="text-danger"></span></label>
+                    <select class="form-select" name="schemacategory" id="schemacategory" (change)="getschemacategoryid($event.target.value)" style="margin-top: 9px;">
+                        <option value="" selected >All</option>
+                        <ng-container *ngFor="let item of schemeList">
+                            <option value={{item.schemeCategoryId}}>{{item.categoryName}}</option>
+                        </ng-container>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-xxl-10">
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label class="control-label mb-2">Requested From</label><span class="text-danger">*</span>
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="datepicker9" name="fromDate">
+                            <label class="input-group-text bg-transparent border-start-0" for="datepicker9"><i class="iconbsky-calendar"></i> </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label class="control-label mb-2">Requested To</label><span class="text-danger">*</span>
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="datepicker10" name="toDate">
+                            <label class="input-group-text bg-transparent border-start-0" for="datepicker10"><i class="iconbsky-calendar"></i> </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label class="control-label mb-2">State Name</label>
+                        <select class="form-select" id="statecode1" aria-label="Disabled select example" (change)="OnChangeState($event)">
+                            <option value="" selected>Select State</option>
+                            <option *ngFor="let c of statelist" [value]="c.stateCode">{{c.stateName}}</option>
+                          </select>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label class="control-label mb-2">District Name</label>
+                        <select class="form-select" id="distcode1" aria-label="Disabled select example" (change)="OnChangeDist($event)">
+                            <option value="" selected>Select District</option>
+                            <option *ngFor="let c of distList" [value]="c.DISTRICTCODE">{{c.DISTRICTNAME}}</option>
+                          </select>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label class="control-label mb-2">Hospital Name</label>
+                        <select class="form-select" name="hospitalcode" id="hospitalcode">
+                            <option value="" selected >Select Hospital Name</option>
+                            <option *ngFor="let c of hospitalList" [value]="c.HOSPITALCODE">{{c.HOSPITALNAME}}</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label class="control-label mb-2">Speciality Name</label>
+                        <select class="form-select" name="spId" id="spId" >
+                            <option value="" selected >Select Speciality Name</option>
+                            
+                        </select>
+                    </div>
+                    <div class="col-lg-4 col-xxl-4">
+                        <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                            <label class="control-label mb-2">Package Name<span class="text-danger">*</span></label>
+                            <select class="form-select" name="pkgId" id="pkgId">
+                                <option value="" selected>Select Package Name</option>
+    
+                            </select>
+                        </div>
+                    </div>
+                </div> -->
+                <div class="col-lg-12">
+                    <div class="d-grid gap-2 d-md-flex">
+                        <button type="submit" class="btn btn-success me-1" (click)="getRejectedRequestList()">Search</button>
+                        <button type="reset" class="btn btn-secondary" (click)="ResetField()">Reset</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-lg-3 col-xl-3 col-xxl-3 ms-xxl-auto ms-xl-auto ms-lg-auto ms-md-auto">
+            <div class="mb-3 mt-3">
+                <input type="text" id="txtsearchDate" class="form-control" placeholder="Search" name="txtsearchDate" [(ngModel)]="txtsearchDate" autocomplete="off">
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3 mt-3">
+        <div class="col-lg-9 col-xxl-9">
+            <div [align]="'start'" class="table-utilities">
+                <button class="btn btn-success btn-sm mx-1" tooltip="Excel" (click)="downloadReport()">
+                <i class="bi bi-download" ></i>
+              </button>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xxl-3">
+        </div>
+    </div>
+    <div class="content-box p-0 overflow-hidden">
+
+        <div class="table-responsive">
+            <table class="table table-striped mb-0">
+                <thead>
+                    <tr>
+                        <th width="60">Sl#</th>
+                        <th>URN</th>
+                        <th>Patient Name</th>
+                        <th>Package ID</th>
+                        <th>Requested On</th>
+                        <th>Claim Raiesd By</th>
+                        <th>Amount (₹)</th>
+                        <!-- <th>Alloted Date</th> -->
+                        <th width="130">Take Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let claim of rejectRequestList | filter:txtsearchDate  | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};
+                    index as i">
+                        <td *ngIf="currentPage==1">{{(i+1)}}</td>
+                        <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+ i+1}}</td>
+                        <td>{{claim.urn}}</td>
+                        <td>{{claim.patientName}}</td>
+                        <td title={{claim.packageName}}> {{claim.packageCode}}</td>
+                        <td> {{claim.createdOn | date :'dd-MMM-yyyy, h:mm:ss a'}}</td>
+                        <td> {{claim.claimRaisedBy | date :'dd-MMM-yyyy'}}</td>
+                        <!-- <td> {{claim.cpdAlotteddate | date :'dd-MMM-yyyy, h:mm:ss a'}}</td> -->
+                        <td> {{claim.currentTotalAmount | currency:'':''}}</td>
+
+                        <td class="text-center">
+                            <a class="btn btn-outline-success btn-sm" (click)="onAction(claim.transactionDetailsId,claim.urn,claim.packageCode)">Action</a>
+                        </td>
+                    </tr>
+                    <tr *ngIf="rejectRequestList.length==0">
+                        <td colspan="8">
+                            <p class="mb-0 text-center text-danger fw-bold">NO DATA FOUND!!</p>
+                        </td>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row mt-3" *ngIf="showPegi">
+        <div class="col-sm-6">
+            <div class="col-sm-*">
+                show
+                <select id="pageItem" name="pageItem" class="form-select-sm" (change)="pageItemChange()">
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                </select> entries
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true" (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+        </div>
+
+    </div>
+</div>

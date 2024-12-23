@@ -1,0 +1,110 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+    <div class="row justify-content-between"  style="margin: 1rem;">
+      <div class="col-lg-4">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a routerLink="/cpdPaymentCalculationDetails" class="nav-link active">CPD Payment Calculation Details
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="content-box">
+        <div class="col-xxl-12">
+          <div class="row">
+
+            <div class="col-xl">
+              <div class="d-flex align-items-center">
+                <div>
+                  <p class="small text-muted mb-0">CPD Allotted Date From</p>
+                  <h6 class="mb-0 "><i class="bi bi-clock small"></i> {{searchFilterParam?.fromDate}} </h6>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xl border-start">
+              <div class="d-flex align-items-center">
+                <div>
+                  <p class="small text-muted mb-0">CPD Allotted Date To</p>
+                  <h6 class="mb-0 "><i class="bi bi-clock small"></i> {{searchFilterParam?.toDate}} </h6>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xl border-start">
+              <div class="d-flex align-items-center">
+                <div>
+                  <p class="small text-muted mb-0">CPD Name</p>
+                  <h6 class="mb-0 "><i class="bi bi-person small"></i> {{searchFilterParam?.cpdName}} </h6>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xl">
+              <div class="d-flex align-items-center">
+                <div>
+                  <p class="small text-muted mb-0">Process Description</p>
+                  <h6 class="mb-0 "><i class="bi bi-card-list small"></i> {{searchFilterParam?.processDescription}} </h6>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top: 10px;margin-bottom: 10px;" *ngIf="responseData?.responseList.length > 0">
+      <div class="col-lg-8 col-xxl-8 row">
+        <div class="col-md-9">
+          <div style="padding-top: 10px; font-weight: bold; color: green">Record Counts : {{ responseData?.responseList?.length}}</div>
+        </div>
+        <div [align]="'start'" class="col-md-3">
+          <button class="btn btn-danger" title="Download PDF" (click)="downloadReport('pdf')" style="float:right; margin-left: 5px;"><i class="bi bi-file-earmark-pdf"></i></button>
+          <button class="btn btn-success" title="Download Excel" (click)="downloadReport('excel')" style="float: right"><i class="bi bi-download" ></i></button>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-xxl-4">
+        <div class="input-group">
+          <input type="text" id="txtsearchDate" class="form-control" autocomplete="off" placeholder="Search" name="txtsearchDate" [(ngModel)]="txtsearchDate">
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!--<div class="content-box p-0 overflow-hidden" *ngIf="responseData?.responseList.length > 0">-->
+<!--  <div class="table-responsive">-->
+<!--    <table class="table table-striped mb-0">-->
+<!--      <thead>-->
+<!--      <tr>-->
+<!--        <th>Sl#</th>-->
+<!--        <th>CPD Name</th>-->
+<!--        <th>Process Description</th>-->
+<!--        <th>Total Claims</th>-->
+<!--        <th>Total Amount Paid</th>-->
+<!--      </tr>-->
+<!--      </thead>-->
+<!--      <tbody>-->
+<!--      <tr *ngFor="let response of responseData?.responseList | filter:txtsearchDate;  index as i">-->
+<!--        <td> {{(i+1)}}</td>-->
+<!--        <td> {{response.fullName}} </td>-->
+<!--        <td> {{response.claimDesc}} </td>-->
+<!--        <td><a href="javascript:void(0)" style="font-weight: bold;" (click)="showPaymentOfUser(response.userId, response.actionCode)">{{response.totalClaims}}</a></td>-->
+<!--        <td>{{response.totalAmountPaid}}</td>-->
+<!--      </tr>-->
+<!--      </tbody>-->
+
+<!--      <tfoot>-->
+<!--      <tr>-->
+<!--        <td colspan="3" style="font-weight: bold; text-align: center">Total</td>-->
+<!--        <td style="font-weight: bold">{{responseData?.totalClaimsCount}}</td>-->
+<!--        <td style="font-weight: bold">{{responseData?.totalAmount}}</td>-->
+<!--      </tr>-->
+<!--      </tfoot>-->
+<!--    </table>-->
+<!--  </div>-->
+<!--</div>-->

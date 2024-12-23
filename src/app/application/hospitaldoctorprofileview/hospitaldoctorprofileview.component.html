@@ -1,0 +1,179 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-6">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/hospitaldoctorprofile" class="nav-link">Add</a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/application/hospitaldoctorprofileview" class="nav-link active" (click)="onchanges()">View</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="hidestatus">
+        <div class="col-lg-4 col-xxl-4">
+            <div class="mb-xl-3">
+                <label class="control-label">State Name</label><span class="text-danger"></span>
+                <select class="form-select" name="stateId" id="stateId" (change)="OnChangeState($event.target.value)" [(ngModel)]="statecode" disabled>
+                    <option value="">Select State</option>
+                    <ng-container *ngFor="let item of stateList">
+                        <option value={{item.stateCode}}>{{item.stateName}}</option>
+                    </ng-container>
+                </select>
+            </div>
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+            <div class="mb-xl-3">
+                <label class="control-label">District Name</label><span class="text-danger"></span>
+                <select class="form-select" name="districtId" id="districtId" (change)="OnChangeDistrict($event.target.value)" [(ngModel)]="districtcode" disabled>
+                    <option value="">Select District</option>
+                    <ng-container *ngFor="let item of districtList">
+                        <option value={{item.districtcode}}>{{item.districtname}}</option>
+                    </ng-container>
+                </select>
+            </div>
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+            <div class="mb-xl-3">
+                <label class="control-label">Hospital Name</label><span class="text-danger"></span>
+                <select class="form-select" name="hospitalcode" id="hospitalcode" [(ngModel)]="hospitalcode" disabled>
+                    <option value="">Select Hospital Name</option>
+                    <ng-container *ngFor="let item of hospitalList">
+                        <option value={{item.hospitalCode}}>{{item.hospitalName}}</option>
+                    </ng-container>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="hiseestatusadmin">
+        <div class="col-lg-4 col-xxl-4">
+            <div class="mb-xl-3">
+                <label class="control-label">State Name</label><span class="text-danger"></span>
+                <select class="form-select" name="stateId" id="state" (change)="OnChangeState($event.target.value)">
+                    <option value="">Select State</option>
+                    <ng-container *ngFor="let item of stateList">
+                        <option value={{item.stateCode}}>{{item.stateName}}</option>
+                    </ng-container>
+                </select>
+            </div>
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+            <div class="mb-xl-3">
+                <label class="control-label">District Name</label><span class="text-danger"></span>
+                <select class="form-select" name="districtId" id="district" (change)="OnChangeDistrict($event.target.value)">
+                    <option value="">Select District</option>
+                    <ng-container *ngFor="let item of districtList">
+                        <option value={{item.districtcode}}>{{item.districtname}}</option>
+                    </ng-container>
+                </select>
+            </div>
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+            <div class="mb-xl-3">
+                <label class="control-label">Hospital Name</label><span class="text-danger"></span>
+                <select class="form-select" name="hospitalcode" id="hospitalc">
+                    <option value="">Select Hospital Name</option>
+                    <ng-container *ngFor="let item of hospitalList">
+                        <option value={{item.hospitalCode}}>{{item.hospitalName}}</option>
+                    </ng-container>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 ">
+        <div class="row">
+            <div class="d-grid gap-2 d-md-flex ">
+                <button type="submit " class="btn btn-success " (click)="getviewdetails() ">Search</button>
+                <button type="reset" class="btn btn-secondary " (click)="getRestdata()">Reset</button>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+        <div class="col-lg-8 col-xxl-8 row">
+            <div class="col-md-9">
+                <div style="padding-top: 10px; font-weight: bold; color: green">Total Records:{{record}}</div>
+            </div>
+            <div [align]="'start'" class="col-md-3">
+                <button class="btn btn-danger" title="Download PDF" (click)="downloadReport('pdf')" style="float:right; margin-left: 5px;"><i class="bi bi-file-earmark-pdf"></i></button>
+                <button class="btn btn-success" title="Download Excel" (click)="downloadReport('excel')" style="float: right"><i class="bi bi-download" ></i></button>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-xxl-4">
+            <div class="input-group">
+                <input type="text" id="txtsearchDate" class="form-control" autocomplete="off" placeholder="Search" name="txtsearchDate" [(ngModel)]="txtsearchDate">
+            </div>
+        </div>
+    </div>
+    <div class="content-box p-0 overflow-hidden ">
+        <div class="table-responsive ">
+            <table class="table table-striped mb-0">
+                <thead>
+                    <tr>
+                        <th width="60" class="text-center ">Sl No.</th>
+                        <th class="text-center ">Doctor Name</th>
+                        <th class="text-center ">Hospital Name</th>
+                        <th class="text-center ">Hospital Code</th>
+                        <th class="text-center ">State Name</th>
+                        <th class="text-center ">District Name</th>
+                        <th class="text-center ">Speciality Code</th>
+                        <th class="text-center ">Contact Number</th>
+                        <th class="text-center ">Registration Number</th>
+                        <th class="text-center ">Date Of Joining</th>
+                        <th width="90 " class="text-center ">Edit</th>
+                        <th width="90 " class="text-center ">Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let claim of details | filter:txtsearchDate| paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage}; index as i ">
+                        <tr>
+                            <td *ngIf="currentPage==1 ">{{(i+1)}}</td>
+                            <td *ngIf="currentPage!=1 ">{{(currentPage-1)*pageElement+ i+1}}</td>
+                            <td class="text-center ">{{claim.docname}}</td>
+                            <td class="text-center ">{{claim.hospitalname}}</td>
+                            <td class="text-center ">{{claim.hospitalCodedata}}</td>
+                            <td class="text-center ">{{claim.statename}}</td>
+                            <td class="text-center ">{{claim.districtname}}</td>
+                            <td class="text-center ">{{claim.speciality_code}}</td>
+                            <td class="text-center ">{{claim.contactnumber}}</td>
+                            <td class="text-center ">{{claim.regnumber}}</td>
+                            <td class="text-center ">{{claim.dateofjoining}}</td>
+                            <td class="text-center ">
+                                <a class="btn btn-outline-primary btn-sm " (click)="edit(claim.profileid,claim.hospitalCodename,claim.docname,claim.contactnumber,claim.regnumber,claim.dateofjoining,claim.statecodename,claim.districtcodename,claim.hospitalCodedata,claim.speciality_code,claim.speciality_name,claim.speciality_id)">Edit</a>
+                            </td>
+                            <td class="text-center ">
+                                <a class="btn btn-outline-success btn-sm " (click)="getdetails(claim.profileid)">Details</a>
+                            </td>
+                        </tr>
+                    </ng-container>
+                    <tr *ngIf="this.details.length==0">
+                        <td colspan="16">
+                            <p class="mb-0 text-center text-danger fw-bold">NO DATA FOUND!!</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="row mt-3" *ngIf="showPegi">
+    <div class="col-sm-4 ">
+        <div class="col-sm-* ">
+            show
+            <select id="pageItem" name="pageItem" class="form-select-sm" (change)="pageItemChange()">
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="150">150</option>
+                <option value="200">200</option>
+                <option value={{record}}>All</option>
+            </select> entries
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true" (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+    </div>
+</div>

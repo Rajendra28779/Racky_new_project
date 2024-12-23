@@ -1,0 +1,165 @@
+<!--===Page Title===-->
+<div class="page-title">
+  <h4>{{ title }}</h4>
+</div>
+<!--===Page Title===-->
+<!--===controle section===-->
+<div class="page-controls-section" id="page-content">
+  <div class="card">
+    <div class="controls-section-header">
+      <ul class="nav nav-tabs nav-fill" role="tablist">
+        <app-tabs *ngFor="let tablist of tablist" [tabMessage]="tablist"></app-tabs>
+      </ul>
+      <div class="indicatorslist">
+        <app-util *ngFor="let utillist of utillist" [childMessage]="utillist"></app-util>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <div class="controls-section">
+        <!-- Search Panel -->
+        <div class="search-container active mb-3">
+          <div class="search-sec">
+            <div class="row">
+              <ng-container *ngFor="let columns of dataCols">
+                <div class="col-12 col-md-6 col-lg-6 mb-3">
+                  {{ columns.colHeader }} :
+                  <strong>{{ dataResult[0][columns.colName] }}</strong>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="userRole!=6">
+                <div class="col-12 col-md-6 col-lg-6 mb-3">
+                  <p class="mb-1 " *ngIf="datadocument?.length>0">Documents Uploaded during Grievance :
+                    <ng-container *ngFor="let docs of datadocument;let i = index">
+                      <ng-container *ngIf="i < visibleDocumentsCount">
+                        <a class="h4" href="{{tempUrlForDocument+docs}}" target="_blank"><i class="bi bi-download"></i></a>&nbsp;&nbsp;
+                      </ng-container>
+                    </ng-container>
+                    <ng-container *ngIf="datadocument.length > 4">
+                      <a class="icon-link link-opacity-100-hover link-primary" href="javascript:void(0);" *ngIf="!showLessButtonVisible" (click)="toggleShowMore()">
+                        {{ showMoreButtonText }}
+                      </a>
+                      <a class="icon-link link-opacity-100-hover link-primary" href="javascript:void(0);" *ngIf="showLessButtonVisible" (click)="toggleShowMore()">
+                        {{ showLessButtonText }}
+                      </a>
+                    </ng-container>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="userRole==30">
+                <div class="col-12 col-md-6 col-lg-6 mb-3" *ngIf="dcUploadDetails?.length>0">
+                  <p class="mb-1 " *ngIf="dcUploadDetails[0].JSNOTHERDETAILS != null">DC Uploaded Document :
+                  <a class="h4" href="{{tempurlForApproval+dcUploadDetails[0].JSNOTHERDETAILS}}" target="_blank"><i class="bi bi-download"></i></a> </p>
+                  <p class="mb-1 " *ngIf="dcUploadDetails[0].JSNOMEDIADETAILS != null">DC Uploaded Audio/Video :
+                  <a class="h4" href="{{tempurlForApproval+dcUploadDetails[0].JSNOMEDIADETAILS}}" target="_blank"><i class="bi bi-download"></i></a> </p>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="userRole!=6">
+                <div class="col-12 col-md-6 col-lg-6 mb-3">
+                  Preview :
+                  <a href="javascript:void(0);"  class="mb-0 fw-500 link"  title="Click here to see preview" (click)="editDetails(formId+':'+dataResult[0].INTONLINESERVICEID+':'+2+':'+dataResult.INTPROFILEID)">
+                    <i class="bi bi-box-arrow-up-right" style="height: 8pt;color: blue;"></i>
+                  </a>
+                </div>
+                <div class="col-12 col-md-6 col-lg-6 mb-3">
+                  Status :
+                  <strong><a href="javascript:void(0)" (click)="notingDetails(formId+':'+dataResult[0].INTONLINESERVICEID)">
+                    <div [innerHTML]="pendingstatus"></div>
+                  </a></strong>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+        <!-- Search Panel -->
+        <div *ngIf="formsList?.length > 0; else norecord">
+          <div class="form-group row">
+            <ng-container *ngIf="userRole != 99">
+              <div class="col-md-2 col-lg-2  mb-2"> Priority <span class="text-danger">*</span></div>
+              <div class="col-md-10 col-lg-10  mb-2">
+                <div class="form-group">
+                  <input type="radio" class="form-check-input" value="High" name="priority" />
+                  <label for="" class="form-check-inline"> High </label>
+
+                  <input type="radio" class="form-check-input" value="Medium" name="priority" />
+                  <label for="" class="form-check-inline"> Medium </label>
+
+                  <input type="radio" class="form-check-input" value="Low" name="priority" />
+                  <label for="" class="form-check-inline"> Low </label>
+                </div>
+              </div>
+            </ng-container>
+
+            <div class="col-md-2 col-lg-2 mb-2">Action <span class="text-danger">*</span></div>
+            <div class="col-md-10 col-lg-10 mb-2">
+              <div class="form-group">
+                <div *ngFor="let actions of userActions" class="form-check form-check-inline">
+                  <input type="radio" name="radAction" class="form-check-input" id="radAction{{ actions }}"
+                    value="{{ actions }}" (click)="chooseAction()" />
+                  <label for="radAction{{ actions }}">{{
+                    allActions[actions]
+                  }}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <ng-container *ngIf="docDetailsToUpload">
+            <div class="form-group row" *ngFor="let allUpDocs of docDetailsToUpload">
+              <div class="col-md-4 col-lg-2">
+                <span class="mandatory" *ngIf="allUpDocs.selIsMandatory == 'Y'">*</span>
+                {{ allUpDocs.txtDocName }}
+              </div>
+              <div class="col-md-8 col-lg-4">
+                <input type="file" class="form-control" name="{{ allUpDocs.docId }}" id="{{ allUpDocs.docId }}" />
+                <small class="text-danger">Upload {{ allUpDocs.txtFileType }} file only, max size upto
+                  {{ allUpDocs.txtFileSize }} {{ allUpDocs.selSizeType }}</small>
+              </div>
+            </div>
+          </ng-container>
+
+          <div class="form-group row">
+            <div class="col-md-4 col-lg-2">Remark <span class="text-danger">*</span></div>
+            <div class="col-md-8 col-lg-8">
+              <textarea class="form-control" rows="4" id="txtRemark" name="txtRemark" #myInput [maxLength]="maxChars"
+                [(ngModel)]="txtRemark" placeholder="Enter Remarks"></textarea>
+              <span class="text-danger small">Characters Remaining: {{maxChars -myInput.value.length}}</span>
+            </div>
+          </div>
+          <!-- <div class="form-group row" *ngIf="(userRole==30 || userRole==99) && QueryCount<3 && queryButtonVisible">
+              <div style="overflow: hidden;">
+                <span class="text-danger small">You Can Now Query {{3-QueryCount}} times</span>
+
+                <div style="white-space: nowrap; animation: marquee 15s linear infinite;">
+                    *<span style="color: rgb(241, 8, 8); font-size: 15px;"> You Can Now Query {{3-QueryCount}} times</span>&nbsp;&nbsp;
+                </div>
+            </div>
+          </div> -->
+          <div class="form-group row">
+            <div class="col-md-4 col-lg-2"></div>
+            <div class="col-md-8 col-lg-8">
+              <a href="javascript:void(0);" class="btn btn-primary" (click)="takeAction()">Submit</a>
+              <a href="javascript:void(0);" class="btn btn-danger ml-1" style="margin-left: 10px;" (click)="backClicked()">Cancel</a>
+            </div>
+          </div>
+              <div class="form-group row" *ngIf="(userRole==30 || userRole==99) && QueryCount<3 && queryButtonVisible">
+              <div style="overflow: hidden;">
+                <span class="text-danger small">You Can Now Query {{3-QueryCount}} times</span>
+
+                <!-- <div style="white-space: nowrap; animation: marquee 15s linear infinite;">
+                    *<span style="color: rgb(241, 8, 8); font-size: 15px;"> You Can Now Query {{3-QueryCount}} times</span>&nbsp;&nbsp;
+                </div> -->
+            </div>
+          </div>
+        </div>
+        <ng-template #norecord>
+          <h6 class="no-content">No Record Found</h6>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+
+  <div class="loader" *ngIf="loading">
+    <div class="loader-item"></div>
+    <p>Loading...</p>
+  </div>
+</div>

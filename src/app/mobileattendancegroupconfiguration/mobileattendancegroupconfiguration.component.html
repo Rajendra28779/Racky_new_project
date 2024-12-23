@@ -1,0 +1,56 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+    <div class="row justify-content-between">
+      <div class="col-lg-4">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a routerLink="/application/allowgroupformobileattendance" routerLinkActive="active" class="nav-link active">
+              Mobile Group Attendance Configuration</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="row">
+      <div class="col-5">     </div>
+      <div class="col-2" style="text-align:end ;">     </div>
+      <div class="col-5">
+        <input type="text " id="txtsearchDate " name="txtsearchDate " [(ngModel)]="txtsearchDate" maxlength="20 "
+          class="form-control " placeholder="Search here...... " autocomplete="off"
+          style=" margin-right: 0px; margin-left: 0px;">
+      </div>
+    </div>
+  <div class="table-responsive example-container" style="margin-top: 1ch;">
+    <table class="table table-striped mb-0">
+      <caption></caption>
+      <thead>
+        <tr>
+          <th>Sl#</th>
+          <th>Group Name</th>
+          <th Style="text-align: center;">Allow for Attendance</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let v of groupList | filter:txtsearchDate ,index as i">
+          <td>{{(i+1)}}</td>
+          <td>{{v.groupTypeName}}</td>
+          <td style="text-align:center ;">
+            <input type="checkbox" class="me-2 text-center" [checked]="v.tempstatus==0" (click)="selectitem(v)">
+          </td>
+        </tr>
+        <tr *ngIf="groupList.length==0">
+          <td colspan="6" Style="text-align: center;">
+            <strong class="text-danger">NO DATA FOUND!!</strong>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div><hr>
+  <div >
+    <button type="button" class="btn btn-success" (click)="Submit()">Submit</button>&nbsp;
+    <input type="reset" value="Reset" class="btn btn-secondary" (click)="resetVal()">
+  </div>
+</div>
+</div>

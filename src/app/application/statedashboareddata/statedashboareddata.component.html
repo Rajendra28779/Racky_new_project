@@ -1,0 +1,127 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+    <div class="row justify-content-between">
+      <div class="col-lg-4">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a style="margin-left: 2ch;" routerLink="/application/statedashboarddata" routerLinkActive="active"
+              class="nav-link active">State Dashboard Data</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="content-box">
+    <div class="row">
+      <div class="col-lg-3 col-xxl-3">
+        <div class="mb-xl-3">
+          <label class="control-label">Claim Submit From<span class="text-danger">*</span></label>
+          <div class="input-group">
+            <input type="text" class="form-control border-end-0 datepicker" id="formdate" name="fromDate">
+            <label class="input-group-text bg-transparent border-start-0" for="formdate">
+              <i class="iconbsky-calendar"></i>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-xxl-3">
+        <div class="mb-xl-3">
+          <label class="control-label">Claim Submit To<span class="text-danger">*</span></label>
+          <div class="input-group">
+            <input type="text" class="form-control border-end-0 datepicker" id="todate" name="toDate">
+            <label class="input-group-text bg-transparent border-start-0" for="todate">
+              <i class="iconbsky-calendar"></i>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-xxl-4">
+        <div class="mb-xl-3">
+          <button type="submit" class="btn btn-success" style="margin-top: 23px;" (click)="Search()">Search</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row" style="margin-top:1ch">
+    <div class="col-3" style="margin-top:2ch">
+      <div class="col-sm-*" *ngIf="showPegi">
+        show
+        <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+          <option value="50">50</option>
+          <option value="100">100</option>
+          <option value="200">200</option>
+          <option value="300">300</option>
+          <option value={{record}}>All</option>
+        </select> entries
+      </div>
+    </div>
+    <div class="col-3" style="margin-top:2ch">
+      <b>Total : {{record}}</b>
+    </div>
+    <div class="col-2" style="text-align:end ;">
+      <button class="btn btn-success btn-sm mx-1" style="margin-top: 10px" tooltip="Excel" (click)="downloadList(1)">
+        <i class="bi bi-file-earmark-spreadsheet"></i>
+      </button>
+      <button class="btn btn-danger btn-sm mx-1" style="margin-top: 10px" tooltip="pdf" (click)="downloadList(2)">
+        <i class="bi bi-file-earmark-pdf"></i>
+      </button>
+    </div>
+    <div class="col-4">
+      <input type="text " id="txtsearchDate " name="txtsearchDate " [(ngModel)]="txtsearchDate" maxlength="20 "
+        class="form-control " placeholder="Search here...... " autocomplete="off"
+        style=" margin-right: 0px; margin-left: 0px;">
+    </div>
+  </div>
+  <div class="table-responsive" style="margin-top:1ch;">
+    <table class="table table-striped mb-0">
+      <caption></caption>
+      <thead>
+        <tr>
+          <th>Sl#</th>
+          <th>Claim Submited Date</th>
+          <th>Total Discharged</th>
+          <th>Total Amount Claimed (₹)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let v of list | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage},index as i">
+          <td *ngIf="currentPage==1 ">{{(i+1)}}</td>
+          <td *ngIf="currentPage!=1 ">{{(currentPage-1)*pageElement+ i+1}}</td>
+          <td>{{v.createon}}</td>
+          <td>{{v.totaldischarge}}</td>
+          <td>{{v.totalamount | currency:'':''}}</td>
+        </tr>
+        <tr *ngIf="showPegi">
+          <td colspan="2" style="text-align:center;">Total</td>
+          <td><b>{{sum}}</b></td>
+          <td><b>{{sum1 | currency:'':''}}</b></td>
+        </tr>
+        <tr *ngIf="record==0">
+          <td colspan="6" style="text-align: center;">
+            <strong class="text-danger">NO DATA FOUND!!</strong>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="row" *ngIf="showPegi">
+    <div class="col-sm-4">
+      <div class="col-sm-*">
+        show
+        <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+          <option value="50">50</option>
+          <option value="100">100</option>
+          <option value="200">200</option>
+          <option value="300">300</option>
+          <option value={{record}}>All</option>
+        </select> entries
+      </div>
+    </div>
+    <div class="col-sm-8 text-right">
+      <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true"
+        (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)">
+      </pagination-controls>
+    </div>
+  </div>
+</div>

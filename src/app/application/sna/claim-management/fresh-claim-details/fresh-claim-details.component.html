@@ -1,0 +1,343 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+    <div class="row justify-content-between">
+      <div class="col-lg-4">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a routerLink="/application/cpdApprovedCase" class="nav-link active">SNA Approved</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div id="filter" class="searchCriteriaBox bg-light p-3">
+    <div class="row">
+      <div class="col-lg-4 col-xxl-4">
+        <div class="mb-xl-3">
+          <label class="control-label">Actual Date of Discharge From</label><span class="text-danger">*</span>
+          <div class="input-group">
+            <input type="text" onkeydown="return false;" class="form-control border-end-0 datepicker" id="datepicker1"
+              name="fromDate">
+            <label class="input-group-text bg-transparent border-start-0" for="datepicker1"><i
+                class="iconbsky-calendar"></i> </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-xxl-4">
+        <div class="mb-xl-3">
+          <label class="control-label">Actual Date of Discharge To</label><span class="text-danger">*</span>
+          <div class="input-group">
+            <input type="text" onkeydown="return false;" class="form-control border-end-0 datepicker" id="datepicker2"
+              name="toDate">
+            <label class="input-group-text bg-transparent border-start-0" for="datepicker2"><i
+                class="iconbsky-calendar"></i> </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-xxl-4">
+        <div class="mb-xl-3">
+          <label class="control-label">Case No</label>
+          <div class="input-group">
+            <input type="text" class="form-control border-end-0" id="caseNo"
+              name="caseNo">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-12 col-xl-12 col-xxl-12" hidden>
+      <div class="row mt-1 mb-2">
+        <div class="col-lg-12 accordion">
+          <div class="card shadow-sm treatment-history">
+            <div class="accordion-item" id="headingThree">
+              <div class="accordion-button collapsed card-header bg-color text-white" data-bs-toggle="collapse"
+                data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseTwo"
+                style="background: #5eb76bc2; height: 40px;">
+                <h5 class="mb-0">Advanced Search</h5>
+              </div>
+              <div id="collapseThree" class="accordion-collapse collapse show" aria-labelledby="headingThree"
+                data-bs-parent="#accordionExample">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-lg-3 col-xxl-3">
+                      <div class="mb-xl-3">
+                        <label class="control-label">State Name</label>
+                        <select class="form-select" id="statecode1" [(ngModel)]="stateId"
+                          aria-label="Disabled select example" (change)="getDistrict($event.target.value)">
+                          <option value="" selected>Select State</option>
+                          <option *ngFor="let c of statelist" [value]="c.stateCode">{{c.stateName}}</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-xxl-3">
+                      <div class="mb-xl-3">
+                        <label class="control-label">District Name</label>
+                        <select class="form-select" id="distcode1" [(ngModel)]="distId"
+                          aria-label="Disabled select example" (change)="getHospital($event.target.value)">
+                          <option value="" selected>Select District</option>
+                          <option *ngFor="let c of distList" [value]="c.DISTRICTCODE">{{c.DISTRICTNAME}}</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-xxl-3">
+                      <div class="mb-xl-3">
+                        <label class="control-label">Hospital Name</label>
+                        <select class="form-select" name="hospitalcode" id="hospitalcode" [(ngModel)]="hospitalId"
+                          aria-label="Disabled select example">
+                          <option value="" selected>Select Hospital Name</option>
+                          <option *ngFor="let c of hospitalList" [value]="c.HOSPITALCODE">{{c.HOSPITALNAME}}</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-xxl-3">
+                      <div class="mb-xl-3">
+                        <label class="control-label">Authentication Mode</label>
+                        <select class="form-select" name="authMode" id="authMode" [(ngModel)]="authMode"
+                          >
+                          <option value="" selected>All</option>
+                          <option value="1" selected>POS</option>
+                          <option value="2">IRIS</option>
+                          <option value="3">OTP</option>
+                          <option value="4">Override</option>
+                          <option value="5">FACE</option>
+                          <option value="6">FINGER PRINT</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-3 col-xxl-3">
+                      <div class="mb-xl-3">
+                        <label class="control-label">Amount</label>
+                        <select class="form-select" name="amountFlag" id="amountFlag"
+                          aria-label="Disabled select example" [(ngModel)]="amountFlag">
+                          <option value="0" selected>ALL</option>
+                          <option value="1">Less Approved Amount</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-xxl-3">
+                      <div class="mb-xl-3">
+                        <label class="control-label">Description</label>
+                        <input type="text" id="description" class="form-control" [(ngModel)]="description"
+                          placeholder="Enter Description" name="description" autocomplete="off">
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-xxl-3">
+                      <div class="mb-xl-3">
+                        <label class="control-label">Mortality</label>
+                        <select class="form-select" id="mortality" [(ngModel)]="mortality"
+                          aria-label="Disabled select example" >
+                          <option value="" selected>Select Mortality</option>
+                          <option value="Y">Yes</option>
+                          <option value="N">No</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-xxl-3">
+                      <div class="mb-xl-3">
+                        <label class="control-label">CPD Status</label>
+                        <select class="form-select" name="cpdFlag" id="cpdFlag" [(ngModel)]="statusCPD">
+                          <option value="0" selected>CPD Approved</option>
+                          <option value="1">Auto Approved</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-3 col-xxl-3">
+                      <div class="mb-xl-3">
+                        <label class="control-label">Procedure</label>
+
+                        <ng-autocomplete #auto [data]="packageHeaderItem" placeholder="Select Procedure"
+                          (selected)="selectEvent($event)" (inputCleared)="clearEvent()" [itemTemplate]="itemTemplate"
+                          [notFoundTemplate]="notFoundTemplate" spellcheck="false"
+                         >
+                        </ng-autocomplete>
+
+                        <ng-template #itemTemplate let-item>
+                          <a [innerHTML]="item.packageheadername"></a>
+                        </ng-template>
+
+                        <ng-template #notFoundTemplate let-notFound>
+                          <div [innerHTML]="notFound"></div>
+                        </ng-template>
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-xxl-3">
+                      <div class="mb-xl-3">
+                        <label class="control-label">Package</label>
+
+                        <ng-autocomplete #auto1 [data]="packageList" placeholder="Select Package"
+                          (selected)="selectEvent1($event)" (inputCleared)="clearEvent1()"
+                          [itemTemplate]="itemTemplate1" [notFoundTemplate]="notFoundTemplate1"
+                          spellcheck="false" >
+                        </ng-autocomplete>
+
+                        <ng-template #itemTemplate1 let-item>
+                          <a [innerHTML]="item.procedureDescription"></a>
+                        </ng-template>
+
+                        <ng-template #notFoundTemplate1 let-notFound>
+                          <div [innerHTML]="notFound"></div>
+                        </ng-template>
+                      </div>
+                    </div>
+                    <div class="col-lg-2 col-xxl-2">
+                      <div class="mb-xl-3">
+                        <label class="control-label">Ward</label>
+                        <ng-autocomplete #auto2 [data]="wardList" placeholder="Select Ward"
+                          (selected)="selectEvent2($event)" (inputCleared)="clearEvent2()"
+                          [itemTemplate]="itemTemplate2" [notFoundTemplate]="notFoundTemplate2"
+                          spellcheck="false" >
+                        </ng-autocomplete>
+
+                        <ng-template #itemTemplate2 let-item>
+                          <a [innerHTML]="item.wardname"></a>
+                        </ng-template>
+
+                        <ng-template #notFoundTemplate2 let-notFound>
+                          <div [innerHTML]="notFound"></div>
+                        </ng-template>
+                      </div>
+                    </div>
+                    <div class="col-lg-2 col-xxl-2">
+                      <div class="mb-xl-3">
+                        <label class="control-label">Implant</label>
+                        <select class="form-select" id="implant" [(ngModel)]="implant"
+                          aria-label="Disabled select example">
+                          <option value="" selected>Select Implant</option>
+                          <option value="1">Yes</option>
+                          <option value="0">No</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-lg-2 col-xxl-2">
+                      <div class="mb-xl-3">
+                        <label class="control-label">Highend Drug</label>
+                        <select class="form-select" name="highend" id="highend" [(ngModel)]="highend"
+                        >
+                          <option value="" selected>Select Highend Drug</option>
+                          <option value="1">Yes</option>
+                          <option value="0">No</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-3 col-xxl-3">
+                      <div class="mb-xl-3">
+                        <label class="control-label">Search Type</label>
+                        <select class="form-select" name="searchtype" id="searchtype" [(ngModel)]="searchtype"
+                          >
+                          <option value=1>All</option>
+                          <option value=2>1.0 Block Data</option>
+                          <option value=3>2.0 Block Data</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 col-xxl-6">
+                      <div class="mb-xl-3">
+                        <label class="control-label">Search</label>
+                        <div class="input-group">
+                          <input type="text" id="filter" class="form-control border-end-0" [(ngModel)]="filter"
+                            placeholder="Search URN, Claim No, Patient Name, Phone No, Hospital Details, Invoice No, Package ID"
+                            name="filter" autocomplete="off">
+                          <label class="input-group-text bg-transparent border-start-0"><i
+                              class="bi bi-search"></i></label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-xxl-3">
+                      <div class="mb-xl-3">
+                        <label class="control-label">Trigger</label>
+                        <select class="form-select" id="trigger" [(ngModel)]="trigger"
+                          aria-label="Disabled select example" >
+                          <option value="0" selected>Select Trigger</option>
+                          <option *ngFor="let hos of triggerList" [value]="hos.slno">{{hos.reportname}}</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-xxl-4">
+                      <div class="mb-xl-3">
+                        <label class="control-label">CPD Name</label>
+                        <ng-autocomplete #auto [data]="cpdList" placeholder="Select CPD Name"
+                          (selected)="selectCPDEvent($event)" (inputCleared)="clearCPDEvent()"
+                          [itemTemplate]="itemTemplate4" [notFoundTemplate]="notFoundTemplate"
+                           spellcheck="false">
+                        </ng-autocomplete>
+                        <ng-template #itemTemplate4 let-item>
+                          <a [innerHTML]="item.fullName"></a>
+                        </ng-template>
+                        <ng-template #notFoundTemplate let-notFound>
+                          <div [innerHTML]="notFound"></div>
+                        </ng-template>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col align-self-end">
+        <div class="col-lg-12">
+          <button type="submit" class="btn btn-success" (click)="onClickSearch()">Search</button> &nbsp;
+          <button type="submit" class="btn btn-secondary" (click)="ResetField()">Reset</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-body" *ngIf="show">
+    <div class="table-responsive treatment-history-table-class">
+      <table aria-describedby="cardBalanceDetails" class="table mb-0 border" style="width: 100%">
+        <thead class="bgcolor-th">
+          <tr>
+            <th>Sl#</th>
+            <th>Case No.</th>
+            <th>URN</th>
+            <th>Patient Name</th>
+            <th>Hospital</th>
+            <th>Allocate Date</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let case of allocateCaseList | paginate:
+          {id: 'listing_pagination', itemsPerPage:pageElement,  currentPage: currentPage } ; let i = index">
+            <td>{{ i+1 }}</td>
+            <td>{{ case?.caseNo }}</td>
+            <td>{{ case?.urn }}</td>
+            <td>{{ case?.patientName }}</td>
+            <td>{{ case?.hospitalName }}</td>
+            <td>{{ case?.allocateDate }}</td>
+            <td><a class="btn btn-outline-success btn-sm" (click)="onAction(case.caseId,case.urn,case.caseNo)">Action
+              </a></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="row mt-2 col-xl-12" *ngIf="showPagination">
+        <div class="col-lg-2">
+          <div class="col-sm-*">
+            Show
+            <select id="pageItem" name="pageItem" class="custom-select-sm" (change)="pageItemChange()">
+              <option value="100">100</option>
+              <option value="200">200</option>
+              <option value="500">500</option>
+              <option value="{{allocateCaseList.length}}">All</option>
+            </select>
+            Entries
+          </div>
+        </div>
+        <div class="col-lg-10 text-end">
+          <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true"
+            (pageChange)="pageChange($event)"></pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

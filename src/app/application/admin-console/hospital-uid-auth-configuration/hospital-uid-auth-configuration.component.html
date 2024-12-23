@@ -1,0 +1,167 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+    <div class="row justify-content-between">
+      <div class="col-lg-10">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a routerLink="/application/hospitalUIDAuthConfig" routerLinkActive="active"
+              class="nav-link active">Hospital Auth Mapping</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/application/hospitalUIDAuthConfigview" routerLinkActive="" class="nav-link"
+              style="color: #1f723f;">Log</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-box">
+    <div class="row">
+      <div class="col-lg-3 col-xxl-3">
+        <div class="mb-xl-3">
+          <label class="control-label">State Name<span class="text-danger"></span></label>
+          <select class="form-select" name="stateId" id="stateId" (change)="onChangeState($event.target.value)">
+            <option value="" selected disabled>Select State</option>
+            <ng-container *ngFor="let item of stateList">
+              <option value={{item.stateCode}}>{{item.stateName}}</option>
+            </ng-container>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-xxl-3">
+        <div class="mb-xl-3">
+          <label class="control-label">District Name</label>
+          <select class="form-select" name="districtId" id="districtId"
+            (change)="onChangeDistrict($event.target.value)">
+            <option value="">Select All</option>
+            <ng-container *ngFor="let item of districtList">
+              <option value={{item.districtcode}}>{{item.districtname}}</option>
+            </ng-container>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-xxl-3">
+        <div class="mb-xl-3">
+          <label class="control-label">Hospital Name</label>
+          <select class="form-select" name="hosId" id="hosId">
+            <option value="">Select All</option>
+            <ng-container *ngFor="let item of hospitalList">
+              <option value={{item.hospitalCode}}>{{item.hospitalName}}</option>
+            </ng-container>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-lg-2 col-xxl-2">
+        <div class="mb-xl-3">
+          <label class="control-label"></label>
+          <div class="d-grid gap-2 d-md-flex input-group">
+            <button type="button" class="btn btn-success" (click)="fetchDetails()">Fetch</button>
+            <button type="button" class="btn btn-secondary" style="margin-left:5px;"
+              (click)="reset()">Reset</button>&nbsp;
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top: 5px;margin-bottom: 5px;" *ngIf="configList.length!=0">
+      <div class="col-lg-3 col-xxl-3" style="margin-top: 2ch;">
+        <div class="col-sm-*" *ngIf="showPegi">
+          show
+          <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+            <option value="100" selected>100</option>
+            <option value="250">250</option>
+            <option value="500">500</option>
+            <option value="1000">1000</option>
+            <option value="{{allRecordsSize}}">ALL</option>
+          </select> entries
+        </div>
+      </div>
+      <div class="col-lg-3 col-xxl-3" style="margin-top: 2ch;">
+        <b>Total No Of Record : {{configList.length}}</b>
+      </div>
+      <div class="col-2" style="text-align:end ;">
+        <button class="btn btn-success btn-sm mx-1" style="margin-top: 10px" tooltip="Excel" (click)="downloadList(1)">
+          <i class="bi bi-file-earmark-spreadsheet"></i>
+        </button>
+        <button class="btn btn-danger btn-sm mx-1" style="margin-top: 10px" tooltip="pdf" (click)="downloadList(2)">
+          <i class="bi bi-file-earmark-pdf"></i>
+        </button>
+      </div>
+      <div class="col-lg-4 col-xxl-4" style="text-align: right">
+        <div class="input-group">
+          <input type="text" id="txtsearchDate" class="form-control" autocomplete="off" placeholder="Search"
+            name="textSearch" [(ngModel)]="textSearch">
+        </div>
+      </div>
+    </div>
+    <div class="form-cointainer" *ngIf="configList.length!=0">
+      <div class="main-tab">
+        <div class="row justify-content-between">
+          <div class="table-responsive">
+            <table class="table table-striped" mb-0>
+              <caption></caption>
+              <thead>
+                <tr>
+                  <th>Sl No</th>
+                  <th>Hospital Code</th>
+                  <th>Hospital Name</th>
+                  <th><input type="checkbox" [checked]="otpsta==0" (click)="selectallitem(this.otp,$event,4)">&nbsp;:OTP</th>
+                  <th><input type="checkbox" [checked]="irissta==0" (click)="selectallitem(this.iris,$event,2)">&nbsp;:IRIS</th>
+                  <th><input type="checkbox" [checked]="possta==0" (click)="selectallitem(this.pos,$event,1)">&nbsp;:POS</th>
+                  <th><input type="checkbox" [checked]="facesta==0"(click)="selectallitem(this.face,$event,3)">&nbsp;:FACE</th>
+                  <th><input type="checkbox" [checked]="fingersta==0"(click)="selectallitem(this.finger,$event,5)">&nbsp;:FINGER</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="let item of configList | filter:textSearch | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage}; index as i">
+                  <td *ngIf="currentPage==1">{{(i+1)}}</td>
+                  <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+ i+1}}</td>
+                  <td>{{item.hospitalCode}}</td>
+                  <td>{{item.hospitalName}}</td>
+                  <td><input type="checkbox" [checked]="item.otp==0"
+                      (click)="selectitem(item.otpid,item,item.otp,4)"></td>
+                  <td><input type="checkbox" [checked]="item.iris==0"
+                      (click)="selectitem(item.irisid,item,item.iris,2)"></td>
+                  <td><input type="checkbox" [checked]="item.pos==0"
+                      (click)="selectitem(item.posid,item,item.pos,1)"></td>
+                  <td><input type="checkbox" [checked]="item.face==0"
+                      (click)="selectitem(item.faceid,item,item.face,3)"></td>
+                  <td><input type="checkbox" [checked]="item.finger==0"
+                      (click)="selectitem(item.fingerId,item,item.finger,5)"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top: 5px;" *ngIf="showPegi">
+      <div class="col-sm-6">
+        <div class="col-sm-*">
+          show
+          <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+            <option value="100" selected>100</option>
+            <option value="250">250</option>
+            <option value="500">500</option>
+            <option value="1000">1000</option>
+            <option value="{{allRecordsSize}}">ALL</option>
+          </select> entries
+        </div>
+      </div>
+      <div class="col-sm-6 text-right" style="text-align: right;">
+        <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true"
+          (pageChange)="currentPage = $event" (pageBoundsCorrection)="onPageBoundsCorrection($event)">
+        </pagination-controls>
+      </div>
+    </div>
+    <button type="button" class="btn btn-success" (click)="submit()" *ngIf="showPegi">Submit</button>
+    <button type="button" class="btn btn-secondary" style="margin-left:5px;" *ngIf="showPegi"
+      (click)="reset()">Reset</button>
+  </div>
+</div>

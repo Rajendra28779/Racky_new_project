@@ -1,0 +1,94 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/dcapproval" class="nav-link active">DC Approval</a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-lg-3 col-xl-3 col-xxl-3 ms-xxl-auto ms-xl-auto ms-lg-auto ms-md-auto">
+            <div class="mb-3 mt-2">
+                <input type="text" id="txtsearchDate" class="form-control" placeholder="Search" name="txtsearchDate" [(ngModel)]="txtsearchDate" autocomplete="off">
+            </div>
+            <button class="btn btn-success btn-sm mx-1" tooltip="Excel" (click)="downloadReport('excel')"><i class="bi bi-download"></i></button>
+            <button class="btn btn-danger btn-sm mx-1" tooltip="pdf" (click)="downloadReport('pdf')"><i class="bi bi-file-earmark-pdf"></i></button>
+        </div>
+    </div>
+</div>
+<div class="content-box p-0 overflow-hidden">
+
+    <div class="table-responsive">
+        <table class="table table-striped mb-0">
+            <thead>
+                <tr>
+                    <th width="60">Sl#</th>
+                    <th>Claim No.</th>
+                    <th>Invoice</th>
+                    <th>URN</th>
+                    <th>HOSPITALNAME</th>
+                    <th>Patient Name</th>
+                    <th>Package Code</th>
+                    <th>Actual Date of Admission</th>
+                    <th>Actual Date of Discharge</th>
+                    <th>Claim Raised On</th>
+                    <th>Amount (₹)</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let claim of dcClaimList | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};
+                    index as i">
+                    <td *ngIf="currentPage==1">{{(i+1)}}</td>
+                    <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+ i+1}}</td>
+                    <td>{{claim.claim_no}}</td>
+                    <td>{{claim.invoiceno}}</td>
+                    <td>{{claim.URN}}</td>
+                    <td>{{claim.hospitalname}}({{claim.hospitalcode}})</td>
+                    <td> {{claim.PatientName}}</td>
+                    <td title={{claim.PackageName}}> {{claim.PackageCode}}</td>
+                    <td> {{claim.actualdateofadmission | date: 'dd-MMM-yyyy'}}</td>
+                    <td> {{claim.actualdateofdischarge | date: 'dd-MMM-yyyy'}}</td>
+                    <td> {{claim.CreatedOn | date :'dd-MMM-yyyy, h:mm:ss a'}}</td>
+
+                    <td> {{claim.CurrentTotalAmount | currency:'':''}}</td>
+                    <td class="text-center">
+                        <a class="btn btn-outline-success btn-sm" (click)="onAction(claim.transactionDetailsId,claim.URN,claim.PackageCode)">Action</a>
+                    </td>
+                </tr>
+                <tr *ngIf="this.dcClaimList.length==0">
+                    <td colspan="16">
+                        <p class="mb-0 text-center text-danger fw-bold">NO DATA FOUND!!</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row mt-3" *ngIf="showPegi">
+    <!-- <div class="col-sm-4">
+          Showing {{ (currentPage - 1) * pageElement + 1 }}  to {{elementTo}} of {{record1}}
+          (Total Record -  {{districtDetails.length }})
+      </div> -->
+    <div class="col-sm-6">
+        <!-- Showing {{elementFrom}} to {{elementTo}} of {{totalRecord}} entries -->
+        <div class="col-sm-*">
+            show
+            <select id="pageItem" name="pageItem" class="form-select-sm" (change)="pageItemChange()">
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="25">25</option>
+        <option value="50">50</option>
+      </select> entries
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true" (pageChange)="currentPage = $event" class="text-end"></pagination-controls>
+    </div>
+
+</div>

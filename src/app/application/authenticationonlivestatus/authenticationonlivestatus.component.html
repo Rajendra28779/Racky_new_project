@@ -1,0 +1,246 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+      <div class="row justify-content-between">
+          <div class="col-lg-12">
+              <ul class="nav nav-tabs">
+                  <li class="nav-item">
+                      <a routerLink="/application/hospitalauthrpt" routerLinkActive="active" class="nav-link " style="color: #1f723f;">Hospital Authentication Report</a>
+                  </li>
+                  <li class="nav-item">
+                      <a routerLink="/application/liveauthenticationrpt" routerLinkActive="active" class="nav-link active">Live Status</a>
+                  </li>
+              </ul>
+          </div>
+          <!-- <div class="col-lg-6 ">
+              <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+          </div> -->
+      </div>
+  </div>
+
+  <div class="content-box mt-3">
+      <div class="row" >
+                <div class="col-md-3">
+                  <label class="control-label mb-2">Authentication Date</label><span class="text-danger">*</span>
+                  <div class="input-group">
+                <input type="text" class="form-control border-end-0 datepicker" onkeydown="return false;" id="fromDate"  name="fromDate" autocomplete="off" placeholder="Select Date">
+                <label class="input-group-text bg-transparent border-start-0" for="fromDate"><i class="iconbsky-calendar"></i> </label>
+                  </div>
+              </div>
+        </div>
+        <div class="row" style="margin-top: 1ch;">
+          <div class="col-md-4 mb-2">
+              <label class="control-label">State Name</label>
+              <select class="form-select" name="stateId" id="stateId"
+                  (change)="OnChangeState($event.target.value)">
+                  <option value="" selected>Select State</option>
+                  <ng-container *ngFor="let item of stateList">
+                      <option value={{item.stateCode}}>{{item.stateName}}</option>
+                  </ng-container>
+              </select>
+
+          </div>
+          <div class="col-md-4">
+              <label class="control-label">District Name</label>
+              <select class="form-select" name="districtId" id="districtId"
+                  (change)="OnChangeDistrict($event.target.value)">
+                  <option value="" selected>Select District</option>
+                  <ng-container *ngFor="let item of districtList">
+                      <option value={{item.districtcode}}>{{item.districtname}}</option>
+                  </ng-container>
+              </select>
+
+          </div>
+          <div class="col-md-4">
+              <label class="control-label">Hospital Name</label>
+              <select class="form-select" name="hospital" id="hospital">
+                  <option value="" selected>Select Hospital</option>
+                  <ng-container *ngFor="let item of hospitalList">
+                      <option value={{item.hospitalCode}}>{{item.hospitalName}}</option>
+                  </ng-container>
+              </select>
+
+          </div>
+       </div>
+       <div class="col-md-4 mt-4 " >
+        <input type="submit" value="Search" class=" btn btn-success" (click)="details()">&nbsp;&nbsp;
+        <input type="reset" value="Reset" class=" btn btn-secondary" (click)="reset()">
+      </div>
+  </div>
+
+   <!-- OTP -->
+   <div  class="col-lg-12 col-xl-12 col-xxl-12 mb-4">
+    <div  class="card shadow">
+      <div  class="card-header bg-color text-white">
+        <h5  class="mb-0">OTP</h5>
+     </div>
+       <div  class="card-body">
+        <div class="table-responsive " id="treatmentTable" style="margin-top:2px;">
+          <table class="table table-striped mb-0">
+            <thead>
+              <tr>
+                <th width="50">Sl#</th>
+                <th>Hospital Name</th>
+                <th>URN</th>
+                <th>Patient Name</th>
+                <th>Verifier Name</th>
+                <th>Purpose</th>
+                <th>Time</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let v of otp | filter:textserch1 ,index as i">
+                <td >{{(i+1)}}</td>
+                <td>{{v.hospitalname}} ({{v.hospitalcode}})</td>
+                <td>{{v.urn}}</td>
+                <td>{{v.patient}}</td>
+                <td>{{v.verifier}}</td>
+                <td>{{v.prps}}</td>
+                <td>{{v.createon}}</td>
+                <td>{{v.verifystatus}}</td>
+              </tr>
+              <tr *ngIf="count1==0">
+                <td colspan="20" align="center">
+                  <strong class="text-danger">NO DATA FOUND!!</strong>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+   <!-- IRIS -->
+   <div  class="col-lg-12 col-xl-12 col-xxl-12 mb-4">
+    <div  class="card shadow">
+      <div  class="card-header bg-color text-white">
+        <h5  class="mb-0">IRIS</h5>
+     </div>
+       <div  class="card-body">
+        <div class="table-responsive" id="treatmentTable1" style="margin-top:2px;">
+          <table class="table table-striped mb-0">
+            <thead>
+              <tr>
+                <th width="50">Sl#</th>
+                <th>Hospital Name</th>
+                <th>URN</th>
+                <th>Patient Name</th>
+                <th>Verifier Name</th>
+                <th>Purpose</th>
+                <th>Time</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let v of iris | filter:textserch2 ,index as i">
+                <td>{{(i+1)}}</td>
+                <td>{{v.hospitalname}} ({{v.hospitalcode}})</td>
+                <td>{{v.urn}}</td>
+                <td>{{v.patient}}</td>
+                <td>{{v.verifier}}</td>
+                <td>{{v.prps}}</td>
+                <td>{{v.createon}}</td>
+                <td>{{v.verifystatus}}</td>
+              </tr>
+              <tr *ngIf="count2==0">
+                <td colspan="20" align="center">
+                  <strong class="text-danger">NO DATA FOUND!!</strong>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- POS -->
+  <div  class="col-lg-12 col-xl-12 col-xxl-12 mb-4">
+    <div  class="card shadow">
+      <div  class="card-header bg-color text-white">
+        <h5  class="mb-0">POS</h5>
+     </div>
+       <div  class="card-body">
+        <div class="table-responsive" id="treatmentTable2" style="margin-top:2px;">
+          <table class="table table-striped mb-0">
+            <thead>
+              <tr>
+                <th width="50">Sl#</th>
+                <th>Hospital Name</th>
+                <th>URN</th>
+                <th>Patient Name</th>
+                <th>Verifier Name</th>
+                <th>Purpose</th>
+                <th>Time</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let v of pos | filter:textserch3 ,index as i">
+                <td>{{(i+1)}}</td>
+                <td>{{v.hospitalname}} ({{v.hospitalcode}})</td>
+                <td>{{v.urn}}</td>
+                <td>{{v.patient}}</td>
+                <td>{{v.verifier}}</td>
+                <td>{{v.prps}}</td>
+                <td>{{v.createon}}</td>
+                <td>{{v.verifystatus}}</td>
+              </tr>
+              <tr *ngIf="count3==0">
+                <td colspan="20" align="center">
+                  <strong class="text-danger">NO DATA FOUND!!</strong>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FACE -->
+  <div  class="col-lg-12 col-xl-12 col-xxl-12 mb-4">
+    <div  class="card shadow">
+      <div  class="card-header bg-color text-white">
+        <h5  class="mb-0">FACE</h5>
+     </div>
+       <div  class="card-body">
+        <div class="table-responsive" id="treatmentTable3" style="margin-top:2px;">
+          <table class="table table-striped mb-0">
+            <thead>
+              <tr>
+                <th width="50">Sl#</th>
+                <th>Hospital Name</th>
+                <th>URN</th>
+                <th>Patient Name</th>
+                <th>Verifier Name</th>
+                <th>Purpose</th>
+                <th>Time</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let v of faceList | filter:textserch3 ,index as i">
+                <td>{{(i+1)}}</td>
+                <td>{{v.hospitalname}} ({{v.hospitalcode}})</td>
+                <td>{{v.urn}}</td>
+                <td>{{v.patient}}</td>
+                <td>{{v.verifier}}</td>
+                <td>{{v.prps}}</td>
+                <td>{{v.createon}}</td>
+                <td>{{v.verifystatus}}</td>
+              </tr>
+              <tr *ngIf="count4==0">
+                <td colspan="20" align="center">
+                  <strong class="text-danger">NO DATA FOUND!!</strong>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

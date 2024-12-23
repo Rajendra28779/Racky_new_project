@@ -1,0 +1,326 @@
+<div class="main-tab">
+    <div class="col-lg-4">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a routerLink="/application/userhospital" routerLinkActive="active"
+                    class="nav-link" style="color: #1f723f;">Add</a>
+            </li>
+            <li class="nav-item">
+                <a routerLink="/application/viewhospital" routerLinkActive="active"
+                    class="nav-link active">View</a>
+            </li>
+            <li class="nav-item">
+              <a routerLink="/application/hospincentive" routerLinkActive="active" class="nav-link"
+                  style="color: #1f723f;">Incentive Report</a>
+          </li>
+        </ul>
+    </div>
+</div>
+<div id="filter" class="searchCriteriaBox bg-light p-3">
+    <form autocomplete="off" [formGroup]="SearchForm" (ngSubmit)="onChange()">
+        <div class="row">
+            <div class="col-lg-3 col-xxl-3">
+                <div class="form-group">
+                    <label class="control-label">State Name</label>
+                    <select name="stateId" id="stateId" class="form-control"
+                        (change)="OnChangeState($event.target.value)" formControlName="stateId">
+                        <option value="">Select State</option>
+                        <ng-container *ngFor="let item of stateList;index as i">
+                            <option [value]="item.stateCode">{{item.stateName}}</option>
+                        </ng-container>
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-3 col-xxl-3">
+                <div class="form-group">
+                    <label class="control-label">District Name</label>
+                    <select name="districtId" id="districtId" class="form-control" formControlName="districtId">
+                        <option value="">Select District</option>
+                        <ng-container *ngFor="let item of districtList;index as i">
+                            <option [value]="item.districtcode">{{item.districtname}}</option>
+                        </ng-container>
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-3 col-xxl-3">
+                <div class="form-group">
+                    <label class="control-label">Hospital Type</label>
+                    <select name="hospitalType" id="hospitalType" class="form-control" formControlName="hospitalType">
+                        <option value="">Select Hospital Type</option>
+                        <ng-container *ngFor="let item of catList">
+                            <option [value]="item.categoryId">{{item.categoryName}}</option>
+                        </ng-container>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div style="height: 13pt;"></div>
+        <div class="row">
+            <div class="col-lg-3 col-xxl-3">
+                <div class="form-group">
+                    <label class="control-label">CPD Approval Required</label>
+                    <select name="cpdAppReq" id="cpdAppReq" class="form-control" formControlName="cpdAppReq">
+                        <option value="">Select</option>
+                        <option value="0">Yes</option>
+                        <option value="1">No</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-3 col-xxl-3">
+                <div class="form-group">
+                    <label class="control-label">SNA Tagged</label>
+                    <select name="snoTagged" id="snoTagged" class="form-control" formControlName="snoTagged">
+                        <option value="">Select</option>
+                        <option value="0">Yes</option>
+                        <option value="1">No</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-3 col-xxl-3">
+                <div class="form-group">
+                    <label class="control-label">TMS Active Status</label>
+                    <select name="tmsstatus" id="tmsstatus" class="form-control" formControlName="tmsstatus">
+                        <option value="">Select</option>
+                        <option value="0">Active</option>
+                        <option value="1">Inactive</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div style="height: 13pt;"></div>
+        <div class="row">
+            <div class="col align-self-end">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success mr-2">Search</button>
+                    &nbsp;
+                    <button class="btn btn-secondary" (click)="resetTable()">Reset</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+    <div class="col-lg-3 col-xxl-3" style="padding-top: 10px; padding-left: 17px;">
+        <div class="form-group" *ngIf="showPegi">
+            show
+            <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+                <option value="100">100</option>
+                <option value="200">200</option>
+                <option value="300">300</option>
+                <option value="400">400</option>
+                <option value={{record}}>All</option>
+            </select> entries
+        </div>
+    </div>
+    <div class="col-lg-3 col-xxl-3 text-center" style="padding-top: 10px;">
+        <div class="form-group">
+            <b>Total Hospitals: <span style="color: green;">{{hospitalData.length}}</span></b>
+        </div>
+    </div>
+    <div class="col-lg-2 col-xxl-2" style="text-align: right; padding-top: 3px;">
+        <div class="form-group">
+            <button class="btn btn-outline-success btn-sm me-1" type="submit" (click)="downloadReport()">
+                <i class="bi bi-file-earmark-spreadsheet"></i>
+            </button>
+            &nbsp;
+            <button class="btn btn-outline-danger btn-sm me-1" tooltip="pdf" (click)="downloadPdf()">
+                <i class="bi bi-file-earmark-pdf" ></i>
+              </button>
+        </div>
+    </div>
+    <div class="col-lg-4 col-xxl-4">
+        <div class="input-group">
+            <input type="text" id="txtsearchDate" class="form-control" placeholder="Search here" name="txtsearchDate"
+                [(ngModel)]="txtsearchDate">
+        </div>
+    </div>
+</div>
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="table-responsive">
+                <table class="table table-striped" mb-0>
+                    <thead>
+                        <tr>
+                            <th width="60">Sl No</th>
+                            <th>Hospital Details</th>
+                            <th>State Name</th>
+                            <th>District Name</th>
+                            <th>Hospital Type</th>
+                            <th width="150">Incentive Start Date</th>
+                            <th width="150">Incentive End Date</th>
+                            <th width="150">MOU Start Date</th>
+                            <th width="150">MOU End Date</th>
+                            <th style="text-align: center;">CPD Approval Required</th>
+                            <th>TMS Active Status</th>
+                            <th>Status</th>
+                            <th style="text-align: center;">Details</th>
+                            <th style="text-align: center;">Action</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr
+                            *ngFor="let item of hospitalData | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage}; index as i">
+                            <td *ngIf="currentPage==1">{{i+1}}</td>
+                            <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+i+1}}</td>
+                            <td>{{item.hospitalName}} ({{item.hospitalCode}})</td>
+                            <td>{{item.stateName}}</td>
+                            <td>{{item.districtName}}</td>
+                            <td>{{item.hospitalType?item.hospitalType:'-NA-'}}</td>
+                            <td>{{item.hcvalidform}}</td>
+                            <td>{{item.hcvalidto}}</td>
+                            <td>{{item.moustartdate}}</td>
+                            <td>{{item.mouenddate}}</td>
+                            <td style="text-align: center;">
+                                <span *ngIf="item.cpdApprovalRequired===0">Yes</span>
+                                <span *ngIf="item.cpdApprovalRequired===1">No</span>
+                            </td>
+                            <td>
+                                <span *ngIf="!item.tmsActiveStat">-NA-</span>
+                                <span *ngIf="item.tmsActiveStat==0">Active</span>
+                                <span *ngIf="item.tmsActiveStat==1">InActive</span>
+                            </td>
+                            <td>
+                                <span *ngIf="item.status===0">Active</span>
+                                <span *ngIf="item.status===1">InActive</span>
+                            </td>
+                            <!-- data-bs-toggle="modal"
+                            data-bs-target="#exampleModal1" -->
+                            <td style="text-align: center;">
+                                <a href="javascript:void(0)"  (click)="view(item.hospitalId,item.tmsActiveStat,item.hospitalCode)">
+                                    <i class="bi bi-eye" style="color:blue;"></i>
+                                </a>
+                            </td>
+                            <td style="width: 70pt; text-align: center;">
+                                <a class="btn btn-outline-primary btn-sm me-1"  (click)="edit(item.hospitalId)">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr *ngIf="! hospitalData?.length">
+                            <td colspan="10" align="center"><strong class="text-danger">No data found</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row" *ngIf="showPegi">
+                <div class="col-sm-4">
+                    <div class="col-sm-*">
+                        show
+                        <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+                            <option value="100">100</option>
+                            <option value="200">200</option>
+                            <option value="300">300</option>
+                            <option value="400">400</option>
+                            <option  value={{record}}>All</option>
+                        </select> entries
+                    </div>
+                </div>
+                <div class="col-sm-8 text-right">
+                    <pagination-controls id="listing_pagination" [maxSize]="100" [directionLinks]="true"
+                        (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Hospital Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table" *ngIf="hospdetails">
+                    <tbody>
+                        <tr>
+                            <td class="det-td" style="border-top: 1px solid #ddd;">Hospital Name</td>
+                            <td style="border-top: 1px solid #ddd;">{{hospdetails.hospitalName}}</td>
+                        </tr>
+                        <tr>
+                            <td class="det-td">Hospital Code</td>
+                            <td>{{hospdetails.hospitalCode}}</td>
+                        </tr>
+                        <tr>
+                            <td class="det-td">Mobile No</td>
+                            <td>{{hospdetails.mobile}}</td>
+                        </tr>
+                        <tr>
+                            <td class="det-td">Email Id</td>
+                            <td>{{hospdetails.email}}</td>
+                        </tr>
+                        <tr>
+                            <td class="det-td">Hospital Type</td>
+                            <td>{{hospdetails.hospitalType?hospdetails.hospitalType:'-NA-'}}</td>
+                        </tr>
+                        <tr>
+                            <td class="det-td">Assigned DC</td>
+                            <td>{{hospdetails.assignedDcName?hospdetails.assignedDcName:'-NA-'}}</td>
+                        </tr>
+                        <tr>
+                            <td class="det-td">Assigned SNA</td>
+                            <td>{{hospdetails.assignedSnoName?hospdetails.assignedSnoName:'-NA-'}}</td>
+                        </tr>
+                        <tr>
+                            <td class="det-td">TMS Active Status</td>
+                            <td>{{hospdetails.tmsActive}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal modal-custom-backdrop" id="OtpModal" tabindex="-1" aria-labelledby="exampleModalLabel" style="backdrop-filter: blur(5px);"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title text-success" id="exampleModalLabel" >Enter OTP<span
+                  class="required-asterisk text-danger">
+                  *</span></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="close()"></button>
+              </div>
+                <div class="modal-body py-5">
+
+
+                    <div class="row">
+                            <div class="iconinput">
+                                <input type="text" class="form-control usertext userinput" id="otpId" name="otpId" maxlength="6"
+                                    placeholder="Enter OTP" autocomplete="off"  onkeyup="this.value=this.value.replace(/[^0-9]/g,'');">
+                            </div>
+                    </div>
+                    <div class="d-flex pt-4 pb-3">
+                        <div class="pe-2 text-secondary">
+                            <i class="feather-iconsmartphone text-secondary fs-1-2" id="phoneId"></i>
+                        </div>
+                            <input type="text" id="mobileNoId" class="form-control text-secondary p-0 border-0" readonly>
+                    </div>
+                    <div class="d-flex pt-4 pb-2 position-absolute bottom--10">
+
+                        <div class="pe-2 text-secondary">
+                            <p id="timerdivId"><i class="feather-iconclock fs-1-2"></i> Time Left : </p>
+                        </div>
+                        <div>
+                            <input type="text" id="timeCounter" class="form-control text-danger p-0 border-0" readonly>
+                        </div>
+                    </div>
+                </div>
+                <!-- <p class="small text-end text-secondary" >
+                  <a (click)="backToLogin()">Back to Login &nbsp;  </a>
+                </p> -->
+                <div class="modal-footer d-flex justify-content-center align-items-center">
+                    <button type="button" id="sendId" class="btn btn-success" (click)="validateOtp()">Submit</button>
+                    <button type="button" id="reSendId" class="btn btn-success" (click)="onResendOtp()">Resend
+                        OTP</button>
+                </div>
+            </div>
+        </div>
+    </div>

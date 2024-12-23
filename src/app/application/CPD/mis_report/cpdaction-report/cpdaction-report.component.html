@@ -1,0 +1,161 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+    <div class="row justify-content-between">
+      <div class="col-lg-4">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a routerLink="/application/cpdactionReportComponent" class="nav-link active">CPD Action Report</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-box mt-3">
+    <div class="col-xxl-10">
+      <div class="row">
+        <div class="col-lg-4 col-xxl-4">
+          <form autocomplete="off" [formGroup]="form">
+            <div class="mb-xl-3">
+              <label class="control-label">CPD User Name</label><span class="text-danger">*</span>
+              <select class="form-select" id="cpdId" formControlName="cpdId"[(ngModel)]="name">
+
+                <option value="" selected disabled>Select CPD User</option>
+                <ng-container *ngFor="let item of cpdList">
+                  <option value={{item.userid.userId}}>{{item.fullName}}</option>
+                </ng-container>
+              </select>
+            </div>
+          </form>
+        </div>
+
+        <div class="col-lg-4 col-xxl-4">
+          <div class="mb-xl-3">
+            <label class="control-label">Years</label><span class="text-danger">*</span>
+            <select class="form-select" id="yearId" [(ngModel)]="stickyear">
+              <option value="" selected>Select Year</option>
+              <ng-container *ngFor="let year of years">
+                <option value={{year}}>{{ year }}</option>
+              </ng-container>
+            </select>
+          </div>
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+          <div class="mb-xl-3">
+            <label class="control-label">Months</label><span class="text-danger">*</span>
+            <select class="form-select" id="monthId" aria-label="Disabled select example" [(ngModel)]="Months">
+              <option value="JAN">January</option>
+              <option value="FEB">February</option>
+              <option value="MAR">March</option>
+              <option value="APR">April</option>
+              <option value="MAY">May</option>
+              <option value="JUN">June</option>
+              <option value="JUL">July</option>
+              <option value="AUG">August</option>
+              <option value="SEP">September</option>
+              <option value="OCT">October</option>
+              <option value="NOV">November</option>
+              <option value="DEC">December</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-12">
+      <div class="d-grid gap-2 d-md-flex">
+        <button type="submit" class="btn btn-success" (click)="getCpdAction()">Search</button>
+        <button type="reset" class="btn btn-secondary" (click)="getReset()">Reset</button>
+      </div>
+    </div>
+    <div class="row" >
+      <div class="col-md-4">
+          <p>No of List : {{record}}</p>
+      </div>
+      <div class="col-md-2"></div>
+
+      <div class="col-md-1"></div>
+      <div class="col-md-4">
+          <div class="input-group">
+              <input type="text" id="txtsearchDate" class="form-control" placeholder="Search" name="txtsearchDate" [(ngModel)]="txtsearchDate" autocomplete="off">
+          </div>
+      </div>
+      <div class="col-md-1">
+        <button class="btn btn-success btn-sm me-1"
+        (click)="downloadReport('xcl')">
+        <i class="bi bi-file-earmark-spreadsheet"></i>
+      </button>
+      <button class="btn btn-danger btn-sm me-1"
+        (click)="downloadReport('pdf')">
+        <i class="bi bi-file-earmark-pdf"></i>
+      </button>
+  </div>
+  </div>
+
+    <!-- <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+
+      <div class="col-lg-4 col-xxl-4">
+      <div class="table-responsive">
+          <div [align]="'start'" class="table-utilities" style="padding-bottom: 5%;">
+            <button class="btn  btn-success"
+              (click)="downloadReport()">
+              <i class="bi bi-download"></i>
+            </button>
+          </div>
+        </div>
+      </div> -->
+      <!-- <div class="content-box p-0 overflow-hidden"> -->
+      <div class="table-responsive">
+        <table class="table table-striped mb-0">
+          <thead>
+            <tr>
+              <th>Sl#</th>
+              <th>Date</th>
+              <th>Total Approved</th>
+              <th>Total Rejected</th>
+              <th>Total Queried</th>
+              <th>Total Dishonour</th>
+             <th>My Amount(Approved+Rejected)(₹)</th>
+              <th>Dishonour Amount(₹)</th>
+              <th>Final Amount(₹)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let claim of data | filter:txtsearchDate index as i">
+              <td>{{(i+1)}}</td>
+              <td>{{claim.date}}</td>
+              <td>{{claim.approve}} </td>
+              <td>{{claim.reject}} </td>
+              <td>{{claim.query}} </td>
+              <td>{{claim.dishonour}} </td>
+
+              <td>{{claim.myamount | currency:'':''}} </td>
+
+              <td>{{claim.dishonouramount | currency:'':''}} </td>
+              <td>{{claim.finalamount | currency:'':''}} </td>
+             </tr>
+
+            <tr *ngIf="showPegi">
+              <td>Total</td>
+              <td></td>
+              <td>{{totalApproveCount}} </td>
+              <td>{{totalApproveCount1}}</td>
+              <td>{{totalApproveCount2}}</td>
+              <td>{{totalApproveCount3}}</td>
+
+              <td>{{totalApproveCount4| currency:'':''}}</td>
+
+              <td>{{totalApproveCount5| currency:'':''}} </td>
+              <td>{{totalApproveCount6| currency:'':''}}</td>
+
+
+            </tr>
+            <tr *ngIf="!showPegi">
+              <div class="row">
+                <span style="color: red;text-align: center;position:absolute">NO DATA FOUND!!</span>
+              </div>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>

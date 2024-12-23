@@ -1,0 +1,230 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <!-- <li class="nav-item">
+                        <a routerLink="/application/OldProcessedClaimList" class="nav-link active">Claims</a>
+                    </li> -->
+                    <li class="nav-item">
+                        <a routerLink="/application/OldProcessedClaimList" routerLinkActive="active"
+                            class="nav-link active">Old Claims</a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/application/OldCLaimQueried" routerLinkActive="active"
+                            class="nav-link text-success">SNA Queried And Pending At Hospital</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="content-box">
+        <div class="col-xxl-10">
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Actual Date of Discharge From<span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="datepicker15" name="fromDate">
+                            <label class="input-group-text bg-transparent border-start-0" for="datepicker15"><i class="iconbsky-calendar"></i> </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Actual Date of Discharge To<span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="datepicker16" name="toDate">
+                            <label class="input-group-text bg-transparent border-start-0" for="datepicker16"><i class="iconbsky-calendar"></i> </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Claim Status</label><span class="text-danger">*</span>
+                        <select class="form-select" id="claimstatus"  [(ngModel)]="claimstatus" aria-label="Disabled select example" >
+                            <option value="" selected>Select Status</option>
+                            <option value="Paid">Paid</option>
+                            <option value="Rejected">Rejected</option>
+                            <option value="SNAInvestigation">SNAInvestigation</option>
+                            <option value="CPDUnprocessed">CPDUnprocessed</option>
+                            <option value="SNAApproved">SNAApproved</option>
+                            <option value="SNARejected">SNARejected</option>
+                            <option value="Approved">Approved</option>
+                            <option value="Investigation">Investigation</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">State Name<span class="text-danger">*</span></label>
+                        <select class="form-select" name="stateId" id="stateId" [(ngModel)]="stateId" (change)="OnChangeState($event.target.value)">
+                            <option value="" selected>Select State</option>
+                            <ng-container *ngFor="let item of stateList">
+                                <option value={{item.stateCode}}>{{item.stateName}}</option>
+                            </ng-container>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">District Name</label>
+                        <select class="form-select" name="districtId" id="districtId" [(ngModel)]="districtId" (change)="OnChangeDistrict($event.target.value)">
+                            <option value="" selected>Select District</option>
+                            <ng-container *ngFor="let item of districtList">
+                                <option value={{item.districtcode}}>{{item.districtname}}</option>
+                            </ng-container>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Hospital Name</label>
+                        <!-- <select class="form-select" name="hospital" id="hospital" [(ngModel)]="hospital">
+                            <option value="" selected>Select Hospital</option>
+                            <ng-container *ngFor="let item of hospitalList">
+                                <option value={{item.hospitalCode}}>{{item.hospitalName}}</option>
+                            </ng-container>
+                        </select> -->
+                        <ng-multiselect-dropdown #multiSelect [placeholder]="placeHolder" [data]="hospitalList" 
+                            [settings]="dropdownSettings"  id="hospital" 
+                            [(ngModel)]="selectedItems" (onSelect)=onItemSelect($event) (onDeSelect)="onItemDeSelect($event)"
+                            (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)">
+                        </ng-multiselect-dropdown>
+
+                    </div>
+                </div>
+                <div class="mt-2">
+                    <div class="d-grid gap-2 d-md-flex">
+                        <button type="submit" class="btn btn-success" (click)="getSnoClaimDetails()">Search</button>
+                        <button type="reset" class="btn btn-secondary" (click)="ResetField()">Reset</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    
+    <div class="row" style="margin-top: 10px;margin-bottom: 10px;" *ngIf="snoclaimlist?.length!=0">
+        <div class="col-lg-4 col-xxl-4" style="padding-top: 10px; padding-left: 20px;" >
+            show
+                <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                    <option value="150">150</option>
+                    <option value="200">200</option>
+                    <option value={{snoclaimlist?.length}}>All</option>
+                </select> entries &nbsp;&nbsp;
+        </div>
+        <div class="col-lg-4 col-xxl-4" style="text-align: right; padding-top: 3px;">
+            <button class="btn btn-outline-success btn-sm me-1" tooltip="Excel" (click)="downloadReport()">
+                <i class="bi bi-file-earmark-spreadsheet" style="font-size: 11pt;"></i>
+            </button> &nbsp;
+            <button class="btn btn-outline-danger btn-sm me-1" tooltip="pdf" (click)="downloadPdf()">
+                <i class="bi bi-file-earmark-pdf" style="font-size: 11pt;"></i>
+            </button>
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+            <div class="input-group">
+                <input type="text" id="txtsearchDate" class="form-control" placeholder="Search here..." name="txtsearchDate"
+                    [(ngModel)]="txtsearchDate" autocomplete="off">
+            </div>
+        </div>
+    </div>
+    <div class="content-box p-0 overflow-hidden" *ngIf="snoclaimlist?.length!=0">
+        <div class="table-responsive">
+            <table class="table table-striped mb-0">
+                <thead>
+                    <tr>
+                        <th width="40">Sl#</th>
+                        <th>Claim No.</th>
+                        <th>URN</th>
+                        <th>Patient Name</th>
+                        <th>Invoice No</th>
+                        <th>Hospital Name</th>
+                        <th>Hospital Code</th>
+                        <th>Date of Admission</th>
+                        <th>Actual Date of Admission</th>
+                        <th>Date of Discharge</th>
+                        <th>Actual Date of Discharge</th>
+                        <th>Claim Status</th>
+                        <th>SNA Remarks</th>
+                        <th>Approved User</th>
+                        <th>Rejected User</th>
+                        <th>Investigation User</th>
+                        <th>SNA Approved User</th>
+                        <th>SNA Rejected User</th>
+                        <th>SNA Investigation User</th>
+                        <th>SNA Final Decision User</th>
+                        <th>Paid User</th>
+                        <th>TPA Final Decision User</th>
+                        <th *ngIf="checkStatus==1">Take Action</th>
+                        <th *ngIf="checkStatus!=1">View</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let claim of snoclaimlist | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};
+                    index as i">
+                        <td *ngIf="currentPage==1">{{(i+1)}}</td>
+                        <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+ i+1}}</td>
+                        <td> {{claim.oldClaimNo}}</td>
+                        <td> {{claim.urn}}</td>
+                        <td> {{claim.patientName}}</td>
+                        <td> {{claim.invoiceNumber}}</td>
+                        <td> {{claim.hospitalname}}</td>
+                        <td> {{claim.hospitalcode}}</td>
+                        <td> {{claim.dateofadmission}}</td>
+                        <td> {{claim.actualDateOfAdmission}}</td>
+                        <td> {{claim.dateofdischarge}}</td>
+                        <td> {{claim.actualDateOfDischarge}}</td>
+                        <td> {{claim.claimstatus}}</td>
+                        <td> {{claim.snaremarks}}</td>
+                        <td> {{claim.approveduser}}</td>
+                        <td> {{claim.rejecteduser}}</td>
+                        <td> {{claim.investigationuser}}</td>
+                        <td> {{claim.snaapproveduser}}</td>
+                        <td> {{claim.snarejecteduser}}</td>
+                        <td> {{claim.snainvestigationuser}}</td>
+                        <td> {{claim.snafinaldecisionuser}}</td>
+                        <td> {{claim.paiduser}}</td>
+                        <td> {{claim.tpafinaldecisionuser}}</td>
+                        <td class="text-center" *ngIf="checkStatus==1">
+                            <a class="btn btn-outline-success btn-sm" (click)="onAction(claim.transactionDetailsId,claim.urn,claim.transid)">Action</a>
+                        </td>
+                        <td class="text-center" *ngIf="checkStatus!=1">
+                            <a class="btn btn-outline-success btn-sm" (click)="onAction(claim.transactionDetailsId,claim.urn,claim.transid)">View</a>
+                        </td>
+                        <!-- <td class="text-center" *ngIf="claim.claimstatus!='SNARejected'">--</td> -->
+                    </tr>
+                    <tr  *ngIf="snoclaimlist?.length==0">
+                        <div class="row">
+                            <span style="color: red;text-align: center;position:absolute">NO DATA FOUND!!</span>
+                        </div>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 20px;" *ngIf="snoclaimlist?.length!=0">
+        <div class="col-sm-6">
+            <div class="col-sm-*">
+                show
+                <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                    <option value="150">150</option>
+                    <option value="200">200</option>
+                    <option value={{snoclaimlist?.length}}>All</option>
+                </select> entries
+            </div>
+        </div>
+        <div class="col-sm-6 text-right">
+            <pagination-controls id="listing_pagination" [maxSize]="20" [directionLinks]="true" (pageChange)="currentPage = $event" (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+        </div>
+
+    </div>
+</div>

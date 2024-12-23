@@ -1,0 +1,27 @@
+[
+      {
+        "pagetitle":"Manage Document",
+        "tabList":[{"tabName":"Add Documents","tabUrl":"../addDocumentConfig","tabClass":"active"}
+                  ],
+        "utils":[
+          {"utilName":"mandatory"},
+          {"utilName":"back"}
+         
+         
+          ],
+        "messages":{
+          "successMsg":"Date saved successfully",
+          "errorMsg":"Error in database",
+          "warningtype":"You want to delete this record",
+          "deleteMsg":"Record has been deleted",
+          "modulename":"Select Module Name",
+          "formname":"Select Form Name",
+          "msgdocname":"Document name cant be Blank",
+          "msgfileSize":"File size cant be Blank",
+          "msgsizetype":"Select file size type",
+          "msgFileName":"File name cant be Blank"
+        }
+      }
+    ]
+
+

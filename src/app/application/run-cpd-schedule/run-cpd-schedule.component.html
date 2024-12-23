@@ -1,0 +1,42 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/runcpdschedule" routerLinkActive="active" class="nav-link active">Run CPD Schedule</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="content-box">
+        <form>
+            <div class="row">
+                <div class="col-xxl-12">
+                    <form [formGroup]="SearchForm">
+                        <div class="row">
+                            <div class="col-lg-12 col-xxl-12 text-center">
+                                <div style="font-size: 28px;">
+                                    Total Case to be Assign: <span style="color:red">{{data}}</span>
+                                    <!-- Total Case to be Assign: <span style="color:red" [(ngModel)]="runcpdscdl.data1"></span> -->
+                                    <!-- Total Case to be Assign: <span style="color:red" [(runcpdscdl)]="data1"></span> -->
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-xxl-12 text-center">
+                                <button type="submit" class="btn btn-success mt-4" style="padding: 10px 25px 10px 25px;" (click)="runcpdscheduleFresh()">RUN  Fresh Claim</button>&nbsp;
+                                <button type="submit" class="btn btn-success mt-4" style="padding: 10px 25px 10px 25px;" (click)="runcpdscheduleDishonor()">RUN  Dishonored</button>&nbsp;
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+    
+

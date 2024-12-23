@@ -1,0 +1,33 @@
+[
+      {
+        "pagetitle":"Add Message Engine",
+        "tabList":[
+      
+          {"tabName":"Add New","tabUrl":"","tabClass":"active add d-none"},
+                    {"tabName":"Edit","tabUrl":"","tabClass":"active edit d-none"}
+                  
+                  ],
+        "utils":[
+          {"utilName":"mandatory"},
+          {"utilName":"back"}
+         
+          ],
+        "messages":{
+          "successMsg":"New Message Generated Successfully",
+          "updatesuccessMsg":"Updated Successfully",
+          "errorMsg":"Error in Message creation",
+          "configtype":"Please a Select Message Configtype",
+          "formnames":"Please a Select Form Name",
+          "smsTempId":"Please Enter smsTempId",
+          "messageType":"Please Select a Message Type", 
+          "eventType":"Please Select a Event ",  
+          "smsSubject":"Please Enter SMS Subject",   
+          "smscontent":"Please Enter SMS content",
+          "intMailTemplate":"Please Select a Template",
+          "intDocumentType":"Please Select a Document Type",
+          "vchDocument":"Please Choose a Document"
+         }
+      }
+    ]
+
+

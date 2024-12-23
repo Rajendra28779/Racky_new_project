@@ -1,0 +1,318 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/revertedfloatdetails" routerLinkActive="active" class="nav-link active">Float Details</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-6 ">
+                <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 5px; margin-bottom: 5px;">
+        <label class="control-label"><strong>Float Number: {{floatNumber}}</strong></label>
+    </div>
+    <div class="row" style="margin-bottom: 10px; margin-top: 0px;">
+        <!-- <div class="d-flex justify-content-between py-1"> -->
+        <!-- <div class="col-lg-4 col-xxl-4" style="padding-top: 10px; padding-left: 12px;"> -->
+        <div class="col-lg-3 col-xxl-3">
+            <label class="control-label">Search By</label>
+            <select class="form-select" name="search" id="search" [(ngModel)]="searchTypeId" (change)="selectEvent($event.target.value)">
+              <option value="1">All</option>
+              <!-- <option value="2">Less Approved Amount</option> -->
+              <option value="4">Bulk Approved</option>
+              <option value="5">CPD Approved cases</option>
+              <option value="6">CPD Rejected cases</option>
+              <option value="7">CPD Un-processed Cases</option>
+              <option value="8">Query by CPD</option>
+              <option value="9">Reclaimed cases</option>
+              <option value="10">Query by SNA</option>
+              <option value="2">Remark by FO</option>
+              <option value="15">Non Observation Action</option>
+              <option value="11">Remark by Joint CEO</option>
+              <option value="12">Remark by Internal Auditor</option>
+              <option value="13">Remark by DY CEO</option>
+              <option value="14">Remark by CEO</option>
+          </select>
+        </div>
+        <div class="col-lg-2 col-xxl-2">
+            <label class="control-label">Search User By</label>
+            <select class="form-select" name="searchUser" id="searchUser" (change)="selectUserEvent($event)">
+            <option value="1">All</option>
+            <option value="2">Finance Oficer</option>
+            <option value="3">Internal Auditor</option>
+        </select>
+        </div>
+        <div class="col-lg-3 col-xxl-3">
+            <label class="control-label">Search By Remark</label>
+            <!-- <select class="form-select" name="search" id="search" (change)="filterFloatDetails($event)">
+            <option value="" selected>All</option>
+            <option *ngFor="let item of foremarkList" [value]="item.remarkid">{{item.remark}}</option>
+        </select> -->
+            <ng-multiselect-dropdown #multiSelect [placeholder]="placeHolder" [data]="foremarkList" [settings]="dropdownSettings" id="selectRemark" [(ngModel)]="selectedItems" (onSelect)=onItemSelect($event) (onDeSelect)="onItemDeSelect($event)" (onSelectAll)="onSelectAll($event)"
+                (onDeSelectAll)="onDeSelectAll($event)">
+            </ng-multiselect-dropdown>
+        </div>
+        <div class="col-lg-2 col-xxl-2" [align]="'start'" style="padding-top: 11px;">
+            <div class="form-group">
+                <button class="btn btn-outline-success btn-sm me-1" (click)="downloadReport('excel')">
+                  <i class="bi bi-file-earmark-spreadsheet" style="font-size: 13pt;"></i>
+              </button> &nbsp;
+                <button class="btn btn-outline-danger btn-sm me-1" (click)="downloadReport('pdf')">
+                  <i class="bi bi-file-earmark-pdf" style="font-size: 13pt;"></i>
+              </button>
+            </div>
+        </div>
+        <div class="col-lg-2 col-xxl-2" style="padding-top: 10px; padding-left: 17px;">
+            <input type="text " id="txtsearchDate " name="txtsearchDate " [(ngModel)]="txtsearchDate" maxlength="20 " class="form-control " placeholder="Search here...... " autocomplete="off" maxlength="50">
+        </div>
+        <!-- </div> -->
+    </div>
+    <div class="content-box p-0 overflow-hidden">
+        <div class="table-responsive">
+            <table class="table table-sm mb-0">
+                <thead>
+                    <tr>
+                        <th>Sl No</th>
+                        <th>Hospital Code</th>
+                        <th>Hospital Name</th>
+                        <th>District</th>
+                        <th>GJAY Incentive Status </th>
+                        <th>URN</th>
+                        <th>Invoice No</th>
+                        <th>Claim No</th>
+                        <th>Case No</th>
+                        <th>Patient Name</th>
+                        <th>Gender</th>
+                        <th>Package Code</th>
+                        <th>Package Cost (&#8377;)</th>
+                        <th>Package Procedure</th>
+                        <th>Actual Date Of Admission</th>
+                        <th>Actual Date Of Discharge</th>
+                        <th>Mortality (Hospital)</th>
+                        <th>Mortality (CPD)</th>
+                        <th>Hospital Claimed Amount (&#8377;)</th>
+                        <th>Implant Data</th>
+                        <th>CPD Claim Status</th>
+                        <th>CPD Remarks</th>
+                        <th>CPD Approved Amount (&#8377;)</th>
+                        <th>SNA Claim Status</th>
+                        <th>SNA Remarks</th>
+                        <th>M And E Remarks</th>
+                        <th>SNA Approved Amount(SNA/CPD) (&#8377;)</th>
+                        <!-- <th>Joint CEO Finance Remarks</th>
+                      <th>FO Remarks</th>
+                      <th>Internal Auditor Remarks (Revert Case)</th>
+                      <th>Joint CEO Finance Remarks (Revert Case)</th>
+                      <th>SNA/Nodal Officer Remark</th>
+                      <th>SNA/Nodal officer Revised Approved Amount (&#8377;)</th> -->
+                        <th *ngIf="isJCFR">Joint CEO Finance Remarks</th>
+                        <th *ngIf="isFR">FO Remarks</th>
+                        <th *ngIf="isIARRC">Internal Auditor Remarks (Revert Case)</th>
+                        <th *ngIf="isJCFRRC">Joint CEO Finance Remarks (Revert Case)</th>
+                        <th *ngIf="isNR">Nodal Officer Remark</th>
+                        <th *ngIf="isNORAM">Nodal officer Revised Approved Amount (&#8377;)</th>
+                        <th *ngIf="isJCRVA">Joint CEO Remarks (Verification again)</th>
+                        <th *ngIf="isFFR">Final FO Remarks</th>
+                        <th *ngIf="isIAR">Internal Auditor Remarks</th>
+                        <th *ngIf="isDCFR">DY. CEO Finance Remarks</th>
+                        <th *ngIf="isFJCR">Final Joint CEO Remarks</th>
+                        <th *ngIf="isCEORRC">CEO Remark Revert Case</th>
+                        <th *ngIf="isSNARRC">SNA Remark Revert Case</th>
+                        <th *ngIf="isCEOR">CEO Remark</th>
+                        <!-- <th *ngIf="isSNAFR">SNA Final Remark</th> -->
+                        <!-- <th>Joint CEO Finance Remarks (FO Verification)</th>
+                      <th>Final FO Remarks</th>
+                      <th>Internal Auditor Remarks</th>
+                      <th>DY. CEO Finance Remarks</th>
+                      <th>Final Joint CEO Remarks</th> -->
+                        <th class="text-center">Details</th>
+                        <!-- <th class="text-center">Edit</th> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let item of detailsData | filter:txtsearchDate |
+                    paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage}; index as j">
+                        <tr title="{{item.previousFloat}}" id="tags{{j}}" [ngClass]="item.colorStatus ==0? {'green':true}:item.colorStatus ==1? {'warning':true}:item.colorStatus ==2? {'primary':true}:{'default':true}">
+                            <td *ngIf="currentPage==1">{{j+1}}</td>
+                            <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+j+1}}</td>
+                            <td>{{item.hospitalCode}}</td>
+                            <td>{{item.hospitalName}}</td>
+                            <td>{{item.districtName}}</td>
+                            <td>{{item.incenticeStatus}}</td>
+                            <td>{{item.urn}}</td>
+                            <td>{{item.invoiceNo}}</td>
+                            <td>{{item.claimNo}}</td>
+                            <td>{{item.caseNo}}</td>
+                            <td>{{item.patientName}}</td>
+                            <td>{{item.gender}}</td>
+                            <td title="{{item.packageName}}"><span class="pkd">{{item.packageCode}}</span></td>
+                            <td>{{item.packageCost | currencyInr}}</td>
+                            <td>{{item.procedureName}}</td>
+                            <td>{{item.actualDateOfAdmission!=null?item.actualDateOfAdmission:"N/A"}}</td>
+                            <td>{{item.actualDateOfDischarge!=null?item.actualDateOfDischarge:"N/A"}}</td>
+                            <td>{{item.mortality?item.mortality:'N/A'}}</td>
+                            <td>{{item.cpdMortality?item.cpdMortality:'N/A'}}</td>
+                            <td *ngIf="!item.totalAmountClaimed">N/A</td>
+                            <td *ngIf="item.totalAmountClaimed">{{item.totalAmountClaimed | currencyInr}}</td>
+                            <td>{{item.implantData?item.implantData:'N/A'}}</td>
+                            <td>{{item.cpdClaimStatus?item.cpdClaimStatus:'N/A'}}</td>
+                            <td>{{item.cpdRemarks?item.cpdRemarks:'N/A'}}</td>
+                            <td *ngIf="!item.cpdApprovedAmount">N/A</td>
+                            <td *ngIf="item.cpdApprovedAmount">{{item.cpdApprovedAmount | currencyInr}}</td>
+                            <td>{{item.snaClaimStatus?item.snaClaimStatus:'N/A'}}</td>
+                            <td>{{item.snaRemarks?item.snaRemarks:'N/A'}}</td>
+                            <td>{{item.meremark}}</td>
+                            <td *ngIf="!item.snoApprovedAmount">N/A</td>
+                            <td *ngIf="item.snoApprovedAmount">{{item.snoApprovedAmount | currencyInr}}</td>
+                            <!-- <td>{{item.jointCeoRemarks?item.jointCeoRemarks:'N/A'}}</td>
+                          <td>{{item.foRemarks?item.foRemarks:'N/A'}}</td>
+                          <td>{{item.iarRevertCase?item.iarRevertCase:'N/A'}}</td>
+                          <td>{{item.jointCeoRemarksRevert?item.jointCeoRemarksRevert:'N/A'}}</td>
+                          <td>{{item.noRemarks?item.noRemarks:'N/A'}}</td>
+                          <td *ngIf="!item.noApprovedAmount">N/A</td>
+                          <td *ngIf="item.noApprovedAmount">{{item.noApprovedAmount | number}}</td> -->
+                            <td *ngIf="isJCFR">{{item.jointCeoRemarks?item.jointCeoRemarks:'N/A'}}</td>
+                            <td *ngIf="isFR">{{item.foRemarks?item.foRemarks:'N/A'}}</td>
+                            <td *ngIf="isIARRC">{{item.iarRevertCase?item.iarRevertCase:'N/A'}}</td>
+                            <td *ngIf="isJCFRRC">{{item.jointCeoRemarksRevert?item.jointCeoRemarksRevert:'N/A'}}</td>
+                            <td *ngIf="isNR">{{item.noRemarks?item.noRemarks:'N/A'}}</td>
+                            <td *ngIf="!item.noApprovedAmount && isNORAM">N/A</td>
+                            <td *ngIf="item.noApprovedAmount && isNORAM">{{item.noApprovedAmount | currencyInr}}</td>
+                            <td *ngIf="isJCRVA">{{item.jointCeoRemarksVerify?item.jointCeoRemarksVerify:'N/A'}}</td>
+                            <td *ngIf="isFFR">{{item.finalFoRemarks?item.finalFoRemarks:'N/A'}}</td>
+                            <td *ngIf="isIAR">{{item.audRemarks?item.audRemarks:'N/A'}}</td>
+                            <td *ngIf="isDCFR">{{item.dyceoRemarks?item.dyceoRemarks:'N/A'}}</td>
+                            <td *ngIf="isFJCR">{{item.jointCeoRemarksFinal?item.jointCeoRemarksFinal:'N/A'}}</td>
+                            <td *ngIf="isCEORRC">{{item.ceoremarkrevertcase?item.ceoremarkrevertcase:'N/A'}}</td>
+                            <td *ngIf="isSNARRC">{{item.snaremarkrevertcase?item.snaremarkrevertcase:'N/A'}}</td>
+                            <td *ngIf="isCEOR">{{item.ceoremark?item.ceoremark:'N/A'}}</td>
+                            <!-- <td *ngIf="isSNAFR">{{item.snafinalremark?item.snafinalremark:'N/A'}}</td> -->
+                            <!-- <td>{{item.jointCeoRemarksVerify?item.jointCeoRemarksVerify:'N/A'}}</td>
+                          <td>{{item.finalFoRemarks?item.finalFoRemarks:'N/A'}}</td>
+                          <td>{{item.audRemarks?item.audRemarks:'N/A'}}</td>
+                          <td>{{item.dyceoRemarks?item.dyceoRemarks:'N/A'}}</td>
+                          <td>{{item.jointCeoRemarksFinal?item.jointCeoRemarksFinal:'N/A'}}</td> -->
+                            <td class="text-center">
+                                <a class="btn btn-outline-success btn-sm" (click)="getActionDetails(item.claimId,item.urn,item.floatNumber)">Detail</a>
+                            </td>
+                            <!-- <td class="text-center">
+                                <a class="btn btn-outline-primary btn-sm me-1" (click)="edit1(item)">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                            </td> -->
+                        </tr>
+                    </ng-container>
+                    <tr *ngIf="detailsData?.length">
+                        <td>Total</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>{{totalApprovedAmount}}</td>
+                        <td *ngIf="isJCFR"></td>
+                        <td *ngIf="isFR"></td>
+                        <td *ngIf="isIARRC"></td>
+                        <td *ngIf="isJCFRRC"></td>
+                        <td *ngIf="isNR"></td>
+                        <td *ngIf="isNORAM"></td>
+                        <td *ngIf="isJCRVA"></td>
+                        <td *ngIf="isFFR"></td>
+                        <td *ngIf="isIAR"></td>
+                        <td *ngIf="isDCFR"></td>
+                        <td *ngIf="isFJCR"></td>
+                        <td *ngIf="isCEORRC"></td>
+                        <td *ngIf="isSNARRC"></td>
+                        <td *ngIf="isCEOR"></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr *ngIf="!detailsData?.length">
+                        <td colspan="14" align="center"><strong class="text-danger">No data found</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- <button class="btn btn-danger" id="Cancel" data-bs-dismiss="modal" aria-label="Close">Cancel</button> -->
+    <div class="row mt-3" *ngIf="showPegi ">
+        <div class="col-sm-4 ">
+            <div class="col-sm-* ">
+                show
+                <select id="pageItem" name="pageItem" class="form-select-sm" (change)="pageItemChange()">
+              <option value="50">50</option>
+              <option value="100">100</option>
+              <option value="200">200</option>
+              <option value="300">300</option>
+              <option value="400">400</option>
+              <option value={{detailsData?.length}}>All</option>
+          </select> entries
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true" (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+        </div>
+    </div>
+    <button class="btn btn-success" id="forward" (click)="forward()">Forward</button>
+</div>
+<div class="modal fade" id="modaldatabindnng" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-focus="false">
+    <div class="modal-dialog" style="max-width: 85%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button style="color: red;" type="button" #closebutton3 class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Sl No</th>
+                            <th>FO Remark</th>
+                            <th>SNA Approved Amount</th>
+                            <th>Action ON</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container>
+                            <tr *ngFor="let item of modaldata index as j">
+                                <td *ngIf="item.fo_remarks != null">{{j+1}}</td>
+                                <td *ngIf="item.fo_remarks != null">{{item.fo_remarks}}</td>
+                                <td *ngIf="item.fo_remarks != null">{{item.APPROVEDAMOUNT| currency:'':''}}</td>
+                                <td *ngIf="item.fo_remarks != null">{{item.actionon | date:'dd-MMM-yyyy, h:mm:ss a'}}</td>
+                            </tr>
+                        </ng-container>
+                        <td colspan="16" id="vlaue">
+                            <p class="mb-0 text-center text-danger fw-bold">NO DATA FOUND!!</p>
+                        </td>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

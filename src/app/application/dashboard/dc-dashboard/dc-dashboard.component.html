@@ -1,0 +1,1341 @@
+ <!-- DC Dashboard Section -->
+<div >
+<div id="contentData" class="content content-box">
+    <div class="dashboard-sts">
+        <div class="main-tab">
+            <div class="row justify-content-between">
+                <div class="col-lg-12">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item"><a routerlinkactive="active" class="nav-link active"> DC Dashboard </a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+     <!-- Dc Investigation Section -->
+
+        <div class="col-xxl-12 col-xl-12 col-lg-12">
+            <div class="d-flex justify-content-end">
+                <!-- <div class="me-3 tab-n"> -->
+                <!-- <img src="../../../../assets/img/statistics.png" (click)="graphToggle(1)" title="Graph view" /> -->
+                <!-- <button class="btn btn-danger btn-sm mb-2" type="submit" id="demo" (click)="openPDF()"><i class="bi bi-file-earmark-pdf"></i></button> -->
+                <!-- </div> -->
+                <div class="me-3 tab-n"><img src="../../../../assets/img/statistics.png" (click)="graphToggle(1)" title="Graph view" /></div>
+                <div class="tab-n"><img src="../../../../assets/img/table.png" (click)="graphToggle(2)" title="Table view" /></div>
+
+                <!-- <div class="tab-n"><img src="../../../../assets/img/table.png" (click)="graphToggle(2)" title="Table view" /></div> -->
+            </div>
+        </div>
+
+        <div [class]="(graphToggleVal == 2) ? 'row display_none' : 'row'">
+            <div class="col-xxl-6 col-xl-6 col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-4">
+                <div class="border h-100 fixed-h">
+                    <div class="row mb-4">
+                        <div class="col-xxl-4 col-xl-4 col-lg-5 col-md-5 col-sm-5 col-12">
+                            <div class="new-dash">
+                                <h3>DC Investigation</h3>
+                            </div>
+                        </div>
+
+                        <div class="col-xxl-8 col-xl-8 col-lg-7 col-md-7 col-sm-7 col-12">
+                            <div class="d-block d-xl-flex d-lg-flex d-md-flex d-sm-flex d-flex justify-content-end">
+                                <!-- <div class="tag-box">As on 1st May</div> -->
+                                <div class="pr-1 pb-1 pb-xl-0 pb-lg-0 pb-md-0 pb-sm-0 pe-2">
+                                    <select class="form-select form-select-sm" id="yearId" [(ngModel)]="year" (change)="getCountDetails()">
+                                        <option *ngFor="let x of yearList" [value]="x">FY {{x}}</option>
+                                    </select>
+                                </div>
+                                <div class="pr-1 pb-1 pb-xl-0 pb-lg-0 pb-md-0 pb-sm-0">
+                                    <select class="form-select form-select-sm" [(ngModel)]="month" id="monthId" (change)="getCountDetails()">
+                                        <option *ngFor="let month of monthList" [value]="month.monthId">{{month.monthName}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="chart-toll d-flex">
+                                <div class="flex-fill">
+                                    <div class="d_bigprice text-primary">{{totalWise?.total}}</div>
+
+                                    <div class="preauthdash-bl d-flex flex-row align-items-center">
+                                        <div class="color-t bg-primary me-2"></div>
+                                        <div class="flex-grow-1 bd-highlight">Total</div>
+                                    </div>
+                                </div>
+                                <div class="flex-fill">
+                                    <div class="d_bigprice text-successnew">{{totalWise?.approved}}</div>
+                                    <div class="preauthdash-bl d-flex flex-row align-items-center">
+                                        <div class="color-t bg-success me-2"></div>
+                                        <div class="flex-grow-1 bd-highlight">Approved</div>
+                                    </div>
+                                </div>
+                                <div class="flex-fill">
+                                    <div class="d_bigprice text-warningnew">{{totalWise?.pending}}</div>
+                                    <div class="preauthdash-bl d-flex flex-row align-items-center">
+                                        <div class="color-t bg-warning me-2"></div>
+                                        <div class="flex-grow-1 bd-highlight">Pending</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-12">
+                                <figure class="highcharts-figure">
+                                    <div id="column-chart" class="highchart_sec"></div>
+                                </figure>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xxl-6 col-xl-6 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="border mb-4 fixed-h">
+
+                    <div class="row mb-4">
+                        <div class="col-xxl-4 col-xl-3 col-lg-5 col-md-5 col-sm-5 col-12">
+                            <div class="new-dash">
+                                <h3>Referral</h3>
+                            </div>
+                        </div>
+
+                        <div class="col-xxl-8 col-xl-9 col-lg-7 col-md-7 col-sm-7 col-12">
+
+                            <div class="d-block d-xl-flex d-lg-flex d-md-flex d-sm-flex justify-content-end">
+                                <div class="pr-1 pb-1 pb-xl-0 pb-lg-0 pb-md-0 pb-sm-0 pe-2">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control border-end-0 datepicker form-control-sm" id="fromDate" name="fromDate" placeholder="From Date"  autocomplete="off">
+                                        <label class="input-group-text bg-transparent border-start-0" for="fromDate"><i class="iconbsky-calendar"></i> </label>
+                                    </div>
+
+                                </div>
+                                <div class="pr-1 pb-1 pb-xl-0 pb-lg-0 pb-md-0 pb-sm-0 pe-2">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control border-end-0 datepicker form-control-sm" id="toDate" name="toDate" placeholder="To Date"  autocomplete="off">
+                                        <label class="input-group-text bg-transparent border-start-0" for="toDate"><i class="iconbsky-calendar"></i> </label>
+                                    </div>
+                                </div>
+                                <div class="pr-1 pb-1 pb-xl-0 pb-lg-0 pb-md-0 pb-sm-0 col-xxl-4">
+                                    <select class="form-select form-select-sm" name="hospitalcode" id="hospitalcode" [(ngModel)]="hospitalId" (change)="getDCOverRideCount()">
+                                        <option value="" selected>Select Hospital</option>
+                                        <option *ngFor="let c of hospitalList" [value]="c.hospital_code">{{c.hospital_name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 border-end">
+                                <div class="row bottom-gap">
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                                        <label class="d_bigprice text-warningnew"> {{DCOverrideTotal?.rfNonAuth}}</label>
+                                        <div class="d_pricesmall">Non-Authenticate</div>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                                        <div class="progress-warning">{{DCOverrideTotal?.percentagerfNonAuth}}%</div>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-warning" role="progressbar" aria-label="Success example" [style.width.%]="DCOverrideTotal?.percentagerfNonAuth" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="row bottom-gap">
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                                        <label class="d_bigprice text-successnew">{{DCOverrideTotal?.rfAuth}}</label>
+                                        <div class="d_pricesmall">Authenticate</div>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                                        <div class="progress-success">{{DCOverrideTotal?.percentagerfAuth}}%</div>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-success" role="progressbar" aria-label="Success example" [style.width.%]="DCOverrideTotal?.percentagerfAuth" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                   <div class="border-top mt-4 mb-4"></div>
+
+                    <div class="row mb-4">
+                        <div class="col-xxl-4 col-xl-4 col-lg-5">
+                            <div class="new-dash">
+                                <h3>Override</h3>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="row">
+                                    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 border-end">
+                                        <div class="row bottom-gap">
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                                                <label class="d_bigprice text-warningnew"> {{DCOverrideTotal?.ovpending}}</label>
+                                                <div class="d_pricesmall">Pending</div>
+                                            </div>
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                                                <div class="progress-warning">{{DCOverrideTotal?.percentageovpending}}%</div>
+                                                <div class="progress">
+                                                    <div class="progress-bar bg-warning" role="progressbar" aria-label="Success example" [style.width.%]="DCOverrideTotal?.percentageovpending" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                        <div class="row bottom-gap">
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                                                <label class="d_bigprice text-successnew"> {{DCOverrideTotal?.ovapproved}}</label>
+                                                <div class="d_pricesmall">Approved</div>
+                                            </div>
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                                                <div class="progress-success">{{DCOverrideTotal?.percentageovapproved}}%</div>
+                                                <div class="progress">
+                                                    <div class="progress-bar bg-success" role="progressbar" aria-label="Success example" [style.width.%]="DCOverrideTotal?.percentageovapproved" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+     <!-- Dc Investigation Section -->
+
+
+     <!-- Dc Investigation table view -->
+
+        <div [class]="(graphToggleVal == 1) ? 'row display_none' : 'row'">
+            <div class="col-xxl-6 col-xl-6 col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-4">
+                <div class="border h-100 fixed-h">
+                    <div class="row">
+                        <div class="col-xxl-4 col-xl-4 col-lg-5 col-md-5 col-sm-5 col-12 mb-4">
+                            <div class="new-dash">
+                                <h3>DC Investigation</h3>
+                            </div>
+                        </div>
+
+                        <div class="col-xxl-8 col-xl-8 col-lg-7 col-md-7 col-sm-7 col-12">
+                            <div class="d-block d-xl-flex d-lg-flex d-md-flex d-sm-flex d-flex justify-content-end">
+                                <div class="pr-1 pb-1 pb-xl-0 pb-lg-0 pb-md-0 pb-sm-0 pe-2">
+                                    <select class="form-select form-select-sm" id="dcyear" [(ngModel)]="dcyear" (change)="getTblCountDetails()">
+                                        <option *ngFor="let x of yearList" [value]="x">FY {{x}}</option>
+                                    </select>
+                                </div>
+                                <div class="pr-1 pb-1 pb-xl-0 pb-lg-0 pb-md-0 pb-sm-0">
+                                    <select class="form-select form-select-sm" [(ngModel)]="dcmonth" id="dcmonth" (change)="getTblCountDetails()">
+                                        <option *ngFor="let month of monthList" [value]="month.monthId">{{month.monthName}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="dc-custom-tbl">
+                                    <div class="table-responsive">
+                                        <table class="table table-sm mb-0 table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Hospital Name</th>
+                                                    <th scope="col" class="text-center">Pending</th>
+                                                    <th scope="col" class="text-center">Approved</th>
+                                                    <th scope="col" class="text-center">Total</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let claim of DCTblCount">
+                                                    <td class="skill-txt border-end-0">{{claim.hospitalName}}</td>
+                                                    <td align="center" class="text-warning fw-500 border-end-0">{{claim.pending}}</td>
+                                                    <td align="center" class="text-success fw-500 border-end-0">{{claim.approved}}</td>
+                                                    <td align="center" class="border-end-0"><b> {{claim.total}} </b></td>
+                                                </tr>
+
+                                                <!-- <tr>
+                                                    <td class="skill-txt border-end-0">Apollo Hospital</td>
+                                                    <td align="center" class="text-warning fw-500 border-end-0">40</td>
+                                                    <td align="center" class="text-success fw-500 border-end-0">32</td>
+                                                    <td align="center" class="border-end-0"><b> 80 </b></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td class="skill-txt border-end-0">Kalinga Hospital</td>
+                                                    <td align="center" class="text-warning fw-500 border-end-0">40</td>
+                                                    <td align="center" class="text-success fw-500 border-end-0">32</td>
+                                                    <td align="center" class="border-end-0"><b> 80 </b></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td class="skill-txt border-end-0">Aditya Hospital</td>
+                                                    <td align="center" class="text-warning fw-500 border-end-0">40</td>
+                                                    <td align="center" class="text-success fw-500 border-end-0">32</td>
+                                                    <td align="center" class="border-end-0"><b> 80 </b></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td class="skill-txt border-end-0">Utkal Hospital</td>
+                                                    <td align="center" class="text-warning fw-500 border-end-0">40</td>
+                                                    <td align="center" class="text-success fw-500 border-end-0">32</td>
+                                                    <td align="center" class="border-end-0"><b> 80 </b></td>
+                                                </tr> -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xxl-6 col-xl-6 col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-4">
+                <div class="border h-100 fixed-h">
+                    <div class="row">
+                        <div class="col-xxl-4 col-xl-5 col-lg-5 col-md-5 col-sm-5 col-12 mb-4">
+                            <div class="new-dash">
+                                <h3>DC Override & Referral</h3>
+                            </div>
+                        </div>
+
+                        <div class="col-xxl-8 col-xl-7 col-lg-7 col-md-7 col-sm-7 col-12">
+                            <div class="d-block d-xl-flex d-lg-flex d-md-flex d-sm-flex d-flex justify-content-end">
+                                <div class="pr-1 pb-1 pb-xl-0 pb-lg-0 pb-md-0 pb-sm-0 pe-2">
+                                    <select class="form-select form-select-sm" id="ovyear" [(ngModel)]="ovyear" (change)="getTblOverCountDetails()">
+                                        <option *ngFor="let x of yearList" [value]="x">FY {{x}}</option>
+                                    </select>
+                                </div>
+                                <div class="pr-1 pb-1 pb-xl-0 pb-lg-0 pb-md-0 pb-sm-0">
+                                    <select class="form-select form-select-sm" [(ngModel)]="ovmonth" id="ovmonth" (change)="getTblOverCountDetails()">
+                                        <option *ngFor="let month of monthList" [value]="month.monthId">{{month.monthName}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="new-custom-tbl">
+                                    <div class="table-responsive">
+                                        <table width="100%" class="table table-sm mb-0">
+                                            <tr>
+                                                <th rowspan="2" width="30%">Hospital Name</th>
+                                                <th colspan="2" class="text-center">Override</th>
+                                                <th colspan="2" class="border-end-0 text-center" align="center">Referal</th>
+                                            </tr>
+
+                                            <tr class="border-bottom">
+                                                <th class="border-end-0 text-center">Peding</th>
+                                                <th class="text-center">Approved</th>
+                                                <th class="border-end-0 text-center">Non-Authenticate</th>
+                                                <th class="border-end-0 text-center">Authenticate</th>
+                                            </tr>
+
+                                            <tr *ngFor="let claim of DCOverrideCount">
+                                                <td class="skill-txt">{{claim.hospitalName}}</td>
+                                                <td class="text-warning fw-500 border-end-0" align="center">{{claim.ovpending}}</td>
+                                                <td class="text-success fw-500" align="center">{{claim.ovapproved}}</td>
+                                                <td class="text-warning fw-500 border-end-0" align="center">{{claim.rfAuth}}</td>
+                                                <td class="text-success fw-500 border-end-0" align="center">{{claim.rfNonAuth}}</td>
+                                            </tr>
+                                            <!-- <tr>
+                                                <td class="skill-txt">Apollo Hospital</td>
+                                                <td class="text-warning fw-500 border-end-0" align="center">40</td>
+                                                <td class="text-success fw-500" align="center">40</td>
+                                                <td class="text-warning fw-500 border-end-0" align="center">32</td>
+                                                <td class="text-success fw-500 border-end-0" align="center">80</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Kalinga Hospital</td>
+                                                <td class="text-warning fw-500 border-end-0" align="center">40</td>
+                                                <td class="text-success fw-500" align="center">40</td>
+                                                <td class="text-warning fw-500 border-end-0" align="center">32</td>
+                                                <td class="text-success fw-500 border-end-0" align="center">80</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="skill-txt">Aditya Hospital</td>
+                                                <td class="text-warning fw-500 border-end-0" align="center">40</td>
+                                                <td class="text-success fw-500" align="center">40</td>
+                                                <td class="text-warning fw-500 border-end-0" align="center">32</td>
+                                                <td class="text-success fw-500 border-end-0" align="center">80</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="skill-txt">Utkal Hospital</td>
+                                                <td class="text-warning fw-500 border-end-0" align="center">40</td>
+                                                <td class="text-success fw-500" align="center">40</td>
+                                                <td class="text-warning fw-500 border-end-0" align="center">32</td>
+                                                <td class="text-success fw-500 border-end-0" align="center">80</td>
+                                            </tr> -->
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <!-- Dc Investigation table view -->
+
+    <!-- Empaneled Section -->
+            <div class="row">
+                <div class="col-xxl-6 col-xl-6 col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-4">
+                    <div class="border h-100 fixed-h">
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12 mb-4">
+                                <div class="new-dash">
+                                    <h3>Empanelment Hospital <span> (With In State) </span></h3>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <div class="row d-flex align-items-center">
+                                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-6">
+                                            <div class="d_bigprice">{{EmpCountTotal?.AssignedForInv}}</div>
+                                            <div class="d_pricesmall">Assigned for Investigation</div>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-6 border-start border-end text-center gap-row">
+                                            <div class="d_bigprice">{{EmpCountTotal?.Investigated}}</div>
+                                            <div class="d_pricesmall">Investigated</div>
+
+                                            <div class="border-top mt-3 mb-3"></div>
+
+                                            <div class="d_bigprice fs-16">{{EmpCountTotal?.QueryToBeRespond}}</div>
+                                            <div class="d_pricesmall">Query to be responded</div>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-xs-6 gap-row">
+                                            <div class="d_bigprice">{{EmpCountTotal?.PendingForInv}}</div>
+                                            <div class="d_pricesmall">Pending for Investigation</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="border-top mt-3 mb-3"></div>
+
+                                    <div class="row">
+                                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 border-end">
+                                            <div class="d_bigprice">{{EmpCountTotal?.Approved}}</div>
+                                            <div class="d_pricesmall">Approved</div>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 border-end gap-row">
+                                            <div class="d_bigprice">{{EmpCountTotal?.Reject}}</div>
+                                            <div class="d_pricesmall">Rejected</div>
+                                        </div>
+                                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 gap-row">
+                                            <div class="d_bigprice">{{EmpCountTotal?.SentForReSubmit}}</div>
+                                            <div class="d_pricesmall">Re-Submission</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    </div>
+                </div>
+
+                <div class="col-xxl-6 col-xl-6 col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-4">
+                    <div class="border h-100 fixed-h">
+                        <div class="row">
+                            <div class="col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-5 col-12 mb-3">
+                                <div class="new-dash">
+                                    <h3>Grievance</h3>
+                                </div>
+                            </div>
+
+                            <div class="col-xxl-7 col-xl-7 col-lg-7 col-md-7 col-sm-7 col-12">
+                                <div class="d-flex justify-content-end">
+                                    <div class="me-3 tab-n"><img src="../../../../assets/img/statistics.png" (click)="empaneltoggle(1)" title="Graph view" /></div>
+                                    <div class="tab-n"><img src="../../../../assets/img/table.png" (click)="empaneltoggle(2)" title="Table view" /></div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    <!-- empanel graph view -->
+                        <div [class]="(empaneltoggleVal == 2) ? 'row display_none' : 'row'">
+
+                            <div class="card-body">
+                                <div class="chart-toll d-flex row">
+                                    <div class="col-xl-12">
+                                        <div class="row mb-3">
+                                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 border-end">
+                                                <div class="d_bigprice">{{DcGrievanceTotal?.Total}}</div>
+                                                <div class="d_pricesmall">Total</div>
+                                            </div>
+
+                                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 border-end gap-row">
+                                                <div class="d_bigprice text-primary">{{DcGrievanceTotal?.Action}}</div>
+                                                <div class="d_pricesmall">Action</div>
+                                            </div>
+
+                                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 gap-row">
+                                                <div class="d_bigprice text-warning">{{DcGrievanceTotal?.Pending}}</div>
+                                                <div class="d_pricesmall">Pending</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xl-12">
+                                    <figure class="highcharts-figure">
+                                        <div id="column-chartnew" class="highchart_stack"></div>
+                                    </figure>
+                                </div>
+                            </div>
+
+                        </div>
+                    <!-- empanel graph view -->
+
+
+                    <!-- empanel table view -->
+                        <div [class]="(empaneltoggleVal == 1) ? 'row display_none' : 'row'">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <div class="new-custom-tbl">
+                                        <div class="table-responsive">
+                                            <table width="100%" class="table table-sm mb-0">
+                                                <tr class="border-bottom">
+                                                    <th width="30%">Grievance By</th>
+                                                    <th class="text-center">Action</th>
+                                                    <th class="text-center">Pending</th>
+                                                    <th class="text-center border-end-0">Total</th>
+                                                </tr>
+
+                                                <tr *ngFor="let claim of DCGrievanceTblCount">
+                                                    <td class="skill-txt">{{claim.Grievance_Name}}</td>
+                                                    <td class="text-success fw-500" align="center">{{claim.Action}}</td>
+                                                    <td class="text-warning fw-500" align="center">{{claim.Pending}}</td>
+                                                    <td class="fw-500 border-end-0" align="center">{{claim.Total}}</td>
+                                                </tr>
+                                                <!-- <tr>
+                                                    <td class="skill-txt"> Hospital </td>
+                                                    <td class="text-success fw-500" align="center">40</td>
+                                                    <td class="text-warning fw-500" align="center">40</td>
+                                                    <td class="fw-500 border-end-0" align="center">80</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="skill-txt"> Others </td>
+                                                    <td class="text-success fw-500" align="center">40</td>
+                                                    <td class="text-warning fw-500" align="center">40</td>
+                                                    <td class="fw-500 border-end-0" align="center">80</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="skill-txt"> Beneficiaries </td>
+                                                    <td class="text-success fw-500" align="center">40</td>
+                                                    <td class="text-warning fw-500" align="center">40</td>
+                                                    <td class="fw-500 border-end-0" align="center">80</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="skill-txt"> Hospital </td>
+                                                    <td class="text-success fw-500" align="center">40</td>
+                                                    <td class="text-warning fw-500" align="center">40</td>
+                                                    <td class="fw-500 border-end-0" align="center">80</td>
+                                                </tr> -->
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+
+                    <!-- empanel table view -->
+
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+
+    <!-- Empaneled Section -->
+
+     <!-- Grievance received Section -->
+
+        <div class="border mb-4 h-100 fixed-h">
+            <div class="row">
+                <div class="col-xxl-6 col-xl-6 col-lg-12 col-md-12 col-sm-12 col-xs-12 border-end pe-3">
+                    <div class="row mb-4">
+                        <div class="col-xl-12 col-lg-12">
+                            <div class="new-dash">
+                                <h3>Grievance Received On Various Modes</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body social-progressbar">
+                        <div class="row">
+                            <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-4 col-sm-4 col-xs-12 mb-2">
+                                <div class="d-flex dc-gap">
+                                    <div class="me-3"><img src="../../../../assets/img/envelope.png" /></div>
+                                    <div class="w-100">
+                                        <div class="dc-progress">
+                                            Benificiaries <span class="float-end"> <b>{{GrievanceMode?.Beneficiary}} </b> </span>
+                                        </div>
+                                        <div class="progress progress-preauth">
+                                            <div class="progress-bar bg-success" role="progressbar" [style]="getPromoStyles(GrievanceMode?.Beneficiary,GrievanceMode?.total)" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-4 col-sm-4 col-xs-12 mb-2">
+                                <div class="d-flex dc-gap">
+                                    <div class="me-3"><img src="../../../../assets/img/browser.png" /></div>
+                                    <div class="w-100">
+                                        <div class="dc-progress">
+                                            Hospital <span class="float-end"> <b>{{GrievanceMode?.Hospital}} </b> </span>
+                                        </div>
+                                        <div class="progress progress-preauth">
+                                            <div class="progress-bar bg-danger" role="progressbar" [style]="getPromoStyles(GrievanceMode?.Hospital,GrievanceMode?.total)" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-4 col-sm-4 col-xs-12 mb-2">
+                                <div class="d-flex dc-gap">
+                                    <div class="me-3"><img src="../../../../assets/img/envelope-new.png" /></div>
+                                    <div class="w-100">
+                                        <div class="dc-progress">
+                                            E-mail/Letter <span class="float-end"> <b>{{GrievanceMode?.Email}} </b> </span>
+                                        </div>
+                                        <div class="progress progress-preauth">
+                                            <div class="progress-bar bg-warning" role="progressbar" [style]="getPromoStyles(GrievanceMode?.Email,GrievanceMode?.total)" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-4 col-sm-4 col-xs-12 mb-2">
+                                <div class="d-flex dc-gap">
+                                    <div class="me-3"><img src="../../../../assets/img/group.png" /></div>
+                                    <div class="w-100">
+                                        <div class="dc-progress">
+                                            Mo Sarkar <span class="float-end"> <b>{{GrievanceMode?.Mo_Sarkar}} </b> </span>
+                                        </div>
+                                        <div class="progress progress-preauth">
+                                            <div class="progress-bar bg-success" role="progressbar" [style]="getPromoStyles(GrievanceMode?.Mo_Sarkar,GrievanceMode?.total)" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-4 col-sm-4 col-xs-12 mb-2">
+                                <div class="d-flex dc-gap">
+                                    <div class="me-3"><img src="../../../../assets/img/newspaper-folded.png" /></div>
+                                    <div class="w-100">
+                                        <div class="dc-progress">
+                                            Newspaper <span class="float-end"> <b>{{GrievanceMode?.News_Paper}} </b> </span>
+                                        </div>
+                                        <div class="progress progress-preauth">
+                                            <div class="progress-bar bg-danger" role="progressbar" [style]="getPromoStyles(GrievanceMode?.News_Paper,GrievanceMode?.total)" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-4 col-sm-4 col-xs-12 mb-2">
+                                <div class="d-flex dc-gap">
+                                    <div class="me-3"><img src="../../../../assets/img/browser.png" /></div>
+                                    <div class="w-100">
+                                        <div class="dc-progress">
+                                            Social Media <span class="float-end"> <b>{{GrievanceMode?.Social_Media}} </b> </span>
+                                        </div>
+                                        <div class="progress progress-preauth">
+                                            <div class="progress-bar bg-warning" role="progressbar" [style]="getPromoStyles(GrievanceMode?.Social_Media,GrievanceMode?.total)" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xxl-6 col-xl-6 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+
+                    <div [class]="(graphresolvedVal == 2) ? 'card-body display_none' : 'card-body'">
+
+                        <div class="row">
+                            <div class="col-xl-7 col-lg-7 mb-4">
+                                <div class="new-dash">
+                                    <h3>Grievance Received Vs Resolved</h3>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-5 col-lg-5">
+                                <div class="d-flex justify-content-end">
+                                    <div class="me-3 tab-n"><img src="../../../../assets/img/statistics.png" (click)="graphresolved(1)" /></div>
+                                    <div class="tab-n"><img src="../../../../assets/img/table.png" (click)="graphresolved(2)" /></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="col-xl-12">
+                                    <figure class="highcharts-figure">
+                                        <div id="line-chart" class="highchart_column"></div>
+                                    </figure>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div [class]="(graphresolvedVal == 1) ? 'card-body display_none' : 'card-body'">
+
+                        <div class="row">
+                            <div class="col-xl-7 col-lg-7 mb-4">
+                                <div class="new-dash">
+                                    <h3>Hospital Wise Grievance Received </h3>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-5 col-lg-5">
+                                <div class="d-flex justify-content-end">
+                                    <div class="me-3 tab-n"><img src="../../../../assets/img/statistics.png" (click)="graphresolved(1)" /></div>
+                                    <div class="tab-n"><img src="../../../../assets/img/table.png" (click)="graphresolved(2)" /></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="dc-custom-tbl">
+                                    <div class="table-responsive">
+                                        <table class="table table-sm mb-0 table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Hospital Name</th>
+                                                    <th scope="col" align="right" class="text-end"><img src="../../../../assets/img/envelope.png" title="Benificiaries" /></th>
+                                                    <th scope="col" align="right" class="text-end"><img src="../../../../assets/img/browser.png" title="Hospital" /></th>
+                                                    <th scope="col" align="right" class="text-end"><img src="../../../../assets/img/envelope-new.png" title="E-mail/Letter" /></th>
+                                                    <th scope="col" align="right" class="text-end"><img src="../../../../assets/img/group.png" title="Mo Sarkar" /></th>
+                                                    <th scope="col" align="right" class="text-end"><img src="../../../../assets/img/newspaper-folded.png" title="Newspaper" /></th>
+                                                    <th scope="col" align="right" class="text-end"><img src="../../../../assets/img/browser.png" title="Social Media" /></th>
+
+                                                    <th scope="col" align="right" class="text-end">Total</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let claim of GrievanceResolvedTbl">
+                                                    <td class="skill-txt">{{claim.hospitalname}}</td>
+                                                    <td align="right">{{claim.Beneficiary}}</td>
+                                                    <td align="right">{{claim.Hospital}}</td>
+                                                    <td align="right">{{claim.Email}}</td>
+                                                    <td align="right">{{claim.Mo_Sarkar}}</td>
+                                                    <td align="right">{{claim.News_Paper}}</td>
+                                                    <td align="right">{{claim.Social_Media}}</td>
+                                                    <td align="right"><b>{{claim.total}}</b></td>
+                                                </tr>
+                                                <!-- <tr>
+                                                    <td class="skill-txt">Apollo Hospital</td>
+                                                    <td align="right">40</td>
+                                                    <td align="right">32</td>
+                                                    <td align="right">32</td>
+                                                    <td align="right">32</td>
+                                                    <td align="right">32</td>
+                                                    <td align="right">32</td>
+
+                                                    <td align="right"><b>80 </b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="skill-txt">Kalinga Hospital</td>
+                                                    <td align="right">40</td>
+                                                    <td align="right">32</td>
+                                                    <td align="right">32</td>
+                                                    <td align="right">32</td>
+                                                    <td align="right">32</td>
+                                                    <td align="right">32</td>
+
+                                                    <td align="right"><b>80 </b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="skill-txt">Aditya Hospital</td>
+                                                    <td align="right">40</td>
+                                                    <td align="right">32</td>
+                                                    <td align="right">32</td>
+                                                    <td align="right">32</td>
+                                                    <td align="right">32</td>
+                                                    <td align="right">32</td>
+
+                                                    <td align="right"><b>80 </b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="skill-txt">Utkal Hospital</td>
+                                                    <td align="right">40</td>
+                                                    <td align="right">32</td>
+                                                    <td align="right">32</td>
+                                                    <td align="right">32</td>
+                                                    <td align="right">32</td>
+                                                    <td align="right">32</td>
+
+                                                    <td align="right"><b>80 </b></td>
+                                                </tr> -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+     <!-- Grievance received Section -->
+
+
+
+
+     <!-- CCE Outbound Call Section -->
+     <div class="border mb-4 h-100">
+        <div class="row">
+           <div class="col-xxl-7 col-xl-7 col-lg-12 col-md-12 col-sm-12 col-xs-12 border-end pe-3">
+              <div class="row mb-4">
+                 <div class="col-xl-12 col-lg-12">
+                    <div class="new-dash">
+                       <h3> Call Center Executive - CCE </h3>
+                    </div>
+                 </div>
+              </div>
+
+              <div class="card-body">
+                 <div class="row border-bottom pb-3">
+                    <div class="col-xxl-4 col-xl-4 col-lg-4 border-end gap-remove">
+                       <ul class="selling-list">
+                          <li>
+                             <div class="prc-sec">
+                                <div class="icon"><img src="../../../../assets/img/signal.png"></div>
+                                <div>
+                                   <div class="icon_price text-primary">{{CCECountTotal?.TotalConnect}}</div>
+                                   <div class="preauthdash-bl d-flex flex-row align-items-center">
+                                      <div class="flex-grow-1 bd-highlight">Total Call Completed</div>
+                                   </div>
+                                </div>
+                             </div>
+                          </li>
+                       </ul>
+                    </div>
+                    <div class="col-xxl-8 col-xl-8 col-lg-8 gap-remove">
+                       <div class="row">
+                          <div class="col-xxl-4 col-xl-4 col-lg-4 border-end gap-remove">
+                             <div class="d-flex">
+                                <div class="prc-sec flex-fill px-2">
+                                   <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 prc-sec d-block">
+                                      <label class="icon_price text-successnew "> {{CCECountTotal?.TotalYes}} </label>
+                                      <div class="text-secondary d_pricesmall"> Yes </div>
+                                   </div>
+                                </div>
+                                <div class="prc-sec px-2">
+                                   <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 prc-sec d-block">
+                                      <label class="icon_price text-dangernew"> {{CCECountTotal?.TotalNo}}</label>
+                                      <div class="text-secondary d_pricesmall"> No </div>
+                                   </div>
+                                </div>
+                             </div>
+                          </div>
+                          <div class="col-xxl-4 col-xl-4 col-lg-4 border-end gap-remove">
+                             <div class="prc-sec">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 prc-sec d-block">
+                                   <label class="icon_price text-successnew"> {{CCECountTotal?.TotalYesPositive}} </label>
+                                   <div class="text-secondary d_pricesmall"> Positive Response </div>
+                                </div>
+                             </div>
+                          </div>
+                          <div class="col-xxl-4 col-xl-4 col-lg-4 gap-remove">
+                             <div class="prc-sec">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 prc-sec d-block">
+                                   <label class="icon_price text-dangernew"> {{CCECountTotal?.TotalYesNegative}}</label>
+                                   <div class="text-secondary d_pricesmall"> Negative Response </div>
+                                </div>
+                             </div>
+                          </div>
+                       </div>
+                    </div>
+                 </div>
+                 <div class="row mt-4 cce-gap">
+                    <div class="col-xxl-9 col-xl-8 col-lg-8 col-md-8 col-sm-8">
+                       <div class="ques"> <b class="me-2"> Q1.</b>  Are you receiving cashless treatment under GJAY  </div>
+                    </div>
+                    <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                       <div class="wrapper">
+                          <div class="progress">
+                             <div class="progress-bar rounded-0 bg-success" role="progressbar" [style.width.%]="CCECountTotal?.Question1YesPercent" aria-valuenow="15" aria-valuemin="0" aria-valuemax="40"></div>
+                             <div class="progress-bar rounded-0 bg-danger" role="progressbar" [style.width.%]="CCECountTotal?.Question1NoPercent" aria-valuenow="30" aria-valuemin="0" aria-valuemax="60"></div>
+                          </div>
+                          <!-- hover section -->
+                          <div class="tooltip">
+                             <div class="d-flex mt-2">
+                                <div  class="preauthdash-bl d-flex align-items-center me-4">
+                                   <div  class="color-t bg-success me-2"></div>
+                                   <div  class="flex-grow-1 bd-highlight"> <b> Yes - </b> {{CCECountTotal?.Question1Yes}} </div>
+                                </div>
+                                <div  class="preauthdash-bl d-flex align-items-center">
+                                   <div  class="color-t bg-danger me-2"></div>
+                                   <div  class="flex-grow-1 bd-highlight"> <b> No - </b>  {{CCECountTotal?.Question1No}} </div>
+                                </div>
+                             </div>
+                          </div>
+                          <!-- hover section -->
+                       </div>
+                       <div class="row">
+                          <div class="d-flex justify-content-start flex-fill mb-3">
+                             <div class="flex-fill pl-3">
+                                <div class="small-dashfnt"> <span class="text-successnew"> Yes </span> | {{CCECountTotal?.Question1YesPercent}}% </div>
+                             </div>
+                             <div class="flex-fill text-end pr-3">
+                                <div class="small-dashfnt"> <span class="text-dangernew"> No </span> | {{CCECountTotal?.Question1NoPercent}}% </div>
+                             </div>
+                          </div>
+                       </div>
+                    </div>
+                    <div class="col-xxl-9 col-xl-8 col-lg-8 col-md-8 col-sm-8">
+                       <div class="ques"> <b class="me-2"> Q2.</b> Are you satisfied with service? </div>
+                    </div>
+                    <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                       <div class="wrapper">
+                          <div class="progress">
+                             <div class="progress-bar rounded-0 bg-success" role="progressbar" [style.width.%]="CCECountTotal?.Question2YesPercent" aria-valuenow="15" aria-valuemin="0" aria-valuemax="35"></div>
+                             <div class="progress-bar rounded-0 bg-danger" role="progressbar" [style.width.%]="CCECountTotal?.Question2NoPercent" aria-valuenow="30" aria-valuemin="0" aria-valuemax="55"></div>
+                          </div>
+                          <!-- hover section -->
+                          <div class="tooltip">
+                             <div class="d-flex mt-2">
+                                <div  class="preauthdash-bl d-flex align-items-center me-4">
+                                   <div  class="color-t bg-success me-2"></div>
+                                   <div  class="flex-grow-1 bd-highlight"> <b> Yes - </b> {{CCECountTotal?.Question2Yes}} </div>
+                                </div>
+                                <div  class="preauthdash-bl d-flex align-items-center">
+                                   <div  class="color-t bg-danger me-2"></div>
+                                   <div  class="flex-grow-1 bd-highlight"> <b> No - </b>  {{CCECountTotal?.Question2No}} </div>
+                                </div>
+                             </div>
+                          </div>
+                          <!-- hover section -->
+                       </div>
+                       <div class="row">
+                          <div class="d-flex justify-content-start flex-fill mb-3">
+                             <div class="flex-fill pl-3">
+                                <div class="small-dashfnt"> <span class="text-successnew"> Yes </span> | {{CCECountTotal?.Question2YesPercent}}% </div>
+                             </div>
+                             <div class="flex-fill text-end pr-3">
+                                <div class="small-dashfnt"> <span class="text-dangernew"> No </span> | {{CCECountTotal?.Question2NoPercent}}% </div>
+                             </div>
+                          </div>
+                       </div>
+                    </div>
+                    <div class="col-xxl-9 col-xl-8 col-lg-8 col-md-8 col-sm-8">
+                       <div class="ques"> <b class="me-2"> Q3.</b>  Whether you have paid any extra money for treatment under GJAY </div>
+                    </div>
+                    <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                       <div class="wrapper">
+                          <div class="progress">
+                             <div class="progress-bar rounded-0 bg-success" role="progressbar" [style.width.%]="CCECountTotal?.Question3YesPercent" aria-valuenow="15" aria-valuemin="0" aria-valuemax="60"></div>
+                             <div class="progress-bar rounded-0 bg-danger" role="progressbar" [style.width.%]="CCECountTotal?.Question3NoPercent" aria-valuenow="30" aria-valuemin="0" aria-valuemax="40"></div>
+                          </div>
+                          <!-- hover section -->
+                          <div class="tooltip">
+                             <div class="d-flex mt-2">
+                                <div  class="preauthdash-bl d-flex align-items-center me-4">
+                                   <div  class="color-t bg-success me-2"></div>
+                                   <div  class="flex-grow-1 bd-highlight"> <b> Yes - </b> {{CCECountTotal?.Question3Yes}} </div>
+                                </div>
+                                <div  class="preauthdash-bl d-flex align-items-center">
+                                   <div  class="color-t bg-danger me-2"></div>
+                                   <div  class="flex-grow-1 bd-highlight"> <b> No - </b>  {{CCECountTotal?.Question3No}} </div>
+                                </div>
+                             </div>
+                          </div>
+                          <!-- hover section -->
+                       </div>
+                       <div class="row">
+                          <div class="d-flex justify-content-start flex-fill mb-3">
+                             <div class="flex-fill pl-3">
+                                <div class="small-dashfnt"> <span class="text-successnew"> Yes </span> | {{CCECountTotal?.Question3YesPercent}}% </div>
+                             </div>
+                             <div class="flex-fill text-end pr-3">
+                                <div class="small-dashfnt"> <span class="text-dangernew"> No </span> | {{CCECountTotal?.Question3NoPercent}}% </div>
+                             </div>
+                          </div>
+                       </div>
+                    </div>
+                    <div class="col-xxl-9 col-xl-8 col-lg-8 col-md-8 col-sm-8">
+                       <div class="ques"> <b class="me-2"> Q4.</b> Did Swasthya Mitra facilitate your care </div>
+                    </div>
+                    <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                       <div class="wrapper">
+                          <div class="progress">
+                             <div class="progress-bar rounded-0 bg-success" role="progressbar" [style.width.%]="CCECountTotal?.Question4YesPercent" aria-valuenow="15" aria-valuemin="0" aria-valuemax="30"></div>
+                             <div class="progress-bar rounded-0 bg-danger" role="progressbar" [style.width.%]="CCECountTotal?.Question4NoPercent" aria-valuenow="30" aria-valuemin="0" aria-valuemax="70"></div>
+                          </div>
+                          <!-- hover section -->
+                          <div class="tooltip">
+                             <div class="d-flex mt-2">
+                                <div  class="preauthdash-bl d-flex align-items-center me-4">
+                                   <div  class="color-t bg-success me-2"></div>
+                                   <div  class="flex-grow-1 bd-highlight"> <b> Yes - </b> {{CCECountTotal?.Question4Yes}} </div>
+                                </div>
+                                <div  class="preauthdash-bl d-flex align-items-center">
+                                   <div  class="color-t bg-danger me-2"></div>
+                                   <div  class="flex-grow-1 bd-highlight"> <b> No - </b>  {{CCECountTotal?.Question4No}} </div>
+                                </div>
+                             </div>
+                          </div>
+                          <!-- hover section -->
+                       </div>
+                       <div class="row">
+                          <div class="d-flex justify-content-start flex-fill mb-3">
+                             <div class="flex-fill pl-3">
+                                <div class="small-dashfnt"> <span class="text-successnew"> Yes </span> | {{CCECountTotal?.Question4YesPercent}}% </div>
+                             </div>
+                             <div class="flex-fill text-end pr-3">
+                                <div class="small-dashfnt"> <span class="text-dangernew"> No </span> | {{CCECountTotal?.Question4NoPercent}}% </div>
+                             </div>
+                          </div>
+                       </div>
+                    </div>
+                 </div>
+              </div>
+
+
+
+           </div>
+           <div class="col-xxl-5 col-xl-5 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card-body">
+                 <div class="row">
+                    <div class="outbound-gap">
+                       <ul class="selling-list border-bottom pb-3">
+                          <li>
+                             <div class="prc-sec">
+                                <div class="icon2 border-dark"><img src="../../../../assets/img/statistics.png"></div>
+                                <div>
+                                   <div class="icon_price d_bigprice"> {{CCECountTotal?.DcTotal}} </div>
+                                   <div class="preauthdash-bl d-flex flex-row align-items-center">
+                                      <div class="flex-grow-1 bd-highlight"> Total </div>
+                                   </div>
+                                </div>
+                             </div>
+                          </li>
+                          <li>
+                             <div class="prc-sec">
+                                <div class="icon2"><img src="../../../../assets/img/pending-task.png"></div>
+                                <div>
+                                   <div class="icon_price text-warningnew"> {{CCECountTotal?.DcPending}} </div>
+                                   <div class="preauthdash-bl d-flex flex-row align-items-center">
+                                      <div class="flex-grow-1 bd-highlight">Pending</div>
+                                   </div>
+                                </div>
+                             </div>
+                          </li>
+                          <li>
+                             <div class="prc-sec">
+                                <div class="icon3"> <img src="../../../../assets/img/approved.png"> </div>
+                                <div>
+                                   <div class="icon_price text-successnew"> {{CCECountTotal?.DcAction}} </div>
+                                   <div class="preauthdash-bl d-flex flex-row align-items-center">
+                                      <div class="flex-grow-1 bd-highlight"> Action </div>
+                                   </div>
+                                </div>
+                             </div>
+                          </li>
+                       </ul>
+
+                       <div class="row d-flex justify-content-center align-items-center chart-full">
+                          <div class="col-xxl-6 col-xl-12 col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                             <div class="highcharts-figure d-flex  align-items-center h-center">
+                                <div id="pie-chart"></div>
+                             </div>
+                          </div>
+                          <div class="col-xxl-6 col-xl-12 col-lg-8 col-md-6 col-sm-6 col-xs-12 cce-sec">
+                             <div class="d-flex flex-row align-items-center mb-2">
+                                <div class="color-t bg-warning"></div>
+                                <div class="w-70 ms-2">  Support <b> (Q1 + Q2)</b> </div>
+                                <div class="flex-fill text-left"><b> {{CCECountTotal?.Support}} </b> </div>
+                             </div>
+                             <div class="d-flex flex-row align-items-center mb-2">
+                                <div class="color-t bg-primary"></div>
+                                <div class="w-70 ms-2">  Behaviour <b> (Q4)</b> </div>
+                                <div class="flex-fill text-left"><b> {{CCECountTotal?.Behaviour}} </b> </div>
+                             </div>
+                             <div class="d-flex flex-row align-items-center mb-2">
+                                <div class="color-t bg-success"></div>
+                                <div class="w-70 ms-2">  Bribe <b> (Q3)</b> </div>
+                                <div class="flex-fill text-left"><b> {{CCECountTotal?.Bribe}} </b> </div>
+                             </div>
+                          </div>
+                       </div>
+                    </div>
+                 </div>
+              </div>
+           </div>
+        </div>
+     </div>
+     <!-- CCE Outbound Call Section -->
+
+
+    <!-- CCE Outbound Call Section -->
+
+    <!-- <div class="border mb-4 h-100">
+        <div class="row">
+            <div class="col-xxl-8 col-xl-8 col-lg-12 col-md-12 col-sm-12 col-xs-12 border-end pe-3">
+                <div class="row mb-4">
+                    <div class="col-xl-12 col-lg-12">
+                        <div class="new-dash">
+                            <h3> Call Center Executive - CCE </h3>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="card-body">
+                    <div class="row">
+
+                        <ul class="selling-list">
+                            <li>
+                            <div class="prc-sec">
+                                <div class="icon"><img src="../../../../assets/img/signal.png"></div>
+                                <div>
+                                <div class="icon_price text-primary">{{CCECountTotal?.TotalConnect}}</div>
+                                <div class="preauthdash-bl d-flex flex-row align-items-center">
+                                    <div class="flex-grow-1 bd-highlight">Total Call Completed</div>
+                                </div>
+                                </div>
+                            </div>
+                            </li>
+
+                            <li>
+                                <div class="prc-sec">
+                                <div class="icon2"><img src="../../../../assets/img/pending-task.png"></div>
+                                <div>
+                                <div class="icon_price text-warningnew"> {{CCECountTotal?.DcPending}} </div>
+                                <div class="preauthdash-bl d-flex flex-row align-items-center">
+                                    <div class="flex-grow-1 bd-highlight">Pending</div>
+                                </div>
+                                </div>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="prc-sec">
+                                <div class="icon3"> <img src="../../../../assets/img/approved.png"> </div>
+                                <div>
+                                <div class="icon_price text-successnew"> {{CCECountTotal?.DcAction}} </div>
+                                <div class="preauthdash-bl d-flex flex-row align-items-center">
+                                    <div class="flex-grow-1 bd-highlight"> Action </div>
+                                </div>
+                                </div>
+                                </div>
+                            </li>
+                            </ul>
+
+                    </div>
+
+                    <div class="row mt-4 cce-gap">
+
+                        <div class="col-xxl-9 col-xl-8 col-lg-8 col-md-8 col-sm-8">
+                            <div class="ques"> <b class="me-2"> Q1.</b>  Are you receiving cashless treatment under GJAY  </div>
+
+                        </div>
+
+                        <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                            <div class="progress">
+                                <div class="progress-bar rounded-0 bg-success" role="progressbar" [style.width.%]="CCECountTotal?.Question1YesPercent" aria-valuenow="15" aria-valuemin="0" aria-valuemax="40"></div>
+                                <div class="progress-bar rounded-0 bg-danger" role="progressbar" [style.width.%]="CCECountTotal?.Question1NoPercent" aria-valuenow="30" aria-valuemin="0" aria-valuemax="60"></div>
+                            </div>
+                            <div class="row">
+                                <div class="d-flex justify-content-start flex-fill mb-3">
+                                    <div class="flex-fill pl-3">
+                                        <div class="small-dashfnt"> <span class="text-successnew"> Yes </span> | {{CCECountTotal?.Question1YesPercent}}% </div>
+                                    </div>
+                                    <div class="flex-fill text-end pr-3">
+                                        <div class="small-dashfnt"> <span class="text-dangernew"> No </span> | {{CCECountTotal?.Question1NoPercent}}% </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-xxl-9 col-xl-8 col-lg-8 col-md-8 col-sm-8">
+                            <div class="ques"> <b class="me-2"> Q2.</b> Are you satisfied with service? </div>
+
+                            </div>
+
+                            <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                                <div class="progress">
+                                    <div class="progress-bar rounded-0 bg-success" role="progressbar" [style.width.%]="CCECountTotal?.Question2YesPercent" aria-valuenow="15" aria-valuemin="0" aria-valuemax="35"></div>
+                                    <div class="progress-bar rounded-0 bg-danger" role="progressbar" [style.width.%]="CCECountTotal?.Question2NoPercent" aria-valuenow="30" aria-valuemin="0" aria-valuemax="55"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="d-flex justify-content-start flex-fill mb-3">
+                                        <div class="flex-fill pl-3">
+                                            <div class="small-dashfnt"> <span class="text-successnew"> Yes </span> | {{CCECountTotal?.Question2YesPercent}}% </div>
+                                        </div>
+                                        <div class="flex-fill text-end pr-3">
+                                            <div class="small-dashfnt"> <span class="text-dangernew"> No </span> | {{CCECountTotal?.Question2NoPercent}}% </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                            <div class="col-xxl-9 col-xl-8 col-lg-8 col-md-8 col-sm-8">
+                            <div class="ques"> <b class="me-2"> Q3.</b>  Whether you have paid any extra money for treatment under GJAY </div>
+
+                            </div>
+
+                            <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                                <div class="progress">
+                                    <div class="progress-bar rounded-0 bg-success" role="progressbar" [style.width.%]="CCECountTotal?.Question3YesPercent" aria-valuenow="15" aria-valuemin="0" aria-valuemax="60"></div>
+                                    <div class="progress-bar rounded-0 bg-danger" role="progressbar" [style.width.%]="CCECountTotal?.Question3NoPercent" aria-valuenow="30" aria-valuemin="0" aria-valuemax="40"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="d-flex justify-content-start flex-fill mb-3">
+                                        <div class="flex-fill pl-3">
+                                            <div class="small-dashfnt"> <span class="text-successnew"> Yes </span> | {{CCECountTotal?.Question3YesPercent}}% </div>
+                                        </div>
+                                        <div class="flex-fill text-end pr-3">
+                                            <div class="small-dashfnt"> <span class="text-dangernew"> No </span> | {{CCECountTotal?.Question3NoPercent}}% </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                            <div class="col-xxl-9 col-xl-8 col-lg-8 col-md-8 col-sm-8">
+                            <div class="ques"> <b class="me-2"> Q4.</b> Did Swasthya Mitra facilitate your care </div>
+
+                            </div>
+
+                            <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-4 col-sm-4">
+                                <div class="progress">
+                                    <div class="progress-bar rounded-0 bg-success" role="progressbar" [style.width.%]="CCECountTotal?.Question4YesPercent" aria-valuenow="15" aria-valuemin="0" aria-valuemax="30"></div>
+                                    <div class="progress-bar rounded-0 bg-danger" role="progressbar" [style.width.%]="CCECountTotal?.Question4NoPercent" aria-valuenow="30" aria-valuemin="0" aria-valuemax="70"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="d-flex justify-content-start flex-fill mb-3">
+                                        <div class="flex-fill pl-3">
+                                            <div class="small-dashfnt"> <span class="text-successnew"> Yes </span> | {{CCECountTotal?.Question4YesPercent}}% </div>
+                                        </div>
+                                        <div class="flex-fill text-end pr-3">
+                                            <div class="small-dashfnt"> <span class="text-dangernew"> No </span> | {{CCECountTotal?.Question4NoPercent}}% </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                    </div>
+
+
+
+                </div>
+
+
+
+
+
+            </div>
+
+
+
+
+            <div class="col-xxl-4 col-xl-4 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                <div class="card-body">
+                    <div class="row">
+
+                        <div class="outbound-gap">
+                            <div class="row cce-toll d-flex">
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                                    <label class="card-complhead text-successnew"> {{CCECountTotal?.PosResponse}}%</label>
+                                    <div class="text-secondary d_pricesmall"> Positive Response </div>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                                    <label class="card-complhead text-dangernew"> {{CCECountTotal?.NegResponse}}%</label>
+                                    <div class="text-secondary d_pricesmall"> Negetive Response </div>
+                                </div>
+                            </div>
+
+                            <div class="row d-flex justify-content-center align-items-center chart-full border-top">
+
+                                <div class="col-xxl-6 col-xl-12 col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="highcharts-figure d-flex  align-items-center h-center">
+                                        <div id="pie-chart"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xxl-6 col-xl-12 col-lg-8 col-md-6 col-sm-6 col-xs-12 cce-sec">
+                                    <div class="d-flex flex-row align-items-center mb-2">
+                                        <div class="color-t bg-warning"></div>
+                                        <div class="w-90 ms-2">  Support(Q1+Q2) </div>
+                                        <div class="flex-fill text-left"><b> {{CCECountTotal?.Support}} </b> </div>
+                                    </div>
+                                    <div class="d-flex flex-row align-items-center mb-2">
+                                        <div class="color-t bg-primary"></div>
+                                        <div class="w-90 ms-2">  Behaviour(Q4) </div>
+                                        <div class="flex-fill text-left"><b>{{CCECountTotal?.Behaviour}}</b> </div>
+                                    </div>
+                                    <div class="d-flex flex-row align-items-center mb-2">
+                                        <div class="color-t bg-success"></div>
+                                        <div class="w-90 ms-2">  Bribe(Q3) </div>
+                                        <div class="flex-fill text-left"><b> {{CCECountTotal?.Bribe}} </b> </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+        </div>
+    </div> -->
+
+    <!-- CCE Outbound Call Section -->
+</div>
+</div>
+ <!-- DC Dashboard Section -->

@@ -1,0 +1,111 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item" *ngIf="isSaveData">
+                        <a routerLink="/application/addunprocess" routerLinkActive="active"
+                            class="nav-link active">Add</a>
+                    </li>
+
+                    <li class="nav-item" *ngIf="isUpdateData">
+                        <a routerLink="/application/addunprocess" routerLinkActive="active"
+                            class="nav-link active">Update</a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/application/viewunprocess" routerLinkActive="active" class="nav-link"
+                            style="color: #1f723f;">View</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-6 ">
+                <!-- <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite> -->
+            </div>
+        </div>
+    </div>
+    <div class="content-box">
+        <form [formGroup]="form" autocomplete="off">
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Year</label><span class="text-danger">*</span>
+                        <select class="form-select" id="years" [value]="updateUnprocessed.years" formControlName="years"
+                            name="years">
+                            <option value="" selected>Select Year</option>
+                            <ng-container *ngFor="let year of getAllYears">
+                                <option value={{year}}>{{ year }}</option>
+                            </ng-container>
+                        </select>
+
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Month</label><span class="text-danger">*</span>
+                        <select class="form-select" id="months" name="months" [value]="updateUnprocessed.months"
+                            formControlName="months" aria-label="Disabled select example">
+                            <option value="" selected>Select Month</option>
+                            <option value="1">January</option>
+                            <option value="2">February</option>
+                            <option value="3">March</option>
+                            <option value="4">April</option>
+                            <option value="5">May</option>
+                            <option value="6">June</option>
+                            <option value="7">July</option>
+                            <option value="8">August</option>
+                            <option value="9">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3">
+                        <label class="control-label">Unprocess Date</label><span class="text-danger">*</span>
+                        <div class="input-group mb-xl-3">
+                            <input type="text" class="form-control border-end-0 datepicker" id="unprocessDate"
+                                placeholder="Enter Date" name="unprocessDate"
+                                [value]="updateUnprocessed.unprocessDate | date :'dd-MMM-yyyy'" formControlName="unprocessDate">
+                            <label class="input-group-text bg-transparent border-start-0" for="unprocessDate"><i
+                                    class="iconbsky-calendar"></i> </label>
+                        </div>
+                    </div>
+                </div>
+                 <!------------------------------->
+                <div class="col-lg-4 col-xxl-4" *ngIf="isUpdateData">
+                    <div class="mb-3">
+                        <label>Status:</label>&nbsp;&nbsp;
+                        <label *ngIf="updateUnprocessed.statusFlag==0">
+                            <input type="radio" checked="checked" [checked]="true"
+                                (click)="yes($event)" name="statusFlag" id="statusFlag">Unprocess Not Run &nbsp;&nbsp;
+                            <input type="radio" (click)="no($event)" name="statusFlag"
+                                id="statusFlag">Unprocess Run
+                        </label>
+
+                        <label *ngIf="updateUnprocessed.statusFlag==1">
+                            <input type="radio" (click)="yes($event)" name="statusFlag"
+                                id="statusFlag">Unprocess Not Run &nbsp;&nbsp;
+                            <input type="radio" checked="checked" [checked]="true"
+                                (click)="no($event)" name="statusFlag" id="statusFlag">Unprocess Run
+                        </label>
+                    </div>
+                </div>
+                <!------------------------------->
+                
+            </div> 
+            <div class="col-lg-12">
+                <div *ngIf="isSaveData ">
+                    <input type="submit" value="Submit" class="btn btn-success" (click)="save()">&nbsp;
+                    <input type="Reset" value="Reset" (click)="resetData()" class="btn btn-secondary">
+                </div>
+                <div *ngIf="isUpdateData">
+                    <input type="submit" value="Update" class="btn btn-success" (click)="update(unprocessed)">&nbsp;
+                    <input type="submit" value="Cancel" class="btn btn-secondary" (click)="cencel1()">
+                </div>
+            </div>
+        </form>
+    </div>

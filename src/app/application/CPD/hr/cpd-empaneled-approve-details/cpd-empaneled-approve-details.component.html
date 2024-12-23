@@ -1,0 +1,525 @@
+<div class="form-cointainer claim-detail">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card shadow-sm">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card-header">
+                            <h5 class="mb-0">Basic Details</h5>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card-header">
+                            <h5 class="mb-0">Appication Submission Date : <strong>{{ basicDetails?.applicationSubmitDate }}</strong></h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row gx-xl-5">
+                        <div class="col-xl-4 my-auto">
+                            <!-- Profile picture card-->
+                            <div class="text-center">
+                                <!-- Profile picture image-->
+                                <div>
+                                    <img class="img-account-profile rounded-circle mb-2" [src]="imageToShow" alt="Candidate Image">
+                                </div>
+                                <div class="mt-2 mb-2">
+                                    <a href="javascript:void(0);" class="btn-default btn-sm mt-2 mb-3" (click)="downloadfileCpdRegistration('profilephoto',basicDetails.photo)"><i class="bi bi-eye"></i> View</a>
+                                </div>
+                                <!-- Profile picture help block-->
+                                <div class="font-italic text-muted mb-1">Applicant Name - <strong class="text-success">{{ basicDetails?.applicantFullName }}</strong>
+                                </div>
+                                <div class="small font-italic text-muted mb-2">Email Id -
+                                    <strong>{{ basicDetails?.email }}</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-8 border-start my-auto">
+                            <div class="row gx-xl-5">
+                                <div class="col-lg-4">
+                                    <div class="mb-3">
+                                        <span class="text-muted">Post Name</span> <br />
+                                        <strong>{{basicDetails?.postName}}</strong>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="mb-3">
+                                        <span class="text-muted">Father's Name</span> <br />
+                                        <strong>{{ basicDetails?.fatherName }}</strong>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="mb-3">
+                                        <span class="text-muted">Identity Type</span> <br />
+                                        <strong>{{basicDetails?.identityType}}</strong>
+                                        <a href="" target="_blank" class="download-pdf" (click)="downloadfileCpdRegistration('identityDoc',basicDetails.identityDoc)" title="Download PDF">
+                                            <i class="bi bi-download"></i></a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="mb-3">
+                                        <span class="text-muted">Identity Proof No</span> <br />
+                                        <strong>{{ basicDetails?.identityProofNo }}</strong>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="mb-3">
+                                        <span class="text-muted">DOB</span> <br />
+                                        <strong>{{ basicDetails?.dob }}</strong>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="mb-3">
+                                        <span class="text-muted">Age</span> <br />
+                                        <strong>{{ basicDetails?.age }}</strong>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="mb-3">
+                                        <span class="text-muted">Mobile No</span> <br />
+                                        <strong>{{ basicDetails?.presentMobile }}</strong>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="mb-3">
+                                        <span class="text-muted">Gender</span> <br />
+                                        <strong>{{ basicDetails?.gender }}</strong>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="mb-3">
+                                        <span class="text-muted">Doctor license No</span> <br />
+                                        <strong>{{ basicDetails?.doctorLicenseNo }}</strong>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="mb-3">
+                                        <span class="text-muted">Language Spoken</span> <br />
+                                        <strong>{{ basicDetails?.languageReadWrite }}</strong>
+                                    </div>
+                                </div>
+                                <!-- <div class="col-lg-4">
+                  <div class="mb-3">
+                    <span class="text-muted">Request Date</span> <br />
+                    <strong>{{ basicDetails?.applicationSubmitDate }}</strong>
+                  </div>
+                </div> -->
+                                <!-- <div class="col-lg-4">
+                  <div class="mb-3">
+                    <span class="text-muted">Contact No</span> <br />
+                    <strong>{{ basicDetails?.permanentMobile }}</strong>
+                  </div>
+                </div> -->
+                                <!-- <div class="col-lg-4">
+                  <div class="mb-3">
+                    <span class="text-muted">Applicant Full Name</span> <br />
+                    <strong>{{ basicDetails?.applicantFullName }}</strong>
+                  </div>
+                </div> -->
+                                <!-- <div class="col-lg-4">
+                  <div class="mb-3">
+                    <span class="text-muted">Applicant Photo </span> <br />
+                    <strong>{{ basicDetails?.photo }}</strong>
+                  </div>
+                </div> -->
+                                <!-- <div class="col-lg-4">
+                  <div class="mb-3">
+                    <span class="text-muted">State</span> <br />
+                    <strong>{{ basicDetails?.stateName }}</strong>
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="mb-3">
+                    <span class="text-muted">District</span> <br />
+                    <strong>{{ basicDetails?.stateName }}</strong>
+                  </div>
+                </div> -->
+                                <!-- <div class="col-lg-4">
+                  <div class="mb-3">
+                    <span class="text-muted">Mobile No</span> <br />
+                    <strong>{{ basicDetails?.presentMobile }}</strong>
+                  </div>
+                </div> -->
+                                <!-- <div class="col-lg-4">
+                  <div class="mb-3">
+                    <span class="text-muted">Present Contact Address</span> <br />
+                    <strong>{{ basicDetails?.presentAddress }}</strong>
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="mb-3">
+                    <span class="text-muted">Permanent Address</span> <br />
+                    <strong>{{ basicDetails?.permanentAddress }}</strong>
+                  </div>
+                </div> -->
+                                <!-- <div class="col-lg-4">
+                  <div class="mb-3">
+                    <span class="text-muted">Email Address</span> <br />
+                    <strong>{{ basicDetails?.email }}</strong>
+                  </div>
+                </div> -->
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm mt-3 mt-xl-4 ">
+                <div class="card-header">
+                    <h5 class="mb-0">Address Details</h5>
+                </div>
+                <div class="card-body">
+                    <div class="text-success">
+                        <h6>Present Contact Address</h6>
+                    </div>
+                    <div class="row gx-xl-5">
+                        <div class="col-xl">
+                            <p class=" text-muted mb-0">Country</p>
+                            <p class="mb-0 fw-bold">
+                                {{addressDetails?.presentCountry}}
+                            </p>
+                        </div>
+                        <div class="col-xl border-start">
+                            <div class="d-flex ">
+                                <div>
+                                    <p class="text-muted mb-0">State</p>
+                                    <p class="mb-0 fw-bold">
+                                        {{addressDetails?.presentState}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl border-start">
+                            <div class="d-flex ">
+                                <div>
+                                    <p class="text-muted mb-0">City</p>
+                                    <p class="mb-0 fw-bold">
+                                        {{addressDetails?.presentDistrict}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl border-start">
+                            <div class="d-flex ">
+                                <div>
+                                    <p class="text-muted mb-0">Mobile No.</p>
+                                    <p class="mb-0 fw-bold">
+                                        {{addressDetails?.presentMobile}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row gx-xl-5 mt-4">
+                        <div class="col-xl">
+                            <p class=" text-muted mb-0">Alt. Mobile No.</p>
+                            <p class="mb-0 fw-bold">
+                                {{addressDetails?.presentAltNumber}}
+                            </p>
+                        </div>
+                        <div class="col-xl border-start">
+                            <div class="d-flex ">
+                                <div>
+                                    <p class="text-muted mb-0">Postal Address</p>
+                                    <p class="mb-0 fw-bold">
+                                        {{addressDetails?.presntPostalAdr}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl border-start">
+                            <div class="d-flex ">
+                                <div>
+                                    <p class="text-muted mb-0">Nearest Landmark</p>
+                                    <p class="mb-0 fw-bold">
+                                        {{addressDetails?.presentLandMark}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl border-start">
+                            <div class="d-flex ">
+                                <div>
+                                    <p class="text-muted mb-0">Pincode</p>
+                                    <p class="mb-0 fw-bold">
+                                        {{addressDetails?.presentPincode}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-success mt-3">
+                        <h6>Permanent Contact Address</h6>
+                    </div>
+                    <div class="row gx-xl-5">
+                        <div class="col-xl">
+                            <p class=" text-muted mb-0">Country</p>
+                            <p class="mb-0 fw-bold">
+                                {{addressDetails?.permanentCountry}}
+                            </p>
+                        </div>
+                        <div class="col-xl border-start">
+                            <div class="d-flex ">
+                                <div>
+                                    <p class="text-muted mb-0">State</p>
+                                    <p class="mb-0 fw-bold">
+                                        {{addressDetails?.permanentState}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl border-start">
+                            <div class="d-flex ">
+                                <div>
+                                    <p class="text-muted mb-0">City</p>
+                                    <p class="mb-0 fw-bold">
+                                        {{addressDetails?.permanentDistrict}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl border-start">
+                            <div class="d-flex ">
+                                <div>
+                                    <p class="text-muted mb-0">Mobile No.</p>
+                                    <p class="mb-0 fw-bold">
+                                        {{addressDetails?.permanentMobile}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row gx-xl-5 mt-4">
+                        <div class="col-xl">
+                            <p class=" text-muted mb-0">Alt. Mobile No.</p>
+                            <p class="mb-0 fw-bold">
+                                {{addressDetails?.permanentAltNumber}}
+                            </p>
+                        </div>
+                        <div class="col-xl border-start">
+                            <div class="d-flex ">
+                                <div>
+                                    <p class="text-muted mb-0">Postal Address</p>
+                                    <p class="mb-0 fw-bold">
+                                        {{addressDetails?.permanentPostalAddress}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl border-start">
+                            <div class="d-flex ">
+                                <div>
+                                    <p class="text-muted mb-0">Nearest Landmark</p>
+                                    <p class="mb-0 fw-bold">
+                                        {{addressDetails?.permanentLandMark}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl border-start">
+                            <div class="d-flex ">
+                                <div>
+                                    <p class="text-muted mb-0">Pincode</p>
+                                    <p class="mb-0 fw-bold">
+                                        {{addressDetails?.permanentPincode}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-lg-12">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h5 class="mb-0">Interview Details</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="bgcolor-th">
+                                <tr>
+                                    <th>Sl#</th>
+                                    <th>Interview Date from</th>
+                                    <th>Interview Date To</th>
+                                    <th>Time From</th>
+                                    <th>Time To</th>
+                                    <th>Remark</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngIf="interviewList?.length > 0">
+                                    <tr *ngFor="let interview of interviewList; index as i">
+                                        <td>{{ i + 1 }}</td>
+                                        <td>{{ interview.interviewFromDate }}</td>
+                                        <td>{{ interview.interviewToDate }}</td>
+                                        <td>{{ interview.fromTime }}</td>
+                                        <td>{{ interview.toTime }}</td>
+                                        <td>
+                                            <!-- {{ interview.remarks }} -->
+                                            <span id="proceduredescription{{i}}">
+                        {{interview.remarks.length>10?interview.remarks.substring(0, 10) +
+                        '...':interview.remarks}}
+                      </span>
+                                            <span style="cursor: pointer; color: #1189cf" id="showMoreId6{{i}}" (click)="showPreDoc1(interview.remarks,i)">
+                        {{interview.remarks.length>10?'Show More':''}}
+                      </span>
+                                            <span style="cursor: pointer; color: #1089cf" id="showMoreId7{{i}}" (click)="hidePreDoc1(interview.remarks,i)"></span>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                                <tr *ngIf="interviewList?.length === 0">
+                                    <td colspan="9" align="center">
+                                        <strong class="text-danger">No Data Found</strong>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-lg-12">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h5 class="mb-0">Speciality</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="bgcolor-th">
+                                <tr>
+                                    <th>Sl#</th>
+                                    <th>Speciality Code</th>
+                                    <th>Speciality Name</th>
+                                    <th>Document</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngIf="specilityList?.length > 0">
+                                    <tr *ngFor="let specility of specilityList; index as i">
+                                        <td>{{ i + 1 }}</td>
+                                        <td>{{ specility.packageCode }}</td>
+                                        <td>{{ specility.packageCode }}</td>
+                                        <td class="text-center">
+                                            <a href="javascript:void(0);" (click)="downloadfileCpdRegistration('specialityDoc',specility.document)">
+                                                <i class="bi bi-file-earmark-pdf" style="color:red;font-size:15px;"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                                <tr *ngIf="specilityList?.length === 0">
+                                    <td colspan="9" align="center">
+                                        <strong class="text-danger">No Data Found</strong>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-lg-12">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <h5 class="mb-0">Approval Details</h5>
+                        </div>
+                        <div class="col-lg-2">
+                            <h5 class="mb-0">Username :-</h5>
+                        </div>
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control" id="userName" placeholder="Enter Username" name="userName" onkeyup="this.value=this.value.replace(/[^a-zA-Z0-9]/g,'');" [ngClass]="{ 'is-invalid': valid==2, 'is-valid': valid==1 }" [(ngModel)]="userName" (change)=checkUserName()>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-2 col-xxl-2">
+                            <div class="input-group mb-3">
+                                <label class="col-form-label mt-4 fw-bold">Joining Date</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-5 col-xxl-5">
+                            <label class="col-form-label">From</label>
+                            <div class="input-group mb-3">
+                                <input type="text" onkeydown="return false;" class="form-control border-end-0 datepicker" id="fromDate" name="fromDate" />
+                                <label class="input-group-text bg-transparent border-start-0" for="datepicker1"><i
+                    class="iconbsky-calendar"></i>
+                </label>
+                            </div>
+                        </div>
+                        <div class="col-lg-5 col-xxl-5">
+                            <label class="col-form-label">Maximum Claim</label>
+                            <div class="input-group mb-3">
+                                <input type="text" (keypress)="checkCharacter($event)" class="form-control border-end-0" id="maximumClaim" placeholder="Enter Maximum Claim" name="maximumClaim" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-2 col-xxl-2">
+                            <div class="input-group mb-3">
+                                <label class="col-form-label mt-4 fw-bold">MOU</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-5 col-xxl-5">
+                            <label class="col-form-label">From</label>
+                            <div class="input-group mb-3">
+                                <input type="text" onkeydown="return false;" class="form-control border-end-0 datepicker" id="mouFromDate" name="fromTime" />
+                                <label class="input-group-text bg-transparent border-start-0" for="datepicker1"><i
+                    class="bi bi-calendar"></i>
+                </label>
+                            </div>
+                        </div>
+                        <div class="col-lg-5 col-xxl-5">
+                            <label class="col-form-label">To</label>
+                            <div class="input-group mb-3">
+                                <input type="text" onkeydown="return false;" class="form-control border-end-0 datepicker" id="mouToDate" name="toTime" />
+                                <label class="input-group-text bg-transparent border-start-0" for="datepicker1"><i
+                    class="bi bi-calendar"></i>
+                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="row">
+            <div class="col-lg-12 col-xxl-12" [formGroup]="myGroup">
+              <label class="col-form-label">Remarks</label>
+              <textarea class="form-control" rows="2" id="remarks" name="remarks" maxlength="500"
+                formControlName="remarks" placeholder="Enter description" #myInput
+                (keypress)="keyPress($event)" [(ngModel)]="description"></textarea>
+              <span class="text-danger small">Characters Remaining: {{500 - myInput.value.length}}</span>
+            </div>
+          </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-grid gap-2 d-sm-block mt-3 mt-xl-4">
+        <button (click)="submitDetails(basicDetails?.presentMobile,basicDetails?.email)" class="btn btn-success me-2" id="Approve">
+      Submit
+    </button>
+        <!-- <button (click)="submitDetails($event, basicDetails?.presentMobile)" class="btn btn-danger me-2" id="Reject">
+      Reject
+    </button>
+    <button (click)="reSet()" class="btn btn-primary me-2" id="Query">
+      Reset
+    </button> -->
+    </div>
+</div>

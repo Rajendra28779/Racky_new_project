@@ -1,0 +1,506 @@
+<div class="form-cointainer claim-detail">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/NoncomplianceQueryRequest/action" routerLinkActive="active" class="nav-link active">
+                         SNA Non compliance Query Request Details</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-6 ">
+                <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+            </div>
+        </div>
+    </div>
+    <div class="content-box p-0 border-0 bg-transparent">
+        <div class="row">
+            <div class="col-lg-6 col-xl-6 col-xxl-4">
+                <div class="card shadow-sm basic-info">
+                    <div class="card-header">
+                        <h5 class="mb-0">Basic Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3 border-bottom pb-3">
+                            <span class="text-success"><i class="iconbsky-hospital fs-1 me-3"></i></span>
+                            <div>
+                                <p class="mb-0 fw-bold">{{ claimDetails?.HOSPITALNAME}} ({{ claimDetails?.HOSPITALCODE }})
+                                    <br> {{ claimDetails?.HOSPITALADDRESS}}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row border-bottom mb-3 pb-3">
+                            <div class="col-lg-12">
+                                <div class="d-flex align-items-center border-end">
+                                    <span class="text-success"><i class="iconbsky-urn-number fs-1 me-3"></i></span>
+                                    <div>
+                                        <p class="text-muted mb-0">URN</p>
+                                        <p class="mb-0 fw-bold">{{ claimDetails?.URN}}</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row border-bottom mb-3 pb-3">
+                            <div class="d-flex align-items-center">
+                                <span class="text-success"><i class="iconbsky-invoice-number fs-1 me-3"></i></span>
+                                <div>
+                                    <p class="text-muted mb-0">Invoice Number</p>
+                                    <p class="mb-0 fw-bold">{{ claimDetails?.INVOICENO}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <span class="text-success"><i class="iconbsky-invoice-number fs-1 me-3"></i></span>
+                            <div>
+                                <p class="text-muted mb-0">Claim Number </p>
+                                <p class="mb-0 fw-bold">{{ claimDetails?.CLAIMNO}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-xl-6 col-xxl-4">
+                <div class="card text-bg-success patient-info shadow-sm">
+                    <div class="card-header">
+                        <h5 class="mb-0">Patient Information</h5>
+                    </div>
+                    <div class="card-body py-xl-4">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h4 class="fw-normal mb-3">{{ claimDetails?.PATIENTNAME}}</h4>
+                                <h6 class="fw-normal mb-3">{{ claimDetails?.categoryName}}</h6>
+                                <ul class="list-unstyled mb-0">
+                                    <li><i class="iconbsky-age"></i> {{ claimDetails?.AGE}} Years</li>
+                                    <li *ngIf="  claimDetails?.GENDER=='F' "><i class="iconbsky-gender"></i> Female</li>
+                                    <li *ngIf="  claimDetails?.GENDER=='M' "><i class="iconbsky-gender"></i> Male</li>
+                                    <li><i class="iconbsky-mobile"></i> {{ claimDetails?.MOBILE}} </li>
+                                    <li><i class="iconbsky-location"></i> {{ claimDetails?.Address}} </li>
+
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="card shadow-sm mt-3 mt-xl-4 ">
+                    <div class="card-header">
+                        <h5 class="mb-0">Treatment Details</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row gx-xl-5 treatment-details">
+                            <div class="col-xl">
+                                <p class="small text-muted mb-0">Date Of Adminssion -Date Of Discharge
+                                </p>
+                                <h6 class="mb-0"><i class="iconbsky-calendar small"></i> {{ claimDetails?.DATEOFADMISSION | date: 'dd-MMM-yyyy'}} -
+
+                                    <i class="iconbsky-calendar small ps-2"></i> {{ claimDetails?.DATEOFDISCHARGE | date: 'dd-MMM-yyyy'}}
+                                </h6>
+                            </div>
+                            <div class="col-xl border-start">
+                                <div class="d-flex align-items-center">
+                                    <!-- <i class="iconbsky-package-amount mt-2 me-3 fs-1"></i> -->
+                                    <div>
+                                        <p class="small text-muted mb-0">Package Rate (₹)</p>
+                                        <h6 class="mb-0"> {{ claimDetails?.PACKAGERATE | currency:"":"" }}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl border-start">
+                                <div class="d-flex align-items-center">
+                                    <!-- <i class="iconbsky-block-amount mt-2 me-3 fs-1"></i> -->
+                                    <div>
+                                        <p class="small text-muted mb-0">Blocked Amount (₹)</p>
+                                        <h6 class="mb-0 ">{{ claimDetails?.TOTALAMOUNTBLOCKED | currency:"":"" }}</h6>
+                                        <p class="small text-muted mb-0">Claimed Amount (₹)</p>
+                                        <h6 class="mb-0 ">{{ claimDetails?.TOTALAMOUNTCLAIMED | currency:"":"" }}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl border-start">
+                                <div class="d-flex align-items-center">
+                                    <!-- <i class="iconbsky-block-amount mt-2 me-3 fs-1"></i> -->
+                                    <div>
+                                        <p class="small text-muted mb-0">Authorized Code</p>
+                                        <h6 class="mb-0 ">{{ claimDetails?.AUTHORIZEDCODE }}</h6>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <hr class="mt-xl-4">
+                            </div>
+                            <div class="col-lg-2 ">
+                                <div class="col-xl">
+                                    <p class="small text-muted mb-0">Claim Submission Date</p>
+                                    <h6 class="mb-0"><i class="iconbsky-calendar small"></i> {{claimDetails?.CREATEON | date: 'dd-MMM-yyyy'}}
+                                    </h6>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 border-start ">
+                                <div class="d-flex align-items-center">
+                                    <!-- <i class="iconbsky-block-amount mt-2 me-3 fs-1"></i> -->
+                                    <div>
+                                        <p class="small text-muted mb-0">Procedure</p>
+                                        <h6 class="mb-0">{{ claimDetails?.PROCEDURENAME}}
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 border-start">
+                                <div class="d-flex align-items-center">
+                                    <!-- <i class="iconbsky-block-amount mt-2 me-3 fs-1"></i> -->
+                                    <div>
+                                        <p class="small text-muted mb-0">Packages</p>
+                                        <h6 class="mb-0">{{ claimDetails?.PACKAGENAME}}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 border-start">
+                                <div class="d-flex align-items-center">
+                                    <!-- <i class="iconbsky-block-amount mt-2 me-3 fs-1"></i> -->
+                                    <div>
+                                        <p class="small text-muted mb-0">CLAIM BILL NUMBER</p>
+                                        <h6 class="mb-0 ">{{ claimDetails?.CLAIMBILLNO!=null?claimDetails?.CLAIMBILLNO:"N/A" }}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 border-start">
+                                <div class="d-flex align-items-center">
+                                    <!-- <i class="iconbsky-block-amount mt-2 me-3 fs-1"></i> -->
+                                    <div>
+                                        <p class="small text-muted mb-0">CLAIM CASE NUMBER</p>
+                                        <h6 class="mb-0 ">{{ claimDetails?.CLAIMCASENO!=null?claimDetails?.CLAIMCASENO:"N/A" }}</h6>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- <div class="col-lg-3 border-start">
+                              <div class="d-flex align-items-center">
+                                  <i class="iconbsky-block-amount mt-2 me-3 fs-1"></i>
+                                  <div>
+                                      <p class="small text-muted mb-0">Mortality</p>
+                                      <h6 class="mb-0">{{ claimDetails?.MORTALITY}}</h6>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="col-lg-3 border-start">
+                              <div class="d-flex align-items-center">
+                                  <i class="iconbsky-block-amount mt-2 me-3 fs-1"></i>
+                                  <div>
+                                      <p class="small text-muted mb-0">Referral Code</p>
+                                      <h6 class="mb-0">{{ claimDetails?.REFERRALCODE}}</h6>
+                                  </div>
+                              </div>
+                          </div> -->
+                            <div class="col-12">
+                                <hr class="mt-xl-4">
+                            </div>
+                            <div class="col-xl">
+                                <p class="small text-muted mb-0">Actual Date of Admission and Discharge</p>
+                                <h6 class="mb-0"><i class="iconbsky-calendar small"></i> {{ claimDetails?.ACTUALDATEOFADMISSION | date: 'dd-MMM-yyyy'}} -
+
+                                    <i class="iconbsky-calendar small ps-2"></i> {{ claimDetails?.ACTUALDATEOFDISCHARGE | date: 'dd-MMM-yyyy'}}
+                                </h6>
+                            </div>
+
+                            <div class="col-xl border-start">
+                                <div class="d-flex align-items-center">
+                                    <!-- <i class="iconbsky-block-amount mt-2 me-3 fs-1"></i> -->
+                                    <div>
+                                        <p class="small text-muted mb-0">Referral Code</p>
+                                        <h6 class="mb-0 ">{{ claimDetails?.REFERRALCODE }}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl border-start">
+                                <div class="d-flex align-items-center">
+                                    <!-- <i class="iconbsky-block-amount mt-2 me-3 fs-1"></i> -->
+                                    <div>
+                                        <p class="small text-muted mb-0">NABH Flag</p>
+                                        <h6 class="mb-0 ">{{ claimDetails?.NABHFlag }}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl border-start">
+                                <div class="d-flex align-items-center">
+                                    <!-- <i class="iconbsky-block-amount mt-2 me-3 fs-1"></i> -->
+                                    <div>
+                                        <p class="small text-muted mb-0">Mortality</p>
+                                        <h6 class="mb-0">{{ claimDetails?.MORTALITY}}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl border-start">
+                                <div class="d-flex align-items-center">
+                                    <!-- <i class="iconbsky-block-amount mt-2 me-3 fs-1"></i> -->
+                                    <div>
+                                        <p class="small text-muted mb-0">Implant Data</p>
+                                        <h6 class="mb-0">{{ claimDetails?.IMPLANTDATA!=null?claimDetails?.IMPLANTDATA:"N/A" }}</h6>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 ">
+                                <hr class="mt-xl-4 ">
+                            </div>
+                            <div class="col-xl ">
+                                <p class="small text-muted mb-0 "> Authentication Mode
+                                </p>
+                                <h6 class="mb-0 " style="color:red">{{claimDetails?.verification!=null?claimDetails?.verification:"N/A"}} </h6>
+                            </div>
+
+                            <div class="col-xl border-start ">
+                                <div class="d-flex align-items-center ">
+                                    <!-- <i class="iconbsky-package-amount mt-2 me-3 fs-1 "></i> -->
+                                    <div>
+                                        <p class="small text-muted mb-0 "> Is Patient OTP Verified</p>
+                                        <h6 class="mb-0 ">{{claimDetails?.ispatient!=null?claimDetails?.ispatient:"N/A"}}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl border-start ">
+                                <div class="d-flex align-items-center ">
+                                    <!-- <i class="iconbsky-package-amount mt-2 me-3 fs-1 "></i> -->
+                                    <div>
+                                        <p class="small text-muted mb-0 ">Referral Authstatus</p>
+                                        <h6 class="mb-0 ">
+                                            {{claimDetails?.Referalstatus!=null?claimDetails?.Referalstatus:"N/A"}}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <hr class="my-xl-4">
+                                <h5>Pre-Auth Log</h5>
+                                <div class="table-responsive">
+                                    <table class="table mb-0" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th width="40" rowspan="2">Sl#</th>
+                                                <th rowspan="2">Pre-Auth Code</th>
+                                                <th rowspan="2">Claimed Amount (₹)</th>
+                                                <th rowspan="2">Approved Amount (₹)</th>
+                                                <th rowspan="2">Claimed Date</th>
+                                                <th rowspan="2">Approved Date</th>
+                                                <th rowspan="2">Remark</th>
+                                                <th colspan="3" style="text-align:center">Documents</th>
+                                                <th rowspan="2">Details</th>
+                                            </tr>
+                                            <tr>
+                                                <th>Doc1</th>
+                                                <th>Doc2</th>
+                                                <th>Doc3</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <ng-container *ngIf="check">
+                                                <tr *ngFor="let prteAuth of preAuth,index as i">
+                                                    <td>{{i+1}}</td>
+                                                    <td>{{prteAuth.preauthCode}}</td>
+                                                    <td>{{prteAuth.claimedAmount | currency:"":""}}</td>
+                                                    <td>{{prteAuth.approvedAmount | currency:"":""}}</td>
+                                                    <td>{{prteAuth.claimedDate | date :'dd-MMM-yyyy, h:mm:ss a'}}</td>
+                                                    <td>{{prteAuth.approvedDate | date :'dd-MMM-yyyy, h:mm:ss a'}}</td>
+                                                    <td>{{prteAuth.preAuthRemarks}}</td>
+                                                    <td *ngIf="prteAuth.aditionalDoc1 != undefined"><a href="javascript:void(0);" (click)="downloadAction($event,prteAuth.aditionalDoc1,prteAuth.hospitalCode,prteAuth.claimedDate,'')"><i
+                                                              class="bi bi-file-earmark-pdf"
+                                                              style="color:red;font-size:15px;"></i></a></td>
+                                                    <td *ngIf="prteAuth.aditionalDoc1 == undefined">--</td>
+                                                    <td *ngIf="prteAuth.aditionalDoc2 != undefined"><a href="javascript:void(0);" (click)="downloadAction($event,prteAuth.aditionalDoc2,prteAuth.hospitalCode,prteAuth.claimedDate,'')"><i
+                                                              class="bi bi-file-earmark-pdf"
+                                                              style="color:red;font-size:15px;"></i></a></td>
+                                                    <td *ngIf="prteAuth.aditionalDoc2 == undefined">--</td>
+                                                    <td *ngIf="prteAuth.aditionalDoc3 != undefined"><a href="javascript:void(0);" (click)="downloadAction($event,prteAuth.aditionalDoc3,prteAuth.hospitalCode,prteAuth.claimedDate,'')"><i
+                                                              class="bi bi-file-earmark-pdf"
+                                                              style="color:red;font-size:15px;"></i></a></td>
+                                                    <td *ngIf="prteAuth.aditionalDoc3 == undefined">--</td>
+                                                    <td><a href="javascript:void(0)" (click)="preAuthLogDetail(prteAuth.urnNo, claimDetails?.AUTHORIZEDCODE,prteAuth.hospitalCode)">Click
+                                                          here</a></td>
+                                                </tr>
+                                            </ng-container>
+                                            <tr *ngIf="!check">
+                                                <td colspan="8" align="center"><strong class="text-danger">No data
+                                                      found</strong></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- <div class="card-body" *ngIf="check">
+                                  <ul class="list-unstyled">
+                                      <li><i class="iconbsky-list-icon me-2"></i> Check more information.<a href="javascript:void(0)" (click)="preAuthLogDetails( claimDetails?.URN, claimDetails?.AUTHORIZEDCODE, claimDetails?.HOSPITALCODE)">
+                                              Click here</a>
+                                      </li>
+                                  </ul>
+                                  <hr>
+                              </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="row mt-4">
+            <div class="col-lg-12">
+                <div class="card shadow-sm treatment-history">
+                    <div class="card-header">
+                        <h5 class="mb-0">Action Taken History</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Sl#</th>
+                                        <th>Action By</th>
+                                        <th>Action On</th>
+                                        <th>Last Query By</th>
+                                        <th>Hospital Remark</th>
+                                        <th>Remark</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let action of claimLog index as i">
+                                        <td>{{i+1}}</td>
+                                        <td>{{action.ACTIONBY}}</td>
+                                        <td>{{action.ACTIONON | date :'dd-MMM-yyyy'}}</td>
+                                        <td>{{action.LASTQUERYON | date :'dd-MMM-yyyy'}}</td>
+                                        <td>{{action.DESCRIPTION}}</td>
+                                        <td>{{action.SNAREMARK}}</td>
+                                        <!-- <td><a href="javascript:void(0)" (click)="viewDescription(action.DESCRIPTION)">view</a></td>                                         -->
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="card shadow-sm mt-3 mt-xl-4 ">
+                <div class="card-header">
+                    <h5 class="mb-0">Hospital Request Details</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row gx-xl-5 treatment-details">
+
+                        <div class="col-xl border-start">
+                            <div class="d-flex align-items-center">
+                                <!-- <i class="iconbsky-package-amount mt-2 me-3 fs-1"></i> -->
+                                <div>
+                                    <p class="small text-muted mb-0">Remark</p>
+                                    <h6 class="mb-0"><a href="javascript:void(0)" (click)="viewDescription(claimDetails.DESCRIPTION)">view</a></h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl border-start">
+                            <div class="d-flex align-items-center">
+                                <!-- <i class="iconbsky-block-amount mt-2 me-3 fs-1"></i> -->
+                                <div>
+                                    <p class="small text-muted mb-0">Last Date of Re Submission of Claim </p>
+                                    <h6 class="mb-0 ">{{ claimDetails?.CLAIMRAISEDBY | date :'dd-MMM-yyyy'}}</h6>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-lg-12">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-6 col-xxl-5">
+                                <div class="alert alert-danger mb-4 d-flex align-items-center small ">
+                                    <p class="mb-0 pe-3 me-3 border-end ">
+                                        <i class="bi bi-info-circle-fill fs-5 me-2 "></i> Guideline for Upload
+                                    </p>
+                                    <p class="mb-0 ">
+                                        Photo should be in <strong>.jpg, .jpeg, .pdf</strong> format. Upload photo below
+                                        <strong>3MB</strong> size.<br><strong>(*) Indicates mandatory </strong>.
+                                    </p>
+                                </div>
+                                <div class="col-6 col-lg-4 col-xxl-10 ">
+                                    <div class="file-upload ">
+                                        <p class="mb-1 ">Approval Document<strong class="required-field"></strong></p>
+                                        <div class="file-upload-content ">
+                                            <a class="btn btn-danger text-white btn-sm remove-img "><i
+                                                  class="fas fa-times "></i>
+                                          </a>
+                                            <img class="file-upload-image " src="# " alt="your image " />
+                                        </div>
+                                        <div class="image-upload-wrap text-center rounded " id="noncompliance">
+                                            <input class="file-upload-input " type='file' id="ADD" accept=".pdf,.jpeg,.jpg" onCut="return false" onDrag="return false" onDrop="return false" (change)="AdditionalDocument($event) " />
+                                            <div class="drag-text " *ngIf="lengthforfile==1">
+                                                <h5><i class="iconbsky-upload-icon d-block fs-4 "></i>{{shortLink}}</h5>
+                                            </div>
+                                            <div class="drag-text " *ngIf="lengthforfile!=1">
+                                                <h5><i class="iconbsky-upload-icon d-block fs-4 "></i>Select a file to upload</h5>
+                                            </div>
+                                        </div>
+                                        <p class="small pt-1 "><img src="../../../../assets/img/pdf.png " alt="Download Document " target="_blank" width="20 "> <a style="cursor:pointer ;" (click)="downloadfilehospitallbill() "> Download</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div></div>
+                        <div class="row">
+                            <div class="col-sm-4" [formGroup]="myGroup">
+                                <label class="col-form-label">Remark</label><span class="text-danger">*</span>
+                                <textarea class="form-control" rows="4" id="remarks" name="remarks" formControlName="remarks" maxlength="500" placeholder="Enter Remarks" #myInput [maxlength]="maxChars" (keypress)="keyPress($event)"></textarea>
+                                <span class="text-danger small">Characters Remaining: {{maxChars -
+                                  myInput.value.length}}</span>
+                            </div>
+                            <div class="col-sm-4">
+                                <label class="control-label">Re Claim Raise Extend upto</label><span class="text-danger">*</span>
+                                <div class="input-group">
+                                    <input type="text" class="form-control border-end-0 datepicker" id="datepicker" name="toDate" [(ngModel)]="claimBy">
+                                    <label class="input-group-text bg-transparent border-start-0" for="datepicker2"><i
+                                          class="iconbsky-calendar"></i> </label>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4"></div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-grid gap-2 d-sm-block mt-3 mt-xl-4">
+                <button class="btn btn-success me-2" id="Approve" (click)="TakeAction($event,claimDetails?.REJECTIONID,claimDetails?.TRANSACTIONDETAILSID)">Approve</button>
+                <button class="btn btn-danger me-2" id="Reject" (click)="TakeAction($event,claimDetails?.REJECTIONID,claimDetails?.TRANSACTIONDETAILSID)">Reject</button>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal justify-content-center" id="appealDisposal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body py-5">
+                    <span class="text-center text-success">
+                      <!-- <i class="bi bi-check-circle d-block fs-1 mb-3"></i> -->
+                      {{dtls}}
+                      <!-- Your password has been sent to your mail ID. -->
+                  </span>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="modalClose()">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

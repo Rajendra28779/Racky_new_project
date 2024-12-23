@@ -1,0 +1,15 @@
+@import '../../../../assets/scss/mixins';
+@import '../../../../assets/scss/variables';
+@import '../../../../assets/scss/statuspage';
+.document-upload {
+    .uploaded-doc {
+        a {
+            display: block;
+            padding: 1rem;
+        }
+    }
+    .required-field::before {
+        content: "*";
+        color: red;
+    }
+}

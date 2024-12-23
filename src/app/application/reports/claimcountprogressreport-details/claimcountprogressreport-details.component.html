@@ -1,0 +1,96 @@
+<div class="content">
+    <div class="container-fluid p-0">
+        <div class="form-cointainer">
+            <div class="main-tab">
+                <div class="row justify-content-between">
+                    <div class="col-lg-12">
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a routerLinkActive="active" class="nav-link active">Claim Count Progress Report Details</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="content-box">
+                <div class="row">
+                    <div class="col-lg-4 col-xxl-4" style="padding-top: 10px;">
+                        <b style="padding-left: 7px;">{{pageHeading}}</b>
+                    </div>
+                    <div class="col-lg-4 col-xxl-4" align="right">
+                        <button class="btn btn-outline-success btn-sm mx-1" style="margin-top: 1px;" (click)="downloadReport('xcl')">
+                            <i class="bi bi-file-earmark-spreadsheet" style="font-size: 13pt;"></i>
+                        </button>
+                        <button class="btn btn-outline-danger btn-sm mx-1" style="margin-top: 1px;" (click)="downloadReport('pdf')">
+                            <i class="bi bi-file-earmark-pdf" style="font-size: 13pt;"></i>
+                        </button>
+                    </div>
+                    <div class="col-lg-4 col-xxl-4">
+                        <div class="input-group">
+                            <input type="text" id="txtsearchDate" class="form-control" placeholder="Search here" name="txtsearchDate"
+                                [(ngModel)]="txtsearchDate">
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="height: 10pt;"></div>
+                <div class="row">
+                    <div class="table-responsive">
+                        <table class="table table-striped mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Sl No.</th>
+                                    <th>Claim No.</th>
+                                    <th>Case No.</th>
+                                    <th>URN</th>
+                                    <th>Hospital Name</th>
+                                    <th>Package Code</th>
+                                    <!-- <th>Package Name</th> -->
+                                    <th>Actual Date Of Admission</th>
+                                    <th>Actual Date Of Discharge</th>
+                                    <th *ngIf="eventName=='SQW' || eventName=='SQA' || eventName=='CQW' || eventName=='CQA'">
+                                        Query Date
+                                    </th>
+                                    <th *ngIf="eventName=='NID' || eventName=='NON'">Claim Raise By</th>
+                                    <th *ngIf="eventName=='CPD' || eventName=='CRS' || eventName=='CRV'">CPD Alloted Date</th>
+                                    <th *ngIf="eventName!='SQW' && eventName!='SQA'">CPD Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let claim of countprogressreport | filter:txtsearchDate;index as i">
+                                    <td>{{i+1}}</td>
+                                    <td *ngIf="claim.claimNo!=undefined && claim.claimId!=null">{{claim.claimNo}}</td>
+                                    <td *ngIf="claim.claimNo==undefined || claim.claimId==null">N/A</td>
+                                    <td>{{claim.caseno}}</td>
+                                    <td>{{claim.urn}}</td>
+                                    <td>{{claim.hospitalName}}({{claim.hospitalCode}})</td>
+                                    <td title="{{claim.packageName}}"><span class="pkd">{{claim.packagecode}}</span></td>
+                                    <!-- <td>{{claim.packageName}}</td> -->
+                                    <td>{{claim.actDateOfAdm}}</td>
+                                    <td>{{claim.actDateOfDschrg}}</td>
+                                    <td *ngIf="eventName=='SQW' || eventName=='SQA' || eventName=='CQW' || eventName=='CQA'">
+                                        {{claim.queryDate | date :'dd-MMM-yyyy'}}
+                                    </td>
+                                    <td *ngIf="eventName=='NID' || eventName=='NON'">
+                                        {{claim.claimRaisedBy | date :'dd-MMM-yyyy'}}
+                                    </td><td *ngIf="eventName=='CPD' || eventName=='CRS' || eventName=='CRV'">
+                                        {{claim.cpdAllotedDate | date :'dd-MMM-yyyy'}}
+                                    </td>
+                                    <ng-container *ngIf="eventName!='SQW' && eventName!='SQA'">
+                                    <td *ngIf="claim.cpdName==undefined || claim.cpdName==null">N/A</td>
+                                    <td *ngIf="claim.cpdName!=undefined || claim.cpdName!=null">{{claim.cpdName}}</td>
+                                    </ng-container>
+                                    <!-- <td *ngIf="claim.claimId==0 || claim.claimId==null">--</td> -->
+                                </tr>
+                                <tr *ngIf="countprogressreport.length==0">
+                                    <td colspan="9" align="center">
+                                        <strong class="text-danger">NO DATA FOUND!!</strong>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>    
+        </div>
+    </div>
+</div>

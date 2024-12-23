@@ -1,0 +1,446 @@
+<div class="form-cointainer claim-detail">
+  <div class="main-tab">
+      <div class="row justify-content-between">
+          <div class="col-lg-11">
+              <ul class="nav nav-tabs">
+                  <li class="nav-item"><a routerlink="/application/specialitydetails" routerlinkactive="active" class="nav-link active" ng-reflect-router-link-active="active" href="#/application/specialitydetails">Specialty Details</a></li>
+              </ul>
+          </div>
+          <div class="col-lg-1">
+            <a href="javascript:void(0)" ngbTooltip="Go to Previous" class="btn btn-success"
+            (click)="backToPrevious()"><i style="color:white;" class="bi bi-arrow-left"></i></a>
+        </div>
+          <div class="col-lg-6">
+              <app-utilite>
+                  <div class="utilite float-end mb-1">
+                      <ul class="mb-0">
+                          <li class="bg-transparent border-0 d-none"><span class="text-danger small"><b >(*)</b> Indicate mandatory </span></li>
+                          <li class="d-none"><a href="javascript:void(0)" ngbtooltip="Click to Print"><i  class="bi bi-printer"></i></a></li>
+                          <li class="d-none"><a href="javascript:void(0)" ngbtooltip="Delete Record"><i  class="bi bi-trash"></i></a></li>
+                          <li class="d-none"><a href="javascript:void(0)" ngbtooltip="Download"><i  class="bi bi-download"></i></a></li>
+                          <li><a href="javascript:void(0)" ngbtooltip="Go to Previous"><i  class="bi bi-arrow-left"></i></a></li>
+                      </ul>
+                  </div>
+              </app-utilite>
+          </div>
+      </div>
+  </div>
+  <div class="content-box p-0 border-0 bg-transparent">
+      <div class="row">
+          <!-- Hospital information -->
+          <div class="col-lg-12 col-xl-12 col-xxl-12 mb-4">
+              <div class="card shadow-sm basic-info">
+                  <div class="card-header bg-color text-white">
+                      <h5 class="mb-0"> Patient Information</h5>
+                  </div>
+                  <div class="card-body">
+                      <div class="row treatment-details">
+                          <div class="col-xl-3 col-lg-3">
+                              <div class="d-flex align-items-center  border-end">
+                                  <div>
+                                      <p class="small text-muted mb-1">URN</p>
+                                      <h6 class="mb-0"> {{requestDetails?.urn}} </h6>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="col-xl-3 col-lg-3">
+                              <div class="d-flex align-items-center  border-end">
+                                  <div>
+                                      <p class="small text-muted mb-1">Patient Name</p>
+                                      <h6 class="mb-0"> {{requestDetails?.patientName}} </h6>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="col-xl-3 col-lg-3">
+                              <div class="d-flex align-items-center  border-end">
+                                  <div>
+                                      <p class="small text-muted mb-1">Gender</p>
+                                      <h6 class="mb-0"> {{requestDetails?.gender}} </h6>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="col-xl-3 col-lg-3">
+                              <div class="d-flex align-items-center">
+                                  <div>
+                                      <p class="small text-muted mb-1">Address </p>
+                                      <h6 class="mb-0"> {{requestDetails?.address}} </h6>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="col-12">
+                              <hr class="mt-xl-3">
+                          </div>
+                          <div class="col-xl-4 col-lg-4">
+                              <div class="d-flex align-items-center  border-end">
+                                  <div>
+                                      <p class="small text-muted mb-1">Scheme Category Name</p>
+                                      <h6 class="mb-0">{{requestDetails?.schemeCategoryName}} </h6>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="col-xl-4 col-lg-4">
+                              <div class="d-flex align-items-center border-end">
+                                  <div>
+                                      <p class="small text-muted mb-1">Verification Mode</p>
+                                      <h6 class="mb-0">{{requestDetails?.verificationMode}}</h6>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="col-xl-4 col-lg-4">
+                              <div class="d-flex align-items-center">
+                                  <div>
+                                      <p class="small text-muted mb-1">Specialty Name</p>
+                                      <h6 class="mb-0"> {{requestDetails?.specialityName}} </h6>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="col-xl-4 col-lg-4">
+                            <div class="d-flex align-items-center">
+                                <div>
+                                    <p class="small text-muted mb-1">Specialty Code</p>
+                                    <h6 class="mb-0"> {{requestDetails?.specialityCode}} </h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-4">
+                            <div class="d-flex align-items-center">
+                                <div>
+                                    <p class="small text-muted mb-1">Hospital</p>
+                                    <h6 class="mb-0"> {{requestDetails?.hospitalName}} ({{requestDetails?.hospitalCode}})</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-4">
+                          <div class="d-flex align-items-center">
+                              <div>
+                                  <p class="small text-muted mb-1">Request Time</p>
+                                  <h6 class="mb-0"> {{requestDetails?.requestDateTime}}</h6>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-xl-4 col-lg-4">
+                        <div class="d-flex align-items-center">
+                            <div>
+                              <p class="small text-muted mb-1">Patient Photo</p>
+                              <a href="javascript:void(0);" (click)="download(requestDetails?.patientPhoto,requestDetails?.docDate)">
+                                <i class="bi bi-file-earmark-pdf" style="color: red; font-size: 24px;"></i>
+                              </a>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="col-xl-4 col-lg-4">
+                        <div class="d-flex align-items-center">
+                            <div>
+                              <p class="small text-muted mb-1">Clinical Doc</p>
+                              <a href="javascript:void(0);" (click)="download(requestDetails?.clinicalDoc,requestDetails?.docDate)">
+                                <i class="bi bi-file-earmark-pdf" style="color: red; font-size: 24px;"></i>
+                              </a>
+                              <!-- <h6 class="mb-0"> {{requestDetails?.clinicalDoc}}</h6> -->
+                            </div>
+                        </div>
+                      </div>
+                      <div class="col-xl-4 col-lg-4">
+                        <div class="d-flex align-items-center">
+                            <div>
+                              <p class="small text-muted mb-1">Hospital Remark</p>
+                              <h6 class="mb-0"> {{requestDetails?.hospitalRemark}}</h6>
+                            </div>
+                        </div>
+                      </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <!-- Treatment information -->
+      <div class="col-lg-12 col-xl-12 col-xxl-12">
+          <div class="row mt-4">
+              <div class="col-lg-12 accordion">
+                  <div class="card shadow-sm treatment-history">
+                      <div class="accordion-item" id="headingTwo">
+                          <div class="accordion-button collapsed card-header bg-color" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                              <h5 class="mb-0">Patient History</h5>
+                          </div>
+                          <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                              <div class="card-body">
+                                       <div class="content-box">
+                                          <div class="row">
+                                              <div class="table-responsive">
+                                                  <table id="treatmentTable" class="table mb-0 border">
+                                                      <thead>
+                                                          <tr>
+                                                              <th width="50">Sl#</th>
+                                                              <th>Patient Name</th>
+                                                              <th>Hospital Name</th>
+                                                              <th>Admission Date</th>
+                                                              <th>Actual Admission Date</th>
+                                                              <th>Discharge Date</th>
+                                                              <th>Actual Discharge Date</th>
+                                                              <th>Hospital Claim Amount(₹)</th>
+                                                          </tr>
+                                                      </thead>
+                                                      <tbody>
+                                                          <ng-container *ngIf="patientHistory?.length">
+                                                              <tr *ngFor="let item of patientHistory; index as i">
+                                                                  <td>{{i+1}}</td>
+                                                                  <td width="100">{{item.patientName}}</td>
+                                                                  <td width="100">{{item.hospitalName}} ({{item.hospitalCode}})</td>
+                                                                  <td width="100">{{item.dateOfAdmission}}</td>
+                                                                  <td width="100">{{item.actualDateOfAdmission}}</td>
+                                                                  <td width="100">{{item.dateOfDischarge}}</td>
+                                                                  <td width="100">{{item.actualDateOfDischarge}}</td>
+                                                                  <td width="100">{{item.claimAmount}}</td>
+                                                              </tr>
+                                                          </ng-container>
+                                                          <tr *ngIf="!patientHistory?.length">
+                                                              <td colspan="8" align="center"><strong class="text-danger">No data found</strong></td>
+                                                          </tr>
+                                                      </tbody>
+                                                  </table>
+                                              </div>
+                                          </div>
+                                      </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <!-- Patient History -->
+      <div class="col-lg-12 col-xl-12 col-xxl-12">
+          <div class="row mt-4">
+              <div class="col-lg-12 accordion">
+                  <div class="card shadow-sm treatment-history">
+                      <div class="accordion-item" id="headingTwo">
+                          <div class="accordion-button collapsed card-header bg-color" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseTwo">
+                              <h5 class="mb-0"> Ongoing Patient Treatment</h5>
+                          </div>
+                          <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                              <div class="card-body">
+                                  <div class="table-responsive">
+                                      <table class="table mb-0 border">
+                                          <thead>
+                                              <tr>
+                                                  <th>Patient Name </th>
+                                                  <th>Hospital</th>
+                                                  <th>Package Code </th>
+                                                  <th>Package Name</th>
+                                                  <th>Date of Admission </th>
+                                                  <th>Actual Date of Admission </th>
+                                                  <th>Amount Blocked</th>
+                                              </tr>
+                                          </thead>
+                                          <tbody>
+                                              <tr *ngFor="let item of onGoingPatntTrtmt; index as i">
+                                                  <td> {{item.patientName}} </td>
+                                                  <td> {{item.hospitalName}} ({{item.hospitalCode}}) </td>
+                                                  <td> {{item.packageCode}} </td>
+                                                  <td> {{item.packageName}} </td>
+                                                  <td> {{item.dateOfAdmission}} </td>
+                                                  <td> {{item.actualDateOfAdmission}} </td>
+                                                  <td> {{item.amountBlocked}} </td>
+                                              </tr>
+                                          </tbody>
+                                      </table>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-lg-12 col-xl-12 col-xxl-12">
+        <div class="row mt-4">
+            <div class="col-lg-12 accordion">
+                <div class="card shadow-sm treatment-history">
+                    <div class="accordion-item" id="headingTwo">
+                        <div class="accordion-button collapsed card-header bg-color" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                            <h5 class="mb-0">URN Treatment History</h5>
+                        </div>
+                        <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table mb-0 border">
+                                        <thead>
+                                            <tr>
+                                                <th>Patient Name </th>
+                                                <th>Age </th>
+                                                <th>Gender </th>
+                                                <th>Hospital</th>
+                                                <th>Package Code </th>
+                                                <th>Package Name</th>
+                                                <th>Date of Admission </th>
+                                                <th>Actual Date of Admission </th>
+                                                <th>Amount Blocked</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let item of urnHistory; index as i">
+                                                <td> {{item.patientName}} </td>
+                                                <td> {{item.age}} </td>
+                                                <td> {{item.gender}} </td>
+                                                <td> {{item.hospitalName}} ({{item.hospitalCode}}) </td>
+                                                <td> {{item.packageCode}} </td>
+                                                <td> {{item.packageName}} </td>
+                                                <td> {{item.dateOfAdmission}} </td>
+                                                <td> {{item.actualDateOfAdmission}} </td>
+                                                <td> {{item.claimAmount}} </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 col-xl-12 col-xxl-12">
+      <div class="row mt-4">
+          <div class="col-lg-12 accordion">
+              <div class="card shadow-sm treatment-history">
+                  <div class="accordion-item" id="headingTwo">
+                      <div class="accordion-button collapsed card-header bg-color" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                          <h5 class="mb-0"> Ongoing URN Treatment</h5>
+                      </div>
+                      <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                          <div class="card-body">
+                              <div class="table-responsive">
+                                  <table class="table mb-0 border">
+                                      <thead>
+                                          <tr>
+                                              <th>Patient Name </th>
+                                              <th>Age </th>
+                                              <th>Gender </th>
+                                              <th>Hospital</th>
+                                              <th>Package Code </th>
+                                              <th>Package Name</th>
+                                              <th>Date of Admission </th>
+                                              <th>Actual Date of Admission </th>
+                                              <th>Amount Blocked</th>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                          <tr *ngFor="let item of onGoingUrnTrtmt; git status
+                                          index as i">
+                                              <td> {{item.patientName}} </td>
+                                              <td> {{item.age}} </td>
+                                              <td> {{item.gender}} </td>
+                                              <td> {{item.hospitalName}} ({{item.hospitalCode}}) </td>
+                                              <td> {{item.packageCode}} </td>
+                                              <td> {{item.packageName}} </td>
+                                              <td> {{item.dateOfAdmission}} </td>
+                                              <td> {{item.actualDateOfAdmission}} </td>
+                                              <td> {{item.amountBlocked}} </td>
+                                          </tr>
+                                      </tbody>
+                                  </table>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+      <div class="col-lg-12 col-xl-12 col-xxl-12">
+        <div class="row mt-4">
+            <div class="col-lg-12 accordion">
+                <div class="card shadow-sm treatment-history">
+                    <div class="accordion-item" id="headingTwo">
+                        <div class="accordion-button collapsed card-header bg-color " data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseTwo">
+                            <h5 class="mb-0">Action Taken History </h5>
+                        </div>
+                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table mb-0 border">
+                                        <thead>
+                                            <tr>
+                                                <th>Sl#</th>
+                                                <th>Query Remark</th>
+                                                <th>Description</th>
+                                                <th>Query Date Time</th>
+                                                <th>Query Compile Date</th>
+                                                <th>Doc</th>
+                                                <th>Query Compile Remark</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let item of actionTakenLog; index as i">
+                                                <td>{{i+1}}</td>
+                                                <td>{{item.queryRemark}}</td>
+                                                <td>{{item.queryDesc}}</td>
+                                                <td>{{item.queryDateTime}}</td>
+                                                <td>{{item.queryCompileDate}}</td>
+                                                <td *ngIf="item.queryCompilyDoc != null">
+                                                  <a href="javascript:void(0);" (click)="download(item.queryCompilyDoc,requestDetails?.docDate)">
+                                                   <i class="bi bi-file-earmark-pdf" style="color: red; font-size: 24px;"></i>
+                                                  </a>
+                                                </td>
+                                                <td *ngIf="item.queryCompilyDoc == null">NA</td>
+                                                <td>{{item.queryCompilyremerk}}</td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Action taken History -->
+      <div class="col-lg-12 col-xl-12 col-xxl-12">
+          <div class="row mt-4">
+              <div class="col-lg-12">
+                  <div class="card shadow-sm">
+                      <div class="card-body">
+                          <div class="row">
+                              <div class="col-lg-6">
+                                  <label class="col-form-label">Remarks <span  class="text-danger">*</span></label>
+                                  <ng-autocomplete #auto [data]="allremarks" name="id" id="id" placeholder="Select Remark" (selected)="getId($event)" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" [searchKeyword]="keyword" (inputCleared)="clearEvent()" spellcheck="false">
+                                  </ng-autocomplete>
+
+                                  <ng-template #itemTemplate let-item>
+                                      <a [innerHTML]="item.remarks"></a>
+                                  </ng-template>
+
+                                  <ng-template #notFoundTemplate let-notFound>
+                                      <div [innerHTML]="notFound"></div>
+                                  </ng-template>
+                              </div>
+                              <!-- <div class="col-lg-4 col-xxl-4">
+                                  <label class="col-form-label">Approved Amount</label>
+                                  <div class="input-group mb-3"><span id="basic-addon1" class="input-group-text">
+                                          <i class="bi bi-currency-rupee"></i></span>
+                                      <input type="text" id="amount" name="amount" maxlength="8" value="{{textApprovedamount}}" (keypress)="approved_Amount($event)" (blur)="checkAmount()" class="form-control" autocomplete="off">
+                                  </div>
+                              </div> -->
+                              <div class="row">
+                                  <div class="col-lg-6 col-xxl-5" [formGroup]="myGroup">
+                                      <label class="col-form-label">Description</label>
+                                      <textarea class="form-control" rows="4" id="description" name="description" formControlName="remarks" maxlength="500" placeholder="Enter description" #myInput [maxlength]="maxChars" (keypress)="keyPress($event)"></textarea>
+                                      <span class="text-danger small">Characters Remaining: {{maxChars -
+                                   myInput.value.length}}</span>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="d-grid gap-2 d-sm-block mt-3 mt-xl-3">
+          <button id="Approve" class="btn btn-success me-2" (click)="submit($event)" [disabled]="isApproved">Approve</button>
+          <button id="Reject" class="btn btn-primary me-2" (click)="submit($event)" [disabled]="isReject">Reject</button>
+          <button id="Query" class="btn btn-danger me-2" (click)="submit($event)" [disabled]="isQuery">Query</button>
+      </div>
+  </div>
+</div>

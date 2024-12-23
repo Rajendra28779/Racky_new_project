@@ -1,0 +1,667 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-8">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/callcenterexe" routerLinkActive="active" class="nav-link">Call Center</a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/application/grievanceDGOQuery" routerLinkActive="active" class="nav-link">Query</a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/application/callcenterexeview" routerLinkActive="active" class="nav-link">View</a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/application/dgoInitialTakeAction" routerLinkActive="active" class="nav-link active">Initial Take Action</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="content-box mt-3">
+        <div class="col-xxl-10">
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label class="control-label mb-2">From Date</label><span class="text-danger">*</span>
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="date1" name="fromDate">
+                            <label class="input-group-text bg-transparent border-start-0" for="datepicker1"><i
+                                    class="iconbsky-calendar"></i> </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label class="control-label mb-2">To Date</label><span class="text-danger">*</span>
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="date2" name="toDate">
+                            <label class="input-group-text bg-transparent border-start-0" for="datepicker2"><i
+                                    class="iconbsky-calendar"></i> </label>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label class="control-label mb-2">Status</label>
+                        <select class="form-select" id="queryStatus" aria-label="Disabled select example">
+                            <option value="" selected>Select Status</option>
+                            <option value="N">Fresh</option>
+                            <option value="Q">Query</option>
+                        </select>
+                    </div>
+                </div> -->
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="control-label">State Name</label>
+                    <select class="form-select" name="stateId" id="stateId"
+                        (change)="OnChangeState($event.target.value)">
+                        <option value="" selected>Select State</option>
+                        <ng-container *ngFor="let item of stateList">
+                            <option value={{item.stateCode}}>{{item.stateName}}</option>
+                        </ng-container>
+                    </select>
+
+                </div>
+                <div class="col-md-4">
+                    <label class="control-label">District Name</label>
+                    <!-- <select class="form-select" name="districtId" id="districtId"
+                        (change)="OnChangeDistrict($event.target.value)">
+                        <option value="" selected>Select District</option>
+                        <ng-container *ngFor="let item of districtList">
+                            <option value={{item.districtcode}}>{{item.districtname}}</option>
+                        </ng-container>
+                    </select> -->
+                    <div>
+                      <ng-multiselect-dropdown #multiSelect [placeholder]="placeholderdistrict" [data]="districtlistdataformultidropdown" [settings]="dropdownSettingsfrdistrict" id="DistrictCode" (onSelect)=onItemSelectfrdistrict($event) (onDeSelect)="onItemDeSelectfrdistrict($event)"
+                      [(ngModel)]="selectedItems"  (onSelectAll)="onSelectAllfrdistrict($event)" (onDeSelectAll)="onDeSelectAllfordistrict($event)">
+                      </ng-multiselect-dropdown>
+                    </div>
+
+                </div>
+                <div class="col-md-4">
+                    <label class="control-label">Hospital Name</label>
+                    <!-- <select class="form-select" name="hospital" id="hospital">
+                        <option value="" selected>Select Hospital</option>
+                        <ng-container *ngFor="let item of hospitalList">
+                            <option value={{item.hospitalCode}}>{{item.hospitalName}}</option>
+                        </ng-container>
+                    </select> -->
+                    <div>
+                      <ng-multiselect-dropdown #multiSelect [placeholder]="placeholderdistricthospital" [data]="hospitaldatadataformultidropdown" [settings]="dropdownSettingsfrhospitalist" id="HospitalCode" (onSelect)=onItemSelectfrhospital($event) (onDeSelect)="onItemDeSelectfrhospital($event)"
+                      [(ngModel)]="selectedItems1"  (onSelectAll)="onSelectAllfrhospital($event)" (onDeSelectAll)="onDeSelectAllforhospital($event)">
+                      </ng-multiselect-dropdown>
+                    </div>
+
+                </div>
+
+                <!-- <div class="mt-2">
+                    <div class="d-grid gap-2 d-md-flex">
+                        <button type="submit" class="btn btn-success" (click)="Search()">Search</button>
+                        <button type="reset" class="btn btn-secondary" (click)="ResetField()">Reset</button>
+
+                    </div>
+                </div> -->
+
+            </div>
+            <div class="col-lg-12 mt-3">
+                <div class="d-grid gap-2 d-md-flex">
+                    <button type="submit" class="btn btn-success" (click)="onSearch()">Search</button>
+                    <button type="reset" class="btn btn-secondary" (click)="resetField()">Reset</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+        <div class="col-lg-4 col-xxl-4" style="padding-top: 10px; padding-left: 17px;">
+            <b>No. Of Records: <span style="color: green;">{{size}}</span></b>
+        </div>
+        <div class="col-lg-4 col-xxl-4" style="text-align: right; padding-top: 3px;">
+            <div class="form-group">
+                <button class="btn btn-outline-success btn-sm me-1" type="submit" (click)="downloadReport()">
+                    <i class="bi bi-download"></i>
+                </button>
+            </div>
+        </div>
+        <!-- <div class="col-md-3 col-lg-3 col-xl-3 col-xxl-3 ms-xxl-auto ms-xl-auto ms-lg-auto ms-md-auto"> -->
+        <div class="col-lg-4 col-xxl-4">
+            <div class="input-group">
+                <input type="text" id="txtsearchDate" class="form-control" placeholder="Search" name="txtsearchDate"
+                    autocomplete="off" [(ngModel)]="txtsearchDate">
+            </div>
+        </div>
+        <!-- </div> -->
+    </div>
+    <div class="row mt-3">
+        <div class="table-responsive pkg_tbl">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th width="60">Sl No. </th>
+                        <th width="100">
+                            <div> URN </div>
+                            <div class="th-small"> Patient Name </div>
+                        </th>
+                        <th width="80">
+                            <div> Patient Details </div>
+                        </th>
+                        <th width="150">
+                            <div> Call Response </div>
+                            <div class="th-small"> Active Status </div>
+                        </th>
+                        <th width="170" class="text-center">
+                            <div> Hospital Details </div>
+                            <div class="th-small"> CCE Remarks </div>
+                        </th>
+                        <th width="150">
+                            <div> DC ITA Remarks </div>
+                            <div class="th-small"> Document </div>
+                        </th>
+                        <!-- <th width="150">
+                            <div> GO Query Remarks </div>
+                        </th> -->
+                        <th width="150">
+                            <div>Allotted Date</div>
+                            <div class="th-small"> Date of Admission </div>
+                        </th>
+                        <th width="150">
+                            <div> Total Amount Blocked (₹)</div>
+                        </th>
+                        <th width="150">
+                            <div> DGO Allotted Date </div>
+                        </th>
+                        <th width="150">Take Action </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="!cceOutboundData?.length">
+                        <td colspan="17" class="text-center"><strong class="text-danger">No data found</strong></td>
+                    </tr>
+                    <ng-container
+                        *ngFor="let item of cceOutboundData | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};index as i">
+                        <tr>
+                            <td *ngIf="currentPage==1">{{(i+1)}}</td>
+                            <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+ i+1}}</td>
+                            <td>
+                                <div class="color-hed">{{item.urn}} </div>
+                                <div class="th-small"> {{item.patientName}} </div>
+                            </td>
+                            <td>
+                                <div class="th-small mt-0">
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <div class="p-1 ic-loc"> <i class="bi bi-phone"></i> </div>
+                                        <div class="p-1 flex-fill"> {{item.mobileNo}}</div>
+                                    </div>
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <div class="p-1 ic-loc"> <i class="bi-geo-alt"></i> </div>
+                                        <div class="p-1 flex-fill"> {{item.districtName}},{{item.blockName}},
+                                            <br>{{item.panchayatName}},{{item.villageName}} </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="color-hed"> {{item.callResponse}}</div>
+                                <ng-container *ngIf="item.mobileActiveStatus=='Yes'">
+                                    <div class="th-small badge badge-success mt-2"> {{item.mobileActiveStatus}} </div>
+                                </ng-container>
+                                <ng-container *ngIf="item.mobileActiveStatus=='No'">
+                                    <div class="th-small badge2 badge-danger mt-2"> {{item.mobileActiveStatus}} </div>
+                                </ng-container>
+                                <ng-container *ngIf="item.mobileActiveStatus=='Not Connected'">
+                                    <div class="th-small badge2 badge-danger mt-2"> {{item.mobileActiveStatus}} </div>
+                                </ng-container>
+                            </td>
+                            <td class="text-center">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <div class="mt-0 me-3" align="center" data-bs-toggle="modal"
+                                        data-bs-target="#iconhosp" title="Hospital Details">
+                                        <div class="color-hed bg-fa"> <i class="bi bi-hospital"
+                                                (click)="openHospDetails(item.cceId)"></i> </div>
+                                    </div>
+
+                                    <div class="popover__wrapper">
+                                        <div class="mt-0" title="CCE Remarks">
+                                            <div class="color-hed bg-fa"> <i class="bi bi-info-circle"></i> </div>
+                                        </div>
+                                        <div class="popover__content">
+                                            <h4 class="border-bottom mb-2 top-head"> Call Center Executive Remarks </h4>
+                                            <div class="col-xxl-12 col-xl-12 col-lg-12">
+                                                <div class="hidtbl-th p-1 m-0 gap-bt">
+                                                    <p class="text-danger" *ngIf="item.executiveRemarks==null">Remarks
+                                                        Not Available</p>
+                                                    <p>{{item.executiveRemarks}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="popover__wrapper">
+                                    <div class="mt-0" title="DC Remarks">
+                                        <div class="color-hed bg-fa"> <i class="bi bi-info-circle"></i> </div>
+                                    </div>
+                                    <div class="popover__content text-center">
+                                        <h4 class="border-bottom mb-2 top-head"> DC ITA Remarks </h4>
+                                        <div class="col-xxl-12 col-xl-12 col-lg-12">
+                                            <div class="hidtbl-th p-1 m-0 gap-bt">
+                                                <p class="text-danger" *ngIf="item.dcRemarks==null">Remarks
+                                                    Not Available</p>
+                                                <p>{{item.dcRemarks}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex mt-2">
+                                    <div class="col-lg-4 col-xxl-4 me-2" *ngIf="item.doc1">
+                                        <div class="mb-xl-3">
+                                            <button title="PDF File" class="btn btn-outline-success btn-sm"
+                                                (click)="downloadAction($event,item.doc1,item.hospitalCode,item.dateOfAdm,'')">
+                                                <i class="bi bi-file-earmark-pdf"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-xxl-4 me-2" *ngIf="item.doc2">
+                                        <div class="mb-xl-3">
+                                            <button title="Audio File" class="btn btn-outline-success btn-sm"
+                                                (click)="downloadAction($event,item.doc2,item.hospitalCode,item.dateOfAdm,'')">
+                                                <i class="bi bi-music-note-beamed"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-xxl-4 me-2" *ngIf="item.doc3">
+                                        <div class="mb-xl-3">
+                                            <button title="Video File" class="btn btn-outline-success btn-sm "
+                                                (click)="downloadAction($event,item.doc3,item.hospitalCode,item.dateOfAdm,'')">
+                                                <i class="bi bi-camera-video"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <!-- <td class="text-center">
+                                <div class="popover__wrapper">
+                                    <div class="mt-0" title="DGO Query Remarks">
+                                        <div class="color-hed bg-fa"> <i class="bi bi-info-circle"></i> </div>
+                                    </div>
+                                    <div class="popover__content">
+                                        <h4 class="border-bottom mb-2 top-head"> GO Query Remarks </h4>
+                                        <div class="col-xxl-12 col-xl-12 col-lg-12">
+                                            <div class="hidtbl-th p-1 m-0 gap-bt">
+                                                <p class="text-danger" *ngIf="item.goQueryRemarks==null">Remarks
+                                                    Not Available</p>
+                                                <p>{{item.goQueryRemarks}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td> -->
+                            <td>
+                                <div class="mt-0">
+                                    <div class="color-hed"> {{item.alottedDate }} </div>
+                                    <div class="th-small"> {{item.dateOfAdm |  date:'dd-MMM-yyyy'}} </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="color-hed">
+                                    {{item.totalAmountBlocked | currency:'':''}} </div>
+                            </td>
+                            <td>
+                                <div style="color: red;" *ngIf="addDays === true">
+                                    {{item.dcSubmittedDate | date:'dd/MM/yyyy'}}</div>
+                                <div class="color-hed" *ngIf="addDays === false">
+                                    {{item.dcSubmittedDate | date:'dd/MM/yyyy'}}</div>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-outline-success btn-sm" title="View Details"
+                                    (click)="rowDetails(item.cceId,item.status = !item.status)">
+                                    <i class="bi bi-eye"></i> Details
+                                </button>
+                            </td>
+                        </tr>
+                        <tr *ngIf="item.status == true">
+                            <td colspan="12" class="m-0 pt-0 pb-0 border-cols">
+                                <div>
+                                    <div class="row">
+                                        <div class="col-xxl-12 col-xl-12 col-lg-12">
+                                            <div class="row p-2">
+                                                <div class="col-xxl-12 col-xl-12 col-lg-12">
+                                                    <ng-container *ngIf="item.mobileActiveStatus == 'Yes'">
+                                                        <div class="row">
+                                                            <div class="col-xxl-8 col-xl-9 col-lg-9">
+                                                                <h4 class="border-bottom mb-2 top-head"> Question </h4>
+                                                            </div>
+                                                            <div class="col-xxl-4 col-xl-3 col-lg-3">
+                                                                <h4 class="border-bottom mb-2 top-head"> Answer </h4>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xxl-8 col-xl-9 col-lg-9 mb-2 cont-s">
+                                                                Are you receiving cashless treatment under GJAY
+                                                                <span class="ques-odia">(ଆପଣ ଜି.ଜେ.ଏ.ୱାଇ ଅଧୀନରେ
+                                                                    ନଗଦବିହୀନ
+                                                                    ଚିକିତ୍ସା ଗ୍ରହଣ କରୁଛନ୍ତି କି)</span>
+
+                                                            </div>
+                                                            <ng-container *ngIf="item.question1Response=='NO'">
+                                                                <div
+                                                                    class="col-xxl-4 col-xl-3 col-lg-3 mb-2  d-flex align-items-center">
+                                                                    <span class="text-danger">No
+                                                                    </span>
+                                                                </div>
+                                                            </ng-container>
+                                                            <ng-container *ngIf="item.question1Response=='YES'">
+                                                                <div
+                                                                    class="col-xxl-4 col-xl-3 col-lg-3 mb-2  d-flex align-items-center">
+                                                                    <span class="text-success"> Yes
+                                                                    </span>
+                                                                </div>
+                                                            </ng-container>
+                                                            <div class="col-xxl-12 col-xl-12 col-lg-12 mb-2">
+                                                                <div class="bord-s border-bottom"></div>
+                                                            </div>
+
+                                                            <div class="col-xxl-8 col-xl-9 col-lg-9 mb-2 cont-s">
+                                                                Are you satisfied with service?
+                                                                <span class="ques-odia">(ଆପଣ ସେବାରେ ସନ୍ତୁଷ୍ଟ କି?)
+                                                                </span>
+
+                                                            </div>
+                                                            <ng-container *ngIf="item.question2Response=='YES'">
+                                                                <div
+                                                                    class="col-xxl-4 col-xl-3 col-lg-3 mb-2  d-flex align-items-center">
+                                                                    <span class="text-success"> Yes
+                                                                    </span>
+                                                                </div>
+                                                            </ng-container>
+                                                            <ng-container *ngIf="item.question2Response=='NO'">
+                                                                <div
+                                                                    class="col-xxl-4 col-xl-3 col-lg-3 mb-2  d-flex align-items-center">
+                                                                    <span class="text-danger"> No
+                                                                    </span>
+                                                                </div>
+                                                            </ng-container>
+                                                            <div class="col-xxl-12 col-xl-12 col-lg-12 mb-2">
+                                                                <div class="bord-s border-bottom"></div>
+                                                            </div>
+                                                            <div class="col-xxl-8 col-xl-9 col-lg-9 mb-2 cont-s">
+                                                                Whether you have paid any extra money for treatment
+                                                                under
+                                                                GJAY
+                                                                <span class="ques-odia">(ଆପଣ ଜି.ଜେ.ଏ.ୱାଇ ଅଧୀନରେ
+                                                                    ଚିକିତ୍ସା
+                                                                    ପାଇଁ କୌଣସି ଅତିରିକ୍ତ ଟଙ୍କା ଦେଇଛନ୍ତି କି?)</span>
+
+                                                            </div>
+                                                            <ng-container *ngIf="item.question3Response=='NO'">
+                                                                <div
+                                                                    class="col-xxl-4 col-xl-3 col-lg-3 mb-2  d-flex align-items-center">
+                                                                    <span class="text-success"> No
+                                                                    </span>
+                                                                </div>
+                                                            </ng-container>
+                                                            <ng-container *ngIf="item.question3Response=='YES'">
+                                                                <div
+                                                                    class="col-xxl-4 col-xl-3 col-lg-3 mb-2  d-flex align-items-center">
+                                                                    <span class="text-danger"> Yes
+                                                                    </span>
+                                                                </div>
+                                                            </ng-container>
+                                                            <div class="col-xxl-12 col-xl-12 col-lg-12 mb-2">
+                                                                <div class="bord-s border-bottom"></div>
+                                                            </div>
+                                                            <div class="col-xxl-8 col-xl-9 col-lg-9 mb-2 cont-s">
+                                                                Did Swasthya Mitra facilitate your care
+                                                                <span class="ques-odia">(ସ୍ୱାସ୍ଥ୍ୟ ମିତ୍ର ଆପଣଙ୍କ ଯତ୍ନକୁ
+                                                                    ସୁଗମ
+                                                                    କରିଥିଲେ କି?)</span>
+
+                                                            </div>
+                                                            <ng-container *ngIf="item.question4Response=='YES'">
+                                                                <div
+                                                                    class="col-xxl-4 col-xl-3 col-lg-3 mb-2  d-flex align-items-center">
+                                                                    <span class="text-success"> Yes
+                                                                    </span>
+                                                                </div>
+                                                            </ng-container>
+                                                            <ng-container *ngIf="item.question4Response=='NO'">
+                                                                <div
+                                                                    class="col-xxl-4 col-xl-3 col-lg-3 mb-2  d-flex align-items-center">
+                                                                    <span class="text-danger">No
+                                                                    </span>
+                                                                </div>
+                                                            </ng-container>
+                                                            <div class="col-xxl-12 col-xl-12 col-lg-12 mb-2">
+                                                                <div class="bord-s border-bottom"></div>
+                                                            </div>
+                                                        </div>
+                                                    </ng-container>
+                                                    <h4 class="border-bottom mb-2 top-head"> Document Upload </h4>
+                                                    <div class="row">
+                                                        <div class="col-xxl-4 col-xl-4 col-lg-4">
+                                                            <div class="file-upload text-center">
+                                                                <div class="d-flex">
+                                                                    <div class="flex-grow-1 mb-2 text-start">Select File
+                                                                    </div>
+                                                                </div>
+                                                                <div class="file-upload">
+                                                                    <input type="file" class="form-control mb-2"
+                                                                        id="dgoDoc" accept=".pdf,.jpeg,.jpg"
+                                                                        (change)="Doc1($event)">
+                                                                    <small class="text-danger">(Upload pdf,jpeg,jpg and
+                                                                        size should not exceed 3 MB) </small>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xxl-8 col-xl-8 col-lg-12">
+                                                            <p class="mb-2 text-start mt-2"> DGO Remarks <span
+                                                                    class="text-danger">*</span></p>
+                                                            <textarea class="form-control mb-2" rows="3" id="remarks"
+                                                                placeholder="Enter DGO Remarks.."#myInput4 [maxLength]="maxChars"></textarea>
+                                                                <span class="text-danger small">Characters Remaining: {{maxChars - myInput4.value.length}}</span>
+
+                                                        </div>
+                                                        <div
+                                                            class="col-xxl-4 col-xl-4 col-lg-12 d-flex align-items-end">
+                                                            <input type="button"
+                                                                class="btn btn-success btn-bg btn-small me-2 mb-2"
+                                                                value="Initial Take Action" title="Initial Take Action" (click)="saveDGOCall(3)">
+                                                            <!-- <ng-container *ngIf="item?.dgoQueryCount <=3">
+                                                                <input type="button"
+                                                                    class="btn btn-primary btn-small mb-2" value="Query"
+                                                                    title="Query" (click)="saveDGOCall(2)">
+                                                            </ng-container> -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+        <div class="row" style="margin-top: 20px;" *ngIf="showPegi">
+            <div class="col-sm-2">
+                <div class="col-sm-*">
+                    show
+                    <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="{{size}}">All</option>
+                    </select> entries &nbsp;&nbsp;
+                </div>
+            </div>
+            <div class="col-sm-10 text-end">
+                <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true" (pageChange)="currentPage = $event" (pageBoundsCorrection)="onPageBoundsCorrection($event)" class="text-end"></pagination-controls>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <!-- <div class="modal fade" id="iconhosp" tabindex="-1" aria-labelledby="iconhospLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="p-0 m-0 top-head"> Hospital Details </h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" *ngIf="cceOutboundDataById">
+                    <div class="col-xxl-12 col-xl-12 col-lg-12">
+                        <div class="row">
+                            <div class="col-xxl-4  col-xl-4  col-lg-4  col-md-4 col-sm-4 col-xs-12">
+                                <div class="text-start p-0 gap-bt"> Hospital District </div>
+                            </div>
+                            <div class="col-xxl-8  col-xl-8 col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                <div class="color-hed p-0 gap-bt"> <span class="me-2">:</span>
+                                    {{cceOutboundDataById.hospitalDist}} </div>
+                            </div>
+                            <div class="col-xxl-4  col-xl-4  col-lg-4  col-md-4 col-sm-4 col-xs-12">
+                                <div class="text-start p-0 gap-bt"> Hospital Name </div>
+                            </div>
+                            <div class="col-xxl-8  col-xl-8 col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                <div class="color-hed p-0 gap-bt"> <span class="me-2">:</span>
+                                    {{cceOutboundDataById.hospitalName}} </div>
+                            </div>
+                            <div class="col-xxl-4  col-xl-4  col-lg-4  col-md-4 col-sm-4 col-xs-12">
+                                <div class="text-start p-0  gap-bt"> Procedure Name </div>
+                            </div>
+                            <div class="col-xxl-8  col-xl-8 col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                <div class="color-hed p-0 gap-bt"> <span class="me-2">:</span>
+                                    {{cceOutboundDataById.procedureName}} </div>
+                            </div>
+                            <div class="col-xxl-4  col-xl-4  col-lg-4  col-md-4 col-sm-4 col-xs-12">
+                                <div class="text-start p-0  gap-bt"> Package Name </div>
+                            </div>
+                            <div class="col-xxl-8  col-xl-8 col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                <div class="color-hed p-0 gap-bt"> <span class="me-2">:</span>
+                                    {{cceOutboundDataById.packageName}} </div>
+                            </div>
+                            <div class="col-xxl-4  col-xl-4  col-lg-4  col-md-4 col-sm-4 col-xs-12">
+                                <div class="text-start p-0  gap-bt"> Invoice No </div>
+                            </div>
+                            <div class="col-xxl-8  col-xl-8 col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                <div class="color-hed p-0 gap-bt"> <span class="me-2">:</span>
+                                    {{cceOutboundDataById.invoiceNo}} </div>
+                            </div>
+                            <div class="col-xxl-4  col-xl-4  col-lg-4  col-md-4 col-sm-4 col-xs-12">
+                                <div class="text-start p-0  gap-bt"> Alotted Date </div>
+                            </div>
+                            <div class="col-xxl-8  col-xl-8 col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                <div class="color-hed p-0 gap-bt"> <span class="me-2">:</span>
+                                    {{cceOutboundDataById.alottedDate|date:'dd-MMM-yyyy'}} </div>
+                            </div>
+                            <div class="col-xxl-4  col-xl-4  col-lg-4  col-md-4 col-sm-4 col-xs-12">
+                                <div class="text-start p-0  gap-bt"> Alternative No </div>
+                            </div>
+                            <div class="col-xxl-8  col-xl-8 col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                <div class="color-hed p-0 gap-bt"> <span class="me-2">:</span>
+                                    {{cceOutboundDataById.alternativeNo}} </div>
+                            </div>
+                            <div class="col-xxl-4  col-xl-4  col-lg-4  col-md-4 col-sm-4 col-xs-12">
+                                <div class="text-start p-0  gap-bt"> ID </div>
+                            </div>
+                            <div class="col-xxl-8  col-xl-8 col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                <div class="color-hed p-0 gap-bt"> <span class="me-2">:</span>
+                                    {{cceOutboundDataById.transId}} </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <div class="modal fade" id="iconhosp" tabindex="-1" aria-labelledby="iconhospLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="p-0 m-0 top-head"> Hospital Details </h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" *ngIf="cceOutboundDataById">
+                    <div class="col-xxl-12 col-xl-12 col-lg-12">
+                        <div class="row">
+                          <div class="col-xxl-4  col-xl-4  col-lg-4  col-md-4 col-sm-4 col-xs-12">
+                            <div class="text-start p-0 gap-bt"> Hospital State </div>
+                        </div>
+                        <div class="col-xxl-8  col-xl-8 col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                            <div class="color-hed p-0 gap-bt"> <span class="me-2">:</span>
+                                {{cceOutboundDataById.state}} </div>
+                        </div>
+                            <div class="col-xxl-4  col-xl-4  col-lg-4  col-md-4 col-sm-4 col-xs-12">
+                                <div class="text-start p-0 gap-bt"> Hospital District </div>
+                            </div>
+                            <div class="col-xxl-8  col-xl-8 col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                <div class="color-hed p-0 gap-bt"> <span class="me-2">:</span>
+                                    {{cceOutboundDataById.hospitalDist}} </div>
+                            </div>
+                            <div class="col-xxl-4  col-xl-4  col-lg-4  col-md-4 col-sm-4 col-xs-12">
+                                <div class="text-start p-0 gap-bt"> Hospital Name </div>
+                            </div>
+                            <div class="col-xxl-8  col-xl-8 col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                <div class="color-hed p-0 gap-bt"> <span class="me-2">:</span>
+                                    {{cceOutboundDataById.hospitalName}} </div>
+                            </div>
+                            <div class="col-xxl-4  col-xl-4  col-lg-4  col-md-4 col-sm-4 col-xs-12">
+                              <div class="text-start p-0  gap-bt"> Hoapital Code </div>
+                          </div>
+                          <div class="col-xxl-8  col-xl-8 col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                              <div class="color-hed p-0 gap-bt"> <span class="me-2">:</span>
+                                  {{cceOutboundDataById.hospitalCode}} </div>
+                          </div>
+                          <div class="col-xxl-4  col-xl-4  col-lg-4  col-md-4 col-sm-4 col-xs-12">
+                            <div class="text-start p-0  gap-bt"> Alternative No </div>
+                        </div>
+                        <div class="col-xxl-8  col-xl-8 col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                            <div class="color-hed p-0 gap-bt"> <span class="me-2">:</span>
+                                {{cceOutboundDataById.alternativeNo}} </div>
+                        </div>
+                            <div class="col-xxl-4  col-xl-4  col-lg-4  col-md-4 col-sm-4 col-xs-12">
+                                <div class="text-start p-0  gap-bt"> Procedure Name </div>
+                            </div>
+                            <div class="col-xxl-8  col-xl-8 col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                <div class="color-hed p-0 gap-bt"> <span class="me-2">:</span>
+                                    {{cceOutboundDataById.procedureName}} </div>
+                            </div>
+                            <div class="col-xxl-4  col-xl-4  col-lg-4  col-md-4 col-sm-4 col-xs-12">
+                                <div class="text-start p-0  gap-bt"> Package Name </div>
+                            </div>
+                            <div class="col-xxl-8  col-xl-8 col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                <div class="color-hed p-0 gap-bt"> <span class="me-2">:</span>
+                                    {{cceOutboundDataById.packageName}} </div>
+                            </div>
+                            <div class="col-xxl-4  col-xl-4  col-lg-4  col-md-4 col-sm-4 col-xs-12">
+                                <div class="text-start p-0  gap-bt"> Invoice No </div>
+                            </div>
+                            <div class="col-xxl-8  col-xl-8 col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                <div class="color-hed p-0 gap-bt"> <span class="me-2">:</span>
+                                    {{cceOutboundDataById.invoiceNo}} </div>
+                            </div>
+                            <div class="col-xxl-4  col-xl-4  col-lg-4  col-md-4 col-sm-4 col-xs-12">
+                                <div class="text-start p-0  gap-bt"> Alotted Date </div>
+                            </div>
+                            <div class="col-xxl-8  col-xl-8 col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                <div class="color-hed p-0 gap-bt"> <span class="me-2">:</span>
+                                    {{cceOutboundDataById.alottedDate}} </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    <!-- package status section -->
+    <!-- CCE Outbound call new designed -->

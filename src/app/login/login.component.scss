@@ -1,0 +1,99 @@
+@import '../../assets/scss/variables';
+
+.login-wrapp {
+    background: $gray-200 url(../../assets/img/login-bg.jpg) center;
+    background-size: cover;
+}
+
+.login-box {
+    border-radius: 1rem;
+
+    img {
+        height: 4.5rem;
+    }
+
+    h1 {
+        font-size: 3rem;
+        font-weight: bold;
+    }
+
+    h4 {
+        position: relative;
+        padding-bottom: .5rem;
+
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            width: 4rem;
+            height: .2rem;
+            left: 0;
+            //transform: translate(-220%, 50%);
+            background-color: rgba($link-color, .7);
+        }
+    }
+
+    .form-label {
+        font-weight: 600;
+    }
+
+    .form-control {
+        padding: .7rem 1rem .7rem 3.2rem;
+        border-radius: $custom-radius;
+        line-height: inherit;
+    }
+
+    .iconinput {
+        position: relative;
+
+        &>i {
+            position: absolute;
+            top: 0.4rem;
+            left: .8rem;
+            top: .2rem;
+            color: rgba($link-color, .8);
+        }
+
+        &.password {
+            i {
+                font-size: 1.4rem;
+                top: 0.7rem;
+            }
+        }
+
+        a {
+            &.enablebtn {
+                position: absolute;
+                padding: 0 .5rem;
+                right: 0.5rem;
+                top: 0.5rem;
+            }
+        }
+    }
+}
+
+a:not(.btn) {
+    color: $green;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+@media screen and(max-width:576px){
+    .login-box {
+    img {
+        height: 3.2rem;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        font-weight: bold;
+    }
+}
+}
+
+.clrBg {
+  font-weight: 500;
+  background-color: antiquewhite;
+}

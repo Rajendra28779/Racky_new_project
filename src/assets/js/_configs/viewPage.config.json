@@ -1,0 +1,27 @@
+[
+    {
+      "pagetitle":"View Page",
+      "tabList":[
+        {"tabName":"View","tabUrl":"../viewpage","tabClass":"active"},
+        {"tabName":"Add","tabUrl":"../addpage"}
+        
+      ],
+      "utils":[
+        {"utilName":"search"},
+        {"utilName":"print"},
+        {"utilName":"delete"},
+        {"utilName":"publish"},
+        {"utilName":"unpublish"},
+        {"utilName":"download"}
+        ],
+      "messages":
+        {
+          "successMsg":"Data saved successfully",
+        "errorMsg":"Error in database",
+        "warningtype":"You want to delete this record",
+        "deleteMsg":"Record has been deleted"
+        }
+       
+      
+    }
+  ]

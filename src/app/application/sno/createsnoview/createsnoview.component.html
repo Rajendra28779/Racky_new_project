@@ -1,0 +1,139 @@
+<div class="main-tab">
+    <div class="col-lg-4">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a routerLink="/application/createsno" routerLinkActive="active" class="nav-link active">Add</a>
+            </li>
+            <li class="nav-item">
+                <a routerLink="/application/createsnoview" routerLinkActive="active"
+                    class="nav-link active">View</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div id="filter" class="searchCriteriaBox bg-light p-3">
+    <form autocomplete="off" [formGroup]="SearchForm" (ngSubmit)="onChange()">
+        <div class="row">
+            <div class="col-md-6 col-lg-4">
+                <div class="form-group">
+                    <label class="control-label">State Name<span class="text-danger">*</span></label>
+                    <select name="stateId" id="stateId" class="form-control"
+                        (change)="OnChangeState($event.target.value)" formControlName="stateId">
+                        <option value="null">Select State</option>
+                        <ng-container *ngFor="let item of stateList;index as i">
+                            <option [value]="item.stateCode">{{item.stateName}}</option>
+                        </ng-container>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="form-group">
+                    <label class="control-label">District Name<span class="text-danger">*</span></label>
+                    <select name="districtId" id="districtId" class="form-control" formControlName="districtId">
+                        <option value="null">Select District</option>
+                        <ng-container *ngFor="let item of districtList;index as i">
+                            <option [value]="item.districtcode">{{item.districtname}}</option>
+                        </ng-container>
+                    </select>
+                </div>
+            </div>
+            <div class="col align-self-end">
+                <div class="form-group">
+                    <button class="btn btn-success mr-2" type="submit">Search</button>
+                    &nbsp;
+                    <button class="btn btn-secondary" type="reset" (click)="resetTable()">Reset</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+    <div class="col-lg-4 col-xxl-4">
+        <div class="form-group">
+            <button class="btn btn-primary" type="submit" (click)="downloadReport()">Download</button>
+        </div>
+    </div>
+    <div class="col-lg-4 col-xxl-4"></div>
+    <div class="col-lg-4 col-xxl-4">
+        <div class="input-group">
+            <input type="text" id="txtsearchDate" class="form-control" placeholder="Search here" name="txtsearchDate"
+                [(ngModel)]="txtsearchDate">
+        </div>
+    </div>
+</div>
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="table-responsive">
+                <table class="table table-striped" mb-0 id="exportTable">
+                    <thead>
+                        <tr>
+                            <th width="60">Sl No</th>
+                            <th width="160">Full Name</th>
+                            <th width="30">User Name</th>
+                            <th width="30">Mobile</th>
+                            <th width="30">Email Id</th>
+                            <th width="30">State</th>
+                            <th width="30">District</th>
+                            <!-- <th width="30">Hospital</th> -->
+                            <th width="100">Status</th>
+                            <th width="80" style="text-align: center;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr
+                            *ngFor="let item of snoData | filter:txtsearchDate |
+                        paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};index as i">
+                            <td *ngIf="currentPage==1">{{i+1}}</td>
+                            <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+i+1}}</td>
+                            <td>{{item.fullName}}</td>
+                            <td>{{item.username}}</td>
+                            <td>{{item.mobileNo}}</td>
+                            <td>{{item.emailId}}</td>
+                            <td>{{item.stateName}}</td>
+                            <td>{{item.districtName}}</td>
+                            <!-- <td>{{item.hospitalInformation.hospitalName}}</td>     -->
+                            <td>
+                                <p *ngIf="item.status === 0">Active</p>
+                                <p *ngIf="item.status === 1">InActive</p>
+                            </td>
+                            <td style="text-align: center;">
+                                <a class="btn btn-outline-primary btn-sm me-1" (click)="edit(item.bskyUserId)"><i
+                                    class="bi bi-pencil"></i></a>
+                                <!--ng-container *ngIf="item.status === 1">
+                                    <a class="btn btn-outline-primary btn-sm me-1"><i
+                                            class="bi bi-pencil"></i></a>
+                                    <a class="btn btn-outline-danger btn-sm"><i 
+                                        class="bi bi-trash3"></i></a>
+                                </ng-container>
+                                <ng-container *ngIf="item.status === 0">
+                                    <a class="btn btn-outline-primary btn-sm me-1" (click)="edit(item.bskyUserId)"><i
+                                            class="bi bi-pencil"></i></a>
+                                    <a class="btn btn-outline-danger btn-sm" (click)="delete(item)"><i
+                                            class="bi bi-trash3"></i></a>
+                                </ng-container-->
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row" *ngIf="showPegi">
+                <div class="col-sm-4">
+                    <div class="col-sm-*">
+                        show
+                        <select id="pageItem" name="pageItem" class="custom-select-sm" (change)="pageItemChange()">
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                        </select> entries
+                    </div>
+                </div>
+                <div class="col-sm-8 text-right">
+                    <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true"
+                        (pageChange)="currentPage = $event"></pagination-controls>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

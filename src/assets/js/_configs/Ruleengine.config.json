@@ -1,0 +1,77 @@
+[
+    {
+      "pagetitle":"Configure Rule Engine",
+      "tabList":[
+     
+        
+        {"tabName":"Add Rule Engine","tabUrl":"","tabClass":"active"},
+        {"tabName":"View Rule Engine","tabUrl":"../viewRuleengine"}
+        ],
+      "utils":[
+        {"utilName":"mandatory"},
+        {"utilName":"back"}
+       
+        ],
+      "messages":
+        {
+        "successMsg":"Rule added successfully",
+        "updateMsg" :"Rule updated successfully",
+        "errorMsg":"Something Went Wrong",
+        "warningtype":"You want to delete this record",
+        "deleteMsg":"Record has been deleted",
+        "typeMsg":"Type can not be left blank",
+        "fieldTypeMsg":"Field type can not be left blank",
+        "operatorMsg":"Operator can not be left blank",
+        "conditionMsg":"Condition can not be left blank",
+        "outputOperatorMsg":"Output operator can not be left blank",
+        "outputMsg":"Output can not be left blank",
+        "ruleBlnkMsg":"Rule Name can not be left blank",
+        "formBlnkMsg": "Form Name can not be left blank",
+        "moduleBlnkMsg": "Module Name can not be left blank",
+        "blockSpecialCharMsg":"Special character is not allowed !!!",
+        "outputEvtMsg":"Enter at least one event."
+      },
+      
+      "ruleTypeIf":
+      [
+        {"key":"1","values" : ["if"]}
+      ],
+
+       "ruleType":
+       [
+         {"key":"ruleTypeOthers" , "values" : [{"Id":2,"value":"else if"},
+                                {"Id":3,"value":"else"}
+          ]},
+      
+
+         { "key":"operators" ,"values": [{"Id":1,"value":"greater than"},
+          {"Id":2,"value":"less than"},
+          {"Id":3,"value":"and"},
+          {"Id":4,"value":"or"},
+          {"Id":5,"value":"equal"},
+          {"Id":6,"value":"not equal"},
+          {"Id":7,"value":"greater than equal"},
+          {"Id":8,"value":"less than equal"}
+          ]},
+
+          { "key":"outputOperators" ,"values": [{"Id":1,"value":"And"},
+            {"Id":2,"value":"Or"},
+            {"Id":3,"value":"Then"}
+            ]},
+            { "key":"event" ,"values": [{"Id":1,"value":"True"},
+              {"Id":2,"value":"False"},
+              {"Id":3,"value":"Event"}
+              ]}
+       ],
+    
+      
+       "fieldType":
+       [
+        
+            {"fieldControlType":"1", "fieldName":"Gender", "fieldValues": "['Male','Female','Others']"},
+            {"fieldControlType":"2", "fieldName":"State",  "fieldValues": "['odisha','bihar','Rajastan','AndraPradesh']"},
+            {"fieldControlType":"6", "filedName":"Name",   "fieldValues":""}
+       ]
+      
+    }
+  ]

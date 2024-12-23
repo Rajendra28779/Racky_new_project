@@ -1,0 +1,82 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item" *ngIf="isUpdateBtnInVisible">
+                        <a routerLink="/application/userGroup" routerLinkActive="active" class="nav-link active">Add</a>
+                    </li>
+                    <li class="nav-item" *ngIf="isSave">
+                        <a routerLink="/application/userGroup" routerLinkActive="active"
+                            class="nav-link active">Update</a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/application/viewgroup" routerLinkActive="active"
+                            class="nav-link active">View</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-6">
+                <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+            </div>
+
+            <div class="content-box">
+                <div class="row">
+                    <form [formGroup]="addGroup" autocomplete="off" id="subUpdate">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-4">
+                                
+                                    <div class="mb-3">
+                                    <label for="groupName" class="form-label">Group Name:<span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="groupName" maxlength="18"
+                                        name="groupName" [(ngModel)]="updategroupname.groupName"
+                                        formControlName="groupName" placeholder="Enter GroupName"
+                                        onkeyup="this.value=this.value.replace(/[^a-zA-Z ]/g,'');"
+                                        [ngClass]="{ 'is-invalid': submitted && f['groupName'].errors }"
+                                        (keyup)="keyfunction1($event.target)" />
+
+                                    </div>
+                                </div>
+                                <div>
+                                     <!-------------------->
+                                    <div class="col-lg-4" *ngIf="isSave">
+                                    <div class="mb-3">
+                                        <label>Status:</label>&nbsp;&nbsp;
+                                        <label *ngIf="updategroupname.isActive==0">
+                                            <input type="radio" checked="checked" [checked]="true" (click)="yes($event)"
+                                                name="status" id="status">Active &nbsp;&nbsp;
+                                            <input type="radio" (click)="no($event)" name="status" id="status">In-Active
+                                        </label>
+
+                                        <label *ngIf="updategroupname.isActive==1">
+                                            <input type="radio" (click)="yes($event)" name="status" id="status">Active
+                                            &nbsp;&nbsp;
+                                            <input type="radio" checked="checked" [checked]="true" (click)="no($event)"
+                                                name="status" id="status">In-Active
+                                        </label>
+                                    </div>
+                                    </div>
+                                    <!-------------------->
+                                    <div *ngIf="isUpdateBtnInVisible ">
+                                        <button type="button" class="btn btn-success"
+                                            (click)="saveData()">Submit</button>&nbsp;&nbsp;
+                                        <button type="reset" (click)="resetData()" class="btn btn-secondary "
+                                            style="padding: 7px 16px 7px 16px;">Reset</button>
+                                    </div>
+                                    <div *ngIf="isSave">
+                                        <button class="btn btn-success"
+                                            (click)="update(updategroupname)">Update</button>&nbsp;&nbsp;
+                                        <button (click)="resetData()" type="reset" class="btn btn-secondary"
+                                            style="padding: 7px 16px 7px 16px;">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

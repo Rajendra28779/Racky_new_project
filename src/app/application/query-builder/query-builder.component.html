@@ -1,0 +1,26 @@
+<div class="row">
+    <div class="col-lg-12 col-xxl-12" >
+        <label class="col-form-label">Write Query</label>
+        <!-- <textarea class="form-control" rows="4" id="remarks" name="remarks"></textarea> -->
+        <textarea class="form-control" rows="5" id="query" name="query" [(ngModel)]="query" placeholder="Enter Query"></textarea>
+    </div>  
+    <div>    
+        <button class="btn btn-success px-xl-4 py-xl-2" (click)="getDetails()" id="loginBtn">Submit</button>
+    </div>
+</div>
+<div class="content-box p-0 overflow-hidden" *ngIf="dataCheck">
+    <div class="table-responsive">
+        <table class="table table-striped mb-0">
+            <thead>
+                <tr > 
+                    <th *ngFor="let columnname of columnHead">{{columnname}}</th> 
+                </tr>
+            </thead>
+            <tbody> 
+                <tr *ngFor="let columnData of columnDatas">
+                     <td *ngFor="let column of columnData">{{column}}</td> 
+                </tr> 
+            </tbody>
+        </table>
+    </div>
+</div>

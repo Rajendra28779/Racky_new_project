@@ -1,0 +1,25 @@
+[
+      {
+        "pagetitle":"View Form Config",
+        "tabList":[
+          {"tabName":"View Application List","tabUrl":"../viewFormConfig","tabClass":"active"}
+       
+        ],
+        "utils":[
+          {"utilName":"search"},
+          {"utilName":"print"},
+          {"utilName":"delete"},
+          {"utilName":"publish"},
+          {"utilName":"unpublish"},
+          {"utilName":"download"}
+          ],
+        "messages":[
+          {"successMsg":"Date saved successfully"},
+          {"errorMsg":"Error in database"},
+          {"warningtype":"print"}
+         
+        ]
+      }
+    ]
+
+

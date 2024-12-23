@@ -1,0 +1,90 @@
+<div class="content">
+  <div class="container-fluid p-0">
+      <div class="form-cointainer">
+          <div class="main-tab">
+            <div class="row justify-content-between">
+              <div class="col-lg-12">
+                <ul class="nav nav-tabs">
+                  <li class="nav-item">
+                      <a routerLinkActive="active" class="nav-link active">CPD Alloted Claim Details</a>
+                  </li>
+                  <li class="col-lg-10">
+                      <div [align]="'start'" class="table-utilities float-end" style="padding-bottom: 1%;">
+                          <button class="btn btn-success btn-sm mx-1" style="margin-top: 10px;" tooltip="Excel"
+                              (click)="downloadReport('xcl')">
+                              <i class="bi bi-download"></i>
+                          </button>
+                          <button class="btn btn-danger btn-sm mx-1" style="margin-top: 10px;" tooltip="Excel"
+                              (click)="downloadReport('pdf')">
+                              <i class="bi bi-file-earmark-pdf"></i>
+                          </button>
+
+
+                      </div>
+                      <div  class="table-utilities float-end">
+                            <input type="text " id="txtsearchDate " name="txtsearchDate " [(ngModel)]="txtsearchDate" maxlength="20 "
+                              class="form-control " placeholder="Search here...... " autocomplete="off"
+                              style=" margin-right: 0px; margin-left: 0px;">
+                          </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="content-box">
+            <div class="row">
+              <div class="table-responsive">
+                  <table class="table table-striped mb-0">
+                      <thead>
+                        <tr>
+                            <th>Sl#</th>
+                            <th>Claim No.</th>
+                            <th>Invoice No</th>
+                            <th>URN</th>
+                            <th *ngIf="group!=3">Hospital Details</th>
+                            <th>Patient Name</th>
+                            <th>Package Code</th>
+                            <th>Actual Date Of Addmission</th>
+                            <th>Actual Date Of Discharge</th>
+                            <th>Claimed Amount(₹)</th>
+                            <th>Alloted Date</th>
+                            <th *ngIf="type==2">Action type</th>
+                            <th [width]="80" *ngIf="group!=3">Details</th>
+
+                        </tr>
+                      </thead>
+                      <tbody >
+                        <tr *ngFor="let claim of claimlist | filter:txtsearchDate, index as i">
+                          <td>{{i+1}}</td>
+                          <td>{{claim.claimNo}}</td>
+                          <td *ngIf="claim.invoiceno==null">N/A</td>
+                          <td *ngIf="claim.invoiceno!=null">{{claim.invoiceno}}</td>
+                          <td>{{claim.urn}}</td>
+                          <td *ngIf="group!=3">{{claim.hospitalName}} ({{claim.hospitalCode}})</td>
+                          <td>{{claim.patentname}}</td>
+                          <td title="{{claim.packageName}}">{{claim.packagecode}}</td>
+                          <td>{{claim.actDateOfAdm | date :'dd-MMM-yyyy'}}</td>
+                          <td>{{claim.actDateOfDschrg | date :'dd-MMM-yyyy'}}</td>
+                          <td>{{claim.claimamount| currency:'':''}}</td>
+                          <td >{{claim.alloteddate}}</td>
+                          <td *ngIf="type==2" >{{claim.actiontype}}</td>
+                          <td *ngIf="group!=3"><a class="btn btn-outline-primary btn-sm " (click)="details(claim.claimId,claim.urn)">Details</a></td>
+                          </tr>
+                        <tr  *ngIf="countclaimlist==0">
+                            <div class="row">
+                                <span style="color: red;text-align: center;position:absolute">NO DATA FOUND!!</span>
+                            </div>
+                        </tr>
+
+
+
+                      </tbody>
+                    </table>
+              </div>
+            </div>
+          </div>
+
+      </div>
+  </div>
+</div>

@@ -1,0 +1,126 @@
+.lst {
+  color: black;
+}
+.lst:hover {
+  cursor: pointer;
+  color: green;
+}
+.pgl {
+  background-color: green;
+  color: white;
+  border-radius: 5px;
+}
+.upg:hover {
+  background-color: #e6e6e6;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.ltu {
+  color: darkgrey;
+}
+	.progress .bg-success{ background-color: #29BB89 !important;}
+	.progress .bg-warning{ background-color: #ECA00D !important;}
+	.progress{height: 10px;}
+	.card{
+	border-radius: 0.4rem;
+	-webkit-box-shadow: 0 0 20px rgb(8 21 66 / 5%);
+	box-shadow: 0 0 20px rgb(8 21 66 / 5%);
+	background: #fff;
+	}
+	.percent-p{
+	font-style: normal;
+	font-weight: 600;
+	font-size: 20px;
+	line-height: 23px;
+	color: #116ABC;
+	}
+	.mw-30{min-width: 25%;}
+	.mw-40{min-width: 40%;}
+	.bg-primary{background: #1B4F8E !important;}
+	.text-primary{color: #1B4F8E !important;}
+	.bg-danger{background-color: #FF7070 !important;}
+	.text-danger{color: #FF7070 !important;}
+	.border-right {border-right: 1px solid#dee2e6;}
+	.text-success {color: #29BB89 !important;}
+	.text-warning{color: #ECA00D !important;}
+	.card-completed{
+	font-style: normal;
+	font-weight: 400;
+	font-size: 20px;
+	line-height: 23px;
+	}
+	.card-pending{
+	font-style: normal;
+	font-weight: 400;
+	font-size: 20px;
+	line-height: 23px;
+	}
+	.color-hed {
+	color: #515151 !important;
+	font-weight: 500;
+	}
+	.card-head {
+	font-family: 'Roboto';
+	font-style: normal;
+	font-weight: 800;
+	font-size: 24px;
+	}
+	.card-complhead {
+	font-family: 'Roboto';
+	font-style: normal;
+	font-weight: 500;
+	font-size: 32px;
+	line-height: 38px;
+	color: #515151;
+	}
+	.card-small {
+	font-style: normal;
+	font-weight: 500;
+	font-size: 14px;
+	line-height: 16px;
+	color: #404040;
+	}
+	.color-g {
+	color: #29BB89;
+	}
+	.color-p {
+	color: #FF7070;
+    }
+    .mw-200{
+        min-width: 200px;
+	}
+
+    .mw-150{
+        min-width: 150px;
+    }
+	@media screen and (max-width: 1440px) {
+	.mw-30{min-width: auto;}
+	.mw-40{min-width: auto;}
+	}
+	@media screen and (max-width: 1366px) {
+	.mw-30{min-width: auto;}
+	.mw-40{min-width: auto;}
+	.card-small {
+	font-style: normal;
+	font-weight: 500;
+	font-size: 14px;
+	line-height: 16px;
+	color: #404040;
+	}
+	.card-completed{font-size: 18px;}
+	.percent-p{font-size: 18px;}
+	.card-warning{font-size: 20px;}
+	.card-head {
+	font-family: "Roboto";
+	font-style: normal;
+	font-weight: 800;
+	font-size: 20px;
+	}
+	.card-complhead{
+	font-family: "Roboto";
+	font-style: normal;
+	font-weight: 500;
+	font-size: 24px;
+	line-height: 34px;
+	}
+    }

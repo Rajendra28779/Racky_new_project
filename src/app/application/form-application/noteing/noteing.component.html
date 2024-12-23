@@ -1,0 +1,113 @@
+<div class="page-title d-flex justify-content-between align-items-center">
+    <h4>{{ title }}</h4>
+    <div class="indicatorslist">
+        <a title="" href="javascript:void(0)" class="btn btn-sm btn-success" id="backicon" data-toggle="tooltip"
+        data-placement="top" (click)="backClicked()" data-original-title="Back"><i
+            class="bi bi-arrow-left-short"></i></a>
+    </div>
+  </div>
+  
+  <div class="page-controls-section" id="page-content">
+    <div class="card">
+      <div class="controls-section-header">
+        <ul class="nav nav-tabs nav-fill" role="tablist">
+          <app-tabs
+            *ngFor="let tablist of tablist"
+            [tabMessage]="tablist"
+          ></app-tabs>
+        </ul>
+       
+      </div>
+      <div class="card-body">
+        <div class="controls-section">
+         
+          <div *ngIf="noteingList?.length > 0; else norecord">
+            <div class="action-history" id="viewTable" *ngFor="let nlist of noteingList;let i=index">
+                <div class="action-item notingTbl">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="action-authority">
+                                <i class="bi bi-person-circle"></i>
+                                <span class="d-block noting-user">
+                                                                    {{nlist.intfromauthority}}
+                                                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="action-body">
+                                <p class="mb-2"><strong>Remark :</strong> 
+                     <span [innerHTML]="nlist.txtnoting"></span>
+
+                                
+                            </p>
+                         
+                                <p class="mb-1 "><strong>Action On : </strong> {{nlist.dtactiontaken
+                                }}                            </p>
+                                <p class="mb-0 "><strong>Status : </strong>  {{nlist.intstatus == 2 ? 'Revert' 
+                                    : (nlist.intstatus == 1) ? 'Forward'  
+                                    : (nlist.intstatus == 3) ? 'Resubmitted' 
+                                    : (nlist.intstatus == 6) ? 'Query' 
+                                    : (nlist.intstatus == 7) ? 'Reject'
+                                    : (nlist.intstatus == 9) ? 'Query Replied by Applicant' 
+                                    : (nlist.intstatus == 8) ?'Approved'
+                                    : (nlist.intstatus == 17) ?'Action Taken'
+                                    : (nlist.intstatus == 18) ?'Reopen'
+                                    : (nlist.intstatus == 19) ?'Action Taken'
+                                    :'---'}}                    
+                            
+                               
+                            
+                            </p>
+                            <p class="mb-1 " *ngIf="nlist.jsnotherdetails != null"><strong>Document : </strong>                            
+                            <a 
+                                                                        class="h4"
+                                                                        href="{{tempurlForApproval+nlist.jsnotherdetails}}"
+                                                                        target="_blank"><i
+                                                                            class="bi bi-download"></i></a> </p>
+                                                                            <p class="mb-1 " *ngIf="nlist.jsnomediadetails != null"><strong>Audio/Video : </strong>                            
+                                                                              <a 
+                                                                                                                          class="h4"
+                                                                                                                          href="{{tempurlForApproval+nlist.jsnomediadetails}}"
+                                                                                                                          target="_blank"><i
+                                                                                                                              class="bi bi-download"></i></a> </p>
+                                                                           
+                                                                            <p class="mb-1" *ngIf="nlist.priority != null" ><strong>Priority :</strong> 
+                                                                              <span *ngIf ="nlist.priority == 'High'" class="text-white bg-danger  rounded-1 m-2 high_btn  align-items-center ms-3">{{nlist.priority}}</span>
+                                                                              <span *ngIf ="nlist.priority == 'Medium'" class="text-white bg-orange rounded-1 m-2 high_btn2  align-items-center ms-3">{{nlist.priority}} </span>
+                                                                              <span *ngIf ="nlist.priority == 'Low'" class="text-white bg-yellow rounded-1 m-2 high_btn3  align-items-center ms-3">{{nlist.priority}}</span>
+                                                                             
+                                                                                         
+                                                                                     </p>
+                                                                                      <ng-container  *ngIf="nlist.queryDoc != null && nlist.intfromauthority==='Applicant'">
+                                                                                        <div *ngFor = "let doc of nlist.queryDoc">
+                                                                                     <p class="mb-1"><strong>{{doc.docName}}: </strong>                            
+                                                                                      <a 
+                                                                                                                                  class="h4"
+                                                                                                                                  href="{{tempurl+doc.doc}}"
+                                                                                                                                  target="_blank"><i
+                                                                                                                                      class="bi bi-download"></i></a> </p>
+                                                                                                                                    </div>
+                                                                                                                                    </ng-container>
+                                </div>
+                                </div>
+                        </div>
+                        </div>
+                        </div>
+        
+
+<div >
+
+</div>
+          </div>
+          <ng-template #norecord>
+            <h6 class="no-content">No Record Found</h6>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="loader" *ngIf="loading">
+    <div class="loader-item"></div>
+    <p>Loading...</p>
+  </div>
+  

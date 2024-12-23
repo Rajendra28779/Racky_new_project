@@ -1,0 +1,337 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/postpaymentlist" class="nav-link active">Post Payment List</a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/application/postpaymentview" class="nav-link text-success">Post Payment View</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="filter" class="searchCriteriaBox bg-light p-3">
+        <div class="row">
+            <div class="col-lg-3 col-xxl-3">
+                <div class="mb-xl-3">
+                    <label class="control-label">Actual Date of Discharge From</label><span class="text-danger">*</span>
+                    <div class="input-group">
+                        <input type="text" class="form-control border-end-0 datepicker" id="datepicker1" name="fromDate">
+                        <label class="input-group-text bg-transparent border-start-0" for="datepicker1"><i class="iconbsky-calendar"></i> </label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-xxl-3">
+                <div class="mb-xl-3">
+                    <label class="control-label">Actual Date of Discharge To</label><span class="text-danger">*</span>
+                    <div class="input-group">
+                        <input type="text" class="form-control border-end-0 datepicker" id="datepicker2" name="toDate">
+                        <label class="input-group-text bg-transparent border-start-0" for="datepicker2"><i class="iconbsky-calendar"></i> </label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-xxl-3">
+                <div class="mb-xl-3">
+                    <label class="control-label">SNA Doctor Name<span class="text-danger">*</span></label>
+                    <ng-autocomplete #auto [data]="snoList" [(ngModel)]="selectedValue" [disabled]="disabled" placeholder="Select SNA Name" (selected)="selectEvent($event)" (inputCleared)="clearEvent()" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate"
+                        [searchKeyword]="keyword" spellcheck="false">
+                    </ng-autocomplete>
+
+                    <ng-template #itemTemplate let-item>
+                        <a [innerHTML]="item.fullName"></a>
+                    </ng-template>
+
+                    <ng-template #notFoundTemplate let-notFound>
+                        <div [innerHTML]="notFound"></div>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="col-lg-3 col-xxl-3">
+                <div class="mb-xl-3">
+                    <label class="control-label">Scheme Category Name<span class="text-danger">*</span></label>
+                    <select class="form-select" name="schemacategory" id="schemacategory" (change)="getschemacategoryid($event.target.value)" style="margin-top: 9px;">
+                    <option value="" selected >All</option>
+                    <ng-container *ngFor="let item of schemeList">
+                        <option value={{item.schemeCategoryId}}>{{item.categoryName}}</option>
+                    </ng-container>
+                </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-xxl-3">
+                <div class="mb-xl-3">
+                    <label class="control-label">State Name</label>
+                    <select class="form-select" name="stateId" id="stateId" [(ngModel)]="stateId" (change)="OnChangeState($event.target.value)">
+                        <option value="" selected>Select State</option>
+                        <ng-container *ngFor="let item of stateList">
+                            <option value={{item.stateCode}}>{{item.stateName}}</option>
+                        </ng-container>
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-3 col-xxl-3">
+                <div class="mb-xl-3">
+                    <label class="control-label">District Name</label>
+                    <select class="form-select" name="districtId" id="districtId" [(ngModel)]="districtId" (change)="OnChangeDistrict($event.target.value)">
+                        <option value="" selected>Select District</option>
+                        <ng-container *ngFor="let item of districtList">
+                            <option value={{item.districtcode}}>{{item.districtname}}</option>
+                        </ng-container>
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-3 col-xxl-3">
+                <div class="mb-xl-3">
+                    <label class="control-label">Hospital Name</label>
+                    <ng-multiselect-dropdown #multiSelect [placeholder]="placeHolder" [data]="hospitalList" [settings]="dropdownSettings" id="hospitalCode" [(ngModel)]="selectedItems" (onSelect)=onItemSelect($event) (onDeSelect)="onItemDeSelect($event)" (onSelectAll)="onSelectAll($event)"
+                        (onDeSelectAll)="onDeSelectAll($event)">
+                    </ng-multiselect-dropdown>
+                </div>
+            </div>
+            <div class="col-lg-3 col-xxl-3">
+                <div class="mb-xl-3">
+                    <label class="control-label">Search Type</label>
+                    <select class="form-select" name="search" id="search">
+                        <option value=1 selected>2.0 Block Data</option>
+                        <option value=2>1.0 Block Data</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col align-self-end">
+                <div class="mb-xl-3">
+                    <button type="submit" class="btn btn-success" (click)="getPostPaymentList()">Search</button> &nbsp;
+                    <button type="submit" class="btn btn-secondary" (click)="resetField()">Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+        <div class="col-lg-3 col-xxl-3" style="padding-top: 10px; padding-left: 15px;">
+            <div class="form-group" *ngIf="showPegi">
+                Show
+                <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                    <option value="200">200</option>
+                    <option value="{{paymentList?.length}}">All</option>
+                </select> Entries
+            </div>
+        </div>
+        <div class="col-lg-3 col-xxl-3 text-center" style="padding-top: 10px;">
+            <div class="form-group">
+                <b>Total Cases: <span style="color: green;">{{paymentList?.length}}</span></b>
+            </div>
+        </div>
+        <div class="col-lg-2 col-xxl-2" style="text-align: right; padding-top: 3px;">
+            <div class="form-group">
+                <button class="btn btn-outline-success btn-sm me-1" type="submit" (click)="downloadReport('excel')">
+                    <i class="bi bi-file-earmark-spreadsheet" style="font-size: 13pt;"></i>
+                </button> &nbsp;
+                <button class="btn btn-outline-danger btn-sm me-1" type="submit" (click)="downloadReport('pdf')">
+                    <i class="bi bi-file-earmark-pdf" style="font-size: 13pt;"></i>
+                </button>
+            </div>
+        </div>
+        <div class="col-lg-4 col-xxl-4">
+            <div class="input-group">
+                <input type="text" id="txtsearchDate" class="form-control" placeholder="Search here" name="txtsearchDate" [(ngModel)]="txtsearchDate" autocomplete="off" maxlength="50">
+            </div>
+        </div>
+    </div>
+    <div class="form-cointainer">
+        <div class="main-tab">
+            <div class="row justify-content-between">
+                <div class="table-responsive">
+                    <table class="table table-striped mb-0">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" id="allCheck" (change)="checkAllCheckBox($event)"></th>
+                                <th>Sl No</th>
+                                <th>URN</th>
+                                <th>Claim No.</th>
+                                <th>Case No.</th>
+                                <th>Patient Name</th>
+                                <th>Hospital Details</th>
+                                <th>Invoice No.</th>
+                                <th>Package ID</th>
+                                <th>Actual Date of Admission</th>
+                                <th>Actual Date of Discharge</th>
+                                <th>Hospital Claim Amount (₹)</th>
+                                <th>CPD Approved Amount (₹)</th>
+                                <th>SNA Approved Amount (₹)</th>
+                                <th>CPD Mortality</th>
+                                <th>Hospital Mortality</th>
+                                <th>CPD Claim Status</th>
+                                <th>CPD Remarks</th>
+                                <th>SNA Claim Status</th>
+                                <th>SNA Remarks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let claim of paymentList | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};
+                                index as i">
+                                <td><input id="{{claim.claimid}}" type="checkbox" (change)="tdCheck($event,claim.claimid)"></td>
+                                <td *ngIf="currentPage==1">{{(i+1)}}</td>
+                                <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+ i+1}}</td>
+                                <td>
+                                    {{claim.urn}}
+                                </td>
+                                <td> {{claim.claimNo}}</td>
+                                <td> {{claim.caseNo}}</td>
+                                <!-- <td>{{claim.transactionID}}/{{claim.packageCode}}</td> -->
+                                <td> {{claim.patientName}}</td>
+                                <td> {{claim.hospitalName}}({{claim.hospitalCode}})</td>
+                                <td> {{claim.invoiceNumber}}</td>
+                                <td title={{claim.packageName}}> {{claim.packageCode}}</td>
+                                <td> {{claim.actualDateOfAdmission | date :'dd-MMM-yyyy'}}</td>
+                                <td> {{claim.actualDateOfDischarge | date :'dd-MMM-yyyy'}}</td>
+                                <!-- <td> {{claim.createdOn | date :'dd-MMM-yyyy, h:mm:ss a'}}</td> -->
+                                <!-- <td> {{claim.cpdAlotteddate | date :'dd-MMM-yyyy, h:mm:ss a'}}</td> -->
+                                <td> {{claim.currentTotalAmount | currency:'':''}}</td>
+                                <td> {{claim.cpdApprovedAmount | currency:'':''}}</td>
+                                <td> {{claim.snaApprovedAmount | currency:'':''}}</td>
+                                <!-- <td> {{claim.actualCpdAmount | currency:'':''}}</td> -->
+                                <!-- <td> {{claim.actualSnaAmount | currency:'':''}}</td> -->
+                                <td *ngIf="claim.mortality == 'Y'"> Yes</td>
+                                <td *ngIf="claim.mortality == 'N'">No</td>
+                                <td *ngIf="claim.mortality == undefined || claim.mortality == ''"> N/A</td>
+                                <td *ngIf="claim.hospitalMortality == 'Y'"> Yes</td>
+                                <td *ngIf="claim.hospitalMortality == 'N'">No</td>
+                                <td *ngIf="claim.hospitalMortality == undefined || claim.hospitalMortality == ''"> N/A</td>
+                                <td> {{claim.cpdClaimStatus}}</td>
+                                <td Class="text-center" (click)="viewDescription(claim.cpdRemarks)"><a href="javascript:void(0)">view</a></td>
+                                <td> {{claim.snaClaimStatus}}</td>
+                                <td Class="text-center" (click)="viewDescription(claim.snaRemarks)"><a href="javascript:void(0)">view</a></td>
+                                <!-- <td class="text-center">
+                                    <a class="btn btn-outline-success btn-sm"
+                                        (click)="onAction(claim.transactionDetailsId,claim.urn,claim.packageCode)">Action</a>
+                                </td> -->
+                            </tr>
+                            <tr *ngIf="paymentList.length==0">
+                                <td colspan="20" class="text-center text-danger">
+                                    <strong>NO DATA FOUND!!</strong>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row" style="margin-top: 20px;" *ngIf="showPegi">
+                    <div class="col-sm-6">
+                        <div class="col-sm-*">
+                            Show
+                            <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                                <option value="200">200</option>
+                                <option value="{{paymentList?.length}}">All</option>
+                            </select> Entries
+                        </div>
+                    </div>
+                    <div class="col-sm-6 text-right">
+                        <pagination-controls id="listing_pagination" [maxSize]="20" [directionLinks]="true" class="text-end" (pageChange)="currentPage = $event" (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 align-items-center">
+        <a class="btn btn-success px-xl-3 py-xl-2 me-2" *ngIf="show" id="button" data-bs-toggle="modal" data-bs-target="#postpaymentModal" (click)="initializePayment()">Pay</a>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="postpaymentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-focus="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    <span>Payment Details</span>
+                </h5>
+                <button type="button" #closebutton class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="cancel()"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-6 col-xxl-6" style="padding-top: 10px; padding-left: 17px;">
+                        <b>Final Approved Amount<span class="text-danger">* </span>:</b>
+                    </div>
+                    <div class="col-lg-6 col-xxl-6" style="padding-top: 10px; color: rgb(255, 4, 4);">
+                        <b><span >{{totalPaidAmount | currency:'':''}}</span></b>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-xxl-6" style="padding-top: 10px; padding-left: 17px;">
+                        <b>Actual Paid Amount<span class="text-danger">* </span>:</b>
+                    </div>
+                    <div class="col-lg-6 col-xxl-6" style="padding-top: 10px; color: rgb(255, 4, 4);">
+                        <input type="text" class="form-control" id="paidamount" name="paidamount" (keypress)="approved_Amount($event)" (blur)="checkAmount()" placeholder="Enter Number" maxlength="10">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-xxl-6" style="padding-top: 10px; padding-left: 17px;">
+                        <b>Paid By<span class="text-danger">* </span>:</b>
+                    </div>
+                    <div class="col-lg-6 col-xxl-6" style="padding-top: 10px;">
+                        <select class="form-select" id="bankModeId" aria-label="Disabled select example" (click)="getMode()">
+                            <option value="" selected>Select</option>
+                            <option *ngFor="let bank of bankMode" [value]="bank.paymentModeId">{{bank.paymentType}}</option>
+                          </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-xxl-6" style="padding-top: 10px; padding-left: 17px;">
+                        <b> DD/CHEQUE/ET No.<span class="text-danger">* </span>:</b>
+                    </div>
+                    <div class="col-lg-6 col-xxl-6" style="padding-top: 10px;">
+                        <input type="text" class="form-control" id="typeNumber" name="typeNumber" placeholder="Enter Number" onkeyup="this.value=this.value.replace(/[^a-zA-Z0-9]/g,'');" minlength="6" maxlength="50" (keypress)="getValidNo($event)" oninput="this.value = this.value.toUpperCase()">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-xxl-6" style="padding-top: 10px; padding-left: 17px;">
+                        <b>Bank Name<span class="text-danger" *ngIf="showStar">* </span>:</b>
+                    </div>
+                    <div class="col-lg-6 col-xxl-6" style="padding-top: 10px;">
+                        <select class="form-select" id="bankId" aria-label="Disabled select example">
+                            <option value="" selected>Select</option>
+                            <option *ngFor="let bank of bankList" [value]="bank.bankId">{{bank.bankName}}</option>
+                          </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-xxl-6" style="padding-top: 10px; padding-left: 17px;">
+                        <b>Date<span class="text-danger">* </span>:</b>
+                    </div>
+                    <div class="col-lg-6 col-xxl-6" style="padding-top: 10px;">
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="currentDate" name="currentDate">
+                            <label class="input-group-text bg-transparent border-start-0" for="currentDate"><i class="iconbsky-calendar"></i></label>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-success" (click)="submitPayment()">Update</button> &nbsp;
+                <button class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close" (click)="cancel()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal justify-content-center" id="appealDisposal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body py-5">
+                <span class="text-center text-success">
+          {{dtls}}
+         </span>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="modalClose()">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>

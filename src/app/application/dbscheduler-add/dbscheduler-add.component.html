@@ -1,0 +1,122 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+      <div class="row justify-content-between">
+          <div class="col-lg-4">
+              <ul class="nav nav-tabs">
+                  <li class="nav-item">
+                      <a routerLink="/application/dbscheduleradd" routerLinkActive="active" class="nav-link active" >Add</a>
+                  </li>
+                  <li class="nav-item">
+                      <a routerLink="/application/dbschedulerview" routerLinkActive="active" class="nav-link " style="color: #1f723f;">View</a>
+                  </li>
+                  <li class="nav-item">
+                    <a routerLink="/application/dbschedulerlog" routerLinkActive="active" class="nav-link "  style="color: #1f723f;">Log</a>
+                </li>
+              </ul>
+          </div>
+      </div>
+  <div class="content-box">
+    <form [formGroup]="addForm" autocomplete="off">
+  <div class="row">
+    <div class="col-lg-5 col-xxl-5">
+        <div class="mb-xl-3">
+            <label class="form-label">Procedure Name<span class="text-danger">*</span></label>
+            <input class="form-control" type="text" placeholder="Enter Procedure Name" autocomplete="off" formControlName="procedurename" id="procedurename" maxlength="200"
+            (keypress)="keyPress1($event)" >
+        </div>
+    </div>
+    <div class="col-lg-5 col-xxl-5">
+        <div class="mb-xl-3">
+            <label class="form-label">Scheduler Name<span class="text-danger">*</span></label>
+            <input class="form-control" type="text" placeholder="Enter Scheduler Name" autocomplete="off" formControlName="schedularname" id="schedularname"
+            (keypress)="keyPress2($event)" maxlength="55">
+        </div>
+    </div>
+    <div class="col-lg-5 col-xxl-5">
+      <div class="row">
+        <div class="col-lg-6 col-xxl-6">
+          <label class="form-label">Running Interval<span class="text-danger">*</span></label>
+          <select class="form-select" name="interval" id="runninginterval" formControlName="runninginterval">
+          <option value="">--Select-- </option>
+          <option value="Daily">Daily</option>
+          <option value="Weakly">Weakly</option>
+          <option value="Monthly">Monthly</option>
+          </select>
+        </div>
+        <div class="col-lg-6 col-xxl-6">
+          <label class="form-label">Running time<span class="text-danger">*</span></label>
+          <div class="input-group">
+            <input type="text" onkeydown="return false;" class="form-control border-end-0 timepicker" placeholder="Running time"
+            autocomplete="off" id="runningtime" formControlName="runningtime" >
+            <label class="input-group-text bg-transparent border-start" for="runningtime">
+              <i class="bi bi-clock"></i>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-5 col-xxl-5">
+        <div class="mb-xl-3">
+            <label class="form-label">Description<span class="text-danger">*</span></label>
+            <textarea class="form-control"  placeholder="Enter Remark" autocomplete="off" id="proceduredescrioption" maxlength="1000" style="height: 40pt;" formControlName="proceduredescrioption"
+            onkeyup="this.value=this.value.replace(/[^0-9.a-zA-Z@/_(), ]/g,'');" #myInput  (keypress)="keyPress($event)"></textarea>
+            <span class="text-danger small">Characters Remaining: {{maxChars - myInput.value.length}}</span>
+        </div>
+    </div>
+    <div class="col-lg-12" >
+      <button type="button" class="btn btn-success" (click)="valiadte()">Submit</button>&nbsp;
+      <input type="reset" value="Reset" class="btn btn-secondary" >
+    </div>
+  </div>
+</form>
+  </div>
+</div>
+</div>
+
+<!-- Modal -->
+<div class="modal modal-custom-backdrop" id="exampleOtpModal" tabindex="-1" aria-labelledby="exampleModalLabel" style="backdrop-filter: blur(5px);"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title text-success" id="exampleModalLabel" >Enter OTP<span
+                  class="required-asterisk text-danger">
+                  *</span></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closemodeal()"></button>
+              </div>
+                <div class="modal-body py-5">
+
+
+                    <div class="row">
+                            <div class="iconinput">
+                                <input type="text" class="form-control usertext userinput" id="otpId" name="otpId" maxlength="6"
+                                    placeholder="Enter OTP" autocomplete="off"  onkeyup="this.value=this.value.replace(/[^0-9]/g,'');">
+                            </div>
+                    </div>
+                    <div class="d-flex pt-4 pb-3">
+                        <div class="pe-2 text-secondary">
+                            <i class="feather-iconsmartphone text-secondary fs-1-2" id="phoneId"></i>
+                        </div>
+                            <input type="text" id="mobileNoId" class="form-control text-secondary p-0 border-0" readonly>
+                    </div>
+                    <div class="d-flex pt-4 pb-2 position-absolute bottom--10">
+
+                        <div class="pe-2 text-secondary">
+                            <p id="timerdivId"><i class="feather-iconclock fs-1-2"></i> Time Left : </p>
+                        </div>
+                        <div>
+                            <input type="text" id="timeCounter" class="form-control text-danger p-0 border-0" readonly>
+                        </div>
+                    </div>
+                </div>
+                <!-- <p class="small text-end text-secondary" >
+                  <a (click)="backToLogin()">Back to Login &nbsp;  </a>
+                </p> -->
+                <div class="modal-footer d-flex justify-content-center align-items-center">
+                    <button type="button" id="sendId" class="btn btn-success" (click)="validateOtp()">Submit</button>
+                    <button type="button" id="reSendId" class="btn btn-success" (click)="onResendOtp()">Resend
+                        OTP</button>
+                </div>
+            </div>
+        </div>
+    </div>

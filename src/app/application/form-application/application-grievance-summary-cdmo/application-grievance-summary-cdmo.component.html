@@ -1,0 +1,155 @@
+<div class="page-controls-section" id="page-content">
+  <div class="card">
+    <div class="controls-section-header">
+      <ul class="nav nav-tabs nav-fill" role="tablist">
+        <app-tabs *ngFor="let tablist of tablist" [activateid]="pending" [tabMessage]="tablist"></app-tabs>
+      </ul>
+      <div class="indicatorslist">
+        <app-util *ngFor="let utillist of utillist" [childMessage]="utillist"></app-util>
+      </div>
+    </div>
+    <div class="card-body">
+
+      <div class="controls-section ">
+        <div class="row">
+
+          <div class="col-lg-3 col-xxl-3">
+            <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+              <label class="control-label mb-2"> From Date </label><span class="text-danger">*</span>
+              <div class="input-group">
+                <input type="text" class="form-control border-end-0 datepicker" id="formdate" name="fromDate">
+                <label class="input-group-text bg-transparent border-start-0" for="formdate"><i
+                    class="iconbsky-calendar"></i> </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-xxl-3">
+            <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+              <label class="control-label mb-2">To Date To</label><span class="text-danger">*</span>
+              <div class="input-group">
+                <input type="text" class="form-control border-end-0 datepicker" id="todate" name="toDate">
+                <label class="input-group-text bg-transparent border-start-0" for="todate"><i
+                    class="iconbsky-calendar"></i> </label>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="col-lg-12">
+          <div class="d-grid gap-2 d-md-flex">
+            <button type="button" class="btn btn-success me-2" (click)="searchData()">Search</button>
+            <input type="button" value="Reset" (click)="resetData()" class="btn btn-secondary">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div *ngIf="formsList?.length > 0; else norecord">
+          <div class="d-flex justify-content-between mb-3">
+            <div></div>
+            <div>
+              Per Page:
+              <select id="pageItem" (change)="pageItemChange()">
+                <option *ngFor="let size of pageSizes" [ngValue]="size">
+                  {{ size }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row">
+            </div>
+            <div class="row mb-3 d-flex align-items-center">
+              <div class="col-md-2 total_sec border-end"> Total Record - <span> {{formsList.length}} </span></div>
+              <div class="col-md-3 total_sec border-end"> </div>
+              <div class="col-md-3 total_sec1 border-end"> </div>
+
+              <div class="col-md-4 d-flex border-end">
+                <button class="btn btn-outline-success btn-sm me-1" (click)="downloadReport()">
+                  <i class="bi bi-file-earmark-spreadsheet" style="font-size: 13pt;"></i>
+                </button>
+                <button class="btn btn-outline-danger btn-sm me-1" type="submit" (click)="downloadPdf()">
+                  <i class="bi bi-file-earmark-pdf" style="font-size: 13pt;"></i>
+                </button>
+                <input type="text" [(ngModel)]="searchText" class="form-control"
+                  placeholder="Enter text to filter records" style="max-width: 300px;" />
+              </div>
+
+            </div>
+            <!-- Modal -->
+          </div>
+          <div class="table-responsive print-section">
+            <table aria-describedby="mydesc" data-toggle="table" class="table table-bordered valign-middle"
+              *ngIf="(dataResult | filter: searchText).length > 0; else noResults;">
+              <thead>
+                <tr>
+                  <th>Sl#</th>
+                  <th *ngFor="let colName of dataCols" style="width: 100%">
+                    {{ colName.colHeader }}
+                  </th>
+                  <th>Applied Date</th>
+                  <th>Last Action by</th>
+                  <th>Status</th>
+                  <th>View</th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngFor="let rows of dataResult | filter: searchText 
+                | paginate: {id:'listing_pagination', itemsPerPage:pageElement, currentPage:currentPage }
+                ;index as i">
+                <tr >
+                  <td *ngIf="currentPage==1">{{i+1}}</td>
+                  <td *ngIf="currentPage!=1">{{ (currentPage - 1) * pageElement+ i+1 }}</td>
+                  <td *ngFor="let colName of dataCols">
+                    {{ rows[colName.colName] }}
+                  </td>
+                  <td>{{rows.STMCREATEDON}}</td>
+                  <td>
+                    {{rows.INTSENTFROM}}
+                  </td>
+                  <td>
+                    <a href="javascript:void(0)" (click)="notingDetails(formID+':'+rows.INTONLINESERVICEID)">
+                      <div [innerHTML]="getAppStatus(rows)"></div>
+                    </a>
+                  </td>
+                  <td>
+                    <a href="javascript:void(0);" class="btn btn-primary btn-sm" (click)="editDetails(formID+':'+rows.INTONLINESERVICEID+':'+2+':'+rows.INTPROFILEID)">Preview</a>
+                  </td>
+                </tr>
+              </ng-container>
+              </tbody>
+            </table>
+          </div>
+          <!--Pagination-->
+          <div class="row" *ngIf="showPegi">
+            <div class="col-sm-4" ng-model="total">
+              <strong>
+                Showing {{ (currentPage - 1) * pageElement + 1 }} to {{elementTo}} of {{recordList}}
+                (Total Records - {{dataResult.length }})
+              </strong>
+            </div>
+            <div class="col-sm-8 text-right" style="text-align: end;">
+              <pagination-controls id="listing_pagination" (pageChange)="pageChange($event)">
+              </pagination-controls>
+
+            </div>
+          </div>
+          <div class="col-sm-12 text-center" *ngIf="!showPegi">
+            <span style="color: red;"><Strong>No Record Found !!!</Strong></span>
+          </div>
+        </div>
+        <ng-template #norecord ng-if="total">
+          <h6 class="no-content">No Record Found</h6>
+        </ng-template>
+        <ng-template #noResults>
+          <p>No results found for "{{searchText}}".</p>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="loader" *ngIf="loading">
+  <div class="loader-item"></div>
+  <p>Loading...</p>
+</div>

@@ -1,0 +1,212 @@
+import { Component, OnInit } from '@angular/core';
+import { GroupService } from '../Services/group.service';
+import { FormGroup, FormControl } from '@angular/forms';
+import Swal from 'sweetalert2';
+import { NavigationExtras, Router } from '@angular/router';
+import { HeaderService } from '../header.service';
+import { QueryTypeServiceService } from '../Services/query-type-service.service';
+import { TableUtil } from '../util/TableUtil';
+import jsPDF from 'jspdf';
+import { DatePipe } from '@angular/common';
+import autoTable from 'jspdf-autotable';
+import { SessionStorageService } from 'src/app/services/session-storage.service';
+declare let $: any;
+
+@Component({
+  selector: 'app-querytypeview',
+  templateUrl: './querytypeview.component.html',
+  styleUrls: ['./querytypeview.component.scss']
+})
+export class QuerytypeviewComponent implements OnInit {
+  updateGroup = new FormGroup({
+    groupName: new FormControl(''),
+  });
+
+  record: any;
+  currentPage: any;
+  pageElement: any;
+  showPegi: boolean;
+  txtsearchDate: any;
+  constructor(private querytypeservice: QueryTypeServiceService, private route: Router, public headerService: HeaderService,private sessionService: SessionStorageService) { }
+  queryList: any = [];
+  ngOnInit(): void {
+    this.headerService.setTitle("View Query Type");
+    $('.selectpicker').selectpicker();
+    $('.datepicker').datetimepicker({
+      format: 'DD-MMM-YYYY',
+      maxDate: new Date(),
+      daysOfWeekDisabled: ['', 7],
+    });
+    $('.timepicker').datetimepicker({
+      format: 'LT',
+      daysOfWeekDisabled: ['', 7],
+    });
+    $('.datetimepicker').datetimepicker({
+      format: 'DD-MMM-YYYY LT',
+      daysOfWeekDisabled: ['', 7],
+    });
+    var date = new Date();
+    let year = date.getFullYear();
+    let date1 = '01';
+    let date2 = date.getDate();
+    let month: any = date.getMonth();
+    if (month == 0) {
+      month = 'Jan';
+    } else if (month == 1) {
+      month = 'Feb';
+    } else if (month == 2) {
+      month = 'Mar';
+    } else if (month == 3) {
+      month = 'Apr';
+    } else if (month == 4) {
+      month = 'May';
+    } else if (month == 5) {
+      month = 'Jun';
+    } else if (month == 6) {
+      month = 'Jul';
+    } else if (month == 7) {
+      month = 'Aug';
+    } else if (month == 8) {
+      month = 'Sep';
+    } else if (month == 9) {
+      month = 'Oct';
+    } else if (month == 10) {
+      month = 'Nov';
+    } else if (month == 11) {
+      month = 'Dec';
+    }
+    this.currentPage = 1;
+    this.pageElement = 50;
+    this.getQueryDetails();
+  }
+
+  getQueryDetails() {
+    this.querytypeservice.getQueryTypeList().subscribe((alldata) => {
+      this.queryList = alldata;
+      this.queryList = alldata;
+      this.record = this.queryList.length;
+      if (this.record > 0) {
+        this.currentPage = 1;
+        this.pageElement = 50;
+        this.showPegi = true;
+      }
+      else {
+        this.showPegi = false;
+      }
+    })
+  }
+
+  edit(item: any) {
+    let objToSend: NavigationExtras = {
+      state: {
+        typeId: item
+      }
+    };
+    this.route.navigate(['/application/querytype'], objToSend);
+  }
+
+  pageItemChange() {
+    this.pageElement = (<HTMLInputElement>document.getElementById("pageItem")).value;
+  }
+
+  onPageBoundsCorrection(number: number) {
+    this.currentPage = number;
+  }
+  report: any = [];
+  quertTypeDetail: any = {
+    slNo: "",
+    typeName: "",
+    remarks: "",
+    fullname: "",
+    createdOn: "",
+    statusflag: ""
+  };
+
+  heading = [['Sl No.', 'Type Name', 'Remark', 'CreatedBy', 'CreatedOn', 'Status']];
+  downloadReport(type) {
+    this.report = [];
+    let item: any;
+    for (var i = 0; i < this.queryList.length; i++) {
+      item = this.queryList[i];
+      this.quertTypeDetail = [];
+      this.quertTypeDetail.slNo = i + 1;
+      this.quertTypeDetail.typeName = item.typeName;
+      this.quertTypeDetail.remarks = item.remarks;
+      this.quertTypeDetail.fullname = item.createdBy.fullname;
+      this.quertTypeDetail.createdOn = this.convertDate1(item.createdOn);
+      if (item.statusflag == '0') {
+        this.quertTypeDetail.statusflag = "Active";
+      } else if (item.statusflag == '1') {
+        this.quertTypeDetail.statusflag = "In Active";
+      }
+      this.report.push(this.quertTypeDetail);
+    }
+    if (type == 1) {
+      let filter = [];
+      TableUtil.exportListToExcelWithFilter(this.report, "Query Type List", this.heading, filter);
+    } else if (type == 2) {
+      if (this.report == null || this.report.length == 0) {
+        this.swal("Info", "No Record Found", "info");
+        return;
+      }
+      var doc = new jsPDF('l', 'mm', [260, 240]);
+      doc.setFontSize(20);
+      doc.setFont('helvetica', 'bold');
+      doc.text("Query Type List", 105, 10);
+      doc.setFontSize(12);
+      doc.text("Generated On: " + this.convertDate(new Date()), 35, 33);
+      doc.text("Generated By: " + this.sessionService.decryptSessionData("user").fullName, 145, 33);
+      var rows = [];
+      for (var i = 0; i < this.report.length; i++) {
+        var clm = this.report[i];
+        var pdf = [];
+        pdf[0] = clm.slNo;
+        pdf[1] = clm.typeName;
+        pdf[2] = clm.remarks;
+        pdf[3] = clm.fullname;
+        pdf[4] = clm.createdOn;
+        pdf[5] = clm.statusflag;
+        rows.push(pdf);
+      }
+      autoTable(doc, {
+        head: this.heading,
+        body: rows,
+        theme: 'grid',
+        startY: 40,
+        headStyles: {
+          fillColor: [26, 99, 54]
+        },
+        columnStyles: {
+          0: { cellWidth: 40 },
+          1: { cellWidth: 45 },
+          2: { cellWidth: 45 },
+          3: { cellWidth: 50 },
+          4: { cellWidth: 30 },
+          5: { cellWidth: 30 }
+        }
+      });
+      doc.save('GJAY_Query Type List.pdf');
+    }
+  }
+
+  convertDate(date) {
+    var datePipe = new DatePipe("en-US");
+    date = datePipe.transform(date, 'dd-MMM-yyyy hh:mm:ss a');
+    return date;
+  }
+
+  swal(title: any, text: any, icon: any) {
+    Swal.fire({
+      icon: icon,
+      title: title,
+      text: text
+    });
+  }
+
+  convertDate1(createdOn: any) {
+    var datePipe = new DatePipe("en-US");
+    createdOn = datePipe.transform(createdOn, 'dd-MMM-yyyy');
+    return createdOn;
+  }
+
+}

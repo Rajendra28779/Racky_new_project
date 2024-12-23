@@ -1,0 +1,99 @@
+<div class="wrapper">
+    <!--<app-appsidebar></app-appsidebar>-->
+    <app-sidebarmenu></app-sidebarmenu>
+    <div class="main">
+        <app-appheader></app-appheader>
+        <main class="content">
+            <div class="container-fluid p-0">
+
+                <div class="form-cointainer">
+                    <div class="main-tab">
+                        <div class="row justify-content-between">
+                            <div class="col-lg-4">
+                                <ul class="nav nav-tabs">
+                                    <li class="nav-item">
+                                        <a routerLinkActive="active" class="nav-link active">Transaction Count
+                                            Details</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+                                <div class="col-lg-4 col-xxl-4"></div>
+                                <div class="col-lg-4 col-xxl-4"></div>
+                                <div class="col-lg-4 col-xxl-4">
+                                    <div class="input-group">
+                                        <input type="text" id="txtsearchDate" class="form-control" placeholder="Search" name="txtsearchDate"
+                                            [(ngModel)]="txtsearchDate" autocomplete="off">
+                                    </div>
+                                </div>
+                            </div> -->
+            <div class="content-box">
+                <div class="row">
+                    <div class="table-responsive" >
+                        <table class="table table-striped mb-0">
+                          <thead>
+                            <tr>
+                                <th width="40">Sl#</th>
+                                <th>URN</th>
+                                <th>Patient Name</th>
+                                <th>Hospital Code</th>
+                                <th>Hospital Name</th>
+                                <th>Package ID</th>
+                                <th>Invoice No.</th>
+                                <th>Amount</th>
+                                <th>Claim Raise Status</th>
+                                <!-- <th>Details</th> -->
+                            </tr>
+                          </thead>
+                          <tbody >
+                            <tr *ngFor="let claim of claimCountDetails | filter:txtsearchDate
+                             index as i">
+                              <td>{{i+1}}</td>
+                              <td>{{claim.urn}}</td>
+                              <td>{{claim.patientName}}</td>
+                              <td>{{claim.hospitalcode}}</td>
+                              <td>{{claim.hospitalName}}</td>
+                              <td title={{claim.packageName}}>{{claim.packagecode}}</td>
+                              <td>{{claim.invoiceno}}</td>
+                              <td>{{claim.currentTotalAmount | currency:'':''}}</td>
+                              <td *ngIf="claim.claimRaiseStatus==1">Yes</td>
+                              <td *ngIf="claim.claimRaiseStatus==0">No</td>
+                              <td *ngIf="claim.claimRaiseStatus==undefined">--</td>
+                              <!-- <td><a href="javascript:void(0)" (click)="getActionDetails(claim.claimId,claim.actDateOfDschrg,claim.authorizedCode,claim.hospitalCode,claim.urn)"> <i
+                                class="fa fa-eye" style="color:blue;font-size:24px"></i></a></td> -->
+                            </tr>
+                            <tr  *ngIf="claimCountDetails?.length==0">
+                                <div class="row">
+                                    <span style="color: red;text-align: center;position:absolute">NO DATA FOUND!!</span>
+                                </div>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="row" style="margin-top: 20px;" *ngIf="showPegi">
+        <div class="col-sm-6">
+            <div class="col-sm-*">
+                show
+                <select id="pageItem" name="pageItem" class="custom-select-sm" (change)="pageItemChange()">
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                </select> entries
+            </div>
+        </div>
+        <div class="col-sm-6 text-right">
+            <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true"
+                (pageChange)="currentPage = $event"></pagination-controls>
+        </div>
+
+    </div> -->
+                </div>
+            </div>
+        </main>
+    </div>
+</div>

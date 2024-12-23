@@ -1,0 +1,77 @@
+<div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+  <div class="col-lg-4 col-xxl-4"></div>
+  <div class="col-lg-4 col-xxl-4"></div>
+  <div class="col-lg-4 col-xxl-4">
+      <div class="input-group">
+          <input type="text" id="txtsearchDate" class="form-control" placeholder="Search here" name="txtsearchDate"
+              [(ngModel)]="txtsearchDate" autocomplete="off">
+      </div>
+  </div>
+</div>
+<div class="form-cointainer">
+  <div class="main-tab">
+    <div class="row justify-content-between">
+    <div class="col-lg-4">
+      <ul class="nav nav-tabs">
+          <li class="nav-item">
+              <a routerLink="/application/userSubGroup" routerLinkActive="active" class="nav-link active">Add</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/application/viewsubgroup" routerLinkActive="active" class="nav-link active">View</a>
+        </li>
+      </ul>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-striped mb-0">
+        <thead>
+          <tr>
+            <th width="50">Sl#</th>
+            <th>Group Name</th>
+            <th>SubGroup Name</th>
+            <th>Status</th>
+            <th width="100">Action</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let v of subgrouplist | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage},index as i">
+          <tr>
+            <td>{{i+1}}</td>
+            <td>{{v.groupid.groupName}}</td>
+            <td> {{v.subgroupname}} </td>
+            <td>
+              <p *ngIf="v.status==0">Active</p>
+              <p *ngIf="v.status==1">In-Active</p>
+            </td>
+            <td>
+
+              <div *ngIf="v.status==0">
+                <a class="btn btn-outline-primary btn-sm me-1" (click)="edit(v.subgroupid)"><i class="bi bi-pencil"></i></a>
+              <!-- <a class="btn btn-outline-danger btn-sm" (click)="delete(v.subgroupid)" ><i class="bi bi-trash3" ></i></a> -->
+            </div>
+            <div *ngIf="v.status==1">
+              <a class="btn btn-outline-primary btn-sm me-1" (click)="edit(v.subgroupid)"><i class="bi bi-pencil"></i></a>
+              <!-- <a class="btn btn-outline-danger btn-sm"  ><i class="bi bi-trash3" ></i></a> -->
+            </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+  <div class="row" *ngIf="showPegi">
+    <div class="col-sm-4">
+        <div class="col-sm-*">
+            show
+            <select id="pageItem" name="pageItem" class="custom-select-sm" (change)="pageItemChange()">
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+            </select> entries
+        </div>
+    </div>
+    <div class="col-sm-8 text-right">
+        <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true" (pageChange)="currentPage = $event"></pagination-controls>
+    </div>
+
+</div>
+</div>

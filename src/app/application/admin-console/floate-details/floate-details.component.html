@@ -1,0 +1,107 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+      <div class="row justify-content-between">
+          <div class="col-lg-4">
+              <ul class="nav nav-tabs">
+                  <li class="nav-item">
+                      <a routerLink="/application/floatedetails" routerLinkActive="active"
+                          class="nav-link active">Float Details</a>
+                  </li>
+
+              </ul>
+          </div>
+          <div class="col-lg-6 ">
+            <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+        </div>
+      </div>
+
+      <br>
+      <div class="row">
+        <div class="col-12">
+<b>Float No: {{floateno}}</b>
+        </div>
+          <div class="col-3" *ngIf="showPegi" style="margin-top:1ch;">
+            <div class="col-sm-*" >
+              show
+              <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+                  <option value="100">100</option>
+                  <option value="200">200</option>
+                  <option value="300">300</option>
+              </select> entries
+          </div>
+          </div>
+          <div class="col-3" style="margin-top:1ch;">
+            <b>No of Claim : {{countflotedetails}}</b>
+          </div>
+          <div class="col-2" style="text-align:end;">
+            <button class="btn btn-success btn-sm mx-1" style="margin-top: 5px" tooltip="Excel" (click)="downloadList(1)">
+          <i class="bi bi-file-earmark-spreadsheet"></i>
+          </button>
+            <button class="btn btn-danger btn-sm mx-1" style="margin-top: 5px" tooltip="pdf" (click)="downloadList(2)">
+            <i class="bi bi-file-earmark-pdf"></i>
+          </button>
+        </div>
+          <div class="col-4" >
+              <input type="text " id="txtsearchDate " name="txtsearchDate " [(ngModel)]="txtsearchDate" maxlength="20 " class="form-control " placeholder="Search here...... " autocomplete="off" style=" margin-right: 0px; margin-left: 0px;">
+          </div>
+      </div>
+        <div class="table-responsive" style="margin-top:1ch;">
+          <table class="table table-striped mb-0">
+            <thead>
+              <tr>
+                <th width="50">Sl#</th>
+                <th>URN</th>
+                <th>Claim No</th>
+                <th>Patient Name</th>
+                <th>Hospital Name</th>
+                <th>Actual Date of Admission</th>
+                <th>Actual Date of Discharge</th>
+                <th>Package ID</th>
+                <th>Claim Raised On</th>
+                <th>Amount(₹)</th>
+                <th width="100">Details</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let v of floatedetails | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage},index as i">
+              <tr *ngIf="countflotedetails>0">
+                <td width="50">{{i+1}}</td>
+                <td>{{v.urnno}}</td>
+                <td>{{v.claimno}}</td>
+                <td>{{v.patentname}}</td>
+                <td>{{v.hospitalname}}</td>
+                <td>{{v.actualdateofAdmission}}</td>
+                <td>{{v.actualdateofDischarge}}</td>
+                <td title="{{v.packagename}}">{{v.packageid}}</td>
+                <td>{{v.claimRaisedon}}</td>
+                <td>{{v.amount | currency:'':''}}</td>
+
+                <td><a class="btn btn-outline-primary btn-sm " (click)="view(v.claimid)">Details</a></td>
+              </tr>
+              <tr *ngIf="countflotedetails==0">
+                <div class="row">
+                  <span style="color: red;text-align: center;position:absolute">NO DATA FOUND!!</span>
+                </div>
+              </tr>
+            </tbody>
+            </table>
+      </div>
+      <div class="row" *ngIf="showPegi">
+        <div class="col-sm-4">
+            <div class="col-sm-*">
+                show
+                <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+                    <option value="100">100</option>
+                    <option value="200">200</option>
+                    <option value="300">300</option>
+                </select> entries
+            </div>
+        </div>
+        <div class="col-sm-8 text-right">
+          <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true"
+            (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)">
+          </pagination-controls>
+        </div>
+  </div>
+</div>
+</div>
+

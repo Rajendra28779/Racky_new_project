@@ -1,0 +1,344 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+    <div class="row justify-content-between">
+      <div class="col-lg-4">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a routerLink="/application/managedduplicatebenificiary" routerLinkActive="active"
+              class="nav-link active">Managed Duplicate Beneficiary</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/application/managedduplicatebenificiaryview" routerLinkActive="active"
+              class="nav-link " style="color: #1f723f;">View</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="content-box">
+    <div class="row">
+      <div class="col-lg-3 col-xxl-3">
+        <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+          <label class="control-label mb-2">Search Type</label><span class="text-danger">*</span>
+          <select class="form-select" id="search" aria-label="Disabled select example">
+            <option value="2">UID</option>
+            <option value="1">URN</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-lg-4 col-xxl-4">
+        <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+          <label class="control-label mb-2">Enter Here</label><span class="text-danger">*</span>
+          <input type="text" class="form-control" placeholder="Please Enter Here" name="urn" id="urn" autocomplete="off"
+            onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" maxlength="25" />
+        </div>
+      </div>
+      <div class="col-lg-4 col-xxl-4">
+        <div class="mb-xl-4 mb-lg-4 mb-md-4 mb-4">
+          <button type="submit" class="btn btn-success" style="margin-top: 3ch" (click)="Search()">
+            Search</button>&nbsp;
+          <button type="button" class="btn btn-secondary" style="margin-top: 3ch" (click)="Reset()">
+            Reset
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="alert alert-danger mt-1 mb-1 d-flex small">
+    <div class="">
+      <p class="mb-0 pe-3 me-3 border-end ">
+        <i class="bi bi-info-circle-fill fs-5 me-2 "></i>NOTE
+      </p>
+    </div>
+    <div>
+      <p class="mb-0 ">
+        The data is shown below For Current Policy Year( {{startdate}} - {{enddate}})
+      </p>
+    </div>
+  </div>
+  <div class="row" style="margin-top: 1ch;margin-bottom: 1ch;">
+    <div class="col-lg-4 col-xxl-4" style="padding-top: 10px; padding-left: 17px;">
+      <b>No. Of Records: <span style="color: green;">{{beneficiarylist.length}}</span></b>
+    </div>
+    <div class="col-lg-4 col-xxl-4" style="text-align: right; padding-top: 3px;">
+      <div class="form-group">
+        <button class="btn btn-success btn-sm mx-1" tooltip="Excel" (click)="downloadReport(1)">
+          <i class="bi bi-file-earmark-spreadsheet"></i>
+        </button>
+        &nbsp;
+        <button class="btn btn-danger btn-sm me-1" type="submit" (click)="downloadReport(2)"><i
+            class="bi bi-file-earmark-pdf"></i></button>
+      </div>
+    </div>
+    <div class="col-lg-4 col-xxl-4">
+      <div class="input-group">
+        <input type="text" id="txtsearchDate" class="form-control" placeholder="Search" name="txtsearchDate"
+          autocomplete="off" [(ngModel)]="txtsearchDate">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="table-responsive pkg_tbl">
+      <table class="table">
+        <caption></caption>
+        <thead>
+          <tr>
+            <th width="50">Sl#</th>
+            <th>State Name</th>
+            <th>District Name</th>
+            <th>Ward/Panchayat Name</th>
+            <th>Village Name</th>
+            <th>URN</th>
+            <th>Scheme</th>
+            <!-- <th>Export To Bsky</th> -->
+            <th>Ongoing Blocked Amount For Family</th>
+            <th>Claim/Discharge Amount For Family</th>
+            <th>Availaible Family Fund</th>
+            <th>Availaible Female Fund</th>
+            <th width="100">Family Details</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let v of beneficiarylist; index as i">
+          <tr>
+            <td>{{ i + 1 }}</td>
+            <td>{{ v.state }}</td>
+            <td>{{ v.dist }}</td>
+            <td>{{ v.ward }}</td>
+            <td>{{ v.village }}</td>
+            <td>{{ v.urn }}</td>
+            <td>{{ v.schemename }}</td>
+            <!-- <td>{{ v.exporttobskydate }}</td> -->
+            <td>{{ v.amountblocked }}</td>
+            <td>{{ v.claimamount }}</td>
+            <td>{{ v.availablebalanceforfamily }}</td>
+            <td>{{ v.femalefund }}</td>
+            <td *ngIf="v.status!=1"><button type="button" class="btn btn-outline-success btn-sm"
+                title="Show More Details" (click)="rowDetails(v.urn,v,v.uid)">
+                <i class="bi bi-eye"></i> Show More
+              </button> </td>
+            <td *ngIf="v.status==1">
+              <button type="button" class="btn btn-outline-success btn-sm" title="Hide Details"
+                (click)="rowDetails(v.urn,v)">
+                <i class="bi bi-eye"></i> Hide
+              </button>
+            </td>
+          </tr>
+
+          <tr *ngIf="v.status==1">
+            <td colspan="12">
+              <div class="container">
+                <div class="table-responsive pkg_tbl2">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <!-- <th width="50">Sl#</th> -->
+                        <th>URN</th>
+                        <th>Beneficiary Name</th>
+                        <th>Age</th>
+                        <th>Gender</th>
+                        <th>DOB</th>
+                        <th>UID</th>
+                        <th>Export Details</th>
+                        <th>Inactive</th>
+                      </tr>
+                    </thead>
+                    <tbody *ngFor="let v of managedbeneficiarylist; index as i">
+                      <tr>
+                        <!-- <td>{{ i + 1 }}</td> -->
+                        <td>{{ v.urn }}</td>
+                        <td>{{ v.beneficiaryname }}</td>
+                        <td>{{ v.age }}</td>
+                        <td>{{ v.gender }}</td>
+                        <td>{{ v.dob }}</td>
+                        <td>{{ v.uid }}</td>
+                        <td>{{ v.exportdetails }}</td>
+                        <td>
+                          <a class="btn btn-outline-danger btn-sm me-2" (click)="action(v)">
+                            <i class="bi bi-trash3"></i>
+                          </a>
+                        </td>
+                      </tr>
+                      <!-- <tr *ngIf="beneficiarylist?.length == 0">
+                      <td colspan="8">
+                        <span style="color: red; text-align: center;">NO DATA FOUND!!</span>
+                      </td>
+                    </tr> -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+        <tbody>
+          <tr *ngIf="beneficiarylist.length!=0">
+            <td>
+              <a href="javascript:void(0);"></a><b>Total</b>
+            </td>
+            <td colspan="6"></td>
+            <td><b>{{totalApproveCount1}}</b> </td>
+            <td><b>{{totalApproveCount2}}</b></td>
+            <td colspan="3"></td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="beneficiarylist.length==0">
+          <tr>
+            <td colspan="12" style="position: relative; height: 100px; text-align: center; vertical-align: middle;">
+              <span
+                style="color: red; display: inline-block; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                NO DATA FOUND!!
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- modal -->
+<div class="modal modal-custom-backdrop" id="log" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="backdrop-filter: blur(5px);">
+  <div class="modal-dialog" style="max-width: 70%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="col-9">
+          <h5 class="modal-title" id="exampleModalLabel">
+            In-Active Benificiary :-
+          </h5>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closemodal()"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-lg-4 col-xxl-4 border-end">
+            <p class="small text-muted mb-1">URN</p>
+            <h6 class="mb-0"> {{item?.urn}} </h6>
+          </div>
+          <div class="col-lg-4 col-xxl-4 border-end">
+            <p class="small text-muted mb-1">Beneficiary Name</p>
+            <h6 class="mb-0"> {{item?.beneficiaryname}} </h6>
+          </div>
+          <div class="col-lg-4 col-xxl-4">
+            <p class="small text-muted mb-1">Gender</p>
+            <h6 class="mb-0"> {{item?.gender}} </h6>
+          </div>
+          <hr>
+          <div class="col-lg-4 col-xxl-4 border-end">
+            <p class="small text-muted mb-1">DOB</p>
+            <h6 class="mb-0"> {{item?.dob}} </h6>
+          </div>
+          <div class="col-lg-4 col-xxl-4 border-end">
+            <p class="small text-muted mb-1">Age</p>
+            <h6 class="mb-0"> {{item?.age}} </h6>
+          </div>
+          <div class="col-lg-4 col-xxl-4">
+            <p class="small text-muted mb-1">UID</p>
+            <h6 class="mb-0"> {{item?.uid}} </h6>
+          </div>
+          <hr>
+          <div class="col-lg-4 col-xxl-4 border-end">
+            <p class="small text-muted mb-1">Export Details</p>
+            <h6 class="mb-0"> {{item?.exportdetails}} </h6>
+          </div>
+          <div class="col-lg-4 col-xxl-4 ">
+            <p class="small text-muted mb-1">Amount</p>
+            <h6 class="mb-0"> {{item?.amount}} </h6>
+          </div>
+          <hr>
+          <div class="col-lg-12 col-xl-12 col-xxl-12">
+            <div class="row mt-2">
+              <div class="col-lg-12 accordion">
+                <div class="card shadow-sm treatment-history">
+                  <div class="accordion-item" id="headingTwo">
+                    <div class="accordion-button collapsed card-header bg-color" data-bs-toggle="collapse"
+                      data-bs-target="#collapsenine" aria-expanded="false" aria-controls="collapsenine">
+                      <h5 class="mb-0" style="font-size: 12pt;"> OnGoing Treatment<strong class="text-dark"></strong>
+                      </h5>
+                    </div>
+                    <div id="collapsenine" class="accordion-collapse collapse show" aria-labelledby="headingTwo"
+                      data-bs-parent="#accordionExample">
+                      <div class="card-body">
+                        <!-- <ul class="list-unstyled"> -->
+                          <div class="content-box">
+                            <div class="row">
+                              <div class="table-responsive treatment-history-table-class">
+                                <table class="table mb-0 border">
+                                  <caption></caption>
+                                  <thead class="bgcolor-th">
+                                    <tr>
+                                      <th class="text-center">Sl#</th>
+                                      <th class="text-center">URN</th>
+                                      <th class="text-center">Case No</th>
+                                      <th class="text-center">Hospital Name</th>
+                                      <!-- <th class="text-center">MemberId</th> -->
+                                      <th class="text-center">Member Name</th>
+                                      <th class="text-center">Date of Admission</th>
+                                      <th class="text-center">UID No.</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                      <tr *ngFor="let multiPack of ongoingtreatmentlist,index as i">
+                                        <td class="text-center">{{i+1}}</td>
+                                        <td class="text-center">{{multiPack.urn}}</td>
+                                        <td class="text-center">{{multiPack.caseno}}</td>
+                                        <td class="text-center">{{multiPack.hospitalname}}</td>
+                                        <!-- <td class="text-center">{{multiPack.memberid}}</td> -->
+                                        <td class="text-center">{{multiPack.membername }}</td>
+                                        <td class="text-center">{{multiPack.admissiondate }}</td>
+                                        <td class="text-center">{{multiPack.uidreferenceno }}</td>
+                                      </tr>
+                                    <tr *ngIf="this.ongoingtreatmentlist.length ==0">
+                                      <td colspan="8" style="text-align: center;"><strong class="text-danger">No data found</strong>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                        <!-- </ul> -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- // -->
+          <div class="col-lg-6 col-xxl-6 mt-1">
+            <div class="mb-xl-2">
+              <label for="EnterFunctionDescription" style="font-weight: 500;" class="form-label">Remark<span class="text-danger">*</span></label>
+              <textarea class="form-control" placeholder="Enter  Remark" autocomplete="off" id="remark" maxlength="500"
+                onkeyup="this.value=this.value.replace(/[^0-9.a-zA-Z@/_() ]/g,'');" #myInput
+                (keypress)="keyPress($event)"></textarea>
+              <span class="text-danger small">Characters Remaining: {{maxChars - myInput.value.length}}</span>
+            </div>
+          </div>
+          <div class="col-lg-3 col-xxl-3 mt-1">
+            <div class="mb-xl-2" *ngIf="allow">
+              <label class="form-label" style="font-weight: 500;">Active URN<span class="text-danger">*</span></label>
+              <input type="text" class="form-control" placeholder="Enter Active URN" autocomplete="off" id="activeurn"
+                maxlength="25"  onkeyup="this.value=this.value.replace(/[^0-9]/g,'');">
+            </div>
+          </div>
+          <div class="col-lg-3 col-xxl-3 mt-1">
+            <div class="mb-xl-2" *ngIf="allow">
+              <label for="EnterFunctionDescription" class="form-label" style="font-weight: 500;">Amount<span class="text-danger">*</span></label>
+              <input type="text" class="form-control" placeholder="Enter Active URN" autocomplete="off" id="amount" [value]="item?.amount"
+                maxlength="6"  onkeyup="this.value=this.value.replace(/[^0-9]/g,'');">
+            </div>
+          </div>
+          <div class="col-lg-12">
+            <div class="d-grid gap-2 d-md-flex">
+              <button type="submit" class="btn btn-success"(click)="submit(1)">Inactive Member</button>&nbsp;
+              <button type="button" class="btn btn-info"(click)="submit(3)" *ngIf="!allow">Inactive Member With Card Balance</button>
+              <button type="button" class="btn btn-primary"(click)="submit(2)" *ngIf="allow">Inactive Member With Card Balance</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

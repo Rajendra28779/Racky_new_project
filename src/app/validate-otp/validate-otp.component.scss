@@ -1,0 +1,47 @@
+.modal-custom-backdrop {
+    background: #00000038;
+}
+
+#timeCounter {
+   box-shadow:  none !important;
+   outline: 0 !important;
+}
+
+#mobileNoId {
+    box-shadow:  none !important;
+    outline: 0 !important;
+ }
+
+ .bottom--10 {
+     bottom: -10px;
+ }
+
+ .fs-1-2 {
+    font-size: 1.2rem;
+ }
+ .login-wrapp {
+  background: #e9ecef url(../../assets/img/login-bg.jpg) center;
+  background-size: cover;
+}
+h4 {
+    position: relative;
+    padding-bottom: 1rem;
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        width: 4rem;
+        height: .2rem;
+        left: 0;
+        //transform: translate(-220%, 50%);
+        background-color: rgba(29, 163, 60, 0.7);
+    }
+}
+.link {
+    color: green;
+}
+.link:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}

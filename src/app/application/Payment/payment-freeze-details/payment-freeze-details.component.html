@@ -1,0 +1,206 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="/application/revertedfloatdetails" routerLinkActive="active" class="nav-link active">
+                          Payment Freeze Details
+                      </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-6 ">
+                <app-utilite (receiveResponse)="getResponseFromUtil($event)"></app-utilite>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 30px; margin-bottom: 0px;">
+        <h5 class="text-danger" style="font-weight: bold;">{{freezedata.Action}}</h5>
+    </div>
+    <div class="row" style="margin-bottom: 5px; margin-top: 0px;">
+        <div class="col-lg-4 col-xxl-4" style="padding-top: 15px; padding-left: 12px;">
+            <b>Total Claim Count: <span style="color: green;">{{detailsData?.length}}</span></b>
+        </div>
+        <div class="col-lg-4 col-xxl-4" [align]="'start'" style="text-align: right; padding-top: 11px;">
+            <div class="form-group">
+                <button class="btn btn-outline-success btn-sm me-1" (click)="downloadReport('excel')">
+                  <i class="bi bi-file-earmark-spreadsheet" style="font-size: 13pt;"></i>
+              </button> &nbsp;
+                <button class="btn btn-outline-danger btn-sm me-1" (click)="downloadReport('pdf')">
+                  <i class="bi bi-file-earmark-pdf" style="font-size: 13pt;"></i>
+              </button>
+            </div>
+        </div>
+        <div class="col-lg-4 col-xxl-4" style="padding-top: 10px; padding-left: 17px;">
+            <input type="text " id="txtsearchDate " name="txtsearchDate " [(ngModel)]="txtsearchDate" maxlength="20 " class="form-control " placeholder="Search here...... " autocomplete="off" maxlength="50">
+        </div>
+        <!-- </div> -->
+    </div>
+    <div class="content-box p-0 overflow-hidden">
+        <div class="table-responsive">
+            <table class="table table-sm table-striped mb-0">
+                <thead>
+                    <tr>
+                        <th>Sl No</th>
+                        <th>Hospital Details</th>
+                        <th>District</th>
+                        <th>GJAY Incentive Status </th>
+                        <th>URN</th>
+                        <th>Invoice No</th>
+                        <th>Claim No</th>
+                        <!-- <th>Case No</th> -->
+                        <th>Patient Name</th>
+                        <th>Gender</th>
+                        <th>Package Code</th>
+                        <th>Package Cost (&#8377;)</th>
+                        <th>Package Procedure</th>
+                        <th>Actual Date Of Admission</th>
+                        <th>Actual Date Of Discharge</th>
+                        <th>Mortality (Hospital)</th>
+                        <th>Mortality (CPD)</th>
+                        <th>Hospital Claimed Amount (&#8377;)</th>
+                        <th>Implant Data</th>
+                        <th>CPD Claim Status</th>
+                        <th>CPD Remarks</th>
+                        <th>CPD Approved Amount (&#8377;)</th>
+                        <th>SNA Claim Status</th>
+                        <th>SNA Remarks</th>
+                        <th>SNA Approved Amount(SNA/CPD) (&#8377;)</th>
+                        <th>Joint CEO Finance Remarks</th>
+                        <th>FO Remarks</th>
+                        <th>Joint CEO Finance Remarks (Revert Case)</th>
+                        <th>Nodal Officer Remark</th>
+                        <th>Nodal officer Revised Approved Amount (&#8377;)</th>
+                        <th>Joint CEO Finance Remarks (FO Verification)</th>
+                        <th>Final FO Remarks</th>
+                        <th>Internal Auditor Remarks</th>
+                        <th>DY. CEO Finance Remarks</th>
+                        <th>Final Joint CEO Remarks</th>
+                        <th>CEO Remark Revert Case</th>
+                        <th>SNA Remark Revert Case</th>
+                        <th>CEO Remark</th>
+                        <th>SNA Final Remark</th>
+                        <th class="text-center">Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngIf="detailsData">
+                        <tr *ngFor="let item of detailsData | filter:txtsearchDate |
+                          paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage}; index as j">
+                            <td *ngIf="currentPage==1">{{j+1}}</td>
+                            <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+j+1}}</td>
+                            <td>{{item.hospitalName}} ({{item.hospitalCode}})</td>
+                            <td>{{item.districtName}}</td>
+                            <td>{{item.incenticeStatus}}</td>
+                            <td>{{item.urn}}</td>
+                            <td>{{item.invoiceNo}}</td>
+                            <td>{{item.claimNo}}</td>
+                            <!-- <td>{{item.caseNo}}</td> -->
+                            <td>{{item.patientName}}</td>
+                            <td>{{item.gender}}</td>
+                            <td title="{{item.packageName}}"><span class="pkd">{{item.packageCode}}</span></td>
+                            <td>{{item.packageCost | number}}</td>
+                            <td>{{item.procedureName}}</td>
+                            <td>{{item.actualDateOfAdmission!=null?item.actualDateOfAdmission:"N/A"}}</td>
+                            <td>{{item.actualDateOfDischarge!=null?item.actualDateOfDischarge:"N/A"}}</td>
+                            <td>{{item.mortality?item.mortality:'N/A'}}</td>
+                            <td>{{item.cpdMortality?item.cpdMortality:'N/A'}}</td>
+                            <td *ngIf="!item.totalAmountClaimed">N/A</td>
+                            <td *ngIf="item.totalAmountClaimed">{{item.totalAmountClaimed | currencyInr}}</td>
+                            <td>{{item.implantData?item.implantData:'N/A'}}</td>
+                            <td>{{item.cpdClaimStatus?item.cpdClaimStatus:'N/A'}}</td>
+                            <td>{{item.cpdRemarks?item.cpdRemarks:'N/A'}}</td>
+                            <td *ngIf="!item.cpdApprovedAmount">N/A</td>
+                            <td *ngIf="item.cpdApprovedAmount">{{item.cpdApprovedAmount | currencyInr}}</td>
+                            <td>{{item.snaClaimStatus?item.snaClaimStatus:'N/A'}}</td>
+                            <td>{{item.snaRemarks?item.snaRemarks:'N/A'}}</td>
+                            <td *ngIf="!item.snaApprovedAmount">N/A</td>
+                            <td *ngIf="item.snaApprovedAmount">{{item.snaApprovedAmount | currencyInr}}</td>
+                            <td>{{item.jointCeoRemarks?item.jointCeoRemarks:'N/A'}}</td>
+                            <td>{{item.foRemarks?item.foRemarks:'N/A'}}</td>
+                            <td>{{item.jointCeoRemarksRevert?item.jointCeoRemarksRevert:'N/A'}}</td>
+                            <td>{{item.noRemarks?item.noRemarks:'N/A'}}</td>
+                            <td *ngIf="!item.noApprovedAmount">N/A</td>
+                            <td *ngIf="item.noApprovedAmount">{{item.noApprovedAmount | currencyInr}}</td>
+                            <td>{{item.jointCeoRemarksVerify?item.jointCeoRemarksVerify:'N/A'}}</td>
+                            <td>{{item.finalFoRemarks?item.finalFoRemarks:'N/A'}}</td>
+                            <td>{{item.audRemarks?item.audRemarks:'N/A'}}</td>
+                            <td>{{item.dyceoRemarks?item.dyceoRemarks:'N/A'}}</td>
+                            <td>{{item.jointCeoRemarksFinal?item.jointCeoRemarksFinal:'N/A'}}</td>
+                            <td>{{item.ceoremarkrevertcase?item.ceoremarkrevertcase:'N/A'}}</td>
+                            <td>{{item.snaremarkrevertcase?item.snaremarkrevertcase:'N/A'}}</td>
+                            <td>{{item.ceoremark?item.ceoremark:'N/A'}}</td>
+                            <td>{{item.snafinalremark?item.snafinalremark:'N/A'}}</td>
+                            <!-- <td width="150">{{item.foRemarks!=null?item.foRemarks:'-NA-'}}</td>
+                          <td class="text-center">
+                              <a class="btn btn-outline-success btn-sm me-1" data-bs-toggle="modal" data-bs-target="#modaldatabindnng"
+                                  (click)="viewDescription(item.claimId)">View</a>
+                          </td> -->
+                            <td class="text-center">
+                                <a class="btn btn-outline-success btn-sm" (click)="getActionDetails(item.claimId,item.urn,item.floatNumber)">Detail</a>
+                            </td>
+                        </tr>
+                    </ng-container>
+                    <tr *ngIf="!detailsData?.length">
+                        <td colspan="36" align="center"><strong class="text-danger">No Data Found</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- <button class="btn btn-danger" id="Cancel" data-bs-dismiss="modal" aria-label="Close">Cancel</button> -->
+    <div class="row mt-3" *ngIf="showPegi ">
+        <div class="col-sm-4 ">
+            <div class="col-sm-* ">
+                show
+                <select id="pageItem" name="pageItem" class="form-select-sm" (change)="pageItemChange()">
+              <option value="50">50</option>
+              <option value="100">100</option>
+              <option value="200">200</option>
+              <option value="300">300</option>
+              <option value="400">400</option>
+              <option value={{detailsData?.length}}>All</option>
+          </select> entries
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true" (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+        </div>
+    </div>
+    <button class="btn btn-success" id="paymentFreeze" (click)="paymentFreeze()">Payment Freeze</button>
+</div>
+<div class="modal fade" id="modaldatabindnng" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-focus="false">
+    <div class="modal-dialog" style="max-width: 85%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button style="color: red;" type="button" #closebutton3 class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Sl No</th>
+                            <th>FO Remark</th>
+                            <th>SNA Approved Amount</th>
+                            <th>Action ON</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of modaldata;index as j">
+                            <td *ngIf="item.fo_remarks != null">{{j+1}}</td>
+                            <td *ngIf="item.fo_remarks != null">{{item.fo_remarks}}</td>
+                            <td *ngIf="item.fo_remarks != null">{{item.APPROVEDAMOUNT| currency:'':''}}</td>
+                            <td *ngIf="item.fo_remarks != null">{{item.actionon | date:'dd-MMM-yyyy, h:mm:ss a'}}</td>
+                        </tr>
+                        <tr *ngIf="!modaldata?.length">
+                            <td colspan="4" style="text-align: center;">
+                                <span class="mb-0 text-center text-danger fw-bold">NO DATA FOUND!!</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

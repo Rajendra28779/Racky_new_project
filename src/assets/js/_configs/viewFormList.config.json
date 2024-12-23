@@ -1,0 +1,25 @@
+[
+      {
+        "pagetitle":"View Applications List",
+        "tabList":[
+          {"tabName":"View","tabUrl":"../viewManageform","tabClass":"active"}
+          
+        ],
+        "utils":[
+          {"utilName":"search"},
+          {"utilName":"print"},          
+          {"utilName":"download"}
+          ],
+        "messages":
+          {
+            "successMsg":"Date saved successfully",
+          "errorMsg":"Error in database",
+          "warningtype":"You want to delete this record",
+          "deleteMsg":"Record has been deleted"
+          }
+         
+        
+      }
+    ]
+
+

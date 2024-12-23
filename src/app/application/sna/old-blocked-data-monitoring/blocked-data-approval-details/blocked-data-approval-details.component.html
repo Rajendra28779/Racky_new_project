@@ -1,0 +1,816 @@
+<div class="form-cointainer claim-detail">
+
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerlink="/application/blockedDataApprovalDetails" routerlinkactive="active" class="nav-link active" ng-reflect-router-link="/application/blockedDataApprovalDetails" ng-reflect-router-link-active="active" href="#/application/blockedDataApprovalDetails">Blocked Data Details</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-box p-0 border-0 bg-transparent">
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 mb-2 mt-2">
+                <h4> Case No - <span class="num_bg"> {{patientInfo?.caseNo}} </span> </h4>
+            </div>
+
+
+            <!--Hospital Information-->
+            <div class="col-lg-12 col-xl-12 col-xxl-12 mb-4">
+                <div class="card shadow-sm basic-info">
+                    <div class="card-header bg-color text-white">
+                        <h5 class="mb-0" style="color: white"> Hospital Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row treatment-details">
+                            <div class="col-xl-3 col-lg-3">
+                                <div class="d-flex align-items-center  border-end">
+                                    <div>
+                                        <p class="small text-muted mb-1">Hospital Name</p>
+                                        <h6 class="mb-0"> {{patientInfo?.hospitalName}} </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-3">
+                                <div class="d-flex align-items-center  border-end">
+                                    <div>
+                                        <p class="small text-muted mb-1">Hospital Code</p>
+                                        <h6 class="mb-0"> {{patientInfo?.hospitalCode}} </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-3">
+                                <div class="d-flex align-items-center border-end">
+                                    <div>
+                                        <p class="small text-muted mb-1">Hospital State</p>
+                                        <h6 class="mb-0"> {{patientInfo?.hospitalState}} </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-3">
+                                <div class="d-flex align-items-center">
+                                    <div>
+                                        <p class="small text-muted mb-1">Hospital District</p>
+                                        <h6 class="mb-0"> {{patientInfo?.hospitalDistrict}} </h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Patient Information-->
+            <div class="col-lg-12 col-xl-12 col-xxl-12 mb-4">
+                <div class="card shadow-sm basic-info">
+                    <div class="card-header bg-color text-white">
+                        <h5 class="mb-0" style="color: white"> Patient Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row treatment-details">
+                            <div class="col-xl-3 col-lg-3">
+                                <div class="d-flex align-items-center  border-end">
+                                    <div>
+                                        <p class="small text-muted mb-1">URN</p>
+                                        <h6 class="mb-0"> {{patientInfo?.urn}} </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-3">
+                                <div class="d-flex align-items-center  border-end">
+                                    <div>
+                                        <p class="small text-muted mb-1">Patient Name</p>
+                                        <h6 class="mb-0"> {{patientInfo?.patientName}} </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-3">
+                                <div class="d-flex align-items-center border-end">
+                                    <div>
+                                        <p class="small text-muted mb-1">Patient Phone No </p>
+                                        <h6 class="mb-0"> {{patientInfo?.phoneNo}} </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-3">
+                                <div class="d-flex align-items-center ">
+                                    <div>
+                                        <p class="small text-muted mb-1">Verified Member Name </p>
+                                        <h6 class="mb-0"> {{patientInfo?.verifiedMemberName}} </h6>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--       Treatment information -->
+            <div class="col-lg-12 col-xl-12 col-xxl-12">
+                <div class="card shadow-sm basic-info">
+                    <div class="card-header bg-color text-white">
+                        <h5 class="mb-0" style="color: white"> Treatment Information</h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="col-xl-12 col-lg-12 p-3">
+                            <div class="row treatment-details">
+                                <div class="col-xl-3 col-lg-3">
+                                    <div class="d-flex align-items-center  border-end">
+                                        <div>
+                                            <p class="small text-muted mb-1">Invoice No</p>
+                                            <h6 class="mb-0"> {{patientInfo?.invoiceNo}} </h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-3">
+                                    <div class="d-flex align-items-center  border-end">
+                                        <div>
+                                            <p class="small text-muted mb-1">Pre-Auth Status</p>
+                                            <h6 class="mb-0"> {{patientInfo?.preAuthStatus}} </h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-3">
+                                    <div class="d-flex align-items-center border-end">
+                                        <div>
+                                            <p class="small text-muted mb-1"> Blocked Amount </p>
+                                            <h6 class="mb-0"> {{patientInfo?.blockedAmount| currency:"":"₹"}} </h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-3">
+                                    <div class="d-flex align-items-center">
+                                        <div>
+                                            <p class="small text-muted mb-1">Blocking Date</p>
+                                            <h6 class="mb-0"> {{patientInfo?.blockingDate}} </h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <hr class="mt-xl-3">
+                                </div>
+                                <div class="col-xl-3 col-lg-3">
+                                    <div class="d-flex align-items-center  border-end">
+                                        <div>
+                                            <p class="small text-muted mb-1">Procedure Code</p>
+                                            <h6 class="mb-0"> {{patientInfo?.procedureCode}} </h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-3">
+                                    <div class="d-flex align-items-center border-end">
+                                        <div>
+                                            <p class="small text-muted mb-1">Procedure Name </p>
+                                            <h6 class="mb-0"> {{patientInfo?.procedureName}} </h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-3">
+                                    <div class="d-flex align-items-center  border-end">
+                                        <div>
+                                            <p class="small text-muted mb-1">Package Code</p>
+                                            <h6 class="mb-0"> {{patientInfo?.packageCode}} </h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-3">
+                                    <div class="d-flex align-items-center ">
+                                        <div>
+                                            <p class="small text-muted mb-1">Package Name </p>
+                                            <h6 class="mb-0"> {{patientInfo?.packageName}} </h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <hr class="mt-xl-3">
+                                </div>
+                                <div class="col-xl-3 col-lg-3">
+                                    <div class="d-flex align-items-center border-end">
+                                        <div>
+                                            <p class="small text-muted mb-1"> Ward Name </p>
+                                            <h6 class="mb-0"> {{patientInfo?.wardName}} </h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-3">
+                                    <div class="d-flex align-items-center border-end">
+                                        <div>
+                                            <p class="small text-muted mb-1"> Policy Start Date </p>
+                                            <h6 class="mb-0"> {{patientInfo?.policyStartDate}} </h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-3">
+                                    <div class="d-flex align-items-center border-end">
+                                        <div>
+                                            <p class="small text-muted mb-1"> Policy End Date </p>
+                                            <h6 class="mb-0"> {{patientInfo?.policyEndDate}} </h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-3">
+                                    <div class="d-flex align-items-center">
+                                        <div>
+                                            <p class="small text-muted mb-1"> Latest Status </p>
+                                            <h6 class="mb-0"> {{patientInfo?.latestStatus}} </h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <hr class="mt-xl-3">
+                                </div>
+                                <div class="col-xl-3 col-lg-3">
+                                    <div class="d-flex align-items-center border-end">
+                                        <div>
+                                            <p class="small text-muted mb-1"> Hospitalization Days</p>
+                                            <h6 class="mb-0"> {{patientInfo?.noOfDays}} </h6>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Approval Information-->
+            <div class="col-lg-12 col-xl-12 col-xxl-12 mb-4" style="margin-top: 2rem;">
+                <div class="card shadow-sm basic-info">
+                    <div class="card-header bg-color text-white">
+                        <h5 class="mb-0" style="color: white"> Approval Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row treatment-details">
+                            <div class="col-xl-3 col-lg-3">
+                                <div class="d-flex align-items-center  border-end">
+                                    <div>
+                                        <p class="small text-muted mb-1">Hospital Request Date</p>
+                                        <h6 class="mb-0"> {{approvalInfo?.requestDate}} </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-3">
+                                <div class="d-flex align-items-center  border-end">
+                                    <div>
+                                        <p class="small text-muted mb-1">Hospital Remark</p>
+                                        <h6 class="mb-0"> {{approvalInfo?.remark}} </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-3">
+                                <div class="d-flex align-items-center  border-end">
+                                    <div>
+                                        <p class="small text-muted mb-1">Hospital Uploaded Doc</p>
+                                        <h6 *ngIf="approvalInfo?.doc1 != undefined && approvalInfo?.doc1 != 'NA'"><a href="javascript:void(0);" (click)="downloadDocument(approvalInfo?.doc1, patientInfo?.hospitalCode, approvalInfo?.uploadYear)"><i class="bi bi-file-earmark-pdf" style="color:red;font-size:15px;"></i></a></h6>
+                                        <h6 *ngIf="approvalInfo?.doc1 == undefined || approvalInfo?.doc1 == 'NA'">--</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-3" *ngIf="queryCount == 1 || queryCount == 2">
+                                <div class="d-flex align-items-center">
+                                    <div>
+                                        <p class="small text-muted mb-1">SNA First Query Remark</p>
+                                        <h6 class="mb-0"> {{approvalInfo?.queryRemark1}} </h6>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12" *ngIf="queryCount == 1 || queryCount == 2">
+                                <hr class="mt-xl-3">
+                            </div>
+
+                            <div class="col-xl-3 col-lg-3" *ngIf="queryCount == 1 || queryCount == 2">
+                                <div class="d-flex align-items-center border-end">
+                                    <div>
+                                        <p class="small text-muted mb-1">SNA First Query Description</p>
+                                        <h6 class="mb-0"> {{approvalInfo?.queryDescription1}} </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-3" *ngIf="queryCount == 1 || queryCount == 2">
+                                <div class="d-flex align-items-center  border-end">
+                                    <div>
+                                        <p class="small text-muted mb-1">SNA First Query Date</p>
+                                        <h6 class="mb-0"> {{approvalInfo?.queryDate1}} </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-3" *ngIf="queryCount == 1 || queryCount == 2">
+                                <div class="d-flex align-items-center  border-end">
+                                    <div>
+                                        <p class="small text-muted mb-1">Hospital Replay of First Query </p>
+                                        <h6 class="mb-0"> {{approvalInfo?.hospitalReplayRemark1}} </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-3" *ngIf="queryCount == 1 || queryCount == 2">
+                                <div class="d-flex align-items-center">
+                                    <div>
+                                        <p class="small text-muted mb-1">Hospital Replay Date of First Query</p>
+                                        <h6 class="mb-0"> {{approvalInfo?.hospitalReplayDate1}} </h6>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12" *ngIf="queryCount == 1 || queryCount == 2">
+                                <hr class="mt-xl-3">
+                            </div>
+
+                            <div class="col-xl-3 col-lg-3" *ngIf="queryCount == 1 || queryCount == 2">
+                                <div class="d-flex align-items-center border-end">
+                                    <div>
+                                        <p class="small text-muted mb-1">Hospital Uploaded Doc. of First Query</p>
+                                        <h6 *ngIf="approvalInfo?.doc2 != undefined && approvalInfo?.doc2 != 'NA'"><a href="javascript:void(0);" (click)="downloadDocument(approvalInfo?.doc2, patientInfo?.hospitalCode, approvalInfo?.uploadYear)"><i class="bi bi-file-earmark-pdf" style="color:red;font-size:15px;"></i></a></h6>
+                                        <h6 *ngIf="approvalInfo?.doc2 == undefined || approvalInfo?.doc2== 'NA'">--</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-3" *ngIf="queryCount == 2">
+                                <div class="d-flex align-items-center border-end">
+                                    <div>
+                                        <p class="small text-muted mb-1">Second Query Remark</p>
+                                        <h6 class="mb-0"> {{approvalInfo?.queryRemark2}} </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-3" *ngIf="queryCount == 2">
+                                <div class="d-flex align-items-center  border-end">
+                                    <div>
+                                        <p class="small text-muted mb-1">Second Query Description</p>
+                                        <h6 class="mb-0"> {{approvalInfo?.queryDescription2}} </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-3" *ngIf="queryCount == 2">
+                                <div class="d-flex align-items-center">
+                                    <div>
+                                        <p class="small text-muted mb-1">Second Query Date</p>
+                                        <h6 class="mb-0"> {{approvalInfo?.queryDate2}} </h6>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12" *ngIf="queryCount == 2">
+                                <hr class="mt-xl-3">
+                            </div>
+
+                            <div class="col-xl-3 col-lg-3" *ngIf="queryCount == 2">
+                                <div class="d-flex align-items-center border-end">
+                                    <div>
+                                        <p class="small text-muted mb-1">Hospital Replay of Second Query</p>
+                                        <h6 class="mb-0"> {{approvalInfo?.hospitalReplayRemark2}} </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-3" *ngIf="queryCount == 2">
+                                <div class="d-flex align-items-center border-end">
+                                    <div>
+                                        <p class="small text-muted mb-1">Hospital Replay Date of Second Query</p>
+                                        <h6 class="mb-0"> {{approvalInfo?.hospitalReplayDate2}} </h6>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-3 col-lg-3" *ngIf="queryCount == 2">
+                                <div class="d-flex align-items-center  border-end">
+                                    <div>
+                                        <p class="small text-muted mb-1">Hospital Uploaded Doc. of Second Query</p>
+                                        <h6 *ngIf="approvalInfo?.doc3 != undefined && approvalInfo?.doc3 != 'NA'"><a href="javascript:void(0);" (click)="downloadDocument(approvalInfo?.doc3, patientInfo?.hospitalCode, approvalInfo?.uploadYear)"><i class="bi bi-file-earmark-pdf" style="color:red;font-size:15px;"></i></a></h6>
+                                        <h6 *ngIf="approvalInfo?.doc3 == undefined || approvalInfo?.doc3 == 'NA'">--</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-3" *ngIf="patientInfo?.approvalStatus == 3 || patientInfo?.approvalStatus == 4">
+                                <div class="d-flex align-items-center">
+                                    <div>
+                                        <p class="small text-muted mb-1">
+                                            <ng-container *ngIf="patientInfo?.approvalStatus == 4">Approved Date</ng-container>
+                                            <ng-container *ngIf="patientInfo?.approvalStatus == 3">Rejected Date</ng-container>
+                                        </p>
+                                        <h6 class="mb-0"> {{approvalInfo?.approveDate}} </h6>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12" *ngIf="patientInfo?.approvalStatus == 3 || patientInfo?.approvalStatus == 4">
+                                <hr class="mt-xl-3">
+                            </div>
+
+                            <div class="col-xl-3 col-lg-3" *ngIf="patientInfo?.approvalStatus == 3 || patientInfo?.approvalStatus == 4">
+                                <div class="d-flex align-items-center">
+                                    <div>
+                                        <p class="small text-muted mb-1">
+                                            <ng-container *ngIf="patientInfo?.approvalStatus == 4">Approved By</ng-container>
+                                            <ng-container *ngIf="patientInfo?.approvalStatus == 3">Rejected By</ng-container>
+                                        </p>
+                                        <h6 class="mb-0"> {{approvalInfo?.approveBy}} </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-3" *ngIf="patientInfo?.approvalStatus == 3 || patientInfo?.approvalStatus == 4">
+                                <div class="d-flex align-items-center border-end">
+                                    <div>
+                                        <p class="small text-muted mb-1">SNA Remark</p>
+                                        <h6 class="mb-0"> {{approvalInfo?.snaRemark}} </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-3" *ngIf="patientInfo?.approvalStatus == 3 || patientInfo?.approvalStatus == 4">
+                                <div class="d-flex align-items-center border-end">
+                                    <div>
+                                        <p class="small text-muted mb-1">SNA Description</p>
+                                        <h6 class="mb-0"> {{approvalInfo?.snaDescription}} </h6>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--        Implant Information-->
+            <div class="col-lg-12 col-xl-12 col-xxl-12 mb-4">
+                <div class="card shadow-sm basic-info">
+                    <div class="card-header bg-color text-white">
+                        <h5 class="mb-0" style="color: white"> Implant Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table mb-0" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Sl#</th>
+                                        <th>Implant Code</th>
+                                        <th>Implant Name</th>
+                                        <th>Unit</th>
+                                        <th>Price</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <ng-container *ngIf="implantInfo?.implantInfoList.length > 0">
+                                        <tr *ngFor="let implantInfo of implantInfo?.implantInfoList; index as i">
+                                            <td>{{i+1}}</td>
+                                            <td>{{implantInfo.implantCode}}</td>
+                                            <td>{{implantInfo.implantName}}</td>
+                                            <td>{{implantInfo.unit}}</td>
+                                            <td>{{implantInfo.amount | currency:"":"₹"}}</td>
+                                        </tr>
+                                    </ng-container>
+                                    <tr *ngIf="implantInfo?.implantInfoList.length === 0">
+                                        <td colspan="5" align="center"><strong class="text-danger">No Data Found</strong></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--        Hed Information-->
+            <div class="col-lg-12 col-xl-12 col-xxl-12 mb-4">
+                <div class="card shadow-sm basic-info">
+                    <div class="card-header bg-color text-white">
+                        <h5 class="mb-0" style="color: white"> Highend Drugs Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table mb-0" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Sl#</th>
+                                        <th>Code</th>
+                                        <th>Name</th>
+                                        <th>Unit</th>
+                                        <th>Price</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <ng-container *ngIf="hedInfo?.hedInfoList.length > 0">
+                                        <tr *ngFor="let hedInfo of hedInfo?.hedInfoList; index as i">
+                                            <td>{{i+1}}</td>
+                                            <td>{{hedInfo.hedCode}}</td>
+                                            <td>{{hedInfo.hedName}}</td>
+                                            <td>{{hedInfo.unit}}</td>
+                                            <td>{{hedInfo.amount | currency:"":"₹"}}</td>
+                                        </tr>
+                                    </ng-container>
+                                    <tr *ngIf="hedInfo?.hedInfoList.length === 0">
+                                        <td colspan="5" align="center"><strong class="text-danger">No Data Found</strong></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--        Hed Information-->
+
+            <div class="col-lg-12 col-xl-12 col-xxl-12">
+                <div class="row mt-4">
+                    <div class="col-lg-12 accordion">
+                        <div class="card shadow-sm treatment-history">
+                            <div class="accordion-item" id="headingTen">
+                                <div class="accordion-button collapsed card-header bg-color text-white" data-bs-toggle="collapse" data-bs-target="#collapseTen" aria-expanded="false" aria-controls="collapseTwo" style="height: 3rem;">
+                                    <h5 style="color: white">Treatment History</h5>
+                                </div>
+                                <div id="collapseTen" class="accordion-collapse collapse show" aria-labelledby="headingTen" data-bs-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <div>
+                                            <div class="col-lg-12 row">
+                                                <div class="col-lg-12">
+                                                    <h6><i class="iconbsky-list-icon me-2" style="color: #0b6c21"></i>Discharge Treatment Information</h6>
+                                                </div>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table id="treatmentTable" class="table mb-0 border">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Sl#</th>
+                                                            <th>URN</th>
+                                                            <th>Case No</th>
+                                                            <th>Package Code</th>
+                                                            <th>Patient Name</th>
+                                                            <th>Date of Admission</th>
+                                                            <th>Actual Date of Admission</th>
+                                                            <th>Date of Discharge</th>
+                                                            <th>Actual Date of Discharge</th>
+                                                            <th>Action Amount(₹)</th>
+                                                            <th>CPD Approved Amount(₹)</th>
+                                                            <th>SNA Approved Amount(₹)</th>
+                                                            <th>Status</th>
+                                                            <th>Details</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <ng-container *ngIf="treatmentHistoryList.length > 0">
+                                                            <tr *ngFor="let treatment of treatmentHistoryList; index as i">
+                                                                <td>{{i+1}}</td>
+                                                                <td>{{treatment.urnno}}</td>
+                                                                <td>{{treatment.caseNo}}</td>
+                                                                <td title={{treatment.packagename}}>{{treatment.packagecode}}</td>
+                                                                <td>{{treatment.patientname}}</td>
+                                                                <td>{{treatment.dateofadmission}}</td>
+                                                                <td>{{treatment.actualDateofadmission}}</td>
+                                                                <td>{{treatment.dateofdischarge}}</td>
+                                                                <td>{{treatment.actualDateofdischarge}}</td>
+                                                                <td>{{treatment.totalamount}}</td>
+                                                                <td *ngIf="treatment.cpdapproveamount==null">N/A</td>
+                                                                <td *ngIf="treatment.cpdapproveamount!=null">{{treatment.cpdapproveamount | currency:'':''}}</td>
+                                                                <td *ngIf="treatment.snaapproveamount==null">N/A</td>
+                                                                <td *ngIf="treatment.snaapproveamount!=null">{{treatment.snaapproveamount | currency:'':''}}</td>
+                                                                <td>{{treatment.status}}</td>
+                                                                <td><a href="javascript:void(0)" (click)="getDetails(treatment.transctionId,treatment.claimId,treatment.urnno,treatment.packagecode,treatment.caseNo)">Click here</a></td>
+                                                            </tr>
+                                                        </ng-container>
+                                                        <tr *ngIf="treatmentHistoryList.length === 0">
+                                                            <td colspan="14" align="center"><strong class="text-danger">No data found</strong></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                        <div style="margin-top: 2rem;">
+                                            <div class="col-lg-12 row">
+                                                <div class="col-lg-12">
+                                                    <h6><i class="iconbsky-list-icon me-2" style="color: #0b6c21"></i>Old Claim Information</h6>
+                                                </div>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table id="oldTreatmentTable" class="table mb-0 border">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Sl#</th>
+                                                            <th>URN</th>
+                                                            <th>Case No</th>
+                                                            <th>Patient Name</th>
+                                                            <th>Date of Admission</th>
+                                                            <th>Actual Date of Admission</th>
+                                                            <th>Date of Discharge</th>
+                                                            <th>Actual Date of Discharge</th>
+                                                            <th>Claim Status</th>
+                                                            <th>Approved Amount(₹)</th>
+                                                            <th>Approved Date</th>
+                                                            <th>SNA Approved Amount(₹)</th>
+                                                            <th>SNA Approved Date</th>
+                                                            <th>Remarks</th>
+                                                            <th>SNA Remarks</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <ng-container *ngIf="oldTreatmentHistoryList.length > 0">
+                                                            <tr *ngFor="let oldTreatment of oldTreatmentHistoryList; index as i">
+                                                                <td>{{i+1}}</td>
+                                                                <td>{{oldTreatment.URN}}</td>
+                                                                <td>{{oldTreatment.caseNo}}</td>
+                                                                <td>{{oldTreatment.patientName}}</td>
+                                                                <td>{{oldTreatment.actualDateOfAdmission}}</td>
+                                                                <td>{{oldTreatment.dateOfDischarge}}</td>
+                                                                <td>{{oldTreatment.dateOfAdmission}}</td>
+                                                                <td>{{oldTreatment.actualDateOfDischarge}}</td>
+                                                                <td>{{oldTreatment.claimStatus}}</td>
+                                                                <td>{{oldTreatment.approvedAmount}}</td>
+                                                                <td>{{oldTreatment.approvedDate}}</td>
+                                                                <td>{{oldTreatment.SNAApprovedAmount}}</td>
+                                                                <td>{{oldTreatment.SNAApprovedDate}}</td>
+                                                                <td><a href="javascript:void(0)" class="trigger" (click)="openModal('Remark', oldTreatment.remark)">View</a></td>
+                                                                <td><a href="javascript:void(0)" class="trigger" (click)="openModal('SNA Remark', oldTreatment.SNARemark)">View</a></td>
+                                                            </tr>
+                                                        </ng-container>
+                                                        <tr *ngIf="oldTreatmentHistoryList.length === 0">
+                                                            <td colspan="15" align="center"><strong class="text-danger">No data found</strong></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!--        TMS 2.O Treatment History-->
+            <div class="col-lg-12 col-xl-12 col-xxl-12 mb-4" style="margin-top: 1rem">
+                <div class="card shadow-sm basic-info">
+                    <div class="card-header bg-color text-white">
+                        <h5 class="mb-0" style="color: white"> TMS 2.0 Treatment History (URN)- {{patientInfo?.urn}}</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table mb-0" style="width:100%" id="urnInfo">
+                                <thead>
+                                    <tr>
+                                        <th>Sl#</th>
+                                        <th>Member Id</th>
+                                        <th>Patient Name</th>
+                                        <th>Case No</th>
+                                        <th>Hospital Name</th>
+                                        <th>Procedure Code</th>
+                                        <th>Procedure Name</th>
+                                        <th>Claimed Amount</th>
+                                        <th>Amount Blocked</th>
+                                        <th>Actual Date of Admission</th>
+                                        <th>Actual Date of Discharge</th>
+                                        <th>Blocked Date</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <ng-container *ngIf="urnInfoList?.length > 0">
+                                        <tr *ngFor="let urnInfo of urnInfoList; index as i">
+                                            <td>{{i+1}}</td>
+                                            <td>{{urnInfo.memberId}}</td>
+                                            <td>{{urnInfo.patientName}}</td>
+                                            <td>{{urnInfo.caseNo}}</td>
+                                            <td title="{{urnInfo.hospitalCode}}">{{urnInfo.hospitalName}}</td>
+                                            <td>{{urnInfo.procedureCode}}</td>
+                                            <td>{{urnInfo.procedureName}}</td>
+                                            <td>{{urnInfo.claimedAmount| currency:"":"₹"}}</td>
+                                            <td>{{urnInfo.amountBlocked| currency:"":"₹"}}</td>
+                                            <td>{{urnInfo.actualDateOfAdmission}}</td>
+                                            <td>{{urnInfo.actualDateOfDischarge}}</td>
+                                            <td>{{urnInfo.blockedDate}}</td>
+                                            <td>{{urnInfo.status}}</td>
+                                        </tr>
+                                    </ng-container>
+                                    <tr *ngIf="urnInfoList?.length === 0">
+                                        <td colspan="13" align="center"><strong class="text-danger">No Data Found</strong></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--        Balance Info-->
+            <div class="col-lg-12 col-xl-12 col-xxl-12 mb-4">
+                <div class="card shadow-sm basic-info">
+                    <div class="card-header bg-color text-white">
+                        <h5 class="mb-0" style="color: white"> Previous Policy Balance Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row treatment-details">
+                            <div class="col-xl-3 col-lg-3">
+                                <div class="d-flex align-items-center  border-end">
+                                    <div>
+                                        <p class="small text-muted mb-1">Available Amount</p>
+                                        <h6 class="mb-0">{{ balanceInfo?.availableBalance !== 'NA' ? (balanceInfo?.availableBalance | currency:'':'₹') : balanceInfo?.availableBalance }}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-3">
+                                <div class="d-flex align-items-center  border-end">
+                                    <div>
+                                        <p class="small text-muted mb-1">Amount Blocked</p>
+                                        <h6 class="mb-0"> {{balanceInfo?.amountBlocked !== 'NA' ? (balanceInfo?.amountBlocked | currency:'':'₹') : balanceInfo?.amountBlocked}} </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-3">
+                                <div class="d-flex align-items-center border-end">
+                                    <div>
+                                        <p class="small text-muted mb-1">Claimed Amount</p>
+                                        <h6 class="mb-0"> {{balanceInfo?.claimedAmount !== 'NA' ? (balanceInfo?.claimedAmount | currency:'':'₹') : balanceInfo?.claimedAmount}} </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-3">
+                                <div class="d-flex align-items-center">
+                                    <div>
+                                        <p class="small text-muted mb-1">Female Fund</p>
+                                        <h6 class="mb-0"> {{balanceInfo?.femaleFund !== 'NA' ? (balanceInfo?.femaleFund | currency:'':'₹') : balanceInfo?.femaleFund}} </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <hr class="mt-xl-3">
+                            </div>
+                            <div class="col-xl-3 col-lg-3">
+                                <div class="d-flex align-items-center border-end">
+                                    <div>
+                                        <p class="small text-muted mb-1">Policy Start Date</p>
+                                        <h6 class="mb-0"> {{balanceInfo?.policyStartDate}} </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-3">
+                                <div class="d-flex align-items-center border-end">
+                                    <div>
+                                        <p class="small text-muted mb-1">Policy End Date</p>
+                                        <h6 class="mb-0"> {{balanceInfo?.policyEndDate}} </h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="formSection" *ngIf="pageStatus == 0">
+                <div class="row">
+                    <div class="col-lg-4 col-xxl-4">
+                        <div class="col">
+                            <div>
+                                <label class="col-form-label">Remarks <span class="text-danger">*</span></label>
+                                <ng-autocomplete #auto [data]="actionRemarkList" name="remark" id="ramark" placeholder="Select Remark" (selected)="getId($event)" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" [searchKeyword]="keyword" (inputCleared)="clearActionRemarkId()"
+                                    spellcheck="false">
+                                </ng-autocomplete>
+                                <ng-template #itemTemplate let-item>
+                                    <a [innerHTML]="item.remarks"></a>
+                                </ng-template>
+                                <ng-template #notFoundTemplate let-notFound>
+                                    <div [innerHTML]="notFound"></div>
+                                </ng-template>
+                            </div>
+
+                            <div>
+                                <div class="col">
+                                    <label class="col-form-label">Description <span class="text-danger">*</span></label>
+                                    <textarea class="form-control" rows="5" id="description" name="description" formControlName="description" maxlength="500" placeholder="Enter description" #myInput [maxlength]="maxChars" (keypress)="validateDescription($event)"></textarea>
+                                    <span class="text-danger small">Characters Remaining: {{maxChars - myInput.value.length}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-grid gap-2 d-sm-block mt-3 mt-xl-4">
+                    <button (click)="submitDetails($event, 'Y')" class="btn btn-success me-2" id="approve" [disabled]="approvalDisabled">Approve</button>
+                    <button (click)="submitDetails($event, 'Q')" class="btn btn-warning me-2" id="query" [disabled]="queryCount >= 2 || queryDisabled">Query</button>
+                    <button (click)="submitDetails($event, 'R')" class="btn btn-danger me-2" id="reject" [disabled]="rejectDisabled">Reject</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal justify-content-center" id="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h4 class="text-center">{{modalTitle}}</h4>
+            </div>
+            <div class="modal-body py-5 text-center">
+                <span class="modalBody">{{modalBody}}</span>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="closeModal()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

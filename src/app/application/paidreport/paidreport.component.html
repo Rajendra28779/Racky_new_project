@@ -1,0 +1,315 @@
+<div class="form-cointainer">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="col-lg-4">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a routerLink="" class="nav-link active">Paid Report</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="content-box mt-3">
+        <div class="col-xxl-10">
+            <div class="row">
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label class="control-label mb-2">Actual Date of Discharge</label><span class="text-danger">*</span>
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="datepicker4" name="fromDate" autocomplete="off">
+                            <label class="input-group-text bg-transparent border-start-0" for="datepicker4"><i
+                                    class="iconbsky-calendar"></i> </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xxl-4">
+                    <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                        <label class="control-label mb-2">Discharge Date To</label><span class="text-danger">*</span>
+                        <div class="input-group">
+                            <input type="text" class="form-control border-end-0 datepicker" id="datepicker3" name="toDate" autocomplete="off">
+                            <label class="input-group-text bg-transparent border-start-0" for="datepicker3"><i
+                                    class="iconbsky-calendar"></i> </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hospital for  -->
+                <div class="row" *ngIf="user.groupId==5">
+                    <div class="col-lg-3 col-xxl-3">
+                        <div class="mb-xl-3">
+                            <label class="control-label">State Name</label>
+                            <ng-autocomplete #auto2 [data]="stateList" placeholder="Select State" (selected)="selectEvent2($event)" (inputCleared)="clearEvent2()" [itemTemplate]="itemTemplate2" [notFoundTemplate]="notFoundTemplate2" [searchKeyword]="keyword2" [(ngModel)]="record.stateName"
+                                disabled="true" spellcheck="false">
+                            </ng-autocomplete>
+
+                            <ng-template #itemTemplate2 let-item>
+                                <a [innerHTML]="item.stateName"></a>
+                            </ng-template>
+
+                            <ng-template #notFoundTemplate2 let-notFound>
+                                <div [innerHTML]="notFound"></div>
+                            </ng-template>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-xxl-3">
+                        <div class="mb-xl-3">
+                            <label class="control-label">District Name</label>
+                            <ng-autocomplete #auto1 [data]="districtList" placeholder="Select District" (selected)="selectEvent1($event)" (inputCleared)="clearEvent1()" [itemTemplate]="itemTemplate1" [notFoundTemplate]="notFoundTemplate1" [searchKeyword]="keyword1" [(ngModel)]="record.districtName"
+                                disabled="true" spellcheck="false">
+                            </ng-autocomplete>
+
+                            <ng-template #itemTemplate1 let-item>
+                                <a [innerHTML]="item.districtname"></a>
+                            </ng-template>
+
+                            <ng-template #notFoundTemplate1 let-notFound>
+                                <div [innerHTML]="notFound"></div>
+                            </ng-template>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-xxl-3">
+                        <div class="mb-xl-3">
+                            <label class="control-label">Hospital Name</label>
+                            <ng-autocomplete #auto [data]="hospitalList" placeholder="Select Hospital" (selected)="selectEvent($event)" (inputCleared)="clearEvent()" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" [searchKeyword]="keyword" [(ngModel)]="record.hospitalName"
+                                disabled="true" spellcheck="false">
+                            </ng-autocomplete>
+
+                            <ng-template #itemTemplate let-item>
+                                <a [innerHTML]="item.hospitalName"></a>
+                            </ng-template>
+
+                            <ng-template #notFoundTemplate let-notFound>
+                                <div [innerHTML]="notFound"></div>
+                            </ng-template>
+                        </div>
+                    </div>
+                    <div class="d-grid gap-2 d-md-flex ">
+                        <button type="submit " class="btn btn-success " (click)="getpaidsearch() ">Search</button>
+                        <button type="reset" class="btn btn-secondary " (click)="getReset()">Reset</button>
+                    </div>
+                </div>
+
+                <!-- Admin for  -->
+                <div class="row" *ngIf="this.user.groupId==1">
+                    <div class="col-lg-3 col-xxl-3">
+                        <div class="mb-xl-3">
+                            <label class="control-label">State Name</label>
+                            <ng-autocomplete #auto2 [data]="stateList" placeholder="Select State" (selected)="selectEvent2($event)" (inputCleared)="clearEvent2()" [itemTemplate]="itemTemplate2" [notFoundTemplate]="notFoundTemplate2" [searchKeyword]="keyword2" spellcheck="false">
+                            </ng-autocomplete>
+
+                            <ng-template #itemTemplate2 let-item>
+                                <a [innerHTML]="item.stateName"></a>
+                            </ng-template>
+
+                            <ng-template #notFoundTemplate2 let-notFound>
+                                <div [innerHTML]="notFound"></div>
+                            </ng-template>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-xxl-3">
+                        <div class="mb-xl-3">
+                            <label class="control-label">District Name</label>
+                            <ng-autocomplete #auto1 [data]="districtList" placeholder="Select District" (selected)="selectEvent1($event)" (inputCleared)="clearEvent1()" [itemTemplate]="itemTemplate1" [notFoundTemplate]="notFoundTemplate1" [searchKeyword]="keyword1" spellcheck="false">
+                            </ng-autocomplete>
+
+                            <ng-template #itemTemplate1 let-item>
+                                <a [innerHTML]="item.districtname"></a>
+                            </ng-template>
+
+                            <ng-template #notFoundTemplate1 let-notFound>
+                                <div [innerHTML]="notFound"></div>
+                            </ng-template>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-xxl-3">
+                        <div class="mb-xl-3">
+                            <label class="control-label">Hospital Name</label>
+                            <ng-autocomplete #auto [data]="hospitalList" placeholder="Select Hospital" (selected)="selectEvent($event)" (inputCleared)="clearEvent()" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" [searchKeyword]="keyword" spellcheck="false">
+                            </ng-autocomplete>
+
+                            <ng-template #itemTemplate let-item>
+                                <a [innerHTML]="item.hospitalName"></a>
+                            </ng-template>
+
+                            <ng-template #notFoundTemplate let-notFound>
+                                <div [innerHTML]="notFound"></div>
+                            </ng-template>
+                        </div>
+                    </div>
+                    <div class="d-grid gap-2 d-md-flex ">
+                        <button type="submit " class="btn btn-success " (click)="getpaidsearch() ">Search</button>
+                        <button type="reset" class="btn btn-secondary " (click)="getReset()">Reset</button>
+                    </div>
+                </div>
+
+                <!-- fouser for  -->
+                <div class="row" *ngIf="this.user.groupId==8">
+                    <div class="col-lg-3 col-xxl-3">
+                        <div class="mb-xl-3">
+                            <label class="control-label">State Name</label>
+                            <ng-autocomplete #auto2 [data]="stateList" placeholder="Select State" (selected)="selectEvent2($event)" (inputCleared)="clearEvent2()" [itemTemplate]="itemTemplate2" [notFoundTemplate]="notFoundTemplate2" [searchKeyword]="keyword2" spellcheck="false">
+                            </ng-autocomplete>
+
+                            <ng-template #itemTemplate2 let-item>
+                                <a [innerHTML]="item.stateName"></a>
+                            </ng-template>
+
+                            <ng-template #notFoundTemplate2 let-notFound>
+                                <div [innerHTML]="notFound"></div>
+                            </ng-template>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-xxl-3">
+                        <div class="mb-xl-3">
+                            <label class="control-label">District Name</label>
+                            <ng-autocomplete #auto1 [data]="districtList" placeholder="Select District" (selected)="selectEvent1($event)" (inputCleared)="clearEvent1()" [itemTemplate]="itemTemplate1" [notFoundTemplate]="notFoundTemplate1" [searchKeyword]="keyword1" spellcheck="false">
+                            </ng-autocomplete>
+
+                            <ng-template #itemTemplate1 let-item>
+                                <a [innerHTML]="item.districtname"></a>
+                            </ng-template>
+
+                            <ng-template #notFoundTemplate1 let-notFound>
+                                <div [innerHTML]="notFound"></div>
+                            </ng-template>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-xxl-3">
+                        <div class="mb-xl-3">
+                            <label class="control-label">Hospital Name</label>
+                            <ng-autocomplete #auto [data]="hospitalList" placeholder="Select Hospital" (selected)="selectEvent($event)" (inputCleared)="clearEvent()" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" [searchKeyword]="keyword" spellcheck="false">
+                            </ng-autocomplete>
+
+                            <ng-template #itemTemplate let-item>
+                                <a [innerHTML]="item.hospitalName"></a>
+                            </ng-template>
+
+                            <ng-template #notFoundTemplate let-notFound>
+                                <div [innerHTML]="notFound"></div>
+                            </ng-template>
+                        </div>
+                    </div>
+                    <div class="d-grid gap-2 d-md-flex ">
+                        <button type="submit " class="btn btn-success " (click)="getpaidsearch() ">Search</button>
+                        <button type="reset" class="btn btn-secondary " (click)="getReset()">Reset</button>
+                    </div>
+                </div>
+
+                <!-- DC for  -->
+                <div class="row" *ngIf="this.user.groupId==6">
+                    <div class="col-lg-3 col-xxl-3">
+                        <div class="mb-xl-3">
+                            <label class="control-label">State Name</label>
+                            <ng-autocomplete #auto2 [data]="stateList" placeholder="Select State" (selected)="selectEvent2($event)" (inputCleared)="clearEvent2()" [itemTemplate]="itemTemplate2" [notFoundTemplate]="notFoundTemplate2" [searchKeyword]="keyword2" spellcheck="false">
+                            </ng-autocomplete>
+
+                            <ng-template #itemTemplate2 let-item>
+                                <a [innerHTML]="item.stateName"></a>
+                            </ng-template>
+
+                            <ng-template #notFoundTemplate2 let-notFound>
+                                <div [innerHTML]="notFound"></div>
+                            </ng-template>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-xxl-3">
+                        <div class="mb-xl-3">
+                            <label class="control-label">District Name</label>
+                            <ng-autocomplete #auto1 [data]="districtList" placeholder="Select District" (selected)="selectEvent1($event)" (inputCleared)="clearEvent1()" [itemTemplate]="itemTemplate1" [notFoundTemplate]="notFoundTemplate1" [searchKeyword]="keyword1" spellcheck="false">
+                            </ng-autocomplete>
+
+                            <ng-template #itemTemplate1 let-item>
+                                <a [innerHTML]="item.districtname"></a>
+                            </ng-template>
+
+                            <ng-template #notFoundTemplate1 let-notFound>
+                                <div [innerHTML]="notFound"></div>
+                            </ng-template>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-xxl-3">
+                        <div class="mb-xl-3">
+                            <label class="control-label">Hospital Name</label>
+                            <ng-autocomplete #auto [data]="hospitalList" placeholder="Select Hospital" (selected)="selectEvent($event)" (inputCleared)="clearEvent()" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" [searchKeyword]="keyword" spellcheck="false">
+                            </ng-autocomplete>
+
+                            <ng-template #itemTemplate let-item>
+                                <a [innerHTML]="item.hospitalName"></a>
+                            </ng-template>
+
+                            <ng-template #notFoundTemplate let-notFound>
+                                <div [innerHTML]="notFound"></div>
+                            </ng-template>
+                        </div>
+                    </div>
+                    <div class="d-grid gap-2 d-md-flex ">
+                        <button type="submit " class="btn btn-success " (click)="getpaidsearch() ">Search</button>
+                        <button type="reset" class="btn btn-secondary " (click)="getReset()">Reset</button>
+                    </div>
+
+                </div>
+                <div class="mb-3 mt-3" [align]="'start'">
+                    <button class="btn btn-success btn-sm mx-1" tooltip="Excel" (click)="downloadReport('excel')" style="float:right; margin-left: 5px;"><i class="bi bi-download"></i></button>
+                    <button class="btn btn-danger btn-sm mx-1" tooltip="pdf" (click)="downloadReport('pdf')" style="float: right"><i class="bi bi-file-earmark-pdf"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-box p-0 overflow-hidden ">
+        <div class="table-responsive ">
+            <table class="table table-striped mb-0 " id="claimraise">
+                <thead>
+                    <tr>
+                        <th width="60">Sl No.</th>
+                        <th>Payment Date</th>
+                        <!-- <th>Total Discharge</th> -->
+                        <th>Total Paid Case</th>
+                        <th>Total Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let claim of paidList | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage}; index as i ">
+                        <tr>
+                            <td *ngIf="currentPage==1 ">{{(i+1)}}</td>
+                            <td *ngIf="currentPage!=1 ">{{(currentPage-1)*pageElement+ i+1}}</td>
+                            <td *ngIf="claim.payment_date!='N/A'">{{claim.payment_date | date :'dd-MMM-yyyy'}} </td>
+                            <td *ngIf="claim.payment_date=='N/A'">{{claim.payment_date}}</td>
+                            <!-- <td (click)="myFunction(claim.payment_date,1,claim.actualdateofdischarge)">
+                                <a href="javascript:void(0);"> {{claim.total_discharge}} </a></td> -->
+                            <td (click)="myFunction(claim.payment_date,2,claim.actualdateofdischarge)">
+                                <a href="javascript:void(0);">{{claim.total_paid_case }}</a></td>
+                            <td> {{claim.total_amount |currency:'':''}}</td>
+                        </tr>
+                    </ng-container>
+                    <tr *ngIf="!showPegi">
+                        <td colspan="16">
+                            <p class="mb-0 text-center text-danger fw-bold">NO DATA FOUND!!</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="row mt-3" *ngIf="showPegi ">
+    <div class="col-sm-4 ">
+        <div class="col-sm-* ">
+            show
+            <select id="pageItem" name="pageItem" class="form-select-sm" (change)="pageItemChange()">
+                <option value="100">100</option>
+                <option value="200">200</option>
+                <option value="300">300</option>
+                <option value="400">400</option>
+            </select> entries
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true" (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+    </div>
+</div>

@@ -1,0 +1,104 @@
+<div class="form-cointainer">
+  <div class="main-tab">
+      <div class="row justify-content-between">
+          <div class="col-lg-4">
+              <ul class="nav nav-tabs ">
+                <li class="nav-item" >
+                  <a routerLink="/application/packgaeunbundlingmaster" routerLinkActive="active" class="nav-link " style="color: #1f723f;">Add</a>
+              </li>
+              <li class="nav-item">
+                <a routerLink="/application/packgaeunbundlingmasterview" routerLinkActive="active" class="nav-link active" >View</a>
+            </li>
+              </ul>
+          </div>
+      </div>
+  </div>
+
+  <div class="content-box">
+    <div class="row">
+      <div class="col-3 col-3 d-flex align-items-center mb-2">
+          <div class="col-sm-*" *ngIf="showPegi">
+            show
+            <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+              <option value="100">100</option>
+              <option value="200">200</option>
+              <option value="300">300</option>
+              <option value={{totalcount}}>All</option>
+            </select> entries
+          </div>
+      </div>
+      <div class="col-2 d-flex align-items-center justify-content-end mb-2"> <b>Total : {{totalcount}}</b></div>
+
+      <div class="col-2" style="text-align:end ;">
+        <button class="btn btn-success btn-sm mx-1" style="margin-top: 10px" tooltip="Excel" (click)="downloadList(1)">
+      <i class="bi bi-file-earmark-spreadsheet"></i>
+  </button>
+        <button class="btn btn-danger btn-sm mx-1" style="margin-top: 10px" tooltip="pdf" (click)="downloadList(2)">
+        <i class="bi bi-file-earmark-pdf"></i>
+    </button>
+    </div>
+
+      <div class="col-5 mb-2">
+        <input type="text " id="txtsearchDate " name="txtsearchDate " [(ngModel)]="txtsearchDate" maxlength="20 "
+          class="form-control " placeholder="Search here...... " autocomplete="off"
+          style=" margin-right: 0px; margin-left: 0px;">
+
+
+      </div>
+    </div>
+    <div class="table-responsive" style="margin-top:2px;">
+      <table class="table table-striped mb-0">
+        <thead>
+          <tr>
+            <th width="50">Sl#</th>
+            <th>Unbundling Name</th>
+            <th>Unbundling Speciality Code</th>
+            <th>Unbundling Package Code</th>
+            <th>Created On</th>
+            <th>Status</th>
+            <th>Edit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let v of list | filter:txtsearchDate | paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage},index as i">
+            <td *ngIf="currentPage==1 ">{{(i+1)}}</td>
+            <td *ngIf="currentPage!=1 ">{{(currentPage-1)*pageElement+ i+1}}</td>
+            <td>{{v.packagename}}</td>
+            <td>{{v.specialitycode}}</td>
+            <td>{{v.packagecode}}</td>
+            <td>{{v.screatedOn}}</td>
+            <td *ngIf="v.status==0">Active</td>
+            <td *ngIf="v.status==1">In-Active</td>
+            <td><button style="text-align: center;" class="btn btn-outline-primary btn-sm me-1" (click)="edit(v)"><i class="bi bi-pencil"></i></button></td>
+          </tr>
+          <tr *ngIf="totalcount==0">
+            <td colspan="10" align="center">
+              <strong class="text-danger">NO DATA FOUND!!</strong>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div><br>
+    <div class="row" *ngIf="showPegi">
+      <div class="col-sm-4">
+        <div class="col-sm-*">
+          show
+          <select id="pageItem" name="pageItem" class="custom-select-sm" [(ngModel)]="pageElement">
+            <option value="100">100</option>
+            <option value="200">200</option>
+            <option value="300">300</option>
+            <option value={{totalcount}}>All</option>
+          </select> entries
+        </div>
+      </div>
+      <div class="col-sm-8 text-right">
+        <pagination-controls id="listing_pagination" [maxSize]="10" [directionLinks]="true"
+          (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)">
+        </pagination-controls>
+      </div>
+
+
+    </div>
+  </div>
+
+</div>

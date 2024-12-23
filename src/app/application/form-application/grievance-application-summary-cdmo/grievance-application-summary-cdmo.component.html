@@ -1,0 +1,149 @@
+<div class="page-controls-section" id="page-content">
+    <div class="card">
+        <div class="controls-section-header">
+            <ul class="nav nav-tabs nav-fill" role="tablist">
+                <app-tabs [color]="'green'" *ngFor="let tablist of tablist" [tabMessage]="tablist"></app-tabs>
+            </ul>
+            <div class="indicatorslist">
+                <app-util *ngFor="let utillist of utillist" [childMessage]="utillist"></app-util>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="controls-section ">
+                <div class="controls-section ">
+                    <div class="row">
+
+                        <div class="col-lg-3 col-xxl-3">
+                            <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                                <label class="control-label mb-2"> Action Date From</label><span class="text-danger">*</span>
+                                <div class="input-group">
+                                    <input type="text" class="form-control border-end-0 datepicker" id="formdate"
+                                        name="fromDate">
+                                    <label class="input-group-text bg-transparent border-start-0" for="formdate"><i
+                                            class="iconbsky-calendar"></i> </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-xxl-3">
+                            <div class="mb-xl-3 mb-lg-3 mb-md-3 mb-3">
+                                <label class="control-label mb-2">Action Date To</label><span class="text-danger">*</span>
+                                <div class="input-group">
+                                    <input type="text" class="form-control border-end-0 datepicker" id="todate"
+                                        name="toDate">
+                                    <label class="input-group-text bg-transparent border-start-0" for="todate"><i
+                                            class="iconbsky-calendar"></i> </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="d-grid gap-2 d-md-flex">
+                            <button type="button" class="btn btn-success me-2" (click)="searchData()">Search</button>
+                            <input type="button" value="Reset" (click)="resetData()" class="btn btn-secondary">
+                        </div>
+                    </div>
+                </div>
+                <!-- Search Panel -->
+                <div *ngIf="listData?.length > 0; else norecord">
+                    <div class="d-flex justify-content-between mb-3">
+                        <div></div>
+                        <div>
+                            Per Page:
+                            <select id="pageItem" (change)="pageItemChange()">
+                                <option *ngFor="let size of pageSizes" [ngValue]="size">
+                                    {{ size }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="row">
+                        </div>
+                        <div class="row mb-3 d-flex align-items-center">
+                          <div class="col-md-2 total_sec border-end"> Total Record - <span> {{listData.length}} </span></div>
+                          <div class="col-md-3 total_sec border-end"> </div>
+                          <div class="col-md-3 total_sec1 border-end"> </div>
+            
+                          <div class="col-md-4 d-flex border-end">
+                            <button class="btn btn-outline-success btn-sm me-1" (click)="downloadReport()">
+                              <i class="bi bi-file-earmark-spreadsheet" style="font-size: 13pt;"></i>
+                            </button>
+                            <button class="btn btn-outline-danger btn-sm me-1" type="submit" (click)="downloadPdf()">
+                              <i class="bi bi-file-earmark-pdf" style="font-size: 13pt;"></i>
+                            </button>
+                            <input type="text" [(ngModel)]="searchText" class="form-control"
+                              placeholder="Enter text to filter records" style="max-width: 300px;" />
+                          </div>
+            
+                        </div>
+            
+                        <!-- Modal -->
+                      </div>
+                    <br>
+                    <div class="table-responsive print-section">
+                        <table aria-describedby="mydesc" data-toggle="table" class="table table-bordered valign-middle"
+                            *ngIf="(listData | filter: searchText).length > 0; else noResults">
+                            <thead>
+                                <tr>
+                                    <th>Sl#</th>
+                                    <th>Grievance Number</th>
+                                    <th>Contact No</th>
+                                    <th>State</th>
+                                    <th>District</th>
+                                    <th>Grievance By</th>
+                                    <th>Grievance Medium</th>
+                                    <th>Action On</th>
+                                    <th>Forwarded To</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let rows of listData | filter: searchText | paginate: {id:'listing_pagination', itemsPerPage:pageElement, currentPage:currentPage };index as i">
+                                    <td *ngIf="currentPage==1">{{i+1}}</td>
+                                    <td *ngIf="currentPage!=1">{{ (currentPage - 1) * pageElement+ i+1 }}</td>
+                                    <td>{{ rows.APPLICATIONNO}}</td>
+                                    <td>{{rows.CONTACTNO}}</td>
+                                    <td>{{rows.STATE}}</td>
+                                    <td>{{rows.DISTRICT}}</td>
+                                    <td>{{rows.GRIEVANCE_BY_NAME}}</td>
+                                    <td>{{rows.GRIEVANCE_MEDIUM_NAME}}</td>
+                                    <td>{{rows.ACTIONON | date :'dd-MMM-yyyy, h:mm:ss a'}}</td>
+                                    <td>{{rows.DCNAME}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row" *ngIf="showPegi">
+                        <div class="col-sm-4">
+                            <strong>
+                                Showing {{ (currentPage - 1) * pageElement + 1 }} to {{elementTo}} of {{recordList}}
+                                (Total Records - {{listData.length }})
+                            </strong>
+                        </div>
+                        <div class="col-sm-8 text-right" style="text-align: end;">
+                            <pagination-controls id="listing_pagination" (pageChange)="pageChange($event)">
+                            </pagination-controls>
+                          </div>
+                    </div>
+                    <div class="col-sm-12 text-center" *ngIf="!showPegi">
+                        <span style="color: red;"><Strong>No Record Found !!!</Strong></span>
+                    </div>
+                </div>
+                <ng-template #norecord>
+                    <h6 class="no-content">No Record Found</h6>
+                </ng-template>
+                <ng-template #noResults>
+                    <p>No results found for "{{searchText}}".</p>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="loader" *ngIf="loading">
+    <div class="loader-item"></div>
+    <p>Loading...</p>
+</div>

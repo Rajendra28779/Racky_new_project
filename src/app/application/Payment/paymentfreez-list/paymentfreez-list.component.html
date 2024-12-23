@@ -1,0 +1,627 @@
+<div class="main-tab">
+    <div class="row justify-content-between">
+        <div class="col-lg-12">
+            <ul class="nav nav-tabs">
+                <li class="nav-item" *ngIf="isActive4">
+                    <a routerLink="/application/paymentFreezeList" routerLinkActive="active" class="nav-link active" (click)="verifyFromDyCEO()">Verified From Joint CEO</a>
+                </li>
+                <li class="nav-item" *ngIf="!isActive4">
+                    <a routerLink="/application/paymentFreezeList" class="nav-link" (click)="verifyFromDyCEO()" style="color: #1f723f;">Verified From Joint CEO</a>
+                </li>
+                <li class="nav-item" *ngIf="isActive2">
+                    <a routerLink="/application/paymentFreezeList" routerLinkActive="active" class="nav-link active" (click)="OnFoRemarks()">Observation From Joint CEO</a>
+                </li>
+                <li class="nav-item" *ngIf="!isActive2">
+                    <a routerLink="/application/paymentFreezeList" class="nav-link" (click)="OnFoRemarks()" style="color: #1f723f;">Observation From Joint CEO</a>
+                </li>
+                <li class="nav-item" *ngIf="isActive1">
+                    <a routerLink="/application/paymentFreezeList" routerLinkActive="active" class="nav-link active" (click)="getVerifyFloatList()">Verified From CEO</a>
+                </li>
+                <li class="nav-item" *ngIf="!isActive1">
+                    <a routerLink="/application/paymentFreezeList" class="nav-link" (click)="getVerifyFloatList()" style="color: #1f723f;">Verified From CEO</a>
+                </li>
+
+                <li class="nav-item" *ngIf="isActive3">
+                    <a routerLink="/application/paymentFreezeList" routerLinkActive="active" class="nav-link active" (click)="getClarifyFromCEO()">Observation From CEO</a>
+                </li>
+                <li class="nav-item" *ngIf="!isActive3">
+                    <a routerLink="/application/paymentFreezeList" class="nav-link" (click)="getClarifyFromCEO()" style="color: #1f723f;">Observation From CEO</a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</div>
+<div id="filter" class="searchCriteriaBox bg-light p-3">
+    <div class="row">
+        <div class="col-lg-3 col-xxl-3">
+            <div class="form-group">
+                <label class="control-label">Float Generation Date From</label><span class="text-danger">*</span>
+                <div class="input-group">
+                    <input type="text" class="form-control border-end-0 datepicker" id="datepicker1" name="fromDate" />
+                    <label class="input-group-text bg-transparent border-start-0" for="datepicker1">
+                        <i class="iconbsky-calendar"></i>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xxl-3">
+            <div class="form-group">
+                <label class="control-label">Float Generation Date To</label><span class="text-danger">*</span>
+                <div class="input-group">
+                    <input type="text" class="form-control border-end-0 datepicker" id="datepicker2" name="toDate" />
+                    <label class="input-group-text bg-transparent border-start-0" for="datepicker2">
+                        <i class="iconbsky-calendar"></i>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xxl-3" *ngIf="snadoctornamehidestatus">
+            <div class="form-group">
+                <label class="control-label">SNA Doctor Name<span class="text-danger">*</span></label>
+                <ng-autocomplete #auto [data]="snoList" placeholder="Select SNA Name" (selected)="selectEvent($event)" (inputCleared)="clearEvent()" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" [searchKeyword]="keyword" spellcheck="false">
+                </ng-autocomplete>
+
+                <ng-template #itemTemplate let-item>
+                    <a [innerHTML]="item.fullName"></a>
+                </ng-template>
+
+                <ng-template #notFoundTemplate let-notFound>
+                    <div [innerHTML]="notFound"></div>
+                </ng-template>
+            </div>
+        </div>
+        <!-- </div>
+    <div class="row"> -->
+        <div class="col align-self-end">
+            <div class="form-group">
+                <button type="submit" *ngIf="isVerifyCEO" class="btn btn-success" (click)="getVerifyFloatList()">Search</button>
+                <button type="submit" *ngIf="isClarifyJointCEO" class="btn btn-success" (click)="OnFoRemarks()">Search</button>
+                <button type="submit" *ngIf="isClarifyCEO" class="btn btn-success" (click)="getClarifyFromCEO()">Search</button>
+                <button type="submit" *ngIf="isVerifyJoinCEO" class="btn btn-success" (click)="verifyFromDyCEO()">Search</button> &nbsp;
+                <!-- <button type="submit" class="btn btn-secondary" (click)="onresetrecordReverted()">Reset</button> -->
+            </div>
+        </div>
+        <!-- <div class="col align-self-end" *ngIf="submitbuttonhide">
+            <div class="form-group">
+                <button type="submit" class="btn btn-success" (click)="OnFoRemarks('search')">Search</button>
+                &nbsp;
+                <button type="submit" class="btn btn-secondary" (click)="onresetrecordReverted('search')">Reset</button>
+            </div>
+        </div> -->
+    </div>
+</div>
+<div style="height: 15pt;"></div>
+<div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+    <div class="col-lg-4 col-xxl-4" style="padding-top: 10px; padding-left: 17px;">
+        <b>Total Float Count: <span style="color: green;">{{status=='P'?paymentList?.length:foremarks?.length}}</span></b>
+    </div>
+    <div class="col-lg-4 col-xxl-4" style="text-align: right; padding-top: 1px;">
+        <div class="form-group">
+            <button class="btn btn-outline-success btn-sm me-1" (click)="downloadList()">
+                <i class="bi bi-file-earmark-spreadsheet" style="font-size: 13pt;"></i>
+            </button> &nbsp;
+            <button class="btn btn-outline-danger btn-sm me-1" (click)="downloalpdf()">
+                <i class="bi bi-file-earmark-pdf" style="font-size: 13pt;"></i>
+            </button>
+        </div>
+    </div>
+    <div class="col-lg-4 col-xxl-4">
+        <div class="input-group">
+            <input type="text" id="txtsearchDate" class="form-control" placeholder="Search here" name="txtsearchDate" [(ngModel)]="txtsearchDate" autocomplete="off" maxlength="50">
+        </div>
+    </div>
+</div>
+<div class="form-cointainer" id="value1">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="table-responsive">
+                <table class="table table-striped" mb-0>
+                    <thead>
+                        <tr>
+                            <th>Sl No.</th>
+                            <th>Float Number</th>
+                            <th>Generated On</th>
+                            <th>Remark</th>
+                            <th class="text-center">History</th>
+                            <th class="text-center">Total Claim Count</th>
+                            <th>Total Amount (&#8377;)</th>
+                            <th>Round Amount (&#8377;)</th>
+                            <th class="text-center">View</th>
+                            <th class="text-center">Abstract Report</th>
+                            <th class="text-center">Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of paymentList | filter:txtsearchDate |
+                        paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};
+                        index as i">
+                            <td *ngIf="currentPage==1">{{i+1}}</td>
+                            <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+i+1}}</td>
+                            <td>{{item.floatNo}}</td>
+                            <td>{{item.createdOn | date :'dd-MMM-yyyy hh:mm:ss a'}}</td>
+                            <td>{{item.remark}}</td>
+                            <td class="text-center">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#historyModal" (click)="viewHistory(item)"><i style="color: blue;" class="bi bi-eye"></i></a>
+                            </td>
+                            <td class="text-center">{{item.count}}</td>
+                            <td>{{item.amount | currencyInr}}</td>
+                            <td>{{item.roundAmount | currencyInr}}</td>
+                            <td class="text-center">
+                                <a href="javascript:void(0)" (click)="viewreport(item.floatNo)">
+                                    <i style="color: blue;" class="bi bi-eye"></i>
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <a class="btn btn-outline-success btn-sm" (click)="getfloatdetailsHospitalwise(item.floatNo)">
+                                    Report
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <a class="btn btn-outline-success btn-sm me-1" (click)="view1(item.floatNo,item.floatId)">Detail</a>
+                            </td>
+                        </tr>
+                        <tr *ngIf="! paymentList?.length">
+                            <td colspan="8" align="center"><strong class="text-danger">No data found</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row" *ngIf="showPegi">
+                <div class="col-sm-4">
+                    <div class="col-sm-*">
+                        show
+                        <select id="pageItem" name="pageItem" class="custom-select-sm" (change)="pageItemChange()">
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                            <option value="200">200</option>
+                            <option value="300">300</option>
+                            <option value="400">400</option>
+                            <option value="">All</option>
+                        </select> entries
+                    </div>
+                </div>
+                <div class="col-sm-8 text-right">
+                    <pagination-controls id="listing_pagination" [maxSize]="50" [directionLinks]="true" (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<!-- <div class="modal fade" id="verifyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-focus="false">
+    <div class="modal-dialog" style="max-width: 85%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    <span *ngIf="header">Payment Freeze Details - {{header}}</span>
+                </h5>
+                <button type="button" #closebutton class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="height: 575pt;">
+                <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+                    <div class="col-lg-4 col-xxl-4" style="padding-top: 10px; padding-left: 17px;">
+                        <b>Total Claim Processed: <span style="color: green;">{{paymentDetails?.length}}</span></b>
+                    </div>
+                    <div class="col-lg-4 col-xxl-4" style="text-align: right; padding-top: 1px;">
+                        <button class="btn btn-outline-success btn-sm me-1" type="submit" (click)="downloadReport()">
+                            <i class="bi bi-file-earmark-spreadsheet" style="font-size: 13pt;"></i>
+                        </button>
+                    </div>
+                    <div class="col-lg-4 col-xxl-4">
+                        <div class="input-group">
+                            <input type="text" id="txtsearch" class="form-control" placeholder="Search here" name="txtsearch" [(ngModel)]="txtsearch" autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-cointainer" *ngIf="paymentDetails?.length">
+                    <div class="main-tab">
+                        <div class="row justify-content-between">
+                            <div class="table-responsive" style="height: 440pt;">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Sl No</th>
+                                            <th>URN</th>
+                                            <th>Claim No.</th>
+                                            <th>Invoice Number</th>
+                                            <th>Patient Name</th>
+                                            <th>Actual Date of Admission</th>
+                                            <th>Actual Date of Discharge</th>
+                                            <th>Claim Amount (₹)</th>
+                                            <th>CPD Approved Amount (₹)</th>
+                                            <th>SNA Approved Amount (₹)</th>
+                                            <th width="150">FO Remarks</th>
+                                            <th class="text-center">Details</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <ng-container *ngIf="paymentDetails">
+                                            <tr *ngFor="let item of paymentDetails | filter:txtsearch; index as j">
+                                                <td>{{j+1}}</td>
+                                                <td>{{item.urn}}</td>
+                                                <td>{{item.claimNo}}</td>
+                                                <td>{{item.invoiceNo}}</td>
+                                                <td>{{item.patientname}}</td>
+                                                <td>{{item.actualDateOfAdmission}}</td>
+                                                <td>{{item.actualDateOfDischarge}}</td>
+                                                <td> {{item.totalAmountClaimed | currency:'':''}}</td>
+                                                <td *ngIf="item.cpdApprovedAmount!=null"> {{item.cpdApprovedAmount | currency:'':''}}</td>
+                                                <td *ngIf="item.cpdApprovedAmount==null"> {{item.cpdApprovedAmount!=null?item.cpdApprovedAmount:"N/A"}}</td>
+                                                <td *ngIf="item.snaApprovedAmount!=null"> {{item.snaApprovedAmount | currency:'':''}}</td>
+                                                <td *ngIf="item.snaApprovedAmount==null"> {{item.snaApprovedAmount!=null?item.snaApprovedAmount:"N/A"}}</td>
+                                                <td width="150">{{item.foRemarks!=null?item.foRemarks:'-NA-'}}</td>
+                                                <td class="text-center">
+                                                    <a class="btn btn-outline-success btn-sm" (click)="getActionDetails(item.claimId,item.urn)">Detail</a>
+                                                </td>
+                                            </tr>
+                                        </ng-container>
+                                        <tr *ngIf="! paymentDetails?.length">
+                                            <td colspan="14" align="center"><strong class="text-danger">No data found</strong></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <button class="btn btn-success" (click)="paymentFreeze(header)">Payment Freeze</button>&nbsp;
+                <button class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div> -->
+<!-- FO RemarkS -->
+<div class="form-cointainer" id="value2">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="table-responsive">
+                <table class="table table-striped" mb-0>
+                    <thead>
+                        <tr>
+                            <th>Sl No.</th>
+                            <th>Float Number</th>
+                            <th>Generated On</th>
+                            <th>Remarks</th>
+                            <th class="text-center">History</th>
+                            <th class="text-center">Total Claim Count</th>
+                            <th>Total Amount (&#8377;)</th>
+                            <th>Round Amount (&#8377;)</th>
+                            <th class="text-center">View</th>
+                            <th class="text-center">Abstract Report</th>
+                            <th class="text-center">Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of foremarks | filter:txtsearchDate |
+                            paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};
+                            index as i">
+                            <td *ngIf="currentPage==1">{{i+1}}</td>
+                            <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+i+1}}</td>
+                            <td>{{item.floatNo}}</td>
+                            <td>{{item.created_on | date :'dd-MMM-yyyy hh:mm:ss a'}}</td>
+                            <td>{{item.remarks?item.remarks:'N/A'}}</td>
+                            <td class="text-center">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#historyModal" (click)="viewHistory(item)"><i style="color: blue;" class="bi bi-eye"></i></a>
+                            </td>
+                            <td class="text-center">{{item.count}}</td>
+                            <td>{{item.amount | currencyInr}}</td>
+                            <td>{{item.roundAmount | currencyInr}}</td>
+                            <td class="text-center">
+                                <a href="javascript:void(0)" (click)="viewreport(item.floatNo)">
+                                    <i style="color: blue;" class="bi bi-eye"></i>
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <a class="btn btn-outline-success btn-sm" (click)="getfloatdetailsHospitalwise(item.floatNo)">
+                                    Report
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <a class="btn btn-outline-success btn-sm me-1" (click)="view(item.floatNo,item.floatId)">Detail</a>
+                            </td>
+                        </tr>
+                        <tr *ngIf="!foremarks?.length">
+                            <td colspan="9" align="center"><strong class="text-danger">No data found</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row" *ngIf="showPegi">
+                <div class="col-sm-4">
+                    <div class="col-sm-*">
+                        show
+                        <select id="pageItem" name="pageItem" class="custom-select-sm" (change)="pageItemChange()">
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                                <option value="200">200</option>
+                                <option value="300">300</option>
+                                <option value="400">400</option>
+                            </select> entries
+                    </div>
+                </div>
+                <div class="col-sm-8 text-right">
+                    <pagination-controls id="listing_pagination" [maxSize]="50" [directionLinks]="true" (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="form-cointainer" id="value3">
+    <div class="main-tab">
+        <div class="row justify-content-between">
+            <div class="table-responsive">
+                <table class="table table-striped" mb-0>
+                    <thead>
+                        <tr>
+                            <th>Sl No.</th>
+                            <th>Float Number</th>
+                            <th>Generated On</th>
+                            <th>Remark</th>
+                            <th class="text-center">History</th>
+                            <th class="text-center">Total Claim Count</th>
+                            <th>Total Amount (&#8377;)</th>
+                            <th>Round Amount (&#8377;)</th>
+                            <th class="text-center">View</th>
+                            <th class="text-center">Abstract Report</th>
+                            <th class="text-center">Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of paymentList | filter:txtsearchDate |
+                      paginate: {id: 'listing_pagination', itemsPerPage: pageElement, currentPage: currentPage};
+                      index as i">
+                            <td *ngIf="currentPage==1">{{i+1}}</td>
+                            <td *ngIf="currentPage!=1">{{(currentPage-1)*pageElement+i+1}}</td>
+                            <td>{{item.floatNo}}</td>
+                            <td>{{item.createdOn | date :'dd-MMM-yyyy hh:mm:ss a'}}</td>
+                            <td>{{item.remark}}</td>
+                            <td class="text-center">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#historyModal" (click)="viewHistory(item)"><i style="color: blue;" class="bi bi-eye"></i></a>
+                            </td>
+                            <td class="text-center">{{item.count}}</td>
+                            <td>{{item.amount | currencyInr}}</td>
+                            <td>{{item.roundAmount | currencyInr}}</td>
+                            <td class="text-center">
+                                <a href="javascript:void(0)" (click)="viewreport(item.floatNo)">
+                                    <i style="color: blue;" class="bi bi-eye"></i>
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <a class="btn btn-outline-success btn-sm" (click)="getfloatdetailsHospitalwise(item.floatNo)">
+                                  Report
+                              </a>
+                            </td>
+                            <td class="text-center">
+                                <a class="btn btn-outline-success btn-sm me-1" (click)="view(item.floatNo,item.floatId)">Detail</a>
+                            </td>
+                        </tr>
+                        <tr *ngIf="! paymentList?.length">
+                            <td colspan="8" align="center"><strong class="text-danger">No data found</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row" *ngIf="showPegi">
+                <div class="col-sm-4">
+                    <div class="col-sm-*">
+                        show
+                        <select id="pageItem" name="pageItem" class="custom-select-sm" (change)="pageItemChange()">
+                          <option value="50">50</option>
+                          <option value="100">100</option>
+                          <option value="200">200</option>
+                          <option value="300">300</option>
+                          <option value="400">400</option>
+                          <option value="">All</option>
+                      </select> entries
+                    </div>
+                </div>
+                <div class="col-sm-8 text-right">
+                    <pagination-controls id="listing_pagination" [maxSize]="50" [directionLinks]="true" (pageChange)="currentPage = $event" class="text-end" (pageBoundsCorrection)="onPageBoundsCorrection($event)"></pagination-controls>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="historyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-focus="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="exampleModalLabel">
+                    <h6>Float History</h6>
+                </div>
+                <!-- <button type="button" #closebutton class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="cancel()"></button> -->
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-2 mb-2">
+                        Float Number
+                    </div>
+                    <div class="col-lg-4 mb-2"><strong>{{floatNum}}</strong></div>
+                    <div class="col-lg-2 mb-2">
+                        Amount
+                    </div>
+                    <div class="col-lg-4 mb-2"><strong>{{floatAmount}}</strong></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-2 mb-2">
+                        Created By
+                    </div>
+                    <div class="col-lg-4 mb-2"><strong>{{floatCreatedBy}}</strong></div>
+                    <div class="col-lg-2 mb-2">
+                        Created on
+                    </div>
+                    <div class="col-lg-4 mb-2"><strong>{{createdOn | date :'dd-MMM-yyyy hh:mm:ss a'}}</strong></div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-sm table-striped mb-0">
+                        <thead>
+                            <tr>
+                                <th>Sl No</th>
+                                <!-- <th>Float Number</th> -->
+                                <!-- <th>Generated On</th>-->
+                                <!-- <th>Generated By</th> -->
+                                <th>Action By</th>
+                                <th>Action On</th>
+                                <th>Amount</th>
+                                <th>Remarks</th>
+                                <th>Document</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngFor="let float of floatHistoryList; index as i">
+                                <tr>
+                                    <td>{{ i + 1 }}</td>
+                                    <!-- <td> {{ float.floateno }}</td> -->
+                                    <!-- <td>{{ float.createon| date :'dd-MMM-yyyy hh:mm:ss a' }}</td>-->
+                                    <!-- <td>{{ float.createby.fullname}}</td> -->
+                                    <td *ngIf="float.actionby != null">{{ float.actionby != null?float.actionby.fullname:''}} ({{float.actionby != null?float.actionby.groupId.groupTypeName:''}})</td>
+                                    <td *ngIf="float.actionby == null"></td>
+                                    <td>{{ float.actionon| date :'dd-MMM-yyyy hh:mm:ss a' }}</td>
+                                    <td>{{ float.amount | currencyInr}}</td>
+                                    <td>{{ float.remarks}}</td>
+                                    <!-- <td>{{ float.floatDoc}}</td> -->
+                                    <td *ngIf="float.floatDoc != undefined">
+                                        <a href="javascript:void(0);" (click)="floatDocDownload($event,float)">
+                                            <i class="bi bi-file-earmark-image" style="color:red;font-size:24px"></i></a>
+                                    </td>
+                                    <td *ngIf="float.floatDoc == undefined">--</td>
+                                </tr>
+                            </ng-container>
+                            <tr *ngIf="floatHistoryList.length == 0">
+                                <td colspan="10" class="text-center text-uppercase">
+                                    <strong class="text-danger">No data found !!</strong>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- modalfor foremarks -->
+<!-- <div class="modal fade" id="modalexamle" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-focus="false">
+    <div class="modal-dialog" style="max-width: 85%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalexamle">
+                    <span *ngIf="header">Payment Freeze Details - {{header}}</span>
+                </h5>
+                <button type="button" #closebutton1 class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+                    <div class="col-lg-4 col-xxl-4" style="padding-top: 10px; padding-left: 17px;">
+                        <b>Total Claim Processed: <span style="color: green;">{{detailsData?.length}}</span></b>
+                    </div>
+                    <div class="col-lg-4 col-xxl-4" style="text-align: right; padding-top: 1px;">
+                        <button class="btn btn-outline-success btn-sm me-1" (click)="downloadexcel(('excel'))">
+                            <i class="bi bi-file-earmark-spreadsheet" style="font-size: 13pt;"></i>
+                        </button>
+                        <button class="btn btn-outline-danger btn-sm me-1" (click)="downloadexcel('pdf')">
+                            <i class="bi bi-file-earmark-pdf" style="font-size: 13pt;"></i>
+                        </button>
+                    </div>
+                    <div class="col-lg-4 col-xxl-4">
+                        <div class="input-group">
+                            <input type="text" id="txtsearch" class="form-control" placeholder="Search here" name="txtsearch" [(ngModel)]="txtsearch">
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Sl No</th>
+                            <th>URN</th>
+                            <th>Claim No.</th>
+                            <th>Invoice Number</th>
+                            <th>Patient Name</th>
+                            <th>Actual Date of Admission</th>
+                            <th>Actual Date of Discharge</th>
+                            <th>Claim Amount (₹)</th>
+                            <th>CPD Approved Amount (₹)</th>
+                            <th>SNA Approved Amount (₹)</th>
+                            <th width="150">FO Remarks</th>
+                            <th width="150">FO Remark History</th>
+                            <th>Edit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngIf="detailsData">
+                            <tr *ngFor="let item of detailsData | filter:txtsearch; index as j">
+                                <td>{{j+1}}</td>
+                                <td>{{item.urn}}</td>
+                                <td>{{item.claimNo}}</td>
+                                <td>{{item.invoiceNo}}</td>
+                                <td>{{item.patientname}}</td>
+                                <td>{{item.actualDateOfAdmission!=null?item.actualDateOfAdmission:"N/A"}}</td>
+                                <td>{{item.actualDateOfDischarge!=null?item.actualDateOfDischarge:"N/A"}}</td>
+                                <td> {{item.totalAmountClaimed | currency:'':''}}</td>
+                                <td *ngIf="item.cpdApprovedAmount!=null"> {{item.cpdApprovedAmount | currency:'':''}}</td>
+                                <td *ngIf="item.cpdApprovedAmount==null"> {{item.cpdApprovedAmount!=null?item.cpdApprovedAmount:"N/A"}}</td>
+                                <td *ngIf="item.snaApprovedAmount!=null"> {{item.snaApprovedAmount | currency:'':''}}</td>
+                                <td *ngIf="item.snaApprovedAmount==null"> {{item.snaApprovedAmount!=null?item.snaApprovedAmount:"N/A"}}</td>
+                                <td width="150">{{item.foRemarks!=null?item.foRemarks:'-NA-'}}</td>
+                                <td *ngIf="modaldata.fo_remarks != null">
+                                    <a class="btn btn-outline-success btn-sm me-1" (click)="viewDescription(item.claimId)">View</a> </td>
+                                <td *ngIf="modaldata.fo_remarks == null">
+                                    <a>--</a>
+                                </td>
+
+                                <td>
+                                    <a class="btn btn-outline-primary btn-sm me-1" (click)="edit1(item)">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </ng-container>
+                        <tr *ngIf="!detailsData?.length">
+                            <td colspan="14" align="center"><strong class="text-danger">No data found</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="btn btn-success" id="forward" (click)="forward(header)">Forward</button> &nbsp;
+                <button class="btn btn-danger" id="Cancel" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div> -->
+<!-- old remark modal -->
+<!-- <div class="modal fade" id="modaldatabindnng" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-focus="false">
+    <div class="modal-dialog" style="max-width: 85%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button style="color: red;" type="button" #closebutton3 class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Sl No.</th>
+                            <th>FO Remarks</th>
+                            <th>SNA Approved Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container>
+                            <tr *ngFor="let item of modaldata index as j">
+                                <td *ngIf="item.fo_remarks != null">{{j+1}}</td>
+                                <td *ngIf="item.fo_remarks != null">{{item.fo_remarks}}</td>
+                                <td *ngIf="item.fo_remarks != null">{{item.APPROVEDAMOUNT| currency:'':''}}</td>
+                            </tr>
+                        </ng-container>
+                        <tr *ngIf="modaldata?.length">
+                            <td colspan="14" align="center"><strong class="text-danger">No data found</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div> -->
